@@ -56,6 +56,7 @@ package org.apache.commons.collections;
 import java.util.Collection;
 import java.util.Comparator;
 
+import org.apache.commons.collections.comparators.BooleanComparator;
 import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
@@ -171,6 +172,22 @@ public class ComparatorUtils {
         return new ReverseComparator(comparator);
     }
 
+    /**
+     * Gets a Comparator that can sort Boolean objects.
+     * <p>
+     * The parameter specifies whether true or false is sorted first.
+     * <p>
+     * The comparator throws NullPointerException if a null value is compared.
+     * 
+     * @param trueFirst  when <code>true</code>, sort 
+     *        <code>true</code> {@link Boolean}s before
+     *        <code>false</code> {@link Boolean}s.
+     * @return  a comparator that sorts booleans
+     */
+    public static Comparator booleanComparator(boolean trueFirst) {
+        return BooleanComparator.getBooleanComparator(trueFirst);
+    }
+    
     /**
      * Gets a Comparator that controls the comparison of <code>null</code> values.
      * <p>
