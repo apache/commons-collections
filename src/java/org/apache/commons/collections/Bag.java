@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.8 2003/05/11 12:13:58 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.9 2003/05/11 14:14:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import java.util.Set;
  * which unfortunately will break backwards compatibility with this version.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.8 $ $Date: 2003/05/11 12:13:58 $
+ * @version $Revision: 1.9 $ $Date: 2003/05/11 14:14:58 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -92,7 +92,7 @@ public interface Bag extends Collection {
     * @param object  the object to search for
     * @return the number of occurrences of the object, zero if not found
     */
-   public int getCount(Object object);
+   int getCount(Object object);
 
    /**
     * <i>(Violation)</i>
@@ -111,7 +111,7 @@ public interface Bag extends Collection {
     * @param object  the object to add
     * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
     */
-   public boolean add(Object object);
+   boolean add(Object object);
 
    /**
     * Adds <code>nCopies</code> copies of the specified object to the Bag.
@@ -124,7 +124,7 @@ public interface Bag extends Collection {
     * @param nCopies  the number of copies to add
     * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
     */
-   public boolean add(Object object, int nCopies);
+   boolean add(Object object, int nCopies);
 
    /**
     * <i>(Violation)</i>
@@ -140,7 +140,7 @@ public interface Bag extends Collection {
     *
     * @return <code>true</code> if this call changed the collection
     */
-   public boolean remove(Object object);
+   boolean remove(Object object);
 
    /**
     * Removes <code>nCopies</code> copies of the specified object from the Bag.
@@ -152,7 +152,7 @@ public interface Bag extends Collection {
     * @param nCopies  the number of copies to remove
     * @return <code>true</code> if this call changed the collection
     */
-   public boolean remove(Object object, int nCopies);
+   boolean remove(Object object, int nCopies);
 
    /**
     * Returns a {@link Set} of unique elements in the Bag.
@@ -161,14 +161,14 @@ public interface Bag extends Collection {
     * 
     * @return the Set of unique Bag elements
     */
-   public Set uniqueSet();
+   Set uniqueSet();
 
    /**
     * Returns the total number of items in the bag across all types.
     * 
     * @return the total size of the Bag
     */
-   public int size();
+   int size();
 
    /**
     * <i>(Violation)</i>
@@ -187,7 +187,7 @@ public interface Bag extends Collection {
     * @param coll  the collection to check against
     * @return <code>true</code> if the Bag contains all the collection
     */
-   public boolean containsAll(Collection coll);
+   boolean containsAll(Collection coll);
 
    /**
     * <i>(Violation)</i>
@@ -206,7 +206,7 @@ public interface Bag extends Collection {
     * @param coll  the collection to remove
     * @return <code>true</code> if this call changed the collection
     */
-   public boolean removeAll(Collection coll);
+   boolean removeAll(Collection coll);
 
    /**
     * <i>(Violation)</i>
@@ -228,7 +228,7 @@ public interface Bag extends Collection {
     * @param coll  the collection to retain
     * @return <code>true</code> if this call changed the collection
     */
-   public boolean retainAll(Collection coll);
+   boolean retainAll(Collection coll);
 
    /**
     * Returns an {@link Iterator} over the entire set of members,
@@ -237,6 +237,6 @@ public interface Bag extends Collection {
     * 
     * @return iterator over all elements in the Bag
     */
-   public Iterator iterator();
+   Iterator iterator();
    
 }
