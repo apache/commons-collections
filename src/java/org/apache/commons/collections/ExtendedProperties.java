@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.9 2003/02/19 20:14:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.10 2003/04/18 23:17:09 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -158,7 +158,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since 1.0
- * @version $Revision: 1.9 $ $Date: 2003/02/19 20:14:25 $
+ * @version $Revision: 1.10 $ $Date: 2003/04/18 23:17:09 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -472,14 +472,23 @@ public class ExtendedProperties extends Hashtable
             }
             catch (UnsupportedEncodingException e)
             {
-                // Get one with the default encoding...
+                // Another try coming up....
             }
         }
         
         if (reader == null)
         {
-            reader =
-                new PropertiesReader(new InputStreamReader(input));
+            try 
+            {
+                reader =
+                    new PropertiesReader(new InputStreamReader(input,"8859_1"));
+            } 
+            catch (UnsupportedEncodingException e)
+            {
+                // ISO8859-1 support is required on java platforms but....
+                // If it's not supported, use the system default encoding
+                reader = new PropertiesReader(new InputStreamReader(input));
+            }
         }
 
         try
