@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.9 2002/05/09 03:20:59 mas Exp $
- * $Revision: 1.9 $
- * $Date: 2002/05/09 03:20:59 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.10 2002/05/24 04:00:30 mas Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/05/24 04:00:30 $
  *
  * ====================================================================
  *
@@ -521,6 +521,44 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     // and the list
     sentinel.next = sentinel;
     sentinel.prev = sentinel;
+  }
+
+  // per Map.equals(Object)
+  public boolean equals(Object obj) {
+    if(obj == null) return false;
+    if(obj == this) return true;
+
+    if(!(obj instanceof Map)) return false;
+
+    return entrySet().equals(((Map)obj).entrySet());
+  }
+
+  // per Map.hashCode()
+  public int hashCode() {
+    return entrySet().hashCode();
+  }
+
+  /**
+   *  Provides a string representation of the entries within the map.  The
+   *  format of the returned string may change with different releases, so this
+   *  method is suitable for debugging purposes only.  If a specific format is
+   *  required, use {@link #entrySet()}.{@link Set#iterator() iterator()} and
+   *  iterate over the entries in the map formatting them as appropriate.
+   **/
+  public String toString() {
+    StringBuffer buf = new StringBuffer();
+    buf.append('[');
+    for(Entry pos = sentinel.next; pos != sentinel; pos = pos.next) {
+      buf.append(pos.getKey());
+      buf.append('=');
+      buf.append(pos.getValue());
+      if(pos.next != sentinel) {
+        buf.append(',');
+      }
+    }
+    buf.append(']');
+
+    return buf.toString();
   }
 
   // per Map.keySet()
