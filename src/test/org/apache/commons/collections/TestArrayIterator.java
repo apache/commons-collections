@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.8 2001/05/14 10:42:51 jstrachan Exp $
- * $Revision: 1.8 $
- * $Date: 2001/05/14 10:42:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.1 2001/05/14 10:42:53 jstrachan Exp $
+ * $Revision: 1.1 $
+ * $Date: 2001/05/14 10:42:53 $
  *
  * ====================================================================
  *
@@ -62,38 +62,47 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
+import java.util.Iterator;
 
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.8 2001/05/14 10:42:51 jstrachan Exp $
+ * Tests the ArrayIterator to ensure that the next() method will actually
+ * perform the iteration rather than the hasNext() method.
+ * The code of this test was supplied by Mauricio S. Moura
+ *
+ * @author James Strachan
+ * @author Mauricio S. Moura
+ * @version $Id: TestArrayIterator.java,v 1.1 2001/05/14 10:42:53 jstrachan Exp $
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestArrayIterator extends TestObject {
+    
+    protected String[] testArray = {
+        "One", "Two", "Three"
+    };
+    
+    public static Test suite() {
+        return new TestSuite(TestArrayIterator.class);
+    }
+    
+    public TestArrayIterator(String testName) {
         super(testName);
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayList.suite());
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashMap.suite());
-        suite.addTest(TestTreeMap.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        return suite;
+    
+    /**
+     * Return a new, empty {@link Object} to used for testing.
+     */
+    public Object makeObject() {
+        return new ArrayIterator(testArray);
     }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    
+    public void testIterator() {
+        Iterator iter = (Iterator) makeObject();
+        for ( int i = 0; i < testArray.length; i++ ) {
+            Object testValue = testArray[i];            
+            Object iterValue = iter.next();
+            
+            assertEquals( "Iteration value is correct", testValue, iterValue );
+        }
+        
+        assert("Iterator should now be empty", ! iter.hasNext() );
     }
 }

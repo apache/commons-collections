@@ -12,13 +12,14 @@ import java.util.Iterator;
 /** Implements {@link Iterator} over an array of objects
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @version $Revision: 1.1 $
+  * @
+  * @version $Revision: 1.2 $
   */
 public class ArrayIterator implements Iterator {
     
     private Object[] array;
-    private int index = -1;
-
+    private int index = 0;
+  
     
     public ArrayIterator() {
     }
@@ -30,11 +31,11 @@ public class ArrayIterator implements Iterator {
     // Iterator interface
     //-------------------------------------------------------------------------
     public boolean hasNext() {
-        return ++index >= 0 && index < array.length;
+        return  (index < array.length);
     }
 
     public Object next() {
-        return array[ index ];
+        return array[ index++ ];
     }
 
     public void remove() {
