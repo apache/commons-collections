@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.17 2003/03/03 19:41:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.18 2003/04/18 23:29:24 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,7 +82,7 @@ import java.util.Set;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.17 $ $Date: 2003/03/03 19:41:29 $
+ * @version $Revision: 1.18 $ $Date: 2003/04/18 23:29:24 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Stephen Colebourne
@@ -185,7 +185,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
 
     /**
      * Constructs a new <code>BeanMap</code> that operates on the 
-     * specified bean.  If the given bean is <code>null</COde>, then
+     * specified bean.  If the given bean is <code>null</code>, then
      * this map will be empty.
      *
      * @param bean  the bean for this map to operate on
@@ -198,6 +198,10 @@ public class BeanMap extends AbstractMap implements Cloneable {
     // Map interface
     //-------------------------------------------------------------------------
 
+    public String toString() {
+        return "BeanMap<" + String.valueOf(bean) + ">";
+    }
+    
     /**
      * Clone this bean map using the following process: 
      *
