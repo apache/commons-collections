@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedCollection.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedCollection.java,v 1.3 2003/05/11 13:14:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.Predicate;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/11 13:14:51 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -117,6 +117,21 @@ public class PredicatedCollection extends AbstractCollectionDecorator {
         }
     }
 
+    /**
+     * Validates the object being added to ensure it matches the predicate.
+     * <p>
+     * The predicate itself should not throw an exception, but return false to
+     * indicate that the object cannot be added.
+     * 
+     * @param object  the object being added
+     * @throws IllegalArgumentException if the add is invalid
+     */
+    protected void validate(Object object) {
+        if (predicate.evaluate(object) == false) {
+            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate rejected it");
+        }
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Override to validate the object being added to ensure it matches
@@ -145,21 +160,6 @@ public class PredicatedCollection extends AbstractCollectionDecorator {
             validate(it.next());
         }
         return getCollection().addAll(coll);
-    }
-
-    /**
-     * Validates the object being added to ensure it matches the predicate.
-     * <p>
-     * The predicate itself should not throw an exception, but return false to
-     * indicate that the object cannot be added.
-     * 
-     * @param object  the object being added
-     * @throws IllegalArgumentException if the add is invalid
-     */
-    protected void validate(Object object) {
-        if (predicate.evaluate(object) == false) {
-            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate rejected it");
-        }
     }
 
 }
