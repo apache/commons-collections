@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.1 2003/01/06 03:59:12 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/06 03:59:12 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.2 2003/01/07 00:59:51 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/07 00:59:51 $
  *
  * ====================================================================
  *
@@ -146,33 +146,29 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
         return new RandomAccessIntSubList(this,fromIndex,toIndex);
     }
 
+    /** 
+     * Returns <code>true</code> iff <i>that</i> is 
+     * an {@link IntList} with the same {@link #size size}
+     * as me, and whose {@link #iterator iterator} returns the 
+     * same sequence of values as mine.
+     */
     public boolean equals(Object that) {
-        // handle an easy and somewhat frequent case via a shortcut
-        if(this == that) { return true; } 
-
-        // otherwise, try to get an IntIterator from that object
-        IntIterator thatIter = null;        
-        if(that instanceof IntList) {
-            if(size() != ((IntList)that).size()) { return false; } // another quick check
-            thatIter = ((IntList)that).iterator();
-        } else if(that instanceof List) {
-            if(size() != ((List)that).size()) { return false; } // another quick check
-            thatIter = IteratorIntIterator.wrap(((List)that).iterator());
-        }
-        
-        if(null == thatIter) { return false; }
-        
-        // walk thru thisIter and thatIter, checking for any differences
-        for(IntIterator thisIter = iterator(); thisIter.hasNext();) {
-            if(!thatIter.hasNext()) { return false; } // thatIter has a different length
-            if(thisIter.next() != thatIter.next()) { 
-                return false; 
+        if(this == that) { 
+            return true; 
+        } else if(that instanceof IntList) {
+            IntList thatList = (IntList)that;
+            if(size() != thatList.size()) {
+                return false;
             }
-        }
-        
-        if(thatIter.hasNext()) { return false; } // thatIter has a different length
-        
-        return true;
+            for(IntIterator thatIter = thatList.iterator(), thisIter = iterator(); thisIter.hasNext();) {
+                if(thisIter.next() != thatIter.next()) { 
+                    return false; 
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }        
     }
     
     public int hashCode() {

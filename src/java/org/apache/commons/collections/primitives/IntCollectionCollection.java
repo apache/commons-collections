@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollectionCollection.java,v 1.2 2003/01/06 03:56:21 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2003/01/06 03:56:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollectionCollection.java,v 1.3 2003/01/07 00:59:51 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/01/07 00:59:51 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Iterator;
  * Adapts an {@link IntCollection} to the
  * {@link java.util.Collection Collection} interface.
  *
- * @version $Revision: 1.2 $ $Date: 2003/01/06 03:56:21 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/07 00:59:51 $
  * @author Rodney Waldhoff 
  */
 public class IntCollectionCollection implements Collection {
@@ -99,8 +99,18 @@ public class IntCollectionCollection implements Collection {
         return _collection.containsAll(CollectionIntCollection.wrap(c));
     }        
     
-    public boolean equals(Object o) {
-        return _collection.equals(o);
+    public boolean equals(Object that) {
+        if(that instanceof Collection) {
+            try {
+                return _collection.equals(CollectionIntCollection.wrap((Collection)that));
+            } catch(ClassCastException e) {
+                return false;
+            } catch(NullPointerException e) {
+                return false;
+            }
+        } else {
+            return _collection.equals(that);
+        }
     }
     
     public int hashCode() {

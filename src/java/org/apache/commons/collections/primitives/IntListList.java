@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListList.java,v 1.1 2003/01/06 03:57:42 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/06 03:57:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListList.java,v 1.2 2003/01/07 00:59:51 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/07 00:59:51 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.ListIterator;
  * Adapts an {@link IntList} to the
  * {@link java.util.List List} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/06 03:57:42 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/07 00:59:51 $
  * @author Rodney Waldhoff 
  */
 public class IntListList extends IntCollectionCollection implements List {
@@ -119,6 +119,14 @@ public class IntListList extends IntCollectionCollection implements List {
         return IntListList.wrap(_list.subList(fromIndex,toIndex));
     }
 
+    public boolean equals(Object that) {
+        if(that instanceof IntList) {
+            return _list.equals(ListIntList.wrap((List)that));
+        } else {
+            return super.equals(that);
+        }
+    }
+    
     public static List wrap(IntList list) {
         return null == list ? null : new IntListList(list);
     }

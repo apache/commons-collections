@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/CollectionIntCollection.java,v 1.2 2003/01/07 00:59:51 rwaldhoff Exp $
- * $Revision: 1.2 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ListIntList.java,v 1.1 2003/01/07 00:59:51 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2003/01/07 00:59:51 $
  *
  * ====================================================================
@@ -61,101 +61,80 @@
 
 package org.apache.commons.collections.primitives;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
- * Adapts a {@link java.lang.Number Number} valued
- * {@link java.util.Collection Collection} to the
- * {@link IntCollection} interface.
+ * Adapts a {@link Number}-valued {@link java.util.List List} 
+ * to the {@link IntList} interface.
  *
- * @version $Revision: 1.2 $ $Date: 2003/01/07 00:59:51 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/07 00:59:51 $
  * @author Rodney Waldhoff 
  */
-public class CollectionIntCollection implements IntCollection {
-    public CollectionIntCollection(Collection collection) {
-        _collection = collection;
-    }
-          
-    public boolean add(int element) {
-        return _collection.add(new Integer(element));
-    }
-        
-    public boolean addAll(IntCollection c) {
-        return _collection.addAll(IntCollectionCollection.wrap(c));
+public class ListIntList extends CollectionIntCollection implements IntList {
+    
+    public ListIntList(List list) {
+        super(list);        
+        _list = list;
     }
     
-    public void clear() {
-        _collection.clear();
+    public void add(int index, int element) {
+        _list.add(index,new Integer(element));
     }
 
-    public boolean contains(int element) {
-        return _collection.contains(new Integer(element));
+    public boolean addAll(int index, IntCollection collection) {
+        return _list.addAll(index,IntCollectionCollection.wrap(collection));
     }
-    
-    public boolean containsAll(IntCollection c) {
-        return _collection.containsAll(IntCollectionCollection.wrap(c));
-    }        
-    
+
+    public int get(int index) {
+        return ((Number)_list.get(index)).intValue();
+    }
+
+    public int indexOf(int element) {
+        return _list.indexOf(new Integer(element));
+    }
+
+    public int lastIndexOf(int element) {
+        return _list.lastIndexOf(new Integer(element));
+    }
+
+    public IntListIterator listIterator() {
+        return ListIteratorIntListIterator.wrap(_list.listIterator());
+    }
+
+    public IntListIterator listIterator(int index) {
+        return ListIteratorIntListIterator.wrap(_list.listIterator(index));
+    }
+
+    public int removeElementAt(int index) {
+        return ((Number)_list.remove(index)).intValue();
+    }
+
+    public int set(int index, int element) {
+        return ((Number)_list.set(index,new Integer(element))).intValue();
+    }
+
+    public IntList subList(int fromIndex, int toIndex) {
+        return ListIntList.wrap(_list.subList(fromIndex,toIndex));
+    }
+
     public boolean equals(Object that) {
-        if(that instanceof IntCollection) {
-            return _collection.equals(IntCollectionCollection.wrap((IntCollection)that));
+        if(that instanceof List) {
+            try {
+                return _list.equals(ListIntList.wrap((List)that));
+            } catch(ClassCastException e) {
+                return false;
+            } catch(NullPointerException e) {
+                return false;
+            }
         } else {
-            return _collection.equals(that);
+            return super.equals(that);
         }
-    }
-    
-    public int hashCode() {
-        return _collection.hashCode();
-    }
-    
-    public boolean isEmpty() {
-        return _collection.isEmpty();
-    }
-    
-    public IntIterator iterator() {
-        return IteratorIntIterator.wrap(_collection.iterator());
-    }
-     
-    public boolean removeElement(int element) {
-        return _collection.remove(new Integer(element));
-    }
-    
-    public boolean removeAll(IntCollection c) {
-        return _collection.removeAll(IntCollectionCollection.wrap(c));
     }
         
-    public boolean retainAll(IntCollection c) {
-        return _collection.retainAll(IntCollectionCollection.wrap(c));
+    public static IntList wrap(List list) {
+        return null == list ? null : new ListIntList(list);
     }
-    
-    public int size() {
-        return _collection.size();
-    }
-    
-    public int[] toArray() {
-        Object[] src = _collection.toArray();
-        int[] dest = new int[src.length];
-        for(int i=0;i<src.length;i++) {
-            dest[i] = ((Number)(src[i])).intValue();
-        }
-        return dest;
-    }
-    
-    public int[] toArray(int[] dest) {
-        Object[] src = _collection.toArray();
-        if(dest.length < src.length) {
-            dest = new int[src.length];
-        }
-        for(int i=0;i<src.length;i++) {
-            dest[i] = ((Number)(src[i])).intValue();
-        }
-        return dest;
-    }
-    
-    public static IntCollection wrap(Collection collection) {
-        return null == collection ? null : new CollectionIntCollection(collection);
-    }
-    
-    private Collection _collection = null;
-    
+
+    private List _list = null;
+
 }
