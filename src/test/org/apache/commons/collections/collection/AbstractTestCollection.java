@@ -15,6 +15,11 @@
  */
 package org.apache.commons.collections.collection;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -107,7 +112,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:40 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/09 15:16:24 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -1285,4 +1290,30 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
         }
     }
 
+    public void testSerializeDeserializeThenCompare() throws Exception {
+        Object obj = makeCollection();
+        if (obj instanceof Serializable) {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(buffer);
+            out.writeObject(obj);
+            out.close();
+
+            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+            Object dest = in.readObject();
+            in.close();
+            assertEquals("obj != deserialize(serialize(obj)) - EMPTY Collection", obj, dest);
+        }
+        obj = makeFullCollection();
+        if (obj instanceof Serializable) {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(buffer);
+            out.writeObject(obj);
+            out.close();
+
+            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+            Object dest = in.readObject();
+            in.close();
+            assertEquals("obj != deserialize(serialize(obj)) - FULL Collection", obj, dest);
+        }
+    }
 }
