@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.25 2003/10/05 21:03:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.26 2003/10/09 10:39:16 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -89,7 +89,7 @@ import org.apache.commons.collections.decorators.UnmodifiableCollection;
  * @author Stephen Colebourne
  * @author Phil Steitz
  * 
- * @version $Revision: 1.25 $ $Date: 2003/10/05 21:03:44 $
+ * @version $Revision: 1.26 $ $Date: 2003/10/09 10:39:16 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -596,12 +596,13 @@ public class TestCollectionUtils extends TestCase {
         Map map = new HashMap();
         map.put("zeroKey", "zero");
         map.put("oneKey", "one");
+
         Object test = CollectionUtils.get(map, 0);
-        assertTrue(((Map.Entry) test).getKey().equals("zeroKey"));
-        assertTrue(((Map.Entry) test).getValue().equals("zero"));
+        assertEquals("zeroKey",((Map.Entry) test).getKey());
+        assertEquals("zero",((Map.Entry) test).getValue());
         test = CollectionUtils.get(map, 1);
-        assertTrue(((Map.Entry) test).getKey().equals("oneKey"));
-        assertTrue(((Map.Entry) test).getValue().equals("one"));
+        assertEquals("oneKey",((Map.Entry) test).getKey());
+        assertEquals("one",((Map.Entry) test).getValue());
         
         // Map index out of range
         try {
@@ -622,20 +623,20 @@ public class TestCollectionUtils extends TestCase {
         map2.put("zeroKey", "zero");
         map2.put("oneKey", "one");
         test = CollectionUtils.get(map2, 1);
-        assertTrue(((Map.Entry) test).getKey().equals("zeroKey"));
-        assertTrue(((Map.Entry) test).getValue().equals("zero"));
+        assertEquals("zeroKey",((Map.Entry) test).getKey());
+        assertEquals("zero",((Map.Entry) test).getValue());
         test = CollectionUtils.get(map2, 0);
-        assertTrue(((Map.Entry) test).getKey().equals("oneKey"));
-        assertTrue(((Map.Entry) test).getValue().equals("one"));
+        assertEquals("oneKey",((Map.Entry) test).getKey());
+        assertEquals("one",((Map.Entry) test).getValue());
                 
         // List, entry exists
         List list = new ArrayList();
         list.add("zero");
         list.add("one");
         test = CollectionUtils.get(list, 0);
-        assertTrue(test.equals("zero"));
+        assertEquals("zero",test);
         test = CollectionUtils.get(list, 1);
-        assertTrue(test.equals("one"));
+        assertEquals("one",test);
         
         // list, non-existent entry -- IndexOutOfBoundsException
         try {
@@ -648,10 +649,10 @@ public class TestCollectionUtils extends TestCase {
         // Iterator, entry exists
         Iterator iterator = list.iterator();
         test = CollectionUtils.get(iterator,0);
-        assertTrue(test.equals("zero"));
+        assertEquals("zero",test);
         iterator = list.iterator();
         test = CollectionUtils.get(iterator,1);
-        assertTrue(test.equals("one"));
+        assertEquals("one",test);
         
         // Iterator, non-existent entry 
         try {
@@ -666,10 +667,10 @@ public class TestCollectionUtils extends TestCase {
         Vector vector = new Vector(list);
         Enumeration enum = vector.elements();
         test = CollectionUtils.get(enum,0);
-        assertTrue(test.equals("zero"));
+        assertEquals("zero",test);
         enum = vector.elements();
         test = CollectionUtils.get(enum,1);
-        assertTrue(test.equals("one"));
+        assertEquals("one",test);
         
         // Enumerator, non-existent entry 
         try {
@@ -684,7 +685,7 @@ public class TestCollectionUtils extends TestCase {
         Bag bag = new HashBag();
         bag.add("element", 1);
         test = CollectionUtils.get(bag, 0);
-        assertTrue(test.equals("element"));
+        assertEquals("element",test);
         
         // Collection, non-existent entry
         try {
@@ -699,9 +700,9 @@ public class TestCollectionUtils extends TestCase {
         objArray[0] = "zero";
         objArray[1] = "one";
         test = CollectionUtils.get(objArray,0);
-        assertTrue(test.equals("zero"));
+        assertEquals("zero",test);
         test = CollectionUtils.get(objArray,1);
-        assertTrue(test.equals("one"));
+        assertEquals("one",test);
         
         // Object array, non-existent entry -- ArrayIndexOutOfBoundsException
         try {
