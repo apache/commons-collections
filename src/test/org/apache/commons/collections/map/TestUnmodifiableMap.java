@@ -28,7 +28,7 @@ import org.apache.commons.collections.Unmodifiable;
  * {@link UnmodifiableMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/02/18 01:20:37 $
+ * @version $Revision: 1.9 $ $Date: 2004/04/09 10:32:25 $
  * 
  * @author Phil Steitz
  */
@@ -87,4 +87,18 @@ public class TestUnmodifiableMap extends AbstractTestIterableMap{
         } catch (IllegalArgumentException ex) {}
     }
 
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+    public void testCreate() throws Exception {
+        resetEmpty();
+        writeExternalFormToDisk(
+            (java.io.Serializable) map,
+            "D:/dev/collections/data/test/UnmodifiableMap.emptyCollection.version3.1.obj");
+        resetFull();
+        writeExternalFormToDisk(
+            (java.io.Serializable) map,
+            "D:/dev/collections/data/test/UnmodifiableMap.fullCollection.version3.1.obj");
+    }
 }
