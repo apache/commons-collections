@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedBag.java,v 1.1 2003/09/09 03:03:57 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedBag.java,v 1.2 2003/09/19 22:21:53 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,13 +65,14 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.HashBag;
 import org.apache.commons.collections.TestBag;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.PredicateUtils;
 
 /**
  * Extension of {@link TestBag} for exercising the {@link PredicatedBag}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/09 03:03:57 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/19 22:21:53 $
  * 
  * @author Phil Steitz
  */
@@ -89,25 +90,35 @@ public class TestPredicatedBag extends TestBag {
         String[] testCaseName = { TestPredicatedBag.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
+    
+    //--------------------------------------------------------------------------
 
-    protected Predicate getPredicate() {
+    protected Predicate stringPredicate() {
         return new Predicate() {
             public boolean evaluate(Object o) {
                 return o instanceof String;
             }
         };
-    }
+    }   
+    
+    protected Predicate truePredicate = PredicateUtils.truePredicate();
     
     protected Bag decorateBag(HashBag bag, Predicate predicate) {
         return PredicatedBag.decorate(bag, predicate);
     }
 
     public Bag makeBag() {
-        return decorateBag(new HashBag(), getPredicate());
+        return decorateBag(new HashBag(), truePredicate);
     }
+    
+    public Bag makeTestBag() {
+        return decorateBag(new HashBag(), stringPredicate());
+    }
+    
+    //--------------------------------------------------------------------------
 
     public void testlegalAddRemove() {
-        Bag bag = makeBag();
+        Bag bag = makeTestBag();
         assertEquals(0, bag.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "1"};
         for (int i = 0; i < els.length; i++) {
@@ -124,7 +135,7 @@ public class TestPredicatedBag extends TestBag {
     }
  
     public void testIllegalAdd() {
-        Bag bag = makeBag();
+        Bag bag = makeTestBag();
         Integer i = new Integer(3);
         try {
             bag.add(i);
@@ -143,7 +154,7 @@ public class TestPredicatedBag extends TestBag {
         elements.add(new Integer(3));
         elements.add("four");
         try {
-            Bag bag = decorateBag(elements, getPredicate());
+            Bag bag = decorateBag(elements, stringPredicate());
             fail("Bag contains an element that should fail the predicate.");
         } catch (IllegalArgumentException e) {
             // expected
