@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.7 2002/02/14 20:58:48 morgand Exp $
- * $Revision: 1.7 $
- * $Date: 2002/02/14 20:58:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.8 2002/02/14 21:24:32 morgand Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/02/14 21:24:32 $
  *
  * ====================================================================
  *
@@ -87,6 +87,9 @@ import java.util.Set;
   * <p>
   * A synchronized version can be obtained with:
   * <code>Collections.synchronizedMap( theMapToSynchronize )</code>
+  * If it will be accessed by multiple threads, you _must_ synchronize access 
+  * to this Map.  Even concurrent get(Object) operations produce indeterminate
+  * behaviour.
   * </p>
   *
   * <p>
