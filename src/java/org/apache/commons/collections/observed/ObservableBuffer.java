@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableBuffer.java,v 1.2 2003/10/09 20:50:04 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableBuffer.java,v 1.3 2003/10/13 21:18:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.Buffer;
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/10/09 20:50:04 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/13 21:18:56 $
  * 
  * @author Stephen Colebourne
  */
@@ -81,7 +81,7 @@ public class ObservableBuffer extends ObservableCollection implements Buffer {
     /**
      * Factory method to create an observable buffer.
      * <p>
-     * A {@link StandardModificationHandler} will be created.
+     * A {@link org.apache.commons.collections.observed.standard.StandardModificationHandler} will be created.
      * This can be accessed by {@link #getHandler()} to add listeners.
      *
      * @param buffer  the buffer to decorate, must not be null
@@ -115,7 +115,8 @@ public class ObservableBuffer extends ObservableCollection implements Buffer {
      * is interpretted. An IllegalArgumentException is thrown if no suitable
      * handler can be found for this listener.
      * <p>
-     * A <code>null</code> listener will create a {@link StandardModificationHandler}.
+     * A <code>null</code> listener will create a
+     * {@link org.apache.commons.collections.observed.standard.StandardModificationHandler}.
      *
      * @param buffer  the buffer to decorate, must not be null
      * @param listener  buffer listener, may be null
