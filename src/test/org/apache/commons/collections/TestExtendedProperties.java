@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.5 2003/08/24 10:50:58 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2003/08/24 10:50:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.6 2003/08/24 11:29:52 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/08/24 11:29:52 $
  *
  * ====================================================================
  *
@@ -73,34 +73,29 @@ import java.io.*;
  * 
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
  * @author Mohan Kishore
- * @version $Id: TestExtendedProperties.java,v 1.5 2003/08/24 10:50:58 scolebourne Exp $
+ * @author Stephen Colebourne
+ * @version $Id: TestExtendedProperties.java,v 1.6 2003/08/24 11:29:52 scolebourne Exp $
  */
-public class TestExtendedProperties extends TestCase
-{
+public class TestExtendedProperties extends TestCase {
     protected ExtendedProperties eprop = new ExtendedProperties();
 
-    public TestExtendedProperties(String testName)
-    {
+    public TestExtendedProperties(String testName) {
         super(testName);
     }
 
-    public static Test suite()
-    {
-        return new TestSuite( TestExtendedProperties.class );
+    public static Test suite() {
+        return new TestSuite(TestExtendedProperties.class);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestExtendedProperties.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestExtendedProperties.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public void testRetrieve()
-    {
+    public void testRetrieve() {
         /*
          * should be emptry and return null
          */
-
         assertEquals("This returns null", eprop.getProperty("foo"), null);
 
         /*
@@ -114,27 +109,27 @@ public class TestExtendedProperties extends TestCase
          * now add another and get a Vector
          */
         eprop.addProperty("number", "2");
-        assertTrue("This returns array", ( eprop.getVector("number") instanceof java.util.Vector ) );
-        
+        assertTrue("This returns array", (eprop.getVector("number") instanceof java.util.Vector));
+
         /*
          *  now test dan's new fix where we get the first scalar 
          *  when we access a vector valued
          *  property
          */
-        assertTrue("This returns scalar", ( eprop.getString("number") instanceof String ) );
+        assertTrue("This returns scalar", (eprop.getString("number") instanceof String));
 
         /*
          * test comma separated string properties
          */
         String prop = "hey, that's a test";
         eprop.setProperty("prop.string", prop);
-        assertTrue("This returns vector", ( eprop.getVector("prop.string") instanceof java.util.Vector ) );
-        
+        assertTrue("This returns vector", (eprop.getVector("prop.string") instanceof java.util.Vector));
+
         String prop2 = "hey\\, that's a test";
         eprop.remove("prop.string");
         eprop.setProperty("prop.string", prop2);
-        assertTrue("This returns array", ( eprop.getString("prop.string") instanceof java.lang.String) );
-        
+        assertTrue("This returns array", (eprop.getString("prop.string") instanceof java.lang.String));
+
         /*
          * test subset : we want to make sure that the EP doesn't reprocess the data 
          *  elements when generating the subset
@@ -142,20 +137,19 @@ public class TestExtendedProperties extends TestCase
 
         ExtendedProperties subEprop = eprop.subset("prop");
 
-        assertTrue("Returns the full string",  subEprop.getString("string").equals( prop ) );
-        assertTrue("This returns string for subset", ( subEprop.getString("string") instanceof java.lang.String) );
-        assertTrue("This returns array for subset", ( subEprop.getVector("string") instanceof java.util.Vector) );
-        
+        assertTrue("Returns the full string", subEprop.getString("string").equals(prop));
+        assertTrue("This returns string for subset", (subEprop.getString("string") instanceof java.lang.String));
+        assertTrue("This returns array for subset", (subEprop.getVector("string") instanceof java.util.Vector));
+
     }
 
-    public void testInterpolation()
-    {
+    public void testInterpolation() {
         eprop.setProperty("applicationRoot", "/home/applicationRoot");
         eprop.setProperty("db", "${applicationRoot}/db/hypersonic");
         String dbProp = "/home/applicationRoot/db/hypersonic";
         assertTrue("Checking interpolated variable", eprop.getString("db").equals(dbProp));
     }
-    
+
     public void testSaveAndLoad() {
         ExtendedProperties ep1 = new ExtendedProperties();
         ExtendedProperties ep2 = new ExtendedProperties();
@@ -196,7 +190,7 @@ public class TestExtendedProperties extends TestCase
             fail("There was an exception saving and loading the EP");
         }
     }
-    
+
     public void testTrailingBackSlash() {
         ExtendedProperties ep1 = new ExtendedProperties();
 
@@ -219,4 +213,5 @@ public class TestExtendedProperties extends TestCase
             fail("There was an exception loading the EP");
         }
     }
+    
 }
