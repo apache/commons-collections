@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.2 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.3 2002/02/23 03:50:23 bayard Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/23 03:50:23 $
  *
  * ====================================================================
  *
@@ -70,6 +70,9 @@ import java.util.*;
   * as well as other useful features like deep copying
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  *
+  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
+  * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>
   */
 public class MapUtils {
 
@@ -397,4 +400,29 @@ public class MapUtils {
         // XXXX: should probably use log4j here instead...
         System.out.println( "INFO: Exception: " + e );
     }
+
+
+    /**
+     * Nice method for adding data to a map in such a way
+     * as to not get NPE's. The point being that if the
+     * value is null, map.put() will throw an exception.
+     * That blows in the case of this class cause you may want to
+     * essentially treat put("Not Null", null ) == put("Not Null", "")
+     * We will still throw a NPE if the key is null cause that should
+     * never happen.
+     */
+    public static final void safeAddToMap(Map map, Object key, Object value)
+        throws NullPointerException
+    {
+        if (value == null)
+        {
+            map.put ( key, "" );
+        }
+        else
+        {
+           map.put ( key, value );
+        }
+    }
+
+
 }
