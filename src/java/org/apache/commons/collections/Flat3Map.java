@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/Flat3Map.java,v 1.1 2003/11/02 23:41:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/Flat3Map.java,v 1.2 2003/11/08 18:49:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,10 +66,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.apache.commons.collections.iterators.DefaultMapIterator;
+import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.ResetableMapIterator;
-import org.apache.commons.collections.pairs.AbstractMapEntry;
 
 /**
  * A <code>Map</code> implementation that stores data in simple fields until
@@ -98,7 +97,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * (Note that the impact of this has not actually been tested!)
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 23:41:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/08 18:49:06 $
  *
  * @author Stephen Colebourne
  */
@@ -578,7 +577,7 @@ public class Flat3Map implements Map {
      */
     public MapIterator mapIterator() {
         if (iMap != null) {
-            return new DefaultMapIterator(this);
+            return new EntrySetMapIterator(this);
         }
         if (iSize == 0) {
             return IteratorUtils.EMPTY_MAP_ITERATOR;
@@ -670,15 +669,6 @@ public class Flat3Map implements Map {
         public void reset() {
             iIndex = 0;
             iCanRemove = false;
-        }
-        
-        public Entry asMapEntry() {
-            return new AbstractMapEntry(getKey(), getValue()) {
-                public Object setValue(Object value) {
-                    FlatMapIterator.this.setValue(value);
-                    return super.setValue(value);
-                }
-            };
         }
         
         public String toString() {
