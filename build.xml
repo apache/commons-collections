@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.34 2003/01/06 12:54:05 rwaldhoff Exp $ -->
+<!-- $Id: build.xml,v 1.35 2003/01/06 12:54:57 rwaldhoff Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -49,7 +49,7 @@
       <property name="Name-Long" value="Jakarta Commons Collections Package"/>
 
       <!-- The current version number of this component -->
-      <property name="component.version"       value="2.1"/>
+      <property name="component.version" value="2.1"/>
       <property name="doc.release.notes" value="RELEASE-NOTES-${component.version}.html"/>
       <property name="doc.status" value="STATUS.html"/>
 
@@ -76,10 +76,9 @@
       <property name="dest.bin.zip" value="${dest}/${bin.name}.zip"/>
       
       <property name="src.name" value="${bin.name}-src"/>
-      <property name="dest.src.tar"    value="${dest}/${src.name}.tar"/>
-      <property name="dest.src.tar.gz"    value="${dest}/${src.name}.tar.gz"/>
-      <property name="dest.src.zip" value="${dest}/${src.name}.zip"/>
-      
+      <property name="dest.src.tar" value="${dest}/${src.name}.tar"/>
+      <property name="dest.src.tar.gz" value="${dest}/${src.name}.tar.gz"/>
+      <property name="dest.src.zip" value="${dest}/${src.name}.zip"/>      
 
       <property name="javac.debug" value="true"/>
       <property name="javac.deprecation" value="true"/>
