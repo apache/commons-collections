@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/NodeCachingLinkedList.java,v 1.1 2003/12/11 00:18:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/NodeCachingLinkedList.java,v 1.2 2003/12/24 01:15:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,12 +64,21 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * A linked list implementation that caches the nodes used internally to prevent
- * unnecessary object creates and deletion. This results in a performance
- * improvement for long-lived lists which both add and remove.
+ * A <code>List</code> implementation that stores a cache of internal Node objects
+ * in an effort to reduce wasteful object creation.
+ * <p>
+ * A linked list creates one Node for each item of data added. This can result in
+ * a lot of object creation and garbage collection. This implementation seeks to
+ * avoid that by maintaining a store of cached nodes.
+ * <p>
+ * This implementation is suitable for long-lived lists where both add and remove
+ * are used. Short-lived lists, or lists which only grow will have worse performance
+ * using this class.
+ * <p>
+ * <b>Note that this implementation is not synchronized.</b>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/11 00:18:06 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/24 01:15:40 $
  * 
  * @author Jeff Varszegi
  * @author Rich Dougherty
@@ -135,6 +144,8 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
     //-----------------------------------------------------------------------
     /**
      * Gets the maximum size of the cache.
+     * 
+     * @return the maximum cache size
      */
     protected int getMaximumCacheSize() {
         return maximumCacheSize;
@@ -142,6 +153,8 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
 
     /**
      * Sets the maximum size of the cache.
+     * 
+     * @param maximumCacheSize  the new maximum cache size
      */
     protected void setMaximumCacheSize(int maximumCacheSize) {
         this.maximumCacheSize = maximumCacheSize;
@@ -163,7 +176,7 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
      * {@link #cacheSize} is decreased accordingly. The node that is returned
      * will have <code>null</code> values for next, previous and element.
      *
-     * @return A node, or <code>null</code> if there are no nodes in the cache.
+     * @return a node, or <code>null</code> if there are no nodes in the cache.
      */
     protected Node getNodeFromCache() {
         if (cacheSize == 0) {
@@ -177,20 +190,27 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
         return cachedNode;
     }
     
+    /**
+     * Checks whether the cache is full.
+     * 
+     * @return true if the cache is full
+     */
     protected boolean isCacheFull() {
         return cacheSize >= maximumCacheSize;
     }
     
     /**
-     * Adds a node to the cache, if the cache isn't full. The node's contents
-     * are cleared to so they can be garbage collected.
+     * Adds a node to the cache, if the cache isn't full.
+     * The node's contents are cleared to so they can be garbage collected.
+     * 
+     * @param node  the node to add to the cache
      */
     protected void addNodeToCache(Node node) {
         if (isCacheFull()) {
-            // Don't cache the node.
+            // don't cache the node.
             return;
         }
-        // Clear the node's contents and add it to the cache.
+        // clear the node's contents and add it to the cache.
         Node nextCachedNode = firstCachedNode;
         node.previous = null;
         node.next = nextCachedNode;
@@ -201,47 +221,39 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
 
     //-----------------------------------------------------------------------    
     /**
-     * Create a node, getting it from the cache if possible.
-     */
-    protected Node createHeaderNode() {
-        Node cachedNode = getNodeFromCache();
-        if (cachedNode == null) {
-            return super.createHeaderNode();
-        } else {
-            return cachedNode;
-        }
-    }
-    
-    /**
-     * Creates a new node with the specified properties, using a cached Node
-     * if possible.
+     * Creates a new node, either by reusing one from the cache or creating
+     * a new one.
      * 
-     * @param previous  node to precede the new node
-     * @param next  node to follow the new node
      * @param value  value of the new node
+     * @return the newly created node
      */
-    protected Node createNode(Node previous, Node next, Object value) {
+    protected Node createNode(Object value) {
         Node cachedNode = getNodeFromCache();
         if (cachedNode == null) {
-            return super.createNode(previous, next, value);
+            return super.createNode(value);
         } else {
-            cachedNode.next = next;
-            cachedNode.previous = previous;
             cachedNode.value = value;
             return cachedNode;
         }
     }
 
     /**
-     * Calls the superclass' implementation then calls
-     * <code>addNodeToCache</code> on the node which has 
-     * been removed.
+     * Removes the node from the list, storing it in the cache for reuse
+     * if the cache is not yet full.
+     * 
+     * @param node  the node to remove
      */
     protected void removeNode(Node node) {
         super.removeNode(node);
         addNodeToCache(node);
     }
     
+    /**
+     * Removes all the nodes from the list, storing as many as required in the
+     * cache for reuse.
+     * 
+     * @param node  the node to remove
+     */
     protected void removeAllNodes() {
         // Add the removed nodes to the cache, then remove the rest.
         // We can add them to the cache before removing them, since
