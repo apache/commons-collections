@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.1 2002/06/18 02:58:28 mas Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/18 02:58:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.2 2002/06/18 03:06:45 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/18 03:06:45 $
  *
  * ====================================================================
  *
@@ -69,17 +69,19 @@ import java.util.Set;
 /**
  *  Tests base {@link Set} methods and contracts.<P>
  *
- *  Since {@link Set} doesn't stipulate much new behavior that
- *  isn't already found in {@link Collection}, this class basically
- *  just adds tests for {@link Set#equals} and {@link Set#hashCode}.<P>
+ *  Since {@link Set} doesn't stipulate much new behavior that isn't already
+ *  found in {@link Collection}, this class basically just adds tests for
+ *  {@link Set#equals()} and {@link Set#hashCode()} along with an updated
+ *  {@link #verify()} that ensures elements do not appear more than once in the
+ *  set.<P>
  *
- *  To use, subclass and override the {@link #makeEmptySet}
+ *  To use, subclass and override the {@link #makeEmptySet()}
  *  method.  You may have to override other protected methods if your
  *  set is not modifiable, or if your set restricts what kinds of
  *  elements may be added; see {@link TestCollection} for more details.<P>
  *
  *  @author Paul Jack
- *  @version $Id: TestSet.java,v 1.1 2002/06/18 02:58:28 mas Exp $
+ *  @version $Id: TestSet.java,v 1.2 2002/06/18 03:06:45 mas Exp $
  */
 public abstract class TestSet extends TestCollection {
 
@@ -95,24 +97,31 @@ public abstract class TestSet extends TestCollection {
 
 
     /**
-     *  Makes an empty collection by invoking {@link #makeEmptySet}.
+     *  Makes an empty collection by invoking {@link #makeEmptySet()}.  
      *
      *  @return an empty collection
      */
-    protected Collection makeCollection() {
+    protected final Collection makeCollection() {
         return makeEmptySet();
     }
 
 
     /**
-     *  Makes a full collection by invoking {@link #makeFullSet}.
+     *  Makes a full collection by invoking {@link #makeFullSet()}.
      *
      *  @return a full collection
      */
-    protected Collection makeFullCollection() {
+    protected final Collection makeFullCollection() {
         return makeFullSet();
     }
 
+    /**
+     *  Return the {@link TestCollection#collection} fixture, but cast as a
+     *  Set.  
+     */
+    protected Set getSet() {
+        return (Set)collection;
+    }
 
     /**
      *  Returns an empty {@link HashSet} for use in modification testing.
@@ -135,6 +144,13 @@ public abstract class TestSet extends TestCollection {
         return set;
     }
 
+    /**
+     *  Return the {@link TestCollection#confirmed} fixture, but cast as a 
+     *  Set.
+     **/
+    protected Set getConfirmedSet() {
+        return (Set)confirmed;
+    }
 
     /**
      *  Makes an empty set.  The returned set should have no elements.
@@ -146,7 +162,7 @@ public abstract class TestSet extends TestCollection {
 
     /**
      *  Makes a full set by first creating an empty set and then adding
-     *  all the elements returned by {@link #getFullElements}.
+     *  all the elements returned by {@link #getFullElements()}.
      *
      *  Override if your set does not support the add operation.
      *
@@ -160,42 +176,41 @@ public abstract class TestSet extends TestCollection {
 
 
     /**
-     *  Tests {@link Set#equals}.
+     *  Tests {@link Set#equals(Object)}.
      */
     public void testSetEquals() {
-        Set set1 = makeEmptySet();
+        resetEmpty();
+        assertEquals("Empty sets should be equal", 
+                     getSet(), getConfirmedSet());
+        verify();
+
         HashSet set2 = new HashSet();
-        assertEquals("Empty sets should be equal", set1, set2);
-
         set2.add("foo");
-        assertTrue("Nonempty set shouldn't equal empty set", 
-                   !set1.equals(set2));
+        assertTrue("Empty set shouldn't equal nonempty set", 
+                   !getSet().equals(set2));
 
-        set1 = makeFullSet();
-        set2 = new HashSet();
-        set2.addAll(Arrays.asList(getFullElements()));
-        assertEquals("Full sets should be equal", set1, set2);
+        resetFull();
+        assertEquals("Full sets should be equal", getSet(), getConfirmedSet());
+        verify();
 
         set2.clear();
         set2.addAll(Arrays.asList(getOtherElements()));
         assertTrue("Sets with different contents shouldn't be equal", 
-                   !set1.equals(set2));
+                   !getSet().equals(set2));
     }
 
 
     /**
-     *  Tests {@link Set#hashCode}.
+     *  Tests {@link Set#hashCode()}.
      */
     public void testSetHashCode() {
-        Set set1 = makeEmptySet();
-        Set set2 = new HashSet();
-        assertEquals("Empty sets have equal hashCodes", set1.hashCode(),
-                     set2.hashCode());
+        resetEmpty();
+        assertEquals("Empty sets have equal hashCodes", 
+                     getSet().hashCode(), getConfirmedSet().hashCode());
 
-        set1 = makeFullSet();
-        set2 = new HashSet(Arrays.asList(getFullElements()));
-        assertEquals("Equal sets have equal hashCodes", set1.hashCode(),
-                     set2.hashCode());
+        resetFull();
+        assertEquals("Equal sets have equal hashCodes", 
+                     getSet().hashCode(), getConfirmedSet().hashCode());
     }
 
 
