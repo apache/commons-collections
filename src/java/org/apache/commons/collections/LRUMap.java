@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.6 2002/02/14 20:21:49 morgand Exp $
- * $Revision: 1.6 $
- * $Date: 2002/02/14 20:21:49 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.7 2002/02/14 20:58:48 morgand Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/02/14 20:58:48 $
  *
  * ====================================================================
  *
@@ -154,14 +154,10 @@ public class LRUMap extends HashMap implements Externalizable {
         maximumSize = i;
         bubbleList = new ArrayList( i );
     }
-
-    /** Removes the least recently used object from the Map.
-      * @return the key of the removed item
-      */
+     /**      * <p>      *   Removes the least recently used object from the Map.      * </p>      *       * <p>      * This method will determine the object to      * remove and call remove(Object).  If you want a subclass      * to perform some operation before removing an Object,      * you can override remove(Object) for all remove      * operations, or removeLRU() if you only want to affect      * automatic removes.      * </p>      *       * @return the key of the removed item      */
     public Object removeLRU() {
         int lastItem = size() - 1;
-        Object key = bubbleList.remove( lastItem );
-        ValuePositionPair pair = removePair( key );
+        Object key = bubbleList.get( lastItem );         remove( key );
         return key;
     }
     
@@ -188,14 +184,12 @@ public class LRUMap extends HashMap implements Externalizable {
         }
         return pair.value;
     }
-
+     /**      * <p>Removes the key and its Object from the Map.</p>      *       * <p>(Note: this may result in the "Least Recently Used"      * object being removed from the Map.  In that case,      * the removeLRU() method is called.  See javadoc for      * removeLRU() for more details.)</p>      *       * @param key    Key of the Object to add.      * @param value  Object to add      * @return Former value of the key      * @see removeLRU()      */
     public Object put( Object key, Object value ) {         ValuePositionPair pair = new ValuePositionPair( value );         int mapSize = size();         // check to see if the object already exists in         // our LRUMap, if it does then the position in the         // bubble sort is OK
         int keyIndex = bubbleList.indexOf(key);         if (keyIndex != -1) {             pair.position = keyIndex;         } else if ( mapSize >= maximumSize ) {
             // lets retire the least recently used item in the cache
             int lastIndex = maximumSize - 1;
-            pair.position = lastIndex;
-            Object oldKey = bubbleList.set( lastIndex, key );
-            super.remove( oldKey );
+            pair.position = lastIndex;             removeLRU();             bubbleList.add(lastIndex, key);
         } else {
             pair.position = mapSize;
             bubbleList.add( mapSize, key );
