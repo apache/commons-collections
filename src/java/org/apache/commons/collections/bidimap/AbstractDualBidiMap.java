@@ -36,7 +36,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.10 2004/02/18 00:57:39 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.11 2004/04/01 22:18:12 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -515,10 +515,14 @@ public abstract class AbstractDualBidiMap implements BidiMap {
                 return false;
             }
             Map.Entry entry = (Map.Entry) obj;
-            if (parent.containsKey(entry.getKey())) {
-                Object value = parent.maps[0].remove(entry.getKey());
-                parent.maps[1].remove(value);
-                return true;
+            Object key = entry.getKey();
+            if (parent.containsKey(key)) {
+                Object value = parent.maps[0].get(key);
+                if (value == null ? entry.getValue() == null : value.equals(entry.getValue())) {
+                    parent.maps[0].remove(key);
+                    parent.maps[1].remove(value);
+                    return true;
+                }
             }
             return false;
         }

@@ -28,6 +28,7 @@ import java.util.Set;
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections.set.AbstractTestSet;
 
 /**
@@ -117,7 +118,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.8 $ $Date: 2004/02/18 01:20:37 $
+ * @version $Revision: 1.9 $ $Date: 2004/04/01 22:18:12 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -1004,6 +1005,67 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         map.clear();
         assertTrue(map.size() == 0);
         assertTrue(entrySet.size() == 0);
+    }
+
+    //-----------------------------------------------------------------------    
+    public void testEntrySetContains1() {
+        resetFull();
+        Set entrySet = map.entrySet();
+        Map.Entry entry = (Map.Entry) entrySet.iterator().next();
+        assertEquals(true, entrySet.contains(entry));
+    }
+    public void testEntrySetContains2() {
+        resetFull();
+        Set entrySet = map.entrySet();
+        Map.Entry entry = (Map.Entry) entrySet.iterator().next();
+        Map.Entry test = new DefaultMapEntry(entry);
+        assertEquals(true, entrySet.contains(test));
+    }
+    public void testEntrySetContains3() {
+        resetFull();
+        Set entrySet = map.entrySet();
+        Map.Entry entry = (Map.Entry) entrySet.iterator().next();
+        Map.Entry test = new DefaultMapEntry(entry.getKey(), "A VERY DIFFERENT VALUE");
+        assertEquals(false, entrySet.contains(test));
+    }
+    
+    public void testEntrySetRemove1() {
+        if (!isRemoveSupported()) return;
+        resetFull();
+        int size = map.size();
+        Set entrySet = map.entrySet();
+        Map.Entry entry = (Map.Entry) entrySet.iterator().next();
+        Object key = entry.getKey();
+        
+        assertEquals(true, entrySet.remove(entry));
+        assertEquals(false, map.containsKey(key));
+        assertEquals(size - 1, map.size());
+    }            
+    public void testEntrySetRemove2() {
+        if (!isRemoveSupported()) return;
+        resetFull();
+        int size = map.size();
+        Set entrySet = map.entrySet();
+        Map.Entry entry = (Map.Entry) entrySet.iterator().next();
+        Object key = entry.getKey();
+        Map.Entry test = new DefaultMapEntry(entry);
+        
+        assertEquals(true, entrySet.remove(test));
+        assertEquals(false, map.containsKey(key));
+        assertEquals(size - 1, map.size());
+    }
+    public void testEntrySetRemove3() {
+        if (!isRemoveSupported()) return;
+        resetFull();
+        int size = map.size();
+        Set entrySet = map.entrySet();
+        Map.Entry entry = (Map.Entry) entrySet.iterator().next();
+        Object key = entry.getKey();
+        Map.Entry test = new DefaultMapEntry(entry.getKey(), "A VERY DIFFERENT VALUE");
+        
+        assertEquals(false, entrySet.remove(test));
+        assertEquals(true, map.containsKey(key));
+        assertEquals(size, map.size());
     }
     
     //-----------------------------------------------------------------------

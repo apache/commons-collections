@@ -35,7 +35,8 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntry;
 import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
- * Decorates a <code>Map</code> to ensure that the order of addition is retained.
+ * Decorates a <code>Map</code> to ensure that the order of addition is retained
+ * using a <code>List</code> to maintain order.
  * <p>
  * The order will be used via the iterators and toArray methods on the views.
  * The order is also returned by the <code>MapIterator</code>.
@@ -47,7 +48,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.13 $ $Date: 2004/04/01 22:18:12 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -385,12 +386,12 @@ public class ListOrderedMap
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Object key = ((Map.Entry) obj).getKey();
-            if (parent.getMap().containsKey(key) == false) {
-                return false;
+            if (getEntrySet().contains(obj)) {
+                Object key = ((Map.Entry) obj).getKey();
+                parent.remove(key);
+                return true;
             }
-            parent.remove(key);
-            return true;
+            return false;
         }
 
         public void clear() {

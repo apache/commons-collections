@@ -46,7 +46,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.13 $ $Date: 2004/03/13 15:54:34 $
+ * @version $Revision: 1.14 $ $Date: 2004/04/01 22:18:12 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -367,12 +367,12 @@ public class AbstractHashedMap implements IterableMap {
     }
     
     /**
-     * Compares two keys for equals.
-     * This implementation uses the equals method.
+     * Compares two keys, in internal converted form, to see if they are equal.
+     * This implementation uses the equals method and assumes neither key is null.
      * Subclasses can override this to match differently.
      * 
-     * @param key1  the first key to compare
-     * @param key2  the second key to compare
+     * @param key1  the first key to compare passed in from outside
+     * @param key2  the second key extracted from the entry via <code>entry.key</code>
      * @return true if equal
      */
     protected boolean isEqualKey(Object key1, Object key2) {
@@ -380,12 +380,12 @@ public class AbstractHashedMap implements IterableMap {
     }
     
     /**
-     * Compares two values for equals.
-     * This implementation uses the equals method.
+     * Compares two values, in external form, to see if they are equal.
+     * This implementation uses the equals method and assumes neither key is null.
      * Subclasses can override this to match differently.
      * 
-     * @param value1  the first value to compare
-     * @param value2  the second value to compare
+     * @param value1  the first value to compare passed in from outside
+     * @param value2  the second value extracted from the entry via <code>getValue()</code>
      * @return true if equal
      */
     protected boolean isEqualValue(Object value1, Object value2) {
@@ -753,8 +753,6 @@ public class AbstractHashedMap implements IterableMap {
     /**
      * Gets the entrySet view of the map.
      * Changes made to the view affect this map.
-     * The Map Entry is not an independent object and changes as the 
-     * iterator progresses.
      * To simply iterate through the entries, use {@link #mapIterator()}.
      * 
      * @return the entrySet view
@@ -801,7 +799,9 @@ public class AbstractHashedMap implements IterableMap {
         
         public boolean contains(Object entry) {
             if (entry instanceof Map.Entry) {
-                return parent.containsKey(((Map.Entry) entry).getKey());
+                Map.Entry e = (Map.Entry) entry;
+                Entry match = parent.getEntry(e.getKey());
+                return (match != null && match.equals(e));
             }
             return false;
         }
@@ -810,11 +810,13 @@ public class AbstractHashedMap implements IterableMap {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
+            if (contains(obj) == false) {
+                return false;
+            }
             Map.Entry entry = (Map.Entry) obj;
             Object key = entry.getKey();
-            boolean result = parent.containsKey(key);
             parent.remove(key);
-            return result;
+            return true;
         }
 
         public Iterator iterator() {
