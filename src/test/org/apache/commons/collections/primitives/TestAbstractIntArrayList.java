@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractIntArrayList.java,v 1.2 2002/06/21 04:01:31 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/21 04:01:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractIntArrayList.java,v 1.3 2002/08/19 21:19:03 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/19 21:19:03 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import org.apache.commons.collections.TestList;
 import java.util.List;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/06/21 04:01:31 $
+ * @version $Revision: 1.3 $ $Date: 2002/08/19 21:19:03 $
  * @author Rodney Waldhoff
  */
 public abstract class TestAbstractIntArrayList extends TestList {
@@ -81,7 +81,7 @@ public abstract class TestAbstractIntArrayList extends TestList {
 
     //---------------------------------------------------------------- Abstract
 
-    abstract protected AbstractIntArrayList createList();
+    abstract protected AbstractIntList createList();
 
     //------------------------------------------------------- TestList interface
 
@@ -92,7 +92,7 @@ public abstract class TestAbstractIntArrayList extends TestList {
     //------------------------------------------------------------------- Tests
 
     public void testAddGet() {
-        AbstractIntArrayList list = createList();
+        AbstractIntList list = createList();
         for(int i=0;i<1000;i++) {
             list.addInt(i);
         }
@@ -102,7 +102,7 @@ public abstract class TestAbstractIntArrayList extends TestList {
     }
 
     public void testAddGetLargeValues() {
-        AbstractIntArrayList list = createList();
+        AbstractIntList list = createList();
         for(int i=0;i<1000;i++) {
             int value = ((int)(Short.MAX_VALUE));
             value += i;
@@ -116,7 +116,7 @@ public abstract class TestAbstractIntArrayList extends TestList {
     }
 
    public void testAddAndShift() {
-      AbstractIntArrayList list = createList();
+      AbstractIntList list = createList();
       list.addInt(0, 1);
       assertEquals("Should have one entry", 1, list.size());
       list.addInt(3);

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestUnsignedByteArrayList.java,v 1.2 2002/06/21 04:01:31 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/21 04:01:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestUnsignedByteArrayList.java,v 1.3 2002/08/19 21:19:03 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/19 21:19:03 $
  *
  * ====================================================================
  *
@@ -67,7 +67,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/06/21 04:01:31 $
+ * @version $Revision: 1.3 $ $Date: 2002/08/19 21:19:03 $
  * @author Rodney Waldhoff
  */
 public class TestUnsignedByteArrayList extends TestAbstractShortArrayList {
@@ -85,7 +85,7 @@ public class TestUnsignedByteArrayList extends TestAbstractShortArrayList {
 
     //---------------------------------------------------------------- Abstract
 
-    protected AbstractShortArrayList createList() {
+    protected AbstractShortList createList() {
         return new UnsignedByteArrayList();
     }
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractShortArrayList.java,v 1.2 2002/06/21 04:01:31 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/21 04:01:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractShortArrayList.java,v 1.3 2002/08/19 21:19:03 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/19 21:19:03 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import org.apache.commons.collections.TestList;
 import java.util.List;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/06/21 04:01:31 $
+ * @version $Revision: 1.3 $ $Date: 2002/08/19 21:19:03 $
  * @author Rodney Waldhoff
  */
 public abstract class TestAbstractShortArrayList extends TestList {
@@ -81,7 +81,7 @@ public abstract class TestAbstractShortArrayList extends TestList {
 
     //---------------------------------------------------------------- Abstract
 
-    abstract protected AbstractShortArrayList createList();
+    abstract protected AbstractShortList createList();
 
     //------------------------------------------------------- TestList interface
 
@@ -92,7 +92,7 @@ public abstract class TestAbstractShortArrayList extends TestList {
     //------------------------------------------------------------------- Tests
 
     public void testAddGet() {
-        AbstractShortArrayList list = createList();
+        AbstractShortList list = createList();
         for(short i=0;i<100;i++) {
             list.addShort(i);
         }
@@ -102,7 +102,7 @@ public abstract class TestAbstractShortArrayList extends TestList {
     }
 
     public void testAddGetLargeValues() {
-        AbstractShortArrayList list = createList();
+        AbstractShortList list = createList();
         for(short i=128;i<256;i++) {
             list.addShort(i);
         }

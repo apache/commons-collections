@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.2 2002/08/13 19:41:36 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/13 19:41:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntList.java,v 1.1 2002/08/19 21:19:03 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/19 21:19:03 $
  *
  * ====================================================================
  *
@@ -71,10 +71,10 @@ import java.util.ListIterator;
 /**
  * Abstract base class for lists backed by an <Code>int</Code> array.
  *
- * @version $Revision: 1.2 $ $Date: 2002/08/13 19:41:36 $
+ * @version $Revision: 1.1 $ $Date: 2002/08/19 21:19:03 $
  * @author Rodney Waldhoff 
  */
-public abstract class AbstractIntArrayList extends AbstractList implements List, Serializable {
+public abstract class AbstractIntList extends AbstractList implements List, Serializable {
 
     //------------------------------------------------------ Abstract Accessors
 

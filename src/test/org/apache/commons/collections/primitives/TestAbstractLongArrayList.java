@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.2 2002/06/21 04:01:31 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/21 04:01:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.3 2002/08/19 21:19:03 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/19 21:19:03 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import org.apache.commons.collections.TestList;
 import java.util.List;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/06/21 04:01:31 $
+ * @version $Revision: 1.3 $ $Date: 2002/08/19 21:19:03 $
  * @author Rodney Waldhoff
  */
 public abstract class TestAbstractLongArrayList extends TestList {
@@ -81,7 +81,7 @@ public abstract class TestAbstractLongArrayList extends TestList {
 
     //---------------------------------------------------------------- Abstract
 
-    abstract protected AbstractLongArrayList createList();
+    abstract protected AbstractLongList createList();
 
     //------------------------------------------------------- TestList interface
 
@@ -92,7 +92,7 @@ public abstract class TestAbstractLongArrayList extends TestList {
     //------------------------------------------------------------------- Tests
 
     public void testAddGet() {
-        AbstractLongArrayList list = createList();
+        AbstractLongList list = createList();
         for(long i=0L;i<1000L;i++) {
             list.addLong(i);
         }
@@ -102,7 +102,7 @@ public abstract class TestAbstractLongArrayList extends TestList {
     }
 
     public void testAddGetLargeValues() {
-        AbstractLongArrayList list = createList();
+        AbstractLongList list = createList();
         for(long i=0L;i<1000L;i++) {
             long value = ((long)(Integer.MAX_VALUE));
             value += i;

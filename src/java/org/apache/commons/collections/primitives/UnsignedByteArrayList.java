@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedByteArrayList.java,v 1.2 2002/08/13 19:41:36 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/13 19:41:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedByteArrayList.java,v 1.3 2002/08/19 21:19:03 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/19 21:19:03 $
  *
  * ====================================================================
  *
@@ -76,10 +76,10 @@ import java.util.ListIterator;
  * Mutators on this class will reject any <Code>short</Code> that does not
  * express an unsigned 8-bit value.
  *
- * @version $Revision: 1.2 $ $Date: 2002/08/13 19:41:36 $
+ * @version $Revision: 1.3 $ $Date: 2002/08/19 21:19:03 $
  * @author Rodney Waldhoff 
  */
-public class UnsignedByteArrayList extends AbstractShortArrayList implements List, Serializable {
+public class UnsignedByteArrayList extends AbstractShortList implements List, Serializable {
 
     //------------------------------------------------------------ Constructors
     
