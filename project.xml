@@ -92,6 +92,7 @@
         <exclude>**/TestSoftRefHashMap.java</exclude>
         <exclude>**/TestSet.java</exclude>
         <exclude>**/TestTreeMap.java</exclude>
+        <exclude>**/TestPredicatedCollection.java</exclude>
       </excludes>
     </unitTest>
 
