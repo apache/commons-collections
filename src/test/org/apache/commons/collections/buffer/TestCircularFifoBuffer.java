@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.buffer;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -30,7 +34,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for CircularFifoBuffer.
  * 
- * @version $Revision: 1.4 $ $Date: 2004/06/02 23:12:45 $
+ * @version $Revision: 1.5 $ $Date: 2004/10/16 22:23:41 $
  * 
  * @author Stephen Colebourne
  */
@@ -192,6 +196,41 @@ public class TestCircularFifoBuffer extends AbstractTestCollection {
             return;
         }
         fail();
+    }
+    
+    public void testRepeatedSerialization() throws Exception {
+        // bug 31433
+        CircularFifoBuffer b = new CircularFifoBuffer(2);
+        b.add("a");
+        assertEquals(1, b.size());
+        assertEquals(true, b.contains("a"));
+        
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        new ObjectOutputStream(bos).writeObject(b);
+        
+        CircularFifoBuffer b2 = (CircularFifoBuffer) new ObjectInputStream(
+            new ByteArrayInputStream(bos.toByteArray())).readObject();
+        
+        assertEquals(1, b2.size());
+        assertEquals(true, b2.contains("a"));
+        b2.add("b");
+        assertEquals(2, b2.size());
+        assertEquals(true, b2.contains("a"));
+        assertEquals(true, b2.contains("b"));
+        
+        bos = new ByteArrayOutputStream();
+        new ObjectOutputStream(bos).writeObject(b2);
+        
+        CircularFifoBuffer b3 = (CircularFifoBuffer) new ObjectInputStream(
+            new ByteArrayInputStream(bos.toByteArray())).readObject();
+        
+        assertEquals(2, b3.size());
+        assertEquals(true, b3.contains("a"));
+        assertEquals(true, b3.contains("b"));
+        b3.add("c");
+        assertEquals(2, b3.size());
+        assertEquals(true, b3.contains("b"));
+        assertEquals(true, b3.contains("c"));
     }
 
     public String getCompatibilityVersion() {

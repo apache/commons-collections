@@ -29,7 +29,7 @@ This release is fully source and binary compatible with v3.1.
 (Checks performed using JDiff and Clirr, thanks).
 </p>
 <p>
-The only new deprecations are ................
+There are no new deprecations.
 </p>
 
 <center><h3>NEW CLASSES</h3></center>
@@ -47,6 +47,7 @@ The only new deprecations are ................
 <center><h3>BUG FIXES</h3></center>
 <ul>
 <li>FastArrayList - Fix iterators and views to work better in multithreaded environments</li>
+<li>BoundedFifoBuffer/CircularFifoBuffer - Fix serialization to work in case where buffer serialized when full [31433]</li>
 </ul>
 
 <center><h3>JAVADOC</h3></center>
