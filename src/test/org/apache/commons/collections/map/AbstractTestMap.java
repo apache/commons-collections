@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.2 2003/11/18 22:37:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.3 2003/12/07 01:21:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,6 +105,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * <li> {@link #isPutChangeSupported()}
  * <li> {@link #isSetValueSupported()}
  * <li> {@link #isRemoveSupported()}
+ * <li> {@link #isGetStructuralModify()}
  * <li> {@link #isAllowDuplicateValues()}
  * <li> {@link #isAllowNullKey()}
  * <li> {@link #isAllowNullValue()}
@@ -158,7 +159,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:17 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/07 01:21:51 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -244,6 +245,18 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      */
     public boolean isRemoveSupported() {
         return true;
+    }
+
+    /**
+     * Returns true if the maps produced by 
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * can cause structural modification on a get(). The example is LRUMap.
+     * <p>
+     * Default implementation returns false.
+     * Override if your map class structurally modifies on get.
+     */
+    public boolean isGetStructuralModify() {
+        return false;
     }
 
     /**
@@ -1159,6 +1172,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             // Entry set should only support remove if map does
             return AbstractTestMap.this.isRemoveSupported();
         }
+        public boolean isGetStructuralModify() {
+            return AbstractTestMap.this.isGetStructuralModify();
+        }
         public boolean supportsEmptyCollections() {
             return AbstractTestMap.this.supportsEmptyCollections();
         }
@@ -1186,7 +1202,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                 Map.Entry entry = (Map.Entry) it.next();
                 assertEquals(true, AbstractTestMap.this.map.containsKey(entry.getKey()));
                 assertEquals(true, AbstractTestMap.this.map.containsValue(entry.getValue()));
-                assertEquals(AbstractTestMap.this.map.get(entry.getKey()), entry.getValue());
+                if (isGetStructuralModify() == false) {
+                    assertEquals(AbstractTestMap.this.map.get(entry.getKey()), entry.getValue());
+                }
                 count++;
             }
             assertEquals(collection.size(), count);

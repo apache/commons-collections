@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestOrderedMapIterator.java,v 1.4 2003/12/03 19:03:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestOrderedMapIterator.java,v 1.5 2003/12/07 01:21:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/03 19:03:21 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/07 01:21:51 $
  * 
  * @author Stephen Colebourne
  */
@@ -146,9 +146,10 @@ public abstract class AbstractTestOrderedMapIterator extends AbstractTestMapIter
             
             // getValue
             Object value = it.getValue();
-            assertSame("Value must be mapped to key", map.get(key), value);
+            if (isGetStructuralModify() == false) {
+                assertSame("Value must be mapped to key", map.get(key), value);
+            }
             assertTrue("Value must be in map",  map.containsValue(value));
-            assertSame("Value must be mapped to key", map.get(key), value);
 
             assertEquals(true, it.hasPrevious());
             

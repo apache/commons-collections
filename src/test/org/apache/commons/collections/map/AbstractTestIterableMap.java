@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestIterableMap.java,v 1.1 2003/12/02 23:51:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestIterableMap.java,v 1.2 2003/12/07 01:21:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 /**
  * Abstract test class for {@link IterableMap} methods and contracts.
  *
- * @version $Revision: 1.1 $ $Date: 2003/12/02 23:51:49 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/07 01:21:51 $
  * 
  * @author Stephen Colebourne
  */
@@ -164,6 +164,10 @@ public abstract class AbstractTestIterableMap extends AbstractTestMap {
         
         public boolean supportsRemove() {
             return AbstractTestIterableMap.this.isRemoveSupported();
+        }
+        
+        public boolean isGetStructuralModify() {
+            return AbstractTestIterableMap.this.isGetStructuralModify();
         }
 
         public boolean supportsSetValue() {

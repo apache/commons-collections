@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.8 2003/12/02 21:56:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.9 2003/12/07 01:21:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.MapIterator;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/12/02 21:56:34 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/07 01:21:51 $
  * 
  * @author Stephen Colebourne
  */
@@ -148,6 +148,16 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
         return true;
     }
 
+    /**
+     * Whether the get operation on the map structurally modifies the map,
+     * such as with LRUMap. Default is false.
+     * 
+     * @return true if the get method structurally modifies the map
+     */
+    public boolean isGetStructuralModify() {
+        return false;
+    }
+    
     /**
      * The values to be used in the add and set tests.
      * Default is two strings.
@@ -227,9 +237,10 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             
             // getValue
             Object value = it.getValue();
-            assertSame("Value must be mapped to key", map.get(key), value);
+            if (isGetStructuralModify() == false) {
+                assertSame("Value must be mapped to key", map.get(key), value);
+            }
             assertTrue("Value must be in map",  map.containsValue(value));
-            assertSame("Value must be mapped to key", map.get(key), value);
 
             verify();
         }
@@ -257,14 +268,15 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             } catch (UnsupportedOperationException ex) {}
             return;
         }
-        
         Object old = it.setValue(newValue);
         confirmed.put(key, newValue);
         assertSame("Key must not change after setValue", key, it.getKey());
         assertSame("Value must be changed after setValue", newValue, it.getValue());
         assertSame("setValue must return old value", value, old);
         assertEquals("Map must contain key", true, map.containsKey(key));
-        assertEquals("Map must not contain old value", false, map.containsValue(old));
+        // test against confirmed, as map may contain value twice
+        assertEquals("Map must not contain old value", 
+            confirmed.containsValue(old), map.containsValue(old));
         assertEquals("Map must contain new value", true, map.containsValue(newValue));
         verify();
         

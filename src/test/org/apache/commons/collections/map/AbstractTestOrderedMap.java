@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestOrderedMap.java,v 1.4 2003/12/02 23:51:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestOrderedMap.java,v 1.5 2003/12/07 01:21:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,7 +75,7 @@ import org.apache.commons.collections.iterators.AbstractTestOrderedMapIterator;
 /**
  * Abstract test class for {@link OrderedMap} methods and contracts.
  *
- * @version $Revision: 1.4 $ $Date: 2003/12/02 23:51:49 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/07 01:21:51 $
  * 
  * @author Stephen Colebourne
  */
@@ -227,6 +227,10 @@ public abstract class AbstractTestOrderedMap extends AbstractTestIterableMap {
             return AbstractTestOrderedMap.this.isRemoveSupported();
         }
 
+        public boolean isGetStructuralModify() {
+            return AbstractTestOrderedMap.this.isGetStructuralModify();
+        }
+        
         public boolean supportsSetValue() {
             return AbstractTestOrderedMap.this.isSetValueSupported();
         }
