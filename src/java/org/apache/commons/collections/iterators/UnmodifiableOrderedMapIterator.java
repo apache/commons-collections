@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.10 2003/11/20 21:45:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableOrderedMapIterator.java,v 1.1 2003/11/20 21:45:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,50 +57,80 @@
  */
 package org.apache.commons.collections.iterators;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.apache.commons.collections.Unmodifiable;
 
-/**
- * Entry point for all iterator tests.
+/** 
+ * Decorates an ordered map iterator such that it cannot be modified.
+ *
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/11/20 21:45:35 $
  * 
- * @version $Revision: 1.10 $ $Date: 2003/11/20 21:45:35 $
- * 
- * @author Rodney Waldhoff
+ * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public final class UnmodifiableOrderedMapIterator implements OrderedMapIterator, Unmodifiable {
+
+    /** The iterator being decorated */
+    private OrderedMapIterator iterator;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Decorates the specified iterator such that it cannot be modified.
+     *
+     * @param iterator  the iterator to decoarate
+     * @throws IllegalArgumentException if the iterator is null
+     */
+    public static OrderedMapIterator decorate(OrderedMapIterator iterator) {
+        if (iterator == null) {
+            throw new IllegalArgumentException("OrderedMapIterator must not be null");
+        }
+        if (iterator instanceof Unmodifiable) {
+            return iterator;
+        }
+        return new UnmodifiableOrderedMapIterator(iterator);
+    }
     
-    public TestAll(String testName) {
-        super(testName);
+    //-----------------------------------------------------------------------
+    /**
+     * Constructor.
+     *
+     * @param iterator  the iterator to decoarate
+     */
+    protected UnmodifiableOrderedMapIterator(OrderedMapIterator iterator) {
+        super();
+        this.iterator = iterator;
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
-        suite.addTest(TestArrayListIterator.suite());
-        suite.addTest(TestArrayListIterator2.suite());
-        suite.addTest(TestObjectArrayIterator.suite());
-        suite.addTest(TestObjectArrayListIterator.suite());
-        suite.addTest(TestObjectArrayListIterator2.suite());
-        suite.addTest(TestCollatingIterator.suite());
-        suite.addTest(TestFilterIterator.suite());
-        suite.addTest(TestFilterListIterator.suite());
-        suite.addTest(TestIteratorChain.suite());
-        suite.addTest(TestListIteratorWrapper.suite());
-        suite.addTest(TestLoopingIterator.suite());
-        suite.addTest(TestSingletonIterator.suite());
-        suite.addTest(TestSingletonListIterator.suite());
-        suite.addTest(TestUniqueFilterIterator.suite());
-        suite.addTest(TestUnmodifiableIterator.suite());
-        suite.addTest(TestUnmodifiableListIterator.suite());
-        suite.addTest(TestUnmodifiableMapIterator.suite());
-        suite.addTest(TestUnmodifiableOrderedMapIterator.suite());
-        return suite;
+    //-----------------------------------------------------------------------
+    public boolean hasNext() {
+        return iterator.hasNext();
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    public Object next() {
+        return iterator.next();
     }
+
+    public boolean hasPrevious() {
+        return iterator.hasPrevious();
+    }
+
+    public Object previous() {
+        return iterator.previous();
+    }
+
+    public Object getKey() {
+        return iterator.getKey();
+    }
+
+    public Object getValue() {
+        return iterator.getValue();
+    }
+
+    public Object setValue(Object value) {
+        throw new UnsupportedOperationException("setValue() is not supported");
+    }
+
+    public void remove() {
+        throw new UnsupportedOperationException("remove() is not supported");
+    }
+
 }
