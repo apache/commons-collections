@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.3 2003/10/05 23:10:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.4 2003/10/10 21:07:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -146,7 +146,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.3 $ $Date: 2003/10/05 23:10:31 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/10 21:07:48 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -948,14 +948,12 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
                    !collection.removeAll(Collections.EMPTY_SET));
         verify();
         
-        assertTrue("Full collection removeAll should return false for " +
-                   "other elements", 
+        assertTrue("Full collection removeAll should return false for other elements", 
                    !collection.removeAll(Arrays.asList(getOtherElements())));
         verify();
         
-        assertTrue("Full collection removeAll should return true for " +
-                   "full elements", 
-                   collection.removeAll(new HashSet(collection)));
+        assertTrue("Full collection removeAll should return true for full elements", 
+                    collection.removeAll(new HashSet(collection)));
         confirmed.removeAll(new HashSet(confirmed));
         verify();
         
