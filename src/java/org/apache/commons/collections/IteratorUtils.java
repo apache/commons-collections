@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.12 2003/09/29 03:38:44 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.13 2003/09/29 22:44:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -95,7 +95,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.12 $ $Date: 2003/09/29 03:38:44 $
+ * @version $Revision: 1.13 $ $Date: 2003/09/29 22:44:14 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -582,7 +582,7 @@ public class IteratorUtils {
      * that will remove elements from the specified collection.
      *
      * @param enumeration  the enumeration to use
-     * @param removeCollection  the collection to remove elements form
+     * @param removeCollection  the collection to remove elements from
      */
     public static Iterator asIterator(Enumeration enumeration, Collection removeCollection) {
         if (enumeration == null) {
