@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.7 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.8 2003/04/13 23:05:35 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -71,8 +71,9 @@ import java.util.List;
  * {@link java.util.ArrayList} of {@link Float} values and allows for
  * better compile-time type checking.<P>
  *
- * @version $Revision: 1.7 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.8 $ $Date: 2003/04/13 23:05:35 $
  * @author Rodney Waldhoff 
+ * @deprecated See {@link FloatList}
  */
 public class FloatArrayList extends AbstractList implements List, Serializable {
 

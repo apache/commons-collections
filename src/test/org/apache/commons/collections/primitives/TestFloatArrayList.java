@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestFloatArrayList.java,v 1.5 2003/01/12 15:23:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestFloatArrayList.java,v 1.6 2003/04/13 23:05:35 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -65,8 +65,9 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.TestList;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/01/12 15:23:20 $
+ * @version $Revision: 1.6 $ $Date: 2003/04/13 23:05:35 $
  * @author Rodney Waldhoff
+ * @deprecated since the tested type is also
  */
 public class TestFloatArrayList extends TestList {
 
