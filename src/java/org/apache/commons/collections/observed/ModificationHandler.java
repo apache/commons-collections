@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.4 2003/09/07 10:33:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.5 2003/09/07 16:50:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import java.util.Collection;
  * later collections release.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/07 10:33:32 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/07 16:50:59 $
  * 
  * @author Stephen Colebourne
  */
@@ -580,6 +580,30 @@ public class ModificationHandler {
      */
     protected void postRemoveNCopies(Object object, int nCopies, boolean collChanged) {
         postEvent(collChanged, ModificationEventType.REMOVE_NCOPIES, -1, object, nCopies, (collChanged ? object : null), null, -1);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Store data and send event before remove() is called on a Buffer.
+     * <p>
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * 
+     * @return true to process modification
+     */
+    protected boolean preRemoveNext() {
+        return preEvent(ModificationEventType.REMOVE_NEXT, -1, null, 1, null, null, -1);
+    }
+
+    /**
+     * Send an event after remove() is called on a Buffer.
+     * <p>
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * 
+     * @param removedValue  the previous value at this index
+     */
+    protected void postRemoveNext(Object removedValue) {
+        // assume collection changed
+        postEvent(true, ModificationEventType.REMOVE_NEXT, -1, removedValue, 1, removedValue, null, -1);
     }
 
     //-----------------------------------------------------------------------

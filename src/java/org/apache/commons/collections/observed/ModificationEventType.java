@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationEventType.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationEventType.java,v 1.3 2003/09/07 16:50:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ package org.apache.commons.collections.observed;
  * They may negated using the bitwise NOT, <code>~</code>.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/07 16:50:59 $
  * 
  * @author Stephen Colebourne
  */
@@ -100,15 +100,17 @@ public class ModificationEventType {
     public static final int REMOVE_INDEXED =0x00000200;
     /** The method remove(Object,int) */
     public static final int REMOVE_NCOPIES =0x00000400;
+    /** The method remove() */
+    public static final int REMOVE_NEXT    =0x00000800;
     /** The method iterator.remove() */
-    public static final int REMOVE_ITERATED=0x00000800;
+    public static final int REMOVE_ITERATED=0x00001000;
     
     /** The method removeAll(Collection) */
-    public static final int REMOVE_ALL =    0x00001000;
+    public static final int REMOVE_ALL =    0x00002000;
     /** The method retainAll(Collection) */
-    public static final int RETAIN_ALL =    0x00002000;
+    public static final int RETAIN_ALL =    0x00004000;
     /** The method clear() */
-    public static final int CLEAR =         0x00004000;
+    public static final int CLEAR =         0x00008000;
     
     /** The method set(int,Object) */
     public static final int SET_INDEXED =   0x00010000;
@@ -120,7 +122,7 @@ public class ModificationEventType {
     /** All methods that change without structure modification */
     public static final int GROUP_CHANGE = SET_INDEXED | SET_ITERATED;
     /** All remove methods */
-    public static final int GROUP_REMOVE = REMOVE | REMOVE_NCOPIES | REMOVE_ITERATED | REMOVE_INDEXED | REMOVE_ALL;
+    public static final int GROUP_REMOVE = REMOVE | REMOVE_INDEXED | REMOVE_NCOPIES | REMOVE_ITERATED | REMOVE_NEXT | REMOVE_ALL;
     /** All retain methods */
     public static final int GROUP_RETAIN = RETAIN_ALL;
     /** All clear methods */
@@ -134,6 +136,8 @@ public class ModificationEventType {
     public static final int GROUP_NCOPIES = ADD_NCOPIES | REMOVE_NCOPIES;
     /** All iterated methods */
     public static final int GROUP_ITERATED = ADD_ITERATED | REMOVE_ITERATED | SET_ITERATED;
+    /** All 'next' methods */
+    public static final int GROUP_NEXT = REMOVE_NEXT;
     /** All bulk methods (xxxAll, clear) */
     public static final int GROUP_BULK =  ADD_ALL | ADD_ALL_INDEXED | REMOVE_ALL | RETAIN_ALL | CLEAR;
     /** All methods that modify the structure */
@@ -145,8 +149,10 @@ public class ModificationEventType {
     public static final int GROUP_FROM_SET = GROUP_FROM_COLLECTION;
     /** All methods sent by a List */
     public static final int GROUP_FROM_LIST = GROUP_FROM_COLLECTION | ADD_INDEXED | ADD_ALL_INDEXED | REMOVE_INDEXED | SET_INDEXED;
-    /** All methods sent by a List */
+    /** All methods sent by a Bag */
     public static final int GROUP_FROM_BAG = GROUP_FROM_COLLECTION | ADD_NCOPIES | REMOVE_NCOPIES;
+    /** All methods sent by a Buffer */
+    public static final int GROUP_FROM_BUFFER = GROUP_FROM_COLLECTION | REMOVE_NEXT;
 
     /** No methods */
     public static final int GROUP_NONE = 0x00000000;
@@ -188,6 +194,8 @@ public class ModificationEventType {
             return "RemoveIndexed";
             case REMOVE_ITERATED:
             return "RemoveIterated";
+            case REMOVE_NEXT:
+            return "RemoveNext";
             case REMOVE_ALL:
             return "RemoveAll";
             case RETAIN_ALL:
