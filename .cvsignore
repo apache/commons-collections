@@ -13,3 +13,4 @@ jcoverage.ser
 target-*
 build2.xml
 release
+build
