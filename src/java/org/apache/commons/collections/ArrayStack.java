@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.1 2001/04/14 19:32:37 craigmcc Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/14 19:32:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.2 2001/04/16 22:39:21 geirm Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/04/16 22:39:21 $
  *
  * ====================================================================
  *
@@ -75,7 +75,7 @@ import java.util.EmptyStackException;
  * worry about multiple thread contention.
  *
  * @author Craig R. McClanahan
- * @version $Revision: 1.1 $ $Date: 2001/04/14 19:32:37 $
+ * @version $Revision: 1.2 $ $Date: 2001/04/16 22:39:21 $
  * @see java.util.Stack
  */
 
@@ -110,6 +110,25 @@ public class ArrayStack extends ArrayList {
 
     }
 
+    /**
+     * Return the n'th item down (zero-relative) from the top of this
+     * stack without removing it.
+     *
+     * @param n Number of items down to go
+     *
+     * @exception EmptyStackException if there are not enough items on the
+     *  stack to satisfy this request
+     */
+    public Object peek(int n) throws EmptyStackException {
+        
+        int m = (size() - n) - 1;
+        if (m < 0)
+            throw new EmptyStackException();
+        else
+            return (get(m));
+        
+    }
+    
 
     /**
      * Pop the top item off of this stack and return it.

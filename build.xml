@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.1 2001/04/14 15:39:03 rwaldhoff Exp $ -->
+<!-- $Id: build.xml,v 1.2 2001/04/16 22:39:20 geirm Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -140,7 +140,7 @@
                bottom="&lt;small&gt;Copyright &amp;copy; 2001 Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
                public="true"
                version="true"
-               author="false"
+               author="true"
                splitindex="false"
                nodeprecated="true"
                nodeprecatedlist="true"
