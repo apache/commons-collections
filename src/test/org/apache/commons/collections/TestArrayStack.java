@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2003/08/31 17:28:43 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.10 2003/10/05 21:03:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.EmptyStackException;
@@ -67,11 +63,15 @@ import java.util.List;
 import junit.framework.Test;
 
 /**
+ * Tests ArrayStack.
+ * 
+ * @version $Revision: 1.10 $ $Date: 2003/10/05 21:03:44 $
+ * 
  * @author Craig McClanahan
- * @version $Id: TestArrayStack.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
  */
-
 public class TestArrayStack extends TestArrayList {
+    
+    protected ArrayStack stack = null;
 
     public TestArrayStack(String testName) {
         super(testName);
@@ -90,13 +90,12 @@ public class TestArrayStack extends TestArrayList {
         return new ArrayStack();
     }
 
-    protected ArrayStack stack = null;
-
     public void setUp() {
         stack = (ArrayStack) makeEmptyList();
         list = stack;
     }
 
+    //-----------------------------------------------------------------------
     public void testNewStack() {
 
         assertTrue("New stack is empty", stack.empty());
@@ -117,7 +116,6 @@ public class TestArrayStack extends TestArrayList {
         }
 
     }
-
 
     public void testPushPeekPop() {
 
@@ -146,7 +144,6 @@ public class TestArrayStack extends TestArrayList {
 
     }
 
-
     public void testSearch() {
 
         stack.push("First Item");
@@ -159,6 +156,5 @@ public class TestArrayStack extends TestArrayList {
                      stack.search("Missing Item"), -1);
 
     }
-
 
 }

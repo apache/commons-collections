@@ -1,13 +1,10 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.24 2003/10/05 19:48:00 psteitz Exp $
- * $Revision: 1.24 $
- * $Date: 2003/10/05 19:48:00 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.25 2003/10/05 21:03:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
@@ -93,9 +89,10 @@ import org.apache.commons.collections.decorators.UnmodifiableCollection;
  * @author Stephen Colebourne
  * @author Phil Steitz
  * 
- * @version $Revision: 1.24 $ $Date: 2003/10/05 19:48:00 $
+ * @version $Revision: 1.25 $ $Date: 2003/10/05 21:03:44 $
  */
 public class TestCollectionUtils extends TestCase {
+    
     public TestCollectionUtils(String testName) {
         super(testName);
     }
@@ -642,7 +639,7 @@ public class TestCollectionUtils extends TestCase {
         
         // list, non-existent entry -- IndexOutOfBoundsException
         try {
-            test = CollectionUtils.index(list, 2);
+            test = CollectionUtils.get(list, 2);
             fail("Expecting IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException e) {
             // expected

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.8 2003/10/02 22:14:29 scolebourne Exp $
- * $Revision: 1.8 $
- * $Date: 2003/10/02 22:14:29 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.9 2003/10/05 21:03:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
@@ -67,52 +63,47 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestArrayList.java,v 1.8 2003/10/02 22:14:29 scolebourne Exp $
+ * Abstract test class for ArrayList.
+ * 
+ * @version $Revision: 1.9 $ $Date: 2003/10/05 21:03:44 $
+ * 
+ * @author Jason van Zyl
  */
-public abstract class TestArrayList extends AbstractTestList
-{
-    public TestArrayList(String testName)
-    {
+public abstract class TestArrayList extends AbstractTestList {
+    
+    protected ArrayList list = null;
+    
+    public TestArrayList(String testName) {
         super(testName);
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         return new TestSuite(TestArrayList.class);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestArrayList.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestArrayList.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    protected ArrayList list = null;
-
-    public void setUp()
-    {
+    public void setUp() {
         list = (ArrayList) makeEmptyList();
     }
 
-    public void testNewArrayList()
-    {
+    //-----------------------------------------------------------------------
+    public void testNewArrayList() {
         assertTrue("New list is empty", list.isEmpty());
         assertEquals("New list has size zero", list.size(), 0);
 
-        try
-        {
+        try {
             list.get(1);
             fail("get(int i) should have thrown IndexOutOfBoundsException");
-        }
-        catch (IndexOutOfBoundsException e)
-        {
+        } catch (IndexOutOfBoundsException e) {
             ; // Expected result
         }
     }
 
-    public void testSearch()
-    {
+    public void testSearch() {
         list.add("First Item");
         list.add("Last Item");
         assertEquals("First item is 'First Item'", list.get(0), "First Item");
