@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if the input is null.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/31 22:06:11 $
  *
  * @author Stephen Colebourne
  */
@@ -32,9 +32,18 @@ public final class NullPredicate implements Predicate, Serializable {
     /** Serial version UID */
     static final long serialVersionUID = 7533784454832764388L;
     
-    /** Singleton predicate instance */    
+    /** Singleton predicate instance */
     public static final Predicate INSTANCE = new NullPredicate();
-    
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     */
+    public static Predicate getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * Restricted constructor.
      */

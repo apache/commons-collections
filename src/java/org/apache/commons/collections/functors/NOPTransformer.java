@@ -23,7 +23,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that does nothing.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/31 22:06:11 $
  *
  * @author Stephen Colebourne
  */
@@ -32,9 +32,18 @@ public class NOPTransformer implements Transformer, Serializable {
     /** Serial version UID */
     static final long serialVersionUID = 2133891748318574490L;
 
-    /** Singleton predicate instance */    
+    /** Singleton predicate instance */
     public static final Transformer INSTANCE = new NOPTransformer();
-    
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     */
+    public static Transformer getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * Constructor
      */

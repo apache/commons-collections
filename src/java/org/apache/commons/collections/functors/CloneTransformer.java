@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Clone is performed using <code>PrototypeFactory.getInstance(input).create()</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/31 22:06:11 $
  *
  * @author Stephen Colebourne
  */
@@ -34,9 +34,18 @@ public class CloneTransformer implements Transformer, Serializable {
     /** Serial version UID */
     static final long serialVersionUID = -8188742709499652567L;
 
-    /** Singleton predicate instance */    
+    /** Singleton predicate instance */
     public static final Transformer INSTANCE = new CloneTransformer();
-    
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     */
+    public static Transformer getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * Constructor
      */

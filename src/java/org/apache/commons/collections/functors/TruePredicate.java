@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that always returns true.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/31 22:06:11 $
  *
  * @author Stephen Colebourne
  */
@@ -32,9 +32,18 @@ public final class TruePredicate implements Predicate, Serializable {
     /** Serial version UID */
     static final long serialVersionUID = 3374767158756189740L;
     
-    /** Singleton predicate instance */    
+    /** Singleton predicate instance */
     public static final Predicate INSTANCE = new TruePredicate();
-    
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     */
+    public static Predicate getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * Restricted constructor.
      */

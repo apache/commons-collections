@@ -23,7 +23,7 @@ import org.apache.commons.collections.Closure;
  * Closure implementation that does nothing.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/31 22:06:11 $
  *
  * @author Stephen Colebourne
  */
@@ -32,9 +32,18 @@ public class NOPClosure implements Closure, Serializable {
     /** Serial version UID */
     static final long serialVersionUID = 3518477308466486130L;
 
-    /** Singleton predicate instance */    
+    /** Singleton predicate instance */
     public static final Closure INSTANCE = new NOPClosure();
-    
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     */
+    public static Closure getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * Constructor
      */

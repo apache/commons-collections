@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that always throws an exception.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.5 $ $Date: 2004/03/31 22:06:11 $
  *
  * @author Stephen Colebourne
  */
@@ -34,9 +34,18 @@ public final class ExceptionTransformer implements Transformer, Serializable {
     static final long serialVersionUID = 7179106032121985545L;
     
 
-    /** Singleton predicate instance */    
+    /** Singleton predicate instance */
     public static final Transformer INSTANCE = new ExceptionTransformer();
-    
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     */
+    public static Transformer getInstance() {
+        return INSTANCE;
+    }
+
     /**
      * Restricted constructor.
      */
