@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.2 2001/04/14 19:32:38 craigmcc Exp $
- * $Revision: 1.2 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.1 2001/04/14 19:32:38 craigmcc Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/14 19:32:38 $
  *
  * ====================================================================
@@ -62,25 +62,39 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
+import java.util.*;
 
 /**
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.2 2001/04/14 19:32:38 craigmcc Exp $
+ * @author Craig McClanahan
+ * @version $Id: TestArrayStack.java,v 1.1 2001/04/14 19:32:38 craigmcc Exp $
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+
+public class TestArrayStack extends TestList {
+
+    public TestArrayStack(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        return suite;
+        return new TestSuite(TestArrayStack.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestArrayStack.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
+
+    private ArrayStack stack = null;
+
+    public void setUp() {
+        stack = new ArrayStack();
+        setList(stack);
+    }
+
+
+    public void testNew() {
+        assert(stack.empty());
+    }
+
+
 }
