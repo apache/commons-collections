@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.7 2003/05/16 15:30:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/PriorityQueueUtils.java,v 1.1 2003/05/16 15:30:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,87 +57,51 @@
  */
 package org.apache.commons.collections;
 
-import java.util.NoSuchElementException;
+import org.apache.commons.collections.decorators.SynchronizedPriorityQueue;
+import org.apache.commons.collections.decorators.UnmodifiablePriorityQueue;
 
 /**
- * A thread safe version of the PriorityQueue.
- * Provides synchronized wrapper methods for all the methods 
- * defined in the PriorityQueue interface.
+ * Provides static utility methods and decorators for {@link PriorityQueue}.
  *
- * @deprecated Moved to decorators subpackage. Due to be removed in v4.0.
- * @since Commons Collections 1.0
- * @version $Revision: 1.7 $ $Date: 2003/05/16 15:30:36 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/05/16 15:30:36 $
  * 
- * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a> 
+ * @author Stephen Colebourne
  */
-public final class SynchronizedPriorityQueue implements PriorityQueue {
+public class PriorityQueueUtils {
 
     /**
-     * The underlying priority queue.
+     * An empty unmodifiable priority queue.
      */
-    protected final PriorityQueue m_priorityQueue;
+    public static final PriorityQueue EMPTY_PRIORITY_QUEUE = UnmodifiablePriorityQueue.decorate(new BinaryHeap());
 
     /**
-     * Constructs a new synchronized priority queue.
+     * <code>PriorityQueueUtils</code> should not normally be instantiated.
+     */
+    public PriorityQueueUtils() {
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a synchronized priority queue backed by the given priority queue.
+     * 
+     * @param priorityQueue  the priority queue to synchronize, must not be null
+     * @return a synchronized priority queue backed by the given priority queue
+     * @throws IllegalArgumentException  if the priority queue is null
+     */
+    public static PriorityQueue synchronizedPriorityQueue(PriorityQueue priorityQueue) {
+        return SynchronizedPriorityQueue.decorate(priorityQueue);
+    }
+
+    /**
+     * Returns an unmodifiable priority queue backed by the given priority queue.
      *
-     * @param priorityQueue  the priority queue to synchronize
+     * @param priorityQueue  the priority queue to make unmodifiable, must not be null
+     * @return an unmodifiable priority queue backed by the given priority queue
+     * @throws IllegalArgumentException  if the priority queue is null
      */
-    public SynchronizedPriorityQueue(final PriorityQueue priorityQueue) {
-        m_priorityQueue = priorityQueue;
+    public static PriorityQueue unmodifiablePriorityQueue(PriorityQueue priorityQueue) {
+        return UnmodifiablePriorityQueue.decorate(priorityQueue);
     }
 
-    /**
-     * Clear all elements from queue.
-     */
-    public synchronized void clear() {
-        m_priorityQueue.clear();
-    }
-
-    /**
-     * Test if queue is empty.
-     *
-     * @return true if queue is empty else false.
-     */
-    public synchronized boolean isEmpty() {
-        return m_priorityQueue.isEmpty();
-    }
-
-    /**
-     * Insert an element into queue.
-     *
-     * @param element the element to be inserted
-     */
-    public synchronized void insert(final Object element) {
-        m_priorityQueue.insert(element);
-    }
-
-    /**
-     * Return element on top of heap but don't remove it.
-     *
-     * @return the element at top of heap
-     * @throws NoSuchElementException if isEmpty() == true
-     */
-    public synchronized Object peek() throws NoSuchElementException {
-        return m_priorityQueue.peek();
-    }
-
-    /**
-     * Return element on top of heap and remove it.
-     *
-     * @return the element at top of heap
-     * @throws NoSuchElementException if isEmpty() == true
-     */
-    public synchronized Object pop() throws NoSuchElementException {
-        return m_priorityQueue.pop();
-    }
-
-    /**
-     * Returns a string representation of the underlying queue.
-     *
-     * @return a string representation of the underlying queue
-     */
-    public synchronized String toString() {
-        return m_priorityQueue.toString();
-    }
-    
 }

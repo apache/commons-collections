@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.7 2003/05/16 15:30:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiablePriorityQueue.java,v 1.1 2003/05/16 15:30:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,42 +55,53 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.decorators;
 
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.PriorityQueue;
+
 /**
- * A thread safe version of the PriorityQueue.
- * Provides synchronized wrapper methods for all the methods 
- * defined in the PriorityQueue interface.
+ * <code>UnmodifiablePriorityQueue</code> decorates another <code>PriorityQueue</code>
+ * to ensure it can't be altered.
  *
- * @deprecated Moved to decorators subpackage. Due to be removed in v4.0.
- * @since Commons Collections 1.0
- * @version $Revision: 1.7 $ $Date: 2003/05/16 15:30:36 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/05/16 15:30:36 $
  * 
- * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a> 
+ * @author Stephen Colebourne
  */
-public final class SynchronizedPriorityQueue implements PriorityQueue {
+public class UnmodifiablePriorityQueue implements PriorityQueue {
+
+    /** The priority queue to decorate */
+    protected final PriorityQueue priorityQueue;
 
     /**
-     * The underlying priority queue.
+     * Factory method to create an unmodifiable priority queue.
+     * 
+     * @param priorityQueue  the priority queue to decorate, must not be null
+     * @throws IllegalArgumentException if priority queue is null
      */
-    protected final PriorityQueue m_priorityQueue;
-
+    public static PriorityQueue decorate(PriorityQueue priorityQueue) {
+        return new UnmodifiablePriorityQueue(priorityQueue);
+    }
+    
     /**
      * Constructs a new synchronized priority queue.
      *
      * @param priorityQueue  the priority queue to synchronize
      */
-    public SynchronizedPriorityQueue(final PriorityQueue priorityQueue) {
-        m_priorityQueue = priorityQueue;
+    protected UnmodifiablePriorityQueue(PriorityQueue priorityQueue) {
+        if (priorityQueue == null) {
+            throw new IllegalArgumentException("PriorityQueue must not be null");
+        }
+        this.priorityQueue = priorityQueue;
     }
 
     /**
-     * Clear all elements from queue.
+     * Clear all elements from queue - Unsupported as unmodifiable.
      */
     public synchronized void clear() {
-        m_priorityQueue.clear();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -99,16 +110,16 @@ public final class SynchronizedPriorityQueue implements PriorityQueue {
      * @return true if queue is empty else false.
      */
     public synchronized boolean isEmpty() {
-        return m_priorityQueue.isEmpty();
+        return priorityQueue.isEmpty();
     }
 
     /**
-     * Insert an element into queue.
+     * Insert an element into queue - Unsupported as unmodifiable.
      *
      * @param element the element to be inserted
      */
-    public synchronized void insert(final Object element) {
-        m_priorityQueue.insert(element);
+    public synchronized void insert(Object element) {
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -118,17 +129,17 @@ public final class SynchronizedPriorityQueue implements PriorityQueue {
      * @throws NoSuchElementException if isEmpty() == true
      */
     public synchronized Object peek() throws NoSuchElementException {
-        return m_priorityQueue.peek();
+        return priorityQueue.peek();
     }
 
     /**
-     * Return element on top of heap and remove it.
+     * Return element on top of heap and remove it - Unsupported as unmodifiable.
      *
      * @return the element at top of heap
      * @throws NoSuchElementException if isEmpty() == true
      */
     public synchronized Object pop() throws NoSuchElementException {
-        return m_priorityQueue.pop();
+        throw new UnsupportedOperationException();
     }
 
     /**
@@ -137,7 +148,7 @@ public final class SynchronizedPriorityQueue implements PriorityQueue {
      * @return a string representation of the underlying queue
      */
     public synchronized String toString() {
-        return m_priorityQueue.toString();
+        return priorityQueue.toString();
     }
     
 }
