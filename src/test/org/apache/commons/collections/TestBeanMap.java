@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.6 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/06/18 05:35:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.7 2002/08/10 02:05:20 pjack Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/08/10 02:05:20 $
  *
  * ====================================================================
  *
@@ -331,4 +331,14 @@ public class TestBeanMap extends TestMap {
          "TestBeanMap.bulkTestMapKeySet.testSimpleSerialization"
         };
     }
+
+
+    public void testBeanMapPutAllWriteable() {
+        BeanMap map1 = (BeanMap)makeFullMap();
+        BeanMap map2 = (BeanMap)makeFullMap();
+        map2.put("someIntValue", new Integer(0));
+        map1.putAllWriteable(map2);
+        assertEquals(map1.get("someIntValue"), new Integer(0));
+    }
+
 }

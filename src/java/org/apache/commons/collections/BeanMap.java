@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.11 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.11 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.12 2002/08/10 02:05:20 pjack Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/08/10 02:05:20 $
  *
  * ====================================================================
  *
@@ -252,6 +252,23 @@ public class BeanMap extends AbstractMap implements Cloneable {
 
         return newMap;
     }
+
+    /**
+     *  Puts all of the writeable properties from the given BeanMap into this
+     *  BeanMap.  Read-only properties will be ignored.
+     *
+     *  @param map  the BeanMap whose properties to put
+     */
+    public void putAllWriteable(BeanMap map) {
+        Iterator readableKeys = map.readMethods.keySet().iterator();
+        while(readableKeys.hasNext()) {
+            Object key = readableKeys.next();
+            if(getWriteMethod(key) != null) {
+                this.put(key, map.get(key));
+            }
+        }
+    }
+
 
     /**
      *  This method reinitializes the bean map to have default values for the
