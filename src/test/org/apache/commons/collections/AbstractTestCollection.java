@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.7 2003/10/31 01:23:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.8 2003/11/04 23:34:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -148,7 +148,7 @@ import org.apache.commons.collections.pairs.DefaultMapEntry;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.7 $ $Date: 2003/10/31 01:23:10 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/04 23:34:46 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -913,7 +913,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
         int size = collection.size();
         for (int i = 0; i < elements.length; i++) {
             resetFull();
-            assertTrue("Collection should remove extant element",
+            assertTrue("Collection should remove extant element: " + elements[i],
                        collection.remove(elements[i]));
 
             // if the elements aren't distinguishable, we can just remove a
