@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.9 2002/02/15 20:50:37 morgand Exp $
- * $Revision: 1.9 $
- * $Date: 2002/02/15 20:50:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.10 2002/02/19 21:17:41 morgand Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/02/19 21:17:41 $
  *
  * ====================================================================
  *
@@ -76,9 +76,9 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.9 2002/02/15 20:50:37 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.10 2002/02/19 21:17:41 morgand Exp $
  */
-public class TestLRUMap extends TestHashMap
+public class TestLRUMap extends TestMap
 {
     public TestLRUMap(String testName) {
         super(testName);
@@ -96,10 +96,6 @@ public class TestLRUMap extends TestHashMap
     public Map makeMap() {
         LRUMap map = new LRUMap(10);
         return map;
-    }
-
-    public void setUp() {
-        map = (HashMap) makeMap();
     }
 
     public void testRemoveLRU() {
