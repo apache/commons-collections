@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.5 2002/02/22 02:34:59 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/02/22 02:34:59 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.6 2002/02/22 02:37:56 mas Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/02/22 02:37:56 $
  *
  * ====================================================================
  *
@@ -729,7 +729,7 @@ public class SequencedHashMap implements Map, Cloneable {
    * @exception CloneNotSupportedException if clone is not supported by a
    * subclass.
    */
-  public Object clone () throws CloneNotSupportException {
+  public Object clone () throws CloneNotSupportedException {
     // yes, calling super.clone() silly since we're just blowing away all
     // the stuff that super might be doing anyway, but for motivations on
     // this, see:
