@@ -1,3 +1,18 @@
 <BODY>
-Contains collection implementations that use primitive elements.
+Contains collection implementations that use primitive elements.  Currently
+the package offers lists of primitive elements that are backed by primitive
+arrays, offering substantial memory and performance savings.<p>
+
+There are generally two layers of abstract per primitive list type.  The
+first layer, implemented by the <Code>Abstract*List</Code> classes, provides
+default implementations for all of the <Code>java.util.List</Code> methods
+and most of their primitive counterparts.  The second layer of abstraction,
+implemented by the <Code>Abstract*ArrayList</Code> classes, provides 
+additional method signatures for manipulating a list that's backed by a
+primitive array.<p>
+
+Note that these layers are not provided for <Code>FloatArrayList</Code>,
+and that many primitive types are not represented in this package at all;
+these inconsistencies may be addressed by a future release.
+
 </BODY>
