@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.6 2002/11/24 16:23:21 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2002/11/24 16:23:21 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.7 2003/04/26 15:09:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,6 +62,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 /**
  * The BoundedFifoBuffer is a <strong>very</strong> efficient implementation of
  * Buffer that does not alter the size of the buffer at runtime.
@@ -86,18 +84,20 @@ import java.util.NoSuchElementException;
  * This buffer prevents null objects from being added.
  *
  * @since 2.1
+ * @version $Revision: 1.7 $ $Date: 2003/04/26 15:09:48 $
+ * 
  * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
- * @version $Id: BoundedFifoBuffer.java,v 1.6 2002/11/24 16:23:21 scolebourne Exp $
  */
 public class BoundedFifoBuffer extends AbstractCollection implements Buffer, BoundedCollection {
     private final Object[] m_elements;
     private int m_start = 0;
     private int m_end = 0;
     private boolean m_full = false;
+    private final int maxElements;
 
     /**
      * Constructs a new <code>BoundedFifoBuffer</code> big enough to hold
@@ -119,6 +119,7 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
             throw new IllegalArgumentException("The size must be greater than 0");
         }
         m_elements = new Object[size];
+        maxElements = m_elements.length;
     }
 
     /**
@@ -126,7 +127,8 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
      * of the elements in the specified collection. That collection's
      * elements will also be added to the buffer.
      *
-     * @param coll  the collection whose elements to add
+     * @param coll  the collection whose elements to add, may not be null
+     * @throws NullPointerException if the collection is null
      */
     public BoundedFifoBuffer(Collection coll) {
         this(coll.size());
@@ -142,9 +144,9 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
         int size = 0;
 
         if (m_end < m_start) {
-            size = m_elements.length - m_start + m_end;
+            size = maxElements - m_start + m_end;
         } else if (m_end == m_start) {
-            size = (m_full ? m_elements.length : 0);
+            size = (m_full ? maxElements : 0);
         } else {
             size = m_end - m_start;
         }
@@ -167,7 +169,7 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
      * @return <code>true</code> if the collection is full
      */
     public boolean isFull() {
-        return size() == m_elements.length;
+        return size() == maxElements;
     }
     
     /**
@@ -176,7 +178,7 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
      * @return the maximum number of elements the collection can hold
      */
     public int maxSize() {
-        return m_elements.length;
+        return maxElements;
     }
     
     /**
@@ -203,12 +205,12 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
         }
 
         if (m_full) {
-            throw new BufferOverflowException("The buffer cannot hold more than " + m_elements.length + " objects.");
+            throw new BufferOverflowException("The buffer cannot hold more than " + maxElements + " objects.");
         }
 
         m_elements[m_end++] = element;
 
-        if (m_end >= m_elements.length) {
+        if (m_end >= maxElements) {
             m_end = 0;
         }
 
@@ -249,7 +251,7 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
         if (null != element) {
             m_elements[m_start++] = null;
 
-            if (m_start >= m_elements.length) {
+            if (m_start >= maxElements) {
                 m_start = 0;
             }
 
@@ -267,7 +269,7 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
      */
     private int increment(int index) {
         index++; 
-        if (index >= m_elements.length) {
+        if (index >= maxElements) {
             index = 0;
         }
         return index;
@@ -282,7 +284,7 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
     private int decrement(int index) {
         index--;
         if (index < 0) {
-            index = m_elements.length - 1;
+            index = maxElements - 1;
         }
         return index;
     }
@@ -325,7 +327,7 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer, Bou
                 // Other elements require us to shift the subsequent elements
                 int i = lastReturnedIndex + 1;
                 while (i != m_end) {
-                    if (i >= m_elements.length) {
+                    if (i >= maxElements) {
                         m_elements[i - 1] = m_elements[0];
                         i = 0;
                     } else {
