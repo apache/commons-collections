@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.9 2002/10/12 22:36:22 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2002/10/12 22:36:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.10 2003/04/26 10:25:35 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2003/04/26 10:25:35 $
  *
  * ====================================================================
  *
@@ -155,7 +155,8 @@ import java.util.NoSuchElementException;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestCollection.java,v 1.9 2002/10/12 22:36:22 scolebourne Exp $
+ * @author Neil O'Toole
+ * @version $Id: TestCollection.java,v 1.10 2003/04/26 10:25:35 scolebourne Exp $
  */
 public abstract class TestCollection extends TestObject {
 
@@ -579,7 +580,7 @@ public abstract class TestCollection extends TestObject {
         resetEmpty();
         elements = getFullElements();
         for(int i = 0; i < elements.length; i++) {
-            assertTrue("Empty collection shouldn'y contain element",
+            assertTrue("Empty collection shouldn't contain element[" + i + "]",
                        !collection.contains(elements[i]));
         }
         // make sure calls to "contains" don't change anything
@@ -587,7 +588,7 @@ public abstract class TestCollection extends TestObject {
 
         elements = getOtherElements();
         for(int i = 0; i < elements.length; i++) {
-            assertTrue("Empty collection shouldn'y contain element",
+            assertTrue("Empty collection shouldn't contain element[" + i + "]",
                        !collection.contains(elements[i]));
         }
         // make sure calls to "contains" don't change anything
@@ -596,7 +597,7 @@ public abstract class TestCollection extends TestObject {
         resetFull();
         elements = getFullElements();
         for(int i = 0; i < elements.length; i++) {
-            assertTrue("Full collection should contain element.", 
+            assertTrue("Full collection should contain element[" + i + "]", 
                        collection.contains(elements[i]));
         }
         // make sure calls to "contains" don't change anything
