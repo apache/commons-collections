@@ -23,11 +23,11 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if either of the predicates return true.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/31 16:43:17 $
  *
  * @author Stephen Colebourne
  */
-public final class OrPredicate implements Predicate, Serializable {
+public final class OrPredicate implements Predicate, PredicateDecorator, Serializable {
 
     /** Serial version UID */
     static final long serialVersionUID = -8791518325735182855L;
@@ -76,22 +76,13 @@ public final class OrPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Gets the first predicate.
+     * Gets the two predicates being decorated as an array.
      * 
-     * @return the predicate
+     * @return the predicates
      * @since Commons Collections 3.1
      */
-    public Predicate getPredicate1() {
-        return iPredicate1;
-    }
-
-    /**
-     * Gets the second predicate.
-     * @return the predicate
-     * @since Commons Collections 3.1
-     */
-    public Predicate getPredicate2() {
-        return iPredicate2;
+    public Predicate[] getPredicates() {
+        return new Predicate[] {iPredicate1, iPredicate2};
     }
 
 }

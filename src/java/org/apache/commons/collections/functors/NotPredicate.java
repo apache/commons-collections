@@ -23,11 +23,11 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns the opposite of the decorated predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/31 16:43:17 $
  *
  * @author Stephen Colebourne
  */
-public final class NotPredicate implements Predicate, Serializable {
+public final class NotPredicate implements Predicate, PredicateDecorator, Serializable {
 
     /** Serial version UID */
     static final long serialVersionUID = -2654603322338049674L;
@@ -71,13 +71,13 @@ public final class NotPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Gets the predicate.
+     * Gets the predicate being decorated.
      * 
-     * @return the predicate
+     * @return the predicate as the only element in an array
      * @since Commons Collections 3.1
      */
-    public Predicate getPredicate() {
-        return iPredicate;
+    public Predicate[] getPredicates() {
+        return new Predicate[] {iPredicate};
     }
 
 }

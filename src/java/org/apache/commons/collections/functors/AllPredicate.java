@@ -24,11 +24,11 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if all the predicates return true.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/31 16:43:17 $
  *
  * @author Stephen Colebourne
  */
-public final class AllPredicate implements Predicate, Serializable {
+public final class AllPredicate implements Predicate, PredicateDecorator, Serializable {
 
     /** Serial version UID */
     static final long serialVersionUID = -3094696765038308799L;

@@ -25,11 +25,11 @@ import org.apache.commons.collections.Transformer;
  * another <code>Predicate</code>.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.3 $ $Date: 2004/05/16 11:16:01 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/31 16:43:17 $
  * @author Alban Peignier
  * @author Stephen Colebourne
  */
-public final class TransformedPredicate implements Predicate, Serializable {
+public final class TransformedPredicate implements Predicate, PredicateDecorator, Serializable {
 
     /** Serial version UID */
     static final long serialVersionUID = -5596090919668315834L;
@@ -82,12 +82,13 @@ public final class TransformedPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Gets the predicate in use.
+     * Gets the predicate being decorated.
      * 
-     * @return the predicate
+     * @return the predicate as the only element in an array
+     * @since Commons Collections 3.1
      */
-    public Predicate getPredicate() {
-        return iPredicate;
+    public Predicate[] getPredicates() {
+        return new Predicate[] {iPredicate};
     }
 
     /**
