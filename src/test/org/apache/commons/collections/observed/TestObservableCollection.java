@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedBag.java,v 1.2 2003/09/21 16:00:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableCollection.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,54 +57,110 @@
  */
 package org.apache.commons.collections.observed;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.Bag;
-import org.apache.commons.collections.HashBag;
-import org.apache.commons.collections.TestBag;
+import org.apache.commons.collections.TestCollection;
 
 /**
- * Extension of {@link TestBag} for exercising the
- * {@link ObservableBag} implementation.
+ * Extension of {@link TestCollection} for exercising the
+ * {@link ObservedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:55 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservedBag extends TestBag implements ObservedTestHelper.ObservedFactory {
+public class TestObservableCollection extends TestCollection implements ObservedTestHelper.ObservedFactory {
     
-    public TestObservedBag(String testName) {
+    public TestObservableCollection(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestObservedBag.class);
+        return new TestSuite(TestObservableCollection.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestObservedBag.class.getName()};
+        String[] testCaseName = { TestObservableCollection.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------
-    public Bag makeBag() {
-        return ObservableBag.decorate(new HashBag(), ObservedTestHelper.LISTENER);
+    public Collection makeConfirmedCollection() {
+        return new ArrayList();
     }
 
+    protected Collection makeConfirmedFullCollection() {
+        List list = new ArrayList();
+        list.addAll(Arrays.asList(getFullElements()));
+        return list;
+    }
+    
+    public Collection makeCollection() {
+        return ObservableCollection.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
+    }
+
+    protected Collection makeFullCollection() {
+        List list = new ArrayList();
+        list.addAll(Arrays.asList(getFullElements()));
+        return ObservableCollection.decorate(list, ObservedTestHelper.LISTENER);
+    }
+    
     //-----------------------------------------------------------------------
-    public void testObservedSet() {
-        ObservedTestHelper.bulkTestObservedBag(this);
+    public void testObservedCollection() {
+        ObservedTestHelper.bulkTestObservedCollection(this);
     }
 
     //-----------------------------------------------------------------------
     public ObservableCollection createObservedCollection() {
-        return ObservableBag.decorate(new HashBag());
+        return ObservableCollection.decorate(new ArrayList());
     }
 
     public ObservableCollection createObservedCollection(Object listener) {
-        return ObservableBag.decorate(new HashBag(), listener);
+        return ObservableCollection.decorate(new ArrayList(), listener);
     }
 
+//  public void testFactoryWithMasks() {
+//      ObservedCollection coll = ObservedCollection.decorate(new ArrayList(), LISTENER, -1, 0);
+//      LISTENER.preEvent = null;
+//      LISTENER.postEvent = null;
+//      coll.add(SIX);
+//      assertTrue(LISTENER.preEvent != null);
+//      assertTrue(LISTENER.postEvent == null);
+//        
+//      coll = ObservedCollection.decorate(new ArrayList(), LISTENER, 0, -1);
+//      LISTENER.preEvent = null;
+//      LISTENER.postEvent = null;
+//      coll.add(SIX);
+//      assertTrue(LISTENER.preEvent == null);
+//      assertTrue(LISTENER.postEvent != null);
+//        
+//      coll = ObservedCollection.decorate(new ArrayList(), LISTENER, -1, -1);
+//      LISTENER.preEvent = null;
+//      LISTENER.postEvent = null;
+//      coll.add(SIX);
+//      assertTrue(LISTENER.preEvent != null);
+//      assertTrue(LISTENER.postEvent != null);
+//        
+//      coll = ObservedCollection.decorate(new ArrayList(), LISTENER, 0, 0);
+//      LISTENER.preEvent = null;
+//      LISTENER.postEvent = null;
+//      coll.add(SIX);
+//      assertTrue(LISTENER.preEvent == null);
+//      assertTrue(LISTENER.postEvent == null);
+//        
+//      coll = ObservedCollection.decorate(new ArrayList(), LISTENER, ModificationEventType.ADD, ModificationEventType.ADD_ALL);
+//      LISTENER.preEvent = null;
+//      LISTENER.postEvent = null;
+//      coll.add(SIX);
+//      assertTrue(LISTENER.preEvent != null);
+//      assertTrue(LISTENER.postEvent == null);
+//  }
+//    
 }

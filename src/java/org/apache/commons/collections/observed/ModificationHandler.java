@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.6 2003/09/21 16:00:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.7 2003/09/21 20:01:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import java.util.Collection;
  * later collections release.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/09/21 16:00:28 $
+ * @version $Revision: 1.7 $ $Date: 2003/09/21 20:01:53 $
  * 
  * @author Stephen Colebourne
  */
@@ -91,8 +91,8 @@ public class ModificationHandler {
     private Collection baseCollection = null;
     /** The root handler */
     private final ModificationHandler rootHandler;
-    /** The range offset, 0 if not a range */
-    private final int rangeOffset;
+    /** The view offset, 0 if not a view */
+    private final int viewOffset;
     
     // Constructors
     //-----------------------------------------------------------------------
@@ -102,19 +102,19 @@ public class ModificationHandler {
     protected ModificationHandler() {
         super();
         this.rootHandler = this;
-        this.rangeOffset = 0;
+        this.viewOffset = 0;
     }
 
     /**
      * Constructor.
      * 
      * @param rootHandler  the base underlying handler
-     * @param rangeOffset  the offset on the base collection
+     * @param viewOffset  the offset on the base collection
      */
-    protected ModificationHandler(ModificationHandler rootHandler, int rangeOffset) {
+    protected ModificationHandler(ModificationHandler rootHandler, int viewOffset) {
         super();
         this.rootHandler = rootHandler;
-        this.rangeOffset = rangeOffset;
+        this.viewOffset = viewOffset;
     }
 
     /**
@@ -173,12 +173,12 @@ public class ModificationHandler {
     }
     
     /**
-     * Gets the range offset.
+     * Gets the view offset.
      * 
-     * @return the range offset
+     * @return the view offset
      */
-    protected int getRangeOffset() {
-        return rangeOffset;
+    protected int getViewOffset() {
+        return viewOffset;
     }
     
     // PreListeners
@@ -291,12 +291,12 @@ public class ModificationHandler {
      * @param object  the object that will be added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
      * @param previous  the previous value that will be removed/replaced, must exist in coll
-     * @param range  the range collection, null if no range
-     * @param rangeOffset  the offset of the range, -1 if unknown
+     * @param view  the view collection that the change was actioned on, null if no view
+     * @param viewOffset  the offset of the subList view, -1 if unknown
      */
     protected boolean preEvent(
             int type, int index, Object object, int repeat,
-            Object previous, ObservableCollection range, int rangeOffset) {
+            Object previous, ObservableCollection view, int viewOffset) {
         return true;
     }
 
@@ -311,12 +311,12 @@ public class ModificationHandler {
      * @param object  the object that was added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
      * @param previous  the previous value that was removed/replace, must have existed in coll
-     * @param range  the range collection, null if no range
-     * @param rangeOffset  the offset of the range, -1 if unknown
+     * @param view  the view collection that the change was actioned on, null if no view
+     * @param viewOffset  the offset of the subList view, -1 if unknown
      */
     protected void postEvent(
             boolean modified, int type, int index, Object object, int repeat,
-            Object previous, ObservableCollection range, int rangeOffset) {
+            Object previous, ObservableCollection view, int viewOffset) {
     }
 
     // Event handling
@@ -358,7 +358,7 @@ public class ModificationHandler {
      * @return true to process modification
      */
     protected boolean preAddIndexed(int index, Object object) {
-        return preEvent(ModificationEventType.ADD_INDEXED, index + rangeOffset, object, 1, null, null, -1);
+        return preEvent(ModificationEventType.ADD_INDEXED, index + viewOffset, object, 1, null, null, -1);
     }
 
     /**
@@ -370,7 +370,7 @@ public class ModificationHandler {
      * @param object  the object being added
      */
     protected void postAddIndexed(int index, Object object) {
-        postEvent(true, ModificationEventType.ADD_INDEXED, index + rangeOffset, object, 1, null, null, -1);
+        postEvent(true, ModificationEventType.ADD_INDEXED, index + viewOffset, object, 1, null, null, -1);
     }
 
     //-----------------------------------------------------------------------
@@ -413,7 +413,7 @@ public class ModificationHandler {
      * @return true to process modification
      */
     protected boolean preAddIterated(int index, Object object) {
-        return preEvent(ModificationEventType.ADD_ITERATED, index + rangeOffset, object, 1, null, null, -1);
+        return preEvent(ModificationEventType.ADD_ITERATED, index + viewOffset, object, 1, null, null, -1);
     }
 
     /**
@@ -426,7 +426,7 @@ public class ModificationHandler {
      */
     protected void postAddIterated(int index, Object object) {
         // assume collection changed
-        postEvent(true, ModificationEventType.ADD_ITERATED, index + rangeOffset, object, 1, null, null, -1);
+        postEvent(true, ModificationEventType.ADD_ITERATED, index + viewOffset, object, 1, null, null, -1);
     }
 
     //-----------------------------------------------------------------------
@@ -465,7 +465,7 @@ public class ModificationHandler {
      * @return true to process modification
      */
     protected boolean preAddAllIndexed(int index, Collection coll) {
-        return preEvent(ModificationEventType.ADD_ALL_INDEXED, index + rangeOffset, coll, 1, null, null, -1);
+        return preEvent(ModificationEventType.ADD_ALL_INDEXED, index + viewOffset, coll, 1, null, null, -1);
     }
 
     /**
@@ -478,7 +478,7 @@ public class ModificationHandler {
      * @param collChanged  the result from the addAll method
      */
     protected void postAddAllIndexed(int index, Collection coll, boolean collChanged) {
-        postEvent(collChanged, ModificationEventType.ADD_ALL_INDEXED, index + rangeOffset, coll, 1, null, null, -1);
+        postEvent(collChanged, ModificationEventType.ADD_ALL_INDEXED, index + viewOffset, coll, 1, null, null, -1);
     }
 
     //-----------------------------------------------------------------------
@@ -540,7 +540,7 @@ public class ModificationHandler {
     protected boolean preRemoveIndexed(int index) {
         // could do a get(index) to determine previousValue
         // we don't for performance, but subclass may override
-        return preEvent(ModificationEventType.REMOVE_INDEXED, index + rangeOffset, null, 1, null, null, -1);
+        return preEvent(ModificationEventType.REMOVE_INDEXED, index + viewOffset, null, 1, null, null, -1);
     }
 
     /**
@@ -552,7 +552,7 @@ public class ModificationHandler {
      * @param previousValue  the result from the remove method
      */
     protected void postRemoveIndexed(int index, Object previousValue) {
-        postEvent(true, ModificationEventType.REMOVE_INDEXED, index + rangeOffset, null, 1, previousValue, null, -1);
+        postEvent(true, ModificationEventType.REMOVE_INDEXED, index + viewOffset, null, 1, previousValue, null, -1);
     }
 
     //-----------------------------------------------------------------------
@@ -617,7 +617,7 @@ public class ModificationHandler {
      * @return true to process modification
      */
     protected boolean preRemoveIterated(int index, Object removedValue) {
-        return preEvent(ModificationEventType.REMOVE_ITERATED, index + rangeOffset, removedValue, 1, removedValue, null, -1);
+        return preEvent(ModificationEventType.REMOVE_ITERATED, index + viewOffset, removedValue, 1, removedValue, null, -1);
     }
 
     /**
@@ -630,7 +630,7 @@ public class ModificationHandler {
      */
     protected void postRemoveIterated(int index, Object removedValue) {
         // assume collection changed
-        postEvent(true, ModificationEventType.REMOVE_ITERATED, index + rangeOffset, removedValue, 1, removedValue, null, -1);
+        postEvent(true, ModificationEventType.REMOVE_ITERATED, index + viewOffset, removedValue, 1, removedValue, null, -1);
     }
 
     //-----------------------------------------------------------------------
@@ -696,7 +696,7 @@ public class ModificationHandler {
     protected boolean preSetIndexed(int index, Object object) {
         // could do a get(index) to determine previousValue
         // we don't for performance, but subclass may override
-        return preEvent(ModificationEventType.SET_INDEXED, index + rangeOffset, object, 1, null, null, -1);
+        return preEvent(ModificationEventType.SET_INDEXED, index + viewOffset, object, 1, null, null, -1);
     }
 
     /**
@@ -710,7 +710,7 @@ public class ModificationHandler {
      */
     protected void postSetIndexed(int index, Object object, Object previousValue) {
         // reference check for modification, in case equals() has issues (eg. performance)
-        postEvent((object != previousValue), ModificationEventType.SET_INDEXED, index + rangeOffset, object, 1, previousValue, null, -1);
+        postEvent((object != previousValue), ModificationEventType.SET_INDEXED, index + viewOffset, object, 1, previousValue, null, -1);
     }
 
     //-----------------------------------------------------------------------
@@ -725,7 +725,7 @@ public class ModificationHandler {
      * @return true to process modification
      */
     protected boolean preSetIterated(int index, Object object, Object previousValue) {
-        return preEvent(ModificationEventType.SET_ITERATED, index + rangeOffset, object, 1, previousValue, null, -1);
+        return preEvent(ModificationEventType.SET_ITERATED, index + viewOffset, object, 1, previousValue, null, -1);
     }
 
     /**
@@ -739,10 +739,83 @@ public class ModificationHandler {
      */
     protected void postSetIterated(int index, Object object, Object previousValue) {
         // reference check for modification, in case equals() has issues (eg. performance)
-        postEvent((object != previousValue), ModificationEventType.SET_ITERATED, index + rangeOffset, object, 1, previousValue, null, -1);
+        postEvent((object != previousValue), ModificationEventType.SET_ITERATED, index + viewOffset, object, 1, previousValue, null, -1);
     }
 
-    // Views
+    // SortedSet Views
+    //-----------------------------------------------------------------------
+    /**
+     * Creates a new handler for SortedSet subSet.
+     * 
+     * @param fromElement  the from element
+     * @param toElement  the to element
+     */
+    protected ModificationHandler createSubSetHandler(Object fromElement, Object toElement) {
+        return new SetViewHandler(rootHandler);
+    }
+    
+    /**
+     * Creates a new handler for SortedSet headSet.
+     * 
+     * @param toElement  the to element
+     */
+    protected ModificationHandler createHeadSetHandler(Object toElement) {
+        return new SetViewHandler(rootHandler);
+    }
+    
+    /**
+     * Creates a new handler for SortedSet tailSet.
+     * 
+     * @param fromElement  the from element
+     */
+    protected ModificationHandler createTailSetHandler(Object fromElement) {
+        return new SetViewHandler(rootHandler);
+    }
+    
+    /**
+     * Inner class for views.
+     */    
+    protected static class SetViewHandler extends ModificationHandler {
+        
+        /**
+         * Constructor.
+         * 
+         * @param rootHandler  the base underlying handler
+         */
+        protected SetViewHandler(ModificationHandler rootHandler) {
+            super(rootHandler, 0);
+        }
+
+        /**
+         * Override the preEvent method to forward all events to the 
+         * underlying handler. This method also inserts details of the view
+         * that caused the event.
+         */
+        protected boolean preEvent(
+                int type, int index, Object object, int repeat,
+                Object previous, ObservableCollection ignoredView, int offset) {
+
+            return getRootHandler().preEvent(
+                type, index, object, repeat,
+                previous, getObservedCollection(), offset);
+        }
+
+        /**
+         * Override the postEvent method to forward all events to the 
+         * underlying handler. This method also inserts details of the view
+         * that caused the event.
+         */
+        protected void postEvent(
+                boolean modified, int type, int index, Object object, int repeat,
+                Object previous, ObservableCollection ignoredView, int offset) {
+
+            getRootHandler().postEvent(
+                modified, type, index, object, repeat,
+                previous, getObservedCollection(), offset);
+        }
+    }
+    
+    // List View
     //-----------------------------------------------------------------------
     /**
      * Creates a new handler for subLists that is aware of the offset.
@@ -751,47 +824,50 @@ public class ModificationHandler {
      * @param toIndex  the sublist toIndex (exclusive)
      */
     protected ModificationHandler createSubListHandler(int fromIndex, int toIndex) {
-        return new SubListHandler(rootHandler, fromIndex + rangeOffset);
+        return new SubListHandler(rootHandler, fromIndex + viewOffset);
     }
-    
+
+    /**
+     * Inner class for subLists.
+     */    
     protected static class SubListHandler extends ModificationHandler {
         
         /**
          * Constructor.
          * 
          * @param rootHandler  the base underlying handler
-         * @param rangeOffset  the offset on the base collection
+         * @param viewOffset  the offset on the base collection
          */
-        protected SubListHandler(ModificationHandler rootHandler, int rangeOffset) {
-            super(rootHandler, rangeOffset);
+        protected SubListHandler(ModificationHandler rootHandler, int viewOffset) {
+            super(rootHandler, viewOffset);
         }
 
         /**
          * Override the preEvent method to forward all events to the 
-         * underlying handler. This method also inserts details of the range
+         * underlying handler. This method also inserts details of the view
          * that caused the event.
          */
         protected boolean preEvent(
                 int type, int index, Object object, int repeat,
-                Object previous, ObservableCollection ignoredRange, int ignoredOffset) {
+                Object previous, ObservableCollection ignoredView, int ignoredOffset) {
 
             return getRootHandler().preEvent(
                 type, index, object, repeat,
-                previous, getObservedCollection(), getRangeOffset());
+                previous, getObservedCollection(), getViewOffset());
         }
 
         /**
          * Override the postEvent method to forward all events to the 
-         * underlying handler. This method also inserts details of the range
+         * underlying handler. This method also inserts details of the view
          * that caused the event.
          */
         protected void postEvent(
                 boolean modified, int type, int index, Object object, int repeat,
-                Object previous, ObservableCollection ignoredRange, int ignoredOffset) {
+                Object previous, ObservableCollection ignoredView, int ignoredOffset) {
 
             getRootHandler().postEvent(
                 modified, type, index, object, repeat,
-                previous, getObservedCollection(), getRangeOffset());
+                previous, getObservedCollection(), getViewOffset());
         }
     }
     

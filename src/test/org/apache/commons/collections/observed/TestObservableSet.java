@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedSet.java,v 1.2 2003/09/21 16:00:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSet.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,22 +71,22 @@ import org.apache.commons.collections.TestSet;
  * {@link ObservedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:56 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservedSet extends TestSet implements ObservedTestHelper.ObservedFactory {
+public class TestObservableSet extends TestSet implements ObservedTestHelper.ObservedFactory {
     
-    public TestObservedSet(String testName) {
+    public TestObservableSet(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestObservedSet.class);
+        return new TestSuite(TestObservableSet.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestObservedSet.class.getName()};
+        String[] testCaseName = { TestObservableSet.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 

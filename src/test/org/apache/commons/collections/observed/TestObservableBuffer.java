@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedList.java,v 1.2 2003/09/21 16:00:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableBuffer.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,62 +57,73 @@
  */
 package org.apache.commons.collections.observed;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestList;
+import org.apache.commons.collections.ArrayStack;
+import org.apache.commons.collections.TestCollection;
 
 /**
- * Extension of {@link TestList} for exercising the
- * {@link ObservedList} implementation.
+ * Extension of {@link TestCollection} for exercising the
+ * {@link ObservableBuffer} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:56 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservedList extends TestList implements ObservedTestHelper.ObservedFactory {
+public class TestObservableBuffer extends TestCollection implements ObservedTestHelper.ObservedFactory {
     
-    public TestObservedList(String testName) {
+    public TestObservableBuffer(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestObservedList.class);
+        return new TestSuite(TestObservableBuffer.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestObservedList.class.getName()};
+        String[] testCaseName = { TestObservableBuffer.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------
-    public List makeEmptyList() {
-        return ObservableList.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
+    public Collection makeConfirmedCollection() {
+        return new ArrayStack();
     }
 
-    protected List makeFullList() {
-        List set = new ArrayList();
-        set.addAll(Arrays.asList(getFullElements()));
-        return ObservableList.decorate(set, ObservedTestHelper.LISTENER);
+    protected Collection makeConfirmedFullCollection() {
+        ArrayStack stack = new ArrayStack();
+        stack.addAll(Arrays.asList(getFullElements()));
+        return stack;
+    }
+    
+    public Collection makeCollection() {
+        return ObservableBuffer.decorate(new ArrayStack(), ObservedTestHelper.LISTENER);
+    }
+
+    protected Collection makeFullCollection() {
+        List stack = new ArrayStack();
+        stack.addAll(Arrays.asList(getFullElements()));
+        return ObservableBuffer.decorate(stack, ObservedTestHelper.LISTENER);
     }
     
     //-----------------------------------------------------------------------
-    public void testObservedList() {
-        ObservedTestHelper.bulkTestObservedList(this);
+    public void testObservedBuffer() {
+        ObservedTestHelper.bulkTestObservedBuffer(this);
     }
 
     //-----------------------------------------------------------------------
     public ObservableCollection createObservedCollection() {
-        return ObservableList.decorate(new ArrayList());
+        return ObservableBuffer.decorate(new ArrayStack());
     }
 
     public ObservableCollection createObservedCollection(Object listener) {
-        return ObservableList.decorate(new ArrayList(), listener);
+        return ObservableBuffer.decorate(new ArrayStack(), listener);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedBuffer.java,v 1.2 2003/09/21 16:00:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableBag.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,73 +57,54 @@
  */
 package org.apache.commons.collections.observed;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.ArrayStack;
-import org.apache.commons.collections.TestCollection;
+import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.HashBag;
+import org.apache.commons.collections.TestBag;
 
 /**
- * Extension of {@link TestCollection} for exercising the
- * {@link ObservableBuffer} implementation.
+ * Extension of {@link TestBag} for exercising the
+ * {@link ObservableBag} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:55 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservedBuffer extends TestCollection implements ObservedTestHelper.ObservedFactory {
+public class TestObservableBag extends TestBag implements ObservedTestHelper.ObservedFactory {
     
-    public TestObservedBuffer(String testName) {
+    public TestObservableBag(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestObservedBuffer.class);
+        return new TestSuite(TestObservableBag.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestObservedBuffer.class.getName()};
+        String[] testCaseName = { TestObservableBag.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------
-    public Collection makeConfirmedCollection() {
-        return new ArrayStack();
+    public Bag makeBag() {
+        return ObservableBag.decorate(new HashBag(), ObservedTestHelper.LISTENER);
     }
 
-    protected Collection makeConfirmedFullCollection() {
-        ArrayStack stack = new ArrayStack();
-        stack.addAll(Arrays.asList(getFullElements()));
-        return stack;
-    }
-    
-    public Collection makeCollection() {
-        return ObservableBuffer.decorate(new ArrayStack(), ObservedTestHelper.LISTENER);
-    }
-
-    protected Collection makeFullCollection() {
-        List stack = new ArrayStack();
-        stack.addAll(Arrays.asList(getFullElements()));
-        return ObservableBuffer.decorate(stack, ObservedTestHelper.LISTENER);
-    }
-    
     //-----------------------------------------------------------------------
-    public void testObservedBuffer() {
-        ObservedTestHelper.bulkTestObservedBuffer(this);
+    public void testObservedSet() {
+        ObservedTestHelper.bulkTestObservedBag(this);
     }
 
     //-----------------------------------------------------------------------
     public ObservableCollection createObservedCollection() {
-        return ObservableBuffer.decorate(new ArrayStack());
+        return ObservableBag.decorate(new HashBag());
     }
 
     public ObservableCollection createObservedCollection(Object listener) {
-        return ObservableBuffer.decorate(new ArrayStack(), listener);
+        return ObservableBag.decorate(new HashBag(), listener);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestAll.java,v 1.3 2003/09/21 20:01:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedSet.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,40 +57,62 @@
  */
 package org.apache.commons.collections.observed;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.TreeSet;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestSortedSet;
+
 /**
- * Entry point for all collections observed tests.
- * 
+ * Extension of {@link TestSet} for exercising the
+ * {@link ObservedSet} implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/21 20:01:53 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public class TestObservableSortedSet extends TestSortedSet implements ObservedTestHelper.ObservedFactory {
     
-    public TestAll(String testName) {
+    public TestObservableSortedSet(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestObservableSortedSet.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestObservableSortedSet.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestObservableBag.suite());
-        suite.addTest(TestObservableBuffer.suite());
-        suite.addTest(TestObservableCollection.suite());
-        suite.addTest(TestObservableList.suite());
-        suite.addTest(TestObservableSet.suite());
-        suite.addTest(TestObservableSortedSet.suite());
-        
-        return suite;
+
+    //-----------------------------------------------------------------------
+    public Set makeEmptySet() {
+        return ObservableSortedSet.decorate(new TreeSet(), ObservedTestHelper.LISTENER);
     }
-        
+
+    protected Set makeFullSet() {
+        Set set = new TreeSet();
+        set.addAll(Arrays.asList(getFullElements()));
+        return ObservableSortedSet.decorate(set, ObservedTestHelper.LISTENER);
+    }
+    
+    //-----------------------------------------------------------------------
+    public void testObservedSortedSet() {
+        ObservedTestHelper.bulkTestObservedSortedSet(this);
+    }
+
+    //-----------------------------------------------------------------------
+    public ObservableCollection createObservedCollection() {
+        return ObservableSortedSet.decorate(new TreeSet());
+    }
+
+    public ObservableCollection createObservedCollection(Object listener) {
+        return ObservableSortedSet.decorate(new TreeSet(), listener);
+    }
+
 }
