@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EnumerationIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EnumerationIterator.java,v 1.1.2.1 2004/05/22 11:39:26 scolebourne Exp $
+ * $Revision: 1.1.2.1 $
+ * $Date: 2004/05/22 11:39:26 $
  *
  * ====================================================================
  *
@@ -101,11 +101,11 @@ public class EnumerationIterator implements Iterator {
      *  Constructs a new <Code>EnumerationIterator</Code> that will remove
      *  elements from the specified collection.
      *
-     *  @param enum  the enumeration to use
-     *  @param collection  the collection to remove elements form
+     *  @param enumeration  the enumeration to use
+     *  @param collection  the collection to remove elements from
      */
-    public EnumerationIterator( Enumeration enum, Collection collection ) {
-        this.enumeration = enum;
+    public EnumerationIterator( Enumeration enumeration, Collection collection ) {
+        this.enumeration = enumeration;
         this.collection = collection;
         this.last = null;
     }

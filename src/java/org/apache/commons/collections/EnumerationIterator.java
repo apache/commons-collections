@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/EnumerationIterator.java,v 1.7 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2002/10/12 22:15:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/EnumerationIterator.java,v 1.7.2.1 2004/05/22 11:39:26 scolebourne Exp $
+ * $Revision: 1.7.2.1 $
+ * $Date: 2004/05/22 11:39:26 $
  *
  * ====================================================================
  *
@@ -96,11 +96,11 @@ extends org.apache.commons.collections.iterators.EnumerationIterator {
      *  Constructs a new <Code>EnumerationIterator</Code> that will remove
      *  elements from the specified collection.
      *
-     *  @param enum  the enumeration to use
-     *  @param collection  the collection to remove elements form
+     *  @param enumeration  the enumeration to use
+     *  @param collection  the collection to remove elements from
      */
-    public EnumerationIterator( Enumeration enum, Collection collection ) {
-        super(enum, collection);
+    public EnumerationIterator( Enumeration enumeration, Collection collection ) {
+        super(enumeration, collection);
     }
 
 }

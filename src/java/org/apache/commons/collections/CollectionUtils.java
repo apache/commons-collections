@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.18 2002/10/13 00:38:36 scolebourne Exp $
- * $Revision: 1.18 $
- * $Date: 2002/10/13 00:38:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.18.2.1 2004/05/22 11:39:26 scolebourne Exp $
+ * $Revision: 1.18.2.1 $
+ * $Date: 2004/05/22 11:39:26 $
  *
  * ====================================================================
  *
@@ -83,7 +83,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Steve Downey
- * @version $Revision: 1.18 $ $Date: 2002/10/13 00:38:36 $
+ * @version $Revision: 1.18.2.1 $ $Date: 2004/05/22 11:39:26 $
  */
 public class CollectionUtils {
 
@@ -636,13 +636,13 @@ public class CollectionUtils {
             return ((Object[])obj)[idx];
         } 
         else if(obj instanceof Enumeration) {
-            Enumeration enum = (Enumeration)obj;
-            while(enum.hasMoreElements()) {
+            Enumeration enumeration = (Enumeration)obj;
+            while(enumeration.hasMoreElements()) {
                 idx--;
                 if(idx == -1) {
-                    return enum.nextElement();
+                    return enumeration.nextElement();
                 } else {
-                    enum.nextElement();
+                    enumeration.nextElement();
                 }
             }
         } 
