@@ -77,7 +77,7 @@ public class TestStaticBucketMap extends TestMap {
     }
 
     public static Test suite() {
-        return new TestSuite(TestStaticBucketMap.class);
+        return BulkTest.makeSuite(TestStaticBucketMap.class);
     }
 
     public static void main(String[] args[]) {
@@ -88,29 +88,14 @@ public class TestStaticBucketMap extends TestMap {
     public Map makeEmptyMap() {
         return new StaticBucketMap(30);
     }
-   
-    // The verification method must be overridden because the collection views
-    // are not backed by the map.
-        
-    public void verifyEntrySet() {
-        // update the entrySet view to the latest version, then proceed to
-        // verify as usual.
-        entrySet = map.entrySet();
-        super.verifyEntrySet();
-    }
-    
-    public void verifyKeySet() {
-        // update the keySet view to the latest version, then proceed to verify
-        // as usual.
-        keySet = map.keySet();
-        super.verifyKeySet();
-    }
-    
-    public void verifyValues() {
-        // update the values view to the latest version, then proceed to verify
-        // as usual.  
-        values = map.values();
-        super.verifyValues();
-    }
 
+    public String[] ignoredSimpleTests() {
+        String pre = "TestStaticBucketMap.bulkTestMap";
+        String post = ".testCollectionIteratorFailFast";
+        return new String[] {
+            pre + "EntrySet" + post,
+            pre + "KeySet" + post,
+            pre + "Values" + post
+        };
+    }   
 }
