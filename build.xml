@@ -69,6 +69,7 @@
   <property name="build.src.tar.name"   value="${build.dist}/${component.name}-${component.version}-src.tar"/>
   <property name="build.src.gz.name"    value="${build.dist}/${component.name}-${component.version}-src.tar.gz"/>
   <property name="build.src.zip.name"   value="${build.dist}/${component.name}-${component.version}-src.zip"/>
+  <property name="dist.home"            value="dist"/> <!-- for nightly builds -->
 
 
 <!-- ========== Settings ================================================== -->
@@ -489,10 +490,19 @@
    
 <!-- ====================================================================== -->
 
-  <target name="dist" depends="jar,testjar,javadoc,tf.validate,tf.jar,dist.bin,dist.src"
+  <!-- Target needed for nightly builds -->
+  <target name="dist" depends="dist.create"
           description="Create distribution folders">
+    <delete dir="${dist.home}"/>
+    <mkdir dir="${dist.home}" />
+    <copy todir="${dist.home}">
+      <fileset dir="${build.dist.bin}" />
+	</copy>
   </target>
-  
+
+  <target name="dist.create" depends="jar,testjar,javadoc,tf.validate,tf.jar,dist.bin,dist.src">
+  </target>
+
   <target name="dist.bin">
     <mkdir      dir="${build.dist.bin.work}"/>
     <copy     todir="${build.dist.bin.work}">
@@ -545,8 +555,11 @@
 
 <!-- ====================================================================== -->
 
-  <target name="zip" depends="zip.bin,zip.src"
-          description="Create zipped distribution">
+  <target name="release" depends="dist.create,zip"
+          description="Create release">
+  </target>
+
+  <target name="zip" depends="zip.bin,zip.src">
   </target>
   
   <target name="zip.bin">
