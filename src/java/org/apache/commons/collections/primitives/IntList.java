@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.10 2003/01/11 21:34:39 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.11 2003/01/12 15:23:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,7 +64,7 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.ListIntList
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.10 $ $Date: 2003/01/11 21:34:39 $
+ * @version $Revision: 1.11 $ $Date: 2003/01/12 15:23:19 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -114,7 +114,7 @@ public interface IntList extends IntCollection {
      * {@link IntList#iterator iterator} are equal (<code>==</code>) to
      * the corresponding elements within me.
      * (This contract ensures that this method works properly across 
-     * different implementations of the <code>IntList</code> interface.
+     * different implementations of the <code>IntList</code> interface.)
      * 
      * @param that the object to compare to me
      * @return <code>true</code> iff <i>that</i> is an <code>IntList</code>
@@ -247,7 +247,7 @@ public interface IntList extends IntCollection {
      * @param toIndex the largest index (exclusive) in me that appears in the 
      *        returned list
      * @return a view of this list from <i>fromIndex</i> (inclusive) to 
-     *         <i>toIndex</i> exclusive
+     *         <i>toIndex</i> (exclusive)
      * 
      * @throws IndexOutOfBoundsException if either specified index is out of range
      */
