@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.16 2003/02/26 01:33:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.17 2003/04/26 10:27:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,11 +82,12 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
  *
- * @version $Revision: 1.16 $ $Date: 2003/02/26 01:33:22 $
+ * @version $Revision: 1.17 $ $Date: 2003/04/26 10:27:59 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
+ * @author Neil O'Toole
  */
 public abstract class TestList extends TestCollection {
 
@@ -804,21 +805,19 @@ public abstract class TestList extends TestCollection {
         List list = getList();
 
         while (i > 0) {
-            assertTrue("Iterator should have next", iter.hasPrevious());
-            assertEquals("Iterator.nextIndex should work", 
-              iter.nextIndex(), i);
-            assertEquals("Iterator.previousIndex should work",
-              iter.previousIndex(), i - 1);
+            assertTrue("Iterator should have previous, i:" + i, iter.hasPrevious());
+            assertEquals("Iterator.nextIndex should work, i:" + i, iter.nextIndex(), i);
+            assertEquals("Iterator.previousIndex should work, i:" + i, iter.previousIndex(), i - 1);
             Object o = iter.previous();
-            assertEquals("Iterator returned correct element", 
-              list.get(i - 1), o);
+            assertEquals("Iterator returned correct element", list.get(i - 1), o);
             i--;
         }
 
         assertTrue("Iterator shouldn't have previous", !iter.hasPrevious());
-        assertEquals("nextIndex should be 0", iter.nextIndex(), 0);
-        assertEquals("previousIndex should be -1", 
-          iter.previousIndex(), -1);
+        int nextIndex = iter.nextIndex();
+        assertEquals("nextIndex should be 0, actual value: " + nextIndex, nextIndex, 0);
+        int prevIndex = iter.previousIndex();
+        assertEquals("previousIndex should be -1, actual value: " + prevIndex, prevIndex, -1);
 
         try {
             iter.previous();
@@ -1049,6 +1048,9 @@ public abstract class TestList extends TestCollection {
            return outer.isAddSupported();
        }
 
+       protected boolean isSetSupported() {
+           return outer.isSetSupported();
+       }
 
        protected boolean isRemoveSupported() {
            return outer.isRemoveSupported();
