@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.15 2003/11/29 18:04:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.16 2004/01/01 19:00:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,36 +63,40 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Binary heap implementation of {@link PriorityQueue} and {@link Buffer}.
+ * Binary heap implementation of <code>PriorityQueue</code>.
+ * <p>
+ * The <code>PriorityQueue</code> interface has now been replaced for most uses
+ * by the <code>Buffer</code> interface. This class and the interface are
+ * retained for backwards compatability. The intended replacement is
+ * {@link org.apache.commons.collections.buffer.BinaryBuffer BinaryBuffer}.
  * <p>
  * The removal order of a binary heap is based on either the natural sort
  * order of its elements or a specified {@link Comparator}.  The 
- * {@link #remove()} method always returns the first element as determined
+ * {@link #pop()} method always returns the first element as determined
  * by the sort order.  (The <code>isMinHeap</code> flag in the constructors
- * can be used to reverse the sort order, in which case {@link #remove()}
+ * can be used to reverse the sort order, in which case {@link #pop()}
  * will always remove the last element.)  The removal order is 
  * <i>not</i> the same as the order of iteration; elements are
  * returned by the iterator in no particular order.
  * <p>
- * The {@link #add(Object)} and {@link #remove()} operations perform
- * in logarithmic time.  The {@link #get()} operation performs in constant
+ * The {@link #insert(Object)} and {@link #pop()} operations perform
+ * in logarithmic time.  The {@link #peek()} operation performs in constant
  * time.  All other operations perform in linear time or worse.
  * <p>
  * Note that this implementation is not synchronized.  Use 
- * {@link BufferUtils#synchronizedBuffer(Buffer)} to provide
- * synchronized access to a <code>BinaryHeap</code>:
+ * {@link PriorityQueueUtils#synchronizedPriorityQueue(PriorityQueue)}
+ * to provide synchronized access to a <code>BinaryHeap</code>:
  *
  * <pre>
- * Buffer heap = BufferUtils.synchronizedBuffer(new BinaryHeap());
+ * PriorityQueue heap = PriorityQueueUtils.synchronizedPriorityQueue(new BinaryHeap());
  * </pre>
  *
- * @deprecated Moved to buffer subpackage. Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.15 $ $Date: 2003/11/29 18:04:57 $
+ * @version $Revision: 1.16 $ $Date: 2004/01/01 19:00:20 $
  * 
- * @author <a href="mailto:donaldp@apache.org">Peter Donald</a>
- * @author <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a>
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @author Peter Donald
+ * @author Ram Chidambaram
+ * @author Michael A. Smith
  * @author Paul Jack
  * @author Stephen Colebourne
  */
@@ -227,7 +231,7 @@ public final class BinaryHeap extends AbstractCollection
         m_comparator = comparator;
     }
 
-    
+    //-----------------------------------------------------------------------
     /**
      * Clears all elements from queue.
      */
