@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestUnmodifiableMap.java,v 1.1 2003/10/06 05:06:05 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestUnmodifiableMap.java,v 1.2 2003/10/07 22:20:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.AbstractTestMap;
  * {@link UnmodifiableMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/06 05:06:05 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/07 22:20:58 $
  * 
  * @author Phil Steitz
  */
@@ -99,11 +99,15 @@ public class TestUnmodifiableMap extends AbstractTestMap{
         return UnmodifiableMap.decorate(new HashMap());
     }
     
-    protected boolean isChangeable() {
+    protected boolean isPutChangeSupported() {
         return false;
     }
     
-    protected boolean isAddRemoveModifiable() {
+    protected boolean isPutAddSupported() {
+        return false;
+    }
+    
+    protected boolean isRemoveSupported() {
         return false;
     }
     

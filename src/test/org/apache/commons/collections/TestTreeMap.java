@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.9 2003/10/05 21:23:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.10 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,7 +62,7 @@ import java.util.TreeMap;
 /**
  * Tests TreeMap.
  * 
- * @version $Revision: 1.9 $ $Date: 2003/10/05 21:23:21 $
+ * @version $Revision: 1.10 $ $Date: 2003/10/07 22:20:57 $
  * 
  * @author Jason van Zyl
  */
@@ -77,7 +77,7 @@ public abstract class TestTreeMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public boolean useNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
 

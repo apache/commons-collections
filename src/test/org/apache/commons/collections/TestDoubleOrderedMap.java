@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.9 2003/10/05 21:11:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.10 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import junit.framework.Test;
  * Map that does not support duplicate keys, duplicate 
  * values, or null values.
  * 
- * @version $Revision: 1.9 $ $Date: 2003/10/05 21:11:06 $
+ * @version $Revision: 1.10 $ $Date: 2003/10/07 22:20:57 $
  * 
  * @author Marc Johnson (marcj at users dot sourceforge dot net)
  */
@@ -104,7 +104,7 @@ public class TestDoubleOrderedMap extends AbstractTestMap  {
     /**
      *  The default comparator in double ordered map does not allow null keys.
      **/
-    public boolean useNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
 
@@ -112,14 +112,14 @@ public class TestDoubleOrderedMap extends AbstractTestMap  {
      *  The default comparator in double ordered map does not allow null keys,
      *  and values are keys in this map.
      **/
-    public boolean useNullValue() {
+    public boolean isAllowNullValue() {
         return false;
     }
 
     /**
      *  Double ordered map does not support duplicate values
      **/
-    public boolean useDuplicateValues() {
+    public boolean isAllowDuplicateValues() {
         return false;
     }
 

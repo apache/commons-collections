@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.12 2003/10/05 20:46:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.13 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import junit.framework.Test;
 /**
  * Test cases for BeanMap
  * 
- * @version $Revision: 1.12 $ $Date: 2003/10/05 20:46:40 $
+ * @version $Revision: 1.13 $ $Date: 2003/10/07 22:20:57 $
  * 
  * @author Morgan Delagrange
  */
@@ -253,14 +253,23 @@ public class TestBeanMap extends AbstractTestMap {
     }
 
     /**
-     *  The mappings in a BeanMap are fixed on the properties the underlying
-     *  bean has.  Adding and removing mappings is not possible, thus this
-     *  method is overridden to return false.
-     **/
-    protected boolean isAddRemoveModifiable() {
+     * The mappings in a BeanMap are fixed on the properties the underlying
+     * bean has.  Adding and removing mappings is not possible, thus this
+     * method is overridden to return false.
+     */
+    protected boolean isPutAddSupported() {
         return false;
     }
-  
+
+    /**
+     * The mappings in a BeanMap are fixed on the properties the underlying
+     * bean has.  Adding and removing mappings is not possible, thus this
+     * method is overridden to return false.
+     */
+    protected boolean isRemoveSupported() {
+        return false;
+    }
+
     protected Map makeFullMap() {
         // note: These values must match (i.e. .equals() must return true)
         // those returned from getSampleValues().
@@ -299,16 +308,24 @@ public class TestBeanMap extends AbstractTestMap {
     }
 
     /**
-     *  Need to override this method because the "clear()" method on the bean
-     *  map just returns the bean properties to their default states.  It does
-     *  not actually remove the mappings as per the map contract.  The default
-     *  testClear() methods checks that the clear method throws an
-     *  UnsupportedOperationException since this class is not add/remove
-     *  modifiable.  In our case though, we do not always throw that exception.
-     **/
-    public void testClear() {
+     * Need to override this method because the "clear()" method on the bean
+     * map just returns the bean properties to their default states.  It does
+     * not actually remove the mappings as per the map contract.  The default
+     * testClear() methods checks that the clear method throws an
+     * UnsupportedOperationException since this class is not add/remove
+     * modifiable.  In our case though, we do not always throw that exception.
+     */
+    public void testMapClear() {
         //TODO: make sure a call to BeanMap.clear returns the bean to its
         //default initialization values.
+    }
+
+    /**
+     * Need to override this method because the "put()" method on the bean
+     * doesn't work for this type of Map.
+     */
+    public void testMapPut() {
+        // see testBeanMapPutAllWriteable
     }
 
     public void testBeanMapClone() {

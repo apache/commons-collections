@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeMap.java,v 1.4 2003/10/02 23:01:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeMap.java,v 1.5 2003/10/07 22:20:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.AbstractTestMap;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/10/02 23:01:09 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/07 22:20:58 $
  * 
  * @author Stephen Colebourne
  */
@@ -99,7 +99,11 @@ public class TestFixedSizeMap extends AbstractTestMap {
         return FixedSizeMap.decorate(map);
     }
     
-    protected boolean isAddRemoveModifiable() {
+    protected boolean isPutAddSupported() {
+        return false;
+    }
+
+    protected boolean isRemoveSupported() {
         return false;
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.17 2003/10/05 21:17:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.18 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.decorators.PredicatedMap;
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.17 $ $Date: 2003/10/05 21:17:40 $
+ * @version $Revision: 1.18 $ $Date: 2003/10/07 22:20:57 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -163,11 +163,11 @@ public class TestMapUtils extends BulkTest {
     
     public BulkTest bulkTestTypedMap() {
         return new AbstractTestMap("") {
-            public boolean useNullKey() {
+            public boolean isAllowNullKey() {
                 return false;
             }
 
-            public boolean useNullValue() {
+            public boolean isAllowNullValue() {
                 return false;
             }
 

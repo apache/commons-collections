@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.5 2003/10/06 23:47:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.6 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/10/06 23:47:17 $
+ * @version $Revision: 1.6 $ $Date: 2003/10/07 22:20:57 $
  * 
  * @author Matthew Hawthorne
  */
@@ -128,7 +128,7 @@ public abstract class TestBidiMap extends AbstractTestMap {
     /**
      * Override to indicate to AbstractTestMap this is a BidiMap.
      */
-    protected boolean useDuplicateValues() {
+    protected boolean isAllowDuplicateValues() {
         return false;
     }
     

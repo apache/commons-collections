@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.11 2003/10/05 21:11:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.12 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.Test;
 /**
  * Tests FastTreeMap.
  * 
- * @version $Revision: 1.11 $ $Date: 2003/10/05 21:11:06 $
+ * @version $Revision: 1.12 $ $Date: 2003/10/07 22:20:57 $
  * 
  * @author Jason van Zyl
  */
@@ -97,7 +97,7 @@ public class TestFastTreeMap extends TestTreeMap {
     /**
      *  The comparator for the fast tree map does not support null keys.
      **/
-    public boolean useNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
 
@@ -105,7 +105,7 @@ public class TestFastTreeMap extends TestTreeMap {
      * There is a bug in JDK1.2.2 TreeMap; the keySet will incorrectly
      * return false when a null value is removed
      */
-    public boolean useNullValue() {
+    public boolean isAllowNullValue() {
         return false;
     }
 

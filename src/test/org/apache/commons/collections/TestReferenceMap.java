@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.12 2003/10/05 21:23:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.13 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.Test;
 /**
  * Tests for ReferenceMap. 
  * 
- * @version $Revision: 1.12 $ $Date: 2003/10/05 21:23:21 $
+ * @version $Revision: 1.13 $ $Date: 2003/10/07 22:20:57 $
  *
  * @author Paul Jack
  */
@@ -89,11 +89,11 @@ public class TestReferenceMap extends AbstractTestMap {
         return map;
     }
 
-    public boolean useNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
 
-    public boolean useNullValue() {
+    public boolean isAllowNullValue() {
         return false;
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.3 2003/10/05 20:47:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.4 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,32 +79,33 @@ import java.util.Set;
  * override one or more of the other protected methods.  They're described
  * below.
  * <p>
- * <B>Entry Population Methods</B><P>
- *
+ * <b>Entry Population Methods</b>
+ * <p>
  * Override these methods if your map requires special entries:
+ * 
+ * <ul>
+ * <li>{@link #getSampleKeys()}
+ * <li>{@link #getSampleValues()}
+ * <li>{@link #getNewSampleValues()}
+ * <li>{@link #getOtherKeys()}
+ * <li>{@link #getOtherValues()}
+ * </ul>
  *
- * <UL>
- * <LI>{@link #getSampleKeys()}
- * <LI>{@link #getSampleValues()}
- * <LI>{@link #getNewSampleValues()}
- * <LI>{@link #getOtherKeys()}
- * <LI>{@link #getOtherValues()}
- * </UL>
- *
- * <B>Supported Operation Methods</B><P>
- *
+ * <b>Supported Operation Methods</b>
+ * <p>
  * Override these methods if your map doesn't support certain operations:
  *
- * <UL>
- * <LI> {@link #useDuplicateValues()}
- * <LI> {@link #useNullKey()}
- * <LI> {@link #useNullValue()}
- * <LI> {@link #isAddRemoveModifiable()}
- * <LI> {@link #isChangeable()}
- * </UL>
+ * <ul>
+ * <li> {@link #isPutAddSupported()}
+ * <li> {@link #isPutChangeSupported()}
+ * <li> {@link #isRemoveSupported()}
+ * <li> {@link #isAllowDuplicateValues()}
+ * <li> {@link #isAllowNullKey()}
+ * <li> {@link #isAllowNullValue()}
+ * </ul>
  *
- * <B>Fixture Methods</B><P>
- *
+ * <b>Fixture Methods</b>
+ * <p>
  * For tests on modification operations (puts and removes), fixtures are used
  * to verify that that operation results in correct state for the map and its
  * collection views.  Basically, the modification is performed against your
@@ -139,19 +140,19 @@ import java.util.Set;
  * {@link #verifyValues()} method to verify that the values are unique and in
  * ascending order.<P>
  *  
- * <B>Other Notes</B><P>
- *
+ * <b>Other Notes</b>
+ * <p>
  * If your {@link Map} fails one of these tests by design, you may still use
- * this base set of cases.  Simply override the test case (method) your {@link
- * Map} fails and/or the methods that define the assumptions used by the test
+ * this base set of cases.  Simply override the test case (method) your map
+ * fails and/or the methods that define the assumptions used by the test
  * cases.  For example, if your map does not allow duplicate values, override
- * {@link #useDuplicateValues()} and have it return <code>false</code>
+ * {@link #isAllowDuplicateValues()} and have it return <code>false</code>
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.3 $ $Date: 2003/10/05 20:47:37 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/07 22:20:57 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -179,7 +180,6 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     /** HashMap created by reset(). */
     protected Map confirmed;
 
-
     /**
      * JUnit constructor.
      * 
@@ -189,44 +189,77 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         super(testName);
     }
 
-
     /**
-     *  Override if your map does not allow a <code>null</code> key.  The
-     *  default implementation returns <code>true</code>
+     * Returns true if the maps produced by 
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * support the <code>put</code> and <code>putAll</code> operations
+     * adding new mappings.
+     * <p>
+     * Default implementation returns true.
+     * Override if your collection class does not support put adding.
      */
-    protected boolean useNullKey() {
+    protected boolean isPutAddSupported() {
         return true;
     }
 
     /**
-     *  Override if your map does not allow <code>null</code> values.  The
-     *  default implementation returns <code>true</code>.
+     * Returns true if the maps produced by 
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * support the <code>put</code> and <code>putAll</code> operations
+     * changing existing mappings.
+     * <p>
+     * Default implementation returns true.
+     * Override if your collection class does not support put changing.
      */
-    protected boolean useNullValue() {
+    protected boolean isPutChangeSupported() {
         return true;
     }
 
     /**
-     *  Override if your map does not allow duplicate values.  The default
-     *  implementation returns <code>true</code>.
+     * Returns true if the maps produced by 
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * support the <code>remove</code> and <code>clear</code> operations.
+     * <p>
+     * Default implementation returns true.
+     * Override if your collection class does not support removal operations.
      */
-    protected boolean useDuplicateValues() {
+    protected boolean isRemoveSupported() {
         return true;
     }
 
     /**
-     *  Override if your map allows its mappings to be changed to new values.
-     *  The default implementation returns <code>true</code>.
+     * Returns true if the maps produced by 
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * supports null keys.
+     * <p>
+     * Default implementation returns true.
+     * Override if your collection class does not support null keys.
      */
-    protected boolean isChangeable() {
+    protected boolean isAllowNullKey() {
         return true;
     }
 
     /**
-     *  Override if your map does not allow add/remove modifications.  The
-     *  default implementation returns <code>true</code>.
+     * Returns true if the maps produced by 
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * supports null values.
+     * <p>
+     * Default implementation returns true.
+     * Override if your collection class does not support null values.
      */
-    protected boolean isAddRemoveModifiable() {
+    protected boolean isAllowNullValue() {
+        return true;
+    }
+
+    /**
+     * Returns true if the maps produced by 
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * supports duplicate values.
+     * <p>
+     * Default implementation returns true.
+     * Override if your collection class does not support duplicate values.
+     */
+    protected boolean isAllowDuplicateValues() {
         return true;
     }
 
@@ -235,7 +268,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      *  method must return an array with the same length as {@link
      *  #getSampleValues()} and all array elements must be different. The
      *  default implementation constructs a set of String keys, and includes a
-     *  single null key if {@link #useNullKey()} returns <code>true</code>.
+     *  single null key if {@link #isAllowNullKey()} returns <code>true</code>.
      */
     protected Object[] getSampleKeys() {
         Object[] result = new Object[] {
@@ -243,7 +276,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             "hello", "goodbye", "we'll", "see", "you", "all", "again",
             "key",
             "key2",
-            (useNullKey()) ? null : "nonnullkey"
+            (isAllowNullKey()) ? null : "nonnullkey"
         };
         return result;
     }
@@ -258,10 +291,10 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Returns a list of string elements suitable for return by
-     *  {@link getOtherElements()}.  Override getOtherElements to return
-     *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
+     * Returns a list of string elements suitable for return by
+     * {@link getOtherElements()}.  Override getOtherElements to return
+     * the results of this method if your collection does not support
+     * heterogenous elements or the null element.
      */
     protected Object[] getOtherNonNullStringElements() {
         return new Object[] {
@@ -271,41 +304,41 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Returns the set of values in the mappings used to test the map.  This
-     *  method must return an array with the same length as {@link
-     *  #getSampleKeys()}.  The default implementation constructs a set of
-     *  String values and includes a single null value if {@link
-     *  #useNullValue()} returns <code>true</code>, and includes two values
-     *  that are the same if {@link #useDuplicateValues()} returns
-     *  <code>true</code>.
+     * Returns the set of values in the mappings used to test the map.  This
+     * method must return an array with the same length as
+     * {@link #getSampleKeys()}.  The default implementation constructs a set of
+     * String values and includes a single null value if 
+     * {@link #isNullValueSupported()} returns <code>true</code>, and includes 
+     * two values that are the same if {@link #isAllowDuplicateValues()} returns
+     * <code>true</code>.
      */
     protected Object[] getSampleValues() {
         Object[] result = new Object[] {
             "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev",
             "hellov", "goodbyev", "we'llv", "seev", "youv", "allv", "againv",
-            (useNullValue()) ? null : "nonnullvalue",
+            (isAllowNullValue()) ? null : "nonnullvalue",
             "value",
-            (useDuplicateValues()) ? "value" : "value2",
+            (isAllowDuplicateValues()) ? "value" : "value2",
         };
         return result;
     }
 
     /**
-     *  Returns a the set of values that can be used to replace the values
-     *  returned from {@link #getSampleValues()}.  This method must return an
-     *  array with the same length as {@link #getSampleValues()}.  The values
-     *  returned from this method should not be the same as those returned from
-     *  {@link #getSampleValues()}.  The default implementation constructs a
-     *  set of String values and includes a single null value if {@link
-     *  #useNullValue()} returns <code>true</code>, and includes two values
-     *  that are the same if {@link #useDuplicateValues()} returns
-     *  <code>true</code>.  
+     * Returns a the set of values that can be used to replace the values
+     * returned from {@link #getSampleValues()}.  This method must return an
+     * array with the same length as {@link #getSampleValues()}.  The values
+     * returned from this method should not be the same as those returned from
+     * {@link #getSampleValues()}.  The default implementation constructs a
+     * set of String values and includes a single null value if
+     * {@link #isNullValueSupported()} returns <code>true</code>, and includes two values
+     * that are the same if {@link #isAllowDuplicateValues()} returns
+     * <code>true</code>.  
      */
     protected Object[] getNewSampleValues() {
         Object[] result = new Object[] {
-            (useNullValue() && useDuplicateValues()) ? null : "newnonnullvalue",
+            (isAllowNullValue() && isAllowDuplicateValues()) ? null : "newnonnullvalue",
             "newvalue",
-            (useDuplicateValues()) ? "newvalue" : "newvalue2",
+            (isAllowDuplicateValues()) ? "newvalue" : "newvalue2",
             "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", 
             "newgollyv", "newgeev", "newhellov", "newgoodbyev", "newwe'llv", 
             "newseev", "newyouv", "newallv", "newagainv",
@@ -331,12 +364,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                            keys[i] == null || values[i] == null);
                 
                 assertTrue("NullPointerException on null key, but " +
-                           "useNullKey is not overridden to return false.", 
-                           keys[i] == null || !useNullKey());
+                           "isNullKeySupported is not overridden to return false.", 
+                           keys[i] == null || !isAllowNullKey());
                 
                 assertTrue("NullPointerException on null value, but " +
-                           "useNullValue is not overridden to return false.",
-                           values[i] == null || !useNullValue());
+                           "isNullValueSupported is not overridden to return false.",
+                           values[i] == null || !isAllowNullValue());
                 
                 assertTrue("Unknown reason for NullPointer.", false);
             }
@@ -379,14 +412,14 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
     //-----------------------------------------------------------------------
     /**
-     *  Test to ensure the test setup is working properly.  This method checks
-     *  to ensure that the getSampleKeys and getSampleValues methods are
-     *  returning results that look appropriate.  That is, they both return a
-     *  non-null array of equal length.  The keys array must not have any
-     *  duplicate values, and may only contain a (single) null key if
-     *  useNullKey() returns true.  The values array must only have a null
-     *  value if useNullValue() is true and may only have duplicate values if
-     *  useDuplicateValues() returns true.  
+     * Test to ensure the test setup is working properly.  This method checks
+     * to ensure that the getSampleKeys and getSampleValues methods are
+     * returning results that look appropriate.  That is, they both return a
+     * non-null array of equal length.  The keys array must not have any
+     * duplicate values, and may only contain a (single) null key if
+     * isNullKeySupported() returns true.  The values array must only have a null
+     * value if useNullValue() is true and may only have duplicate values if
+     * isAllowDuplicateValues() returns true.  
      */
     public void testSampleMappings() {
       Object[] keys = getSampleKeys();
@@ -417,12 +450,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                           (!keys[i].equals(keys[j]) && 
                            !keys[j].equals(keys[i]))));
           }
-          assertTrue("failure in test: found null key, but useNullKey " +
-                     "is false.", keys[i] != null || useNullKey());
-          assertTrue("failure in test: found null value, but useNullValue " +
-                     "is false.", values[i] != null || useNullValue());
-          assertTrue("failure in test: found null new value, but useNullValue " +
-                     "is false.", newValues[i] != null || useNullValue());
+          assertTrue("failure in test: found null key, but isNullKeySupported " +
+                     "is false.", keys[i] != null || isAllowNullKey());
+          assertTrue("failure in test: found null value, but isNullValueSupported " +
+                     "is false.", values[i] != null || isAllowNullValue());
+          assertTrue("failure in test: found null new value, but isNullValueSupported " +
+                     "is false.", newValues[i] != null || isAllowNullValue());
           assertTrue("failure in test: values should not be the same as new value",
                      values[i] != newValues[i] && 
                      (values[i] == null || !values[i].equals(newValues[i])));
@@ -493,7 +526,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests {@link Map#clear()}.  If the map {@link #isAddRemoveModifiable()
+     *  Tests {@link Map#clear()}.  If the map {@link #isRemoveSupported()}
      *  can add and remove elements}, then {@link Map#size()} and {@link
      *  Map#isEmpty()} are used to ensure that map has no elements after a call
      *  to clear.  If the map does not support adding and removing elements,
@@ -501,7 +534,14 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      *  UnsupportedOperationException.
      */
     public void testMapClear() {
-        if (!isAddRemoveModifiable()) return;
+        if (!isRemoveSupported()) {
+            try {
+                resetFull();
+                map.clear();
+                fail("Expected UnsupportedOperationException on clear");
+            } catch (UnsupportedOperationException ex) {}
+            return;
+        }
 
         resetEmpty();
         map.clear();
@@ -693,41 +733,64 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      *  Tests Map.put(Object, Object)
      */
     public void testMapPut() {
-        if (!isAddRemoveModifiable()) return;
-
         resetEmpty();
-
         Object[] keys = getSampleKeys();
         Object[] values = getSampleValues();
         Object[] newValues = getNewSampleValues();
 
-        for(int i = 0; i < keys.length; i++) {
-            Object o = map.put(keys[i], values[i]);
-            confirmed.put(keys[i], values[i]);
-            verify();
-            assertTrue("First map.put should return null", o == null);
-            assertTrue("Map should contain key after put", 
-                       map.containsKey(keys[i]));
-            assertTrue("Map should contain value after put", 
-                       map.containsValue(values[i]));
-        }
+        if (isPutAddSupported()) {
+            for (int i = 0; i < keys.length; i++) {
+                Object o = map.put(keys[i], values[i]);
+                confirmed.put(keys[i], values[i]);
+                verify();
+                assertTrue("First map.put should return null", o == null);
+                assertTrue("Map should contain key after put", 
+                           map.containsKey(keys[i]));
+                assertTrue("Map should contain value after put", 
+                           map.containsValue(values[i]));
+            }
+            if (isPutChangeSupported()) {
+                for (int i = 0; i < keys.length; i++) {
+                    Object o = map.put(keys[i], newValues[i]);
+                    confirmed.put(keys[i], newValues[i]);
+                    verify();
+                    assertEquals("Map.put should return previous value when changed",
+                                 values[i], o);
+                    assertTrue("Map should still contain key after put when changed",
+                               map.containsKey(keys[i]));
+                    assertTrue("Map should contain new value after put when changed",
+                               map.containsValue(newValues[i]));
         
-        for(int i = 0; i < keys.length; i++) {
-            Object o = map.put(keys[i], newValues[i]);
-            confirmed.put(keys[i], newValues[i]);
-            verify();
-            assertEquals("Second map.put should return previous value",
-                         values[i], o);
-            assertTrue("Map should still contain key after put",
-                       map.containsKey(keys[i]));
-            assertTrue("Map should contain new value after put",
-                       map.containsValue(newValues[i]));
-
-            // if duplicates are allowed, we're not guaranteed that the value
-            // no longer exists, so don't try checking that.
-            if(!useDuplicateValues()) {
-                assertTrue("Map should not contain old value after second put",
-                           !map.containsValue(values[i]));
+                    // if duplicates are allowed, we're not guaranteed that the value
+                    // no longer exists, so don't try checking that.
+                    if (!isAllowDuplicateValues()) {
+                        assertTrue("Map should not contain old value after put when changed",
+                                   !map.containsValue(values[i]));
+                    }
+                }
+            }
+            
+        } else if (isPutChangeSupported()) {
+            resetFull();
+            int i = 0;
+            for (Iterator it = map.keySet().iterator(); it.hasNext() && i < newValues.length; i++) {
+                Object key = (Object) it.next();
+                Object o = map.put(key, newValues[i]);
+                Object value = confirmed.put(key, newValues[i]);
+                verify();
+                assertEquals("Map.put should return previous value when changed",
+                    value, o);
+                assertTrue("Map should still contain key after put when changed",
+                    map.containsKey(key));
+                assertTrue("Map should contain new value after put when changed",
+                    map.containsValue(newValues[i]));
+        
+                // if duplicates are allowed, we're not guaranteed that the value
+                // no longer exists, so don't try checking that.
+                if (!isAllowDuplicateValues()) {
+                    assertTrue("Map should not contain old value after put when changed",
+                        !map.containsValue(values[i]));
+                }
             }
         }
     }
@@ -736,7 +799,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      *  Tests Map.putAll(Collection)
      */
     public void testMapPutAll() {
-        if (!isAddRemoveModifiable()) return;
+        if (!isPutAddSupported()) return;
 
         resetEmpty();
 
@@ -764,7 +827,14 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      *  Tests Map.remove(Object)
      */
     public void testMapRemove() {
-        if (!isAddRemoveModifiable()) return;
+        if (!isRemoveSupported()) {
+            try {
+                resetFull();
+                map.remove(map.keySet().iterator().next());
+                fail("Expected UnsupportedOperationException on remove");
+            } catch (UnsupportedOperationException ex) {}
+            return;
+        }
 
         resetEmpty();
 
@@ -807,7 +877,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * the underlying map for clear().
      */
     public void testValuesClearChangesMap() {
-        if (!isAddRemoveModifiable()) return;
+        if (!isRemoveSupported()) return;
         
         // clear values, reflected in map
         resetFull();
@@ -833,7 +903,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * the underlying map for clear().
      */
     public void testKeySetClearChangesMap() {
-        if (!isAddRemoveModifiable()) return;
+        if (!isRemoveSupported()) return;
         
         // clear values, reflected in map
         resetFull();
@@ -859,7 +929,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * the underlying map for clear().
      */
     public void testEntrySetClearChangesMap() {
-        if (!isAddRemoveModifiable()) return;
+        if (!isRemoveSupported()) return;
         
         // clear values, reflected in map
         resetFull();
@@ -1007,7 +1077,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         
         protected boolean isRemoveSupported() {
             // Entry set should only support remove if map does
-            return isAddRemoveModifiable();
+            return AbstractTestMap.this.isRemoveSupported();
         }
         
         protected void resetFull() {
@@ -1066,7 +1136,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         }
         
         protected boolean isRemoveSupported() {
-            return isAddRemoveModifiable();
+            return AbstractTestMap.this.isRemoveSupported();
         }
         
         protected void resetEmpty() {
@@ -1127,7 +1197,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         }
         
         protected boolean isRemoveSupported() {
-            return isAddRemoveModifiable();
+            return AbstractTestMap.this.isRemoveSupported();
         }
 
         protected boolean areEqualElementsDistinguishable() {

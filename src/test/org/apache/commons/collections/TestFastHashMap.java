@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.11 2003/10/05 21:11:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.12 2003/10/07 22:20:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import junit.framework.Test;
 /**
  * Tests FastHashMap.
  * 
- * @version $Revision: 1.11 $ $Date: 2003/10/05 21:11:06 $
+ * @version $Revision: 1.12 $ $Date: 2003/10/07 22:20:57 $
  * 
  * @author Jason van Zyl
  */
@@ -93,7 +93,7 @@ public class TestFastHashMap extends AbstractTestMap {
      *  There is a bug in JDK1.2 HashMap; the keySet() will incorrectly
      *  return false when a null value is removed.
      */
-    public boolean useNullValue() {
+    public boolean isAllowNullValue() {
         return false;
     }
 }
