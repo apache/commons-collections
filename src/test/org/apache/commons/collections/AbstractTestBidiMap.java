@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.5 2003/11/02 15:27:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.6 2003/11/02 18:29:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import org.apache.commons.collections.iterators.MapIterator;
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/11/02 15:27:54 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/02 18:29:33 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -482,25 +482,31 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         assertEquals(false, it.hasNext());
         try {
             it.next();
+            fail();
         } catch (NoSuchElementException ex) {}
         try {
             it.getKey();
+            fail();
         } catch (IllegalStateException ex) {
         }
         try {
             it.getValue();
+            fail();
         } catch (IllegalStateException ex) {
         }
         try {
             it.remove();
+            fail();
         } catch (IllegalStateException ex) {
         }
         try {
             it.setValue(null);
+            fail();
         } catch (IllegalStateException ex) {
         }
         try {
             it.asMapEntry();
+            fail();
         } catch (IllegalStateException ex) {
         }
         verify();
@@ -550,6 +556,7 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         if (isRemoveSupported() == false) {
             try {
                 it.remove();
+                fail();
             } catch (UnsupportedOperationException ex) {
             }
             return;
@@ -581,6 +588,7 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         if (isSetValueSupported() == false) {
             try {
                 it.setValue(newValue1);
+                fail();
             } catch (UnsupportedOperationException ex) {
             }
             return;
@@ -618,6 +626,7 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         // key1=newValue1, key2=newValue2
         try {
             it.setValue(newValue1);  // should remove key1
+            fail();
         } catch (IllegalArgumentException ex) {
             return;  // simplest way of dealing with tricky situation
         }
@@ -661,6 +670,7 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         
         try {
             it.setValue(newValue1);
+            fail();
         } catch (IllegalStateException ex) {
         }
         verify();
