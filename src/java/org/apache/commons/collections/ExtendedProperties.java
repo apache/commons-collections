@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.17 2003/10/09 20:58:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.18 2003/12/29 18:18:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,6 +71,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -80,8 +81,11 @@ import java.util.Vector;
  * This class extends normal Java properties by adding the possibility
  * to use the same key many times concatenating the value strings
  * instead of overwriting them.
- *
- * <p>The Extended Properties syntax is explained here:
+ * <p>
+ * <b>Please consider using the <code>PropertiesConfiguration</code> class in
+ * Commons-Configuration as soon as it is released.</b>
+ * <p>
+ * The Extended Properties syntax is explained here:
  *
  * <ul>
  *  <li>
@@ -161,7 +165,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.17 $ $Date: 2003/10/09 20:58:53 $
+ * @version $Revision: 1.18 $ $Date: 2003/12/29 18:18:34 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -224,29 +228,100 @@ public class ExtendedProperties extends Hashtable {
     protected final static String START_TOKEN="${";
     protected final static String END_TOKEN="}";
 
+
+    /**
+     * Interpolate key names to handle ${key} stuff
+     *
+     * @param base string to interpolate
+     * @return returns the key name with the ${key} substituted
+     */
     protected String interpolate(String base) {
+        // COPIED from [configuration] 2003-12-29
+        return (interpolateHelper(base, null));
+    }
+
+    /**
+     * Recursive handler for multple levels of interpolation.
+     *
+     * When called the first time, priorVariables should be null.
+     *
+     * @param base string with the ${key} variables
+     * @param priorVariables serves two purposes: to allow checking for
+     * loops, and creating a meaningful exception message should a loop
+     * occur.  It's 0'th element will be set to the value of base from
+     * the first call.  All subsequent interpolated variables are added
+     * afterward.
+     *
+     * @return the string with the interpolation taken care of
+     */
+    protected String interpolateHelper(String base, List priorVariables) {
+        // COPIED from [configuration] 2003-12-29
         if (base == null) {
             return null;
         }
-        
+
+        // on the first call initialize priorVariables
+        // and add base as the first element
+        if (priorVariables == null) {
+            priorVariables = new ArrayList();
+            priorVariables.add(base);
+        }
+
         int begin = -1;
         int end = -1;
         int prec = 0 - END_TOKEN.length();
         String variable = null;
         StringBuffer result = new StringBuffer();
-        
+
         // FIXME: we should probably allow the escaping of the start token
-        while ( ((begin=base.indexOf(START_TOKEN,prec+END_TOKEN.length()))>-1)
-                && ((end=base.indexOf(END_TOKEN,begin))>-1) ) {
-            result.append(base.substring(prec+END_TOKEN.length(),begin));
-            variable = base.substring(begin+START_TOKEN.length(),end);
-            if (get(variable) != null) {
-                result.append(get(variable));
+        while (((begin = base.indexOf(START_TOKEN, prec + END_TOKEN.length())) > -1)
+            && ((end = base.indexOf(END_TOKEN, begin)) > -1)) {
+            result.append(base.substring(prec + END_TOKEN.length(), begin));
+            variable = base.substring(begin + START_TOKEN.length(), end);
+
+            // if we've got a loop, create a useful exception message and throw
+            if (priorVariables.contains(variable)) {
+                String initialBase = priorVariables.remove(0).toString();
+                priorVariables.add(variable);
+                StringBuffer priorVariableSb = new StringBuffer();
+
+                // create a nice trace of interpolated variables like so:
+                // var1->var2->var3
+                for (Iterator it = priorVariables.iterator(); it.hasNext();) {
+                    priorVariableSb.append(it.next());
+                    if (it.hasNext()) {
+                        priorVariableSb.append("->");
+                    }
+                }
+
+                throw new IllegalStateException(
+                    "infinite loop in property interpolation of " + initialBase + ": " + priorVariableSb.toString());
             }
-            prec=end;
+            // otherwise, add this variable to the interpolation list.
+            else {
+                priorVariables.add(variable);
+            }
+
+            //QUESTION: getProperty or getPropertyDirect
+            Object value = getProperty(variable);
+            if (value != null) {
+                result.append(interpolateHelper(value.toString(), priorVariables));
+
+                // pop the interpolated variable off the stack
+                // this maintains priorVariables correctness for
+                // properties with multiple interpolations, e.g.
+                // prop.name=${some.other.prop1}/blahblah/${some.other.prop2}
+                priorVariables.remove(priorVariables.size() - 1);
+            } else if (defaults != null && defaults.getString(variable, null) != null) {
+                result.append(defaults.getString(variable));
+            } else {
+                //variable not defined - so put it back in the value
+                result.append(START_TOKEN).append(variable).append(END_TOKEN);
+            }
+            prec = end;
         }
-        result.append(base.substring(prec+END_TOKEN.length(),base.length()));
-        
+        result.append(base.substring(prec + END_TOKEN.length(), base.length()));
+
         return result.toString();
     }
     
