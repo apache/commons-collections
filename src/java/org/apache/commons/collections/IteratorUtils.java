@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2002/10/12 22:15:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.5 2002/11/21 23:08:27 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/11/21 23:08:27 $
  *
  * ====================================================================
  *
@@ -81,6 +81,7 @@ import org.apache.commons.collections.iterators.FilterListIterator;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.commons.collections.iterators.ListIteratorWrapper;
+import org.apache.commons.collections.iterators.LoopingIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -90,7 +91,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * <code>org.apache.commons.collections.iterators</code> subpackage.
  *
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorUtils.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
+ * @version $Id: IteratorUtils.java,v 1.5 2002/11/21 23:08:27 scolebourne Exp $
  * @since 2.1
  */
 public class IteratorUtils {
@@ -393,6 +394,23 @@ public class IteratorUtils {
             throw new NullPointerException("Predicate must not be null");
         }
         return new FilterListIterator(listIterator, predicate);
+    }
+    
+    /**
+     * Gets an iterator that loops continuously over the supplied collection.
+     * <p>
+     * The iterator will only stop looping if the remove method is called
+     * enough times to empty the collection, or if the collection is empty
+     * to start with.
+     *
+     * @param coll  the collection to iterate over, not null
+     * @throws NullPointerException if the collection is null
+     */
+    public static Iterator loopingIterator(Collection coll) {
+        if (coll == null) {
+            throw new NullPointerException("Collection must not be null");
+        }
+        return new LoopingIterator(coll);
     }
     
     /**
