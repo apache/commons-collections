@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestFilterListIterator.java,v 1.2 2002/02/26 17:28:55 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/26 17:28:55 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestFilterListIterator.java,v 1.3 2002/05/13 16:10:37 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/05/13 16:10:37 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import java.util.ListIterator;
 import java.util.Random;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/02/26 17:28:55 $
+ * @version $Revision: 1.3 $ $Date: 2002/05/13 16:10:37 $
  * @author Rodney Waldhoff
  */
 public class TestFilterListIterator extends TestCase {
@@ -314,6 +314,18 @@ public class TestFilterListIterator extends TestCase {
             walkForward(expected,filtered);
             previousPreviousNext(expected,filtered);
         }
+    }
+
+    public void testFailingHasNextBug() {
+        FilterListIterator filtered = new FilterListIterator(list.listIterator(),fourPred);
+        ListIterator expected = fours.listIterator();
+        while(expected.hasNext()) {
+            expected.next();
+            filtered.next();
+        }
+        assertTrue(filtered.hasPrevious());
+        assertTrue(!filtered.hasNext());
+        assertEquals(expected.previous(),filtered.previous());
     }
 
     // Utilities
