@@ -20,9 +20,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.collections.functors.ChainedClosure;
+import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.ExceptionClosure;
 import org.apache.commons.collections.functors.ForClosure;
 import org.apache.commons.collections.functors.IfClosure;
+import org.apache.commons.collections.functors.InvokerTransformer;
 import org.apache.commons.collections.functors.NOPClosure;
 import org.apache.commons.collections.functors.SwitchClosure;
 import org.apache.commons.collections.functors.TransformerClosure;
@@ -46,7 +48,7 @@ import org.apache.commons.collections.functors.WhileClosure;
  * All the supplied closures are Serializable.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/04/14 21:47:47 $
+ * @version $Revision: 1.9 $ $Date: 2004/05/26 21:50:52 $
  *
  * @author Stephen Colebourne
  */
@@ -155,7 +157,7 @@ public class ClosureUtils {
      */
     public static Closure invokerClosure(String methodName) {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
-        return asClosure(TransformerUtils.invokerTransformer(methodName, null, null));
+        return asClosure(InvokerTransformer.getInstance(methodName));
     }
 
     /**
@@ -174,7 +176,7 @@ public class ClosureUtils {
      */
     public static Closure invokerClosure(String methodName, Class[] paramTypes, Object[] args) {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
-        return asClosure(TransformerUtils.invokerTransformer(methodName, paramTypes, args));
+        return asClosure(InvokerTransformer.getInstance(methodName, paramTypes, args));
     }
 
     /**
@@ -339,7 +341,7 @@ public class ClosureUtils {
         int i = 0;
         for (Iterator it = objectsAndClosures.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
-            preds[i] = PredicateUtils.equalPredicate(entry.getKey());
+            preds[i] = EqualPredicate.getInstance(entry.getKey());
             trs[i] = (Closure) entry.getValue();
             i++;
         }

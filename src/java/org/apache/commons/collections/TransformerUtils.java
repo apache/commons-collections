@@ -23,6 +23,7 @@ import org.apache.commons.collections.functors.ChainedTransformer;
 import org.apache.commons.collections.functors.CloneTransformer;
 import org.apache.commons.collections.functors.ClosureTransformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
+import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.ExceptionTransformer;
 import org.apache.commons.collections.functors.FactoryTransformer;
 import org.apache.commons.collections.functors.InstantiateTransformer;
@@ -56,7 +57,7 @@ import org.apache.commons.collections.functors.SwitchTransformer;
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2004/04/14 21:47:47 $
+ * @version $Revision: 1.13 $ $Date: 2004/05/26 21:50:52 $
  * 
  * @author Stephen Colebourne
  * @author James Carman
@@ -339,7 +340,7 @@ public class TransformerUtils {
         int i = 0;
         for (Iterator it = objectsAndTransformers.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
-            preds[i] = PredicateUtils.equalPredicate(entry.getKey());
+            preds[i] = EqualPredicate.getInstance(entry.getKey());
             trs[i] = (Transformer) entry.getValue();
             i++;
         }

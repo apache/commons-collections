@@ -25,6 +25,7 @@ import org.apache.commons.collections.functors.ExceptionPredicate;
 import org.apache.commons.collections.functors.FalsePredicate;
 import org.apache.commons.collections.functors.IdentityPredicate;
 import org.apache.commons.collections.functors.InstanceofPredicate;
+import org.apache.commons.collections.functors.InvokerTransformer;
 import org.apache.commons.collections.functors.NonePredicate;
 import org.apache.commons.collections.functors.NotNullPredicate;
 import org.apache.commons.collections.functors.NotPredicate;
@@ -60,11 +61,12 @@ import org.apache.commons.collections.functors.UniquePredicate;
  * <li>False - always return false
  * <li>Exception - always throws an exception
  * <li>NullIsException/NullIsFalse/NullIsTrue - check for null input
+ * <li>Transformed - transforms the input before calling the predicate
  * </ul>
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.18 $ $Date: 2004/04/14 21:47:47 $
+ * @version $Revision: 1.19 $ $Date: 2004/05/26 21:50:52 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg
@@ -213,7 +215,7 @@ public class PredicateUtils {
      */
     public static Predicate invokerPredicate(String methodName){
         // reuse transformer as it has caching - this is lazy really, should have inner class here
-        return asPredicate(TransformerUtils.invokerTransformer(methodName));
+        return asPredicate(InvokerTransformer.getInstance(methodName));
     }
 
     /**
@@ -238,7 +240,7 @@ public class PredicateUtils {
      */
     public static Predicate invokerPredicate(String methodName, Class[] paramTypes, Object[] args){
         // reuse transformer as it has caching - this is lazy really, should have inner class here
-        return asPredicate(TransformerUtils.invokerTransformer(methodName, paramTypes, args));
+        return asPredicate(InvokerTransformer.getInstance(methodName, paramTypes, args));
     }
 
     // Boolean combinations
