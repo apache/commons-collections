@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.3 2001/07/14 23:33:27 craigmcc Exp $
- * $Revision: 1.3 $
- * $Date: 2001/07/14 23:33:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.4 2001/09/21 03:15:15 jvanzyl Exp $
+ * $Revision: 1.4 $
+ * $Date: 2001/09/21 03:15:15 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import junit.framework.TestSuite;
  *   class
  * 
  *   @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
- *   @version $Id: TestExtendedProperties.java,v 1.3 2001/07/14 23:33:27 craigmcc Exp $
+ *   @version $Id: TestExtendedProperties.java,v 1.4 2001/09/21 03:15:15 jvanzyl Exp $
  */
 public class TestExtendedProperties extends TestCase
 {
@@ -143,5 +143,13 @@ public class TestExtendedProperties extends TestCase
         assertTrue("This returns string for subset", ( subEprop.getString("string") instanceof java.lang.String) );
         assertTrue("This returns array for subset", ( subEprop.getVector("string") instanceof java.util.Vector) );
         
+    }
+
+    public void testInterpolation()
+    {
+        eprop.setProperty("applicationRoot", "/home/applicationRoot");
+        eprop.setProperty("db", "${applicationRoot}/db/hypersonic");
+        String dbProp = "/home/applicationRoot/db/hypersonic";
+        assertTrue("Checking interpolated variable", eprop.getString("db").equals(dbProp));
     }
 }
