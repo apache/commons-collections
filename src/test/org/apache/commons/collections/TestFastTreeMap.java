@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.6 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/06/18 05:35:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.7 2002/08/12 18:00:46 pjack Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/08/12 18:00:46 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.TreeMap;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap.java,v 1.6 2002/06/18 05:35:58 mas Exp $
+ * @version $Id: TestFastTreeMap.java,v 1.7 2002/08/12 18:00:46 pjack Exp $
  */
 public class TestFastTreeMap extends TestTreeMap
 {
@@ -100,6 +100,15 @@ public class TestFastTreeMap extends TestTreeMap
      **/
     public boolean useNullKey() {
       return false;
+    }
+
+
+    /**
+     * There is a bug in JDK1.2.2 TreeMap; the keySet will incorrectly
+     * return false when a null value is removed
+     */
+    public boolean useNullValue() {
+       return false;
     }
 
     public void setUp()

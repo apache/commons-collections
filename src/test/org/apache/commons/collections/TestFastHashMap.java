@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.6 2002/06/18 05:41:11 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/06/18 05:41:11 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.7 2002/08/12 18:00:46 pjack Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/08/12 18:00:46 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastHashMap.java,v 1.6 2002/06/18 05:41:11 mas Exp $
+ * @version $Id: TestFastHashMap.java,v 1.7 2002/08/12 18:00:46 pjack Exp $
  */
 public class TestFastHashMap extends TestMap
 {
@@ -93,5 +93,13 @@ public class TestFastHashMap extends TestMap
         FastHashMap fhm = new FastHashMap();
         fhm.setFast(false);
         return (fhm);
+    }
+
+    /**
+     *  There is a bug in JDK1.2 HashMap; the keySet() will incorrectly
+     *  return false when a null value is removed.
+     */
+    public boolean useNullValue() {
+        return false;
     }
 }
