@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.2 2002/06/21 03:50:40 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/21 03:50:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.3 2002/08/13 19:41:36 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/13 19:41:36 $
  *
  * ====================================================================
  *
@@ -72,45 +72,106 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/06/21 03:50:40 $
+ * A list backed by a <Code>float</Code> array.
+ *
+ * @version $Revision: 1.3 $ $Date: 2002/08/13 19:41:36 $
  * @author Rodney Waldhoff 
  */
 public class FloatArrayList extends AbstractList implements List, Serializable {
 
     //------------------------------------------------------------ Constructors
-    
+
+    /**
+     *  Constructs a new <Code>FloatArrayList</Code> with a default initial
+     *  capacity.
+     */
     public FloatArrayList() {
         this(8);
     }
 
+    /**
+     *  Constructs a new <Code>FloatArrayList</Code> with the specified initial
+     *  capacity.
+     *
+     *  @param capacity  the initial capacity for the list
+     *  @throws IllegalArgumentException if capacity is less than or equal 
+     *   to zero
+     */
     public FloatArrayList(int capacity) {
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("capacity=" + capacity);
+        }
         _data = new float[capacity];
     }
 
     //--------------------------------------------------------------- Accessors
-    
+
+    /**
+     *  Returns the capacity of this list.
+     *
+     *  @return the capacity of this list
+     */
     public int capacity() {
         return _data.length;
     }
 
+    /**
+     *  Returns the size of this list.
+     *
+     *  @return the size of this list
+     */
     public int size() {
         return _size;
     }
 
+    /**
+     *  Returns a {@link Float} that wraps the <Code>float</Code> value at
+     *  the given index.
+     *
+     *  @param index  the index of the <Code>float</Code>value to return
+     *  @return  a {@link Float} that wraps the <Code>float</Code> value
+     *   at that index
+     *  @throws IndexOutOfBoundsException if the index is negative or 
+     *   greater than or equal to {@link #size()}
+     */
     public Object get(int index) {
         checkRange(index);
         return new Float(_data[index]);
     }
 
+    /**
+     *  Returns the <Code>float</Code> value at the given index.
+     *
+     *  @param index  the index of the <Code>float</Code> value to return
+     *  @return  the <Code>float</Code> value at that index
+     *  @throws IndexOutOfBoundsException if the index is negative or 
+     *   greater than or equal to {@link #size()}
+     */
     public float getFloat(int index) {
         checkRange(index);
         return _data[index];
     }
 
+    /**
+     *  Returns true if this list contains the given <Code>float</Code>
+     *  value.
+     *
+     *  @param value  the <Code>float</COde> value to search for
+     *  @return true if this list contains the given <Code>float</COde>
+     *   value, false otherwise
+     */
     public boolean containsFloat(float value) {
         return (-1 != indexOfFloat(value));
     }
 
+    /**
+     *  Returns the index of the first occurrence of the given <Code>float</Code> 
+     *  value, or -1 if this list does not contain that value.
+     *
+     *  @param value  the <Code>float</COde> value to search for
+     *  @return  the index of the first occurrence of that value, or -1
+     *    if this list does not contain that value
+     */
     public int indexOfFloat(float value) {
         for(int i=0;i<_size;i++) {
             if(value == _data[i]) {
@@ -120,6 +181,14 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
         return -1;
     }
 
+    /**
+     *  Returns the index of the last occurrence of the given <Code>float</Code> 
+     *  value, or -1 if this list does not contain that value.
+     *
+     *  @param value  the <Code>float</COde> value to search for
+     *  @return  the index of the last occurrence of that value, or -1
+     *    if this list does not contain that value
+     */
     public int lastIndexOfFloat(float value) {
         for(int i=_size-1;i>=0;i--) {
             if(value == _data[i]) {
@@ -130,7 +199,17 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
     }
 
     //--------------------------------------------------------------- Modifiers
-    
+
+    /**
+     *  Sets the element at the given index to the given <Code>float</COde>
+     *  value.
+     *
+     *  @param index  the index of the element to set
+     *  @param value  the new <Code>float</Code> value for that element
+     *  @return  the previous <Code>float</Code> value at that index
+     *  @throws IndexOutOfBoundsException  if the index is negative or 
+     *   greater than or equal to {@link #size()}
+     */
     public float setFloat(int index, float value) {
         checkRange(index);
         float old = _data[index];
@@ -138,18 +217,47 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
         return old;
     }
 
+    /**
+     *  Returns <Code>new Float({@link #setFloat(int,float) 
+     *  set(index, ((Float)value).floatValue())})</Code>.
+     *
+     *  @param index  the index of the element to set
+     *  @param value  a {@link Float} instance that warps the new 
+     *    <Code>float</Code> value for that element
+     *  @return  a {@link Float} instance that wraps the previous 
+     *    <Code>float</Code> value at that index
+     *  @throws IndexOutOfBoundsException  if the index is negative or 
+     *   greater than or equal to {@link #size()}
+     *  @throws ClassCastException  if the given value is not a {@link Float}
+     *  @throws NullPointerException if the given value is <Code>null</COde>
+     */
     public Object set(int index, Object value) {
         Float f = (Float)value;
         return new Float(setFloat(index, f.floatValue()));
     }
 
 
+    /**
+     *  Adds the given <Code>float</COde> value to this list.
+     *
+     *  @param value  the <Code>float</COde> value to add
+     *  @return true, always
+     */
     public boolean addFloat(float value) {
         ensureCapacity(_size+1);
         _data[_size++] = value;
         return true;
     }
 
+    /**
+     *  Inserts the given <code>float</Code> value into this list at the
+     *  given index.
+     *
+     *  @param index  the index of the insertion
+     *  @param value  the <Code>float</COde> value to insert at that index
+     *  @throws IndexOutOfBoundsException  if the index is negative or 
+     *   greater than {@link #size()}
+     */
     public void addFloat(int index, float value) {
         checkRangeIncludingEndpoint(index);
         ensureCapacity(_size+1);
@@ -159,15 +267,39 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
         _size++;
     }
 
+
+    /**
+     *  Invokes {@link #addFloat(int,float)
+     *  add(index, ((Float)value).floatValue())}.
+     *
+     *  @param index  the index of the insertion
+     *  @param value  a {@link Float} instance that wraps the 
+     *     <Code>float</COde> value to insert at that index
+     *  @throws IndexOutOfBoundsException  if the index is negative or 
+     *   greater than {@link #size()}
+     *  @throws ClassCastException  if the given value is not a {@link Float}
+     *  @throws NullPointerException if the given value is <Code>null</COde>
+     */
     public void add(int index, Object value) {
         addFloat(index,((Float)value).floatValue());
     }
 
+    /**
+     *  Removes all <Code>float</Code> values from this list.
+     */
     public void clear() {
         modCount++;
         _size = 0;
     }
 
+    /**
+     *  Removes the <Code>float</Code> at the given index.
+     *
+     *  @param index  the index of the <Code>float</Code> value to remove
+     *  @return  the removed <Code>float</Code> value
+     *  @throws IndexOutOfBoundsException  if the index is negative or 
+     *   greater than or equal to {@link #size()}
+     */
     public float removeFloatAt(int index) {
         checkRange(index);
         modCount++;
@@ -180,6 +312,14 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
         return oldval;
     }
 
+    /**
+     *  Removes the first occurrence of the given <Code>float</Code> value
+     *  from this list.
+     *
+     *  @param value  the <Code>float</Code> value to remove
+     *  @return  true if the first occurrence of that value was removed, or
+     *   false if this list did not contain that value
+     */
     public boolean removeFloat(float value) {
         int index = indexOfFloat(value);
         if(-1 == index) {
@@ -190,10 +330,25 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
         }
     }
 
+    /**
+     *  Removes the <Code>float</Code> at the given index.
+     *
+     *  @param index  the index of the <Code>float</Code> value to remove
+     *  @return  a {@link Float} instance that wraps the removed 
+     *    <Code>float</Code> value
+     *  @throws IndexOutOfBoundsException  if the index is negative or 
+     *   greater than or equal to {@link #size()}
+     */
     public Object remove(int index) {
         return new Float(removeFloatAt(index));
     }
 
+    /**
+     *  Ensures that the internal array is big enough to hold the specified
+     *  number of elements.
+     *
+     *  @param mincap  the minium capacity
+     */
     public void ensureCapacity(int mincap) {
         modCount++;
         if(mincap > _data.length) {
@@ -204,6 +359,10 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
         }
     }
 
+    /**
+     *  Trims this list such that {@link #capacity()} is equal to 
+     *  {@link #size()}.
+     */
     public void trimToSize() {
         modCount++;
         if(_size < _data.length) {

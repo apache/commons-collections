@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.1 2002/06/04 16:01:27 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:01:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.2 2002/08/13 19:41:36 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/13 19:41:36 $
  *
  * ====================================================================
  *
@@ -72,23 +72,40 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:01:27 $
+ * A list of <Code>int</Code> elements.
+ *
+ * @version $Revision: 1.2 $ $Date: 2002/08/13 19:41:36 $
  * @author Rodney Waldhoff 
  */
 public class IntArrayList extends AbstractIntArrayList implements List, Serializable {
 
-    //------------------------------------------------------------ Constructors
-    
+    //------------------------------------------------------------ Constructors  
+
+    /**
+     *  Constructs a new <Code>IntArrayList</Code> with a default capacity.
+     */
     public IntArrayList() {
         this(8);
     }
 
+    /**
+     *  Constructs a new <Code>IntArrayList</Code> with the given capacity.
+     *
+     *  @param the capacity for the list
+     *  @throws IllegalArgumentException  if the capacity is less than or
+     *   equal to zero
+     */
     public IntArrayList(int capacity) {
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("capacity " + capacity);
+        }
         _data = new int[capacity];
     }
 
     //--------------------------------------------------------------- Accessors
-    
+
+    // Note: JavaDoc for these methods is inherited from the superclass.
+
     public int capacity() {
         return _data.length;
     }
@@ -125,6 +142,8 @@ public class IntArrayList extends AbstractIntArrayList implements List, Serializ
     }
 
     //--------------------------------------------------------------- Modifiers
+
+    // Note: JavaDoc for these methods is inherited from the superclass.
     
     public int setInt(int index, int value) {
         checkRange(index);

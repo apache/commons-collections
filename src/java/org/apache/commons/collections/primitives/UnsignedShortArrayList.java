@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.1 2002/06/04 16:01:27 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:01:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.2 2002/08/13 19:41:36 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/13 19:41:36 $
  *
  * ====================================================================
  *
@@ -72,18 +72,38 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:01:27 $
+ * A list of unsigned 16-bit values, stored in an <Code>int</Code> array.
+ * Mutators on this class will reject any <Code>int</Code> that does not
+ * express an unsigned 16-bit value.
+ *
+ * @version $Revision: 1.2 $ $Date: 2002/08/13 19:41:36 $
  * @author Rodney Waldhoff 
  */
 public class UnsignedShortArrayList extends AbstractIntArrayList implements List, Serializable {
 
     //------------------------------------------------------------ Constructors
     
+    /**
+     *  Constructs a new <Code>UnsignedShortArrayList</Code> with a 
+     *  default initial capacity.
+     */
     public UnsignedShortArrayList() {
         this(8);
     }
 
+
+    /**
+     *  Constructs a new <Code>UnsignedShortArrayList</Code> with the 
+     *  specified initial capacity.
+     *
+     *  @param capacity  the capacity for this list
+     *  @throws IllegalArgumentException if the given capacity is less than 
+     *    or equal to zero
+     */
     public UnsignedShortArrayList(int capacity) {
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("capacity=" + capacity);
+        }
         _data = new short[capacity];
     }
 
@@ -130,7 +150,7 @@ public class UnsignedShortArrayList extends AbstractIntArrayList implements List
     }
 
     //--------------------------------------------------------------- Modifiers
-    
+
     public int setInt(int index, int value) {
         assertValidUnsignedShort(value);
         checkRange(index);
@@ -252,6 +272,15 @@ public class UnsignedShortArrayList extends AbstractIntArrayList implements List
 
     private transient short[] _data = null;
     private int _size = 0;
+
+    /**
+     *  The maximum possible unsigned 16-bit value.
+     */
     public static final int MAX_VALUE = 0xFFFF;
+
+
+    /**
+     *  The minimum possible unsigned 16-bit value.
+     */
     public static final int MIN_VALUE = 0;
 }

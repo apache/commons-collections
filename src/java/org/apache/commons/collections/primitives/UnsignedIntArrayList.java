@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedIntArrayList.java,v 1.1 2002/06/04 16:01:27 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:01:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedIntArrayList.java,v 1.2 2002/08/13 19:41:36 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/13 19:41:36 $
  *
  * ====================================================================
  *
@@ -72,18 +72,37 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:01:27 $
+ * A list of unsigned 32-bit values, stored in a <Code>long</Code> array.
+ * Mutators on this class will reject any <Code>long</Code> that does not
+ * express an unsigned 16-bit value.
+ *
+ * @version $Revision: 1.2 $ $Date: 2002/08/13 19:41:36 $
  * @author Rodney Waldhoff 
  */
 public class UnsignedIntArrayList extends AbstractLongArrayList implements List, Serializable {
 
     //------------------------------------------------------------ Constructors
     
+    /**
+     *  Constructs a new <Code>UnsignedIntArrayList</Code> with a 
+     *  default initial capacity.
+     */
     public UnsignedIntArrayList() {
         this(8);
     }
 
+    /**
+     *  Constructs a new <Code>UnsignedIntArrayList</Code> with the 
+     *  specified initial capacity.
+     *
+     *  @param capacity  the capacity for this list
+     *  @throws IllegalArgumentException if the given capacity is less than 
+     *    or equal to zero
+     */
     public UnsignedIntArrayList(int capacity) {
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("capacity=" + capacity);
+        }
         _data = new int[capacity];
     }
 
@@ -251,6 +270,14 @@ public class UnsignedIntArrayList extends AbstractLongArrayList implements List,
 
     private transient int[] _data = null;
     private int _size = 0;
+
+    /**
+     *  The maximum possible unsigned 32-bit value.
+     */
     public static final long MAX_VALUE = 0xFFFFFFFFL;
+
+    /**
+     *  The minimum possible unsigned 32-bit value.
+     */
     public static final long MIN_VALUE = 0L;
 }

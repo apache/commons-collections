@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortArrayList.java,v 1.1 2002/06/04 16:01:27 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:01:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortArrayList.java,v 1.2 2002/08/13 19:41:36 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/13 19:41:36 $
  *
  * ====================================================================
  *
@@ -69,82 +69,293 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:01:27 $
+ * Abstract base class for lists backed by a <Code>short</Code> array.
+ *
+ * @version $Revision: 1.2 $ $Date: 2002/08/13 19:41:36 $
  * @author Rodney Waldhoff 
  */
 public abstract class AbstractShortArrayList extends AbstractList implements List, Serializable {
 
     //------------------------------------------------------ Abstract Accessors
     
+    /**
+     *  Returns the maximum size the list can reach before the array 
+     *  is resized.
+     *
+     *  @return the maximum size the list can reach before the array is resized
+     */
     abstract public int capacity();
+
+    /**
+     *  Returns the number of <Code>short</Code> elements currently in this
+     *  list.
+     *
+     *  @return the size of this list
+     */
     abstract public int size();
+
+    /**
+     *  Returns the <Code>short</Code> element at the specified index in this
+     *  array.
+     *
+     *  @param index  the index of the element to return
+     *  @return  the <Code>short</Code> element at that index
+     *  @throws  IndexOutOfBoundsException  if the index is negative or
+     *    greater than or equal to {@link #size()}
+     */
     abstract public short getShort(int index);
+
+    /**
+     *  Returns <Code>true</Code> if this list contains the given 
+     *  <Code>short</Code> element.
+     *
+     *  @param value  the element to search for
+     *  @return true if this list contains the given value, false otherwise
+     */
     abstract public boolean containsShort(short value);
+
+    /**
+     *  Returns the first index of the given <Code>short</Code> element, or
+     *  -1 if the value is not in this list.
+     *
+     *  @param value  the element to search for
+     *  @return  the first index of that element, or -1 if the element is
+     *    not in this list
+     */
     abstract public int indexOfShort(short value);
+
+    /**
+     *  Returns the last index of the given <Code>short</Code> element, or
+     *  -1 if the value is not in this list.
+     *
+     *  @param value  the element to search for
+     *  @return  the last index of that element, or -1 if the element is
+     *    not in this list
+     */
     abstract public int lastIndexOfShort(short value);
 
     //--------------------------------------------------------------- Accessors
     
-    /** Returns <code>new Short({@link #getShort getShort(index)})</code>. */
+    /** 
+     *  Returns <code>new Short({@link #getShort getShort(index)})</code>. 
+     *
+     *  @param index  the index of the element to return
+     *  @return  an {@link Short} object wrapping the <Code>short</Code>
+     *    value at that index
+     *  @throws IndexOutOfBoundsException  if the index is negative or
+     *    greater than or equal to {@link #size()}
+     */
     public Object get(int index) {
         return new Short(getShort(index));
     }
 
-    /** Returns <code>{@link #containsShort containsShort(((Short)value).shortValue())}</code>. */
+    /** 
+     *  Returns <code>{@link #containsShort containsShort(((Short)value.shortValue())}</code>. 
+     *
+     *  @param value  an {@link Short} object whose wrapped <Code>short</Code>
+     *    value to search for
+     *  @return true  if this list contains that <Code>short</Code> value
+     *  @throws ClassCastException  if the given object is not an 
+     *    {@link Short}
+     *  @throws NullPointerException  if the given object is <Code>null</Code> 
+     */
     public boolean contains(Object value) {
         return containsShort(((Short)value).shortValue());
     }
 
-    /** Returns <code>({@link #size} == 0)</code>. */
+    /** 
+     *  Returns <code>({@link #size} == 0)</code>. 
+     *
+     *  @return true if this list is empty, false otherwise
+     */
     public boolean isEmpty() {
         return (0 == size());
     }
 
-    /** Returns <code>{@link #indexOfShort indexOfShort(((Short)value).shortValue())}</code>. */
+    /** 
+     *  Returns <code>{@link #indexOfShort indexOfShort(((Short)value.shortValue())}</code>. 
+     *
+     *  @param value  an {@link Short} object whose wrapped <Code>short</Code>
+     *    value to search for
+     *  @return the first index of that <Code>short</Code> value, or -1 if 
+     *    this list does not contain that value
+     *  @throws ClassCastException  if the given object is not an 
+     *    {@link Short}
+     *  @throws NullPointerException  if the given object is <Code>null</Code> 
+     */
     public int indexOf(Object value) {
         return indexOfShort(((Short)value).shortValue());
     }
 
-    /** Returns <code>{@link #lastIndexOfShort lastIndexOfShort(((Short)value).shortValue())}</code>. */
+    /** 
+     *  Returns <code>{@link #lastIndexOfShort lastIndexOfShort(((Short)value.shortValue())}</code>. 
+     *
+     *  @param value  an {@link Short} object whose wrapped <Code>short</Code>
+     *    value to search for
+     *  @return the last index of that <Code>short</Code> value, or -1 if 
+     *    this list does not contain that value
+     *  @throws ClassCastException  if the given object is not an 
+     *    {@link Short}
+     *  @throws NullPointerException  if the given object is <Code>null</Code> 
+     */
     public int lastIndexOf(Object value) {
         return lastIndexOfShort(((Short)value).shortValue());
     }
 
     //------------------------------------------------------ Abstract Modifiers
 
+    /**
+     *  Sets the element at the given index to the given <Code>short</Code>
+     *  value.
+     *
+     *  @param index  the index of the element to set
+     *  @param value  the <Code>short</Code> value to set it to
+     *  @return  the previous <Code>short</Code> value at that index
+     *  @throws  IndexOutOfBoundsException  if the index is negative or 
+     *     greater than or equal to {@link #size()}.
+     */
     abstract public short setShort(int index, short value);
+
+    /**
+     *  Adds the given <Code>short</Code> value to the end of this list.
+     *
+     *  @param value  the value to add
+     *  @return  true, always
+     */
     abstract public boolean addShort(short value);
+
+    /**
+     *  Inserts the given <Code>short</Code> value into this list at the
+     *  specified index.
+     *
+     *  @param index  the index for the insertion
+     *  @param value  the value to insert at that index
+     *  @throws IndexOutOfBoundsException if the index is negative or 
+     *    greater than {@link #size()}
+     */
     abstract public void addShort(int index, short value);
+
+    /**
+     *  Removes the <Code>short</Code> element at the specified index.
+     *
+     *  @param index  the index of the element to remove
+     *  @return  the removed <Code>short</Code> value
+     *  @throws IndexOutOfBoundsException if the index is negative or
+     *   greater than or equal to {@link #size()}
+     */
     abstract public short removeShortAt(int index);
+
+    /**
+     *  Removes the first occurrence of the given <Code>short</Code> value
+     *  from this list.
+     *
+     *  @param value  the value to remove
+     *  @return  true if this list contained that value and removed it,
+     *   or false if this list didn't contain the value
+     */
     abstract public boolean removeShort(short value);
+
+    /**
+     *  Removes all <Code>short</Code> values from this list.
+     */
     abstract public void clear();
+
+    /**
+     *  Ensures that the length of the internal <Code>short</Code> array is
+     *  at list the given value.
+     *
+     *  @param mincap  the minimum capcity for this list
+     */
     abstract public void ensureCapacity(int mincap);
+
+    /**
+     *  Resizes the internal array such that {@link #capacity()} is equal
+     *  to {@link #size()}.
+     */
     abstract public void trimToSize();
 
     //--------------------------------------------------------------- Modifiers
     
-    /** Returns <code>new Short({@link #setShort(int,short) setShort(index,((Short)value).shortValue())})</code>. */
+    /** 
+     * Returns <code>new Short({@link #setShort(int,short) 
+     * setShort(index,((Short)value.shortValue())})</code>. 
+     *
+     * @param index  the index of the element to set
+     * @param value  an {@link Short} object whose <Code>short</Code> value
+     *  to set at that index
+     * @return  an {@link Short} that wraps the <Code>short</Code> value  
+     *   previously at that index
+     * @throws IndexOutOfBoundsException if the index is negative or greater
+     *  than or equal to {@link #size()}
+     * @throws ClassCastException if the given value is not an {@link Short}
+     * @throws NullPointerException if the given value is <Code>null</COde>
+     */
     public Object set(int index, Object value) {
         return new Short(setShort(index,((Short)value).shortValue()));
     }
 
-    /** Invokes <code>{@link #addShort(short) addShort(((Short)value).shortValue())})</code>. */
+    /** 
+     * Invokes <code>{@link #addShort(short) addShort(((Short)value.shortValue())})</code>. 
+     *
+     * @param value  an {@link Short} object that wraps the <Code>short</Code>
+     *   value to add
+     * @return true, always
+     * @throws ClassCastException if the given value is not an {@link Short}
+     * @throws NullPointerException if the given value is <Code>null</COde>     
+     */
     public boolean add(Object value) {
         return addShort(((Short)value).shortValue());
     }    
 
-    /** Invokes <code>{@link #addShort(int,short) addShort(index,((Short)value).shortValue())})</code>. */
+    /** 
+     * Invokes <code>{@link #addShort(int,short) addShort(index,((Short)value.shortValue())})</code>. 
+     *
+     * @param index  the index of the insertion
+     * @param value an {@link Short} object that wraps the <Code>short</Code>
+     *   value to insert
+     * @throws IndexOutOfBoundsException if the index is negative or greater
+     *   than {@link #size()}
+     * @throws ClassCastException if the given value is not an {@link Short}
+     * @throws NullPointerException if the given value is <Code>null</COde>
+     */
     public void add(int index, Object value) {
         addShort(index,((Short)value).shortValue());
     }
 
-    /** Returns <code>new Short({@link #removeShortAt(int) removeShortAt(index)})</code>. */
+    /** 
+     * Returns <code>new Short({@link #removeShortAt(int) removeIntAt(index)})</code>. 
+     *
+     * @param index  the index of the element to remove
+     * @return  an {@link Short} object that wraps the value that was
+     *   removed from that index
+     * @throws IndexOutOfBoundsException  if the given index is negative
+     *   or greater than or equal to {@link #size()}
+     */
     public Object remove(int index) {
         return new Short(removeShortAt(index));
     }
 
-    /** Returns <code>{@link #removeShort(short) removeShort(((Short)value).shortValue())}</code>. */
+    /** 
+     * Returns <code>{@link #removeShort(short) removeShort(((Short)value.shortValue())}</code>. 
+     *
+     * @param value  an {@link Short} object that wraps the <Code>short</Code>
+     *   value to remove
+     * @return true if the first occurrence of that <Code>short</Code> value
+     *   was removed from this list, or <Code>false</Code> if this list
+     *   did not contain that <Code>short</Code> value
+     * @throws ClassCastException if the given value is not an {@link Short}
+     * @throws NullPointerException if the given value is <Code>null</COde>
+     */
     public boolean remove(Object value) {
         return removeShort(((Short)value).shortValue());
     }
+
 }
+
+
+
+    //--------------------------------------------------------------- Accessors
+    
+
+
+    

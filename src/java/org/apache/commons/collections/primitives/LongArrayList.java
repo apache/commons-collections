@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/LongArrayList.java,v 1.1 2002/06/04 16:01:27 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:01:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/LongArrayList.java,v 1.2 2002/08/13 19:41:36 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/13 19:41:36 $
  *
  * ====================================================================
  *
@@ -72,18 +72,35 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:01:27 $
+ * A list of <Code>long</COde> elements.
+ *
+ * @version $Revision: 1.2 $ $Date: 2002/08/13 19:41:36 $
  * @author Rodney Waldhoff 
  */
 public class LongArrayList extends AbstractLongArrayList implements List, Serializable {
 
     //------------------------------------------------------------ Constructors
     
+    /**
+     *  Constructs a new <Code>LongArrayList</CodE> with a default initial
+     *  capacity.
+     */
     public LongArrayList() {
         this(8);
     }
 
+    /**
+     *  Constructs a new <Code>LongArrayList</CodE> with the given initial
+     *  capacity.
+     *
+     *  @param capacity  the initial capacity for the array
+     *  @throws IllegalArgumentException if the capacity is less than or 
+     *    equal to zero
+     */
     public LongArrayList(int capacity) {
+        if (capacity <= 0) {
+            throw new IllegalArgumentException("capacity=" + capacity);
+        }
         _data = new long[capacity];
     }
 
