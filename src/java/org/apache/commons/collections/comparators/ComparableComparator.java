@@ -54,8 +54,9 @@ package org.apache.commons.collections.comparators;
  * <http://www.apache.org/>.
  */
 
-import java.util.Comparator;
+import java.io.Serializable;
 import java.lang.Comparable;
+import java.util.Comparator;
 
 /**
  * A Comparator that compares Comparable objects.
@@ -68,9 +69,9 @@ import java.lang.Comparable;
  * of SortedSet and SortedMap.
  *
  * @author bayard@generationjava.com
- * @version $Id: ComparableComparator.java,v 1.2 2002/02/28 18:06:39 morgand Exp $
+ * @version $Id: ComparableComparator.java,v 1.3 2002/03/01 19:18:49 morgand Exp $
  */
-public class ComparableComparator implements Comparator {
+public class ComparableComparator implements Comparator,Serializable {
 
     public ComparableComparator() {
     }

@@ -54,15 +54,16 @@ package org.apache.commons.collections.comparators;
  * <http://www.apache.org/>.
  */
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Reverses the order of another comparator.
  *
  * @author bayard@generationjava.com
- * @version $Id: ReverseComparator.java,v 1.4 2002/03/01 19:00:33 morgand Exp $
+ * @version $Id: ReverseComparator.java,v 1.5 2002/03/01 19:18:49 morgand Exp $
  */
-public class ReverseComparator implements Comparator {
+public class ReverseComparator implements Comparator,Serializable {
 
     private Comparator comparator;
 
