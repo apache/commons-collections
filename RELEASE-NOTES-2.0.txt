@@ -40,3 +40,9 @@ Bugs fixed:
   - calling setMaximumSize(int) will remove excess LRUs
     when the current size of the Map exceeds the new
     maximum size
+    
+ArrayIterator
+-------------
+
+Bugs fixed:
+  - ArrayIterator can now iterate over arrays of primatives 
