@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.4 2001/05/20 21:03:30 craigmcc Exp $
- * $Revision: 1.4 $
- * $Date: 2001/05/20 21:03:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.5 2002/02/10 08:07:42 jstrachan Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/02/10 08:07:42 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -95,7 +95,7 @@ import java.util.Set;
  * maximum performance.</p>
  *
  * @author Craig R. McClanahan
- * @version $Revision: 1.4 $ $Date: 2001/05/20 21:03:30 $
+ * @version $Revision: 1.5 $ $Date: 2002/02/10 08:07:42 $
  */
 
 public class FastHashMap extends HashMap {

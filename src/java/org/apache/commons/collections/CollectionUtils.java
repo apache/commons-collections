@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.6 2001/11/26 17:15:33 bayard Exp $
- * $Revision: 1.6 $
- * $Date: 2001/11/26 17:15:33 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.7 2002/02/10 08:07:42 jstrachan Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/02/10 08:07:42 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,7 +77,7 @@ import java.util.Set;
  *
  * @author Rodney Waldhoff
  *
- * @version $Id: CollectionUtils.java,v 1.6 2001/11/26 17:15:33 bayard Exp $
+ * @version $Id: CollectionUtils.java,v 1.7 2002/02/10 08:07:42 jstrachan Exp $
  */
 public class CollectionUtils {
 
