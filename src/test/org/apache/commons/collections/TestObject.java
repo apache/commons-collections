@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.3 2002/02/22 02:18:50 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/22 02:18:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.4 2002/02/22 22:01:32 morgand Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/22 22:01:32 $
  *
  * ====================================================================
  *
@@ -90,12 +90,14 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.3 2002/02/22 02:18:50 mas Exp $
+ * @version $Id: TestObject.java,v 1.4 2002/02/22 22:01:32 morgand Exp $
  */
 public abstract class TestObject extends TestCase {
     public TestObject(String testName) {
         super(testName);
     }
+
+    public static final String COLLECTIONS_VERSION = "version2";
 
     /**
      * Return a new, empty {@link Object} to used for testing.
