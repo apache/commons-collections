@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/decorators/Attic/TestAll.java,v 1.3 2003/05/20 00:44:11 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/decorators/Attic/BaseUnmodifiableIntList.java,v 1.1 2003/05/20 00:44:11 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,32 +57,74 @@
 
 package org.apache.commons.collections.primitives.decorators;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.apache.commons.collections.primitives.IntCollection;
+import org.apache.commons.collections.primitives.IntIterator;
+import org.apache.commons.collections.primitives.IntList;
+import org.apache.commons.collections.primitives.IntListIterator;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/05/20 00:44:11 $
- * @author Rodney Waldhoff
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/05/20 00:44:11 $
+ * 
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+abstract class BaseUnmodifiableIntList extends BaseProxyIntList {
+
+    public final void add(int index, int element) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public final boolean addAll(int index, IntCollection collection) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestBaseProxyIntCollection.suite());
-        suite.addTest(TestBaseProxyIntList.suite());
-        suite.addTest(TestUnmodifiableIntList.suite());
-
-        return suite;
+    public final int removeElementAt(int index) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
     }
+
+    public final int set(int index, int element) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
+    }
+
+    public final boolean add(int element) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
+    }
+
+    public final boolean addAll(IntCollection c) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
+    }
+
+    public final void clear() {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
+    }
+
+    public final boolean removeAll(IntCollection c) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
+    }
+
+    public final boolean removeElement(int element) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
+    }
+
+    public final boolean retainAll(IntCollection c) {
+        throw new UnsupportedOperationException("This IntList is not modifiable.");
+    }    
+    
+    public final IntList subList(int fromIndex, int toIndex) {
+        return UnmodifiableIntList.wrap(getProxiedList().subList(fromIndex,toIndex));
+    }
+
+    public final IntIterator iterator() {
+        return UnmodifiableIntIterator.wrap(getProxiedList().iterator());
+    }
+    
+    public IntListIterator listIterator() {
+        return UnmodifiableIntListIterator.wrap(getProxiedList().listIterator());
+    }
+
+    public IntListIterator listIterator(int index) {
+        return UnmodifiableIntListIterator.wrap(getProxiedList().listIterator(index));
+    }
+
 }
-

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/decorators/Attic/TestAll.java,v 1.3 2003/05/20 00:44:11 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/decorators/Attic/NonSerializableUnmodifiableIntList.java,v 1.1 2003/05/20 00:44:11 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,32 +57,23 @@
 
 package org.apache.commons.collections.primitives.decorators;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.apache.commons.collections.primitives.IntList;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/05/20 00:44:11 $
- * @author Rodney Waldhoff
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/05/20 00:44:11 $
+ * 
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+final class NonSerializableUnmodifiableIntList extends BaseUnmodifiableIntList {
+    NonSerializableUnmodifiableIntList(IntList list) {
+        this.proxied = list;
+    }
+    
+    protected IntList getProxiedList() {
+        return proxied;
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestBaseProxyIntCollection.suite());
-        suite.addTest(TestBaseProxyIntList.suite());
-        suite.addTest(TestUnmodifiableIntList.suite());
-
-        return suite;
-    }
+    private IntList proxied = null;
 }
-

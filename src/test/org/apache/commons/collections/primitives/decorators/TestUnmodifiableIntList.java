@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/decorators/Attic/TestAll.java,v 1.3 2003/05/20 00:44:11 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/decorators/Attic/TestUnmodifiableIntList.java,v 1.1 2003/05/20 00:44:11 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,32 +57,60 @@
 
 package org.apache.commons.collections.primitives.decorators;
 
+import java.io.Serializable;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.IntList;
+
 /**
- * @version $Revision: 1.3 $ $Date: 2003/05/20 00:44:11 $
+ * @version $Revision: 1.1 $ $Date: 2003/05/20 00:44:11 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestUnmodifiableIntList extends BaseUnmodifiableIntListTest {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestUnmodifiableIntList(String testName) {
         super(testName);
     }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
+    
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
+        return new TestSuite(TestUnmodifiableIntList.class);
+    }
 
-        suite.addTest(TestBaseProxyIntCollection.suite());
-        suite.addTest(TestBaseProxyIntList.suite());
-        suite.addTest(TestUnmodifiableIntList.suite());
+    // framework
+    // ------------------------------------------------------------------------
 
-        return suite;
+    protected IntList makeUnmodifiableIntList() {
+        return UnmodifiableIntList.wrap(makeIntList());
+    }
+
+    // tests
+    // ------------------------------------------------------------------------
+
+    public void testWrapNull() {
+        assertNull(UnmodifiableIntList.wrap(null));
+    }
+
+    public void testWrapUnmodifiableIntList() {
+        IntList list = makeUnmodifiableIntList();
+        assertSame(list,UnmodifiableIntList.wrap(list));
+    }
+
+    public void testWrapSerializableIntList() {
+        IntList list = makeIntList();
+        assertTrue(list instanceof Serializable);
+        assertTrue(UnmodifiableIntList.wrap(list) instanceof Serializable);
+    }
+
+    public void testWrapNonSerializableIntList() {
+        IntList list = makeIntList();
+        IntList ns = list.subList(0,list.size());
+        assertTrue(!(ns instanceof Serializable));
+        assertTrue(!(UnmodifiableIntList.wrap(ns) instanceof Serializable));
     }
 }
-
