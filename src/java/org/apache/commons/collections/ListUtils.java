@@ -33,7 +33,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.29 $ $Date: 2004/12/11 06:22:58 $
+ * @version $Revision: 1.30 $ $Date: 2004/12/19 16:56:30 $
  * 
  * @author Federico Barbieri
  * @author Peter Donald
@@ -259,21 +259,21 @@ public class ListUtils {
     }
 
     
-	/**
-	 * Returns an unmodifiable list copy of the collection.
-	 * <p>
-	 * This method uses the unmodifiable list implementation in the decorators subpackage.
-	 * @param collection the <code>Collection</code> to copy.
-	 * @return an unmodifiable <code>List</code>.
-	 * @throws IllegalArgumentException if collection is null.
-	 */
-	public static List unmodifiableListCopy(final Collection collection) {
-		if (collection == null) throw new IllegalArgumentException("null not permitted.");
-		
-		final List copy = new ArrayList(collection.size());
-		copy.addAll(collection);
-		return UnmodifiableList.decorate(copy);
-	}
+    /**
+     * Returns an unmodifiable list copy of the collection.
+     * <p>
+     * This method uses the unmodifiable list implementation in the decorators subpackage.
+     * @param collection the <code>Collection</code> to copy.
+     * @return an unmodifiable <code>List</code>.
+     * @throws IllegalArgumentException if collection is null.
+     */
+    public static List unmodifiableListCopy(final Collection collection) {
+        if (collection == null) throw new IllegalArgumentException("null not permitted.");
+        
+        final List copy = new ArrayList(collection.size());
+        copy.addAll(collection);
+        return UnmodifiableList.decorate(copy);
+    }
     
     /**
      * Returns a predicated (validating) list backed by the given list.
@@ -369,65 +369,55 @@ public class ListUtils {
     }
 
     /**
-	 * Returns a List containing all the elements in <code>collection</code>
-	 * that are also in <code>retain</code>. The cardinality of an element <code>e</code>
-	 * in the returned list is the same as the cardinality of <code>e</code>
-	 * in <code>collection</code> unless <code>retain</code> does not contain <code>e</code>, in which
-	 * case the cardinality is zero. This method is useful if you do not wish to modify
-	 * the collection <code>c</code> and thus cannot call <code>collection.retainAll(retain);</code>.
-	 * 
-	 * @param collection the collection whose contents are the target of the #retailAll operation
-	 * @param retain the collection containing the elements to be retained in the returned collection
-	 * @return a <code>List</code> containing all the elements of <code>c</code>
-	 * that occur at least once in <code>retain</code>.
-	 * @throws NullPointerException if either parameter is null
-	 */
-	public static List retainAll(final Collection collection, final Collection retain) {
-		final List list = new ArrayList(Math.min(collection.size(), retain.size()));
+     * Returns a List containing all the elements in <code>collection</code>
+     * that are also in <code>retain</code>. The cardinality of an element <code>e</code>
+     * in the returned list is the same as the cardinality of <code>e</code>
+     * in <code>collection</code> unless <code>retain</code> does not contain <code>e</code>, in which
+     * case the cardinality is zero. This method is useful if you do not wish to modify
+     * the collection <code>c</code> and thus cannot call <code>collection.retainAll(retain);</code>.
+     * 
+     * @param collection  the collection whose contents are the target of the #retailAll operation
+     * @param retain  the collection containing the elements to be retained in the returned collection
+     * @return a <code>List</code> containing all the elements of <code>c</code>
+     * that occur at least once in <code>retain</code>.
+     * @throws NullPointerException if either parameter is null
+     */
+    public static List retainAll(Collection collection, Collection retain) {
+        List list = new ArrayList(Math.min(collection.size(), retain.size()));
 
-		Object item = null;
-		for (final Iterator iter = collection.iterator(); iter.hasNext();)
-		{
-			item = iter.next();
+        for (Iterator iter = collection.iterator(); iter.hasNext();) {
+            Object obj = iter.next();
+            if (retain.contains(obj)) {
+                list.add(obj);
+            }
+        }
+        return list;
+    }
 
-			if (retain.contains(item))
-			{
-				list.add(item);
-			}
-		}
+    /**
+     * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
+     * method returns a list containing all the elements in <code>c</code>
+     * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
+     * in the returned collection is the same as the cardinality of <code>e</code>
+     * in <code>collection</code> unless <code>remove</code> contains <code>e</code>, in which
+     * case the cardinality is zero. This method is useful if you do not wish to modify
+     * <code>collection</code> and thus cannot call <code>collection.removeAll(remove);</code>.
+     * 
+     * @param collection  the collection from which items are removed (in the returned collection)
+     * @param remove  the items to be removed from the returned <code>collection</code>
+     * @return a <code>List</code> containing all the elements of <code>c</code> except
+     * any elements that also occur in <code>remove</code>.
+     * @throws NullPointerException if either parameter is null
+     */
+    public static List removeAll(Collection collection, Collection remove) {
+        List list = new ArrayList();
+        for (Iterator iter = collection.iterator(); iter.hasNext();) {
+            Object obj = iter.next();
+            if (remove.contains(obj) == false) {
+                list.add(obj);
+            }
+        }
+        return list;
+    }
 
-		return list;
-	}
-	
-	/**
-	 * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
-	 * method returns a list containing all the elements in <code>c</code>
-	 * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
-	 * in the returned collection is the same as the cardinality of <code>e</code>
-	 * in <code>collection</code> unless <code>remove</code> contains <code>e</code>, in which
-	 * case the cardinality is zero. This method is useful if you do not wish to modify
-	 * <code>collection</code> and thus cannot call <code>collection.removeAll(remove);</code>.
-	 * 
-	 * @param collection the collection from which items are removed (in the returned collection)
-	 * @param remove the items to be removed from the returned <code>collection</code>
-	 * @return a <code>List</code> containing all the elements of <code>c</code> except
-	 * any elements that also occur in <code>remove</code>.
-	 * @throws NullPointerException if either parameter is null
-	 */
-	public static List removeAll(final Collection collection, final Collection remove) {
-		final List list = new ArrayList();
-
-		Object o = null;
-		for (final Iterator iter = collection.iterator(); iter.hasNext();)
-		{
-			o = iter.next();
-			if (remove.contains(o) == false)
-			{
-				list.add(o);
-			}
-		}
-
-		return list;
-	}
-    
 }

@@ -37,7 +37,7 @@ import org.apache.commons.collections.map.TestPredicatedMap;
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.25 $ $Date: 2004/12/11 06:26:13 $
+ * @version $Revision: 1.26 $ $Date: 2004/12/19 16:56:31 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -771,36 +771,30 @@ public class TestMapUtils extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
     
-	public void testUnmodifiableMapCopy() {
-		Map map = new HashMap();
-		map.put("key", "value");
+    public void testUnmodifiableMapCopy() {
+        Map map = new HashMap();
+        map.put("key", "value");
 
-		Map copy = MapUtils.unmodifiableMapCopy(map);
-		assertTrue(copy instanceof Unmodifiable);
-		assertEquals(map, copy);
-		map.clear();
-		assertFalse(map.equals(copy));
+        Map copy = MapUtils.unmodifiableMapCopy(map);
+        assertTrue(copy instanceof Unmodifiable);
+        assertEquals(map, copy);
+        map.clear();
+        assertFalse(map.equals(copy));
 
-		try
-		{
-			copy.clear();
-			fail("should be unmodifiable.");
-		}
-		catch (UnsupportedOperationException uoe)
-		{
-			// this is what we want
-		}
-		
-		try
-		{
-			map = MapUtils.unmodifiableMapCopy(null);
-			fail("expecting IllegalArgumentException");
-		}
-		catch (IllegalArgumentException iae)
-		{
-			// this is what we want
-		}
+        try {
+            copy.clear();
+            fail("should be unmodifiable.");
+        } catch (UnsupportedOperationException uoe) {
+            // this is what we want
+        }
+        
+        try {
+            map = MapUtils.unmodifiableMapCopy(null);
+            fail("expecting IllegalArgumentException");
+        } catch (IllegalArgumentException iae) {
+            // this is what we want
+        }
 
-	}
-    
+    }
+
 }
