@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.14 2004/01/08 22:26:07 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.15 2004/01/14 00:59:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,16 +71,15 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * A skeletal implementation of the {@link Bag}
  * interface to minimize the effort required for target implementations.
  * Subclasses need only to call <code>setMap(Map)</code> in their constructor 
- * (or invoke the {@link #DefaultMapBag(java.util.Map) Map-constructor})
- * specifying a map instance that will be used to store the contents of 
- * the bag.
+ * (or invoke the Map constructor) specifying a map instance that will be used
+ * to store the contents of the bag.
  * <p>
  * The map will be used to map bag elements to a number; the number represents
  * the number of occurrences of that element in the bag.
  *
  * @deprecated Moved to bag subpackage as AbstractMapBag. Due to be removed in v4.0.
  * @since Commons Collections 2.0
- * @version $Revision: 1.14 $ $Date: 2004/01/08 22:26:07 $
+ * @version $Revision: 1.15 $ $Date: 2004/01/14 00:59:14 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
