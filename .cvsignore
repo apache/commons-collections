@@ -14,3 +14,6 @@ target-*
 build2.xml
 release
 build
+COLLECTIONS_2_1.xml
+COLLECTIONS_3_0.xml
+HEAD.xml
