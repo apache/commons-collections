@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollatingIterator.java,v 1.1 2002/07/09 16:48:56 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/07/09 16:48:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollatingIterator.java,v 1.2 2002/07/10 14:06:39 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/07/10 14:06:39 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import org.apache.commons.collections.comparators.ComparableComparator;
 
 /**
  * Unit test suite for {@link CollatingIterator}.
- * @version $Revision: 1.1 $ $Date: 2002/07/09 16:48:56 $
+ * @version $Revision: 1.2 $ $Date: 2002/07/10 14:06:39 $
  * @author Rodney Waldhoff
  */
 public class TestCollatingIterator extends TestIterator {
@@ -138,6 +138,15 @@ public class TestCollatingIterator extends TestIterator {
 
     //------------------------------------------------------------------- Tests
 
+    public void testGetSetComparator() {
+        CollatingIterator iter = new CollatingIterator();
+        assertNull(iter.getComparator());
+        iter.setComparator(comparator);
+        assertSame(comparator,iter.getComparator());
+        iter.setComparator(null);
+        assertNull(iter.getComparator());
+    }
+
     public void testIterateEven() {
         CollatingIterator iter = new CollatingIterator(comparator);
         iter.addIterator(evens.iterator());
@@ -149,9 +158,7 @@ public class TestCollatingIterator extends TestIterator {
     }
 
     public void testIterateEvenOdd() {
-        CollatingIterator iter = new CollatingIterator(comparator);
-        iter.addIterator(evens.iterator());
-        iter.addIterator(odds.iterator());
+        CollatingIterator iter = new CollatingIterator(comparator,evens.iterator(),odds.iterator());
         for(int i=0;i<20;i++) {
             assertTrue(iter.hasNext());
             assertEquals(new Integer(i),iter.next());
@@ -160,9 +167,7 @@ public class TestCollatingIterator extends TestIterator {
     }
 
     public void testIterateOddEven() {
-        CollatingIterator iter = new CollatingIterator(comparator);
-        iter.addIterator(odds.iterator());
-        iter.addIterator(evens.iterator());
+        CollatingIterator iter = new CollatingIterator(comparator,odds.iterator(),evens.iterator());
         for(int i=0;i<20;i++) {
             assertTrue(iter.hasNext());
             assertEquals(new Integer(i),iter.next());

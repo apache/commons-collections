@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CollatingIterator.java,v 1.1 2002/07/09 16:48:56 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/07/09 16:48:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CollatingIterator.java,v 1.2 2002/07/10 14:06:39 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/07/10 14:06:39 $
  *
  * ====================================================================
  *
@@ -73,12 +73,16 @@ import java.util.BitSet;
  * my {@link #next} method will return the lesser of 
  * <code>A.next()</code> and <code>B.next()</code>.
  *
- * @version $Revision: 1.1 $ $Date: 2002/07/09 16:48:56 $
+ * @version $Revision: 1.2 $ $Date: 2002/07/10 14:06:39 $
  * @author Rodney Waldhoff
  */
 public class CollatingIterator implements Iterator {
 
     //------------------------------------------------------------ Constructors
+    
+    public CollatingIterator() {
+        this(null,2);
+    }
     
     public CollatingIterator(Comparator comp) {
         this(comp,2);
@@ -86,7 +90,7 @@ public class CollatingIterator implements Iterator {
     
     public CollatingIterator(Comparator comp, int initIterCapacity) {
         iterators = new ArrayList(initIterCapacity);
-        comparator = comp;
+        setComparator(comp);
     }
     
     public CollatingIterator(Comparator comp, Iterator a, Iterator b) {
@@ -97,17 +101,28 @@ public class CollatingIterator implements Iterator {
 
     //--------------------------------------------------------- Public Methods
 
+    /**
+     * Add the given {@link Iterator} to my collection to collate.
+     * @throws IllegalStateException if I've already started iterating
+     */
     public void addIterator(Iterator iter) throws IllegalStateException {
         checkNotStarted();
         iterators.add(iter);
     }
 
+    /**
+     * Set the {@link Comparator} by which I collate.
+     * @throws IllegalStateException if I've already started iterating
+     */
     public void setComparator(Comparator comp) throws IllegalStateException {
         checkNotStarted();
         comparator = comp;
     }
 
-    public Comparator getIterator() {
+    /**
+     * Get the {@link Comparator} by which I collate.
+     */
+    public Comparator getComparator() {
         return comparator;
     }
 
@@ -145,6 +160,7 @@ public class CollatingIterator implements Iterator {
 
     //--------------------------------------------------------- Private Methods
 
+    /** Initialize my collating state if it hasn't been already. */
     private void start() {
         if(null == values) {
             values = new ArrayList(iterators.size());
@@ -156,6 +172,15 @@ public class CollatingIterator implements Iterator {
         }
     }
 
+    /** 
+     * Set the {@link #values} and {@link #valueSet} attributes 
+     * at position <i>i</i> to the next value of the 
+     * {@link #iterators iterator} at position <i>i</i>, or 
+     * clear them if the <i>i</i><sup>th</sup> iterator
+     * has no next value.
+     *
+     * @return <tt>false</tt> iff there was no value to set
+     */
     private boolean set(int i) {
         Iterator iter = (Iterator)(iterators.get(i));
         if(iter.hasNext()) {
@@ -169,17 +194,29 @@ public class CollatingIterator implements Iterator {
         }
     }
 
+    /** 
+     * Clear the {@link #values} and {@link #valueSet} attributes 
+     * at position <i>i</i>.
+     */
     private void clear(int i) {
         values.set(i,null);
         valueSet.clear(i);
     }
 
+    /** 
+     * Throw {@link IllegalStateException} iff I've been {@link #start started}.
+     * @throws IllegalStateException iff I've been {@link #start started}
+     */
     private void checkNotStarted() throws IllegalStateException {
         if(null != values) {
             throw new IllegalStateException("Can't do that after next or hasNext has been called.");
         }
     }
 
+    /** 
+     * Returns the index of the least element in {@link #values},
+     * {@link #set(int) setting} any uninitialized values.
+     */
     private int least() throws IllegalStateException {
         int leastIndex = -1;
         Object leastObject = null;                
@@ -203,6 +240,10 @@ public class CollatingIterator implements Iterator {
         return leastIndex;
     }
 
+    /**
+     * Returns <code>true</code> iff any bit in the given set is 
+     * <code>true</code>.
+     */
     private boolean anyValueSet(BitSet set) {
         for(int i=0;i<set.size();i++) {
             if(set.get(i)) {
@@ -212,6 +253,10 @@ public class CollatingIterator implements Iterator {
         return false;
     }
 
+    /**
+     * Returns <code>true</code> iff any {@link Iterator} 
+     * in the given list has a next value.
+     */
     private boolean anyHasNext(ArrayList iters) {
         for(int i=0;i<iters.size();i++) {
             Iterator iter = (Iterator)iters.get(i);
