@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.12 2003/09/25 22:47:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.13 2003/10/03 06:20:54 bayard Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,7 +63,7 @@ import java.util.Map;
  * A default implementation of {@link java.util.Map.Entry}
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.12 $ $Date: 2003/09/25 22:47:14 $
+ * @version $Revision: 1.13 $ $Date: 2003/10/03 06:20:54 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
@@ -189,6 +189,15 @@ public class DefaultMapEntry implements Map.Entry {
     public final int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^
                (getValue() == null ? 0 : getValue().hashCode()); 
+    }
+
+    /**
+     * Written to match the output of the Map.Entry's used in 
+     * a {@link java.util.HashMap}. 
+     * @since 3.0
+     */
+    public String toString() {
+        return ""+getKey()+"="+getValue();
     }
 
 }
