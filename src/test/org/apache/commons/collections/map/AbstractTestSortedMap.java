@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.6 $ $Date: 2004/04/09 09:38:31 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/09 15:04:29 $
  * 
  * @author Stephen Colebourne
  */
@@ -44,17 +44,6 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
     }
     
     //-----------------------------------------------------------------------
-    /**
-     * Returns whether the sub map views are serializable.
-     * If the class being tested is based around a TreeMap then you should
-     * override and return false as TreeMap has a bug in deserialization.
-     * 
-     * @return false
-     */
-    public boolean isSubMapViewsSerializable() {
-        return true;
-    }
-    
     /**
      * Can't sort null keys.
      * 
@@ -173,15 +162,15 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             return false;
         }
         public void testSerializeDeserializeThenCompare() throws Exception {
-            if (((AbstractTestSortedMap) main).isSubMapViewsSerializable() == false) return;
+            if (main.isSubMapViewsSerializable() == false) return;
             super.testSerializeDeserializeThenCompare();
         }
         public void testEmptyMapCompatibility() throws Exception {
-            if (((AbstractTestSortedMap) main).isSubMapViewsSerializable() == false) return;
+            if (main.isSubMapViewsSerializable() == false) return;
             super.testEmptyMapCompatibility();
         }
         public void testFullMapCompatibility() throws Exception {
-            if (((AbstractTestSortedMap) main).isSubMapViewsSerializable() == false) return;
+            if (main.isSubMapViewsSerializable() == false) return;
             super.testFullMapCompatibility();
         }
     }

@@ -117,7 +117,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.11 $ $Date: 2004/04/09 14:45:38 $
+ * @version $Revision: 1.12 $ $Date: 2004/04/09 15:04:29 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -225,6 +225,17 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      */
     public boolean isGetStructuralModify() {
         return false;
+    }
+
+    /**
+     * Returns whether the sub map views of SortedMap are serializable.
+     * If the class being tested is based around a TreeMap then you should
+     * override and return false as TreeMap has a bug in deserialization.
+     * 
+     * @return false
+     */
+    public boolean isSubMapViewsSerializable() {
+        return true;
     }
 
     /**
