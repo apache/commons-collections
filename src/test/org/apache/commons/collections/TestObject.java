@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.19 2003/02/26 00:35:19 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.20 2003/02/26 01:33:22 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,7 +83,7 @@ import java.io.Serializable;
  * @author Rodney Waldhoff
  * @author Anonymous
  * 
- * @version $Revision: 1.19 $ $Date: 2003/02/26 00:35:19 $
+ * @version $Revision: 1.20 $ $Date: 2003/02/26 01:33:22 $
  */
 public abstract class TestObject extends BulkTest {
 
@@ -332,6 +332,10 @@ public abstract class TestObject extends BulkTest {
     throws IOException, ClassNotFoundException {
         ByteArrayInputStream stream = new ByteArrayInputStream(b);
         return readExternalFormFromStream(stream);
+    }
+
+    protected boolean skipSerializedCanonicalTests() {
+        return Boolean.getBoolean("org.apache.commons.collections:with-clover");
     }
 
     // private

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.22 2002/11/01 19:36:54 rwaldhoff Exp $
- * $Revision: 1.22 $
- * $Date: 2002/11/01 19:36:54 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.23 2003/02/26 01:33:22 rwaldhoff Exp $
+ * $Revision: 1.23 $
+ * $Date: 2003/02/26 01:33:22 $
  *
  * ====================================================================
  *
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.22 $ $Date: 2002/11/01 19:36:54 $
+ * @version $Revision: 1.23 $ $Date: 2003/02/26 01:33:22 $
  */
 public abstract class TestMap extends TestObject {
 
@@ -633,9 +633,11 @@ public abstract class TestMap extends TestObject {
         */
 
         // test to make sure the canonical form has been preserved
-        if (!(makeEmptyMap() instanceof Serializable)) return;
-        Map map = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(makeEmptyMap()));
-        assertTrue("Map is empty",map.isEmpty()  == true);
+        Map map = makeEmptyMap();
+        if(map instanceof Serializable && !skipSerializedCanonicalTests()) {
+            Map map2 = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
+            assertTrue("Map is empty",map2.isEmpty());
+        }
     }
 
         /**
@@ -652,9 +654,11 @@ public abstract class TestMap extends TestObject {
         */
 
         // test to make sure the canonical form has been preserved
-        if (!(makeFullMap() instanceof Serializable)) return;
-        Map map = (Map) readExternalFormFromDisk(getCanonicalFullCollectionName(makeFullMap()));
-        assertEquals("Map is the right size",map.size(), getSampleKeys().length);
+        Map map = makeFullMap();
+        if(map instanceof Serializable && !skipSerializedCanonicalTests()) {
+            Map map2 = (Map) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
+            assertEquals("Map is the right size",map2.size(), getSampleKeys().length);
+        }
     }
 
     /**

@@ -131,40 +131,40 @@ public abstract class TestComparator extends TestObject {
      * against the canonical version in CVS.
      */
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
-        Comparator comparator = null;
-
-        // test to make sure the canonical form has been preserved
-	try {
-	    comparator = 
-		(Comparator) readExternalFormFromDisk
-		(getCanonicalComparatorName(makeComparator()));
-	} catch (FileNotFoundException exception) {
-
-	    boolean autoCreateSerialized = false;
-
-	    if(autoCreateSerialized) {
-		comparator = makeComparator();
-		String fileName = getCanonicalComparatorName(comparator);
-		writeExternalFormToDisk((Serializable) comparator, fileName);
-		fail("Serialized form could not be found.  A serialized version " +
-		     "has now been written (and should be added to CVS): " + fileName);
-	    } else {
-		fail("The Serialized form could be located to test serialization " +
-		     "compatibility: " + exception.getMessage());
-	    }
-	}
-
-        
-        // make sure the canonical form produces the ordering we currently
-        // expect
-        List randomList = getComparableObjectsOrdered();
-        reverseObjects(randomList);
-        sortObjects(randomList,comparator);
-
-        List orderedList = getComparableObjectsOrdered();
-
-        assertTrue("Comparator did not reorder the List correctly",
-                   orderedList.equals(randomList));
+        if(!skipSerializedCanonicalTests()) {
+            Comparator comparator = null;
+    
+            // test to make sure the canonical form has been preserved
+            try {
+                comparator = (Comparator) readExternalFormFromDisk(getCanonicalComparatorName(makeComparator()));
+        	} catch (FileNotFoundException exception) {
+    
+                boolean autoCreateSerialized = false;
+    
+        	    if(autoCreateSerialized) {
+    	          	comparator = makeComparator();
+            		String fileName = getCanonicalComparatorName(comparator);
+            		writeExternalFormToDisk((Serializable) comparator, fileName);
+            		fail("Serialized form could not be found.  A serialized version " +
+            		     "has now been written (and should be added to CVS): " + fileName);
+                } else {
+                    fail("The Serialized form could be located to test serialization " +
+                        "compatibility: " + exception.getMessage());
+                }
+            }
+    
+            
+            // make sure the canonical form produces the ordering we currently
+            // expect
+            List randomList = getComparableObjectsOrdered();
+            reverseObjects(randomList);
+            sortObjects(randomList,comparator);
+    
+            List orderedList = getComparableObjectsOrdered();
+    
+            assertTrue("Comparator did not reorder the List correctly",
+                       orderedList.equals(randomList));
+        }
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.15 2003/01/25 12:55:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.16 2003/02/26 01:33:22 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,7 +82,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
  *
- * @version $Revision: 1.15 $ $Date: 2003/01/25 12:55:43 $
+ * @version $Revision: 1.16 $ $Date: 2003/02/26 01:33:22 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -925,9 +925,11 @@ public abstract class TestList extends TestCollection {
         */
 
         // test to make sure the canonical form has been preserved
-        if (!(makeEmptyList() instanceof Serializable)) return;
-        List list = (List) readExternalFormFromDisk(getCanonicalEmptyCollectionName(makeEmptyList()));
-        assertTrue("List is empty",list.size()  == 0);
+        List list = makeEmptyList();
+        if(list instanceof Serializable && !skipSerializedCanonicalTests()) {
+            List list2 = (List) readExternalFormFromDisk(getCanonicalEmptyCollectionName(list));
+            assertTrue("List is empty",list2.size()  == 0);
+        }
     }
 
     /**
@@ -944,9 +946,11 @@ public abstract class TestList extends TestCollection {
         */
 
         // test to make sure the canonical form has been preserved
-        if (!(makeFullList() instanceof Serializable)) return;
-        List list = (List) readExternalFormFromDisk(getCanonicalFullCollectionName(makeFullList()));
-        assertEquals("List is the right size",list.size(), 4);
+        List list = makeFullList();
+        if(list instanceof Serializable && !skipSerializedCanonicalTests()) {
+            List list2 = (List) readExternalFormFromDisk(getCanonicalFullCollectionName(list));
+            assertEquals("List is the right size",list2.size(), 4);
+        }
     }
 
 

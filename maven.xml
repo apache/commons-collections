@@ -1,4 +1,6 @@
-<project default="java:jar"
-  xmlns:j="jelly:core">
-
+<project default="java:jar" xmlns:j="jelly:core">
+  <postGoal name="clover:on">
+    <j:set var="maven.junit.sysproperties" value="${maven.junit.sysproperties} org.apache.commons.collections:with-clover"/>
+    <j:set var="org.apache.commons.collections:with-clover" value="true"/>
+  </postGoal>
 </project>
