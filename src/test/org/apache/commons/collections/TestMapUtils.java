@@ -28,14 +28,14 @@ import java.util.TreeMap;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections.map.AbstractTestMap;
 import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.collections.map.PredicatedMap;
+import org.apache.commons.collections.map.TestPredicatedMap;
 
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.22 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.23 $ $Date: 2004/04/09 14:55:39 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -121,7 +121,7 @@ public class TestMapUtils extends BulkTest {
     }
     
     public BulkTest bulkTestTypedMap() {
-        return new AbstractTestMap("") {
+        return new TestPredicatedMap("") {
             public boolean isAllowNullKey() {
                 return false;
             }

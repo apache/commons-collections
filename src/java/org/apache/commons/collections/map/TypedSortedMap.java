@@ -26,9 +26,11 @@ import org.apache.commons.collections.PredicateUtils;
  * The validation of additions is performed via an instanceof test against 
  * a specified <code>Class</code>. If an object cannot be added to the
  * collection, an IllegalArgumentException is thrown.
+ * <p>
+ * The returned implementation is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/09 14:57:10 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
