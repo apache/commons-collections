@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/PredicatedMap.java,v 1.2 2003/12/05 20:23:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/PredicatedMap.java,v 1.3 2003/12/25 00:49:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,7 +75,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/05 20:23:57 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/25 00:49:14 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -163,7 +163,7 @@ public class PredicatedMap extends AbstractMapDecorator {
     /**
      * Implementation of an entry set that checks (predicates) additions.
      */
-    protected static class PredicatedMapEntrySet extends AbstractCollectionDecorator implements Set {
+    static class PredicatedMapEntrySet extends AbstractCollectionDecorator implements Set {
         
         /** The predicate to use */
         private final Predicate valuePredicate;
@@ -214,7 +214,7 @@ public class PredicatedMap extends AbstractMapDecorator {
     /**
      * Implementation of an entry set iterator.
      */
-    protected static class PredicatedMapEntrySetIterator extends AbstractIteratorDecorator {
+    static class PredicatedMapEntrySetIterator extends AbstractIteratorDecorator {
         
         /** The predicate to use */
         private final Predicate valuePredicate;
@@ -233,7 +233,7 @@ public class PredicatedMap extends AbstractMapDecorator {
     /**
      * Implementation of a map entry that checks (predicates) additions.
      */
-    protected static class PredicatedMapEntry extends AbstractMapEntryDecorator {
+    static class PredicatedMapEntry extends AbstractMapEntryDecorator {
 
         /** The predicate to use */
         private final Predicate predicate;

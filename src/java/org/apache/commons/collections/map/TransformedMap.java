@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/TransformedMap.java,v 1.2 2003/12/05 20:23:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/TransformedMap.java,v 1.3 2003/12/25 00:49:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/05 20:23:57 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/25 00:49:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -192,7 +192,7 @@ public class TransformedMap extends AbstractMapDecorator {
     /**
      * Implementation of an entry set that uses a transforming map entry.
      */
-    protected static class TransformedMapEntrySet extends AbstractCollectionDecorator implements Set {
+    static class TransformedMapEntrySet extends AbstractCollectionDecorator implements Set {
         
         /** The transformer to use */
         private final Transformer valueTransformer;
@@ -243,7 +243,7 @@ public class TransformedMap extends AbstractMapDecorator {
     /**
      * Implementation of an entry set iterator.
      */
-    protected static class TransformedMapEntrySetIterator extends AbstractIteratorDecorator {
+    static class TransformedMapEntrySetIterator extends AbstractIteratorDecorator {
         
         /** The transformer to use */
         private final Transformer valueTransformer;
@@ -262,7 +262,7 @@ public class TransformedMap extends AbstractMapDecorator {
     /**
      * Implementation of a map entry that transforms additions.
      */
-    protected static class TransformedMapEntry extends AbstractMapEntryDecorator {
+    static class TransformedMapEntry extends AbstractMapEntryDecorator {
 
         /** The transformer to use */
         private final Transformer valueTransformer;

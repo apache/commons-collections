@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/FixedSizeList.java,v 1.2 2003/12/11 23:00:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/FixedSizeList.java,v 1.3 2003/12/25 00:46:02 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  * The set method is allowed (as it doesn't change the list size).
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/11 23:00:32 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/25 00:46:02 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -174,7 +174,7 @@ public class FixedSizeList extends AbstractListDecorator implements BoundedColle
     /**
      * List iterator that only permits changes via set()
      */
-    protected static class FixedSizeListIterator extends AbstractListIteratorDecorator {
+    static class FixedSizeListIterator extends AbstractListIteratorDecorator {
         protected FixedSizeListIterator(ListIterator iterator) {
             super(iterator);
         }
@@ -182,9 +182,6 @@ public class FixedSizeList extends AbstractListDecorator implements BoundedColle
             throw new UnsupportedOperationException("List is fixed size");
         }
         public void add(Object object) {
-            throw new UnsupportedOperationException("List is fixed size");
-        }
-        public void remove(Object object) {
             throw new UnsupportedOperationException("List is fixed size");
         }
     }
