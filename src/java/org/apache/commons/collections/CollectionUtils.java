@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.43 2003/09/21 23:47:09 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.44 2003/09/22 02:20:56 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.43 $ $Date: 2003/09/21 23:47:09 $
+ * @version $Revision: 1.44 $ $Date: 2003/09/22 02:20:56 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -239,7 +239,7 @@ public class CollectionUtils {
      * @see #intersection
      */
     public static boolean containsAny(final Collection coll1, final Collection coll2) {
-        if (coll1.size() > coll2.size()) {
+        if (coll1.size() < coll2.size()) {
             for (Iterator it = coll1.iterator(); it.hasNext();) {
                 if (coll2.contains(it.next())) {
                     return true;
