@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.11 2002/02/20 18:30:36 morgand Exp $
- * $Revision: 1.11 $
- * $Date: 2002/02/20 18:30:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.12 2002/03/19 01:18:09 jefft Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/03/19 01:18:09 $
  *
  * ====================================================================
  *
@@ -129,7 +129,7 @@ public class LRUMap extends SequencedHashMap implements Externalizable {
       * @param key    Key of the Object to add.
       * @param value  Object to add
       * @return Former value of the key
-      * @see removeLRU()
+      * @see #removeLRU
       */    
     public Object put( Object key, Object value ) {
 
