@@ -26,7 +26,7 @@ import org.apache.commons.collections.Predicate;
  * passed into the predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -57,10 +57,14 @@ public final class UniquePredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return the predicate result.
+     * Evaluates the predicate returning true if the input object hasn't been
+     * received yet.
+     * 
+     * @param object  the input object
+     * @return true if this is the first time the object is seen
      */
     public boolean evaluate(Object object) {
         return iSet.add(object);
     }
-    
+
 }

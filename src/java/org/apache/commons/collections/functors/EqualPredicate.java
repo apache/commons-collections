@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * as the one stored in this predicate by equals.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -62,7 +62,10 @@ public final class EqualPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return the predicate result.
+     * Evaluates the predicate returning true if the input equals the stored value.
+     * 
+     * @param object  the input object
+     * @return true if input object equals stored value
      */
     public boolean evaluate(Object object) {
         return (iValue.equals(object));
@@ -70,6 +73,7 @@ public final class EqualPredicate implements Predicate, Serializable {
 
     /**
      * Gets the value.
+     * 
      * @return the value
      * @since Commons Collections 3.1
      */

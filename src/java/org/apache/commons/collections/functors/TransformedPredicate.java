@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * another <code>Predicate</code>.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.2 $ $Date: 2004/03/13 17:15:17 $
+ * @version $Revision: 1.3 $ $Date: 2004/05/16 11:16:01 $
  * @author Alban Peignier
  * @author Stephen Colebourne
  */
@@ -60,6 +60,9 @@ public final class TransformedPredicate implements Predicate, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
+     * 
+     * @param transformer  the transformer to use
+     * @param predicate  the predicate to decorate
      */
     public TransformedPredicate(Transformer transformer, Predicate predicate) {
         iTransformer = transformer;
@@ -67,7 +70,11 @@ public final class TransformedPredicate implements Predicate, Serializable {
     }
     
     /**
-     * Return the predicate result.
+     * Evaluates the predicate returning the result of the decorated predicate
+     * once the input has been transformed
+     * 
+     * @param object  the input object which will be transformed
+     * @return true if decorated predicate returns true
      */
     public boolean evaluate(Object object) {
         Object result = iTransformer.transform(object);
@@ -76,6 +83,7 @@ public final class TransformedPredicate implements Predicate, Serializable {
 
     /**
      * Gets the predicate in use.
+     * 
      * @return the predicate
      */
     public Predicate getPredicate() {
@@ -84,6 +92,7 @@ public final class TransformedPredicate implements Predicate, Serializable {
 
     /**
      * Gets the transformer in use.
+     * 
      * @return the transformer
      */
     public Transformer getTransformer() {

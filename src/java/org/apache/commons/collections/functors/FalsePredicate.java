@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that always returns false.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -53,10 +53,13 @@ public final class FalsePredicate implements Predicate, Serializable {
     }
 
     /**
-     * Always return true.
+     * Evaluates the predicate returning false always.
+     * 
+     * @param object  the input object
+     * @return false always
      */
     public boolean evaluate(Object object) {
         return false;
     }
-    
+
 }

@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if both the predicates return true.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -66,7 +66,10 @@ public final class AndPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return the predicate result.
+     * Evaluates the predicate returning true if both predicates return true.
+     * 
+     * @param object  the input object
+     * @return true if both decorated predicates return true
      */
     public boolean evaluate(Object object) {
        return (iPredicate1.evaluate(object) && iPredicate2.evaluate(object));
@@ -74,6 +77,7 @@ public final class AndPredicate implements Predicate, Serializable {
 
     /**
      * Gets the first predicate.
+     * 
      * @return the predicate
      * @since Commons Collections 3.1
      */
@@ -83,6 +87,7 @@ public final class AndPredicate implements Predicate, Serializable {
 
     /**
      * Gets the second predicate.
+     * 
      * @return the predicate
      * @since Commons Collections 3.1
      */

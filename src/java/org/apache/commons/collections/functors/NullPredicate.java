@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if the input is null.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -53,10 +53,13 @@ public final class NullPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return true if the object equals null.
+     * Evaluates the predicate returning true if the input is null.
+     * 
+     * @param object  the input object
+     * @return true if input is null
      */
     public boolean evaluate(Object object) {
         return (object == null);
     }
-    
+
 }

@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that always throws an exception.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -54,7 +54,11 @@ public final class ExceptionPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Always throw an exception
+     * Evaluates the predicate always throwing an exception.
+     * 
+     * @param object  the input object
+     * @return never
+     * @throws FunctorException always
      */
     public boolean evaluate(Object object) {
         throw new FunctorException("ExceptionPredicate invoked");

@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Predicate implementation that returns the result of a transformer.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -40,7 +40,8 @@ public final class TransformerPredicate implements Predicate, Serializable {
     /**
      * Factory to create the predicate.
      * 
-     * @return the transformer
+     * @param transformer  the transformer to decorate
+     * @return the predicate
      * @throws IllegalArgumentException if the transformer is null
      */
     public static Predicate getInstance(Transformer transformer) {
@@ -53,6 +54,8 @@ public final class TransformerPredicate implements Predicate, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
+     * 
+     * @param transformer  the transformer to decorate
      */
     public TransformerPredicate(Transformer transformer) {
         super();
@@ -60,7 +63,11 @@ public final class TransformerPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return the predicate result.
+     * Evaluates the predicate returning the result of the decorated transformer.
+     * 
+     * @param object  the input object
+     * @return true if decorated transformer returns Boolean.TRUE
+     * @throws FunctorException if the transformer returns an invalid type
      */
     public boolean evaluate(Object object) {
         Object result = iTransformer.transform(object);
@@ -74,6 +81,7 @@ public final class TransformerPredicate implements Predicate, Serializable {
 
     /**
      * Gets the transformer.
+     * 
      * @return the transformer
      * @since Commons Collections 3.1
      */

@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * as the one stored in this predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -63,7 +63,11 @@ public final class IdentityPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return the predicate result.
+     * Evaluates the predicate returning true if the input object is identical to
+     * the stored object.
+     * 
+     * @param object  the input object
+     * @return true if input is the same object as the stored value
      */
     public boolean evaluate(Object object) {
         return (iValue == object);
@@ -71,6 +75,7 @@ public final class IdentityPredicate implements Predicate, Serializable {
 
     /**
      * Gets the value.
+     * 
      * @return the value
      * @since Commons Collections 3.1
      */

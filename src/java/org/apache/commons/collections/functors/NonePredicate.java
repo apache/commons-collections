@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if none of the predicates return true.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -77,7 +77,10 @@ public final class NonePredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return the predicate result.
+     * Evaluates the predicate returning false if any stored predicate returns false.
+     * 
+     * @param object  the input object
+     * @return true if none of decorated predicates return true
      */
     public boolean evaluate(Object object) {
         for (int i = 0; i < iPredicates.length; i++) {
@@ -90,6 +93,7 @@ public final class NonePredicate implements Predicate, Serializable {
 
     /**
      * Gets the predicates, do not modify the array.
+     * 
      * @return the predicates
      * @since Commons Collections 3.1
      */

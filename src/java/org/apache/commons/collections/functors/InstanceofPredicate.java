@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * the type stored in this predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -62,7 +62,10 @@ public final class InstanceofPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return the predicate result.
+     * Evaluates the predicate returning true if the input object is of the correct type.
+     * 
+     * @param object  the input object
+     * @return true if input is of stored type
      */
     public boolean evaluate(Object object) {
         return (iType.isInstance(object));
@@ -70,6 +73,7 @@ public final class InstanceofPredicate implements Predicate, Serializable {
 
     /**
      * Gets the type to compare to.
+     * 
      * @return the type
      * @since Commons Collections 3.1
      */

@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns the opposite of the decorated predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -61,7 +61,10 @@ public final class NotPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return the negated predicate result.
+     * Evaluates the predicate returning the opposite to the stored predicate.
+     * 
+     * @param object  the input object
+     * @return true if predicate returns false
      */
     public boolean evaluate(Object object) {
         return !(iPredicate.evaluate(object));
@@ -69,6 +72,7 @@ public final class NotPredicate implements Predicate, Serializable {
 
     /**
      * Gets the predicate.
+     * 
      * @return the predicate
      * @since Commons Collections 3.1
      */

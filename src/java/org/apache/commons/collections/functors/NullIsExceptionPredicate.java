@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that throws an exception if the input is null.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:16:01 $
  *
  * @author Stephen Colebourne
  */
@@ -62,7 +62,12 @@ public final class NullIsExceptionPredicate implements Predicate, Serializable {
     }
 
     /**
-     * Return true if the object equals null else call the decorated predicate.
+     * Evaluates the predicate returning the result of the decorated predicate
+     * once a null check is performed.
+     * 
+     * @param object  the input object
+     * @return true if decorated predicate returns true
+     * @throws FunctorException if input is null
      */
     public boolean evaluate(Object object) {
         if (object == null) {
@@ -73,6 +78,7 @@ public final class NullIsExceptionPredicate implements Predicate, Serializable {
 
     /**
      * Gets the predicate.
+     * 
      * @return the predicate
      * @since Commons Collections 3.1
      */
