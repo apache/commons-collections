@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.10 2003/09/20 14:03:57 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2003/09/20 14:03:57 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import junit.framework.Test;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCursorableLinkedList.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
+ * @version $Id: TestCursorableLinkedList.java,v 1.10 2003/09/20 14:03:57 scolebourne Exp $
  */
 public class TestCursorableLinkedList extends TestList {
     public TestCursorableLinkedList(String testName) {
@@ -916,6 +916,29 @@ public class TestCursorableLinkedList extends TestList {
         list.add("C");
         list.add("D");
         list.add("E");
+
+        java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
+        java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(buf);
+        out.writeObject(list);
+        out.flush();
+        out.close();
+
+        java.io.ByteArrayInputStream bufin = new java.io.ByteArrayInputStream(buf.toByteArray());
+        java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufin);
+        Object list2 = in.readObject();
+
+        assertTrue(list != list2);
+        assertTrue(list2.equals(list));
+        assertTrue(list.equals(list2));
+    }
+
+    public void testSerializationWithOpenCursor() throws Exception {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        list.add("D");
+        list.add("E");
+        CursorableLinkedList.Cursor cursor = list.cursor();
 
         java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
         java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(buf);

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.16 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.17 2003/09/20 14:03:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,13 +84,16 @@ import java.util.NoSuchElementException;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.16 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.17 $ $Date: 2003/09/20 14:03:57 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki
  */
 public class CursorableLinkedList implements List, Serializable {
     //  TODO: use weak references to cursors in case they aren't closed directly
+    
+    /** Ensure serialization compatability */    
+    private static final long serialVersionUID = 8836393098519411393L;
 
     //--- public methods ---------------------------------------------
 
@@ -897,7 +900,7 @@ public class CursorableLinkedList implements List, Serializable {
         out.defaultWriteObject();
         out.writeInt(_size);
         Listable cur = _head.next();
-        while(cur != null) {
+        while (cur != null) {
             out.writeObject(cur.value());
             cur = cur.next();
         }
@@ -906,9 +909,11 @@ public class CursorableLinkedList implements List, Serializable {
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         _size = 0;
+        _modCount = 0;
+        _cursors = new ArrayList();
         _head = new Listable(null,null,null);
         int size = in.readInt();
-        for(int i=0;i<size;i++) {
+        for (int i=0;i<size;i++) {
             this.add(in.readObject());
         }
     }
@@ -916,7 +921,7 @@ public class CursorableLinkedList implements List, Serializable {
     //--- protected attributes ---------------------------------------
 
     /** The number of elements in me. */
-    transient protected int _size = 0;
+    protected transient int _size = 0;
 
     /**
      * A sentry node.
@@ -930,16 +935,16 @@ public class CursorableLinkedList implements List, Serializable {
      * {@link org.apache.commons.collections.CursorableLinkedList.Listable} 
      * is the first or last element in the list.
      */
-    transient protected Listable _head = new Listable(null,null,null);
+    protected transient Listable _head = new Listable(null,null,null);
 
     /** Tracks the number of structural modifications to me. */
-    protected int _modCount = 0;
+    protected transient int _modCount = 0;
 
     /**
      * A list of the currently {@link CursorableLinkedList.Cursor}s currently
      * open in this list.
      */
-    protected List _cursors = new ArrayList();
+    protected transient List _cursors = new ArrayList();
 
     //--- inner classes ----------------------------------------------
 
