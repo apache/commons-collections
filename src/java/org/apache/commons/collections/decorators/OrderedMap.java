@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.1 2003/10/03 06:24:13 bayard Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.2 2003/10/03 06:25:03 bayard Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.DefaultMapEntry;
  * The order can be observed via the iterator or toArray methods.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/03 06:24:13 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/03 06:25:03 $
  * 
  * @author Henri Yandell
  */
@@ -401,6 +401,16 @@ public class OrderedMap extends AbstractMapDecorator implements Map {
             this.insertOrder = insertOrder;
         }
 
+        public Set _entries() {
+            Set set = new java.util.HashSet( this.insertOrder.size() );
+            set = OrderedSet.decorate( set );
+            for (Iterator it = insertOrder.iterator(); it.hasNext();) {
+                Object key = it.next();
+                set.add( new DefaultMapEntry( key, getMap().get( key ) ) );
+            }
+            return set;
+        }
+
         public int size() {
             return this.parent.size();
         }
@@ -425,19 +435,9 @@ public class OrderedMap extends AbstractMapDecorator implements Map {
                 throw new IllegalArgumentException("Parameter must be a Map.Entry");
             }
         }
-        // tmp
-        public Set _entries() {
+        public Iterator iterator() {
             // TODO: Needs to return a EntrySetViewIterator, which 
             //       removes from this and from the Map
-            Set set = new java.util.HashSet( this.insertOrder.size() );
-            set = OrderedSet.decorate( set );
-            for (Iterator it = insertOrder.iterator(); it.hasNext();) {
-                Object key = it.next();
-                set.add( new DefaultMapEntry( key, getMap().get( key ) ) );
-            }
-            return set;
-        }
-        public Iterator iterator() {
             return _entries().iterator();
         }
         public Object toArray()[] {
