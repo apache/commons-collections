@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.8 2003/09/09 03:03:57 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedSortedBag.java,v 1.1 2003/09/09 03:03:57 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,50 +58,84 @@
 package org.apache.commons.collections.decorators;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.Comparator;
+
+import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.SortedBag;
+import org.apache.commons.collections.TreeBag;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.TestBag;
 
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestBag} for exercising the {@link PredicatedSortedBag}
+ * implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/09/09 03:03:57 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/09 03:03:57 $
  * 
- * @author Stephen Colebourne
+ * @author Phil Steitz
  */
-public class TestAll extends TestCase {
+public class TestPredicatedSortedBag extends TestBag {
     
-    public TestAll(String testName) {
+    private SortedBag emptyBag = new TreeBag();
+    private SortedBag nullBag = null;
+    
+    public TestPredicatedSortedBag(String testName) {
         super(testName);
+    }
+    
+    protected Predicate getPredicate() {
+        return new Predicate() {
+            public boolean evaluate(Object o) {
+                return o instanceof String;
+            }
+        };
+    }
+    
+    protected SortedBag decorateBag(SortedBag bag, Predicate predicate) {
+        return PredicatedSortedBag.decorate(bag, predicate);
+    }
+    
+    public Bag makeBag() {
+        return decorateBag(emptyBag, getPredicate());
+    }
+
+    public static Test suite() {
+        return new TestSuite(TestPredicatedSortedBag.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestPredicatedSortedBag.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
     
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestSequencedSet.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        
-        return suite;
+    public void testDecorate() {
+        SortedBag bag = decorateBag(emptyBag, getPredicate());
+        SortedBag bag2 = ((PredicatedSortedBag) bag).getSortedBag();
+        try {
+            SortedBag bag3 = decorateBag(emptyBag, null);
+            fail("Expecting IllegalArgumentException for null predicate");
+        } catch (IllegalArgumentException e) {}
+        try {
+            SortedBag bag4 = decorateBag(nullBag, getPredicate());
+            fail("Expecting IllegalArgumentException for null bag");
+        } catch (IllegalArgumentException e) {}
     }
-        
+    
+    public void testSortOrder() {
+        PredicatedSortedBag bag = 
+            (PredicatedSortedBag) decorateBag(emptyBag, getPredicate());
+        String one = "one";
+        String two = "two";
+        String three = "three";
+        bag.add(one);
+        bag.add(two);
+        bag.add(three);
+        assertEquals("first element", bag.first(), one);
+        assertEquals("last element", bag.last(), two); 
+        Comparator c = bag.comparator();
+        assertTrue("natural order, so comparator should be null", 
+            c == null);
+    }
 }
