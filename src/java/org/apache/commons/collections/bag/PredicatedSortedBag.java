@@ -28,7 +28,7 @@ import org.apache.commons.collections.SortedBag;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/15 12:27:04 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -44,6 +44,7 @@ public class PredicatedSortedBag
      * 
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
+     * @return a new predicated SortedBag
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */

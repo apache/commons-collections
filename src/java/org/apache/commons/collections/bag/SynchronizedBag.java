@@ -29,7 +29,7 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * Iterators must be separately synchronized around the loop.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/15 12:27:04 $
  * 
  * @author Stephen Colebourne
  */
@@ -40,6 +40,7 @@ public class SynchronizedBag
      * Factory method to create a synchronized bag.
      * 
      * @param bag  the bag to decorate, must not be null
+     * @return a new synchronized Bag
      * @throws IllegalArgumentException if bag is null
      */
     public static Bag decorate(Bag bag) {
@@ -68,6 +69,11 @@ public class SynchronizedBag
         super(bag, lock);
     }
 
+    /**
+     * Gets the bag being decorated.
+     * 
+     * @return the decorated bag
+     */
     protected Bag getBag() {
         return (Bag) collection;
     }
@@ -103,6 +109,11 @@ public class SynchronizedBag
      * Synchronized Set for the Bag class.
      */
     class SynchronizedBagSet extends SynchronizedSet {
+        /**
+         * Constructor.
+         * @param set  the set to decorate
+         * @param lock  the lock to use, shared with the bag
+         */
         SynchronizedBagSet(Set set, Object lock) {
             super(set, lock);
         }

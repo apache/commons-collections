@@ -28,7 +28,7 @@ import org.apache.commons.collections.SortedBag;
  * Iterators must be separately synchronized around the loop.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/15 12:27:04 $
  * 
  * @author Stephen Colebourne
  */
@@ -39,6 +39,7 @@ public class SynchronizedSortedBag
      * Factory method to create a synchronized sorted bag.
      * 
      * @param bag  the bag to decorate, must not be null
+     * @return a new synchronized SortedBag
      * @throws IllegalArgumentException if bag is null
      */
     public static SortedBag decorate(SortedBag bag) {
@@ -67,6 +68,11 @@ public class SynchronizedSortedBag
         super(bag, lock);
     }
 
+    /**
+     * Gets the bag being decorated.
+     * 
+     * @return the decorated bag
+     */
     protected SortedBag getSortedBag() {
         return (SortedBag) collection;
     }

@@ -37,7 +37,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
- * @version $Revision: 1.14 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.15 $ $Date: 2004/05/15 12:27:04 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -76,8 +76,9 @@ public abstract class AbstractMapBag implements Bag {
 
     /**
      * Utility method for implementations to access the map that backs
-     * this bag. Not intended for interactive use outside of
-     * subclasses.
+     * this bag. Not intended for interactive use outside of subclasses.
+     * 
+     * @return the map being used by the Bag
      */
     protected Map getMap() {
         return map;
@@ -171,6 +172,9 @@ public abstract class AbstractMapBag implements Bag {
         return new BagIterator(this);
     }
 
+    /**
+     * Inner class iterator for the Bag.
+     */
     static class BagIterator implements Iterator {
         private AbstractMapBag parent;
         private Iterator entryIterator;
@@ -179,6 +183,11 @@ public abstract class AbstractMapBag implements Bag {
         private final int mods;
         private boolean canRemove;
 
+        /**
+         * Constructor.
+         * 
+         * @param parent  the parent bag
+         */
         public BagIterator(AbstractMapBag parent) {
             this.parent = parent;
             this.entryIterator = parent.map.entrySet().iterator();
@@ -391,8 +400,13 @@ public abstract class AbstractMapBag implements Bag {
      * Mutable integer class for storing the data.
      */
     protected static class MutableInteger {
+        /** The value of this mutable. */
         protected int value;
         
+        /**
+         * Constructor.
+         * @param value  the initial value
+         */
         MutableInteger(int value) {
             this.value = value;
         }
@@ -469,6 +483,8 @@ public abstract class AbstractMapBag implements Bag {
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
+     * @param out  the output stream
+     * @throws IOException
      */
     protected void doWriteObject(ObjectOutputStream out) throws IOException {
         out.writeInt(map.size());
@@ -481,6 +497,10 @@ public abstract class AbstractMapBag implements Bag {
 
     /**
      * Read the map in using a custom routine.
+     * @param map  the map to use
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     protected void doReadObject(Map map, ObjectInputStream in) throws IOException, ClassNotFoundException {
         this.map = map;
@@ -514,7 +534,7 @@ public abstract class AbstractMapBag implements Bag {
             return false;
         }
         for (Iterator it = map.keySet().iterator(); it.hasNext();) {
-            Object element = (Object) it.next();
+            Object element = it.next();
             if (other.getCount(element) != getCount(element)) {
                 return false;
             }

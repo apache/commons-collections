@@ -29,7 +29,7 @@ import org.apache.commons.collections.Transformer;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/15 12:27:04 $
  * 
  * @author Stephen Colebourne
  */
@@ -44,6 +44,7 @@ public class TransformedSortedBag
      * 
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed SortedBag
      * @throws IllegalArgumentException if bag or transformer is null
      */
     public static SortedBag decorate(SortedBag bag, Transformer transformer) {

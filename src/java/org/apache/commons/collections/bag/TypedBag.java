@@ -27,7 +27,7 @@ import org.apache.commons.collections.functors.InstanceofPredicate;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/07 23:28:38 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/15 12:27:04 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -42,6 +42,7 @@ public class TypedBag {
      * 
      * @param bag  the bag to decorate, must not be null
      * @param type  the type to allow into the bag, must not be null
+     * @return a new typed Bag
      * @throws IllegalArgumentException if bag or type is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
@@ -53,6 +54,7 @@ public class TypedBag {
      * Restrictive constructor.
      */
     protected TypedBag() {
+        super();
     }
 
 }

@@ -28,7 +28,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>Bag</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/15 12:27:04 $
  * 
  * @author Stephen Colebourne
  */
@@ -37,8 +37,11 @@ public final class UnmodifiableBag
 
     /**
      * Factory method to create an unmodifiable bag.
+     * <p>
+     * If the bag passed in is already unmodifiable, it is returned.
      * 
      * @param bag  the bag to decorate, must not be null
+     * @return an unmodifiable Bag
      * @throws IllegalArgumentException if bag is null
      */
     public static Bag decorate(Bag bag) {
