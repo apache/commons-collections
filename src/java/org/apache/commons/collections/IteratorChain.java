@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorChain.java,v 1.2 2002/04/08 23:59:58 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/04/08 23:59:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorChain.java,v 1.3 2002/04/09 16:33:40 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/04/09 16:33:40 $
  *
  * ====================================================================
  *
@@ -67,20 +67,17 @@ import java.util.NoSuchElementException;
 
 /**
  * <p>An IteratorChain is an Iterator that wraps one or
- * more Iterators in sequence.  When any method from the
+ * more Iterators.  When any method from the
  * Iterator interface is called, the IteratorChain will
- * call the same method on the first Iterator in the chain
- * until it is exhausted until the first Iterator is exhausted.
- * At that point, the IteratorChain will move to the next
- * Iterator in the IteratorChain.  The IteratorChain will
- * continue in this pattern until all Iterators in the
- * IteratorChain are exhausted.</p>
+ * proxy to a single underlying Iterator.  The 
+ * IteratorChain will invoke the Iterators in sequence until 
+ * all Iterators are exhausted completely.</p>
  * 
  * <p>Under many circumstances, linking Iterators together
  * in this manner is more efficient (and convenient)
  * than reading out the contents of each Iterator into a
  * List and creating a new Iterator.</p>
- *  
+ * 
  * <p>Calling a method that adds new Iterator<i>after
  * a method in the Iterator interface
  * has been called</i> will result in an
