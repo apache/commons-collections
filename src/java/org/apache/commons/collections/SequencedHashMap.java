@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.6 2002/02/22 02:37:56 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/02/22 02:37:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.7 2002/02/22 03:17:40 mas Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/02/22 03:17:40 $
  *
  * ====================================================================
  *
@@ -60,6 +60,11 @@
  */
 package org.apache.commons.collections;
 
+import java.io.Externalizable;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.IOException;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -91,7 +96,7 @@ import java.util.NoSuchElementException;
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
-public class SequencedHashMap implements Map, Cloneable {
+public class SequencedHashMap implements Map, Cloneable, Externalizable {
 
   /**
    *  {@link java.util.Map.Entry} that doubles as a node in the linked list
@@ -878,5 +883,30 @@ public class SequencedHashMap implements Map, Cloneable {
   {
     return remove(get(index));
   }
+
+  // per Externalizable.readExternal(ObjectInput)
+  public void readExternal( ObjectInput in ) 
+    throws IOException, ClassNotFoundException 
+  {
+    int size = in.readInt();    
+    for(int i = 0; i < size; i++)  {
+      Object key = in.readObject();
+      Object value = in.readObject();
+      put(key, value);
+    }
+  }
+  
+  // per Externalizable.writeExternal(ObjectOutput)
+  public void writeExternal( ObjectOutput out ) throws IOException {
+    out.writeInt(size());
+    for(Entry pos = sentinel.next; pos != sentinel; pos = pos.next) {
+      out.writeObject(pos.getKey());
+      out.writeObject(pos.getValue());
+    }
+  }
+
+  // add a serial version uid, so that if we change things in the future
+  // without changing the format, we can still deserialize properly.
+  private static final long serialVersionUID = 3380552487888102930L;
 
 }
