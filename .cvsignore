@@ -1,2 +1,5 @@
 build.properties
 dist
+maven.log
+velocity.log
+target
