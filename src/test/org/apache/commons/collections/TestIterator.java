@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestIterator.java,v 1.2 2002/02/25 22:48:52 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/25 22:48:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestIterator.java,v 1.3 2002/02/25 23:26:25 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/25 23:26:25 $
  *
  * ====================================================================
  *
@@ -85,6 +85,7 @@ public abstract class TestIterator extends TestObject {
      */
     public void testEmptyIterator() {
         Iterator iter = makeEmptyIterator();
+        assertTrue("hasNext() should return false for empty iterators",iter.hasNext() == false);
         try {
 	    iter.next();
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
@@ -100,6 +101,9 @@ public abstract class TestIterator extends TestObject {
      */
     public void testFullIterator() {
         Iterator iter = makeFullIterator();
+
+        assertTrue("hasNext() should return true for at least one element",iter.hasNext());
+
         try {
 	    iter.next();
 	} catch (NoSuchElementException e) {
