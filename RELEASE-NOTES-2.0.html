@@ -1,0 +1,84 @@
+<center><h2>RELEASE NOTES: COLLECTIONS 2.0</h2></center>
+
+
+<center><h3>NEW COLLECTIONS</h3></center>
+
+<p>These collections are new to Collections 2.0:</p>
+
+<ul>
+<li><strong>Bag</strong> - A Collection that keeps a count of its members of the same
+    type, using <code>hashCode</code> to check for equality. Suppose
+    you have a Bag that contains <code>{a, a, b, c}</code>.  Calling
+    getCount on <code>a</code> would return 2, while calling
+    uniqueSet would return <code>{a, b, c}</code>.  <i>Note: this is an
+    interface with several implementations.</i></li>
+<li><strong>DoubleOrderedMap</strong> - Red-Black tree-based implementation of Map. 
+    This class guarantees
+    that the map will be in both ascending key order and ascending
+    value order, sorted according to the natural order for the key's
+    and value's classes.</li>
+<li><strong>FilterListIterator</strong> - A proxy <code>ListIterator</code> which 
+    takes a <code>Predicate</code> instance to filter
+    out objects from an underlying <code>ListIterator</code> 
+    instance. Only objects for which the specified 
+    <code>Predicate</code> evaluates to <code>true</code> are
+    returned by the iterator.</li>
+<li><strong>HashBag</strong> -  An implementation of <strong>Bag</strong> that is backed by a 
+    HashMap.</li>
+<li><strong>MultiMap</strong> - This is simply a Map with slightly different semantics.
+    Instead of returning an Object, it returns a Collection.
+    So for example, you can put( key, new Integer(1) ); 
+    and then a Object get( key ); will return you a Collection 
+    instead of an Integer.  This is an interface implemented
+    by <strong>MultiHashMap</strong>.</li>
+<li><strong>SequencedHashMap</strong> -  A map of objects whose mapping entries are 
+    sequenced based on the order in
+    which they were added.</li>
+</ul>
+
+
+<center><h3>CHANGED COLLECTIONS</h3></center>
+
+These classes have changed since Collections 1.0:
+
+<p><u>LRUMap</u></p>
+    
+<p>LRUMap has been reimplemented as a subclass of 
+SynchronizedHashMap.  The new implementation of
+LRUMap should be faster, and it also offers true LRU 
+capabilities; now any get(Object) or 
+put(Object,Object) from this collection
+promotes the key to the Most Recently Used position.</p>
+    
+<p><i>LRUMap 2.0 compatibility changes:</i></p>
+<ul> 
+  <li>LRUMap can no longer be cast to a HashMap.</li>
+  <li>The removeLRU() method now has a different 
+    signature, and is no longer public.  Instead, use
+    remove(getFirstKey()).</li>
+  <li>"Externalized" LRUMap 1.0 Objects cannot be
+    read by LRUMap 2.0.</li>
+</ul>
+        
+<p><i>New features:</i></p>
+<ul>
+  <li>True LRU algorithm.</li>
+  <li>New methods from SequencedHashMap superclass.</li>
+  <li>processRemovedLRU(Object key, Object value) method
+    allows subclasses to perform custom actions on 
+    keys and values that are expunged from the Map.</li>
+</ul>
+        
+<p><i>Bugs fixed:</i></p>
+<ul>
+  <li>calling setMaximumSize(int) will remove excess LRUs
+    when the current size of the Map exceeds the new
+    maximum size</li>
+</ul>
+    
+<p><u>ArrayIterator</u></p>
+
+<p><i>Bugs fixed:</i></p>
+<ul>
+  <li>ArrayIterator can now iterate over arrays of primatives</li>
+</ul> 
