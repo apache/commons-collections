@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.4 2002/03/13 05:40:30 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/03/13 05:40:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.5 2002/03/13 06:00:20 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/03/13 06:00:20 $
  *
  * ====================================================================
  *
@@ -66,11 +66,10 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * A {@link Collection} that keeps a count of its members of the same
- * type, using <code>hashCode</code> to check for equality. Suppose
- * you have a Bag that contains <code>{a, a, b, c}</code>.  Calling
- * {@link #getCount} on <code>a</code> would return 2, while calling
- * {@link #uniqueSet} would return <code>{a, b, c}</code>.
+ * A {@link Collection} that counts the number of times an object appears in
+ * the collection.  Suppose you have a Bag that contains <code>{a, a, b,
+ * c}</code>.  Calling {@link #getCount(Object)} on <code>a</code> would return
+ * 2, while calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
  *
  * @author Chuck Burdick
  **/
@@ -84,12 +83,12 @@ public interface Bag extends Collection {
 
    /**
     * Add the given object to the bag and keep a count. If the object
-    * is already in the {@link #uniqueSet} then increment its count as
-    * reported by {@link #getCount}. Otherwise add it to the {@link
-    * #uniqueSet} and report its count as 1.
+    * is already in the {@link #uniqueSet()} then increment its count as
+    * reported by {@link #getCount(Object)}. Otherwise add it to the {@link
+    * #uniqueSet()} and report its count as 1.
     * @return <code>true</code> if the object was not already in the
     *         <code>uniqueSet</code>
-    * @see #getCount
+    * @see #getCount(Object)
     **/
    public boolean add(Object o);
 
@@ -99,13 +98,13 @@ public interface Bag extends Collection {
     * @return <code>true</code> if the object was not already in the
     *         <code>uniqueSet</code>
     * @see #add(Object)
-    * @see #getCount
+    * @see #getCount(Object)
     **/
    public boolean add(Object o, int i);
 
    /**
     * Remove all occurrences of the given object from the bag, and do
-    * not represent the object in the {@link #uniqueSet}.
+    * not represent the object in the {@link #uniqueSet()}.
     * @see #remove(Object, int)
     * @return <code>true</code> if this call changed the collection
     **/
@@ -114,8 +113,8 @@ public interface Bag extends Collection {
    /**
     * Remove the given number of occurrences from the bag. If the bag
     * contains <code>i</code> occurrences or less, the item will be
-    * removed from the {@link #uniqueSet}.
-    * @see #getCount
+    * removed from the {@link #uniqueSet()}.
+    * @see #getCount(Object)
     * @see #remove(Object)
     * @return <code>true</code> if this call changed the collection
     **/
@@ -130,7 +129,6 @@ public interface Bag extends Collection {
 
    /**
     * Returns the total number of items in the bag across all types.
-    * @see #size
     **/
    public int size();
 
@@ -138,8 +136,8 @@ public interface Bag extends Collection {
     * Returns <code>true</code> if the bag contains all elements in
     * the given collection, respecting cardinality.  That is, if the
     * given collection <code>C</code> contains <code>n</code> copies
-    * of a given object, calling {@link #getCount} on that object must
-    * be >= <code>n</code> for all <code>n</code> in <code>C</code>.
+    * of a given object, calling {@link #getCount(Object)} on that object must
+    * be <code>&gt;= n</code> for all <code>n</code> in <code>C</code>.
     **/
    public boolean containsAll(Collection c);
 
