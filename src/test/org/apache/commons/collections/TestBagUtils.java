@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBagUtils.java,v 1.4 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBagUtils.java,v 1.5 2003/12/24 17:31:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,19 +59,21 @@ package org.apache.commons.collections;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.bag.HashBag;
 import org.apache.commons.collections.bag.PredicatedBag;
 import org.apache.commons.collections.bag.PredicatedSortedBag;
 import org.apache.commons.collections.bag.SynchronizedBag;
 import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.collections.bag.TransformedBag;
 import org.apache.commons.collections.bag.TransformedSortedBag;
+import org.apache.commons.collections.bag.TreeBag;
 import org.apache.commons.collections.bag.UnmodifiableBag;
 import org.apache.commons.collections.bag.UnmodifiableSortedBag;
 
 /**
  * Tests for BagUtils factory methods.
  * 
- * @version $Revision: 1.4 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/24 17:31:41 $
  *
  * @author Phil Steitz
  */
@@ -217,7 +219,7 @@ public class TestBagUtils extends BulkTest {
     public void testTypedSortedBag() {
         Bag bag = BagUtils.typedSortedBag(new TreeBag(), stringClass);      
         assertTrue("Returned object should be a TypedSortedBag.",
-            bag instanceof PredicatedBag);
+            bag instanceof PredicatedSortedBag);
         try {
             bag = BagUtils.typedSortedBag(null, stringClass);
             fail("Expecting IllegalArgumentException for null bag.");
