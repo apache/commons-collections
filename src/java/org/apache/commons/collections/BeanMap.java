@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.3 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.4 2002/02/22 07:00:30 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/22 07:00:30 $
  *
  * ====================================================================
  *
@@ -178,8 +178,9 @@ public class BeanMap extends AbstractMap {
     //-------------------------------------------------------------------------
 
     public Object clone() {
-        Class beanClass = bean.getClass();
+        Class beanClass = null;
         try {
+            beanClass = bean.getClass();
             Object newBean = beanClass.newInstance();
             Map newMap = new BeanMap( newBean );
             newMap.putAll( this );
@@ -190,9 +191,18 @@ public class BeanMap extends AbstractMap {
         }
     }
 
+    /**
+     *  This method reinitializes the bean map to have default values for the
+     *  bean's properties.  This is accomplished by constructing a new instance
+     *  of the bean which th emap uses as its underlying data source.  This
+     *  behavior for <code>clear()</code> differs from the Map contract in that
+     *  the mappings are not actually removed from the map (the mappings for a
+     *  BeanMap are fixed).
+     **/
     public void clear() {
-        Class beanClass = bean.getClass();
+        Class beanClass = null;
         try {
+            beanClass = bean.getClass();
             bean = beanClass.newInstance();
         }
         catch (Exception e) {
