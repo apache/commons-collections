@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.3 2002/11/07 21:43:36 bayard Exp $
- * $Revision: 1.3 $
- * $Date: 2002/11/07 21:43:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.4 2003/01/07 15:18:15 rwaldhoff Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/01/07 15:18:15 $
  *
  * ====================================================================
  *
@@ -72,7 +72,7 @@ import junit.framework.Test;
  * Tests for ReferenceMap. 
  *
  * @author Paul Jack
- * @version $Id: TestReferenceMap.java,v 1.3 2002/11/07 21:43:36 bayard Exp $
+ * @version $Id: TestReferenceMap.java,v 1.4 2003/01/07 15:18:15 rwaldhoff Exp $
  */
 public class TestReferenceMap extends TestMap {
 
@@ -184,8 +184,8 @@ public class TestReferenceMap extends TestMap {
 */
 
 
-    public int getCompatibilityVersion() {
-        return 2; // actually 2.1, but can't represent that as an int
+    public String getCompatibilityVersion() {
+        return "2.1";
     }
 
 

@@ -89,8 +89,8 @@ public class TestSequencedHashMap extends TestMap {
 
     // current versions of SequencedHashMap and subclasses are not
     // compatible with Collections 1.x
-    public int getCompatibilityVersion() {
-        return 2;
+    public String getCompatibilityVersion() {
+        return "2";
     }
 
     public static void main(String[] args) {

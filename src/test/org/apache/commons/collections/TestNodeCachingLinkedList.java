@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestNodeCachingLinkedList.java,v 1.1 2002/11/18 23:58:46 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2002/11/18 23:58:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestNodeCachingLinkedList.java,v 1.2 2003/01/07 15:18:15 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/07 15:18:15 $
  *
  * ====================================================================
  *
@@ -68,14 +68,14 @@ import junit.framework.Test;
  * 
  * @author Jeff Varszegi
  */
-public class TestNodeCachingLinkedList extends TestList {
+public class TestNodeCachingLinkedList extends TestLinkedList {
     protected NodeCachingLinkedList list = null;
 
     public TestNodeCachingLinkedList(String _testName) {
         super(_testName);
     }
 
-    public List makeEmptyList() {
+    public LinkedList makeEmptyLinkedList() {
         return new NodeCachingLinkedList();
     }
 
@@ -85,6 +85,10 @@ public class TestNodeCachingLinkedList extends TestList {
 
     public static Test suite() {
         return BulkTest.makeSuite(TestNodeCachingLinkedList.class);
+    }
+    
+    public String getCompatibilityVersion() {
+        return "2.2";
     }
     
     public static void compareSpeed() {
@@ -157,6 +161,7 @@ public class TestNodeCachingLinkedList extends TestList {
     
 
     public static void main(String args[]) {
+        compareSpeed();
         String[] testCaseName = { TestNodeCachingLinkedList.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }

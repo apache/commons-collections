@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.15 2003/01/04 13:43:10 rwaldhoff Exp $
- * $Revision: 1.15 $
- * $Date: 2003/01/04 13:43:10 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.16 2003/01/07 15:18:15 rwaldhoff Exp $
+ * $Revision: 1.16 $
+ * $Date: 2003/01/07 15:18:15 $
  *
  * ====================================================================
  *
@@ -84,7 +84,7 @@ import java.io.Serializable;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.15 2003/01/04 13:43:10 rwaldhoff Exp $
+ * @version $Id: TestObject.java,v 1.16 2003/01/07 15:18:15 rwaldhoff Exp $
  */
 public abstract class TestObject extends BulkTest {
     public TestObject(String testName) {
@@ -95,19 +95,23 @@ public abstract class TestObject extends BulkTest {
     public static final int COLLECTIONS_MAJOR_VERSION = 2;
 
     /**
+     * Get the version of Collections that this object tries to
+     * maintain serialization compatibility with. Defaults to 1, the
+     * earliest Collections version. (Note: some collections did not
+     * even exist in this version).
+     * 
      * This constant makes it possible for TestMap (and other subclasses,
      * if necessary) to automatically check CVS for a versionX copy of a
      * Serialized object, so we can make sure that compatibility is maintained.
      * See, for example, TestMap.getCanonicalFullMapName(Map map).
      * Subclasses can override this variable, indicating compatibility
      * with earlier Collections versions.
-     * Defaults to 1, the earliest Collections version.  (Note: some
-     * collections did not even exist in this version).
      * 
-     * @return 1
+     * @return The version, or <code>null</code> if this object shouldn't be
+     * tested for compatibility with previous versions.
      */
-    public int getCompatibilityVersion() {
-        return 1;
+    public String getCompatibilityVersion() {
+        return "1";
     }
 
     /**

@@ -28,8 +28,8 @@ public abstract class TestComparator extends TestObject {
      * 
      * @return 2
      */
-    public int getCompatibilityVersion() {
-        return 2;
+    public String getCompatibilityVersion() {
+        return "2";
     }
 
     public void reverseObjects(List list) {

@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.39 2003/01/07 15:18:14 rwaldhoff Exp $
- * $Revision: 1.39 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCommonsLinkedList.java,v 1.1 2003/01/07 15:18:14 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2003/01/07 15:18:14 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,61 +58,33 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import junit.framework.*;
+import java.util.*;
+
+import junit.framework.Test;
 
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.39 2003/01/07 15:18:14 rwaldhoff Exp $
+ * Test case for {@link CommonsLinkedList}.
+ * 
+ * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestCommonsLinkedList extends TestLinkedList {
+
+    public TestCommonsLinkedList(String testName) {
         super(testName);
     }
 
+    public LinkedList makeEmptyLinkedList() {
+        return new CommonsLinkedList();
+    }
+
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestBinaryHeap.suite());
-        suite.addTest(TestBoundedFifoBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestCommonsLinkedList.suite());
-        suite.addTest(TestBufferUtils.suite());
-        suite.addTest(TestSetUtils.suite());
-        suite.addTest(TestListUtils.suite());
-        suite.addTest(TestMapUtils.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestNodeCachingLinkedList.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(TestIteratorUtils.suite());
-        suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
-        return suite;
+        return BulkTest.makeSuite(TestCommonsLinkedList.class);
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    
+    public String getCompatibilityVersion() {
+        return "2.2";
     }
+    
 }
