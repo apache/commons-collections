@@ -1,0 +1,42 @@
+RELEASE NOTES ROUGH DRAFT:
+--------------------------
+
+
+NEW COLLECTIONS:
+----------------
+
+<paste definitions of new collections from STATUS file here>
+
+
+CHANGED COLLECTIONS:
+--------------------
+
+LRUMap
+------
+    
+LRUMap has been reimplemented as a subclass of 
+SynchronizedHashMap.  The new implementation of
+LRUMap should be faster, and it also offers true LRU 
+capabilities; now any get(Object) or 
+put(Object,Object) from this collection
+promotes the key to the Most Recently Used position.
+    
+LRUMap 2.0 compatibility changes: 
+  - LRUMap can no longer be cast to a HashMap.
+  - The removeLRU() method now has a different 
+    signature, and is no longer public.  There is
+    no direct replacement for this method.
+  - "Externalized" LRUMap 1.0 Objects cannot be
+    read by LRUMap 2.0.
+        
+New features:
+  - True LRU algorithm.
+  - New methods from SequencedHashMap superclass.
+  - processRemovedLRU(Object key, Object value) method
+    allows subclasses to perform custom actions on 
+    keys and values that are expunged from the Map.
+        
+Bugs fixed:
+  - calling setMaximumSize(int) will remove excess LRUs
+    when the current size of the Map exceeds the new
+    maximum size
