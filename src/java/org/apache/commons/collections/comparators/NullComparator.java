@@ -62,7 +62,7 @@ import java.util.Comparator;
  *  other objects.
  *
  *  @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- *  @version $Id: NullComparator.java,v 1.4 2002/10/12 22:15:21 scolebourne Exp $ 
+ *  @version $Revision: 1.5 $ $Date: 2003/01/07 18:20:07 $ 
  **/
 public class NullComparator implements Comparator, Serializable {
 
@@ -84,7 +84,7 @@ public class NullComparator implements Comparator, Serializable {
      *  used.
      **/
     public NullComparator() {
-	this(ComparableComparator.getInstance(), true);
+        this(ComparableComparator.getInstance(), true);
     }
 
     /**
@@ -101,7 +101,7 @@ public class NullComparator implements Comparator, Serializable {
      *  <code>null</code>
      **/
     public NullComparator(Comparator nonNullComparator) {
-	this(nonNullComparator, true);
+        this(nonNullComparator, true);
     }
 
     /**
@@ -117,7 +117,7 @@ public class NullComparator implements Comparator, Serializable {
      *  non-<code>null</code> object.
      **/
     public NullComparator(boolean nullsAreHigh) {
-	this(ComparableComparator.getInstance(), nullsAreHigh);
+        this(ComparableComparator.getInstance(), nullsAreHigh);
     }
     
     /**
@@ -140,12 +140,12 @@ public class NullComparator implements Comparator, Serializable {
      *  <code>null</code>
      **/
     public NullComparator(Comparator nonNullComparator, boolean nullsAreHigh) {
-	this.nonNullComparator = nonNullComparator;
-	this.nullsAreHigh = nullsAreHigh;
-
-	if(nonNullComparator == null) {
-	    throw new NullPointerException("null nonNullComparator");
-	}
+        this.nonNullComparator = nonNullComparator;
+        this.nullsAreHigh = nullsAreHigh;
+        
+        if(nonNullComparator == null) {
+            throw new NullPointerException("null nonNullComparator");
+        }
     }
 
     /**
@@ -167,10 +167,10 @@ public class NullComparator implements Comparator, Serializable {
      *  <code>0</code> if <code>o1</code> and <code>o2</code> are equal.
      **/
     public int compare(Object o1, Object o2) {
-	if(o1 == o2) return 0;
-	if(o1 == null) return (this.nullsAreHigh ? 1 : -1);
-	if(o2 == null) return (this.nullsAreHigh ? -1 : 1);
-	return this.nonNullComparator.compare(o1, o2);
+        if(o1 == o2) { return 0; }
+        if(o1 == null) { return (this.nullsAreHigh ? 1 : -1); }
+        if(o2 == null) { return (this.nullsAreHigh ? -1 : 1); }
+        return this.nonNullComparator.compare(o1, o2);
     }
 
     /**
@@ -180,7 +180,7 @@ public class NullComparator implements Comparator, Serializable {
      *  @return a hash code for this comparator.
      **/
     public int hashCode() {
-	return (nullsAreHigh ? -1 : 1) * nonNullComparator.hashCode();
+        return (nullsAreHigh ? -1 : 1) * nonNullComparator.hashCode();
     }
 
     /**
@@ -195,14 +195,14 @@ public class NullComparator implements Comparator, Serializable {
      *  non-<code>null</code> object comparators.
      **/
     public boolean equals(Object obj) {
-	if(obj == null) return false;
-	if(obj == this) return true;
-	if(!obj.getClass().equals(this.getClass())) return false;
+        if(obj == null) { return false; }
+        if(obj == this) { return true; }
+        if(!obj.getClass().equals(this.getClass())) { return false; }
 
-	NullComparator other = (NullComparator)obj;
+        NullComparator other = (NullComparator)obj;
 	
-	return ((this.nullsAreHigh == other.nullsAreHigh) &&
-		(this.nonNullComparator.equals(other.nonNullComparator)));
+        return ((this.nullsAreHigh == other.nullsAreHigh) &&
+                (this.nonNullComparator.equals(other.nonNullComparator)));
     }
 
     private static final long serialVersionUID = -5820772575483504339L;
