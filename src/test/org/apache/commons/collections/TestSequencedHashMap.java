@@ -93,7 +93,7 @@ public class TestSequencedHashMap extends TestMap {
         return 2;
     }
 
-    public static void main(String[] args[]) {
+    public static void main(String[] args) {
         String[] testCaseName = { TestSequencedHashMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
@@ -206,6 +206,22 @@ public class TestSequencedHashMap extends TestMap {
                      map2.getLastKey(),getSampleKeys()[getSampleKeys().length - 1]);
     }
 
+    public void testIndexOf() throws Exception {
+        Object[] keys = getKeys();
+        int expectedSize = keys.length;
+        Object[] values = getValues();
+        for (int i = 0; i < expectedSize; i++) {
+            labRat.put(keys[i], values[i]);
+        }
+        // test that the index returned are in the same order that they were 
+        // placed in the map
+        for (int i = 0; i < keys.length; i++) {
+            assertEquals("indexOf with existing key failed", i, labRat.indexOf(keys[i]));
+        }
+        // test non existing key..
+        assertEquals("test with non-existing key failed", -1, labRat.indexOf("NonExistingKey"));
+    }
+    
     protected void tearDown() throws Exception {
         labRat = null;
     }
