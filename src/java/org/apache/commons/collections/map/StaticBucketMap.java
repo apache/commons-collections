@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.2 2003/12/06 13:03:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.3 2003/12/14 13:00:03 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -132,7 +132,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/06 13:03:15 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/14 13:00:03 $
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich
@@ -611,8 +611,11 @@ public final class StaticBucketMap implements Map {
             return false;
         }
 
-        public boolean remove(Object o) {
-            Map.Entry entry = (Map.Entry)o;
+        public boolean remove(Object obj) {
+            if (obj instanceof Map.Entry == false) {
+                return false;
+            }
+            Map.Entry entry = (Map.Entry)obj;
             int hash = getHash(entry.getKey());
             synchronized (m_locks[hash]) {
                 for (Node n = m_buckets[hash]; n != null; n = n.next) {
