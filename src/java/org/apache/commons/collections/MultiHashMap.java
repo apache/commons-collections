@@ -52,7 +52,7 @@ import org.apache.commons.collections.iterators.EmptyIterator;
  * <code>list</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.19 $ $Date: 2004/05/26 21:56:05 $
+ * @version $Revision: 1.20 $ $Date: 2004/06/09 22:11:54 $
  * 
  * @author Christopher Berry
  * @author James Strachan
@@ -109,14 +109,17 @@ public class MultiHashMap extends HashMap implements MultiMap {
      * @param mapToCopy  a Map to copy
      */
     public MultiHashMap(Map mapToCopy) {
-        super(mapToCopy);
+        // be careful of JDK 1.3 vs 1.4 differences
+        super((int) (mapToCopy.size() * 1.4f));
         if (mapToCopy instanceof MultiMap) {
-            for (Iterator it = entrySet().iterator(); it.hasNext();) {
+            for (Iterator it = mapToCopy.entrySet().iterator(); it.hasNext();) {
                 Map.Entry entry = (Map.Entry) it.next();
                 Collection coll = (Collection) entry.getValue();
                 Collection newColl = createCollection(coll);
-                entry.setValue(newColl);
+                super.put(entry.getKey(), newColl);
             }
+        } else {
+            putAll(mapToCopy);
         }
     }
 

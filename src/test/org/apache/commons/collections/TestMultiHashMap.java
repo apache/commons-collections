@@ -18,6 +18,7 @@ package org.apache.commons.collections;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Unit Tests for <code>MultiHashMap</code>.
  * 
- * @version $Revision: 1.19 $ $Date: 2004/05/14 22:33:58 $
+ * @version $Revision: 1.20 $ $Date: 2004/06/09 22:11:54 $
  *
  * @author Unknown
  */
@@ -368,7 +369,7 @@ public class TestMultiHashMap extends AbstractTestMap {
         assertEquals(2, clonedColl.size());
     }
 
-    public void testConstructor() {
+    public void testConstructorCopy1() {
         MultiHashMap map = new MultiHashMap();
         map.put("A", "1");
         map.put("A", "2");
@@ -384,10 +385,36 @@ public class TestMultiHashMap extends AbstractTestMap {
         assertEquals(2, coll.size());
         assertEquals(1, newMap.size());
         assertEquals(2, newColl.size());
+        
         map.put("A", "3");
         assertEquals(1, map.size());
         assertEquals(3, coll.size());
         assertEquals(1, newMap.size());
         assertEquals(2, newColl.size());
     }
+
+    public void testConstructorCopy2() {
+        Map map = new HashMap();
+        map.put("A", "1");
+        map.put("B", "2");
+        assertEquals(2, map.size());
+        
+        MultiHashMap newMap = new MultiHashMap(map);
+        Collection newColl = (Collection) newMap.get("A");
+        assertNotSame(map, newMap);
+        assertEquals(2, map.size());
+        assertEquals(2, newMap.size());
+        assertEquals(1, newColl.size());
+        
+        map.put("A", "3");
+        assertEquals(2, map.size());
+        assertEquals(2, newMap.size());
+        assertEquals(1, newColl.size());
+        
+        map.put("C", "4");
+        assertEquals(3, map.size());
+        assertEquals(2, newMap.size());
+        assertEquals(1, newColl.size());
+    }
+
 }
