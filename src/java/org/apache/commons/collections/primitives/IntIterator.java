@@ -1,7 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntIterator.java,v 1.1 2003/01/04 15:00:57 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/04 15:00:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntIterator.java,v 1.2 2003/01/10 19:24:10 rwaldhoff Exp $
  *
  * ====================================================================
  *
@@ -23,11 +21,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -62,20 +60,31 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * A {@link java.util.Iterator iterator} over int values.
+ * An iterator over <code>int</code> values.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/04 15:00:57 $
+ * @see org.apache.commons.collections.primitives.adapters.IntIteratorIterator
+ * @see org.apache.commons.collections.primitives.adapters.IteratorIntIterator
+ *
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.2 $ $Date: 2003/01/10 19:24:10 $
+ * 
  * @author Rodney Waldhoff 
  */
 public interface IntIterator {
     /** 
-     * Returns <code>true</code> iff 
-     * I have more elements. 
+     * Returns <code>true</code> iff I have more elements. 
+     * (In other words, returns <code>true</code> iff 
+     * a call to {@link #next next} will return an element
+     * rather than throwing an exception.
+     * 
+     * @return <code>true</code> iff I have more elements
      */
     boolean hasNext();
     
     /** 
      * Returns the next element in me.
+     * 
+     * @return the next element in me
      * @throws NoSuchElementException if there is no next element
      */          
     int next();
@@ -84,9 +93,10 @@ public interface IntIterator {
      * Removes from my underlying collection the last 
      * element {@link #next returned} by me 
      * (optional operation). 
-     * @throws UnsupportedOperationException if remove is not supported
+     * 
+     * @throws UnsupportedOperationException if this operation is not supported
      * @throws IllegalStateException if {@link #next} has not yet been 
-     *         called, or {@link #remove} has already been called after 
+     *         called, or {@link #remove} has already been called since 
      *         the last call to {@link #next}.
      */          
     void remove();

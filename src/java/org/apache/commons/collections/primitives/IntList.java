@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.6 2003/01/10 18:52:37 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.7 2003/01/10 19:24:10 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.ListIntList
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.6 $ $Date: 2003/01/10 18:52:37 $
+ * @version $Revision: 1.7 $ $Date: 2003/01/10 19:24:10 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -83,7 +83,7 @@ public interface IntList extends IntCollection {
      * 
      * @throws UnsupportedOperationException when this operation is not 
      *         supported
-     * @throws IllegalArgumentException is some aspect of the specified element 
+     * @throws IllegalArgumentException if some aspect of the specified element 
      *         prevents it from being added to me
      * @throws IndexOutOfBoundsException if the specified index is out of range
      */
