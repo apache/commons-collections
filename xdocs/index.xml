@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<document>
+
+ <properties>
+  <title>Commons</title>
+  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
+ </properties>
+
+ <body>
+
+<section name="The Collections Component">
+
+<p>
+The introduction of the <a href="http://java.sun.com/products/jdk/1.2/docs/guide/collections/">Collections API</a> by Sun in JDK 1.2 has been a
+boon to quick and effective Java programming.  Ready access to
+powerful data structures has accelerated development by reducing the
+need for custom container classes around each core object.  Most Java2
+APIs are significantly easier to use because of the Collections API.
+</p>
+
+<p>
+However, there are certain holes left unfilled by Sun's
+implementations, and the <a href="http://jakarta.apache.org/commons/">Jakarta-Commons</a> Collections Component strives
+to fulfill them. Among the features of this package are:
+<ul>
+<li>Special-purpose implementations of Lists and Maps for fast
+access</li>
+<li>Adapter classes from Java1-style containers (arrays, enumerations)
+to Java2-style collections.</li>
+<li>Methods to test or create typical set-theory properties of
+collections such as union, intersection, and closure.</li>
+</ul>
+</p>
+</section>
+
+<section name="Documentation">
+<p>
+An alphabetical list of the package can be found in the <a href="http://cvs.apache.org/viewcvs/~checkout~/jakarta-commons/collections/STATUS.html?rev=1.13">collections
+status document</a>.
+</p>
+
+<p>
+The <a href="collections/api/index.html">JavaDoc API documents</a> are available online.
+</p>
+</section>
+
+<section name="Releases">
+<ul>
+<li><a
+href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v2.0/">Version
+2.0</a></li>
+<li><a
+href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v1.0/">Version
+1.0</a></li>
+</ul>
+</section>
+
+</body>
+</document>
+
+
+
+
+
+

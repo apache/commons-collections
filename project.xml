@@ -2,7 +2,7 @@
 
 <project>
   <extend>../project.xml</extend>
-  <name>commons-collections</name>
+  <name>Collections</name>
   <id>commons-collections</id>
   <currentVersion>2.0</currentVersion>
   <inceptionYear>2002</inceptionYear>
