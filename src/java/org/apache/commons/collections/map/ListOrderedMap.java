@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -48,13 +52,17 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.13 $ $Date: 2004/04/01 22:18:12 $
+ * @version $Revision: 1.14 $ $Date: 2004/04/07 23:17:25 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
  */
 public class ListOrderedMap
-        extends AbstractMapDecorator implements OrderedMap {
+        extends AbstractMapDecorator
+        implements OrderedMap, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 2728177751851003750L;
 
     /** Internal list to hold the sequence of objects */
     protected final List insertOrder = new ArrayList();
@@ -81,6 +89,23 @@ public class ListOrderedMap
     protected ListOrderedMap(Map map) {
         super(map);
         insertOrder.addAll(getMap().keySet());
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
     }
 
     // Implement OrderedMap
