@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.17 2003/09/20 14:03:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.18 2003/09/27 10:07:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,6 +69,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.lang.ref.WeakReference;
 
 /**
  * A doubly-linked list implementation of the {@link List} interface,
@@ -84,14 +85,13 @@ import java.util.NoSuchElementException;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.17 $ $Date: 2003/09/20 14:03:57 $
+ * @version $Revision: 1.18 $ $Date: 2003/09/27 10:07:14 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki
+ * @author Simon Kitching
  */
 public class CursorableLinkedList implements List, Serializable {
-    //  TODO: use weak references to cursors in case they aren't closed directly
-    
     /** Ensure serialization compatability */    
     private static final long serialVersionUID = 8836393098519411393L;
 
@@ -304,11 +304,9 @@ public class CursorableLinkedList implements List, Serializable {
      * {@link ListIterator#nextIndex} and {@link ListIterator#previousIndex}
      * methods (they throw {@link UnsupportedOperationException} when invoked.
      * <p>
-     * Clients must close the cursor when they are done using it.
-     * The returned {@link ListIterator} will be an instance of
-     * {@link CursorableLinkedList.Cursor}.   To close the cursor,
-     * cast the {@link ListIterator} to {@link CursorableLinkedList.Cursor}
-     * and invoke the {@link CursorableLinkedList.Cursor#close} method.
+     * Historical Note: In previous versions of this class, the object 
+     * returned from this method was required to be explicitly closed. This 
+     * is no longer necessary.
      *
      * @see #cursor(int)
      * @see #listIterator
@@ -839,7 +837,16 @@ public class CursorableLinkedList implements List, Serializable {
      * of changes to this list.
      */
     protected void registerCursor(Cursor cur) {
-        _cursors.add(cur);
+        // We take this opportunity to clean the _cursors list
+        // of WeakReference objects to garbage-collected cursors.
+        for (Iterator it = _cursors.iterator(); it.hasNext(); ) {
+            WeakReference ref = (WeakReference) it.next();
+            if (ref.get() == null) {
+                it.remove();
+            }
+        }
+        
+        _cursors.add( new WeakReference(cur) );
     }
 
     /**
@@ -847,7 +854,21 @@ public class CursorableLinkedList implements List, Serializable {
      * the set of cursors to be notified of changes to this list.
      */
     protected void unregisterCursor(Cursor cur) {
-        _cursors.remove(cur);
+        for (Iterator it = _cursors.iterator(); it.hasNext(); ) {
+            WeakReference ref = (WeakReference) it.next();
+            Cursor cursor = (Cursor) ref.get();
+            if (cursor == null) {
+                // some other unrelated cursor object has been 
+                // garbage-collected; let's take the opportunity to
+                // clean up the cursors list anyway..
+                it.remove();
+                
+            } else if (cursor == cur) {
+                ref.clear();
+                it.remove();
+                break;
+            }
+        }
     }
 
     /**
@@ -856,8 +877,14 @@ public class CursorableLinkedList implements List, Serializable {
      */
     protected void invalidateCursors() {
         Iterator it = _cursors.iterator();
-        while(it.hasNext()) {
-            ((Cursor)it.next()).invalidate();
+        while (it.hasNext()) {
+            WeakReference ref = (WeakReference) it.next();
+            Cursor cursor = (Cursor) ref.get();
+            if (cursor != null) {
+                // cursor is null if object has been garbage-collected
+                cursor.invalidate();
+                ref.clear();
+            }
             it.remove();
         }
     }
@@ -869,8 +896,14 @@ public class CursorableLinkedList implements List, Serializable {
      */
     protected void broadcastListableChanged(Listable elt) {
         Iterator it = _cursors.iterator();
-        while(it.hasNext()) {
-            ((Cursor)it.next()).listableChanged(elt);
+        while (it.hasNext()) {
+            WeakReference ref = (WeakReference) it.next();
+            Cursor cursor = (Cursor) ref.get();
+            if (cursor == null) {
+                it.remove(); // clean up list
+            } else {
+                cursor.listableChanged(elt);
+            }
         }
     }
 
@@ -880,8 +913,14 @@ public class CursorableLinkedList implements List, Serializable {
      */
     protected void broadcastListableRemoved(Listable elt) {
         Iterator it = _cursors.iterator();
-        while(it.hasNext()) {
-            ((Cursor)it.next()).listableRemoved(elt);
+        while (it.hasNext()) {
+            WeakReference ref = (WeakReference) it.next();
+            Cursor cursor = (Cursor) ref.get();
+            if (cursor == null) {
+                it.remove(); // clean up list
+            } else {
+                cursor.listableRemoved(elt);
+            }
         }
     }
 
@@ -891,8 +930,14 @@ public class CursorableLinkedList implements List, Serializable {
      */
     protected void broadcastListableInserted(Listable elt) {
         Iterator it = _cursors.iterator();
-        while(it.hasNext()) {
-            ((Cursor)it.next()).listableInserted(elt);
+        while (it.hasNext()) {
+            WeakReference ref = (WeakReference) it.next();
+            Cursor cursor = (Cursor) ref.get();
+            if (cursor == null) {
+                it.remove();  // clean up list
+            } else {
+                cursor.listableInserted(elt);
+            }
         }
     }
 
@@ -1171,6 +1216,14 @@ public class CursorableLinkedList implements List, Serializable {
             _valid = false;
         }
 
+        /**
+         * Mark this cursor as no longer being needed. Any resources
+         * associated with this cursor are immediately released.
+         * In previous versions of this class, it was mandatory to close
+         * all cursor objects to avoid memory leaks. It is <i>no longer</i>
+         * necessary to call this close method; an instance of this class
+         * can now be treated exactly like a normal iterator.
+         */
         public void close() {
             if(_valid) {
                 _valid = false;
