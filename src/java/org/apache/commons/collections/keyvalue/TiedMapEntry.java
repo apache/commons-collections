@@ -15,6 +15,7 @@
  */
 package org.apache.commons.collections.keyvalue;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.commons.collections.KeyValue;
@@ -26,11 +27,14 @@ import org.apache.commons.collections.KeyValue;
  * map, however this will probably mess up any iterators.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:00:08 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/09 14:35:10 $
  * 
  * @author Stephen Colebourne
  */
-public class TiedMapEntry implements Map.Entry, KeyValue {
+public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
+
+    /** Serialization version */    
+    private static final long serialVersionUID = -8453869361373831205L;
 
     /** The map underlying the entry/iterator */    
     private final Map map;
