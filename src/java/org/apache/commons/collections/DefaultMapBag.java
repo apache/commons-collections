@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractBag.java,v 1.5 2002/03/13 05:40:30 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/03/13 05:40:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.1 2002/03/25 05:50:57 mas Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/03/25 05:50:57 $
  *
  * ====================================================================
  *
@@ -81,7 +81,7 @@ import java.util.Set;
  * @author Chuck Burdick
  * @author <a href="mas@apache.org">Michael A. Smith</a>
  **/
-public abstract class AbstractBag implements Bag {
+public abstract class DefaultMapBag implements Bag {
    private Map _map = null;
    private int _total = 0;
    private int _mods = 0;
@@ -146,7 +146,7 @@ public abstract class AbstractBag implements Bag {
    public boolean equals(Object o) {
       return (o == this || 
               (o != null && o.getClass().equals(this.getClass()) &&
-               ((AbstractBag)o)._map.equals(this._map)));
+               ((DefaultMapBag)o)._map.equals(this._map)));
    }
 
    public int hashCode() {
@@ -162,12 +162,12 @@ public abstract class AbstractBag implements Bag {
    }
 
    private class BagIterator implements Iterator {
-      private AbstractBag _parent = null;
+      private DefaultMapBag _parent = null;
       private Iterator _support = null;
       private Object _current = null;
       private int _mods = 0;
 
-      public BagIterator(AbstractBag parent, Iterator support) {
+      public BagIterator(DefaultMapBag parent, Iterator support) {
          _parent = parent;
          _support = support;
          _current = null;
