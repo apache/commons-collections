@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/ObservedTestHelper.java,v 1.11 2003/09/27 12:06:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/ObservedTestHelper.java,v 1.12 2003/09/28 21:50:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import org.apache.commons.collections.observed.standard.StandardPreModificationL
  * {@link ObservedCollection} implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2003/09/27 12:06:36 $
+ * @version $Revision: 1.12 $ $Date: 2003/09/28 21:50:37 $
  * 
  * @author Stephen Colebourne
  */
@@ -208,16 +208,15 @@ public class ObservedTestHelper extends Assert {
         doTestRemoveNCopies(factory);
     }
     
-//    public static void bulkTestObservedSortedBag(ObservedFactory factory) {
-//        assertTrue(factory.createObservedCollection() instanceof ObservableSortedBag);
-//        assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservableSortedBag);
-//        assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservableSortedBag);
-//        
-//        bulkTestObservedCollection(factory);
-//        doTestAddNCopies(factory);
-//        doTestRemoveNCopies(factory);
-//        // TODO
-//    }
+    public static void bulkTestObservedSortedBag(ObservedFactory factory) {
+        assertTrue(factory.createObservedCollection() instanceof ObservableSortedBag);
+        assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservableSortedBag);
+        assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservableSortedBag);
+        
+        bulkTestObservedCollection(factory);
+        doTestAddNCopies(factory);
+        doTestRemoveNCopies(factory);
+    }
     
     public static void bulkTestObservedBuffer(ObservedFactory factory) {
         assertTrue(factory.createObservedCollection() instanceof ObservableBuffer);
