@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.2 2001/04/20 16:54:05 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/20 16:54:05 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.1 2001/04/20 16:54:03 rwaldhoff Exp $
+ * $Revision: 1.1 $
+ * $Date: 2001/04/20 16:54:03 $
  *
  * ====================================================================
  *
@@ -61,55 +61,53 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import java.util.Map;
+import junit.framework.*;
+import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
- * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastHashMap.java,v 1.2 2001/04/20 16:54:05 rwaldhoff Exp $
+ * Tests base {@link java.util.Object} methods and contracts.
+ * <p>
+ * To use, simply extend this class, and implement
+ * the {@link #makeObject} method.
+ * <p>
+ * If your {@link Object} fails one of these tests by design,
+ * you may still use this base set of cases.  Simply override the
+ * test case (method) your {@link Object} fails.
+ *
+ * @author Rodney Waldhoff
+ * @version $Id: TestObject.java,v 1.1 2001/04/20 16:54:03 rwaldhoff Exp $
  */
-public class TestFastHashMap extends TestMap
-{
-    public TestFastHashMap(String testName)
-    {
+public abstract class TestObject extends TestCase {
+    public TestObject(String testName) {
         super(testName);
     }
 
-    public static Test suite()
-    {
-        return new TestSuite(TestFastHashMap.class);
+    /**
+     * Return a new, empty {@link Object} to used for testing.
+     */
+    public abstract Object makeObject();
+
+    public void testObjectEqualsSelf() {
+        Object obj = makeObject();
+        assertEquals("A Object should equal itself",obj,obj);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestFastHashMap.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public void testObjectHashCodeEqualsSelfHashCode() {
+        Object obj = makeObject();
+        assertEquals("hashCode should be repeatable",obj.hashCode(),obj.hashCode());
     }
 
-    public Map makeMap() {
-        return new FastHashMap();
-    }
-
-    private FastHashMap map = null;
-
-    public void setUp()
-    {
-        map = new FastHashMap();
-    }
-
-    public void testNewMap()
-    {
-        assert("New map is empty", map.isEmpty());
-        assertEquals("New map has size zero", map.size(), 0);
-    }
-
-    public void testSearch()
-    {
-        map.put("first", "First Item");
-        map.put("second", "Second Item");
-        assertEquals("Top item is 'Second Item'", map.get("first"), "First Item");
-        assertEquals("Next Item is 'First Item'", map.get("second"), "Second Item");
+    public void testObjectHashCodeEqualsContract() {
+        Object obj1 = makeObject();
+        if(obj1.equals(obj1)) {
+            assertEquals("[1] When two objects are equal, their hashCodes should be also.",obj1.hashCode(),obj1.hashCode());
+        }
+        Object obj2 = makeObject();
+        if(obj1.equals(obj2)) {
+            assertEquals("[2] When two objects are equal, their hashCodes should be also.",obj1.hashCode(),obj2.hashCode());
+        }
     }
 }

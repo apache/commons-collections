@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.1 2001/04/14 15:39:44 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/14 15:39:44 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.2 2001/04/20 16:54:07 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/04/20 16:54:07 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCursorableLinkedList.java,v 1.1 2001/04/14 15:39:44 rwaldhoff Exp $
+ * @version $Id: TestCursorableLinkedList.java,v 1.2 2001/04/20 16:54:07 rwaldhoff Exp $
  */
 public class TestCursorableLinkedList extends TestList {
     public TestCursorableLinkedList(String testName) {
@@ -86,7 +86,10 @@ public class TestCursorableLinkedList extends TestList {
 
     public void setUp() {
         list = new CursorableLinkedList();
-        setList(list);
+    }
+
+    public List makeList() {
+        return new CursorableLinkedList();
     }
 
     public void testAdd() {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.1 2001/04/14 15:39:51 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/14 15:39:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.2 2001/04/20 16:54:08 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/04/20 16:54:08 $
  *
  * ====================================================================
  *
@@ -68,60 +68,49 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * Tests base {@link java.util.Collection} methods and contracts.
+ * <p>
+ * To use, simply extend this class, and implement
+ * the {@link #makeCollection} method.
+ * <p>
+ * If your {@link Collection} fails one of these tests by design,
+ * you may still use this base set of cases.  Simply override the
+ * test case (method) your {@link Collection} fails.
+ *
  * @author Rodney Waldhoff
- * @version $Id: TestCollection.java,v 1.1 2001/04/14 15:39:51 rwaldhoff Exp $
+ * @version $Id: TestCollection.java,v 1.2 2001/04/20 16:54:08 rwaldhoff Exp $
  */
-public abstract class TestCollection extends TestCase {
+public abstract class TestCollection extends TestObject {
     public TestCollection(String testName) {
         super(testName);
     }
 
-    private Collection _collection = null;
+    /**
+     * Return a new, empty {@link Collection} to used for testing.
+     */
+    public abstract Collection makeCollection();
 
-    protected void setCollection(Collection c) {
-        _collection = c;
+    public Object makeObject() {
+        return makeCollection();
     }
 
     // optional operation
     public void testCollectionAdd() {
-        boolean added1 = false;
-        try {
-            added1 = _collection.add("element1");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
-        }
-
-        boolean added2 = false;
-        try {
-            added2 = _collection.add("element2");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
-        }
+        Collection c = makeCollection();
+        boolean added1 = tryToAdd(c,"element1");
+        boolean added2 = tryToAdd(c,"element2");
     }
 
     // optional operation
     public void testCollectionAddAll() {
+        Collection c = makeCollection();
         Collection col = new ArrayList();
         col.add("element1");
         col.add("element2");
         col.add("element3");
         boolean added = false;
         try {
-            added = _collection.addAll(col);
+            added = c.addAll(col);
         } catch(UnsupportedOperationException e) {
             // ignored, must not be supported
         } catch(ClassCastException e) {
@@ -136,9 +125,10 @@ public abstract class TestCollection extends TestCase {
 
     // optional operation
     public void testCollectionClear() {
+        Collection c = makeCollection();
         boolean cleared = false;
         try {
-            _collection.clear();
+            c.clear();
             cleared = true;
         } catch(UnsupportedOperationException e) {
             // ignored, must not be supported
@@ -148,28 +138,16 @@ public abstract class TestCollection extends TestCase {
         }
 
         if(cleared) {
-            assert("After Collection.clear(), Collection.isEmpty() should be true.",_collection.isEmpty());
+            assert("After Collection.clear(), Collection.isEmpty() should be true.",c.isEmpty());
         }
 
-        boolean added = false;
-        try {
-            added = _collection.add("element1");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
-        }
+        boolean added = tryToAdd(c,"element1");
 
         if(added) {
-            assert("After element is added, Collection.isEmpty() should be false.",!_collection.isEmpty());
+            assert("After element is added, Collection.isEmpty() should be false.",!c.isEmpty());
             boolean cleared2 = false;
             try {
-                _collection.clear();
+                c.clear();
                 cleared2 = true;
             } catch(UnsupportedOperationException e) {
                 // ignored, must not be supported
@@ -178,127 +156,104 @@ public abstract class TestCollection extends TestCase {
                 fail("Collection.clear should only throw UnsupportedOperationException. Found " + t.toString());
             }
             if(cleared2) {
-                assert("After Collection.clear(), Collection.isEmpty() should be true.",_collection.isEmpty());
+                assert("After Collection.clear(), Collection.isEmpty() should be true.",c.isEmpty());
             }
         }
     }
 
     public void testCollectionContains() {
-        boolean added1 = false;
-        try {
-            added1 = _collection.add("element1");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
-        }
-        assert("If an element was added, it should be contained.",added1 == _collection.contains("element1"));
+        Collection c = makeCollection();
+        assert("Empty Collection shouldn't contain element.",!c.contains("element1"));
+        boolean added1 = tryToAdd(c,"element1");
+        assert("[1] If an element was added, it should be contained, if it wasn't, it shouldn't.",added1 == c.contains("element1"));
 
-        boolean added2 = false;
-        try {
-            added2 = _collection.add("element2");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
-        }
-        assert("If an element was added, it should be contained.",added1 == _collection.contains("element1"));
-        assert("If an element was added, it should be contained.",added2 == _collection.contains("element2"));
+        assert("Shouldn't be contained.",!c.contains("element2"));
+        boolean added2 = tryToAdd(c,"element2");
+        assert("[2] If an element was added, it should be contained, if it wasn't, it shouldn't.",added1 == c.contains("element1"));
+        assert("[3] If an element was added, it should be contained, if it wasn't, it shouldn't.",added2 == c.contains("element2"));
     }
 
     public void testCollectionContainsAll() {
+        Collection c = makeCollection();
         Collection col = new ArrayList();
-        assert("Every Collection should contain all elements of an empty Collection.",_collection.containsAll(col));
+        assert("Every Collection should contain all elements of an empty Collection.",c.containsAll(col));
         col.add("element1");
-        assert("Empty Collection shouldn't contain all elements of a non-empty Collection.",!_collection.containsAll(col));
+        assert("Empty Collection shouldn't contain all elements of a non-empty Collection.",!c.containsAll(col));
 
-        boolean added1 = false;
-        try {
-            added1 = _collection.add("element1");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
-        }
+        boolean added1 = tryToAdd(c,"element1");
         if(added1) {
-            assert("Should contain all.",_collection.containsAll(col));
+            assert("[1] Should contain all.",c.containsAll(col));
         }
 
         col.add("element2");
-        assert("Shouldn't contain all.",!_collection.containsAll(col));
+        assert("Shouldn't contain all.",!c.containsAll(col));
 
-        boolean added2 = false;
-        try {
-            added2 = _collection.add("element2");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
-        }
+        boolean added2 = tryToAdd(c,"element2");
         if(added1 && added2) {
-            assert("Should contain all.",_collection.containsAll(col));
+            assert("[2] Should contain all.",c.containsAll(col));
         }
+    }
+
+    public void testCollectionEqualsSelf() {
+        Collection c = makeCollection();
+        assertEquals("A Collection should equal itself",c,c);
+        tryToAdd(c,"element1");
+        assertEquals("A Collection should equal itself",c,c);
+        tryToAdd(c,"element1");
+        tryToAdd(c,"element2");
+        assertEquals("A Collection should equal itself",c,c);
     }
 
     public void testCollectionEquals() {
-        assertEquals("A Collection should equal itself",_collection,_collection);
-        try {
-            _collection.add("element1");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
+        Collection c1 = makeCollection();
+        Collection c2 = makeCollection();
+        assertEquals("Empty Collections are equal.",c1,c2);
+
+        boolean added1_1 = tryToAdd(c1,"element1");
+        if(added1_1) {
+            assert("Empty Collection not equal to non-empty Collection.",!c2.equals(c1));
+            assert("Non-empty Collection not equal to empty Collection.",!c1.equals(c2));
         }
-        assertEquals("A Collection should equal itself",_collection,_collection);
-        try {
-            _collection.add("element1");
-        } catch(UnsupportedOperationException e) {
-            // ignored, must not be supported
-        } catch(ClassCastException e) {
-            // ignored, type must not be supported
-        } catch(IllegalArgumentException e) {
-            // ignored, element must not be supported
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
+
+        boolean added1_2 = tryToAdd(c2,"element1");
+        assertEquals("After duplicate adds, Collections should be equal.",c1,c2);
+
+        boolean added2_1 = tryToAdd(c1,"element2");
+        boolean added3_2 = tryToAdd(c2,"element3");
+        if(added2_1 || added3_2) {
+            assert("Should not be equal.",!c1.equals(c2));
         }
-        assertEquals("A Collection should equal itself",_collection,_collection);
     }
 
-    public void testCollectionHashCode() {
-        assertEquals("A Collection's hashCode should equal itself",_collection.hashCode(),_collection.hashCode());
+    public void testCollectionHashCodeEqualsSelfHashCode() {
+        Collection c = makeCollection();
+        assertEquals("hashCode should be repeatable",c.hashCode(),c.hashCode());
+        tryToAdd(c,"element1");
+        assertEquals("after add, hashCode should be repeatable",c.hashCode(),c.hashCode());
+    }
+
+    public void testCollectionHashCodeEqualsContract() {
+        Collection c1 = makeCollection();
+        if(c1.equals(c1)) {
+            assertEquals("[1] When two objects are equal, their hashCodes should be also.",c1.hashCode(),c1.hashCode());
+        }
+        Collection c2 = makeCollection();
+        if(c1.equals(c2)) {
+            assertEquals("[2] When two objects are equal, their hashCodes should be also.",c1.hashCode(),c2.hashCode());
+        }
+        tryToAdd(c1,"element1");
+        tryToAdd(c2,"element1");
+        if(c1.equals(c2)) {
+            assertEquals("[3] When two objects are equal, their hashCodes should be also.",c1.hashCode(),c2.hashCode());
+        }
     }
 
     public void testCollectionIsEmpty() {
-        assert("New Collection should be empty.",_collection.isEmpty());
+        Collection c = makeCollection();
+        assert("New Collection should be empty.",c.isEmpty());
         boolean added = false;
         try {
-            added = _collection.add("element1");
+            added = c.add("element1");
         } catch(UnsupportedOperationException e) {
             // ignored, must not be supported
         } catch(ClassCastException e) {
@@ -310,12 +265,13 @@ public abstract class TestCollection extends TestCase {
             fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
         }
         if(added) {
-            assert("If an element was added, the Collection.isEmpty() should return false.",!_collection.isEmpty());
+            assert("If an element was added, the Collection.isEmpty() should return false.",!c.isEmpty());
         }
     }
 
     public void testCollectionIterator() {
-        Iterator it1 = _collection.iterator();
+        Collection c = makeCollection();
+        Iterator it1 = c.iterator();
         assert("Iterator for empty Collection shouldn't have next.",!it1.hasNext());
         try {
             it1.next();
@@ -329,7 +285,7 @@ public abstract class TestCollection extends TestCase {
 
         boolean added = false;
         try {
-            added = _collection.add("element1");
+            added = c.add("element1");
         } catch(UnsupportedOperationException e) {
             // ignored, must not be supported
         } catch(ClassCastException e) {
@@ -341,7 +297,7 @@ public abstract class TestCollection extends TestCase {
             fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
         }
         if(added) {
-            Iterator it2 = _collection.iterator();
+            Iterator it2 = c.iterator();
             assert("Iterator for non-empty Collection should have next.",it2.hasNext());
             assertEquals("element1",it2.next());
             assert("Iterator at end of Collection shouldn't have next.",!it2.hasNext());
@@ -359,9 +315,10 @@ public abstract class TestCollection extends TestCase {
 
     // optional operation
     public void testCollectionRemove() {
+        Collection c = makeCollection();
         boolean added = false;
         try {
-            added = _collection.add("element1");
+            added = c.add("element1");
         } catch(UnsupportedOperationException e) {
             // ignored, must not be supported
         } catch(ClassCastException e) {
@@ -374,7 +331,7 @@ public abstract class TestCollection extends TestCase {
         }
 
         try {
-            assert("Shouldn't be able to remove an element that wasn't added.",!_collection.remove("element2"));
+            assert("Shouldn't be able to remove an element that wasn't added.",!c.remove("element2"));
         } catch(UnsupportedOperationException e) {
         } catch(Throwable t) {
             t.printStackTrace();
@@ -382,8 +339,8 @@ public abstract class TestCollection extends TestCase {
         }
 
         try {
-            assert("If added, should be removed by call to remove.",added == _collection.remove("element1"));
-            assert("If removed, shouldn't be contained.",!_collection.contains("element1"));
+            assert("If added, should be removed by call to remove.",added == c.remove("element1"));
+            assert("If removed, shouldn't be contained.",!c.contains("element1"));
         } catch(UnsupportedOperationException e) {
         } catch(Throwable t) {
             t.printStackTrace();
@@ -393,20 +350,21 @@ public abstract class TestCollection extends TestCase {
 
     // optional operation
     public void testCollectionRemoveAll() {
-        assert("Initial Collection is empty.",_collection.isEmpty());
+        Collection c = makeCollection();
+        assert("Initial Collection is empty.",c.isEmpty());
         try {
-            _collection.removeAll(_collection);
+            c.removeAll(c);
         } catch(UnsupportedOperationException e) {
             // expected
         } catch(Throwable t) {
             t.printStackTrace();
             fail("Collection.removeAll should only throw UnsupportedOperationException. Found " + t.toString());
         }
-        assert("Collection is still empty.",_collection.isEmpty());
+        assert("Collection is still empty.",c.isEmpty());
 
         boolean added = false;
         try {
-            added = _collection.add("element1");
+            added = c.add("element1");
         } catch(UnsupportedOperationException e) {
             // ignored, must not be supported
         } catch(ClassCastException e) {
@@ -418,10 +376,10 @@ public abstract class TestCollection extends TestCase {
             fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
         }
         if(added) {
-            assert("Collection is not empty.",!_collection.isEmpty());
+            assert("Collection is not empty.",!c.isEmpty());
             try {
-                _collection.removeAll(_collection);
-                assert("Collection is empty.",_collection.isEmpty());
+                c.removeAll(c);
+                assert("Collection is empty.",c.isEmpty());
             } catch(UnsupportedOperationException e) {
                 // expected
             } catch(Throwable t) {
@@ -433,15 +391,16 @@ public abstract class TestCollection extends TestCase {
 
     // optional operation
     public void testCollectionRemoveAll2() {
+        Collection c = makeCollection();
         Collection col = new ArrayList();
         col.add("element1");
         col.add("element2");
         col.add("element3");
         boolean added = false;
         try {
-            added = _collection.addAll(col);
+            added = c.addAll(col);
             if(added) {
-                added = _collection.add("element0");
+                added = c.add("element0");
             }
         } catch(UnsupportedOperationException e) {
             // ignored, must not be supported
@@ -455,15 +414,15 @@ public abstract class TestCollection extends TestCase {
         }
         col.add("element4");
         if(added) {
-            assert("Collection is not empty.",!_collection.isEmpty());
+            assert("Collection is not empty.",!c.isEmpty());
             try {
-                assert("Should be changed",_collection.removeAll(col));
-                assert("Collection is not empty.",!_collection.isEmpty());
-                assert("Collection should contain element",_collection.contains("element0"));
-                assert("Collection shouldn't contain removed element",!_collection.contains("element1"));
-                assert("Collection shouldn't contain removed element",!_collection.contains("element2"));
-                assert("Collection shouldn't contain removed element",!_collection.contains("element3"));
-                assert("Collection shouldn't contain removed element",!_collection.contains("element4"));
+                assert("Should be changed",c.removeAll(col));
+                assert("Collection is not empty.",!c.isEmpty());
+                assert("Collection should contain element",c.contains("element0"));
+                assert("Collection shouldn't contain removed element",!c.contains("element1"));
+                assert("Collection shouldn't contain removed element",!c.contains("element2"));
+                assert("Collection shouldn't contain removed element",!c.contains("element3"));
+                assert("Collection shouldn't contain removed element",!c.contains("element4"));
             } catch(UnsupportedOperationException e) {
                 // expected
             } catch(Throwable t) {
@@ -475,13 +434,15 @@ public abstract class TestCollection extends TestCase {
 
     // optional operation
     public void testCollectionRetainAll() {
+        // XXX finish me
     }
 
     public void testCollectionSize() {
-        assertEquals("Size of new Collection is 0.",0,_collection.size());
+        Collection c = makeCollection();
+        assertEquals("Size of new Collection is 0.",0,c.size());
         boolean added = false;
         try {
-            added = _collection.add("element1");
+            added = c.add("element1");
         } catch(UnsupportedOperationException e) {
             // ignored, must not be supported
         } catch(ClassCastException e) {
@@ -493,13 +454,79 @@ public abstract class TestCollection extends TestCase {
             fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
         }
         if(added) {
-            assertEquals("If one element was added, the Collection.size() should be 1.",1,_collection.size());
+            assertEquals("If one element was added, the Collection.size() should be 1.",1,c.size());
         }
     }
 
     public void testCollectionToArray() {
+        Collection c = makeCollection();
+        assertEquals("Empty Collection should return empty array for toArray",0,c.toArray().length);
+        boolean added = false;
+        try {
+            added = c.add("element1");
+        } catch(UnsupportedOperationException e) {
+            // ignored, must not be supported
+        } catch(ClassCastException e) {
+            // ignored, type must not be supported
+        } catch(IllegalArgumentException e) {
+            // ignored, element must not be supported
+        } catch(Throwable t) {
+            t.printStackTrace();
+            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
+        }
+        if(added) {
+            assertEquals("If an element was added, the Collection.toArray().length should be 1.",1,c.toArray().length);
+        } else {
+            assertEquals("Empty Collection should return empty array for toArray",0,c.toArray().length);
+        }
+
+        boolean added2 = false;
+        try {
+            added2 = c.add("element1");
+        } catch(UnsupportedOperationException e) {
+            // ignored, must not be supported
+        } catch(ClassCastException e) {
+            // ignored, type must not be supported
+        } catch(IllegalArgumentException e) {
+            // ignored, element must not be supported
+        } catch(Throwable t) {
+            t.printStackTrace();
+            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
+        }
+        if(added && added2) {
+            assertEquals("If another element was added, the Collection.toArray().length should be 2.",2,c.toArray().length);
+        } else if(added2) {
+            assertEquals("If an element was added, the Collection.toArray().length should be 1.",1,c.toArray().length);
+        } else {
+            assertEquals("Empty Collection should return empty array for toArray",0,c.toArray().length);
+        }
     }
 
     public void testCollectionToArray2() {
+        // XXX finish me
+    }
+
+    /**
+     * Try to add the given object to the given Collection.
+     * Returns <tt>true</tt> if the element was added,
+     * <tt>false</tt> otherwise.
+     *
+     * Fails any Throwable except UnsupportedOperationException,
+     * ClassCastException, or IllegalArgumentException is thrown.
+     */
+    protected boolean tryToAdd(Collection c,Object obj) {
+        try {
+            return c.add(obj);
+        } catch(UnsupportedOperationException e) {
+            return false;
+        } catch(ClassCastException e) {
+            return false;
+        } catch(IllegalArgumentException e) {
+            return false;
+        } catch(Throwable t) {
+            t.printStackTrace();
+            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
+            return false; // never get here, since fail throws exception
+        }
     }
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/16 22:42:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.2 2001/04/20 16:54:04 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/04/20 16:54:04 $
  *
  * ====================================================================
  *
@@ -64,43 +64,48 @@ package org.apache.commons.collections;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
+ * @version $Id: TestFastTreeMap.java,v 1.2 2001/04/20 16:54:04 rwaldhoff Exp $
  */
-public class TestFastTreeMap extends TestCase
+public class TestFastTreeMap extends TestMap
 {
-    public TestFastTreeMap(String testName) 
+    public TestFastTreeMap(String testName)
     {
         super(testName);
     }
 
-    public static Test suite() 
+    public static Test suite()
     {
         return new TestSuite(TestFastTreeMap.class);
     }
 
-    public static void main(String args[]) 
+    public static void main(String args[])
     {
         String[] testCaseName = { TestFastTreeMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    public Map makeMap() {
+        return new FastTreeMap();
+    }
+
     private FastTreeMap map = null;
 
-    public void setUp() 
+    public void setUp()
     {
         map = new FastTreeMap();
     }
 
-    public void testNewMap() 
+    public void testNewMap()
     {
         assert("New map is empty", map.isEmpty());
         assertEquals("New map has size zero", map.size(), 0);
     }
 
-    public void testSearch() 
+    public void testSearch()
     {
         map.put("first", "First Item");
         map.put("second", "Second Item");

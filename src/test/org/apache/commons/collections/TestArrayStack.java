@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.2 2001/04/14 19:50:31 craigmcc Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/14 19:50:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.3 2001/04/20 16:54:08 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/04/20 16:54:08 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Craig McClanahan
- * @version $Id: TestArrayStack.java,v 1.2 2001/04/14 19:50:31 craigmcc Exp $
+ * @version $Id: TestArrayStack.java,v 1.3 2001/04/20 16:54:08 rwaldhoff Exp $
  */
 
 public class TestArrayStack extends TestList {
@@ -84,13 +84,15 @@ public class TestArrayStack extends TestList {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    public List makeList() {
+        return new ArrayStack();
+    }
+
     private ArrayStack stack = null;
 
     public void setUp() {
         stack = new ArrayStack();
-        setList(stack);
     }
-
 
     public void testNewStack() {
 

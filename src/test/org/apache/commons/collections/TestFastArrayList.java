@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/16 22:42:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.2 2001/04/20 16:54:06 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/04/20 16:54:06 $
  *
  * ====================================================================
  *
@@ -64,24 +64,25 @@ package org.apache.commons.collections;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.List;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
+ * @version $Id: TestFastArrayList.java,v 1.2 2001/04/20 16:54:06 rwaldhoff Exp $
  */
-public class TestFastArrayList extends TestCase
+public class TestFastArrayList extends TestList
 {
-    public TestFastArrayList(String testName) 
+    public TestFastArrayList(String testName)
     {
         super(testName);
     }
 
-    public static Test suite() 
+    public static Test suite()
     {
         return new TestSuite(TestFastArrayList.class);
     }
 
-    public static void main(String args[]) 
+    public static void main(String args[])
     {
         String[] testCaseName = { TestFastArrayList.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
@@ -89,32 +90,41 @@ public class TestFastArrayList extends TestCase
 
     private FastArrayList list = null;
 
-    public void setUp() 
+    public void setUp()
     {
         list = new FastArrayList();
     }
 
-    public void testNewFastArrayList() 
+    public List makeList()
+    {
+        return new FastArrayList();
+    }
+
+    public void testNewFastArrayList()
     {
         assert("New list is empty", list.isEmpty());
         assertEquals("New list has size zero", list.size(), 0);
 
-        try 
+        try
         {
             list.get(1);
             fail("get(int i) should have thrown IndexOutOfBoundsException");
-        } 
+        }
         catch (IndexOutOfBoundsException e)
         {
             ; // Expected result
         }
     }
 
-    public void testSearch() 
+    public void testSearch()
     {
         list.add("First Item");
         list.add("Last Item");
         assertEquals("First item is 'First Item'", list.get(0), "First Item");
         assertEquals("Last Item is 'Last Item'", list.get(1), "Last Item");
+    }
+
+    public void testCollectionEquals() {
+        // FastArrayList currently doesn't support the List equals contract
     }
 }

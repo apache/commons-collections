@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.2 2001/04/20 16:54:04 rwaldhoff Exp $
- * $Revision: 1.2 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.1 2001/04/20 16:54:04 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/20 16:54:04 $
  *
  * ====================================================================
@@ -62,141 +62,122 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
-import java.util.List;
+import java.util.Map;
 import java.util.Collection;
 
 /**
- * Tests base {@link java.util.List} methods and contracts.
+ * Tests base {@link java.util.Map} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
- * the {@link #makeList} method.
+ * the {@link #makeMap} method.
  * <p>
- * If your {@link List} fails one of these tests by design,
+ * If your {@link Map} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
- * test case (method) your {@link List} fails.
+ * test case (method) your {@link Map} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestList.java,v 1.2 2001/04/20 16:54:04 rwaldhoff Exp $
+ * @version $Id: TestMap.java,v 1.1 2001/04/20 16:54:04 rwaldhoff Exp $
  */
-public abstract class TestList extends TestCollection {
-    public TestList(String testName) {
+public abstract class TestMap extends TestObject {
+    public TestMap(String testName) {
         super(testName);
     }
 
     /**
-     * Return a new, empty {@link List} to used for testing.
+     * Return a new, empty {@link Map} to used for testing.
      */
-    public abstract List makeList();
+    public abstract Map makeMap();
 
-    public Collection makeCollection() {
-        return makeList();
+    public Object makeObject() {
+        return makeMap();
     }
 
     /*
 
     // optional operation
-    public void testListAddByIndex() {
+    public void testMapClear() {
+        // XXX finish me
+    }
+
+    public void testMapContainsKey() {
+        // XXX finish me
+    }
+
+    public void testMapContainsValue() {
+        // XXX finish me
+    }
+
+    public void testMapEntrySet() {
+        // XXX finish me
+    }
+
+    public void testMapEquals() {
+        // XXX finish me
+    }
+
+    public void testMapGet() {
+        // XXX finish me
+    }
+
+    public void testMapHashCode() {
+        // XXX finish me
+    }
+
+    public void testMapIsEmpty() {
+        // XXX finish me
+    }
+
+    public void testMapKeySet() {
         // XXX finish me
     }
 
     // optional operation
-    public void testListAdd() {
+    public void testMapPut() {
         // XXX finish me
     }
 
     // optional operation
-    public void testListAddAll() {
+    public void testMapPutAll() {
         // XXX finish me
     }
 
     // optional operation
-    public void testListClear() {
+    public void testMapRemove() {
         // XXX finish me
     }
 
-    public void testListContains() {
-        // XXX finish me
-        // is this any different from Collection.contains?
-    }
-
-    public void testListContainsAll() {
-        // XXX finish me
-        // is this any different from Collection.containsAll?
-    }
-
-    public void testListEquals() {
+    public void testMapSize() {
         // XXX finish me
     }
 
-    public void testListGetByIndex() {
+    public void testMapValues() {
         // XXX finish me
     }
-
-    public void testListHashCode() {
-        // XXX finish me
-    }
-
-    public void testListIndexOf() {
-        // XXX finish me
-    }
-
-    public void testListIsEmpty() {
-        // XXX finish me
-        // is this any different from Collection.isEmpty?
-    }
-
-    public void testListIterator() {
-        // XXX finish me
-        // is this any different from Collection.iterator?
-    }
-
-    public void testListLastIndexOf() {
-        // XXX finish me
-    }
-
-    public void testListListIterator() {
-        // XXX finish me
-    }
-
-    public void testListListIteratorByIndex() {
-        // XXX finish me
-    }
-
-    // optional operation
-    public void testListRemoveByIndex() {
-        // XXX finish me
-    }
-
-    // optional operation
-    public void testListRemoveByValue() {
-        // XXX finish me
-    }
-
-    // optional operation
-    public void testListRemoveAll() {
-        // XXX finish me
-        // is this any different from Collection.removeAll?
-    }
-
-    // optional operation
-    public void testListRetainAll() {
-        // XXX finish me
-        // is this any different from Collection.retainAll?
-    }
-
-    // optional operation
-    public void testListSet() {
-        // XXX finish me
-    }
-
-    // size() same as Collection.size() ?
-
-    public void testListSubList() {
-        // XXX finish me
-    }
-
-    // toArray() same as Collection.toArray() ?
-    // toArray(Object[]) same as Collection.toArray(Object[]) ?
 
     */
+
+    /**
+     * Try to put the given pair into the given Collection.
+     *
+     * Fails any Throwable except UnsupportedOperationException,
+     * ClassCastException, or IllegalArgumentException
+     * or NullPointerException is thrown.
+     */
+    protected Object tryToPut(Map map, Object key, Object val) {
+        try {
+            return map.put(key,val);
+        } catch(UnsupportedOperationException e) {
+            return null;
+        } catch(ClassCastException e) {
+            return null;
+        } catch(IllegalArgumentException e) {
+            return null;
+        } catch(NullPointerException e) {
+            return null;
+        } catch(Throwable t) {
+            t.printStackTrace();
+            fail("Map.put should only throw UnsupportedOperationException, ClassCastException, IllegalArgumentException or NullPointerException. Found " + t.toString());
+            return null; // never get here, since fail throws exception
+        }
+    }
 }
