@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/UnmodifiableBuffer.java,v 1.1 2003/11/16 00:05:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/UnmodifiableBuffer.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,19 +57,22 @@
  */
 package org.apache.commons.collections.buffer;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.Unmodifiable;
-import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
  * Decorates another <code>Buffer</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:44 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiableBuffer extends UnmodifiableCollection implements Buffer {
+public class UnmodifiableBuffer extends AbstractBufferDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable buffer.
@@ -95,20 +98,36 @@ public class UnmodifiableBuffer extends UnmodifiableCollection implements Buffer
         super(buffer);
     }
 
-    /**
-     * Gets the buffer being decorated.
-     * 
-     * @return the decorated buffer
-     */
-    protected Buffer getBuffer() {
-        return (Buffer) getCollection();
+    //-----------------------------------------------------------------------
+    public Iterator iterator() {
+        return UnmodifiableIterator.decorate(getCollection().iterator());
+    }
+
+    public boolean add(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean addAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean remove(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean removeAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean retainAll(Collection coll) {
+        throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
-    public Object get() {
-        return getBuffer().get();
-    }
-
     public Object remove() {
         throw new UnsupportedOperationException();
     }

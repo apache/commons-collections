@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/UnmodifiableCollection.java,v 1.1 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/UnmodifiableCollection.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,14 +60,14 @@ package org.apache.commons.collections.collection;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.Unmodifiable;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
  * Decorates another <code>Collection</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  */
@@ -98,59 +98,30 @@ public class UnmodifiableCollection extends AbstractCollectionDecorator implemen
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Override as method unsupported.
-     * @throws UnsupportedOperationException
-     */
+    public Iterator iterator() {
+        return UnmodifiableIterator.decorate(getCollection().iterator());
+    }
+
     public boolean add(Object object) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Override as method unsupported.
-     * @throws UnsupportedOperationException
-     */
     public boolean addAll(Collection coll) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Override as method unsupported.
-     * @throws UnsupportedOperationException
-     */
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Override to return an unmodifiable iterator.
-     * 
-     * @return unmodifiable iterator
-     */
-    public Iterator iterator() {
-        return IteratorUtils.unmodifiableIterator(getCollection().iterator());
-    }
-
-    /**
-     * Override as method unsupported.
-     * @throws UnsupportedOperationException
-     */
     public boolean remove(Object object) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Override as method unsupported.
-     * @throws UnsupportedOperationException
-     */
     public boolean removeAll(Collection coll) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * Override as method unsupported.
-     * @throws UnsupportedOperationException
-     */
     public boolean retainAll(Collection coll) {
         throw new UnsupportedOperationException();
     }

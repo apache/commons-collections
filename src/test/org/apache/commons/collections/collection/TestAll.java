@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/TestAll.java,v 1.1 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/TestAll.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.TestSuite;
  * Entry point for tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  */
@@ -86,6 +86,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestCompositeCollection.suite());
         suite.addTest(TestPredicatedCollection.suite());
         suite.addTest(TestTransformedCollection.suite());
+        suite.addTest(TestUnmodifiableCollection.suite());
         
         return suite;
     }

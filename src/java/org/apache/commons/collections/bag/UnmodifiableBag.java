@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/UnmodifiableBag.java,v 1.1 2003/11/16 00:05:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/UnmodifiableBag.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,22 +57,24 @@
  */
 package org.apache.commons.collections.bag;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Unmodifiable;
-import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>Bag</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:43 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiableBag extends UnmodifiableCollection implements Bag {
+public class UnmodifiableBag extends AbstractBagDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable bag.
@@ -98,21 +100,41 @@ public class UnmodifiableBag extends UnmodifiableCollection implements Bag {
         super(bag);
     }
 
-    /**
-     * Gets the bag being decorated.
-     * 
-     * @return the decorated bag
-     */
-    protected Bag getBag() {
-        return (Bag) getCollection();
+    //-----------------------------------------------------------------------
+    public Iterator iterator() {
+        return UnmodifiableIterator.decorate(getCollection().iterator());
     }
 
-    //-----------------------------------------------------------------------
-    public boolean add(Object o, int count) {
+    public boolean add(Object object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean remove(Object o, int count) {
+    public boolean addAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean remove(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean removeAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean retainAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    //-----------------------------------------------------------------------
+    public boolean add(Object object, int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean remove(Object object, int count) {
         throw new UnsupportedOperationException();
     }
 
@@ -121,8 +143,4 @@ public class UnmodifiableBag extends UnmodifiableCollection implements Bag {
         return UnmodifiableSet.decorate(set);
     }
 
-    public int getCount(Object o) {
-        return getBag().getCount(o);
-    }
-    
 }

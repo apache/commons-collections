@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.3 2003/12/03 01:02:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.4 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,13 +62,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Abstract implementation of the {@link Bag} interface to simplify the creation
@@ -79,7 +79,7 @@ import org.apache.commons.collections.Bag;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/03 01:02:32 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -544,7 +544,7 @@ public abstract class AbstractMapBag implements Bag {
      */
     public Set uniqueSet() {
         if (uniqueSet == null) {
-            uniqueSet = Collections.unmodifiableSet(map.keySet());
+            uniqueSet = UnmodifiableSet.decorate(map.keySet());
         }
         return uniqueSet;
     }

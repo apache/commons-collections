@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/set/UnmodifiableSortedSet.java,v 1.1 2003/11/16 00:05:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/set/UnmodifiableSortedSet.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,20 +57,22 @@
  */
 package org.apache.commons.collections.set;
 
-import java.util.Comparator;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.SortedSet;
 
 import org.apache.commons.collections.Unmodifiable;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
  * Decorates another <code>SortedSet</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:45 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiableSortedSet extends UnmodifiableSet implements SortedSet {
+public class UnmodifiableSortedSet extends AbstractSortedSetDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable set.
@@ -96,13 +98,33 @@ public class UnmodifiableSortedSet extends UnmodifiableSet implements SortedSet 
         super(set);
     }
 
-    /**
-     * Gets the set being decorated.
-     * 
-     * @return the decorated set
-     */
-    protected SortedSet getSortedSet() {
-        return (SortedSet) getCollection();
+    //-----------------------------------------------------------------------
+    public Iterator iterator() {
+        return UnmodifiableIterator.decorate(getCollection().iterator());
+    }
+
+    public boolean add(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean addAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean remove(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean removeAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean retainAll(Collection coll) {
+        throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
@@ -119,18 +141,6 @@ public class UnmodifiableSortedSet extends UnmodifiableSet implements SortedSet 
     public SortedSet tailSet(Object fromElement) {
         SortedSet sub = getSortedSet().tailSet(fromElement);
         return new UnmodifiableSortedSet(sub);
-    }
-
-    public Object first() {
-        return getSortedSet().first();
-    }
-
-    public Object last() {
-        return getSortedSet().last();
-    }
-
-    public Comparator comparator() {
-        return getSortedSet().comparator();
     }
 
 }

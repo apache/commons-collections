@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/TestUnmodifiableList.java,v 1.3 2003/11/18 22:37:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/TestUnmodifiableList.java,v 1.4 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,18 +65,16 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.map.TestPredicatedSortedMap;
-
 /**
  * Extension of {@link AbstractTestList} for exercising the 
  * {@link UnmodifiableList} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:14 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Phil Steitz
  */
-public class TestUnmodifiableList extends AbstractTestList{
+public class TestUnmodifiableList extends AbstractTestList {
     
     public TestUnmodifiableList(String testName) {
         super(testName);
@@ -87,11 +85,11 @@ public class TestUnmodifiableList extends AbstractTestList{
     }
     
     public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedSortedMap.class.getName()};
+        String[] testCaseName = { TestUnmodifiableList.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
- //-------------------------------------------------------------------       
+
+    //-----------------------------------------------------------------------    
     public List makeEmptyList() {
         return UnmodifiableList.decorate(new ArrayList());
     }
@@ -112,8 +110,9 @@ public class TestUnmodifiableList extends AbstractTestList{
     
     public boolean isRemoveSupported() {
         return false;
-    }   
-//--------------------------------------------------------------------   
+    }
+    
+    //-----------------------------------------------------------------------    
     protected UnmodifiableList list = null;
     protected ArrayList array = null;
     

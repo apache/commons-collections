@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/TestAll.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/TestUnmodifiableSet.java,v 1.1 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,42 +57,55 @@
  */
 package org.apache.commons.collections.set;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.apache.commons.collections.BulkTest;
 
 /**
- * Entry point for tests.
- * 
+ * Extension of {@link AbstractTestSet} for exercising the 
+ * {@link UnmodifiableSet} implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/03 11:19:10 $
  * 
- * @author Stephen Colebourne
+ * @author Phil Steitz
  */
-public class TestAll extends TestCase {
+public class TestUnmodifiableSet extends AbstractTestSet{
     
-    public TestAll(String testName) {
+    public TestUnmodifiableSet(String testName) {
         super(testName);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestListOrderedSet.suite());
-        suite.addTest(TestPredicatedSet.suite());
-        suite.addTest(TestPredicatedSortedSet.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        suite.addTest(TestTypedSortedSet.suite());
-        suite.addTest(TestUnmodifiableSet.suite());
-        suite.addTest(TestUnmodifiableSortedSet.suite());
-        
-        return suite;
+        return BulkTest.makeSuite(TestUnmodifiableSet.class);
     }
-        
+    
+    public static void main(String args[]) {
+        String[] testCaseName = { TestUnmodifiableSet.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+    
+    //-------------------------------------------------------------------  
+    public Set makeEmptySet() {
+        return UnmodifiableSet.decorate(new HashSet());
+    }
+    
+    public Set makeFullSet() {
+        HashSet set = new HashSet();
+        set.addAll(Arrays.asList(getFullElements()));
+        return UnmodifiableSet.decorate(set);
+    }
+    
+    public boolean isAddSupported() {
+        return false;
+    }
+    
+    public boolean isRemoveSupported() {
+        return false;
+    }
+           
 }

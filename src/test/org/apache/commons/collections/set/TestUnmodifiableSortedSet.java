@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/TestUnmodifiableSortedSet.java,v 1.3 2003/11/18 22:37:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/TestUnmodifiableSortedSet.java,v 1.4 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,14 +64,15 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.apache.commons.collections.BulkTest;
 
 /**
  * Extension of {@link AbstractTestSortedSet} for exercising the 
  * {@link UnmodifiableSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:17 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Phil Steitz
  */
@@ -82,8 +83,7 @@ public class TestUnmodifiableSortedSet extends AbstractTestSortedSet{
     }
     
     public static Test suite() {
-        // Can't run bulk tests in AbstractTestSet -- subset tests modify set
-        return new TestSuite(TestUnmodifiableSortedSet.class);
+        return BulkTest.makeSuite(TestUnmodifiableSortedSet.class);
     }
     
     public static void main(String args[]) {

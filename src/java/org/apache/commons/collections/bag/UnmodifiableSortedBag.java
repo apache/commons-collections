@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/UnmodifiableSortedBag.java,v 1.1 2003/11/16 00:05:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/UnmodifiableSortedBag.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,20 +57,22 @@
  */
 package org.apache.commons.collections.bag;
 
-import java.util.Comparator;
+import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.collections.SortedBag;
 import org.apache.commons.collections.Unmodifiable;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
  * Decorates another <code>SortedBag</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:43 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiableSortedBag extends UnmodifiableBag implements SortedBag {
+public class UnmodifiableSortedBag extends AbstractSortedBagDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable bag.
@@ -96,26 +98,33 @@ public class UnmodifiableSortedBag extends UnmodifiableBag implements SortedBag 
         super(bag);
     }
 
-    /**
-     * Gets the bag being decorated.
-     * 
-     * @return the decorated bag
-     */
-    protected SortedBag getSortedBag() {
-        return (SortedBag) getCollection();
-    }
-
     //-----------------------------------------------------------------------
-    public Object first() {
-        return getSortedBag().first();
+    public Iterator iterator() {
+        return UnmodifiableIterator.decorate(getCollection().iterator());
     }
 
-    public Object last() {
-        return getSortedBag().last();
+    public boolean add(Object object) {
+        throw new UnsupportedOperationException();
     }
 
-    public Comparator comparator() {
-        return getSortedBag().comparator();
+    public boolean addAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean remove(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean removeAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean retainAll(Collection coll) {
+        throw new UnsupportedOperationException();
     }
 
 }

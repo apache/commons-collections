@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/AbstractTestSortedSet.java,v 1.2 2003/11/18 22:37:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/AbstractTestSortedSet.java,v 1.3 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.BulkTest;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:17 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  * @author Dieter Wimberger
@@ -281,17 +281,24 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
             //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
             //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
 
-        } //TestSortedSetSubSet
+        }
 
         public boolean isNullSupported() {
             return AbstractTestSortedSet.this.isNullSupported();
-        } //useNullValue
-
-        public Object[] getFullElements() {
-            //System.out.println("getFullElements()");
-            return m_FullElements;
+        }
+        public boolean isAddSupported() {
+            return AbstractTestSortedSet.this.isAddSupported();
+        }
+        public boolean isRemoveSupported() {
+            return AbstractTestSortedSet.this.isRemoveSupported();
+        }
+        public boolean isFailFastSupported() {
+            return AbstractTestSortedSet.this.isFailFastSupported();
         }
 
+        public Object[] getFullElements() {
+            return m_FullElements;
+        }
         public Object[] getOtherElements() {
             return m_OtherElements;
         }
@@ -308,44 +315,26 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
                 default :
                     return null;
             }
-        } //getSubSet
+        }
 
         public Set makeEmptySet() {
-            SortedSet s = (SortedSet) AbstractTestSortedSet.this.makeFullSet();
-            s = getSubSet(s);
-            s.clear();
-            return s;
-        } //makeEmptySet
+            SortedSet s = (SortedSet) AbstractTestSortedSet.this.makeEmptySet();
+            return getSubSet(s);
+        }
 
         public Set makeFullSet() {
             SortedSet s = (SortedSet) AbstractTestSortedSet.this.makeFullCollection();
             return getSubSet(s);
-        } //makeFullSet
-
-        public void resetFull() {
-            AbstractTestSortedSet.this.resetFull();
-            TestSortedSetSubSet.this.confirmed = getSubSet((SortedSet) AbstractTestSortedSet.this.confirmed);
-            TestSortedSetSubSet.this.collection = getSubSet((SortedSet) AbstractTestSortedSet.this.collection);
-        }
-
-        public void resetEmpty() {
-            TestSortedSetSubSet.this.resetFull();
-            TestSortedSetSubSet.this.confirmed.clear();
-            TestSortedSetSubSet.this.collection.clear();
         }
 
         public BulkTest bulkTestSortedSetSubSet() {
-            //Override returning null to prevent endless
-            //loop of bulk tests
-            return null;
-        } //bulkTestSortedSetSubSet
-
-        public BulkTest bulkTestSortedSetHeadSet() {
-            return null;
+            return null;  // prevent infinite recursion
         }
-
+        public BulkTest bulkTestSortedSetHeadSet() {
+            return null;  // prevent infinite recursion
+        }
         public BulkTest bulkTestSortedSetTailSet() {
-            return null;
+            return null;  // prevent infinite recursion
         }
 
         static final int TYPE_SUBSET = 0;

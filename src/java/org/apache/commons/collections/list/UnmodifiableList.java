@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/UnmodifiableList.java,v 1.1 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/UnmodifiableList.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,22 +58,23 @@
 package org.apache.commons.collections.list;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.Unmodifiable;
-import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
+import org.apache.commons.collections.iterators.UnmodifiableListIterator;
 
 /**
  * Decorates another <code>List</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiableList extends UnmodifiableCollection implements List {
+public class UnmodifiableList extends AbstractListDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable list.
@@ -109,14 +110,35 @@ public class UnmodifiableList extends UnmodifiableCollection implements List {
     }
 
     //-----------------------------------------------------------------------
-    public void add(int index, Object object) {
+    public Iterator iterator() {
+        return UnmodifiableIterator.decorate(getCollection().iterator());
+    }
+
+    public boolean add(Object object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(int index, Collection coll) {
+    public boolean addAll(Collection coll) {
         throw new UnsupportedOperationException();
     }
 
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean remove(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean removeAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean retainAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    //-----------------------------------------------------------------------
     public Object get(int index) {
         return getList().get(index);
     }
@@ -130,11 +152,19 @@ public class UnmodifiableList extends UnmodifiableCollection implements List {
     }
 
     public ListIterator listIterator() {
-        return IteratorUtils.unmodifiableListIterator(getList().listIterator());
+        return UnmodifiableListIterator.decorate(getList().listIterator());
     }
 
     public ListIterator listIterator(int index) {
-        return IteratorUtils.unmodifiableListIterator(getList().listIterator(index));
+        return UnmodifiableListIterator.decorate(getList().listIterator(index));
+    }
+
+    public void add(int index, Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean addAll(int index, Collection coll) {
+        throw new UnsupportedOperationException();
     }
 
     public Object remove(int index) {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/UnmodifiablePriorityQueue.java,v 1.1 2003/11/16 00:05:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/UnmodifiablePriorityQueue.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,17 +60,18 @@ package org.apache.commons.collections.buffer;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.PriorityQueue;
+import org.apache.commons.collections.Unmodifiable;
 
 /**
  * <code>UnmodifiablePriorityQueue</code> decorates another <code>PriorityQueue</code>
  * to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:44 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiablePriorityQueue implements PriorityQueue {
+public class UnmodifiablePriorityQueue implements PriorityQueue, Unmodifiable {
 
     /** The priority queue to decorate */
     protected final PriorityQueue priorityQueue;
@@ -82,9 +83,13 @@ public class UnmodifiablePriorityQueue implements PriorityQueue {
      * @throws IllegalArgumentException if priority queue is null
      */
     public static PriorityQueue decorate(PriorityQueue priorityQueue) {
+        if (priorityQueue instanceof Unmodifiable) {
+            return priorityQueue;
+        }
         return new UnmodifiablePriorityQueue(priorityQueue);
     }
     
+    //-----------------------------------------------------------------------
     /**
      * Constructs a new synchronized priority queue.
      *
@@ -97,6 +102,7 @@ public class UnmodifiablePriorityQueue implements PriorityQueue {
         this.priorityQueue = priorityQueue;
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Clear all elements from queue - Unsupported as unmodifiable.
      */
