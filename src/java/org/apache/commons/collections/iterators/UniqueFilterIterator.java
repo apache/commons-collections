@@ -17,7 +17,7 @@ package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
 
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.UniquePredicate;
 
 /** 
  * A FilterIterator which only returns "unique" Objects.  Internally,
@@ -25,7 +25,7 @@ import org.apache.commons.collections.PredicateUtils;
  * and duplicate Objects are skipped.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.8 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision: 1.9 $ $Date: 2004/05/07 23:29:02 $
  * 
  * @author Morgan Delagrange
  */
@@ -39,7 +39,7 @@ public class UniqueFilterIterator extends FilterIterator {
      *  @param iterator  the iterator to use
      */
     public UniqueFilterIterator( Iterator iterator ) {
-        super(iterator, PredicateUtils.uniquePredicate());
+        super(iterator, UniquePredicate.getInstance());
     }
 
 }
