@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/MapPerformance.java,v 1.2 2003/11/18 23:23:05 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/MapPerformance.java,v 1.3 2003/12/08 22:05:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,7 +60,6 @@ package org.apache.commons.collections;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -97,11 +96,11 @@ public class MapPerformance {
         Map fastHashMap = new FastHashMap(hashMap);
         Map treeMap = new TreeMap(hashMap);
         Map seqMap = new SequencedHashMap(hashMap);
-        Map linkedMap = new LinkedHashMap(hashMap);
-        Map syncMap = Collections.unmodifiableMap(new HashMap(hashMap));
-        Map bucketMap = new StaticBucketMap();
-        bucketMap.putAll(hashMap);
-        Map doubleMap = new DoubleOrderedMap(hashMap);
+//        Map linkedMap = new LinkedHashMap(hashMap);
+//        Map syncMap = Collections.unmodifiableMap(new HashMap(hashMap));
+//        Map bucketMap = new StaticBucketMap();
+//        bucketMap.putAll(hashMap);
+//        Map doubleMap = new DoubleOrderedMap(hashMap);
         
         // dummy is required as the VM seems to hotspot the first call to the
         // test method with the given type
