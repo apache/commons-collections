@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedBag.java,v 1.1 2003/05/07 13:19:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedBag.java,v 1.2 2003/05/09 16:41:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,12 +68,12 @@ import org.apache.commons.collections.Bag;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/07 13:19:18 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/09 16:41:57 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
  */
-public class TypedBag extends PredicatedBag {
+public class TypedBag {
 
     /**
      * Factory method to create a typed bag.
@@ -87,22 +87,13 @@ public class TypedBag extends PredicatedBag {
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
     public static Bag decorate(Bag bag, Class type) {
-        return new TypedBag(bag, type);
+        return new PredicatedBag(bag, TypedCollection.getPredicate(type));
     }
     
     /**
-     * Constructor that wraps (not copies).
-     * <p>
-     * If there are any elements already in the bag being decorated, they
-     * are validated.
-     * 
-     * @param bag  the bag to decorate, must not be null
-     * @param type  the type to allow into the bag, must not be null
-     * @throws IllegalArgumentException if bag or type is null
-     * @throws IllegalArgumentException if the bag contains invalid elements
+     * Restrictive constructor.
      */
-    protected TypedBag(Bag bag, Class type) {
-        super(bag, TypedCollection.getPredicate(type));
+    protected TypedBag() {
     }
 
 }

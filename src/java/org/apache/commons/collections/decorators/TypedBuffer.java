@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedSortedSet.java,v 1.2 2003/05/09 16:41:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedBuffer.java,v 1.1 2003/05/09 16:41:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,10 +57,10 @@
  */
 package org.apache.commons.collections.decorators;
 
-import java.util.SortedSet;
+import org.apache.commons.collections.Buffer;
 
 /**
- * <code>TypedSortedSet</code> decorates another <code>Set</code>
+ * <code>TypedBuffer</code> decorates another <code>Buffer</code>
  * to validate that elements added are of a specific type.
  * <p>
  * The validation of additions is performed via an instanceof test against 
@@ -68,32 +68,32 @@ import java.util.SortedSet;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/09 16:41:57 $
+ * @version $Revision: 1.1 $ $Date: 2003/05/09 16:41:57 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
  */
-public class TypedSortedSet {
+public class TypedBuffer {
 
     /**
-     * Factory method to create a typed sorted set.
+     * Factory method to create a typed list.
      * <p>
-     * If there are any elements already in the set being decorated, they
+     * If there are any elements already in the buffer being decorated, they
      * are validated.
      * 
-     * @param set  the set to decorate, must not be null
-     * @param type  the type to allow into the collection, must not be null
-     * @throws IllegalArgumentException if set or type is null
-     * @throws IllegalArgumentException if the set contains invalid elements
+     * @param buffer  the buffer to decorate, must not be null
+     * @param type  the type to allow into the buffer, must not be null
+     * @throws IllegalArgumentException if buffer or type is null
+     * @throws IllegalArgumentException if the buffer contains invalid elements
      */
-    public static SortedSet decorate(SortedSet set, Class type) {
-        return new PredicatedSortedSet(set, TypedCollection.getPredicate(type));
+    public static Buffer decorate(Buffer buffer, Class type) {
+        return new PredicatedBuffer(buffer, TypedCollection.getPredicate(type));
     }
     
     /**
      * Restrictive constructor.
      */
-    protected TypedSortedSet() {
+    protected TypedBuffer() {
     }
 
 }

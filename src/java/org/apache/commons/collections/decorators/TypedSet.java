@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedSet.java,v 1.1 2003/05/07 11:19:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedSet.java,v 1.2 2003/05/09 16:41:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,12 +68,12 @@ import java.util.Set;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/07 11:19:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/09 16:41:57 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
  */
-public class TypedSet extends PredicatedSet {
+public class TypedSet {
 
     /**
      * Factory method to create a typed set.
@@ -87,22 +87,13 @@ public class TypedSet extends PredicatedSet {
      * @throws IllegalArgumentException if the set contains invalid elements
      */
     public static Set decorate(Set set, Class type) {
-        return new TypedSet(set, type);
+        return new PredicatedSet(set, TypedCollection.getPredicate(type));
     }
     
     /**
-     * Constructor that wraps (not copies).
-     * <p>
-     * If there are any elements already in the collection being decorated, they
-     * are validated.
-     * 
-     * @param set  the set to decorate, must not be null
-     * @param type  the type to allow into the collection, must not be null
-     * @throws IllegalArgumentException if set or type is null
-     * @throws IllegalArgumentException if the set contains invalid elements
+     * Restrictive constructor.
      */
-    protected TypedSet(Set set, Class type) {
-        super(set, TypedCollection.getPredicate(type));
+    protected TypedSet() {
     }
 
 }

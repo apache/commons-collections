@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedList.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedList.java,v 1.3 2003/05/09 16:41:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,12 +68,12 @@ import java.util.List;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/09 16:41:56 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
  */
-public class TypedList extends PredicatedList {
+public class TypedList {
 
     /**
      * Factory method to create a typed list.
@@ -87,22 +87,13 @@ public class TypedList extends PredicatedList {
      * @throws IllegalArgumentException if the list contains invalid elements
      */
     public static List decorate(List list, Class type) {
-        return new TypedList(list, type);
+        return new PredicatedList(list, TypedCollection.getPredicate(type));
     }
     
     /**
-     * Constructor that wraps (not copies).
-     * <p>
-     * If there are any elements already in the list being decorated, they
-     * are validated.
-     * 
-     * @param list  the list to decorate, must not be null
-     * @param type  the type to allow into the collection, must not be null
-     * @throws IllegalArgumentException if list or type is null
-     * @throws IllegalArgumentException if the list contains invalid elements
+     * Restrictive constructor.
      */
-    protected TypedList(List list, Class type) {
-        super(list, TypedCollection.getPredicate(type));
+    protected TypedList() {
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedCollection.java,v 1.2 2003/05/05 23:25:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedCollection.java,v 1.3 2003/05/09 16:41:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,12 +70,12 @@ import org.apache.commons.collections.Predicate;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:22 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/09 16:41:57 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
  */
-public class TypedCollection extends PredicatedCollection {
+public class TypedCollection {
 
     /**
      * Factory method to create a typed collection.
@@ -89,22 +89,13 @@ public class TypedCollection extends PredicatedCollection {
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
     public static Collection decorate(Collection coll, Class type) {
-        return new TypedCollection(coll, type);
+        return new PredicatedCollection(coll, TypedCollection.getPredicate(type));
     }
     
     /**
-     * Constructor that wraps (not copies).
-     * <p>
-     * If there are any elements already in the collection being decorated, they
-     * are validated.
-     * 
-     * @param coll  the collection to decorate, must not be null
-     * @param type  the type to allow into the collection, must not be null
-     * @throws IllegalArgumentException if collection or type is null
-     * @throws IllegalArgumentException if the collection contains invalid elements
+     * Restrictive constructor.
      */
-    protected TypedCollection(Collection coll, Class type) {
-        super(coll, getPredicate(type));
+    protected TypedCollection() {
     }
 
     /**
@@ -113,7 +104,7 @@ public class TypedCollection extends PredicatedCollection {
      * @param type  the type, must not be null
      * @throws IllegalArgumentException if type is null
      */
-    static Predicate getPredicate(Class type) {
+    protected static Predicate getPredicate(Class type) {
         return new InstanceofPredicate(type);
     }
 
