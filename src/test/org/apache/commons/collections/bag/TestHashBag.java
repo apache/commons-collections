@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestAll.java,v 1.2 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestHashBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,41 +58,35 @@
 package org.apache.commons.collections.bag;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.Bag;
+
 /**
- * Entry point for tests.
+ * Extension of {@link TestBag} for exercising the {@link HashBag}
+ * implementation.
  * 
- * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/02 23:36:12 $
- * 
- * @author Stephen Colebourne
+ * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
+ *
+ * @author Chuck Burdick
  */
-public class TestAll extends TestCase {
+public class TestHashBag extends AbstractTestBag {
     
-    public TestAll(String testName) {
+    public TestHashBag(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestHashBag.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestHashBag.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTypedBag.suite());
-        suite.addTest(TestTypedSortedBag.suite());
-        
-        return suite;
+
+    public Bag makeBag() {
+        return new HashBag();
     }
-        
+    
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.2 2003/11/18 22:37:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.3 2003/12/02 23:36:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.Bag;
@@ -75,7 +76,7 @@ import org.apache.commons.collections.Bag;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Bag} fails.
  *
- * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:15 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/02 23:36:12 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -307,15 +308,93 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         bag.add("A");
         bag.add("A");
         bag.add("B");
-        Iterator i = bag.iterator();
-        i.next();
+        Iterator it = bag.iterator();
+        it.next();
         bag.remove("A");
         try {
-            i.next();
+            it.next();
             fail("Should throw ConcurrentModificationException");
         } catch (ConcurrentModificationException e) {
             // expected
         }
     }
     
+    public void testIteratorFailNoMore() {
+        Bag bag = makeBag();
+        bag.add("A");
+        bag.add("A");
+        bag.add("B");
+        Iterator it = bag.iterator();
+        it.next();
+        it.next();
+        it.next();
+        try {
+            it.next();
+            fail("Should throw NoSuchElementException");
+        } catch (NoSuchElementException ex) {
+            // expected
+        }
+    }
+    
+    public void testIteratorFailDoubleRemove() {
+        Bag bag = makeBag();
+        bag.add("A");
+        bag.add("A");
+        bag.add("B");
+        Iterator it = bag.iterator();
+        it.next();
+        it.next();
+        assertEquals(3, bag.size());
+        it.remove();
+        assertEquals(2, bag.size());
+        try {
+            it.remove();
+            fail("Should throw IllegalStateException");
+        } catch (IllegalStateException ex) {
+            // expected
+        }
+        assertEquals(2, bag.size());
+        it.next();
+        it.remove();
+        assertEquals(1, bag.size());
+    }
+    
+    public void testToArray() {
+        Bag bag = makeBag();
+        bag.add("A");
+        bag.add("A");
+        bag.add("B");
+        bag.add("B");
+        bag.add("C");
+        Object[] array = bag.toArray();
+        int a = 0, b = 0, c = 0;
+        for (int i = 0; i < array.length; i++) {
+            a += (array[i].equals("A") ? 1 : 0);
+            b += (array[i].equals("B") ? 1 : 0);
+            c += (array[i].equals("C") ? 1 : 0);
+        }
+        assertEquals(2, a);
+        assertEquals(2, b);
+        assertEquals(1, c);
+    }
+
+    public void testToArrayPopulate() {
+        Bag bag = makeBag();
+        bag.add("A");
+        bag.add("A");
+        bag.add("B");
+        bag.add("B");
+        bag.add("C");
+        String[] array = (String[]) bag.toArray(new String[0]);
+        int a = 0, b = 0, c = 0;
+        for (int i = 0; i < array.length; i++) {
+            a += (array[i].equals("A") ? 1 : 0);
+            b += (array[i].equals("B") ? 1 : 0);
+            c += (array[i].equals("C") ? 1 : 0);
+        }
+        assertEquals(2, a);
+        assertEquals(2, b);
+        assertEquals(1, c);
+    }
+
 }

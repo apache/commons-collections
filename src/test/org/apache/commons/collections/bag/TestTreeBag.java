@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestAll.java,v 1.2 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestTreeBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,41 +58,58 @@
 package org.apache.commons.collections.bag;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Entry point for tests.
- * 
- * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/02 23:36:12 $
- * 
- * @author Stephen Colebourne
- */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
-        super(testName);
-    }
+import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.SortedBag;
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
+/**
+ * Extension of {@link TestBag} for exercising the {@link TreeBag}
+ * implementation.
+ * 
+ * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
+ *
+ * @author Chuck Burdick
+ */
+public class TestTreeBag extends AbstractTestBag {
     
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTypedBag.suite());
-        suite.addTest(TestTypedSortedBag.suite());
-        
-        return suite;
-    }
-        
+   public TestTreeBag(String testName) {
+      super(testName);
+   }
+
+   public static Test suite() {
+      return new TestSuite(TestTreeBag.class);
+   }
+
+   public static void main(String args[]) {
+      String[] testCaseName = { TestTreeBag.class.getName() };
+      junit.textui.TestRunner.main(testCaseName);
+   }
+
+   public Bag makeBag() {
+      return new TreeBag();
+   }
+
+   public SortedBag setupBag() {
+      SortedBag bag = (SortedBag)makeBag();
+      bag.add("C");
+      bag.add("A");
+      bag.add("B");
+      bag.add("D");
+      return bag;
+   }
+
+   public void testOrdering() {
+      Bag bag = setupBag();
+      assertEquals("Should get elements in correct order",
+                   "A", bag.toArray()[0]);
+      assertEquals("Should get elements in correct order",
+                   "B", bag.toArray()[1]);
+      assertEquals("Should get elements in correct order",
+                   "C", bag.toArray()[2]);
+      assertEquals("Should get first key",
+                   "A", ((SortedBag)bag).first());
+      assertEquals("Should get last key",
+                   "D", ((SortedBag)bag).last());
+   }
 }

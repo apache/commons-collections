@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestAll.java,v 1.2 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/TreeBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,42 +57,66 @@
  */
 package org.apache.commons.collections.bag;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import org.apache.commons.collections.SortedBag;
 
 /**
- * Entry point for tests.
- * 
+ * Implements <code>SortedBag</code>, using a <code>TreeMap</code> to provide
+ * the data storage. This is the standard implementation of a sorted bag.
+ * <p>
+ * Order will be maintained among the bag members and can be viewed through the
+ * iterator.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
  * 
+ * @author Chuck Burdick
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
-        super(testName);
+public class TreeBag extends AbstractMapBag implements SortedBag {
+
+    /**
+     * Constructs an empty <code>TreeBag</code>.
+     */
+    public TreeBag() {
+        super(new TreeMap());
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Constructs an empty bag that maintains order on its unique
+     * representative members according to the given {@link Comparator}.
+     * 
+     * @param comparator  the comparator to use
+     */
+    public TreeBag(Comparator comparator) {
+        super(new TreeMap(comparator));
+    }
+
+    /**
+     * Constructs a {@link Bag} containing all the members of the given
+     * collection.
+     * 
+     * @param coll  the collection to copy into the bag
+     */
+    public TreeBag(Collection coll) {
+        this();
+        addAll(coll);
+    }
+
+    public Object first() {
+        return ((SortedMap) getMap()).firstKey();
+    }
+
+    public Object last() {
+        return ((SortedMap) getMap()).lastKey();
+    }
+
+    public Comparator comparator() {
+        return ((SortedMap) getMap()).comparator();
     }
     
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTypedBag.suite());
-        suite.addTest(TestTypedSortedBag.suite());
-        
-        return suite;
-    }
-        
 }

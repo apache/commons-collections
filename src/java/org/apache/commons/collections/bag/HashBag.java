@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestAll.java,v 1.2 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/HashBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,42 +57,38 @@
  */
 package org.apache.commons.collections.bag;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Collection;
+import java.util.HashMap;
+
+import org.apache.commons.collections.Bag;
 
 /**
- * Entry point for tests.
- * 
+ * Implements <code>Bag</code>, using a <code>HashMap</code> to provide the
+ * data storage. This is the standard implementation of a bag.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
  * 
+ * @author Chuck Burdick
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
-        super(testName);
+public class HashBag extends AbstractMapBag implements Bag {
+
+    /**
+     * Constructs an empty <Code>HashBag</Code>.
+     */
+    public HashBag() {
+        super(new HashMap());
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Constructs a {@link Bag} containing all the members of the given collection.
+     * 
+     * @param coll  a collection to copy into this bag
+     */
+    public HashBag(Collection coll) {
+        this();
+        addAll(coll);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTypedBag.suite());
-        suite.addTest(TestTypedSortedBag.suite());
-        
-        return suite;
-    }
-        
+
 }
