@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.23 2003/05/09 18:41:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.24 2003/05/17 15:03:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,6 +76,8 @@ import org.apache.commons.collections.decorators.LazyMap;
 import org.apache.commons.collections.decorators.LazySortedMap;
 import org.apache.commons.collections.decorators.PredicatedMap;
 import org.apache.commons.collections.decorators.PredicatedSortedMap;
+import org.apache.commons.collections.decorators.TransformedMap;
+import org.apache.commons.collections.decorators.TransformedSortedMap;
 import org.apache.commons.collections.decorators.TypedMap;
 import org.apache.commons.collections.decorators.TypedSortedMap;
 
@@ -91,15 +93,19 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  <li>{@link #fixedSizeMap(Map)}
  *  <li>{@link #fixedSizeSortedMap(SortedMap)}
  *  <li>{@link #lazyMap(Map,Factory)}
- *  <li>{@link #typedMap(Map, Class, Class)}
+ *  <li>{@link #lazyMap(Map,Transformer)}
  *  <li>{@link #lazySortedMap(SortedMap,Factory)}
+ *  <li>{@link #lazySortedMap(SortedMap,Transformer)}
  *  <li>{@link #predicatedMap(Map,Predicate,Predicate)}
  *  <li>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
+ *  <li>{@link #transformedMap(Map, Transformer, Transformer)}
+ *  <li>{@link #transformedSortedMap(Map, Transformer, Transformer)}
+ *  <li>{@link #typedMap(Map, Class, Class)}
  *  <li>{@link #typedSortedMap(Map, Class, Class)}
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.23 $ $Date: 2003/05/09 18:41:34 $
+ * @version $Revision: 1.24 $ $Date: 2003/05/17 15:03:25 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -855,10 +861,10 @@ public class MapUtils {
      * method, as it is a backdoor for adding unvalidated objects.
      *
      * @param map  the map to predicate, must not be null
-     * @param keyPred  the predicate for keys, must not be null
-     * @param valuePred  the predicate for values, must not be null
+     * @param keyPred  the predicate for keys, null means no check
+     * @param valuePred  the predicate for values, null means no check
      * @return a predicated map backed by the given map
-     * @throws IllegalArgumentException  if the Map or Predicates are null
+     * @throws IllegalArgumentException  if the Map is null
      */
     public static Map predicatedMap(Map map, Predicate keyPred, Predicate valuePred) {
         return PredicatedMap.decorate(map, keyPred, valuePred);
@@ -870,12 +876,30 @@ public class MapUtils {
      * Only keys and values of the specified types can be added to the map.
      * 
      * @param map  the map to limit to a specific type, must not be null
-     * @param keyType  the type of keys which may be added to the map
-     * @param valueType  the type of values which may be added to the map
+     * @param keyType  the type of keys which may be added to the map, must not be null
+     * @param valueType  the type of values which may be added to the map, must not be null
      * @return a typed map backed by the specified map
+     * @throws IllegalArgumentException  if the Map or Class is null
      */
     public static Map typedMap(Map map, Class keyType, Class valueType) {
         return TypedMap.decorate(map, keyType, valueType);
+    }
+    
+    /**
+     * Returns a transformed map backed by the given map.
+     * <p>
+     * Each object is passed through the transformers as it is added to the
+     * Map. It is important not to use the original map after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param map  the map to predicate, must not be null
+     * @param keyTransformer  the transformer for the map keys, null means no transformation
+     * @param valueTransformer  the transformer for the map values, null means no transformation
+     * @return a transformed map backed by the given map
+     * @throws IllegalArgumentException  if the Map is null
+     */
+    public static Map transformedMap(Map map, Transformer keyTransformer, Transformer valueTransformer) {
+        return TransformedMap.decorate(map, keyTransformer, valueTransformer);
     }
     
     /**
@@ -1011,10 +1035,10 @@ public class MapUtils {
      * method, as it is a backdoor for adding unvalidated objects.
      *
      * @param map  the map to predicate, must not be null
-     * @param keyPred  the predicate for keys, must not be null
-     * @param valuePred  the predicate for values, must not be null
+     * @param keyPred  the predicate for keys, null means no check
+     * @param valuePred  the predicate for values, null means no check
      * @return a predicated map backed by the given map
-     * @throws IllegalArgumentException  if the SortedMap or Predicates are null
+     * @throws IllegalArgumentException  if the SortedMap is null
      */
     public static SortedMap predicatedSortedMap(SortedMap map, Predicate keyPred, Predicate valuePred) {
         return PredicatedSortedMap.decorate(map, keyPred, valuePred);
@@ -1026,12 +1050,29 @@ public class MapUtils {
      * Only keys and values of the specified types can be added to the map.
      * 
      * @param map  the map to limit to a specific type, must not be null
-     * @param keyType  the type of keys which may be added to the map
-     * @param valueType  the type of values which may be added to the map
+     * @param keyType  the type of keys which may be added to the map, must not be null
+     * @param valueType  the type of values which may be added to the map, must not be null
      * @return a typed map backed by the specified map
      */
     public static SortedMap typedSortedMap(SortedMap map, Class keyType, Class valueType) {
         return TypedSortedMap.decorate(map, keyType, valueType);
+    }
+    
+    /**
+     * Returns a transformed sorted map backed by the given map.
+     * <p>
+     * Each object is passed through the transformers as it is added to the
+     * Map. It is important not to use the original map after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param map  the map to predicate, must not be null
+     * @param keyTransformer  the transformer for the map keys, null means no transformation
+     * @param valueTransformer  the transformer for the map values, null means no transformation
+     * @return a transformed map backed by the given map
+     * @throws IllegalArgumentException  if the Map is null
+     */
+    public static SortedMap transformedSortedMap(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
+        return TransformedSortedMap.decorate(map, keyTransformer, valueTransformer);
     }
     
     /**
