@@ -48,8 +48,8 @@ There are two types of compatibility discussed here, source and binary.
 </li>
 </ul>
 <p>
-Releases of Apache projects, including collections, aim to be source and binary compatible
-within minor versions, and to avoid breakages as much as possible between major versions.
+Releases of commons collections aim to be source and binary compatible within minor versions,
+and to avoid breakages as much as possible between major versions.
 </p>
 
 <p>
@@ -62,6 +62,8 @@ Commons collections 3.0 is binary compatible with version 2.1 and 2.0
 <b>except for certain methods on one class</b>.
 As the release was a major version, this is permitted, however it was unintentional and an error.
 The problem is in the <b><code>IteratorUtils</code></b> class (see methods below).
+(Strictly speaking, there are some minor incompatibilities on other classes, but these
+changes were deliberate and have not caused any known issues.)
 </p>
 
 <p>

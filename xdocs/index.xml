@@ -53,8 +53,8 @@ There are many features, including:
 </ul>
 </p>
 <p>
-Patch version 2.1.1 has just been released.
-The provides a work around to a <a href="compatibility.html">version compatibility</a> issue between v2.1 and v3.0.
+Preview version 3.1-RC1 and patch version 2.1.1 have just been released.
+These provides a work around to a <a href="compatibility.html">version compatibility</a> issue between v2.1 and v3.0.
 </p>
 </section>
 
@@ -82,6 +82,10 @@ The <a href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/">CVS rep
 Version 3.0/2.1.1 - 
  <a href="http://jakarta.apache.org/site/binindex.cgi#commons-collections">Binary</a> - 
  <a href="http://jakarta.apache.org/site/sourceindex.cgi#commons-collections">Source</a>
+</p>
+<p>
+Version 3.1-RC1 (preview for testing - not for production use) - 
+ <a href="http://www.apache.org/~scolebourne/coll31/">Source and binary</a>
 </p>
 <p>
  For previous releases, see the <a href="http://archive.apache.org/dist/jakarta/commons/collections/">Apache Archive</a>
