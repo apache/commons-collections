@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestSortedBidiMap.java,v 1.5 2003/12/01 22:34:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestSortedBidiMap.java,v 1.6 2003/12/03 14:02:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.map.AbstractTestSortedMap;
 /**
  * Abstract test class for {@link SortedBidiMap} methods and contracts.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/12/01 22:34:54 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/03 14:02:49 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -156,6 +156,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
                 
     //-----------------------------------------------------------------------
     public void testBidiClearByHeadMap() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
@@ -199,6 +201,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByHeadMap() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
@@ -239,6 +243,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByHeadMapEntrySet() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
@@ -318,6 +324,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
 
     //-----------------------------------------------------------------------
     public void testBidiClearByTailMap() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
@@ -363,6 +371,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
 
     //-----------------------------------------------------------------------                
     public void testBidiRemoveByTailMap() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
@@ -404,6 +414,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByTailMapEntrySet() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
@@ -490,6 +502,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
 
     //-----------------------------------------------------------------------
     public void testBidiClearBySubMap() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
@@ -543,6 +557,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveBySubMap() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
@@ -585,6 +601,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveBySubMapEntrySet() {
+        if (isRemoveSupported() == false) return;
+        
         // extra test as other tests get complex
         SortedBidiMap sm = (SortedBidiMap) makeFullMap();
         Iterator it = sm.keySet().iterator();
