@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntListIterator.java,v 1.1 2003/01/09 13:40:11 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/09 13:40:11 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListIterator.java,v 1.3 2003/01/10 18:52:37 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/01/10 18:52:37 $
  *
  * ====================================================================
  *
@@ -23,11 +23,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -59,14 +59,12 @@
  *
  */
 
-package org.apache.commons.collections.primitives.adapters;
-
-import org.apache.commons.collections.primitives.IntIterator;
+package org.apache.commons.collections.primitives;
 
 /**
  * A {@link java.util.ListIterator list iterator} over int values.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/09 13:40:11 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/10 18:52:37 $
  * @author Rodney Waldhoff 
  */
 public interface IntListIterator extends IntIterator {

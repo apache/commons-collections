@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.1 2003/01/09 13:40:11 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/09 13:40:11 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.2 2003/01/10 18:52:38 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/10 18:52:38 $
  *
  * ====================================================================
  *
@@ -63,6 +63,7 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.List;
 
+import org.apache.commons.collections.primitives.*;
 import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntList;
 
@@ -70,7 +71,7 @@ import org.apache.commons.collections.primitives.IntList;
  * Adapts a {@link Number}-valued {@link java.util.List List} 
  * to the {@link IntList} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/09 13:40:11 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/10 18:52:38 $
  * @author Rodney Waldhoff 
  */
 public class ListIntList extends CollectionIntCollection implements IntList {

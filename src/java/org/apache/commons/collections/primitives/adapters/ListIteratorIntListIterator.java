@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIteratorIntListIterator.java,v 1.1 2003/01/09 13:40:11 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/09 13:40:11 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIteratorIntListIterator.java,v 1.2 2003/01/10 18:52:38 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/10 18:52:38 $
  *
  * ====================================================================
  *
@@ -63,11 +63,13 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.ListIterator;
 
+import org.apache.commons.collections.primitives.*;
+
 /**
  * Adapts a {@link Number}-valued {@link java.util.ListIterator} 
  * to the {@link IntListIterator} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/09 13:40:11 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/10 18:52:38 $
  * @author Rodney Waldhoff 
  */
 public class ListIteratorIntListIterator implements IntListIterator {

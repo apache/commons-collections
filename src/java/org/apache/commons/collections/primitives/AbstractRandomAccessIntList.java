@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.5 2003/01/09 13:40:10 rwaldhoff Exp $
- * $Revision: 1.5 $
- * $Date: 2003/01/09 13:40:10 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.6 2003/01/10 18:52:37 rwaldhoff Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/01/10 18:52:37 $
  *
  * ====================================================================
  *
@@ -64,7 +64,6 @@ package org.apache.commons.collections.primitives;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.primitives.adapters.IntListIterator;
 
 public abstract class AbstractRandomAccessIntList extends AbstractIntCollection implements IntList {
 

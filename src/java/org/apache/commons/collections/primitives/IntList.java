@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.5 2003/01/10 18:47:15 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.6 2003/01/10 18:52:37 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,7 +58,7 @@
 
 package org.apache.commons.collections.primitives;
 
-import org.apache.commons.collections.primitives.adapters.IntListIterator;
+
 
 /**
  * An ordered collection (a list) of <code>int</code> values.
@@ -67,7 +67,7 @@ import org.apache.commons.collections.primitives.adapters.IntListIterator;
  * @see org.apache.commons.collections.primitives.adapters.ListIntList
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/01/10 18:47:15 $
+ * @version $Revision: 1.6 $ $Date: 2003/01/10 18:52:37 $
  * 
  * @author Rodney Waldhoff 
  */
