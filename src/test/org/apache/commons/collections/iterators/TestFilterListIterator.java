@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterListIterator.java,v 1.2 2002/10/12 22:36:23 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/10/12 22:36:23 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterListIterator.java,v 1.3 2002/11/01 19:07:54 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/11/01 19:07:54 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -70,7 +70,7 @@ import java.util.Random;
 import org.apache.commons.collections.Predicate;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/10/12 22:36:23 $
+ * @version $Revision: 1.3 $ $Date: 2002/11/01 19:07:54 $
  * @author Rodney Waldhoff
  */
 public class TestFilterListIterator extends TestCase {
@@ -155,7 +155,7 @@ public class TestFilterListIterator extends TestCase {
 
     }
 
-    public void tearDown() {
+    public void tearDown() throws Exception {
         list = null;
         odds = null;
         evens = null;

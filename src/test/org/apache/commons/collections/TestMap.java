@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.20 2002/10/13 13:55:35 scolebourne Exp $
- * $Revision: 1.20 $
- * $Date: 2002/10/13 13:55:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.21 2002/11/01 19:07:53 rwaldhoff Exp $
+ * $Revision: 1.21 $
+ * $Date: 2002/11/01 19:07:53 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Id: TestMap.java,v 1.20 2002/10/13 13:55:35 scolebourne Exp $
+ * @version $Revision: 1.21 $ $Date: 2002/11/01 19:07:53 $
  */
 public abstract class TestMap extends TestObject {
 
@@ -1119,7 +1119,7 @@ public abstract class TestMap extends TestObject {
     /**
      *  Erases any leftover instance variables by setting them to null.
      */
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
         map = null;
         keySet = null;
         entrySet = null;

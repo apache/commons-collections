@@ -3,7 +3,7 @@ package org.apache.commons.collections;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -206,7 +206,7 @@ public class TestSequencedHashMap extends TestMap {
                      map2.getLastKey(),getSampleKeys()[getSampleKeys().length - 1]);
     }
 
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
         labRat = null;
     }
 }
