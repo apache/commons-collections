@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.TransformerUtils;
+import org.apache.commons.collections.functors.FactoryTransformer;
 
 /**
  * Decorates another <code>Map</code> to create objects in the map on demand.
@@ -50,7 +50,7 @@ import org.apache.commons.collections.TransformerUtils;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/09 10:36:01 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/07 23:30:33 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -100,7 +100,7 @@ public class LazyMap
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }
-        this.factory = TransformerUtils.asTransformer(factory);
+        this.factory = FactoryTransformer.getInstance(factory);
     }
 
     /**
