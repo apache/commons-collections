@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.9 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.10 2003/09/07 08:48:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,13 +84,13 @@ import java.util.NoSuchElementException;
  * This buffer prevents null objects from being added.
  *
  * @since 2.1
- * @version $Revision: 1.9 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.10 $ $Date: 2003/09/07 08:48:46 $
  * 
  * @author Avalon
- * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
+ * @author Berin Loritsch
  * @author Paul Jack
  * @author Stephen Colebourne
- * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
+ * @author Herve Quiroz
  */
 public class BoundedFifoBuffer extends AbstractCollection implements Buffer, BoundedCollection {
     private final Object[] m_elements;

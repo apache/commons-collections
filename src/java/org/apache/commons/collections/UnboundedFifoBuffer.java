@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.7 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.8 2003/09/07 08:48:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,11 +83,11 @@ import java.util.NoSuchElementException;
  * This buffer prevents null objects from being added.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.8 $ $Date: 2003/09/07 08:48:46 $
  *
  * @author Avalon
- * @author  <a href="fede@apache.org">Federico Barbieri</a>
- * @author  <a href="bloritsch@apache.org">Berin Loritsch</a>
+ * @author Federico Barbieri
+ * @author Berin Loritsch
  * @author Paul Jack
  * @author Stephen Colebourne
  */

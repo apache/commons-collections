@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedCollection.java,v 1.3 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedCollection.java,v 1.4 2003/09/07 08:48:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,9 +67,9 @@ import java.util.Collection;
  * associated with the maximum number of elements.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/07 08:48:46 $
  * 
- * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
+ * @author Herve Quiroz
  * @author Stephen Colebourne
  */
 public interface BoundedCollection extends Collection {
