@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.9 2002/03/24 21:53:27 mas Exp $
- * $Revision: 1.9 $
- * $Date: 2002/03/24 21:53:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.10 2002/03/24 22:00:55 mas Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/03/24 22:00:55 $
  *
  * ====================================================================
  *
@@ -388,8 +388,8 @@ public class BeanMap extends AbstractMap implements Cloneable {
     /**
      * Returns the values for the BeanMap.
      * 
-     * @return values for the BeanMap.  Modifications to this collection
-     *         do not alter the underlying BeanMap.
+     * @return values for the BeanMap.  The returned collection is not
+     *         modifiable.
      */
     public Collection values() {
         ArrayList answer = new ArrayList( readMethods.size() );
