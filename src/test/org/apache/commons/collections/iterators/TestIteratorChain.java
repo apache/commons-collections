@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestIteratorChain.java,v 1.2 2002/10/12 22:36:23 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/10/12 22:36:23 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestIteratorChain.java,v 1.3 2002/10/31 21:55:23 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/10/31 21:55:23 $
  *
  * ====================================================================
  *
@@ -77,7 +77,7 @@ import junit.framework.TestSuite;
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
- * @version $Id: TestIteratorChain.java,v 1.2 2002/10/12 22:36:23 scolebourne Exp $
+ * @version $Id: TestIteratorChain.java,v 1.3 2002/10/31 21:55:23 rwaldhoff Exp $
  */
 public class TestIteratorChain extends TestIterator {
 
@@ -177,5 +177,22 @@ public class TestIteratorChain extends TestIterator {
         assertTrue("List is empty",list3.size() == 0);
     }
 
+    public void testFirstIteratorIsEmptyBug() {
+        List empty = new ArrayList();
+        List notEmpty = new ArrayList();
+        notEmpty.add("A");
+        notEmpty.add("B");
+        notEmpty.add("C");
+        IteratorChain chain = new IteratorChain();
+        chain.addIterator(empty.iterator());
+        chain.addIterator(notEmpty.iterator());
+        assertTrue("should have next",chain.hasNext());
+        assertEquals("A",chain.next());
+        assertTrue("should have next",chain.hasNext());
+        assertEquals("B",chain.next());
+        assertTrue("should have next",chain.hasNext());
+        assertEquals("C",chain.next());
+        assertTrue("should not have next",!chain.hasNext());
+    }
 }
 

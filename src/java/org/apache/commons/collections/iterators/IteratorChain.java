@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.2 2002/08/17 11:28:36 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/17 11:28:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.3 2002/10/31 21:55:23 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/10/31 21:55:23 $
  *
  * ====================================================================
  *
@@ -88,7 +88,7 @@ import java.util.NoSuchElementException;
  * @since 2.1
  * @author Morgan Delagrange
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorChain.java,v 1.2 2002/08/17 11:28:36 scolebourne Exp $
+ * @version $Id: IteratorChain.java,v 1.3 2002/10/31 21:55:23 rwaldhoff Exp $
  */
 public class IteratorChain implements Iterator {
 
@@ -268,7 +268,6 @@ public class IteratorChain implements Iterator {
             // set last used iterator here, in case the user calls remove
             // before calling hasNext() or next() (although they shouldn't)
             lastUsedIterator = currentIterator;
-            return;
         }
 
         if (currentIteratorIndex == (iteratorChain.size() - 1)) {
