@@ -17,32 +17,25 @@ package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
 
-import org.apache.commons.collections.ResettableIterator;
-
 /** 
  * Provides an implementation of an empty iterator.
  * <p>
  * This class provides an implementation of an empty iterator.
  * This class provides for binary compatability between Commons Collections
- * 2.1.1 and 3.1 due to issues with <code>IteratorUtils</code>.
+ * 2.1.1 and 3.0.1 due to issues with <code>IteratorUtils</code>.
  *
- * @since Commons Collections 2.1.1 and 3.1
- * @version $Revision: 1.1 $ $Date: 2004/05/22 09:46:39 $
+ * @since Commons Collections 2.1.1 and 3.0.1
+ * @version $Revision: 1.1.2.1 $ $Date: 2004/05/22 11:15:22 $
  * 
  * @author Stephen Colebourne
  */
-public class EmptyIterator extends AbstractEmptyIterator implements ResettableIterator {
+public final class EmptyIterator extends AbstractEmptyIterator implements Iterator {
 
     /**
      * Singleton instance of the iterator.
-     * @since Commons Collections 3.1
+     * @since Commons Collections 2.1.1 and 3.0.1
      */
-    public static final ResettableIterator RESETTABLE_INSTANCE = new EmptyIterator();
-    /**
-     * Singleton instance of the iterator.
-     * @since Commons Collections 2.1.1 and 3.1
-     */
-    public static final Iterator INSTANCE = RESETTABLE_INSTANCE;
+    public static final Iterator INSTANCE = new EmptyIterator();
 
     /**
      * Constructor.

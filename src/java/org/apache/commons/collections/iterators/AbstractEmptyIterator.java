@@ -20,12 +20,12 @@ import java.util.NoSuchElementException;
 /** 
  * Provides an implementation of an empty iterator.
  *
- * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/05/22 09:46:39 $
+ * @since Commons Collections 2.1.1 and 3.0.1
+ * @version $Revision: 1.1.2.1 $ $Date: 2004/05/22 11:15:22 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractEmptyIterator {
+abstract class AbstractEmptyIterator {
  
     /**
      * Constructor.
@@ -68,22 +68,6 @@ public abstract class AbstractEmptyIterator {
 
     public void remove() {
         throw new IllegalStateException("Iterator contains no elements");
-    }
-
-    public Object getKey() {
-        throw new IllegalStateException("Iterator contains no elements");
-    }
-
-    public Object getValue() {
-        throw new IllegalStateException("Iterator contains no elements");
-    }
-
-    public Object setValue(Object value) {
-        throw new IllegalStateException("Iterator contains no elements");
-    }
-
-    public void reset() {
-        // do nothing
     }
 
 }
