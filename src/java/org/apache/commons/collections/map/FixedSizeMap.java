@@ -44,7 +44,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/04/09 10:36:01 $
+ * @version $Revision: 1.8 $ $Date: 2004/05/07 23:58:33 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -130,6 +130,7 @@ public class FixedSizeMap
 
     public Set entrySet() {
         Set set = map.entrySet();
+        // unmodifiable set will still allow modification via Map.Entry objects
         return UnmodifiableSet.decorate(set);
     }
 
