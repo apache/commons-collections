@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.5 2003/12/24 23:22:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.6 2003/12/29 01:04:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,16 +69,16 @@ import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.Bag;
 
 /**
- * Abstract test class for {@link Bag} methods and contracts.
+ * Abstract test class for {@link org.apache.commons.collections.Bag Bag} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeBag} method.
  * <p>
- * If your {@link Bag} fails one of these tests by design,
+ * If your bag fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
- * test case (method) your {@link Bag} fails.
+ * test case (method) your bag fails.
  *
- * @version $Revision: 1.5 $ $Date: 2003/12/24 23:22:54 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/29 01:04:44 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -100,7 +100,7 @@ public abstract class AbstractTestBag extends AbstractTestObject {
 
     //-----------------------------------------------------------------------
     /**
-     * Return a new, empty {@link Bag} to used for testing.
+     * Return a new, empty bag to used for testing.
      * 
      * @return the bag to be tested
      */

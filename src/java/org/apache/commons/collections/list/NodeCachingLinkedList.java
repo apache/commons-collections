@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/NodeCachingLinkedList.java,v 1.2 2003/12/24 01:15:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/NodeCachingLinkedList.java,v 1.3 2003/12/29 01:04:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -78,7 +78,7 @@ import java.util.Collection;
  * <b>Note that this implementation is not synchronized.</b>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/24 01:15:40 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/29 01:04:44 $
  * 
  * @author Jeff Varszegi
  * @author Rich Dougherty
@@ -97,8 +97,8 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
 
     /**
      * The first cached node, or <code>null</code> if no nodes are cached.
-     * Cached nodes are stored in a singly-linked list with {@link Node#next}
-     * pointing to the next element.
+     * Cached nodes are stored in a singly-linked list with
+     * <code>next</code> pointing to the next element.
      */
     protected transient Node firstCachedNode;
     

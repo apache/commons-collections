@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.4 2003/12/29 00:38:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.5 2003/12/29 01:04:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.OrderedIterator;
  * is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/29 00:38:08 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/29 01:04:44 $
  *
  * @author Rich Dougherty
  * @author Phil Steitz
@@ -470,7 +470,8 @@ public abstract class AbstractLinkedList implements List {
      * Creates a new node with the specified object as its 
      * <code>value</code> and inserts it before <code>node</code>.
      * <p>
-     * This implementation uses {@link #createNode(Object)} and {@link #addNode(Node,Node)}.
+     * This implementation uses {@link #createNode(Object)} and
+     * {@link #addNode(AbstractLinkedList.Node,AbstractLinkedList.Node)}.
      *
      * @param node  node to insert before
      * @param value  value of the newly added node
@@ -485,7 +486,8 @@ public abstract class AbstractLinkedList implements List {
      * Creates a new node with the specified object as its 
      * <code>value</code> and inserts it after <code>node</code>.
      * <p>
-     * This implementation uses {@link #createNode(Object)} and {@link #addNode(Node,Node)}.
+     * This implementation uses {@link #createNode(Object)} and
+     * {@link #addNode(AbstractLinkedList.Node,AbstractLinkedList.Node)}.
      * 
      * @param node  node to insert after
      * @param value  value of the newly added node

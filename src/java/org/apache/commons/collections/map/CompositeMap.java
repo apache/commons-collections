@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/CompositeMap.java,v 1.1 2003/12/14 21:42:55 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/CompositeMap.java,v 1.2 2003/12/29 01:04:43 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.set.CompositeSet;
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/14 21:42:55 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/29 01:04:43 $
  *
  * @author Brian McCallister
  */
@@ -250,7 +250,7 @@ public class CompositeMap implements Map {
     
     /**
      * Returns a set view of the mappings contained in this map.  Each element
-     * in the returned set is a {@link Map.Entry}.  The set is backed by the
+     * in the returned set is a <code>Map.Entry</code>.  The set is backed by the
      * map, so changes to the map are reflected in the set, and vice-versa.
      * If the map is modified while an iteration over the set is in progress,
      * the results of the iteration are undefined.  The set supports element
