@@ -1,8 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.17 2003/01/07 23:44:19 rwaldhoff Exp $
- * $Revision: 1.17 $
- * $Date: 2003/01/07 23:44:19 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.18 2003/01/10 00:15:09 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +81,7 @@ import java.io.Serializable;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Revision: 1.17 $ $Date: 2003/01/07 23:44:19 $
+ * @version $Revision: 1.18 $ $Date: 2003/01/10 00:15:09 $
  */
 public abstract class TestObject extends BulkTest {
     public TestObject(String testName) {
@@ -122,6 +119,11 @@ public abstract class TestObject extends BulkTest {
     public void testObjectEqualsSelf() {
         Object obj = makeObject();
         assertEquals("A Object should equal itself",obj,obj);
+    }
+
+    public void testEqualsNull() {
+        Object obj = makeObject();
+        assertTrue(! obj.equals(null) ); // make sure this doesn't throw NPE either
     }
 
     public void testObjectHashCodeEqualsSelfHashCode() {
