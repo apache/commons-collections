@@ -42,6 +42,7 @@ import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.LoopingIterator;
+import org.apache.commons.collections.iterators.LoopingListIterator;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections.iterators.ObjectGraphIterator;
@@ -64,7 +65,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * against versions 2.1.1 and 3.1.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.27 $ $Date: 2004/05/26 21:53:46 $
+ * @version $Revision: 1.28 $ $Date: 2004/07/17 21:08:05 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -683,6 +684,23 @@ public class IteratorUtils {
             throw new NullPointerException("Collection must not be null");
         }
         return new LoopingIterator(coll);
+    }
+    
+    /**
+     * Gets an iterator that loops continuously over the supplied list.
+     * <p>
+     * The iterator will only stop looping if the remove method is called
+     * enough times to empty the list, or if the list is empty to start with.
+     *
+     * @param list  the list to iterate over, not null
+     * @return a new looping iterator
+     * @throws NullPointerException if the list is null
+     */
+    public static ResettableIterator loopingListIterator(List list) {
+        if (list == null) {
+            throw new NullPointerException("List must not be null");
+        }
+        return new LoopingListIterator(list);
     }
     
     // Views
