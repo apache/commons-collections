@@ -53,7 +53,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * instances. The implementations are provided in the iterators subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.23 $ $Date: 2004/03/20 00:21:08 $
+ * @version $Revision: 1.24 $ $Date: 2004/04/09 22:53:27 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -556,7 +556,8 @@ public class IteratorUtils {
      * 
      * @param root  the root object to start iterating from, null results in an empty iterator
      * @param transformer  the transformer to use, see above, null uses no effect transformer
-     * @return
+     * @return a new object graph iterator
+     * @since Commons Collections 3.1
      */
     public static Iterator objectGraphIterator(Object root, Transformer transformer) {
         return new ObjectGraphIterator(root, transformer);
@@ -572,6 +573,7 @@ public class IteratorUtils {
      *
      * @param iterator  the iterator to use, not null
      * @param transform  the transform to use, not null
+     * @return a new transforming iterator
      * @throws NullPointerException if either parameter is null
      */
     public static Iterator transformedIterator(Iterator iterator, Transformer transform) {
@@ -594,6 +596,7 @@ public class IteratorUtils {
      *
      * @param iterator  the iterator to use, not null
      * @param predicate  the predicate to use as a filter, not null
+     * @return a new filtered iterator
      * @throws NullPointerException if either parameter is null
      */
     public static Iterator filteredIterator(Iterator iterator, Predicate predicate) {
@@ -614,6 +617,7 @@ public class IteratorUtils {
      *
      * @param listIterator  the list iterator to use, not null
      * @param predicate  the predicate to use as a filter, not null
+     * @return a new filtered iterator
      * @throws NullPointerException if either parameter is null
      */
     public static ListIterator filteredListIterator(ListIterator listIterator, Predicate predicate) {
@@ -636,6 +640,7 @@ public class IteratorUtils {
      * to start with.
      *
      * @param coll  the collection to iterate over, not null
+     * @return a new looping iterator
      * @throws NullPointerException if the collection is null
      */
     public static ResettableIterator loopingIterator(Collection coll) {
@@ -651,6 +656,7 @@ public class IteratorUtils {
      * Gets an iterator that provides an iterator view of the given enumeration.
      *
      * @param enumeration  the enumeration to use
+     * @return a new iterator
      */
     public static Iterator asIterator(Enumeration enumeration) {
         if (enumeration == null) {
@@ -665,6 +671,7 @@ public class IteratorUtils {
      *
      * @param enumeration  the enumeration to use
      * @param removeCollection  the collection to remove elements from
+     * @return a new iterator
      */
     public static Iterator asIterator(Enumeration enumeration, Collection removeCollection) {
         if (enumeration == null) {
@@ -680,6 +687,7 @@ public class IteratorUtils {
      * Gets an enumeration that wraps an iterator.
      *
      * @param iterator  the iterator to use, not null
+     * @return a new enumeration
      * @throws NullPointerException if iterator is null
      */
     public static Enumeration asEnumeration(Iterator iterator) {
@@ -696,6 +704,7 @@ public class IteratorUtils {
      * cached, permitting all required operations of ListIterator.
      *
      * @param iterator  the iterator to use, not null
+     * @return a new iterator
      * @throws NullPointerException if iterator parameter is null
      */
     public static ListIterator toListIterator(Iterator iterator) {
@@ -712,6 +721,7 @@ public class IteratorUtils {
      * created. At the end, this is converted to an array.
      *
      * @param iterator  the iterator to use, not null
+     * @return an array of the iterator contents
      * @throws NullPointerException if iterator parameter is null
      */
     public static Object[] toArray(Iterator iterator) {
@@ -730,6 +740,7 @@ public class IteratorUtils {
      *
      * @param iterator  the iterator to use, not null
      * @param arrayClass  the class of array to create
+     * @return an array of the iterator contents
      * @throws NullPointerException if iterator parameter is null
      * @throws NullPointerException if arrayClass is null
      * @throws ClassCastException if the arrayClass is invalid
@@ -752,6 +763,7 @@ public class IteratorUtils {
      * created. At the end, the list is returned.
      *
      * @param iterator  the iterator to use, not null
+     * @return a list of the iterator contents
      * @throws NullPointerException if iterator parameter is null
      */
     public static List toList(Iterator iterator) {
@@ -766,6 +778,7 @@ public class IteratorUtils {
      *
      * @param iterator  the iterator to use, not null
      * @param estimatedSize  the initial size of the ArrayList
+     * @return a list of the iterator contents
      * @throws NullPointerException if iterator parameter is null
      * @throws IllegalArgumentException if the size is less than 1
      */
