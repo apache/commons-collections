@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.12 2003/09/14 03:30:23 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.13 2003/09/15 03:50:41 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.TestSuite;
  * Entry point for all collections decorators tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2003/09/14 03:30:23 $
+ * @version $Revision: 1.13 $ $Date: 2003/09/15 03:50:41 $
  * 
  * @author Stephen Colebourne
  */
@@ -108,6 +108,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestPredicatedSortedMap.suite());
         suite.addTest(TestLazyMap.suite());
         suite.addTest(TestLazySortedMap.suite());
+        suite.addTest(TestBlockingBuffer.suite());
         
         return suite;
     }
