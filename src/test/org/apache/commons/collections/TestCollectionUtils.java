@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.4 2002/08/13 00:26:52 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/13 00:26:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.5 2002/08/18 15:26:43 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/18 15:26:43 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCollectionUtils.java,v 1.4 2002/08/13 00:26:52 pjack Exp $
+ * @version $Id: TestCollectionUtils.java,v 1.5 2002/08/18 15:26:43 scolebourne Exp $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -327,6 +327,52 @@ public class TestCollectionUtils extends TestCase {
         bag.add("element", 1);
         test = CollectionUtils.index(bag, 0);
         assertTrue(test.equals("element"));
+    }
+
+
+    public void testFilter() {
+        List list = new ArrayList();
+        list.add("One");
+        list.add("Two");
+        list.add("Three");
+        list.add("Four");
+        CollectionUtils.filter(list, new Predicate() {
+            public boolean evaluate(Object input) {
+                return (input.equals("Two"));
+            }
+        });
+        assertEquals(1, list.size());
+        assertEquals("Two", list.get(0));
+    }
+
+    public void testTransform1() {
+        List list = new ArrayList();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        CollectionUtils.transform(list, new Transformer() {
+            public Object transform(Object input) {
+                return new Integer((String) input);
+            }
+        });
+        assertEquals(3, list.size());
+        assertEquals(new Integer(1), list.get(0));
+        assertEquals(new Integer(2), list.get(1));
+        assertEquals(new Integer(3), list.get(2));
+    }
+    
+    public void testTransform2() {
+        Set set = new HashSet();
+        set.add("1");
+        set.add("2");
+        set.add("3");
+        CollectionUtils.transform(set, new Transformer() {
+            public Object transform(Object input) {
+                return new Integer(4);
+            }
+        });
+        assertEquals(1, set.size());
+        assertEquals(new Integer(4), set.iterator().next());
     }
 
 
