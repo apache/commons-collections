@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.6 2004/01/03 05:15:00 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.7 2004/01/05 21:32:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/01/03 05:15:00 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/05 21:32:10 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -480,7 +480,6 @@ public class AbstractHashedMap implements IterableMap {
      * 
      * @param entry  the entry to update
      * @param newValue  the new value to store
-     * @return value  the previous value
      */
     protected void updateEntry(HashEntry entry, Object newValue) {
         entry.setValue(newValue);
@@ -518,7 +517,6 @@ public class AbstractHashedMap implements IterableMap {
      * @param hashCode  the hash code of the key to add
      * @param key  the key to add
      * @param value  the value to add
-     * @return the value previously mapped to this key, null if none
      */
     protected void addMapping(int hashIndex, int hashCode, Object key, Object value) {
         modCount++;

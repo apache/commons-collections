@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.25 2003/12/05 20:23:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.26 2004/01/05 21:37:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -84,7 +84,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.25 $ $Date: 2003/12/05 20:23:57 $
+ * @version $Revision: 1.26 $ $Date: 2004/01/05 21:37:13 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
@@ -519,7 +519,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
             }
             public Object next() {
                 Object key = iter.next();
-                return get( (String) key );
+                return get(key);
             }
             public void remove() {
                 throw new UnsupportedOperationException( "remove() not supported for BeanMap" );
@@ -780,7 +780,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
      *  to that type
      * @throws InstantiationException  if the constructor found with 
      *  reflection raises it
-     * @throws InvocationTargetExcetpion  if the constructor found with
+     * @throws InvocationTargetException  if the constructor found with
      *  reflection raises it
      * @throws IllegalAccessException  never
      * @throws IllegalArgumentException  never

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/EnumerationUtils.java,v 1.2 2004/01/05 21:23:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/EnumerationUtils.java,v 1.3 2004/01/05 21:37:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2004 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,7 +66,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * Provides utility methods for {@link Enumeration} instances.
  * 
  * @since Commons Collections 3.0
- * @version $Id: EnumerationUtils.java,v 1.2 2004/01/05 21:23:44 scolebourne Exp $
+ * @version $Id: EnumerationUtils.java,v 1.3 2004/01/05 21:37:13 scolebourne Exp $
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  */
@@ -86,7 +86,7 @@ public class EnumerationUtils {
      * created. The new list is returned.</p>
      *
      * @param enumeration  the enumeration to traverse, which should not be <code>null</code>.
-     * @throws <code>NullPointerException</code> if the enumeration parameter is <code>null</code>.
+     * @throws NullPointerException if the enumeration parameter is <code>null</code>.
      */
     public static List toList(Enumeration enumeration) {
         return IteratorUtils.toList(new EnumerationIterator(enumeration));

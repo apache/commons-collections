@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.5 2004/01/02 01:36:52 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.6 2004/01/05 21:32:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,7 +83,7 @@ import org.apache.commons.collections.BoundedMap;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/01/02 01:36:52 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/05 21:32:47 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
@@ -194,7 +194,6 @@ public class LRUMap extends AbstractLinkedMap
      * 
      * @param entry  the entry to update
      * @param newValue  the new value to store
-     * @return value  the previous value
      */
     protected void updateEntry(HashEntry entry, Object newValue) {
         moveToMRU((LinkEntry) entry);  // handles modCount
@@ -210,7 +209,6 @@ public class LRUMap extends AbstractLinkedMap
      * @param hashCode  the hash code of the key to add
      * @param key  the key to add
      * @param value  the value to add
-     * @return the value previously mapped to this key, null if none
      */
     protected void addMapping(int hashIndex, int hashCode, Object key, Object value) {
         if (size >= maxSize && removeLRU(header.before)) {
@@ -228,7 +226,6 @@ public class LRUMap extends AbstractLinkedMap
      * @param hashCode  the hash code of the key to add
      * @param key  the key to add
      * @param value  the value to add
-     * @return the value previously mapped to this key, null if none
      */
     protected void reuseMapping(LinkEntry entry, int hashIndex, int hashCode, Object key, Object value) {
         // find the entry before the entry specified in the hash table
