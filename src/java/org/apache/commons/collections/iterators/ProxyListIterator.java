@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyListIterator.java,v 1.5 2003/09/29 22:02:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyListIterator.java,v 1.6 2003/11/02 16:29:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,9 +63,9 @@ import java.util.ListIterator;
  * A proxy {@link ListIterator ListIterator} which delegates its
  * methods to a proxy instance.
  *
- * @see ProxyIterator
+ * @deprecated Use AbstractListIteratorDecorator
  * @since Commons Collections 2.0
- * @version $Revision: 1.5 $ $Date: 2003/09/29 22:02:33 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/02 16:29:12 $
  * 
  * @author Rodney Waldhoff
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterListIterator.java,v 1.4 2003/09/29 22:02:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterListIterator.java,v 1.5 2003/11/02 16:29:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,6 +59,7 @@ package org.apache.commons.collections.iterators;
 
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+
 import org.apache.commons.collections.Predicate;
 
 /** 
@@ -70,15 +71,48 @@ import org.apache.commons.collections.Predicate;
  * returned by the iterator.
  * 
  * @since Commons Collections 2.0
- * @version $Revision: 1.4 $ $Date: 2003/09/29 22:02:33 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/02 16:29:12 $
  * 
  * @author Rodney Waldhoff
  */
-public class FilterListIterator extends ProxyListIterator {
+public class FilterListIterator implements ListIterator {
 
-    // Constructors    
-    //-------------------------------------------------------------------------
+    /** The iterator being used */
+    private ListIterator iterator;
     
+    /** The predicate being used */
+    private Predicate predicate;
+
+    /** 
+     * The value of the next (matching) object, when 
+     * {@link #nextObjectSet} is true. 
+     */
+    private Object nextObject;
+
+    /** 
+     * Whether or not the {@link #nextObject} has been set
+     * (possibly to <code>null</code>). 
+     */
+    private boolean nextObjectSet = false;   
+
+    /** 
+     * The value of the previous (matching) object, when 
+     * {@link #previousObjectSet} is true. 
+     */
+    private Object previousObject;
+
+    /** 
+     * Whether or not the {@link #previousObject} has been set
+     * (possibly to <code>null</code>). 
+     */
+    private boolean previousObjectSet = false;   
+
+    /** 
+     * The index of the element that would be returned by {@link #next}.
+     */
+    private int nextIndex = 0;
+    
+    //-----------------------------------------------------------------------
     /**
      *  Constructs a new <code>FilterListIterator</code> that will not 
      *  function until 
@@ -96,7 +130,8 @@ public class FilterListIterator extends ProxyListIterator {
      * @param iterator  the iterator to use
      */
     public FilterListIterator(ListIterator iterator ) {
-        super(iterator);
+        super();
+        this.iterator = iterator;
     }
 
     /**
@@ -106,7 +141,8 @@ public class FilterListIterator extends ProxyListIterator {
      * @param predicate  the predicate to use
      */
     public FilterListIterator(ListIterator iterator, Predicate predicate) {
-        super(iterator);
+        super();
+        this.iterator = iterator;
         this.predicate = predicate;
     }
 
@@ -123,9 +159,7 @@ public class FilterListIterator extends ProxyListIterator {
         this.predicate = predicate;
     }
 
-    // ListIterator interface
-    //-------------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     /** Not supported. */
     public void add(Object o) {
         throw new UnsupportedOperationException("FilterListIterator.add(Object) is not supported.");
@@ -189,36 +223,52 @@ public class FilterListIterator extends ProxyListIterator {
         throw new UnsupportedOperationException("FilterListIterator.set(Object) is not supported.");
     }
 
-    // Properties
-    //-------------------------------------------------------------------------
+    //-----------------------------------------------------------------------
+    /** 
+     * Gets the iterator this iterator is using.
+     * 
+     * @return the iterator.
+     */
+    public ListIterator getListIterator() {
+        return iterator;
+    }
 
     /** 
-     * Getter for the predicate property.
-     * @return value of the predicate property.
+     * Sets the iterator for this iterator to use.
+     * If iteration has started, this effectively resets the iterator.
+     * 
+     * @param iterator  the iterator to use
+     */
+    public void setListIterator(ListIterator iterator) {
+        this.iterator = iterator;
+    }
+
+    //-----------------------------------------------------------------------
+    /** 
+     * Gets the predicate this iterator is using.
+     * 
+     * @return the predicate.
      */
     public Predicate getPredicate() {
         return predicate;
     }
+
     /** 
-     * Setter for the predicate property.
-     * @param predicate new value for the predicate property.
+     * Sets the predicate this the iterator to use.
+     * 
+     * @param predicate  the transformer to use
      */
     public void setPredicate(Predicate predicate) {
         this.predicate = predicate;
     }
 
-    // Private Methods
-    //-------------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     private void clearNextObject() {
         nextObject = null;
         nextObjectSet = false;
     }
 
     private boolean setNextObject() {
-        ListIterator iterator = getListIterator();
-        Predicate predicate = getPredicate();
-        
         // if previousObjectSet,
         // then we've walked back one step in the 
         // underlying list (due to a hasPrevious() call)
@@ -249,9 +299,6 @@ public class FilterListIterator extends ProxyListIterator {
     }
 
     private boolean setPreviousObject() {
-        ListIterator iterator = getListIterator();
-        Predicate predicate = getPredicate();
-        
         // if nextObjectSet,
         // then we've walked back one step in the 
         // underlying list (due to a hasNext() call)
@@ -276,38 +323,4 @@ public class FilterListIterator extends ProxyListIterator {
         return false;
     }
 
-    // Attributes
-    //-------------------------------------------------------------------------
-
-    /** Holds value of property "predicate". */
-    private Predicate predicate;
-
-    /** 
-     * The value of the next (matching) object, when 
-     * {@link #nextObjectSet} is true. 
-     */
-    private Object nextObject;
-
-    /** 
-     * Whether or not the {@link #nextObject} has been set
-     * (possibly to <code>null</code>). 
-     */
-    private boolean nextObjectSet = false;   
-
-    /** 
-     * The value of the previous (matching) object, when 
-     * {@link #previousObjectSet} is true. 
-     */
-    private Object previousObject;
-
-    /** 
-     * Whether or not the {@link #previousObject} has been set
-     * (possibly to <code>null</code>). 
-     */
-    private boolean previousObjectSet = false;   
-
-    /** 
-     * The index of the element that would be returned by {@link #next}.
-     */
-    private int nextIndex = 0;
 }

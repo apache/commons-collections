@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/TransformIterator.java,v 1.5 2003/09/29 22:02:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/TransformIterator.java,v 1.6 2003/11/02 16:29:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,24 +58,26 @@
 package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
+
 import org.apache.commons.collections.Transformer;
 
 /** 
- * A Proxy {@link Iterator Iterator} which uses a {@link Transformer Transformer}
- * instance to transform the contents of the {@link Iterator Iterator} into 
- * some other form.
+ * Decorates an iterator such that each element returned is transformed.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.5 $ $Date: 2003/09/29 22:02:33 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/02 16:29:12 $
  * 
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author James Strachan
+ * @author Stephen Colebourne
  */
-public class TransformIterator extends ProxyIterator {
-    
-    /** Holds value of property transformer. */
+public class TransformIterator implements Iterator {
+
+    /** The iterator being used */
+    private Iterator iterator;
+    /** The transformer being used */
     private Transformer transformer;
-    
-    
+
+    //-----------------------------------------------------------------------
     /**
      * Constructs a new <code>TransformIterator</code> that will not function
      * until the {@link #setIterator(Iterator) setIterator} method is 
@@ -84,7 +86,7 @@ public class TransformIterator extends ProxyIterator {
     public TransformIterator() {
         super();
     }
-    
+
     /**
      * Constructs a new <code>TransformIterator</code> that won't transform
      * elements from the given iterator.
@@ -92,7 +94,8 @@ public class TransformIterator extends ProxyIterator {
      * @param iterator  the iterator to use
      */
     public TransformIterator(Iterator iterator) {
-        super(iterator);
+        super();
+        this.iterator = iterator;
     }
 
     /**
@@ -104,50 +107,83 @@ public class TransformIterator extends ProxyIterator {
      * @param transformer  the transformer to use
      */
     public TransformIterator(Iterator iterator, Transformer transformer) {
-        super(iterator);
+        super();
+        this.iterator = iterator;
         this.transformer = transformer;
     }
 
-    // Iterator interface
-    //-------------------------------------------------------------------------
-    public Object next() {
-        return transform( super.next() );
+    //-----------------------------------------------------------------------
+    public boolean hasNext() {
+        return iterator.hasNext();
     }
 
-    // Properties
-    //-------------------------------------------------------------------------
-    /** 
-     * Getter for property transformer.
+    /**
+     * Gets the next object from the iteration, transforming it using the
+     * current transformer. If the transformer is null, no transformation
+     * occurs and the object from the iterator is returned directly.
      * 
-     * @return Value of property transformer.
+     * @return the next object
+     * @throws NoSuchElementException if there are no more elements
+     */
+    public Object next() {
+        return transform(iterator.next());
+    }
+
+    public void remove() {
+        iterator.remove();
+    }
+
+    //-----------------------------------------------------------------------
+    /** 
+     * Gets the iterator this iterator is using.
+     * 
+     * @return the iterator.
+     */
+    public Iterator getIterator() {
+        return iterator;
+    }
+
+    /** 
+     * Sets the iterator for this iterator to use.
+     * If iteration has started, this effectively resets the iterator.
+     * 
+     * @param iterator  the iterator to use
+     */
+    public void setIterator(Iterator iterator) {
+        this.iterator = iterator;
+    }
+
+    //-----------------------------------------------------------------------
+    /** 
+     * Gets the transformer this iterator is using.
+     * 
+     * @return the transformer.
      */
     public Transformer getTransformer() {
         return transformer;
     }
-    
+
     /** 
-     * Setter for property transformer.
+     * Sets the transformer this the iterator to use.
+     * A null transformer is a no-op transformer.
      * 
-     * @param transformer New value of property transformer.
+     * @param transformer  the transformer to use
      */
     public void setTransformer(Transformer transformer) {
         this.transformer = transformer;
     }
-    
-    // Implementation methods
-    //-------------------------------------------------------------------------
 
+    //-----------------------------------------------------------------------
     /**
-     *  Transforms the given object using the transformer.  If the 
-     *  transformer is null, the original object is returned as-is.
+     * Transforms the given object using the transformer.
+     * If the transformer is null, the original object is returned as-is.
      *
-     *  @param source  the object to transform
-     *  @return  the transformed object
+     * @param source  the object to transform
+     * @return the transformed object
      */
-    protected Object transform( Object source ) {
-        Transformer transformer = getTransformer();
-        if ( transformer != null ) {
-            return transformer.transform( source );
+    protected Object transform(Object source) {
+        if (transformer != null) {
+            return transformer.transform(source);
         }
         return source;
     }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyIterator.java,v 1.6 2003/11/02 16:29:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/AbstractMapIteratorDecorator.java,v 1.1 2003/11/02 16:29:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,87 +57,74 @@
  */
 package org.apache.commons.collections.iterators;
 
-import java.util.Iterator;
+import java.util.Map;
 
-/** 
- * A Proxy {@link Iterator Iterator} which delegates its methods to a proxy instance.
+/**
+ * Provides basic behaviour for decorating a map iterator with extra functionality.
+ * <p>
+ * All methods are forwarded to the decorated map iterator.
  *
- * @deprecated Use AbstractIteratorDecorator
- * @since Commons Collections 1.0
- * @version $Revision: 1.6 $ $Date: 2003/11/02 16:29:12 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/11/02 16:29:12 $
  * 
- * @author James Strachan
+ * @author Stephen Colebourne
  */
-public class ProxyIterator implements Iterator {
-    
-    /** Holds value of property iterator. */
-    private Iterator iterator;
-    
-    // Constructors
-    //-------------------------------------------------------------------------
+public class AbstractMapIteratorDecorator implements MapIterator {
 
+    /** The iterator being decorated */
+    private MapIterator iterator;
+
+    //-----------------------------------------------------------------------
     /**
-     * Constructs a new <code>ProxyIterator</code> that will not function
-     * until {@link #setIterator(Iterator)} is called.
-     */
-    public ProxyIterator() {
-        super();
-    }
-    
-    /**
-     * Constructs a new <code>ProxyIterator</code> that will use the
-     * given iterator.
+     * Constructor that decorates the specified iterator.
      *
-     * @param iterator  the underlying iterator
+     * @param iterator  the iterator to decorate, must not be null
+     * @throws IllegalArgumentException if the collection is null
      */
-    public ProxyIterator(Iterator iterator) {
+    public AbstractMapIteratorDecorator(MapIterator iterator) {
         super();
+        if (iterator == null) {
+            throw new IllegalArgumentException("MapIterator must not be null");
+        }
         this.iterator = iterator;
     }
 
-    // Iterator interface
-    //-------------------------------------------------------------------------
-
     /**
-     *  Returns true if the underlying iterator has more elements.
-     *
-     *  @return true if the underlying iterator has more elements
+     * Gets the iterator being decorated.
+     * 
+     * @return the decorated iterator
      */
-    public boolean hasNext() {
-        return getIterator().hasNext();
-    }
-
-    /**
-     *  Returns the next element from the underlying iterator.
-     *
-     *  @return the next element from the underlying iterator
-     *  @throws NoSuchElementException  if the underlying iterator 
-     *    raises it because it has no more elements
-     */
-    public Object next() {
-        return getIterator().next();
-    }
-
-    /**
-     *  Removes the last returned element from the collection that spawned
-     *  the underlying iterator.
-     */
-    public void remove() {
-        getIterator().remove();
-    }
-
-    // Properties
-    //-------------------------------------------------------------------------
-    /** Getter for property iterator.
-     * @return Value of property iterator.
-     */
-    public Iterator getIterator() {
+    protected MapIterator getMapIterator() {
         return iterator;
     }
-    /** Setter for property iterator.
-     * @param iterator New value of property iterator.
-     */
-    public void setIterator(Iterator iterator) {
-        this.iterator = iterator;
+
+    //-----------------------------------------------------------------------
+    public boolean hasNext() {
+        return iterator.hasNext();
     }
+
+    public Object next() {
+        return iterator.next();
+    }
+
+    public void remove() {
+        iterator.remove();
+    }
+    
+    public Object getKey() {
+        return iterator.getKey();
+    }
+
+    public Object getValue() {
+        return iterator.getValue();
+    }
+
+    public Object setValue(Object obj) {
+        return iterator.setValue(obj);
+    }
+
+    public Map.Entry asMapEntry() {
+        return iterator.asMapEntry();
+    }
+
 }
