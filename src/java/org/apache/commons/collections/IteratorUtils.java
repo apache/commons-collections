@@ -26,11 +26,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.commons.collections.iterators.CollatingIterator;
+import org.apache.commons.collections.iterators.EmptyIterator;
+import org.apache.commons.collections.iterators.EmptyListIterator;
+import org.apache.commons.collections.iterators.EmptyMapIterator;
+import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
 import org.apache.commons.collections.iterators.FilterIterator;
 import org.apache.commons.collections.iterators.FilterListIterator;
@@ -51,9 +54,16 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
 /**
  * Provides static utility methods and decorators for {@link Iterator} 
  * instances. The implementations are provided in the iterators subpackage.
+ * <p>
+ * WARNING: Due to human error certain binary incompatabilities were introduced
+ * between Commons Collections 2.1 and 3.0. The class remained source and test
+ * compatible, so if you can recompile all your classes and dependencies
+ * everything is OK. Those methods which are binary incompatible are marked as
+ * such, together with alternate solutions that are binary compatible
+ * against versions 2.1.1 and 3.1.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.25 $ $Date: 2004/05/21 22:43:10 $
+ * @version $Revision: 1.26 $ $Date: 2004/05/22 09:46:39 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -66,26 +76,28 @@ public class IteratorUtils {
      * An iterator over no elements.
      * <p>
      * WARNING: This constant is binary incompatible with Commons Collections 2.1.
-     */    
-    public static final ResettableIterator EMPTY_ITERATOR = new EmptyIterator();
+     * Use <code>EmptyIterator.INSTANCE</code> for compatability with Commons Collections 2.1.1.
+     */
+    public static final ResettableIterator EMPTY_ITERATOR = EmptyIterator.RESETTABLE_INSTANCE;
     /**
      * A list iterator over no elements.
      * <p>
      * WARNING: This constant is binary incompatible with Commons Collections 2.1.
-     */    
-    public static final ResettableListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
+     * Use <code>EmptyListIterator.INSTANCE</code> for compatability with Commons Collections 2.1.1.
+     */
+    public static final ResettableListIterator EMPTY_LIST_ITERATOR = EmptyListIterator.RESETTABLE_INSTANCE;
     /**
      * An ordered iterator over no elements.
      */    
-    public static final OrderedIterator EMPTY_ORDERED_ITERATOR = new EmptyOrderedIterator();
+    public static final OrderedIterator EMPTY_ORDERED_ITERATOR = EmptyListIterator.ORDERED_INSTANCE;
     /**
      * A map iterator over no elements.
      */    
-    public static final MapIterator EMPTY_MAP_ITERATOR = new EmptyMapIterator();
+    public static final MapIterator EMPTY_MAP_ITERATOR = EmptyMapIterator.INSTANCE;
     /**
      * An ordered map iterator over no elements.
      */    
-    public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = new EmptyOrderedMapIterator();
+    public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = EmptyOrderedMapIterator.INSTANCE;
 
     /**
      * IteratorUtils is not normally instantiated.
@@ -102,6 +114,7 @@ public class IteratorUtils {
      * nothing.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1.
+     * Use <code>EmptyIterator.INSTANCE</code> for compatability with Commons Collections 2.1.1.
      *
      * @return  an iterator over nothing
      */
@@ -116,6 +129,7 @@ public class IteratorUtils {
      * over nothing.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1.
+     * Use <code>EmptyListIterator.INSTANCE</code> for compatability with Commons Collections 2.1.1.
      *
      * @return  a list iterator over nothing
      */
@@ -873,129 +887,6 @@ public class IteratorUtils {
                 // ignore
             }
             return singletonIterator(obj);
-        }
-    }
-    
-    //-----------------------------------------------------------------------
-    /**
-     * EmptyIterator class
-     */
-    static class EmptyIterator implements ResettableIterator {
-        
-        EmptyIterator() {
-            super();
-        }
-
-        public boolean hasNext() {
-            return false;
-        }
-
-        public Object next() {
-            throw new NoSuchElementException("Iterator contains no elements");
-        }
-
-        public void remove() {
-            throw new IllegalStateException("Iterator contains no elements");
-        }
-        
-        public void reset() {
-            // do nothing
-        }
-    }
-    
-    //-----------------------------------------------------------------------    
-    /**
-     * EmptyListIterator class
-     */
-    static class EmptyListIterator extends EmptyIterator implements ResettableListIterator {
-        
-        EmptyListIterator() {
-            super();
-        }
-
-        public boolean hasPrevious() {
-            return false;
-        }
-
-        public Object previous() {
-            throw new NoSuchElementException("Iterator contains no elements");
-        }
-
-        public int nextIndex() {
-            return 0;
-        }
-
-        public int previousIndex() {
-            return -1;
-        }
-
-        public void add(Object o) {
-            throw new UnsupportedOperationException("add() not supported for empty Iterator");
-        }
-
-        public void set(Object o) {
-            throw new IllegalStateException("Iterator contains no elements");
-        }
-    }
-
-    //-----------------------------------------------------------------------    
-    /**
-     * EmptyOrderedIterator class
-     */
-    static class EmptyOrderedIterator extends EmptyIterator implements OrderedIterator, ResettableIterator {
-        
-        EmptyOrderedIterator() {
-            super();
-        }
-        
-        public boolean hasPrevious() {
-            return false;
-        }
-        
-        public Object previous() {
-            throw new NoSuchElementException("Iterator contains no elements");
-        }
-    }
-
-    //-----------------------------------------------------------------------    
-    /**
-     * EmptyMapIterator class
-     */
-    static class EmptyMapIterator extends EmptyIterator implements MapIterator, ResettableIterator {
-        
-        EmptyMapIterator() {
-            super();
-        }
-        
-        public Object getKey() {
-            throw new IllegalStateException("Iterator contains no elements");
-        }
-
-        public Object getValue() {
-            throw new IllegalStateException("Iterator contains no elements");
-        }
-
-        public Object setValue(Object value) {
-            throw new IllegalStateException("Iterator contains no elements");
-        }
-    }
-
-    //-----------------------------------------------------------------------    
-    /**
-     * EmptyOrderedMapIterator class
-     */
-    static class EmptyOrderedMapIterator extends EmptyMapIterator implements OrderedMapIterator, ResettableIterator {
-        
-        EmptyOrderedMapIterator() {
-            super();
-        }
-        
-        public boolean hasPrevious() {
-            return false;
-        }
-        
-        public Object previous() {
-            throw new NoSuchElementException("Iterator contains no elements");
         }
     }
 

@@ -24,11 +24,15 @@ import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.iterators.EmptyIterator;
+import org.apache.commons.collections.iterators.EmptyListIterator;
+import org.apache.commons.collections.iterators.EmptyMapIterator;
+import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 
 /**
  * Tests for IteratorUtils.
  * 
- * @version $Revision: 1.14 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.15 $ $Date: 2004/05/22 09:46:39 $
  * 
  * @author Unknown
  */
@@ -385,8 +389,13 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty iterator
      */
     public void testEmptyIterator() {
-        assertTrue(IteratorUtils.EMPTY_ITERATOR instanceof Iterator);
-        assertTrue(IteratorUtils.EMPTY_ITERATOR instanceof ResettableIterator);
+        assertSame(EmptyIterator.INSTANCE, IteratorUtils.EMPTY_ITERATOR);
+        assertSame(EmptyIterator.RESETTABLE_INSTANCE, IteratorUtils.EMPTY_ITERATOR);
+        assertEquals(true, IteratorUtils.EMPTY_ITERATOR instanceof Iterator);
+        assertEquals(true, IteratorUtils.EMPTY_ITERATOR instanceof ResettableIterator);
+        assertEquals(false, IteratorUtils.EMPTY_ITERATOR instanceof OrderedIterator);
+        assertEquals(false, IteratorUtils.EMPTY_ITERATOR instanceof ListIterator);
+        assertEquals(false, IteratorUtils.EMPTY_ITERATOR instanceof MapIterator);
         assertEquals(false, IteratorUtils.EMPTY_ITERATOR.hasNext());
         IteratorUtils.EMPTY_ITERATOR.reset();
         assertSame(IteratorUtils.EMPTY_ITERATOR, IteratorUtils.EMPTY_ITERATOR);
@@ -406,10 +415,13 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty list iterator
      */
     public void testEmptyListIterator() {
-        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof Iterator);
-        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ListIterator);
-        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResettableIterator);
-        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResettableListIterator);
+        assertSame(EmptyListIterator.INSTANCE, IteratorUtils.EMPTY_LIST_ITERATOR);
+        assertSame(EmptyListIterator.RESETTABLE_INSTANCE, IteratorUtils.EMPTY_LIST_ITERATOR);
+        assertEquals(true, IteratorUtils.EMPTY_LIST_ITERATOR instanceof Iterator);
+        assertEquals(true, IteratorUtils.EMPTY_LIST_ITERATOR instanceof ListIterator);
+        assertEquals(true, IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResettableIterator);
+        assertEquals(true, IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResettableListIterator);
+        assertEquals(false, IteratorUtils.EMPTY_LIST_ITERATOR instanceof MapIterator);
         assertEquals(false, IteratorUtils.EMPTY_LIST_ITERATOR.hasNext());
         assertEquals(0, IteratorUtils.EMPTY_LIST_ITERATOR.nextIndex());
         assertEquals(-1, IteratorUtils.EMPTY_LIST_ITERATOR.previousIndex());
@@ -443,9 +455,13 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty map iterator
      */
     public void testEmptyMapIterator() {
-        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof Iterator);
-        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof MapIterator);
-        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof ResettableIterator);
+        assertSame(EmptyMapIterator.INSTANCE, IteratorUtils.EMPTY_MAP_ITERATOR);
+        assertEquals(true, IteratorUtils.EMPTY_MAP_ITERATOR instanceof Iterator);
+        assertEquals(true, IteratorUtils.EMPTY_MAP_ITERATOR instanceof MapIterator);
+        assertEquals(true, IteratorUtils.EMPTY_MAP_ITERATOR instanceof ResettableIterator);
+        assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR instanceof ListIterator);
+        assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR instanceof OrderedIterator);
+        assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR instanceof OrderedMapIterator);
         assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR.hasNext());
         ((ResettableIterator) IteratorUtils.EMPTY_MAP_ITERATOR).reset();
         assertSame(IteratorUtils.EMPTY_MAP_ITERATOR, IteratorUtils.EMPTY_MAP_ITERATOR);
@@ -477,9 +493,11 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty map iterator
      */
     public void testEmptyOrderedIterator() {
-        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof Iterator);
-        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof OrderedIterator);
-        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ResettableIterator);
+        assertSame(EmptyListIterator.ORDERED_INSTANCE, IteratorUtils.EMPTY_ORDERED_ITERATOR);
+        assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof Iterator);
+        assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof OrderedIterator);
+        assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ResettableIterator);
+        assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof MapIterator);
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR.hasNext());
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR.hasPrevious());
         ((ResettableIterator) IteratorUtils.EMPTY_ORDERED_ITERATOR).reset();
@@ -504,10 +522,12 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty map iterator
      */
     public void testEmptyOrderedMapIterator() {
-        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof Iterator);
-        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof MapIterator);
-        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof OrderedMapIterator);
-        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResettableIterator);
+        assertSame(EmptyOrderedMapIterator.INSTANCE, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR);
+        assertEquals(true, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof Iterator);
+        assertEquals(true, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof MapIterator);
+        assertEquals(true, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof OrderedMapIterator);
+        assertEquals(true, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResettableIterator);
+        assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ListIterator);
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasNext());
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasPrevious());
         ((ResettableIterator) IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR).reset();
