@@ -55,7 +55,6 @@ package org.apache.commons.collections;
  */
 
 import java.util.Iterator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +73,7 @@ import junit.framework.TestSuite;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */
-public class TestSequencedHashMap extends TestHashMap
+public class TestSequencedHashMap extends TestMap
 {
     /**
      * The instance to experiment on.
@@ -94,7 +93,7 @@ public class TestSequencedHashMap extends TestHashMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public void setUp() {
+    public void setUp() throws Exception {
         super.setUp();
         // use makeMap and cast the result to a SeqHashMap
         // so that subclasses of SeqHashMap can share these tests
