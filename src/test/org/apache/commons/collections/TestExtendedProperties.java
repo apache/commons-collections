@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.7 2001/05/04 02:23:44 geirm Exp $
- * $Revision: 1.7 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.1 2001/05/04 02:23:44 geirm Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/05/04 02:23:44 $
  *
  * ====================================================================
@@ -61,38 +61,63 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.7 2001/05/04 02:23:44 geirm Exp $
+ *   Tests some basic functions of the ExtendedProperties
+ *   class
+ * 
+ *   @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
+ *   @version $Id: TestExtendedProperties.java,v 1.1 2001/05/04 02:23:44 geirm Exp $
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestExtendedProperties extends TestCase
+{
+    protected ExtendedProperties eprop = new ExtendedProperties();
+
+    public TestExtendedProperties(String testName)
+    {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayList.suite());
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashMap.suite());
-        suite.addTest(TestTreeMap.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        return suite;
+    public static Test suite()
+    {
+        return new TestSuite( TestExtendedProperties.class );
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+    public static void main(String args[])
+    {
+        String[] testCaseName = { TestExtendedProperties.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
+    }
+
+    public void testRetrieve()
+    {
+        /*
+         * should be emptry and return null
+         */
+
+        assertEquals("This returns null", eprop.getProperty("foo"), null);
+
+        /*
+         *  add a real value, and get it two different ways
+         */
+        eprop.setProperty("number", "1");
+        assertEquals("This returns '1'", eprop.getProperty("number"), "1");
+        assertEquals("This returns '1'", eprop.getString("number"), "1");
+
+        /*
+         * now add another and get a Vector
+         */
+        eprop.addProperty("number", "2");
+        assert("This returns array", ( eprop.getVector("number") instanceof java.util.Vector ) );
+        
+        /*
+         *  now test dan's new fix where we get the first scalar 
+         *  when we access a vector valued
+         *  property
+         */
+        assert("This returns scalar", ( eprop.getString("number") instanceof String ) );
     }
 }
