@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.7 2002/10/12 22:15:20 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2002/10/12 22:15:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.8 2003/01/04 15:00:57 rwaldhoff Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/01/04 15:00:57 $
  *
  * ====================================================================
  *
@@ -75,8 +75,14 @@ import java.io.Serializable;
  * than a {@link java.util.ArrayList} and offers better compile-time type
  * checking.
  *
- * @version $Revision: 1.7 $ $Date: 2002/10/12 22:15:20 $
+ * @version $Revision: 1.8 $ $Date: 2003/01/04 15:00:57 $
  * @author Rodney Waldhoff 
+ *
+ * @deprecated This class will soon change to implement 
+ *             {@link IntList} and not {@link List}. Adapters
+ *             between {@link List} and {@link IntList} will be
+ *             provided.
+ * 
  */
 public class UnsignedShortArrayList extends AbstractIntArrayList implements Serializable {
 

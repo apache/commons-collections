@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntList.java,v 1.4 2002/10/12 22:15:20 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2002/10/12 22:15:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntList.java,v 1.5 2003/01/04 15:00:57 rwaldhoff Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/01/04 15:00:57 $
  *
  * ====================================================================
  *
@@ -85,8 +85,9 @@ import java.util.AbstractList;
  * {@link #removeIntAt(int)} and {@link #clear()} methods.  You may want 
  * to override the other methods to increase performance.<P>
  *
- * @version $Revision: 1.4 $ $Date: 2002/10/12 22:15:20 $
+ * @version $Revision: 1.5 $ $Date: 2003/01/04 15:00:57 $
  * @author Rodney Waldhoff 
+ * @deprecated To be replaced by {@link IntList}.  If useful, an adapter to this interface could be provided.
  */
 public abstract class AbstractIntList extends AbstractList {
 

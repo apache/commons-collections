@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.7 2003/01/04 15:00:57 rwaldhoff Exp $
- * $Revision: 1.7 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollection.java,v 1.1 2003/01/04 15:00:57 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2003/01/04 15:00:57 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,49 +61,99 @@
 
 package org.apache.commons.collections.primitives;
 
-
-
 /**
- * Abstract base class for lists of primitive <Code>int</Code> elements
- * backed by an array.<P>
+ * A {@link java.util.Collection collection} of int values.
  *
- * Extending this class is essentially the same as extending its superclass
- * ({@link AbstractIntList}.  However, this class assumes that the 
- * primitive values will be stored in an underlying primitive array, and
- * provides methods for manipulating the capacity of that array.<P>
- *
- * @version $Revision: 1.7 $ $Date: 2003/01/04 15:00:57 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/04 15:00:57 $
  * @author Rodney Waldhoff 
- * 
- * @deprecated This class will soon change to implement 
- *             {@link IntList} and not {@link List}. Adapters
- *             between {@link List} and {@link IntList} will be
- *             provided.
  */
-public abstract class AbstractIntArrayList extends AbstractIntList {
-
-    //------------------------------------------------------ Abstract Accessors
-
-    /**
-     *  Returns the maximum size the list can reach before the array 
-     *  is resized.
-     *
-     *  @return the maximum size the list can reach before the array is resized
+public interface IntCollection {
+          
+    /** 
+     * Ensures that I contain the specified element 
+     * (optional operation).
      */
-    abstract public int capacity();
+    boolean add(int element);
 
-    /**
-     *  Ensures that the length of the internal <Code>int</Code> array is
-     *  at list the given value.
-     *
-     *  @param mincap  the minimum capcity for this list
+    /** 
+     * {@link #add Adds} all of the elements in the 
+     * specified collection to me 
+     * (optional operation). 
+     */ 
+    boolean addAll(IntCollection c);
+    
+    /** 
+     * Removes all my elements 
+     * (optional operation). 
      */
-    abstract public void ensureCapacity(int mincap);
+    void clear();
 
-    /**
-     *  Resizes the internal array such that {@link #capacity()} is equal
-     *  to {@link #size()}.
+    /** 
+     * Returns <code>true</code> iff I contain 
+     * the specified element. 
      */
-    abstract public void trimToSize();
-
+    boolean contains(int element);
+    
+    /** 
+     * Returns <code>true</code> iff I contain 
+     * all of the elements in the given collection. 
+     */
+    boolean containsAll(IntCollection c);
+    
+    /** 
+     * Compares the specified object with me for 
+     * equality. 
+     */
+    boolean equals(Object o);
+    
+    /** 
+     * Returns my hash code value. 
+     */
+    int hashCode();
+    
+    /** 
+     * Returns true iff I contains no elements. 
+     */
+    boolean isEmpty();
+    
+    /** 
+     * Returns an iterator over all my elements.
+     */
+    IntIterator iterator();
+     
+    /** 
+     * Removes the first occurrence of the 
+     * specified element (optional operation). 
+     */
+    boolean removeElement(int element);
+    
+    /** 
+     * Removes from all the elements that are 
+     * contained in the specified collection 
+     * (optional operation). 
+     */
+    boolean removeAll(IntCollection c);
+    
+    /** 
+     * Retains only the elements that are 
+     * contained in the specified collection 
+     * (optional operation). 
+     */
+    boolean retainAll(IntCollection c);
+    
+    /** 
+     * Returns the number of elements I contain. 
+     */
+    int size();
+    
+    /** 
+     * Returns an array containing all my elements.
+     */
+    int[] toArray();
+    
+    /** 
+     * Returns an array containing all of the elements 
+     * in me, using the given array if it is large enough.
+     */
+    int[] toArray(int[] a);
 }

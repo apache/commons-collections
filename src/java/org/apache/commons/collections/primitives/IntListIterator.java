@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.7 2003/01/04 15:00:57 rwaldhoff Exp $
- * $Revision: 1.7 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListIterator.java,v 1.1 2003/01/04 15:00:57 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2003/01/04 15:00:57 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,49 +61,20 @@
 
 package org.apache.commons.collections.primitives;
 
-
-
 /**
- * Abstract base class for lists of primitive <Code>int</Code> elements
- * backed by an array.<P>
+ * A {@link java.util.ListIterator list iterator} over int values.
  *
- * Extending this class is essentially the same as extending its superclass
- * ({@link AbstractIntList}.  However, this class assumes that the 
- * primitive values will be stored in an underlying primitive array, and
- * provides methods for manipulating the capacity of that array.<P>
- *
- * @version $Revision: 1.7 $ $Date: 2003/01/04 15:00:57 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/04 15:00:57 $
  * @author Rodney Waldhoff 
- * 
- * @deprecated This class will soon change to implement 
- *             {@link IntList} and not {@link List}. Adapters
- *             between {@link List} and {@link IntList} will be
- *             provided.
  */
-public abstract class AbstractIntArrayList extends AbstractIntList {
-
-    //------------------------------------------------------ Abstract Accessors
-
-    /**
-     *  Returns the maximum size the list can reach before the array 
-     *  is resized.
-     *
-     *  @return the maximum size the list can reach before the array is resized
-     */
-    abstract public int capacity();
-
-    /**
-     *  Ensures that the length of the internal <Code>int</Code> array is
-     *  at list the given value.
-     *
-     *  @param mincap  the minimum capcity for this list
-     */
-    abstract public void ensureCapacity(int mincap);
-
-    /**
-     *  Resizes the internal array such that {@link #capacity()} is equal
-     *  to {@link #size()}.
-     */
-    abstract public void trimToSize();
-
+public interface IntListIterator extends IntIterator {
+    void add(int element);
+    boolean hasNext();
+    boolean hasPrevious();
+    int next();
+    int nextIndex();
+    int previous();
+    int previousIndex();
+    void remove();
+    void set(int element);
 }

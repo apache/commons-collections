@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.7 2002/10/12 22:15:20 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2002/10/12 22:15:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.8 2003/01/04 15:00:57 rwaldhoff Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/01/04 15:00:57 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,8 +73,12 @@ import java.io.Serializable;
  * {@link java.util.ArrayList} of {@link Integer} values and allows for
  * better compile-time type checking.<P>
  *
- * @version $Revision: 1.7 $ $Date: 2002/10/12 22:15:20 $
+ * @version $Revision: 1.8 $ $Date: 2003/01/04 15:00:57 $
  * @author Rodney Waldhoff 
+ * @deprecated This class will soon change to implement 
+ *             {@link IntList} and not {@link List}. Adapters
+ *             between {@link List} and {@link IntList} will be
+ *             provided.
  */
 public class IntArrayList extends AbstractIntArrayList implements Serializable {
 

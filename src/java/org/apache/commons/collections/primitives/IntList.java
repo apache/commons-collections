@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.7 2003/01/04 15:00:57 rwaldhoff Exp $
- * $Revision: 1.7 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.1 2003/01/04 15:00:57 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2003/01/04 15:00:57 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,49 +61,74 @@
 
 package org.apache.commons.collections.primitives;
 
-
-
 /**
- * Abstract base class for lists of primitive <Code>int</Code> elements
- * backed by an array.<P>
+ * An ordered collection (a {@link java.util.List}) of int values.
  *
- * Extending this class is essentially the same as extending its superclass
- * ({@link AbstractIntList}.  However, this class assumes that the 
- * primitive values will be stored in an underlying primitive array, and
- * provides methods for manipulating the capacity of that array.<P>
- *
- * @version $Revision: 1.7 $ $Date: 2003/01/04 15:00:57 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/04 15:00:57 $
  * @author Rodney Waldhoff 
- * 
- * @deprecated This class will soon change to implement 
- *             {@link IntList} and not {@link List}. Adapters
- *             between {@link List} and {@link IntList} will be
- *             provided.
  */
-public abstract class AbstractIntArrayList extends AbstractIntList {
-
-    //------------------------------------------------------ Abstract Accessors
-
-    /**
-     *  Returns the maximum size the list can reach before the array 
-     *  is resized.
-     *
-     *  @return the maximum size the list can reach before the array is resized
+public interface IntList {
+    /** 
+     * Inserts the specified element at the specified position 
+     * within me (optional operation). 
      */
-    abstract public int capacity();
-
-    /**
-     *  Ensures that the length of the internal <Code>int</Code> array is
-     *  at list the given value.
-     *
-     *  @param mincap  the minimum capcity for this list
+    void add(int index, int element);
+          
+    /** 
+     * Returns the element at the specified position within 
+     * me. 
      */
-    abstract public void ensureCapacity(int mincap);
-
-    /**
-     *  Resizes the internal array such that {@link #capacity()} is equal
-     *  to {@link #size()}.
+    Object get(int index);
+    
+    /** 
+     * Returns the index of the first occurrence 
+     * of the specified element within me, 
+     * or <code>-1</code> if I do not contain 
+     * the this element. 
      */
-    abstract public void trimToSize();
+    int indexOf(int element);
+     
+    /** 
+     * Returns the index of the last occurrence 
+     * of the specified element within me, 
+     * or -1 if I do not contain this element. 
+     */
+    int lastIndexOf(int element);
+    
+    /** 
+     * Returns a list iterator over all my elements.
+     */
+    IntListIterator listIterator();
+    
+    /** 
+     * Returns a list iterator over my elements,
+     * starting at the specified position. The 
+     * specified index indicates the first element 
+     * that would be returned by an initial call 
+     * to the next method. An initial call to the 
+     * previous method would return the element 
+     * with the specified index minus one.
+     */
+    IntListIterator listIterator(int index);
+    
+    /** 
+     * Removes the element at the specified position in 
+     * me (optional operation). 
+     */
+    int removeElementAt(int index);
+   
+    /** 
+     * Replaces the element at the specified 
+     * position in me with the specified element
+     * (optional operation). 
+     */
+    int set(int index, int element);
+    
+    /** 
+     * Returns a view of the elements within me 
+     * between the specified fromIndex, inclusive, and 
+     * toIndex, exclusive. 
+     */
+    IntList subList(int fromIndex, int toIndex);
 
 }
