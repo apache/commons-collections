@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBag.java,v 1.3 2002/03/14 18:10:33 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/03/14 18:10:33 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBag.java,v 1.4 2002/06/18 01:14:23 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/06/18 01:14:23 $
  *
  * ====================================================================
  *
@@ -79,9 +79,13 @@ import java.util.List;
  * test case (method) your {@link Bag} fails.
  *
  * @author Chuck Burdick
- * @version $Id: TestBag.java,v 1.3 2002/03/14 18:10:33 morgand Exp $
+ * @version $Id: TestBag.java,v 1.4 2002/06/18 01:14:23 mas Exp $
  */
-public abstract class TestBag extends TestCollection {
+// TODO: this class should really extend from TestCollection, but the bag
+// implementations currently do not conform to the Collection interface.  Once
+// those are fixed or at least a strategy is made for resolving the issue, this
+// can be changed back to extend TestCollection instead.
+public abstract class TestBag extends TestObject {
     public TestBag(String testName) {
         super(testName);
     }
@@ -91,7 +95,7 @@ public abstract class TestBag extends TestCollection {
      */
     public abstract Bag makeBag();
 
-    public Collection makeCollection() {
+    public Object makeObject() {
         return makeBag();
     }
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.8 2002/02/26 18:45:46 morgand Exp $
- * $Revision: 1.8 $
- * $Date: 2002/02/26 18:45:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.9 2002/06/18 01:14:23 mas Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/06/18 01:14:23 $
  *
  * ====================================================================
  *
@@ -82,7 +82,7 @@ import java.util.ListIterator;
  * test case (method) your {@link List} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestList.java,v 1.8 2002/02/26 18:45:46 morgand Exp $
+ * @version $Id: TestList.java,v 1.9 2002/06/18 01:14:23 mas Exp $
  */
 public abstract class TestList extends TestCollection {
     public TestList(String testName) {
@@ -862,4 +862,14 @@ public abstract class TestList extends TestCollection {
         assertEquals("List is the right size",list.size(), 4);
     }
 
+    protected Collection makeConfirmedCollection() {
+        ArrayList list = new ArrayList();
+        return list;
+    }
+
+    protected Collection makeConfirmedFullCollection() {
+        ArrayList list = new ArrayList();
+        list.addAll(Arrays.asList(getFullElements()));
+        return list;
+    }
 }
