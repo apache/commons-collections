@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.3 2003/05/11 13:18:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedBuffer.java,v 1.1 2003/05/11 13:18:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,39 +61,46 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.ArrayStack;
+import org.apache.commons.collections.Buffer;
+
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestBuffer} for exercising the {@link TransformedBuffer}
+ * implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/05/11 13:18:27 $
+ * @version $Revision: 1.1 $ $Date: 2003/05/11 13:18:27 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public class TestTransformedBuffer extends TestCase {
     
-    public TestAll(String testName) {
+    public TestTransformedBuffer(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestTransformedBuffer.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestTransformedBuffer.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestSequencedSet.suite());
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        return suite;
-    }
+
+    public void testTransformedBuffer() {
+        Buffer buffer = TransformedBuffer.decorate(new ArrayStack(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(0, buffer.size());
+        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (int i = 0; i < els.length; i++) {
+            buffer.add(els[i]);
+            assertEquals(i + 1, buffer.size());
+            assertEquals(true, buffer.contains(new Integer((String) els[i])));
+            assertEquals(false, buffer.contains(els[i]));
+        }
         
+        assertEquals(false, buffer.remove(els[0]));
+        assertEquals(true, buffer.remove(new Integer((String) els[0])));
+        
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.3 2003/05/11 13:18:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedCollection.java,v 1.1 2003/05/11 13:18:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,43 +57,97 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestCollection;
+import org.apache.commons.collections.Transformer;
+
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestCollection} for exercising the {@link TransformedCollection}
+ * implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/05/11 13:18:27 $
+ * @version $Revision: 1.1 $ $Date: 2003/05/11 13:18:27 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public class TestTransformedCollection extends TestCollection {
     
-    public TestAll(String testName) {
+    private static class Noop implements Transformer, Serializable {
+        public Object transform(Object input) {
+            return input;
+        }
+    }
+    
+    private static class StringToInteger implements Transformer, Serializable {
+        public Object transform(Object input) {
+            return new Integer((String) input);
+        }
+    }
+    
+    static final Transformer NOOP_TRANSFORMER = new Noop();
+    static final Transformer STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
+
+    public TestTransformedCollection(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestTransformedCollection.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestTransformedCollection.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestSequencedSet.suite());
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        return suite;
+
+    public Collection makeConfirmedCollection() {
+        return new ArrayList();
     }
+
+    protected Collection makeConfirmedFullCollection() {
+        List list = new ArrayList();
+        list.addAll(Arrays.asList(getFullElements()));
+        return list;
+    }
+    
+    public Collection makeCollection() {
+        return TransformedCollection.decorate(new ArrayList(), NOOP_TRANSFORMER);
+    }
+
+    protected Collection makeFullCollection() {
+        List list = new ArrayList();
+        list.addAll(Arrays.asList(getFullElements()));
+        return TransformedCollection.decorate(list, NOOP_TRANSFORMER);
+    }
+    
+    protected Object[] getFullElements() {
+        return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+    }
+
+    protected Object[] getOtherElements() {
+        return new Object[] {"9", "88", "678", "87", "98", "78", "99"};
+    }
+
+    public void testTransformedCollection() {
+        Collection coll = TransformedCollection.decorate(new ArrayList(), STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(0, coll.size());
+        Object[] els = getFullElements();
+        for (int i = 0; i < els.length; i++) {
+            coll.add(els[i]);
+            assertEquals(i + 1, coll.size());
+            assertEquals(true, coll.contains(new Integer((String) els[i])));
+            assertEquals(false, coll.contains(els[i]));
+        }
         
+        assertEquals(true, coll.remove(new Integer((String) els[0])));
+    }
+    
 }
