@@ -12,51 +12,59 @@
 <section name="The Collections Component">
 
 <p>
-The introduction of the <a href="http://java.sun.com/products/j2se/1.3/docs/guide/collections/">Collections API</a> by Sun in JDK 1.2 has been a
-boon to quick and effective Java programming.  Ready access to
-powerful data structures has accelerated development by reducing the
-need for custom container classes around each core object.  Most Java2
-APIs are significantly easier to use because of the Collections API.
+The <a href="http://java.sun.com/products/j2se/1.4/docs/guide/collections/">Java Collections Framework</a>
+was a major addition in JDK 1.2.
+It added many powerful data structures that accelerate development of most significant Java applications.
+Since that time it has become the regognised standard for collection handling in the Java language.
 </p>
-
 <p>
-However, there are certain holes left unfilled by Sun's
-implementations, and the <a href="http://jakarta.apache.org/commons/">Jakarta-Commons</a> Collections Component strives
-to fulfill them. Among the features of this package are:
+Commons-Collections seek to build upon the JDK classes by providing new interfaces, implementations and utilities.
+There are many features, including:
 <ul>
-<li>Special-purpose implementations of Lists and Maps for fast
-access</li>
-<li>Adapter classes from Java1-style containers (arrays, enumerations)
-to Java2-style collections.</li>
-<li>Methods to test or create typical set-theory properties of
-collections such as union, intersection, and closure.</li>
+<li>Bag interface for collections that have a number of copies of each object</li>
+<li>Buffer interface for collections that have a well defined removal order, like FIFOs</li>
+<li>BidiMap interface for maps that can be looked up from value to key as well and key to value</li>
+<li>MapIterator interface to provide simple and quick iteration over maps</li>
+<li>Type checking decorators to ensure that only instances of a certain type can be added</li>
+<li>Transforming decorators that alter each object as it is added to the collection</li>
+<li>Composite collections that make multiple collections look like one</li>
+<li>Ordered maps and sets that retain the order elements are added in, including an LRU based map</li>
+<li>Identity map that compares objects based on their identity (==) instead of the equals method</li>
+<li>Reference map that allows keys and/or values to be garbage collected under close control</li>
+<li>Many comparator implementations</li>
+<li>Many iterator implementations</li>
+<li>Adapter classes from array and enumerations to collections</li>
+<li>Utilities to test or create typical set-theory properties of collections such as union, intersection, and closure</li>
 </ul>
 </p>
 </section>
+
 
 <section name="Documentation">
 <p>
-An alphabetical list of the package can be found in the <a href="http://cvs.apache.org/viewcvs/~checkout~/jakarta-commons/collections/STATUS.html?rev=1.19">collections
-status document</a>.
+A getting started <a href="userguide.html">User's Guide</a> is available.
 </p>
-
 <p>
-The <a href="api/index.html">JavaDoc API documents</a> are available online.
+The JavaDoc API documents are available online for the
+<a href="api-30/index.html">current release 3.0</a>, the
+<a href="api-21/index.html">previous version 2.1</a>, and the
+<a href="apidocs/index.html">latest CVS</a>.
+</p>
+<p>
+The <a href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/">CVS repository</a> can be browsed.
 </p>
 </section>
 
+
 <section name="Releases">
-<ul>
-<li><a
-href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v2.1/">Version
-2.1</a></li>
-<li><a
-href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v2.0/">Version
-2.0</a></li>
-<li><a
-href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v1.0/">Version
-1.0</a></li>
-</ul>
+<p>
+Version 3.0 - 
+ <a href="http://jakarta.apache.org/site/binindex.cgi">Binary</a> - 
+ <a href="http://jakarta.apache.org/site/sourceindex.cgi">Source</a>
+</p>
+<p>
+ For previous releases, see the <a href="http://archive.apache.org/dist/jakarta/commons/collections/">Apache Archive</a>
+</p>
 </section>
 
 </body>

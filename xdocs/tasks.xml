@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<document>
+
+ <properties>
+  <title>Commons Collections - Tasks outstanding</title>
+  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
+ </properties>
+
+ <body>
+
+<section name="Tasks outstanding">
+
+<p>
+The following tasks are on the TODO list:
+</p>
+
+<ul>
+<li>Synchronized Map decorators</li>
+<li>Synchronized BidiMap decorators</li>
+<li>Serializable decorators</li>
+<li>MultiMap subpackage implementing a revised interface</li>
+<li>IdentitySet</li>
+<li>BidiMapUtils</li>
+<li>LoopingListIterator</li>
+</ul>
+
+<p>
+Would you like to <a href="mail-lists.html">Volunteer</a>?
+</p>
+</section>
+
+</body>
+</document>
+
+
+
+
+
+
