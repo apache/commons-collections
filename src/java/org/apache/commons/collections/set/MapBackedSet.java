@@ -15,6 +15,7 @@
  */
 package org.apache.commons.collections.set;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -31,12 +32,15 @@ import java.util.Set;
  * Exceptions include <code>BidiMap</code> implementations, as they require unique values.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/04/20 23:51:31 $
+ * @version $Revision: 1.2 $ $Date: 2004/06/02 22:00:47 $
  * 
  * @author Stephen Colebourne
  */
-public final class MapBackedSet implements Set {
-    
+public final class MapBackedSet implements Set, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 6723912213766056587L;
+
     /** The map being used as the backing store */
     protected final Map map;
     /** The dummyValue to use */
