@@ -45,7 +45,7 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.7 $ $Date: 2004/05/12 22:20:54 $
+ * @version $Revision: 1.8 $ $Date: 2004/05/31 19:09:14 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -109,6 +109,13 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------
+    /**
+     * List equals method is defined.
+     */
+    public boolean isEqualsCheckable() {
+        return true;
+    }
+
     /**
      * Returns an empty {@link ArrayList}.
      */

@@ -112,7 +112,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.5 $ $Date: 2004/04/09 15:16:24 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/31 19:09:14 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -225,6 +225,14 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      * The default implementation returns true;
      */
     public boolean isFailFastSupported() {
+        return false;
+    }
+
+    /**
+     * Returns true to indicate that the collection supports equals() comparisons.
+     * The default implementation returns false;
+     */
+    public boolean isEqualsCheckable() {
         return false;
     }
 
@@ -1301,7 +1309,9 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
             Object dest = in.readObject();
             in.close();
-            assertEquals("obj != deserialize(serialize(obj)) - EMPTY Collection", obj, dest);
+            if (isEqualsCheckable()) {
+                assertEquals("obj != deserialize(serialize(obj)) - EMPTY Collection", obj, dest);
+            }
         }
         obj = makeFullCollection();
         if (obj instanceof Serializable) {
@@ -1313,7 +1323,10 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
             Object dest = in.readObject();
             in.close();
-            assertEquals("obj != deserialize(serialize(obj)) - FULL Collection", obj, dest);
+            if (isEqualsCheckable()) {
+                assertEquals("obj != deserialize(serialize(obj)) - FULL Collection", obj, dest);
+            }
         }
     }
+    
 }

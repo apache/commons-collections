@@ -38,7 +38,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/31 19:09:14 $
  * 
  * @author Paul Jack
  */
@@ -72,6 +72,13 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------
+    /**
+     * Set equals method is defined.
+     */
+    public boolean isEqualsCheckable() {
+        return true;
+    }
+
     /**
      * Returns an empty Set for use in modification testing.
      *
