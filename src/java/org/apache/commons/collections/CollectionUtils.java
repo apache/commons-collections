@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.50 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.51 2003/12/11 23:01:02 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,7 +83,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.50 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.51 $ $Date: 2003/12/11 23:01:02 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -957,7 +957,7 @@ public class CollectionUtils {
     /**
      * Returns true if no more elements can be added to the Collection.
      * <p>
-     * This method uses the {@link BoundedCollection} class to determine the
+     * This method uses the {@link BoundedCollection} interface to determine the
      * full status. If the collection does not implement this interface then
      * false is returned.
      * <p>
@@ -988,7 +988,7 @@ public class CollectionUtils {
     /**
      * Get the maximum number of elements that the Collection can contain.
      * <p>
-     * This method uses the {@link BoundedCollection} class to determine the
+     * This method uses the {@link BoundedCollection} interface to determine the
      * maximum size. If the collection does not implement this interface then
      * -1 is returned.
      * <p>
