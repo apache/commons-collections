@@ -24,6 +24,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Factory;
+import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
 
@@ -32,11 +33,14 @@ import org.apache.commons.collections.TransformerUtils;
  * {@link LazySortedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/07 23:05:37 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/09 09:39:47 $
  * 
  * @author Phil Steitz
  */
-public class TestLazySortedMap extends TestLazyMap {
+public class TestLazySortedMap extends AbstractTestSortedMap {
+    
+    protected static final Factory oneFactory = FactoryUtils.constantFactory("One");
+    protected static final Factory nullFactory = FactoryUtils.nullFactory();
     
     public TestLazySortedMap(String testName) {
         super(testName);
@@ -50,9 +54,8 @@ public class TestLazySortedMap extends TestLazyMap {
         String[] testCaseName = { TestLazySortedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
- //-------------------------------------------------------------------
-    
+
+    //-----------------------------------------------------------------------    
     protected SortedMap decorateMap(SortedMap map, Factory factory) {
         return LazySortedMap.decorate(map, factory);
     }
@@ -61,16 +64,40 @@ public class TestLazySortedMap extends TestLazyMap {
         return decorateMap(new TreeMap(), nullFactory);
     }
     
-    public boolean isAllowNullKey() {
-        return false;
-    }
-    
-//--------------------------------------------------------------------   
-    
     protected SortedMap makeTestSortedMap(Factory factory) {
         return decorateMap(new TreeMap(), factory);
     }
     
+    public boolean isSubMapViewsSerializable() {
+        // TreeMap sub map views have a bug in deserialization.
+        return false;
+    }
+
+    public boolean isAllowNullKey() {
+        return false;
+    }
+
+    // from TestLazyMap
+    //-----------------------------------------------------------------------
+    public void testMapGet() {
+        Map map = makeTestSortedMap(oneFactory);
+        assertEquals(0, map.size());
+        String s1 = (String) map.get("Five");
+        assertEquals("One", s1);
+        assertEquals(1, map.size());
+        String s2 = (String) map.get(new String(new char[] {'F','i','v','e'}));
+        assertEquals("One", s2);
+        assertEquals(1, map.size());
+        assertSame(s1, s2);
+        
+        map = makeTestSortedMap(nullFactory);
+        Object o = map.get("Five");
+        assertEquals(null,o);
+        assertEquals(1, map.size());
+        
+    }
+    
+    //-----------------------------------------------------------------------
     public void testSortOrder() {
         SortedMap map = makeTestSortedMap(oneFactory);
         map.put("A",  "a");
