@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableSortedMap.java,v 1.2 2003/11/20 22:35:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableOrderedMap.java,v 1.1 2003/11/20 22:35:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,25 +58,27 @@
 package org.apache.commons.collections.map;
 
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedMap;
 
 import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.iterators.OrderedMapIterator;
+import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
+import org.apache.commons.collections.iterators.UnmodifiableOrderedMapIterator;
 import org.apache.commons.collections.map.UnmodifiableMap.UnmodifiableEntrySet;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
- * Decorates another <code>SortedMap</code> to ensure it can't be altered.
+ * Decorates another <code>OrderedMap</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/20 22:35:50 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/20 22:35:50 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableSortedMap extends AbstractSortedMapDecorator implements Unmodifiable {
+public final class UnmodifiableOrderedMap extends AbstractOrderedMapDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable sorted map.
@@ -84,11 +86,11 @@ public final class UnmodifiableSortedMap extends AbstractSortedMapDecorator impl
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static SortedMap decorate(SortedMap map) {
+    public static OrderedMap decorate(OrderedMap map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
-        return new UnmodifiableSortedMap(map);
+        return new UnmodifiableOrderedMap(map);
     }
 
     //-----------------------------------------------------------------------
@@ -98,11 +100,21 @@ public final class UnmodifiableSortedMap extends AbstractSortedMapDecorator impl
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    protected UnmodifiableSortedMap(SortedMap map) {
+    protected UnmodifiableOrderedMap(OrderedMap map) {
         super(map);
     }
 
     //-----------------------------------------------------------------------
+    public MapIterator mapIterator() {
+        MapIterator it = getOrderedMap().mapIterator();
+        return UnmodifiableMapIterator.decorate(it);
+    }
+
+    public OrderedMapIterator orderedMapIterator() {
+        OrderedMapIterator it = getOrderedMap().orderedMapIterator();
+        return UnmodifiableOrderedMapIterator.decorate(it);
+    }
+
     public void clear() {
         throw new UnsupportedOperationException();
     }
@@ -132,34 +144,6 @@ public final class UnmodifiableSortedMap extends AbstractSortedMapDecorator impl
     public Collection values() {
         Collection coll = super.values();
         return UnmodifiableCollection.decorate(coll);
-    }
-
-    //-----------------------------------------------------------------------
-    public Object firstKey() {
-        return getSortedMap().firstKey();
-    }
-
-    public Object lastKey() {
-        return getSortedMap().lastKey();
-    }
-
-    public Comparator comparator() {
-        return getSortedMap().comparator();
-    }
-
-    public SortedMap subMap(Object fromKey, Object toKey) {
-        SortedMap map = getSortedMap().subMap(fromKey, toKey);
-        return new UnmodifiableSortedMap(map);
-    }
-
-    public SortedMap headMap(Object toKey) {
-        SortedMap map = getSortedMap().headMap(toKey);
-        return new UnmodifiableSortedMap(map);
-    }
-
-    public SortedMap tailMap(Object fromKey) {
-        SortedMap map = getSortedMap().tailMap(fromKey);
-        return new UnmodifiableSortedMap(map);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableMap.java,v 1.1 2003/11/16 00:05:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableMap.java,v 1.2 2003/11/20 22:35:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,6 +63,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
@@ -72,11 +73,11 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>Map</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:45 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/20 22:35:50 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiableMap extends AbstractMapDecorator {
+public final class UnmodifiableMap extends AbstractMapDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable map.
@@ -85,6 +86,9 @@ public class UnmodifiableMap extends AbstractMapDecorator {
      * @throws IllegalArgumentException if map is null
      */
     public static Map decorate(Map map) {
+        if (map instanceof Unmodifiable) {
+            return map;
+        }
         return new UnmodifiableMap(map);
     }
 
