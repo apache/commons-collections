@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedBag.java,v 1.2 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedBag.java,v 1.3 2003/10/02 22:35:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,18 +62,18 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.HashBag;
-import org.apache.commons.collections.TestBag;
+import org.apache.commons.collections.AbstractTestBag;
 
 /**
  * Extension of {@link TestBag} for exercising the {@link TransformedBag}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/02 22:35:31 $
  * 
  * @author Stephen Colebourne
  */
-public class TestTransformedBag extends TestBag {
+public class TestTransformedBag extends AbstractTestBag {
     
     public TestTransformedBag(String testName) {
         super(testName);
@@ -88,7 +88,7 @@ public class TestTransformedBag extends TestBag {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Bag makeBag() {
+    protected Bag makeBag() {
         return TransformedBag.decorate(new HashBag(), TestTransformedCollection.NOOP_TRANSFORMER);
     }
 

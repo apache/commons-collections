@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedBag.java,v 1.1 2003/09/28 21:50:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedBag.java,v 1.2 2003/10/02 22:35:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,7 +61,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Bag;
-import org.apache.commons.collections.TestSortedBag;
+import org.apache.commons.collections.AbstractTestSortedBag;
 import org.apache.commons.collections.TreeBag;
 
 /**
@@ -69,11 +69,11 @@ import org.apache.commons.collections.TreeBag;
  * {@link ObservedSortedBag} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/28 21:50:37 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/02 22:35:31 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservableSortedBag extends TestSortedBag implements ObservedTestHelper.ObservedFactory {
+public class TestObservableSortedBag extends AbstractTestSortedBag implements ObservedTestHelper.ObservedFactory {
     
     public TestObservableSortedBag(String testName) {
         super(testName);
@@ -89,7 +89,7 @@ public class TestObservableSortedBag extends TestSortedBag implements ObservedTe
     }
 
     //-----------------------------------------------------------------------
-    public Bag makeBag() {
+    protected Bag makeBag() {
         return ObservableSortedBag.decorate(new TreeBag(), ObservedTestHelper.LISTENER);
     }
 

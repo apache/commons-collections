@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableBag.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableBag.java,v 1.2 2003/10/02 22:35:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,18 +62,18 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.HashBag;
-import org.apache.commons.collections.TestBag;
+import org.apache.commons.collections.AbstractTestBag;
 
 /**
  * Extension of {@link TestBag} for exercising the
  * {@link ObservableBag} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/02 22:35:31 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservableBag extends TestBag implements ObservedTestHelper.ObservedFactory {
+public class TestObservableBag extends AbstractTestBag implements ObservedTestHelper.ObservedFactory {
     
     public TestObservableBag(String testName) {
         super(testName);
@@ -89,7 +89,7 @@ public class TestObservableBag extends TestBag implements ObservedTestHelper.Obs
     }
 
     //-----------------------------------------------------------------------
-    public Bag makeBag() {
+    protected Bag makeBag() {
         return ObservableBag.decorate(new HashBag(), ObservedTestHelper.LISTENER);
     }
 

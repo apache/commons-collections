@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSortedBag.java,v 1.2 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedBag.java,v 1.1 2003/10/02 22:35:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,16 +58,16 @@
 package org.apache.commons.collections;
 
 /**
- * Tests base {@link java.util.SortedBag} methods and contracts.
+ * Abstract test class for {@link java.util.SortedBag} methods and contracts.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.1 $ $Date: 2003/10/02 22:35:31 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class TestSortedBag extends TestBag {
+public abstract class AbstractTestSortedBag extends AbstractTestBag {
 
-    public TestSortedBag(String testName) {
+    public AbstractTestSortedBag(String testName) {
         super(testName);
     }
     

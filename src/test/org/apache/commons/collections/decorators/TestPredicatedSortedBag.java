@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedSortedBag.java,v 1.3 2003/09/20 17:05:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedSortedBag.java,v 1.4 2003/10/02 22:35:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
 import org.apache.commons.collections.SortedBag;
-import org.apache.commons.collections.TestBag;
+import org.apache.commons.collections.AbstractTestSortedBag;
 import org.apache.commons.collections.TreeBag;
 
 /**
@@ -74,11 +74,11 @@ import org.apache.commons.collections.TreeBag;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/20 17:05:36 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/02 22:35:31 $
  * 
  * @author Phil Steitz
  */
-public class TestPredicatedSortedBag extends TestBag {
+public class TestPredicatedSortedBag extends AbstractTestSortedBag {
     
     private SortedBag emptyBag = new TreeBag();
     private SortedBag nullBag = null;
@@ -112,11 +112,11 @@ public class TestPredicatedSortedBag extends TestBag {
         return PredicatedSortedBag.decorate(bag, predicate);
     }
     
-    public Bag makeBag() {
+    protected Bag makeBag() {
         return decorateBag(emptyBag, truePredicate);
     }
     
-    public Bag makeTestBag() {
+    protected Bag makeTestBag() {
         return decorateBag(emptyBag, stringPredicate());
     }
     

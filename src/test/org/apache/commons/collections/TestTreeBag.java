@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeBag.java,v 1.4 2003/09/20 17:02:03 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/09/20 17:02:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeBag.java,v 1.5 2003/10/02 22:35:31 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/10/02 22:35:31 $
  *
  * ====================================================================
  *
@@ -68,8 +68,10 @@ import junit.framework.TestSuite;
  * implementation.
  *
  * @author Chuck Burdick
- * @version $Id: TestTreeBag.java,v 1.4 2003/09/20 17:02:03 scolebourne Exp $ */
-public class TestTreeBag extends TestBag {
+ * @version $Id: TestTreeBag.java,v 1.5 2003/10/02 22:35:31 scolebourne Exp $
+ */
+public class TestTreeBag extends AbstractTestBag {
+    
    public TestTreeBag(String testName) {
       super(testName);
    }
@@ -83,7 +85,7 @@ public class TestTreeBag extends TestBag {
       junit.textui.TestRunner.main(testCaseName);
    }
 
-   public Bag makeBag() {
+   protected Bag makeBag() {
       return new TreeBag();
    }
 
@@ -110,10 +112,3 @@ public class TestTreeBag extends TestBag {
                    "D", ((SortedBag)bag).last());
    }
 }
-
-
-
-
-
-
-
