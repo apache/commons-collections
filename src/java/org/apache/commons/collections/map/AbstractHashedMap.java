@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.AbstractCollection;
+import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
@@ -45,14 +46,18 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * Overridable methods are provided to change the default hashing behaviour, and
  * to change how entries are added to and removed from the map. Hopefully, all you
  * need for unusual subclasses is here.
+ * <p>
+ * NOTE: From Commons Collections 3.1 this class extends AbstractMap.
+ * This is to provide backwards compatibility for ReferenceMap between v3.0 and v3.1.
+ * This extends clause will be removed in v4.0.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.19 $ $Date: 2004/06/04 23:27:30 $
+ * @version $Revision: 1.20 $ $Date: 2004/06/22 21:42:12 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
  */
-public class AbstractHashedMap implements IterableMap {
+public class AbstractHashedMap extends AbstractMap implements IterableMap {
     
     protected static final String NO_NEXT_ENTRY = "No next() entry in the iteration";
     protected static final String NO_PREVIOUS_ENTRY = "No previous() entry in the iteration";
