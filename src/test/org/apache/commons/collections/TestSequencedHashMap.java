@@ -91,6 +91,12 @@ implements TestMap.SupportsPut, TestMap.EntrySetSupportsRemove
         return new TestSuite(TestSequencedHashMap.class);
     }
 
+    // current versions of SequencedHashMap and subclasses are not
+    // compatible with Collections 1.x
+    public int getCompatibilityVersion() {
+        return 2;
+    }
+
     public static void main(String[] args[]) {
         String[] testCaseName = { TestSequencedHashMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
