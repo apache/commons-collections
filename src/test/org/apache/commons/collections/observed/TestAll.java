@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestObservedSet.java,v 1.4 2003/09/03 00:11:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestAll.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,64 +55,40 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+package org.apache.commons.collections.observed;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestSet;
-
 /**
- * Extension of {@link TestSet} for exercising the
- * {@link ObservedSet} implementation.
- *
+ * Entry point for all collections observed tests.
+ * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/03 00:11:28 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservedSet extends TestSet implements ObservedTestHelper.ObservedFactory {
+public class TestAll extends TestCase {
     
-    public TestObservedSet(String testName) {
+    public TestAll(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        return new TestSuite(TestObservedSet.class);
-    }
-
     public static void main(String args[]) {
-        String[] testCaseName = { TestObservedSet.class.getName()};
+        String[] testCaseName = { TestAll.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
-
-    //-----------------------------------------------------------------------
-    public Set makeEmptySet() {
-        return ObservedSet.decorate(new HashSet(), ObservedTestHelper.LISTENER);
-    }
-
-    protected Set makeFullSet() {
-        Set set = new HashSet();
-        set.addAll(Arrays.asList(getFullElements()));
-        return ObservedSet.decorate(set, ObservedTestHelper.LISTENER);
-    }
     
-    //-----------------------------------------------------------------------
-    public void testObservedSet() {
-        ObservedTestHelper.bulkTestObservedSet(this);
+    public static Test suite() {
+        TestSuite suite = new TestSuite();
+        
+        suite.addTest(TestObservedBag.suite());
+        suite.addTest(TestObservedCollection.suite());
+        suite.addTest(TestObservedList.suite());
+        suite.addTest(TestObservedSet.suite());
+        
+        return suite;
     }
-
-    //-----------------------------------------------------------------------
-    public ObservedCollection createObservedCollection() {
-        return ObservedSet.decorate(new HashSet());
-    }
-
-    public ObservedCollection createObservedCollection(Object listener) {
-        return ObservedSet.decorate(new HashSet(), listener);
-    }
-
+        
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationListener.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedList.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,18 +55,64 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.event;
+package org.apache.commons.collections.observed;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.apache.commons.collections.TestList;
 
 /**
- * A listener for the <code>StandardModificationHandler</code> that is called
- * both before the collection is changed and after the change has occurred.
+ * Extension of {@link TestList} for exercising the
+ * {@link ObservedList} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
  * 
  * @author Stephen Colebourne
  */
-public interface StandardModificationListener 
-    extends StandardPreModificationListener, StandardPostModificationListener {
+public class TestObservedList extends TestList implements ObservedTestHelper.ObservedFactory {
+    
+    public TestObservedList(String testName) {
+        super(testName);
+    }
+
+    public static Test suite() {
+        return new TestSuite(TestObservedList.class);
+    }
+
+    public static void main(String args[]) {
+        String[] testCaseName = { TestObservedList.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
+    //-----------------------------------------------------------------------
+    public List makeEmptyList() {
+        return ObservedList.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
+    }
+
+    protected List makeFullList() {
+        List set = new ArrayList();
+        set.addAll(Arrays.asList(getFullElements()));
+        return ObservedList.decorate(set, ObservedTestHelper.LISTENER);
+    }
+    
+    //-----------------------------------------------------------------------
+    public void testObservedList() {
+        ObservedTestHelper.bulkTestObservedList(this);
+    }
+
+    //-----------------------------------------------------------------------
+    public ObservedCollection createObservedCollection() {
+        return ObservedList.decorate(new ArrayList());
+    }
+
+    public ObservedCollection createObservedCollection(Object listener) {
+        return ObservedList.decorate(new ArrayList(), listener);
+    }
 
 }

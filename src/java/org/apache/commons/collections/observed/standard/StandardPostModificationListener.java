@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.7 2003/09/03 23:54:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationListener.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,51 +55,30 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
+package org.apache.commons.collections.observed.standard;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.apache.commons.collections.observed.ModificationListener;
 
 /**
- * Entry point for all collections decorators tests.
- * 
+ * A listener for the <code>StandardModificationHandler</code> that is called
+ * when a collection has been changed.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/09/03 23:54:25 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
-        super(testName);
-    }
+public interface StandardPostModificationListener extends ModificationListener {
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
+    /**
+     * A collection modification occurred.
+     * <p>
+     * This method should be processed quickly, as with all event handling.
+     * It should also avoid modifying the event source (the collection).
+     * Finally it should avoid throwing an exception.
+     * 
+     * @param event  the event detail
+     */
+    public void modificationOccurred(StandardModificationEvent event);
     
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestSequencedSet.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        
-        return suite;
-    }
-        
 }

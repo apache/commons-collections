@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationHandler.java,v 1.5 2003/09/03 00:11:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,9 +55,13 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.event;
+package org.apache.commons.collections.observed.standard;
 
 import java.util.Collection;
+
+import org.apache.commons.collections.observed.ModificationEventType;
+import org.apache.commons.collections.observed.ModificationHandler;
+import org.apache.commons.collections.observed.ModificationHandlerFactory;
 
 /**
  * The standard implementation of a <code>ModificationHandler</code> that
@@ -72,15 +76,14 @@ import java.util.Collection;
  * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/09/03 00:11:28 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
 public class StandardModificationHandler extends ModificationHandler {
-    
-    static {
-        ModificationHandlerFactory.addFactory(new Factory());
-    }
+
+    /** The singleton factory */    
+    public static final ModificationHandlerFactory FACTORY = new Factory();
 
     /** A reusable empty holders array. */    
     protected static final PreHolder[] EMPTY_PRE_HOLDERS = new PreHolder[0];
@@ -537,7 +540,7 @@ public class StandardModificationHandler extends ModificationHandler {
      * 
      * @author Stephen Colebourne
      */
-    static class Factory extends ModificationHandlerFactory {
+    static class Factory implements ModificationHandlerFactory {
         
         /**
          * Creates a StandardModificationHandler using the listener.
@@ -547,7 +550,7 @@ public class StandardModificationHandler extends ModificationHandler {
          * @return an instantiated handler with the listener attached,
          *  or null if the listener type is unsuited to this factory
          */
-        protected ModificationHandler create(Collection coll, Object listener) {
+        public ModificationHandler createHandler(Collection coll, Object listener) {
             if (listener instanceof StandardPreModificationListener) {
                 if (listener instanceof StandardPostModificationListener) {
                     return new StandardModificationHandler(

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationVetoedException.java,v 1.3 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationListener.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,44 +55,23 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.event;
+package org.apache.commons.collections.observed;
+
+import java.util.EventListener;
 
 /**
- * Exception thrown when a modification to a collection is vetoed.
- * It extends IllegalArgumentException for compatibility with the collections API.
+ * An empty listener designed to be subclassed.
+ * <p>
+ * This interface exists to mark independent subclasses as fulfilling the
+ * role of an event listener for collection modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
-public class ModificationVetoedException extends IllegalArgumentException {
+public interface ModificationListener extends EventListener {
 
-    /** The source event */
-    protected final ModificationEvent event;
-
-    // Constructor
-    //-----------------------------------------------------------------------
-    /**
-     * Constructor.
-     * 
-     * @param message  the text message, may be null
-     * @param event  the observed event, should not be null
-     */
-    public ModificationVetoedException(final String message, final ModificationEvent event) {
-        super((message == null ? "Modification vetoed" : message));
-        this.event = event;
-    }
-
-    // Event access
-    //-----------------------------------------------------------------------
-    /**
-     * Gets the event that caused the veto.
-     * 
-     * @return the event
-     */
-    public ModificationEvent getEvent() {
-        return event;
-    }
-
+    // no methods - subinterfaces define them
+    
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestObservedList.java,v 1.4 2003/09/03 00:11:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandlerFactory.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,64 +55,47 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
+package org.apache.commons.collections.observed;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.apache.commons.collections.TestList;
 
 /**
- * Extension of {@link TestList} for exercising the
- * {@link ObservedList} implementation.
+ * Defines a factory for creating ModificationHandler instances.
+ * <p>
+ * If an application wants to register its own event handler classes, it should
+ * do so using this class. This must be done during initialization to be 
+ * fully thread-safe. There are two steps:
+ * <ol>
+ * <li>A factory must be created that is an implementation of this class
+ * <li>One of the <code>registerFactory</code> methods must be called on ObservedCollection
+ * </ol>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/03 00:11:28 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservedList extends TestList implements ObservedTestHelper.ObservedFactory {
+public interface ModificationHandlerFactory {
     
-    public TestObservedList(String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestObservedList.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestObservedList.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    //-----------------------------------------------------------------------
-    public List makeEmptyList() {
-        return ObservedList.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
-    }
-
-    protected List makeFullList() {
-        List set = new ArrayList();
-        set.addAll(Arrays.asList(getFullElements()));
-        return ObservedList.decorate(set, ObservedTestHelper.LISTENER);
-    }
+    /**
+     * Creates a handler subclass for the specified listener.
+     * <p>
+     * The implementation will normally check to see if the listener
+     * is of a suitable type, and then cast it. <code>null</code> is
+     * returned if this factory does not handle the specified type.
+     * <p>
+     * The listener is defined in terms of an Object to allow for unusual
+     * listeners, such as a Swing model object.
+     * <p>
+     * The collection the handler is for is passed in to allow for a different
+     * handler to be selected for the same listener type based on the collection.
+     * 
+     * @param coll  the collection being decorated
+     * @param listener  a listener object to create a handler for
+     * @return an instantiated handler with the listener attached,
+     *  or null if the listener type is unsuited to this factory
+     */
+    ModificationHandler createHandler(Collection coll, Object listener);
     
-    //-----------------------------------------------------------------------
-    public void testObservedList() {
-        ObservedTestHelper.bulkTestObservedList(this);
-    }
-
-    //-----------------------------------------------------------------------
-    public ObservedCollection createObservedCollection() {
-        return ObservedList.decorate(new ArrayList());
-    }
-
-    public ObservedCollection createObservedCollection(Object listener) {
-        return ObservedList.decorate(new ArrayList(), listener);
-    }
-
 }

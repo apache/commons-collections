@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedCollection.java,v 1.6 2003/09/03 22:29:51 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedCollection.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,14 +55,14 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
+package org.apache.commons.collections.observed;
 
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.collections.event.ModificationHandler;
-import org.apache.commons.collections.event.ModificationHandlerFactory;
-import org.apache.commons.collections.event.StandardModificationHandler;
+import org.apache.commons.collections.decorators.AbstractCollectionDecorator;
+import org.apache.commons.collections.decorators.AbstractIteratorDecorator;
+import org.apache.commons.collections.observed.standard.StandardModificationHandler;
 
 /**
  * Decorates a <code>Collection</code> implementation to observe modifications.
@@ -74,16 +74,22 @@ import org.apache.commons.collections.event.StandardModificationHandler;
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/09/03 22:29:51 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
 public class ObservedCollection extends AbstractCollectionDecorator {
     
+    /** The list of registered factories, checked in reverse order */
+    private static ModificationHandlerFactory[] factories = new ModificationHandlerFactory[] {
+        ModificationHandler.FACTORY,
+        StandardModificationHandler.FACTORY
+    };
+    
     /** The handler to delegate event handling to */
     protected final ModificationHandler handler;
 
-    // Factories
+    // ObservedCollection factories
     //-----------------------------------------------------------------------
     /**
      * Factory method to create an observable collection.
@@ -104,7 +110,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * <p>
      * A lot of functionality is available through this method.
      * If you don't need the extra functionality, simply implement the
-     * {@link org.apache.commons.collections.event.StandardModificationListener}
+     * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
      * Internally, an <code>ObservedCollection</code> relies on a {@link ModificationHandler}.
@@ -112,10 +118,9 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
      * <p>
-     * The handler implementation is determined by the listener parameter.
-     * If the parameter is a <code>ModificationHandler</code> it is used directly.
-     * Otherwise, the factory mechanism of {@link ModificationHandlerFactory} is used
-     * to create the handler for the listener parameter.
+     * The handler implementation is determined by the listener parameter via
+     * the registered factories. The listener may be a manually configured 
+     * <code>ModificationHandler</code> instance.
      * <p>
      * The listener is defined as an Object for maximum flexibility.
      * It does not have to be a listener in the classic JavaBean sense.
@@ -123,9 +128,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * is interpretted. An IllegalArgumentException is thrown if no suitable
      * handler can be found for this listener.
      * <p>
-     * A <code>null</code> listener will throw an IllegalArgumentException
-     * unless a special handler factory has been registered.
-     * <p>
+     * A <code>null</code> listener will create a {@link StandardModificationHandler}.
      *
      * @param coll  the collection to decorate, must not be null
      * @param listener  collection listener, may be null
@@ -140,11 +143,36 @@ public class ObservedCollection extends AbstractCollectionDecorator {
         if (coll == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
-        if (listener instanceof ModificationHandler) {
-            return new ObservedCollection(coll, (ModificationHandler) listener);
-        } else {
-            ModificationHandler handler = ModificationHandlerFactory.createHandler(coll, listener);
-            return new ObservedCollection(coll, handler);
+        return new ObservedCollection(coll, listener);
+    }
+
+    // Register for ModificationHandlerFactory
+    //-----------------------------------------------------------------------
+    /**
+     * Registers a handler factory to be used for looking up a listener to
+     * a handler.
+     * <p>
+     * This method is used to add your own event handler to the supplied ones.
+     * Registering the factory will enable the {@link #decorate(Collection, Object)}
+     * method to create your handler.
+     * <p>
+     * Each handler added becomes the first in the lookup chain. Thus it is
+     * possible to override the default setup.
+     * Obviously this should be done with care in a shared web environment!
+     * <p>
+     * This method is not guaranteed to be threadsafe.
+     * It should only be called during initialization.
+     * Problems will occur if two threads call this method at the same time.
+     * 
+     * @param factory  the factory to add, may be null
+     */
+    public static void registerFactory(final ModificationHandlerFactory factory) {
+        if (factory != null) {
+            // add at end, as checked in reverse order
+            ModificationHandlerFactory[] array = new ModificationHandlerFactory[factories.length + 1];
+            System.arraycopy(factories, 0, array, 0, factories.length);
+            array[factories.length] = factory;
+            factories = array;  // atomic operation
         }
     }
 
@@ -162,10 +190,35 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      */
     protected ObservedCollection(
             final Collection coll,
-            final ModificationHandler handler) {
+            final Object listener) {
         super(coll);
-        this.handler = (handler == null ? new StandardModificationHandler() : handler);
-        ModificationHandlerFactory.initHandler(this.handler, this);
+        this.handler = createHandler(coll, listener);
+        this.handler.init(this);
+    }
+
+    /**
+     * Creates a handler subclass based on the specified listener.
+     * <p>
+     * The method is defined in terms of an Object to allow for unusual
+     * listeners, such as a Swing model object.
+     * 
+     * @param listener  a listener object to create a handler for
+     * @return an instantiated handler with the listener attached
+     * @throws IllegalArgumentException if no suitable handler
+     */
+    protected ModificationHandler createHandler(final Collection coll, final Object listener) {
+        if (listener == null) {
+            return new StandardModificationHandler();
+        }
+        ModificationHandlerFactory[] array = factories;  // atomic operation
+        for (int i = array.length - 1; i >= 0 ; i--) {
+            ModificationHandler handler = array[i].createHandler(coll, listener);
+            if (handler != null) {
+                return handler;
+            }
+        }
+        throw new IllegalArgumentException("Unrecognised listener type: " +
+            (listener == null ? "null" : listener.getClass().getName()));
     }
 
     // Handler access

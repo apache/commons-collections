@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationEventType.java,v 1.2 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationEventType.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.event;
+package org.apache.commons.collections.observed;
 
 /**
  * Defines event constants for event handling and matching.
@@ -74,7 +74,7 @@ package org.apache.commons.collections.event;
  * They may negated using the bitwise NOT, <code>~</code>.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
@@ -84,29 +84,37 @@ public class ModificationEventType {
     public static final int ADD =           0x00000001;
     /** The method add(int,Object) */
     public static final int ADD_INDEXED =   0x00000002;
+    /** The method add(Object,int) */
+    public static final int ADD_NCOPIES =   0x00000004;
+    
     /** The method addAll(Collection) */
-    public static final int ADD_ALL =       0x00000004;
+    public static final int ADD_ALL =       0x00000010;
     /** The method addAll(int,Collection) */
-    public static final int ADD_ALL_INDEXED=0x00000008;
+    public static final int ADD_ALL_INDEXED=0x00000020;
+    
     /** The method remove(Object) */
-    public static final int REMOVE =        0x00000010;
+    public static final int REMOVE =        0x00000100;
     /** The method remove(int) */
-    public static final int REMOVE_INDEXED =0x00000020;
+    public static final int REMOVE_INDEXED =0x00000200;
+    /** The method remove(Object,int) */
+    public static final int REMOVE_NCOPIES =0x00000400;
+    
     /** The method removeAll(Collection) */
-    public static final int REMOVE_ALL =    0x00000040;
+    public static final int REMOVE_ALL =    0x00001000;
     /** The method retainAll(Collection) */
-    public static final int RETAIN_ALL =    0x00000080;
+    public static final int RETAIN_ALL =    0x00002000;
     /** The method clear() */
-    public static final int CLEAR =         0x00000100;
+    public static final int CLEAR =         0x00004000;
+    
     /** The method set(int,Object) */
-    public static final int SET_INDEXED =   0x00000200;
+    public static final int SET_INDEXED =   0x00010000;
 
     /** All add methods */
-    public static final int GROUP_ADD = ADD | ADD_INDEXED | ADD_ALL | ADD_ALL_INDEXED;
+    public static final int GROUP_ADD = ADD | ADD_INDEXED | ADD_NCOPIES | ADD_ALL | ADD_ALL_INDEXED;
     /** All methods that change without structure modification */
     public static final int GROUP_CHANGE = SET_INDEXED;
     /** All remove methods */
-    public static final int GROUP_REMOVE = REMOVE | REMOVE_INDEXED | REMOVE_ALL;
+    public static final int GROUP_REMOVE = REMOVE | REMOVE_NCOPIES | REMOVE_INDEXED | REMOVE_ALL;
     /** All retain methods */
     public static final int GROUP_RETAIN = RETAIN_ALL;
     /** All clear methods */
@@ -117,14 +125,14 @@ public class ModificationEventType {
     /** All indexed methods */
     public static final int GROUP_INDEXED = ADD_INDEXED | ADD_ALL_INDEXED | REMOVE_INDEXED | SET_INDEXED;
     /** All non indexed methods */
-    public static final int GROUP_NON_INDEXED = ADD | ADD_ALL | REMOVE | REMOVE_ALL | RETAIN_ALL | CLEAR;
-    /** All bulk methods (xxxAll and clear) */
-    public static final int GROUP_BULK = ADD_ALL | ADD_ALL_INDEXED | REMOVE_ALL | RETAIN_ALL | CLEAR;
+    public static final int GROUP_NON_INDEXED = ADD | ADD_NCOPIES | ADD_ALL | REMOVE | REMOVE_NCOPIES | REMOVE_ALL | RETAIN_ALL | CLEAR;
+    /** All bulk methods (xxxAll, clear, Bag nCopies) */
+    public static final int GROUP_BULK =  ADD_NCOPIES | ADD_ALL | ADD_ALL_INDEXED | REMOVE_NCOPIES | REMOVE_ALL | RETAIN_ALL | CLEAR;
     /** All non bulk methods */
     public static final int GROUP_NON_BULK = ADD | ADD_INDEXED | REMOVE | REMOVE_INDEXED | SET_INDEXED;
     /** All methods that modify the structure */
     public static final int GROUP_STRUCTURE_MODIFIED = 
-        ADD | ADD_INDEXED | ADD_ALL | ADD_ALL_INDEXED | REMOVE | REMOVE_INDEXED | REMOVE_ALL | RETAIN_ALL | CLEAR;
+        ADD | ADD_NCOPIES | ADD_INDEXED | ADD_ALL | ADD_ALL_INDEXED | REMOVE | REMOVE_NCOPIES | REMOVE_INDEXED | REMOVE_ALL | RETAIN_ALL | CLEAR;
     /** All non structure modifying methods */
     public static final int GROUP_NON_STRUCTURE_MODIFIED = SET_INDEXED;
 
@@ -134,6 +142,8 @@ public class ModificationEventType {
     public static final int GROUP_FROM_SET = GROUP_FROM_COLLECTION;
     /** All methods sent by a List */
     public static final int GROUP_FROM_LIST = GROUP_FROM_COLLECTION | ADD_INDEXED | ADD_ALL_INDEXED | REMOVE_INDEXED | SET_INDEXED;
+    /** All methods sent by a List */
+    public static final int GROUP_FROM_BAG = GROUP_FROM_COLLECTION | ADD_NCOPIES | REMOVE_NCOPIES;
 
     /** No methods */
     public static final int GROUP_NONE = 0x00000000;
@@ -159,12 +169,16 @@ public class ModificationEventType {
             return "Add";
             case ADD_INDEXED:
             return "AddIndexed";
+            case ADD_NCOPIES:
+            return "AddNCopies";
             case ADD_ALL:
             return "AddAll";
             case ADD_ALL_INDEXED:
             return "AddAllIndexed";
             case REMOVE:
             return "Remove";
+            case REMOVE_NCOPIES:
+            return "RemoveNCopies";
             case REMOVE_INDEXED:
             return "RemoveIndexed";
             case REMOVE_ALL:

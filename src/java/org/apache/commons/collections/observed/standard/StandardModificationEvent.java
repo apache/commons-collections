@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationEvent.java,v 1.2 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.event;
+package org.apache.commons.collections.observed.standard;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -64,6 +64,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.observed.ModificationEvent;
+import org.apache.commons.collections.observed.ModificationEventType;
+import org.apache.commons.collections.observed.ModificationHandler;
 
 /**
  * Event class that encapsulates all the event information for a
@@ -75,7 +78,7 @@ import org.apache.commons.collections.Bag;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */

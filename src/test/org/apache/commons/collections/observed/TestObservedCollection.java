@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestObservedCollection.java,v 1.4 2003/09/03 00:11:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedCollection.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
+package org.apache.commons.collections.observed;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +72,7 @@ import org.apache.commons.collections.TestCollection;
  * {@link ObservedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/03 00:11:28 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
  * 
  * @author Stephen Colebourne
  */

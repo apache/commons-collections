@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedList.java,v 1.5 2003/09/03 22:29:51 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedList.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,14 +55,13 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
+package org.apache.commons.collections.observed;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.commons.collections.event.ModificationHandler;
-import org.apache.commons.collections.event.ModificationHandlerFactory;
+import org.apache.commons.collections.decorators.AbstractListIteratorDecorator;
 
 /**
  * Decorates a <code>List</code> implementation to observe modifications.
@@ -74,7 +73,7 @@ import org.apache.commons.collections.event.ModificationHandlerFactory;
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/09/03 22:29:51 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
@@ -101,7 +100,7 @@ public class ObservedList extends ObservedCollection implements List {
      * <p>
      * A lot of functionality is available through this method.
      * If you don't need the extra functionality, simply implement the
-     * {@link org.apache.commons.collections.event.StandardModificationListener}
+     * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
      * Internally, an <code>ObservedList</code> relies on a {@link ModificationHandler}.
@@ -109,10 +108,9 @@ public class ObservedList extends ObservedCollection implements List {
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
      * <p>
-     * The handler implementation is determined by the listener parameter.
-     * If the parameter is a <code>ModificationHandler</code> it is used directly.
-     * Otherwise, the factory mechanism of {@link ModificationHandlerFactory} is used
-     * to create the handler for the listener parameter.
+     * The handler implementation is determined by the listener parameter via
+     * the registered factories. The listener may be a manually configured 
+     * <code>ModificationHandler</code> instance.
      * <p>
      * The listener is defined as an Object for maximum flexibility.
      * It does not have to be a listener in the classic JavaBean sense.
@@ -120,9 +118,7 @@ public class ObservedList extends ObservedCollection implements List {
      * is interpretted. An IllegalArgumentException is thrown if no suitable
      * handler can be found for this listener.
      * <p>
-     * A <code>null</code> listener will throw an IllegalArgumentException
-     * unless a special handler factory has been registered.
-     * <p>
+     * A <code>null</code> listener will create a {@link StandardModificationHandler}.
      *
      * @param list  the list to decorate, must not be null
      * @param listener  list listener, may be null
@@ -137,12 +133,7 @@ public class ObservedList extends ObservedCollection implements List {
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
-        if (listener instanceof ModificationHandler) {
-            return new ObservedList(list, (ModificationHandler) listener);
-        } else {
-            ModificationHandler handler = ModificationHandlerFactory.createHandler(list, listener);
-            return new ObservedList(list, handler);
-        }
+        return new ObservedList(list, listener);
     }
 
     // Constructors
@@ -154,13 +145,13 @@ public class ObservedList extends ObservedCollection implements List {
      * <code>ObservedHandler</code> is created. 
      * 
      * @param list  the list to decorate, must not be null
-     * @param handler  the observing handler, may be null
+     * @param listener  the listener, may be null
      * @throws IllegalArgumentException if the list is null
      */
     protected ObservedList(
             final List list,
-            final ModificationHandler handler) {
-        super(list, handler);
+            final Object listener) {
+        super(list, listener);
     }
     
     /**

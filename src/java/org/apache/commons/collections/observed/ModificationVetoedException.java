@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardPostModificationListener.java,v 1.1 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationVetoedException.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,28 +55,44 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.event;
+package org.apache.commons.collections.observed;
 
 /**
- * A listener for the <code>StandardModificationHandler</code> that is called
- * when a collection has been changed.
+ * Exception thrown when a modification to a collection is vetoed.
+ * It extends IllegalArgumentException for compatibility with the collections API.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
-public interface StandardPostModificationListener extends ModificationListener {
+public class ModificationVetoedException extends IllegalArgumentException {
 
+    /** The source event */
+    protected final ModificationEvent event;
+
+    // Constructor
+    //-----------------------------------------------------------------------
     /**
-     * A collection modification occurred.
-     * <p>
-     * This method should be processed quickly, as with all event handling.
-     * It should also avoid modifying the event source (the collection).
-     * Finally it should avoid throwing an exception.
+     * Constructor.
      * 
-     * @param event  the event detail
+     * @param message  the text message, may be null
+     * @param event  the observed event, should not be null
      */
-    public void modificationOccurred(StandardModificationEvent event);
-    
+    public ModificationVetoedException(final String message, final ModificationEvent event) {
+        super((message == null ? "Modification vetoed" : message));
+        this.event = event;
+    }
+
+    // Event access
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the event that caused the veto.
+     * 
+     * @return the event
+     */
+    public ModificationEvent getEvent() {
+        return event;
+    }
+
 }

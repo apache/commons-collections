@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.7 2003/09/03 23:54:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedSet.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,51 +55,64 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
+package org.apache.commons.collections.observed;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestSet;
+
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestSet} for exercising the
+ * {@link ObservedSet} implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/09/03 23:54:25 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public class TestObservedSet extends TestSet implements ObservedTestHelper.ObservedFactory {
     
-    public TestAll(String testName) {
+    public TestObservedSet(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestObservedSet.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestObservedSet.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestSequencedSet.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        
-        return suite;
+
+    //-----------------------------------------------------------------------
+    public Set makeEmptySet() {
+        return ObservedSet.decorate(new HashSet(), ObservedTestHelper.LISTENER);
     }
-        
+
+    protected Set makeFullSet() {
+        Set set = new HashSet();
+        set.addAll(Arrays.asList(getFullElements()));
+        return ObservedSet.decorate(set, ObservedTestHelper.LISTENER);
+    }
+    
+    //-----------------------------------------------------------------------
+    public void testObservedSet() {
+        ObservedTestHelper.bulkTestObservedSet(this);
+    }
+
+    //-----------------------------------------------------------------------
+    public ObservedCollection createObservedCollection() {
+        return ObservedSet.decorate(new HashSet());
+    }
+
+    public ObservedCollection createObservedCollection(Object listener) {
+        return ObservedSet.decorate(new HashSet(), listener);
+    }
+
 }

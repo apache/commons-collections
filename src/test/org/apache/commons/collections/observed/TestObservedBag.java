@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationListener.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedBag.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,23 +55,56 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.event;
+package org.apache.commons.collections.observed;
 
-import java.util.EventListener;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.HashBag;
+import org.apache.commons.collections.TestBag;
 
 /**
- * An empty listener designed to be subclassed.
- * <p>
- * This interface exists to mark independent subclasses as fulfilling the
- * role of an event listener for collection modification events.
+ * Extension of {@link TestBag} for exercising the
+ * {@link ObservedBag} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
  * 
  * @author Stephen Colebourne
  */
-public interface ModificationListener extends EventListener {
-
-    // no methods - subinterfaces define them
+public class TestObservedBag extends TestBag implements ObservedTestHelper.ObservedFactory {
     
+    public TestObservedBag(String testName) {
+        super(testName);
+    }
+
+    public static Test suite() {
+        return new TestSuite(TestObservedBag.class);
+    }
+
+    public static void main(String args[]) {
+        String[] testCaseName = { TestObservedBag.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
+    //-----------------------------------------------------------------------
+    public Bag makeBag() {
+        return ObservedBag.decorate(new HashBag(), ObservedTestHelper.LISTENER);
+    }
+
+    //-----------------------------------------------------------------------
+    public void testObservedSet() {
+        ObservedTestHelper.bulkTestObservedBag(this);
+    }
+
+    //-----------------------------------------------------------------------
+    public ObservedCollection createObservedCollection() {
+        return ObservedBag.decorate(new HashBag());
+    }
+
+    public ObservedCollection createObservedCollection(Object listener) {
+        return ObservedBag.decorate(new HashBag(), listener);
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedSet.java,v 1.5 2003/09/03 22:29:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedBag.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,62 +55,63 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
+package org.apache.commons.collections.observed;
 
 import java.util.Set;
 
-import org.apache.commons.collections.event.ModificationHandler;
-import org.apache.commons.collections.event.ModificationHandlerFactory;
+import org.apache.commons.collections.Bag;
 
 /**
- * Decorates a <code>Set</code> implementation to observe modifications.
+ * Decorates a <code>Bag</code> implementation to observe modifications.
  * <p>
- * Each modifying method call made on this <code>Set</code> is forwarded to a
+ * Each modifying method call made on this <code>Bag</code> is forwarded to a
  * {@link ModificationHandler}.
  * The handler manages the event, notifying listeners and optionally vetoing changes.
  * The default handler is {@link StandardModificationHandler}.
  * See this class for details of configuration available.
+ * <p>
+ * NOTE: The {@link #uniqueSet()} method returns a <code>Set</code> that is
+ * NOT observed. This is because the set should be unmodifiable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/09/03 22:29:50 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
  * 
  * @author Stephen Colebourne
  */
-public class ObservedSet extends ObservedCollection implements Set {
+public class ObservedBag extends ObservedCollection implements Bag {
     
     // Factories
     //-----------------------------------------------------------------------
     /**
-     * Factory method to create an observable set.
+     * Factory method to create an observable bag.
      * <p>
      * A {@link StandardModificationHandler} will be created.
      * This can be accessed by {@link #getHandler()} to add listeners.
      *
-     * @param set  the set to decorate, must not be null
-     * @return the observed Set
-     * @throws IllegalArgumentException if the collection is null
+     * @param bag  the bag to decorate, must not be null
+     * @return the observed Bag
+     * @throws IllegalArgumentException if the bag is null
      */
-    public static ObservedSet decorate(final Set set) {
-        return new ObservedSet(set, null);
+    public static ObservedBag decorate(final Bag bag) {
+        return new ObservedBag(bag, null);
     }
 
     /**
-     * Factory method to create an observable set using a listener or a handler.
+     * Factory method to create an observable bag using a listener or a handler.
      * <p>
      * A lot of functionality is available through this method.
      * If you don't need the extra functionality, simply implement the
-     * {@link org.apache.commons.collections.event.StandardModificationListener}
+     * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
-     * Internally, an <code>ObservedSet</code> relies on a {@link ModificationHandler}.
+     * Internally, an <code>ObservedBag</code> relies on a {@link ModificationHandler}.
      * The handler receives all the events and processes them, typically by
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
      * <p>
-     * The handler implementation is determined by the listener parameter.
-     * If the parameter is a <code>ModificationHandler</code> it is used directly.
-     * Otherwise, the factory mechanism of {@link ModificationHandlerFactory} is used
-     * to create the handler for the listener parameter.
+     * The handler implementation is determined by the listener parameter via
+     * the registered factories. The listener may be a manually configured 
+     * <code>ModificationHandler</code> instance.
      * <p>
      * The listener is defined as an Object for maximum flexibility.
      * It does not have to be a listener in the classic JavaBean sense.
@@ -118,47 +119,85 @@ public class ObservedSet extends ObservedCollection implements Set {
      * is interpretted. An IllegalArgumentException is thrown if no suitable
      * handler can be found for this listener.
      * <p>
-     * A <code>null</code> listener will throw an IllegalArgumentException
-     * unless a special handler factory has been registered.
-     * <p>
+     * A <code>null</code> listener will create a {@link StandardModificationHandler}.
      *
-     * @param set  the set to decorate, must not be null
-     * @param listener  set listener, may be null
-     * @return the observed set
-     * @throws IllegalArgumentException if the set is null
+     * @param bag  the bag to decorate, must not be null
+     * @param listener  bag listener, may be null
+     * @return the observed bag
+     * @throws IllegalArgumentException if the bag is null
      * @throws IllegalArgumentException if there is no valid handler for the listener
      */
-    public static ObservedSet decorate(
-            final Set set,
+    public static ObservedBag decorate(
+            final Bag bag,
             final Object listener) {
         
-        if (set == null) {
-            throw new IllegalArgumentException("Set must not be null");
+        if (bag == null) {
+            throw new IllegalArgumentException("Bag must not be null");
         }
-        if (listener instanceof ModificationHandler) {
-            return new ObservedSet(set, (ModificationHandler) listener);
-        } else {
-            ModificationHandler handler = ModificationHandlerFactory.createHandler(set, listener);
-            return new ObservedSet(set, handler);
-        }
+        return new ObservedBag(bag, listener);
     }
 
     // Constructors
     //-----------------------------------------------------------------------
     /**
-     * Constructor that wraps (not copies) and takes a handler.
-     * <p>
-     * If a <code>null</code> handler is specified, an 
-     * <code>ObservedHandler</code> is created. 
+     * Constructor that wraps (not copies).
      * 
-     * @param set  the set to decorate, must not be null
-     * @param handler  the observing handler, may be null
-     * @throws IllegalArgumentException if the set is null
+     * @param bag  the bag to decorate, must not be null
+     * @param listener  the listener, may be null
+     * @throws IllegalArgumentException if the bag is null
      */
-    protected ObservedSet(
-            final Set set,
-            final ModificationHandler handler) {
-        super(set, handler);
+    protected ObservedBag(
+            final Bag bag,
+            final Object listener) {
+        super(bag, listener);
+    }
+    
+    /**
+     * Typecast the collection to a Bag.
+     * 
+     * @return the wrapped collection as a Bag
+     */
+    private Bag getBag() {
+        return (Bag) getCollection();
+    }
+
+    // Bag API
+    //-----------------------------------------------------------------------
+    public int getCount(Object object) {
+        return getBag().getCount(object);
+    }
+
+    public Set uniqueSet() {
+        return getBag().uniqueSet();
+    }
+
+    //-----------------------------------------------------------------------
+    public boolean add(Object object) {
+        // override as Bag violates Collection contract
+        boolean result = false;
+        if (handler.preAdd(object)) {
+            result = collection.add(object);
+            handler.postAdd(object, true);  // true, as result is misleading
+        }
+        return result;
+    }
+
+    public boolean add(Object object, int nCopies) {
+        boolean result = false;
+        if (handler.preAdd(object, nCopies)) {
+            result = getBag().add(object, nCopies);
+            handler.postAdd(object, nCopies, result);
+        }
+        return result;
+    }
+
+    public boolean remove(Object object, int nCopies) {
+        boolean result = false;
+        if (handler.preRemove(object, nCopies)) {
+            result = getBag().remove(object, nCopies);
+            handler.postRemove(object, nCopies, result);
+        }
+        return result;
     }
 
 }
