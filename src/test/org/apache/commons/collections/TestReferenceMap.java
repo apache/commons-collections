@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.5 2003/02/19 20:33:11 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2003/02/19 20:33:11 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.6 2003/05/06 10:24:01 rdonkin Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/05/06 10:24:01 $
  *
  * ====================================================================
  *
@@ -61,6 +61,8 @@
 
 package org.apache.commons.collections;
 
+import java.lang.ref.WeakReference;
+
 import java.util.Map;
 
 import junit.framework.Test;
@@ -70,7 +72,7 @@ import junit.framework.Test;
  * Tests for ReferenceMap. 
  *
  * @author Paul Jack
- * @version $Id: TestReferenceMap.java,v 1.5 2003/02/19 20:33:11 scolebourne Exp $
+ * @version $Id: TestReferenceMap.java,v 1.6 2003/05/06 10:24:01 rdonkin Exp $
  */
 public class TestReferenceMap extends TestMap {
 
@@ -186,5 +188,44 @@ public class TestReferenceMap extends TestMap {
         return "2.1";
     }
 
-
+    /** Tests whether purge values setting works */
+    public void testPurgeValues() throws Exception {
+        // many thanks to Juozas Baliuka for suggesting this method
+        Object key = new Object();
+        Object value = new Object();
+        
+        WeakReference keyReference = new WeakReference(key);
+        WeakReference valueReference = new WeakReference(value);
+        
+        Map testMap = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.HARD, true);
+        testMap.put(key, value);
+        
+        assertEquals("In map", value, testMap.get(key));
+        assertNotNull("Weak reference released early (1)", keyReference.get());
+        assertNotNull("Weak reference released early (2)", valueReference.get());
+        
+        // dereference strong references
+        key = null;
+        value = null;
+        
+        int iterations = 0;
+        int bytz = 2;
+        while(true) {
+            System.gc();
+            if(iterations++ > 50){
+                fail("Max iterations reached before resource released.");
+            }
+            testMap.isEmpty();
+            if( 
+                keyReference.get() == null &&
+                valueReference.get() == null) {
+                break;
+                
+            } else {
+                // create garbage:
+                byte[] b =  new byte[bytz];
+                bytz = bytz * 2;
+            }
+        }
+    }
 }

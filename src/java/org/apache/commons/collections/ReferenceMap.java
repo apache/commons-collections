@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.8 2003/01/25 12:33:02 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.9 2003/05/06 10:24:01 rdonkin Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -116,7 +116,7 @@ import java.util.Set;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.8 $ $Date: 2003/01/25 12:33:02 $
+ * @version $Revision: 1.9 $ $Date: 2003/05/06 10:24:01 $
  * 
  * @author Paul Jack
  */
@@ -175,6 +175,11 @@ public class ReferenceMap extends AbstractMap {
      *  @serial
      */
     private float loadFactor;
+    
+    /**
+     * Should the value be automatically purged when the associated key has been collected?
+     */
+    private boolean purgeValues = false;
 
 
     // -- Non-serialized instance variables
@@ -237,6 +242,21 @@ public class ReferenceMap extends AbstractMap {
         this(HARD, SOFT);
     }
 
+    /**
+     *  Constructs a new <Code>ReferenceMap</Code> that will
+     *  use the specified types of references.
+     *
+     *  @param keyType  the type of reference to use for keys;
+     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *  @param valueType  the type of reference to use for values;
+     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *  @param purgeValues should the value be automatically purged when the 
+     *   key is garbage collected 
+     */
+    public ReferenceMap(int keyType, int valueType, boolean purgeValues) {
+        this(keyType, valueType);
+        this.purgeValues = purgeValues;
+    }
 
     /**
      *  Constructs a new <Code>ReferenceMap</Code> that will
@@ -251,6 +271,29 @@ public class ReferenceMap extends AbstractMap {
         this(keyType, valueType, 16, 0.75f);
     }
 
+    /**
+     *  Constructs a new <Code>ReferenceMap</Code> with the
+     *  specified reference types, load factor and initial
+     *  capacity.
+     *
+     *  @param keyType  the type of reference to use for keys;
+     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *  @param valueType  the type of reference to use for values;
+     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *  @param capacity  the initial capacity for the map
+     *  @param loadFactor  the load factor for the map
+     *  @param purgeValues should the value be automatically purged when the 
+     *   key is garbage collected 
+     */
+    public ReferenceMap(
+                        int keyType, 
+                        int valueType, 
+                        int capacity, 
+                        float loadFactor, 
+                        boolean purgeValues) {
+        this(keyType, valueType, capacity, loadFactor);
+        this.purgeValues = purgeValues;
+    }
 
     /**
      *  Constructs a new <Code>ReferenceMap</Code> with the
@@ -778,7 +821,11 @@ public class ReferenceMap extends AbstractMap {
             r = r || ((valueType > HARD) && (value == ref));
             if (r) {
                 if (keyType > HARD) ((Reference)key).clear();
-                if (valueType > HARD) ((Reference)value).clear();
+                if (valueType > HARD) {
+                    ((Reference)value).clear();
+                } else if (purgeValues) {
+                    value = null;
+                }
             }
             return r;
         }
