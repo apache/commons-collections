@@ -24,8 +24,8 @@ promotes the key to the Most Recently Used position.
 LRUMap 2.0 compatibility changes: 
   - LRUMap can no longer be cast to a HashMap.
   - The removeLRU() method now has a different 
-    signature, and is no longer public.  There is
-    no direct replacement for this method.
+    signature, and is no longer public.  Instead, use
+    remove(getFirstKey()).
   - "Externalized" LRUMap 1.0 Objects cannot be
     read by LRUMap 2.0.
         
