@@ -16,19 +16,20 @@ import java.util.List;
  *
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
+ * @deprecated See {@link org.apache.commons.collections.CollectionUtils}.
  */
 public class ListUtils
 {
-    public static List intersection( final List list1, final List list2 ) 
+    public static List intersection( final List list1, final List list2 )
     {
         final ArrayList result = new ArrayList();
         final Iterator iterator = list2.iterator();
 
-        while( iterator.hasNext() ) 
+        while( iterator.hasNext() )
         {
             final Object o = iterator.next();
 
-            if ( list1.contains( o ) ) 
+            if ( list1.contains( o ) )
             {
                 result.add( o );
             }
@@ -36,27 +37,27 @@ public class ListUtils
 
         return result;
     }
-    
-    public static List subtract( final List list1, final List list2 ) 
+
+    public static List subtract( final List list1, final List list2 )
     {
         final ArrayList result = new ArrayList( list1 );
         final Iterator iterator = list2.iterator();
 
-        while( iterator.hasNext() ) 
+        while( iterator.hasNext() )
         {
             result.remove( iterator.next() );
         }
 
         return result;
     }
-    
-    public static List sum( final List list1, final List list2 ) 
+
+    public static List sum( final List list1, final List list2 )
     {
-        return subtract( union( list1, list2 ), 
+        return subtract( union( list1, list2 ),
                          intersection( list1, list2 ) );
     }
-    
-    public static List union( final List list1, final List list2 ) 
+
+    public static List union( final List list1, final List list2 )
     {
         final ArrayList result = new ArrayList( list1 );
         result.addAll( list2 );
