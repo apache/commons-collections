@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.40 2003/02/19 20:33:11 scolebourne Exp $
- * $Revision: 1.40 $
- * $Date: 2003/02/19 20:33:11 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.41 2003/03/09 00:07:41 scolebourne Exp $
+ * $Revision: 1.41 $
+ * $Date: 2003/03/09 00:07:41 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.40 2003/02/19 20:33:11 scolebourne Exp $
+ * @version $Id: TestAll.java,v 1.41 2003/03/09 00:07:41 scolebourne Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -100,6 +100,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestHashBag.suite());
         suite.addTest(TestLRUMap.suite());
         suite.addTest(TestMultiHashMap.suite());
+        suite.addTest(TestMultiKey.suite());
         suite.addTest(TestNodeCachingLinkedList.suite());
         suite.addTest(TestSequencedHashMap.suite());
         suite.addTest(TestStaticBucketMap.suite());
