@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.6 2001/05/04 02:29:03 geirm Exp $ -->
+<!-- $Id: build.xml,v 1.7 2001/05/04 02:35:32 geirm Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -49,7 +49,7 @@
       <property name="Name-Long" value="Jakarta Commons Collections Package"/>
 
       <!-- The current version number of this component -->
-      <property name="component.version"       value="0.01"/>
+      <property name="component.version"       value="0.02-dev"/>
         
       <property name="test.entry" value="org.apache.commons.collections.TestAll"/>
       <property name="test.failonerror" value="true" /> 
