@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.12 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortCollectionCollection.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,54 +55,82 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
+
+import java.io.Serializable;
+import java.util.Collection;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestObject;
+import org.apache.commons.collections.primitives.AbstractRandomAccessShortList;
+import org.apache.commons.collections.primitives.ArrayShortList;
+import org.apache.commons.collections.primitives.ShortList;
+
 /**
- * @version $Revision: 1.12 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestShortCollectionCollection extends TestObject {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestShortCollectionCollection(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestAbstractRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        //suite.addTest(TestArrayUnsignedByteList.suite());
-
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestAbstractRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestAbstractRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
-        
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+        return new TestSuite(TestShortCollectionCollection.class);
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    protected Object makeObject() {
+        ShortList list = new ArrayShortList();
+        for(int i=0;i<10;i++) {
+            list.add((short)i);
+        }
+        return new ShortCollectionCollection(list);
+    }
+
+    public void testSerializeDeserializeThenCompare() {
+        // Collection.equal contract doesn't work that way
+    }
+
+    /** @TODO need to add serialized form to cvs */
+    public void testCanonicalEmptyCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    public void testCanonicalFullCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+    
+    // tests
+    // ------------------------------------------------------------------------
+
+    public void testWrapNull() {
+        assertNull(ShortCollectionCollection.wrap(null));
+    }
+    
+    public void testWrapSerializable() {
+        Collection collection = ShortCollectionCollection.wrap(new ArrayShortList());
+        assertNotNull(collection);
+        assertTrue(collection instanceof Serializable);
+    }
+    
+    public void testWrapNonSerializable() {
+        Collection collection = ShortCollectionCollection.wrap(new AbstractRandomAccessShortList() { 
+            public short get(int i) { throw new IndexOutOfBoundsException(); } 
+            public int size() { return 0; } 
+        });
+        assertNotNull(collection);
+        assertTrue(!(collection instanceof Serializable));
+    }
+
+}

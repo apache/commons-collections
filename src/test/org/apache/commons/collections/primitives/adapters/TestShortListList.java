@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.4 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortListList.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,55 +57,99 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.Serializable;
+import java.util.List;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.TestList;
+import org.apache.commons.collections.primitives.AbstractRandomAccessShortList;
+import org.apache.commons.collections.primitives.ArrayShortList;
+
 /**
- * @version $Revision: 1.4 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestShortListList extends TestList {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestShortListList(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionShortCollection.suite());
-        suite.addTest(TestShortCollectionCollection.suite());
-        suite.addTest(TestShortListList.suite());
-        suite.addTest(TestListShortList.suite());
-        suite.addTest(TestIteratorShortIterator.suite());
-        suite.addTest(TestListIteratorShortListIterator.suite());
-        suite.addTest(TestShortIteratorIterator.suite());
-        suite.addTest(TestShortListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
+        TestSuite suite = BulkTest.makeSuite(TestShortListList.class);
         return suite;
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    protected List makeEmptyList() {
+        return new ShortListList(new ArrayShortList());
+    }
+        
+    protected Object[] getFullElements() {
+        Short[] elts = new Short[10];
+        for(int i=0;i<elts.length;i++) {
+            elts[i] = new Short((short)i);
+        }
+        return elts;
+    }
+
+    protected Object[] getOtherElements() {
+        Short[] elts = new Short[10];
+        for(int i=0;i<elts.length;i++) {
+            elts[i] = new Short((short)(10 + i));
+        }
+        return elts;
+    }
+
+    // tests
+    // ------------------------------------------------------------------------
+
+    /** @TODO need to add serialized form to cvs */
+
+    public void testCanonicalEmptyCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    public void testCanonicalFullCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    public void testEmptyListCompatibility() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    public void testFullListCompatibility() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    public void testWrapNull() {
+        assertNull(ShortListList.wrap(null));
+    }
+    
+    public void testWrapSerializable() {
+        List list = ShortListList.wrap(new ArrayShortList());
+        assertNotNull(list);
+        assertTrue(list instanceof Serializable);
+    }
+    
+    public void testWrapNonSerializable() {
+        List list = ShortListList.wrap(new AbstractRandomAccessShortList() { 
+            public short get(int i) { throw new IndexOutOfBoundsException(); } 
+            public int size() { return 0; } 
+        });
+        assertNotNull(list);
+        assertTrue(!(list instanceof Serializable));
+    }
+}

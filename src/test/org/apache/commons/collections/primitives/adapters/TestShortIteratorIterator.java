@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.12 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortIteratorIterator.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,54 +55,68 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
+
+import java.util.Iterator;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.iterators.TestIterator;
+import org.apache.commons.collections.primitives.ArrayShortList;
+import org.apache.commons.collections.primitives.ShortList;
+
 /**
- * @version $Revision: 1.12 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestShortIteratorIterator extends TestIterator {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestShortIteratorIterator(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestAbstractRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        //suite.addTest(TestArrayUnsignedByteList.suite());
-
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestAbstractRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestAbstractRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
-        
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+        return new TestSuite(TestShortIteratorIterator.class);
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    public Object makeObject() {
+        return makeFullIterator();
+    }
+    
+    public Iterator makeEmptyIterator() {
+        return ShortIteratorIterator.wrap(makeEmptyShortList().iterator());
+    }
+    
+    public Iterator makeFullIterator() {
+        return ShortIteratorIterator.wrap(makeFullShortList().iterator());
+    }
+
+    protected ShortList makeEmptyShortList() {
+        return new ArrayShortList();
+    }
+    
+    protected ShortList makeFullShortList() {
+        ShortList list = makeEmptyShortList();
+        short[] elts = getFullElements();
+        for(int i=0;i<elts.length;i++) {
+            list.add((short)elts[i]);
+        }
+        return list;
+    }
+    
+    public short[] getFullElements() {
+        return new short[] { (short)0, (short)1, (short)2, (short)3, (short)4, (short)5, (short)6, (short)7, (short)8, (short)9 };
+    }
+    
+    // tests
+    // ------------------------------------------------------------------------
+
+
+}

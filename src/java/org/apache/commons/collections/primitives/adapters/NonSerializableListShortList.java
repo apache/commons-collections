@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.12 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/NonSerializableListShortList.java,v 1.1 2003/04/11 00:55:35 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,54 +55,26 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.List;
 
 /**
- * @version $Revision: 1.12 $ $Date: 2003/04/11 00:55:36 $
- * @author Rodney Waldhoff
+ *
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:35 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+final class NonSerializableListShortList extends AbstractListShortList {
+
+    protected NonSerializableListShortList(List list) {
+        _list = list;
     }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    
+    protected List getList() {
+        return _list;
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestAbstractRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        //suite.addTest(TestArrayUnsignedByteList.suite());
-
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestAbstractRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestAbstractRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
         
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
-    }
-}
+    private List _list = null;
 
+}

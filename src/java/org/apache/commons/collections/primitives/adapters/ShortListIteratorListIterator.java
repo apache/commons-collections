@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.4 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ShortListIteratorListIterator.java,v 1.1 2003/04/11 00:55:35 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,55 +57,85 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.ListIterator;
+
+import org.apache.commons.collections.primitives.ShortListIterator;
 
 /**
- * @version $Revision: 1.4 $ $Date: 2003/04/11 00:55:36 $
- * @author Rodney Waldhoff
+ * Adapts an {@link ShortListIterator ShortListIterator} to the
+ * {@link ListIterator ListIterator} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link ShortListIterator ShortListIterator} 
+ * implementation in the "obvious" way.
+ *
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:35 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+public class ShortListIteratorListIterator implements ListIterator {
+    
+    /**
+     * Create a {@link ListIterator ListIterator} wrapping
+     * the specified {@link ShortListIterator ShortListIterator}.  When
+     * the given <i>iterator</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param iterator the (possibly <code>null</code>) 
+     *        {@link ShortListIterator ShortListIterator} to wrap
+     * @return a {@link ListIterator ListIterator} wrapping the given 
+     *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+     *         <code>null</code>.
+     */
+    public static ListIterator wrap(ShortListIterator iterator) {
+        return null == iterator ? null : new ShortListIteratorListIterator(iterator);
+    }
+    
+    /**
+     * Creates an {@link ListIterator ListIterator} wrapping
+     * the specified {@link ShortListIterator ShortListIterator}.
+     * @see #wrap
+     */
+    public ShortListIteratorListIterator(ShortListIterator iterator) {
+        _iterator = iterator;
+    }
+    
+    public int nextIndex() {
+        return _iterator.nextIndex();
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public int previousIndex() {
+        return _iterator.previousIndex();
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionShortCollection.suite());
-        suite.addTest(TestShortCollectionCollection.suite());
-        suite.addTest(TestShortListList.suite());
-        suite.addTest(TestListShortList.suite());
-        suite.addTest(TestIteratorShortIterator.suite());
-        suite.addTest(TestListIteratorShortListIterator.suite());
-        suite.addTest(TestShortIteratorIterator.suite());
-        suite.addTest(TestShortListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        return suite;
+    public boolean hasNext() {
+        return _iterator.hasNext();
     }
+
+    public boolean hasPrevious() {
+        return _iterator.hasPrevious();
+    }
+    
+    public Object next() {
+        return new Short(_iterator.next());
+    }
+
+    public Object previous() {
+        return new Short(_iterator.previous());
+    }
+
+    public void add(Object obj) {
+        _iterator.add(((Number)obj).shortValue());
+    }
+      
+    public void set(Object obj) {
+        _iterator.set(((Number)obj).shortValue());
+    }
+
+    public void remove() {
+        _iterator.remove();
+    }
+          
+    private ShortListIterator _iterator = null;
+
 }
-

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.12 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractShortCollection.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,52 +57,57 @@
 
 package org.apache.commons.collections.primitives;
 
+import java.util.Collections;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.adapters.IteratorShortIterator;
+
 /**
- * @version $Revision: 1.12 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestAbstractShortCollection extends TestCase {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestAbstractShortCollection(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static Test suite() {
+        return new TestSuite(TestAbstractShortCollection.class);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+    // tests
+    // ------------------------------------------------------------------------
+    
+    public void testAddIsUnsupportedByDefault() {
+        ShortCollection col = new ShortCollectionImpl();
+        try {
+            col.add((short)1);
+            fail("Expected UnsupportedOperationException");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }        
+    }
+    // inner classes
+    // ------------------------------------------------------------------------
 
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestAbstractRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        //suite.addTest(TestArrayUnsignedByteList.suite());
 
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestAbstractRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestAbstractRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
+    static class ShortCollectionImpl extends AbstractShortCollection {
+        public ShortCollectionImpl() {
+        }
         
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+        public ShortIterator iterator() {
+            return new IteratorShortIterator(Collections.EMPTY_LIST.iterator());
+        }
+
+        public int size() {
+            return 0;
+        }
     }
 }
-
