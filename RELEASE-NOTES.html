@@ -30,6 +30,7 @@ All feedback should be directed to commons-user at jakarta.apache.org.
 <p>
 This release is fully source and binary compatible with v3.1.
 (Checks performed using JDiff and Clirr, thanks).
+Please check the bug fixes to ensure you weren't relying on the behaviour of a bug.
 </p>
 <p>
 There are no new deprecations.
@@ -55,6 +56,7 @@ There are no new deprecations.
 <li>BoundedFifoBuffer - Fix iterator remove bug causing ArrayIndexOutOfBounds error [33071]</li>
 <li>MultiHashMap.remove(key, item) - Was returning the item even when nothing was removed [32366]</li>
 <li>SetUniqueList.set(int,Object) - Destroyed set status in certain circumstances [33294]</li>
+<li>AbstractLinkedMap.init() - Now calls createEntry() to create the map entry object [33706]</li>
 </ul>
 
 <center><h3>JAVADOC</h3></center>

@@ -120,9 +120,13 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
 
     /**
      * Initialise this subclass during construction.
+     * <p>
+     * NOTE: As from v3.2 this method calls
+     * {@link #createEntry(HashEntry, int, Object, Object)} to create
+     * the map entry object.
      */
     protected void init() {
-        header = new LinkEntry(null, -1, null, null);
+        header = (LinkEntry) createEntry(null, -1, null, null);
         header.before = header.after = header;
     }
 
