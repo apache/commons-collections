@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.4 2001/09/21 03:15:15 jvanzyl Exp $
- * $Revision: 1.4 $
- * $Date: 2001/09/21 03:15:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.5 2003/08/24 10:50:58 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/08/24 10:50:58 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,12 +65,15 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.io.*;
+
 /**
- *   Tests some basic functions of the ExtendedProperties
- *   class
+ * Tests some basic functions of the ExtendedProperties
+ * class
  * 
- *   @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
- *   @version $Id: TestExtendedProperties.java,v 1.4 2001/09/21 03:15:15 jvanzyl Exp $
+ * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
+ * @author Mohan Kishore
+ * @version $Id: TestExtendedProperties.java,v 1.5 2003/08/24 10:50:58 scolebourne Exp $
  */
 public class TestExtendedProperties extends TestCase
 {
@@ -151,5 +154,69 @@ public class TestExtendedProperties extends TestCase
         eprop.setProperty("db", "${applicationRoot}/db/hypersonic");
         String dbProp = "/home/applicationRoot/db/hypersonic";
         assertTrue("Checking interpolated variable", eprop.getString("db").equals(dbProp));
+    }
+    
+    public void testSaveAndLoad() {
+        ExtendedProperties ep1 = new ExtendedProperties();
+        ExtendedProperties ep2 = new ExtendedProperties();
+
+        try {
+            /* initialize value:
+            one=Hello\World
+            two=Hello\,World
+            three=Hello,World
+            */
+            String s1 = "one=Hello\\World\ntwo=Hello\\,World\nthree=Hello,World";
+            byte[] bytes = s1.getBytes();
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            ep1.load(bais);
+            assertEquals("Back-slashes not interpreted properly", 
+                    "Hello\\World", ep1.getString("one"));
+            assertEquals("Escaped commas not interpreted properly", 
+                    "Hello,World", ep1.getString("two"));
+            assertEquals("Commas not interpreted properly", 
+                    2, ep1.getVector("three").size());
+            assertEquals("Commas not interpreted properly", 
+                    "Hello", ep1.getVector("three").get(0));
+            assertEquals("Commas not interpreted properly", 
+                    "World", ep1.getVector("three").get(1));
+                    
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ep1.save(baos, null);
+            bytes = baos.toByteArray();
+            bais = new ByteArrayInputStream(bytes);
+            ep2.load(bais);
+            assertEquals("Back-slash not same after being saved and loaded",
+                    ep1.getString("one"), ep2.getString("one"));
+            assertEquals("Escaped comma not same after being saved and loaded",
+                    ep1.getString("two"), ep2.getString("two"));
+            assertEquals("Comma not same after being saved and loaded",
+                    ep1.getString("three"), ep2.getString("three"));
+        } catch (IOException ioe) {
+            fail("There was an exception saving and loading the EP");
+        }
+    }
+    
+    public void testTrailingBackSlash() {
+        ExtendedProperties ep1 = new ExtendedProperties();
+
+        try {
+            /*
+            initialize using:
+            one=ONE
+            two=TWO \\
+            three=THREE
+            */
+            String s1 = "one=ONE\ntwo=TWO \\\\\nthree=THREE";
+            byte[] bytes = s1.getBytes();
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            ep1.load(bais);
+            assertEquals("Trailing back-slashes not interpreted properly", 
+                    3, ep1.size());
+            assertEquals("Back-slash not escaped properly", 
+                    "TWO \\", ep1.getString("two"));
+        } catch (IOException ioe) {
+            fail("There was an exception loading the EP");
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.12 2003/06/20 07:59:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.13 2003/08/24 10:50:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -103,6 +103,9 @@ import java.util.Vector;
  *   the comma.
  *  </li>
  *  <li>
+ *   Backslashes are escaped by using two consecutive backslashes i.e. \\
+ *  </li>
+ *  <li>
  *   If a <i>key</i> is used more than once, the values are appended
  *   like if they were on the same line separated with commas.
  *  </li>
@@ -158,7 +161,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.12 $ $Date: 2003/06/20 07:59:59 $
+ * @version $Revision: 1.13 $ $Date: 2003/08/24 10:50:58 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -170,6 +173,7 @@ import java.util.Vector;
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
  * @author Janek Bogucki
+ * @author Mohan Kishore
  */
 public class ExtendedProperties extends Hashtable {
     
@@ -248,6 +252,57 @@ public class ExtendedProperties extends Hashtable {
         
         return result.toString();
     }
+    
+    /**
+     * Inserts a backslash before every comma and backslash. 
+     */
+    private static String escape(String s) {
+        StringBuffer buf = new StringBuffer(s);
+        for (int i=0; i < buf.length();i++) {
+            char c = buf.charAt(i);
+            if (c == ',' || c == '\\') {
+                buf.insert(i, '\\');
+                i++;
+            }
+        }
+        return buf.toString();
+    }
+    
+    /**
+     * Removes a backslash from every pair of backslashes. 
+     */
+    private static String unescape(String s) {
+        StringBuffer buf = new StringBuffer(s);
+        for (int i=0; i < buf.length()-1;i++) {
+            char c1 = buf.charAt(i);
+            char c2 = buf.charAt(i+1);
+            if (c1 == '\\' && c2 == '\\') {
+                buf.deleteCharAt(i);
+            }
+        }
+        return buf.toString();
+    }
+    
+    /**
+     * Counts the number of successive times 'ch' appears in the
+     * 'line' before the position indicated by the 'index'.
+     */
+    private static int countPreceding(String line, int index, char ch) {
+        int i;
+        for (i = index-1; i >= 0; i--) {
+            if (line.charAt(i) != ch) break;
+        }
+        return index-1-i;
+    }
+    
+    /**
+     * Checks if the line ends with odd number of backslashes 
+     */
+    private static boolean endsWithSlash(String line) {
+        if (!line.endsWith("\\")) return false;
+
+        return (countPreceding(line, line.length()-1, '\\') % 2 == 0);
+    }
 
     /**
      * This class is used to read properties lines.  These lines do
@@ -284,7 +339,7 @@ public class ExtendedProperties extends Hashtable {
                     String line = readLine().trim();
                     if ((line.length() != 0) && (line.charAt(0) != '#'))
                     {
-                        if (line.endsWith("\\"))
+                        if (endsWithSlash(line))
                         {
                             line = line.substring(0, line.length() - 1);
                             buffer.append(line);
@@ -350,7 +405,7 @@ public class ExtendedProperties extends Hashtable {
             while (hasMoreTokens())
             {
                 String token = super.nextToken();
-                if (token.endsWith("\\"))
+                if (endsWithSlash(token))
                 {
                     buffer.append(token.substring(0, token.length() - 1));
                     buffer.append(DELIMITER);
@@ -678,7 +733,7 @@ public class ExtendedProperties extends Hashtable {
                      * just goes in rather than risking vectorization
                      * if it contains an escaped comma
                      */
-                    addStringProperty(key,value);
+                    addStringProperty(key,unescape(value));
                 }
             }
             else
@@ -692,7 +747,9 @@ public class ExtendedProperties extends Hashtable {
                  * to perform operations with configuration
                  * in a definite order it will be possible.
                  */
-
+                if (token instanceof String) {
+                    token = unescape((String)token);
+                }
                 addPropertyDirect( key, token );
             }                
         }
@@ -821,7 +878,7 @@ public class ExtendedProperties extends Hashtable {
                         StringBuffer currentOutput = new StringBuffer();
                         currentOutput.append(key);
                         currentOutput.append("=");
-                        currentOutput.append((String) value);
+                        currentOutput.append(escape((String) value));
                         theWrtr.println(currentOutput.toString());
                     }
                     else if(value instanceof Vector)
@@ -835,7 +892,7 @@ public class ExtendedProperties extends Hashtable {
                             StringBuffer currentOutput = new StringBuffer();
                             currentOutput.append(key);
                             currentOutput.append("=");
-                            currentOutput.append(currentElement);
+                            currentOutput.append(escape(currentElement));
                             theWrtr.println(currentOutput.toString());
                         }
                     }
