@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
  * like a switch statement.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -127,7 +127,11 @@ public class SwitchTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Execute the transformer whose predicate returns true.
+     * Transforms the input to result by calling the transformer whose matching
+     * predicate returns true.
+     * 
+     * @param input  the input object to transform
+     * @return the transformed result
      */
     public Object transform(Object input) {
         for (int i = 0; i < iPredicates.length; i++) {
@@ -140,6 +144,7 @@ public class SwitchTransformer implements Transformer, Serializable {
 
     /**
      * Gets the predicates, do not modify the array.
+     * 
      * @return the predicates
      * @since Commons Collections 3.1
      */
@@ -149,6 +154,7 @@ public class SwitchTransformer implements Transformer, Serializable {
 
     /**
      * Gets the transformers, do not modify the array.
+     * 
      * @return the transformers
      * @since Commons Collections 3.1
      */
@@ -158,6 +164,7 @@ public class SwitchTransformer implements Transformer, Serializable {
 
     /**
      * Gets the default transformer.
+     * 
      * @return the default transformer
      * @since Commons Collections 3.1
      */

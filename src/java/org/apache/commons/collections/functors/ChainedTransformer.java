@@ -22,10 +22,13 @@ import java.util.Iterator;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Transformer implementation that chains the specified closures together.
+ * Transformer implementation that chains the specified transformers together.
+ * <p>
+ * The input object is passed to the first transformer. The transformed result
+ * is passed to the second transformer and so on.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -109,9 +112,10 @@ public class ChainedTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Execute a list of transformers.
+     * Transforms the input to result via each decorated transformer
      * 
-     * @param object  the input object passed to each transformer
+     * @param object  the input object passed to the first transformer
+     * @return the transformed result
      */
     public Object transform(Object object) {
         for (int i = 0; i < iTransformers.length; i++) {

@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * and then returns the input.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -63,7 +63,10 @@ public class ClosureTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Call the closure.
+     * Transforms the input to result by executing a closure.
+     * 
+     * @param input  the input object to transform
+     * @return the transformed result
      */
     public Object transform(Object input) {
         iClosure.execute(input);
@@ -72,6 +75,7 @@ public class ClosureTransformer implements Transformer, Serializable {
 
     /**
      * Gets the closure.
+     * 
      * @return the closure
      * @since Commons Collections 3.1
      */

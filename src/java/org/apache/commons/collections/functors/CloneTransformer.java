@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Clone is performed using <code>PrototypeFactory.getInstance(input).create()</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -55,7 +55,10 @@ public class CloneTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Do nothing
+     * Transforms the input to result by cloning it.
+     * 
+     * @param input  the input object to transform
+     * @return the transformed result
      */
     public Object transform(Object input) {
         if (input == null) {
@@ -63,5 +66,5 @@ public class CloneTransformer implements Transformer, Serializable {
         }
         return PrototypeFactory.getInstance(input).create();
     }
-    
+
 }

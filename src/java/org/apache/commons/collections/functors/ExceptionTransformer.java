@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that always throws an exception.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -55,10 +55,14 @@ public final class ExceptionTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Always throw an exception.
+     * Transforms the input to result by cloning it.
+     * 
+     * @param input  the input object to transform
+     * @return never
+     * @throws FunctorException always
      */
-    public Object transform(Object object) {
+    public Object transform(Object input) {
         throw new FunctorException("ExceptionTransformer invoked");
     }
-    
+
 }

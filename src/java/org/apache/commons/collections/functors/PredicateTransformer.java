@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * and then returns the input.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -63,7 +63,10 @@ public class PredicateTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Call the predicate.
+     * Transforms the input to result by calling a predicate.
+     * 
+     * @param input  the input object to transform
+     * @return the transformed result
      */
     public Object transform(Object input) {
         return (iPredicate.evaluate(input) ? Boolean.TRUE : Boolean.FALSE);
@@ -71,6 +74,7 @@ public class PredicateTransformer implements Transformer, Serializable {
 
     /**
      * Gets the predicate.
+     * 
      * @return the predicate
      * @since Commons Collections 3.1
      */

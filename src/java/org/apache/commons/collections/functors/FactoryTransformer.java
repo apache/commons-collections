@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that calls a Factory and returns the result.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/03 12:03:11 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -62,7 +62,11 @@ public class FactoryTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Call the factory.
+     * Transforms the input by ignoring the input and returning the result of
+     * calling the decorated factory.
+     * 
+     * @param input  the input object to transform
+     * @return the transformed result
      */
     public Object transform(Object input) {
         return iFactory.create();
@@ -70,6 +74,7 @@ public class FactoryTransformer implements Transformer, Serializable {
 
     /**
      * Gets the factory.
+     * 
      * @return the factory
      * @since Commons Collections 3.1
      */

@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that creates a new object instance by reflection.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -48,6 +48,7 @@ public class InstantiateTransformer implements Transformer, Serializable {
      * 
      * @param paramTypes  the constructor parameter types
      * @param args  the constructor arguments
+     * @return an instantiate transformer
      */
     public static Transformer getInstance(Class[] paramTypes, Object[] args) {
         if (((paramTypes == null) && (args != null))
@@ -88,7 +89,10 @@ public class InstantiateTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Return the result of instantiating the input Class object.
+     * Transforms the input Class object to a result by instantiation.
+     * 
+     * @param input  the input object to transform
+     * @return the transformed result
      */
     public Object transform(Object input) {
         try {
@@ -110,5 +114,5 @@ public class InstantiateTransformer implements Transformer, Serializable {
             throw new FunctorException("InstantiateTransformer: Constructor threw an exception", ex);
         }
     }
-    
+
 }

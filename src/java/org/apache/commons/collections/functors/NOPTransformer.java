@@ -23,7 +23,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that does nothing.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -53,10 +53,13 @@ public class NOPTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Do nothing
+     * Transforms the input to result by doing nothing.
+     * 
+     * @param input  the input object to transform
+     * @return the transformed result which is the input
      */
     public Object transform(Object input) {
         return input;
     }
-    
+
 }

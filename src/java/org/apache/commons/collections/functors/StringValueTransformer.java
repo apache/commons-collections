@@ -23,7 +23,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that returns the <code>String.valueOf</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/16 11:36:31 $
  *
  * @author Stephen Colebourne
  */
@@ -53,10 +53,13 @@ public final class StringValueTransformer implements Transformer, Serializable {
     }
 
     /**
-     * Return the String.valueOf for the object.
+     * Transforms the input to result by calling <code>String.valueOf</code>.
+     * 
+     * @param input  the input object to transform
+     * @return the transformed result
      */
     public Object transform(Object input) {
         return String.valueOf(input);
     }
-    
+
 }
