@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.14 2002/02/26 18:08:58 morgand Exp $
- * $Revision: 1.14 $
- * $Date: 2002/02/26 18:08:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.15 2002/05/08 17:54:28 morgand Exp $
+ * $Revision: 1.15 $
+ * $Date: 2002/05/08 17:54:28 $
  *
  * ====================================================================
  *
@@ -65,6 +65,7 @@ import junit.framework.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
 import java.util.Map;
 import java.util.Collection;
 import java.util.Set;
@@ -87,7 +88,7 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.14 2002/02/26 18:08:58 morgand Exp $
+ * @version $Id: TestMap.java,v 1.15 2002/05/08 17:54:28 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
 
@@ -397,6 +398,24 @@ public abstract class TestMap extends TestObject {
         } catch (UnsupportedOperationException exception) {
             assertTrue("Map must not throw UnsupportedOperationException if the " +
                        "map supports removing elements", !isAddRemoveModifiable());
+        }
+    }
+
+    public void testFailFastIterator() {
+        Map fm = makeFullMap();
+
+        Iterator iterator = fm.keySet().iterator();
+        try {
+            fm.remove(getSampleKeys()[0]);
+        } catch (UnsupportedOperationException e) {
+            return;
+        }
+
+        try {
+            iterator.next();
+            fail("Iterators typically throw ConcurrentModificationExceptions when underlying collection is modified.");
+        } catch (ConcurrentModificationException e) {
+
         }
     }
 
