@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/BulkTest.java,v 1.6 2003/10/05 20:48:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/BulkTest.java,v 1.7 2003/11/18 21:28:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -175,7 +175,7 @@ import junit.framework.TestSuite;
  *  interpret bulk test methods.
  *
  *  @author Paul Jack
- *  @version $Id: BulkTest.java,v 1.6 2003/10/05 20:48:29 scolebourne Exp $
+ *  @version $Id: BulkTest.java,v 1.7 2003/11/18 21:28:16 scolebourne Exp $
  */
 public class BulkTest extends TestCase implements Cloneable {
 
@@ -398,9 +398,11 @@ class BulkTestSuiteMaker {
         try {
             bulk2 = (BulkTest)m.invoke(bulk, null);
             if (bulk2 == null) return;
-        } catch (InvocationTargetException e) {
+        } catch (InvocationTargetException ex) {
+            ex.getTargetException().printStackTrace();
             throw new Error(); // FIXME;
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException ex) {
+            ex.printStackTrace();
             throw new Error(); // FIXME;
         }
 
