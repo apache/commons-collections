@@ -123,7 +123,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.21 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.22 $ $Date: 2004/03/17 21:09:08 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -443,8 +443,7 @@ public class ExtendedProperties extends Hashtable {
     }
 
     /**
-     * Creates and loads the extended properties from the specified
-     * file.
+     * Creates and loads the extended properties from the specified file.
      *
      * @param file  the filename to load
      * @throws IOException if a file error occurs
@@ -454,8 +453,7 @@ public class ExtendedProperties extends Hashtable {
     }
 
     /**
-     * Creates and loads the extended properties from the specified
-     * file.
+     * Creates and loads the extended properties from the specified file.
      *
      * @param file  the filename to load
      * @param defaultFile  a second filename to load default values from
@@ -467,7 +465,17 @@ public class ExtendedProperties extends Hashtable {
         basePath = new File(file).getAbsolutePath();
         basePath = basePath.substring(0, basePath.lastIndexOf(fileSeparator) + 1);
 
-        this.load(new FileInputStream(file));
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(file);
+            this.load(in);
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (IOException ex) {}
+        }
 
         if (defaultFile != null) {
             defaults = new ExtendedProperties(defaultFile);
