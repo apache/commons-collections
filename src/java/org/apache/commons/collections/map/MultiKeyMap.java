@@ -67,7 +67,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * </pre>
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.3 $ $Date: 2004/06/07 21:00:58 $
+ * @version $Revision: 1.4 $ $Date: 2004/10/16 21:26:14 $
  *
  * @author Stephen Colebourne
  */
@@ -829,14 +829,12 @@ public class MultiKeyMap
     }
 
     /**
-     * Puts all the keys and values into this map.
+     * Copies all of the keys and values from the specified map to this map.
      * Each key must be non-null and a MultiKey object.
      * 
-     * @param key  the non-null MultiKey object
-     * @param value  the value to store
-     * @return the previous value for the key
+     * @param mapToCopy  to this map
      * @throws NullPointerException if the mapToCopy or any key within is null
-     * @throws ClassCastException if any key is not a MultiKey
+     * @throws ClassCastException if any key in mapToCopy is not a MultiKey
      */
     public void putAll(Map mapToCopy) {
         for (Iterator it = mapToCopy.keySet().iterator(); it.hasNext();) {

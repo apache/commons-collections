@@ -41,7 +41,7 @@ import org.apache.commons.collections.BoundedMap;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision: 1.14 $ $Date: 2004/06/07 22:13:53 $
+ * @version $Revision: 1.15 $ $Date: 2004/10/16 21:26:14 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
@@ -198,7 +198,7 @@ public class LRUMap
      * Updates an existing key-value mapping.
      * <p>
      * This implementation moves the updated entry to the top of the list
-     * using {@link #moveToMRU(LinkEntry)}.
+     * using {@link #moveToMRU(AbstractLinkedMap.LinkEntry)}.
      * 
      * @param entry  the entry to update
      * @param newValue  the new value to store
@@ -212,7 +212,7 @@ public class LRUMap
      * Adds a new key-value mapping into this map.
      * <p>
      * This implementation checks the LRU size and determines whether to
-     * discard an entry or not using {@link #removeLRU(LinkEntry)}.
+     * discard an entry or not using {@link #removeLRU(AbstractLinkedMap.LinkEntry)}.
      * <p>
      * From Commons Collections 3.1 this method uses {@link #isFull()} rather
      * than accessing <code>size</code> and <code>maxSize</code> directly.

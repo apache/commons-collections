@@ -29,7 +29,7 @@ import java.io.Serializable;
  * If non-hard references are used, then the garbage collector can remove
  * mappings if a key or value becomes unreachable, or if the JVM's memory is
  * running low. For information on how the different reference types behave,
- * see {@link Reference}.
+ * see {@link java.lang.ref.Reference Reference}.
  * <p>
  * Different types of references can be specified for keys and values.
  * The keys can be configured to be weak but the values hard,
@@ -43,7 +43,7 @@ import java.io.Serializable;
  * {@link org.apache.commons.collections.map.ReferenceIdentityMap ReferenceIdentityMap}.
  * It differs in that keys and values in this class are compared using <code>equals()</code>.
  * <p>
- * This {@link Map} implementation does <i>not</i> allow null elements.
+ * This {@link java.util.Map Map} implementation does <i>not</i> allow null elements.
  * Attempting to add a null key or value to the map will raise a <code>NullPointerException</code>.
  * <p>
  * This implementation is not synchronized.
@@ -61,7 +61,7 @@ import java.io.Serializable;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.13 $ $Date: 2004/04/27 21:35:23 $
+ * @version $Revision: 1.14 $ $Date: 2004/10/16 21:26:14 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne

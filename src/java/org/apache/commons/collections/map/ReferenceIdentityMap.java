@@ -45,7 +45,7 @@ import java.lang.ref.Reference;
  * This map will violate the detail of various Map and map view contracts.
  * As a general rule, don't compare this map to other maps.
  * <p>
- * This {@link Map} implementation does <i>not</i> allow null elements.
+ * This {@link java.util.Map Map} implementation does <i>not</i> allow null elements.
  * Attempting to add a null key or value to the map will raise a <code>NullPointerException</code>.
  * <p>
  * This implementation is not synchronized.
@@ -59,7 +59,7 @@ import java.lang.ref.Reference;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.1 $ $Date: 2004/04/27 21:37:32 $
+ * @version $Revision: 1.2 $ $Date: 2004/10/16 21:26:14 $
  * 
  * @author Stephen Colebourne
  */

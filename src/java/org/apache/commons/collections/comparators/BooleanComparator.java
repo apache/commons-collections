@@ -27,7 +27,7 @@ import java.util.Comparator;
  * @see #getBooleanComparator(boolean)
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.14 $ $Date: 2004/05/16 11:56:47 $
+ * @version $Revision: 1.15 $ $Date: 2004/10/16 21:26:14 $
  * 
  * @author Rodney Waldhoff
  */
@@ -143,7 +143,7 @@ public final class BooleanComparator implements Comparator, Serializable {
     
     /**
      * Compares two non-<code>null</code> <code>Boolean</code> objects
-     * according to the value of {@link #trueFirst}.
+     * according to the value of {@link #sortsTrueFirst()}.
      * 
      * @param b1  the first boolean to compare
      * @param b2  the second boolean to compare
@@ -176,7 +176,7 @@ public final class BooleanComparator implements Comparator, Serializable {
      * <p>
      * This implementation returns <code>true</code>
      * iff <code><i>that</i></code> is a {@link BooleanComparator} 
-     * whose {@link #trueFirst} value is equal to mine.
+     * whose value of {@link #sortsTrueFirst()} is equal to mine.
      * 
      * @param object  the object to compare to
      * @return true if equal

@@ -54,7 +54,7 @@ import org.apache.commons.collections.keyvalue.TiedMapEntry;
  * </ul>
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/04/09 14:46:35 $
+ * @version $Revision: 1.2 $ $Date: 2004/10/16 21:26:14 $
  *
  * @author Stephen Colebourne
  */
@@ -103,12 +103,12 @@ public class SingletonMap
     /**
      * Constructor specifying the key and value as a <code>MapEntry</code>.
      *
-     * @param keyValue  the key value pair to use
+     * @param mapEntry  the mapEntry to use
      */
-    public SingletonMap(Map.Entry entry) {
+    public SingletonMap(Map.Entry mapEntry) {
         super();
-        this.key = entry.getKey();
-        this.value = entry.getValue();
+        this.key = mapEntry.getKey();
+        this.value = mapEntry.getValue();
     }
 
     /**
