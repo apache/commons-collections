@@ -1,13 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.6 2002/10/12 22:15:19 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2002/10/12 22:15:19 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.7 2003/01/13 23:54:38 rwaldhoff Exp $
  * ====================================================================
- *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +19,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +32,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -71,16 +67,18 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This class provides a skeletal implementation of the {@link Bag}
+ * A skeletal implementation of the {@link Bag}
  * interface to minimize the effort required for target implementations.
- * Subclasses need only to call {@link #setMap(Map)} in their constructor 
+ * Subclasses need only to call <code>setMap(Map)</code> in their constructor 
+ * (or invoke the {@link #DefaultMapBag(java.util.Map) Map-constructor})
  * specifying a map instance that will be used to store the contents of 
  * the bag.<P>
  *
  * The map will be used to map bag elements to a number; the number represents
  * the number of occurrences of that element in the bag.<P>
  *
- * @since 2.0
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.7 $ $Date: 2003/01/13 23:54:38 $
  * @author Chuck Burdick
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  **/
@@ -91,10 +89,18 @@ public abstract class DefaultMapBag implements Bag {
 
 
    /**
-    *  Constructor.  Subclasses should invoke {@link #setMap(Map)} in
+    *  No-argument constructor.  
+    *  Subclasses should invoke <code>setMap(Map)</code> in
     *  their constructors.
     */
    public DefaultMapBag() {
+   }
+   
+   /**
+    * @since Commons Collections 2.2
+    */
+   public DefaultMapBag(Map map) {
+      setMap(map);
    }
 
    /**
