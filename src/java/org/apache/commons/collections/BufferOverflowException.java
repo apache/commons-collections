@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferOverflowException.java,v 1.3 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferOverflowException.java,v 1.4 2002/10/13 12:57:12 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/10/13 12:57:12 $
  *
  * ====================================================================
  *
@@ -64,40 +64,51 @@ package org.apache.commons.collections;
  * The BufferOverflowException is used when the buffer's capacity has been
  * exceeded.
  *
+ * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
- * @version $Id: BufferOverflowException.java,v 1.3 2002/08/13 00:46:25 pjack Exp $
- * @since Avalon 4.0
+ * @author Paul Jack
+ * @author Stephen Colebourne
+ * @since 2.1
+ * @version $Id: BufferOverflowException.java,v 1.4 2002/10/13 12:57:12 scolebourne Exp $
  */
-public class BufferOverflowException extends RuntimeException
-{
+public class BufferOverflowException extends RuntimeException {
     private final Throwable m_throwable;
 
-    /** Construct a new BufferOverflowException.
-     * @param message The detail message for this exception.
+    /**
+     * Constructs a new <code>BufferOverflowException</code>.
      */
-    public BufferOverflowException( String message )
-    {
-        this( message, null );
+    public BufferOverflowException() {
+        super();
+        m_throwable = null;
     }
 
-    /** Construct a new BufferOverflowException.
-     * @param message The detail message for this exception.
-     * @param throwable the root cause of the exception
+    /** 
+     * Construct a new <code>BufferOverflowException</code>.
+     * 
+     * @param message  the detail message for this exception
      */
-    public BufferOverflowException( String message, Throwable exception )
-    {
-        super( message );
+    public BufferOverflowException(String message) {
+        this(message, null);
+    }
+
+    /** 
+     * Construct a new <code>BufferOverflowException</code>.
+     * 
+     * @param message  the detail message for this exception
+     * @param throwable  the root cause of the exception
+     */
+    public BufferOverflowException(String message, Throwable exception) {
+        super(message);
         m_throwable = exception;
     }
 
     /**
-     * Retrieve root cause of the exception.
+     * Gets the root cause of the exception.
      *
      * @return the root cause
      */
-    public final Throwable getCause()
-    {
+    public final Throwable getCause() {
         return m_throwable;
     }
 }
