@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.6 2002/06/21 03:32:06 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/06/21 03:32:06 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.7 2003/01/07 23:44:19 rwaldhoff Exp $
+ * $Revision: 1.7 $
+ * $Date: 2003/01/07 23:44:19 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCursorableLinkedList.java,v 1.6 2002/06/21 03:32:06 mas Exp $
+ * @version $Id: TestCursorableLinkedList.java,v 1.7 2003/01/07 23:44:19 rwaldhoff Exp $
  */
 public class TestCursorableLinkedList extends TestList {
     public TestCursorableLinkedList(String testName) {
@@ -966,7 +966,8 @@ public class TestCursorableLinkedList extends TestList {
           ".testFullListCompatibility", 
           ".testSimpleSerialization",
           ".testCanonicalEmptyCollectionExists",
-          ".testCanonicalFullCollectionExists"
+          ".testCanonicalFullCollectionExists",
+          ".testSerializeDeserializeThenCompare"
         };
         for (int i = 0; i < ignored.length; i++) {
             list.add(prefix + bulk + ignored[i]);

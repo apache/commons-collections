@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.7 2002/08/10 02:05:20 pjack Exp $
- * $Revision: 1.7 $
- * $Date: 2002/08/10 02:05:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.8 2003/01/07 23:44:19 rwaldhoff Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/01/07 23:44:19 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -60,9 +60,10 @@
  */
 package org.apache.commons.collections;
 
+import java.io.Serializable;
 import java.util.Map;
 
-import junit.framework.*;
+import junit.framework.Test;
 
 /**
  * Test cases for BeanMap
@@ -98,7 +99,7 @@ public class TestBeanMap extends TestMap {
 */
 
 
-    public static class BeanWithProperties {
+    public static class BeanWithProperties implements Serializable {
         private int someInt;
         private long someLong;
         private double someDouble;
@@ -328,7 +329,9 @@ public class TestBeanMap extends TestMap {
          "TestBeanMap.bulkTestMapValues.testCanonicalEmptyCollectionExists",
          "TestBeanMap.bulkTestMapValues.testCanonicalFullCollectionExists",
          "TestBeanMap.bulkTestMapEntrySet.testSimpleSerialization",
-         "TestBeanMap.bulkTestMapKeySet.testSimpleSerialization"
+         "TestBeanMap.bulkTestMapKeySet.testSimpleSerialization",
+         "TestBeanMap.bulkTestMapEntrySet.testSerializeDeserializeThenCompare",
+         "TestBeanMap.bulkTestMapKeySet.testSerializeDeserializeThenCompare"
         };
     }
 

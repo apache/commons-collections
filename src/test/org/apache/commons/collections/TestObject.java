@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.16 2003/01/07 15:18:15 rwaldhoff Exp $
- * $Revision: 1.16 $
- * $Date: 2003/01/07 15:18:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.17 2003/01/07 23:44:19 rwaldhoff Exp $
+ * $Revision: 1.17 $
+ * $Date: 2003/01/07 23:44:19 $
  *
  * ====================================================================
  *
@@ -84,7 +84,7 @@ import java.io.Serializable;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.16 2003/01/07 15:18:15 rwaldhoff Exp $
+ * @version $Revision: 1.17 $ $Date: 2003/01/07 23:44:19 $
  */
 public abstract class TestObject extends BulkTest {
     public TestObject(String testName) {
@@ -138,6 +138,21 @@ public abstract class TestObject extends BulkTest {
         if(obj1.equals(obj2)) {
             assertEquals("[2] When two objects are equal, their hashCodes should be also.",obj1.hashCode(),obj2.hashCode());
             assertTrue("When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true", obj2.equals(obj1));
+        }
+    }
+
+    public void testSerializeDeserializeThenCompare() throws Exception {
+        Object obj = makeObject();
+        if(obj instanceof Serializable) {
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(buffer);
+            out.writeObject(obj);
+            out.close();
+            
+            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+            Object dest = in.readObject();
+            in.close();
+            assertEquals("obj != deserialize(serialize(obj))",obj,dest);
         }
     }
 
