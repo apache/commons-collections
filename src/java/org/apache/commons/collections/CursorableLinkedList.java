@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.8 2002/06/16 03:39:40 mas Exp $
- * $Revision: 1.8 $
- * $Date: 2002/06/16 03:39:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.9 2002/06/21 03:26:15 mas Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/06/21 03:26:15 $
  *
  * ====================================================================
  *
@@ -92,7 +92,7 @@ import java.lang.UnsupportedOperationException; // stops a javadoc warning
  *
  * @since 1.0
  * @author Rodney Waldhoff
- * @version $Id: CursorableLinkedList.java,v 1.8 2002/06/16 03:39:40 mas Exp $
+ * @version $Id: CursorableLinkedList.java,v 1.9 2002/06/21 03:26:15 mas Exp $
  * @see java.util.LinkedList
  */
 public class CursorableLinkedList implements List, Serializable {
@@ -446,13 +446,24 @@ public class CursorableLinkedList implements List, Serializable {
      */
     public int indexOf(Object o) {
         int ndx = 0;
-        for(Listable elt = _head.next(), past = null; null != elt && past != _head.prev(); elt = (past = elt).next()) {
-            if(null == o && null == elt.value()) {
-                return ndx;
-            } else if(o.equals(elt.value())) {
-                return ndx;
+
+        // perform the null check outside of the loop to save checking every
+        // single time through the loop.
+        if (null == o) {
+            for(Listable elt = _head.next(), past = null; null != elt && past != _head.prev(); elt = (past = elt).next()) {
+                if (null == elt.value()) {
+                    return ndx;
+                }
+                ndx++;
             }
-            ndx++;
+        } else {
+
+            for(Listable elt = _head.next(), past = null; null != elt && past != _head.prev(); elt = (past = elt).next()) {
+                if (o.equals(elt.value())) {
+                    return ndx;
+                }
+                ndx++;
+            }
         }
         return -1;
     }
@@ -486,13 +497,23 @@ public class CursorableLinkedList implements List, Serializable {
      */
     public int lastIndexOf(Object o) {
         int ndx = _size-1;
-        for(Listable elt = _head.prev(), past = null; null != elt && past != _head.next(); elt = (past = elt).prev()) {
-            if(null == o && null == elt.value()) {
-                return ndx;
-            } else if(o.equals(elt.value())) {
-                return ndx;
+
+        // perform the null check outside of the loop to save checking every
+        // single time through the loop.
+        if (null == o) {
+            for(Listable elt = _head.prev(), past = null; null != elt && past != _head.next(); elt = (past = elt).prev()) {
+                if (null == elt.value()) {
+                    return ndx;
+                }
+                ndx--;
             }
-            ndx--;
+        } else {
+            for(Listable elt = _head.prev(), past = null; null != elt && past != _head.next(); elt = (past = elt).prev()) {
+                if (o.equals(elt.value())) {
+                    return ndx;
+                }
+                ndx--;
+            }
         }
         return -1;
     }
