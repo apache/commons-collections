@@ -46,6 +46,7 @@ No interface changes, or deprecations have occurred.
 <li>CollectionUtils - Add size(Object) method to find the size of various collection-like objects [27909]</li>
 <li>SingletonIterator - make remove() functionality optional</li>
 <li>AbstractLinkedList/NodeCachingLinkedList - added getValue() and setValue() to Node, and made everything use them</li>
+<li>LRUMap - The addMapping() method now uses isFull() to determine whether it is full</li>
 </ul>
 
 <h4>Made Serializable</h4>
@@ -68,6 +69,7 @@ No interface changes, or deprecations have occurred.
 <li>ExtendedProperties - Close input stream in constructor [27737]</li>
 <li>Flat3Map - Handle infinite loops in toString</li>
 <li>LRUMap - The removeLRU() method was passed the wrong LinkEntry [28433]</li>
+<li>EnumIterator/MapUtils - Changed enum references to enable JDK 1.5 compliance</li>
 </ul>
 
 <center><h3>JAVADOC</h3></center>
@@ -76,7 +78,8 @@ No interface changes, or deprecations have occurred.
 <li>MultiKey - Add extra explanatations, examples and warnings</li>
 <li>MultiMap,MultiHashMap - Add extra documentation to clarify the interface and implementation</li>
 <li>XxxUtils - Clarify the internal workings of the predicated decorator classes [28115]</li>
-<li>BidiMap - clarify 1 to 1 nature of the map</li>
+<li>BidiMap - Clarify 1 to 1 nature of the map</li>
+<li>LRUMap - Added extra javadoc about method implementations</li>
 <li>BoundedCollection/UnmodifiableBoundedCollection - reword to avoid misunderstandings</li>
 <li>Closure/Predicate/Transformer/Factory - Additional javadoc with links</li>
 <li>ClosureUtils/PredicateUtils/TransformerUtils/FactoryUtils - Additional links to implementations</li>
