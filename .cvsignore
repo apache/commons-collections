@@ -7,3 +7,4 @@ target
 .project
 eclipse
 bin
+junit*.properties
