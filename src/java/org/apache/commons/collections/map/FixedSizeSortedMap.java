@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/FixedSizeSortedMap.java,v 1.1 2003/11/16 00:05:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/FixedSizeSortedMap.java,v 1.2 2003/12/11 22:55:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,8 +57,15 @@
  */
 package org.apache.commons.collections.map;
 
-import java.util.Comparator;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
+
+import org.apache.commons.collections.BoundedMap;
+import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>SortedMap</code> to fix the size blocking add/remove.
@@ -74,12 +81,13 @@ import java.util.SortedMap;
  * is not always unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:45 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/11 22:55:25 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeSortedMap extends FixedSizeMap implements SortedMap {
+public class FixedSizeSortedMap extends AbstractSortedMapDecorator
+        implements SortedMap, BoundedMap {
 
     /**
      * Factory method to create a fixed size sorted map.
@@ -112,18 +120,46 @@ public class FixedSizeSortedMap extends FixedSizeMap implements SortedMap {
     }
 
     //-----------------------------------------------------------------------
-    public Object firstKey() {
-        return getSortedMap().firstKey();
+    public Object put(Object key, Object value) {
+        if (map.containsKey(key) == false) {
+            throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
+        }
+        return map.put(key, value);
     }
 
-    public Object lastKey() {
-        return getSortedMap().lastKey();
+    public void putAll(Map mapToCopy) {
+        for (Iterator it = mapToCopy.keySet().iterator(); it.hasNext(); ) {
+            if (mapToCopy.containsKey(it.next()) == false) {
+                throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
+            }
+        }
+        map.putAll(mapToCopy);
     }
 
-    public Comparator comparator() {
-        return getSortedMap().comparator();
+    public void clear() {
+        throw new UnsupportedOperationException("Map is fixed size");
     }
 
+    public Object remove(Object key) {
+        throw new UnsupportedOperationException("Map is fixed size");
+    }
+
+    public Set entrySet() {
+        Set set = map.entrySet();
+        return UnmodifiableSet.decorate(set);
+    }
+
+    public Set keySet() {
+        Set set = map.keySet();
+        return UnmodifiableSet.decorate(set);
+    }
+
+    public Collection values() {
+        Collection coll = map.values();
+        return UnmodifiableCollection.decorate(coll);
+    }
+
+    //-----------------------------------------------------------------------
     public SortedMap subMap(Object fromKey, Object toKey) {
         SortedMap map = getSortedMap().subMap(fromKey, toKey);
         return new FixedSizeSortedMap(map);
@@ -139,4 +175,12 @@ public class FixedSizeSortedMap extends FixedSizeMap implements SortedMap {
         return new FixedSizeSortedMap(map);
     }
 
+    public boolean isFull() {
+        return true;
+    }
+
+    public int maxSize() {
+        return size();
+    }
+   
 }

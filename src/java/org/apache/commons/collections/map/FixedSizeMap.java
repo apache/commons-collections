@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/FixedSizeMap.java,v 1.1 2003/11/16 00:05:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/FixedSizeMap.java,v 1.2 2003/12/11 22:55:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,6 +62,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.BoundedMap;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
@@ -79,12 +80,13 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * is not always unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:45 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/11 22:55:25 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeMap extends AbstractMapDecorator implements Map {
+public class FixedSizeMap extends AbstractMapDecorator
+        implements Map, BoundedMap {
 
     /**
      * Factory method to create a fixed size map.
@@ -145,6 +147,14 @@ public class FixedSizeMap extends AbstractMapDecorator implements Map {
     public Collection values() {
         Collection coll = map.values();
         return UnmodifiableCollection.decorate(coll);
+    }
+
+    public boolean isFull() {
+        return true;
+    }
+
+    public int maxSize() {
+        return size();
     }
    
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.3 2003/12/11 00:46:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.4 2003/12/11 22:55:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,6 +63,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.apache.commons.collections.BoundedMap;
+
 /**
  * A <code>Map</code> implementation with a fixed maximum size which removes
  * the least recently used entry if an entry is added when full.
@@ -81,13 +83,14 @@ import java.util.Map;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/11 00:46:12 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/11 22:55:25 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public class LRUMap extends AbstractLinkedMap implements Serializable, Cloneable {
+public class LRUMap extends AbstractLinkedMap
+        implements BoundedMap, Serializable, Cloneable {
     
     /** Serialisation version */
     static final long serialVersionUID = -612114643488955218L;
