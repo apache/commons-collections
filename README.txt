@@ -7,7 +7,7 @@ project.
 This component requires the excellent Ant utility.  It can 
 be found here :
 
-  http://jakarta.apache.org/ant/
+  http://ant.apache.org/
 
 For testing the project, you will also need JUnit :
 
@@ -38,5 +38,3 @@ $ ant doc
 To build the jar and API doc at once :
 
 $ ant dist
-
-
