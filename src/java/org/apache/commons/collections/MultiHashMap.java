@@ -50,7 +50,7 @@ import java.util.Set;
  * <code>list</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.17 $ $Date: 2004/03/14 17:05:24 $
+ * @version $Revision: 1.18 $ $Date: 2004/05/14 22:33:31 $
  * 
  * @author Christopher Berry
  * @author James Strachan
@@ -94,12 +94,28 @@ public class MultiHashMap extends HashMap implements MultiMap {
     }
 
     /**
-     * Constructor.
+     * Constructor that copies the input map creating an independent copy.
+     * <p>
+     * This method performs different behaviour depending on whether the map
+     * specified is a MultiMap or not. If a MultiMap is specified, each internal
+     * collection is also cloned. If the specified map only implements Map, then
+     * the values are not cloned.
+     * <p>
+     * NOTE: From Commons Collections 3.1 this method correctly copies a MultiMap
+     * to form a truly independent new map.
      * 
      * @param mapToCopy  a Map to copy
      */
     public MultiHashMap(Map mapToCopy) {
         super(mapToCopy);
+        if (mapToCopy instanceof MultiMap) {
+            for (Iterator it = entrySet().iterator(); it.hasNext();) {
+                Map.Entry entry = (Map.Entry) it.next();
+                Collection coll = (Collection) entry.getValue();
+                Collection newColl = createCollection(coll);
+                entry.setValue(newColl);
+            }
+        }
     }
 
     /**
@@ -401,25 +417,25 @@ public class MultiHashMap extends HashMap implements MultiMap {
 
     //-----------------------------------------------------------------------
     /**
-     * Clone the map.
+     * Clones the map creating an independent copy.
      * <p>
      * The clone will shallow clone the collections as well as the map.
      * 
      * @return the cloned map
      */
     public Object clone() {
-        MultiHashMap obj = (MultiHashMap) super.clone();
+        MultiHashMap cloned = (MultiHashMap) super.clone();
 
         // clone each Collection container
-        for (Iterator it = entrySet().iterator(); it.hasNext();) {
+        for (Iterator it = cloned.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
             Collection coll = (Collection) entry.getValue();
             Collection newColl = createCollection(coll);
             entry.setValue(newColl);
         }
-        return obj;
+        return cloned;
     }
-    
+
     /** 
      * Creates a new instance of the map value Collection container.
      * <p>

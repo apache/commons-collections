@@ -29,7 +29,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Unit Tests for <code>MultiHashMap</code>.
  * 
- * @version $Revision: 1.18 $ $Date: 2004/03/14 17:05:24 $
+ * @version $Revision: 1.19 $ $Date: 2004/05/14 22:33:58 $
  *
  * @author Unknown
  */
@@ -344,5 +344,50 @@ public class TestMultiHashMap extends AbstractTestMap {
         assertEquals(true, map.containsValue("A", "Z"));
         assertEquals(true, map.containsValue("A", "M"));
     }
-    
+
+    public void testClone() {
+        MultiHashMap map = new MultiHashMap();
+        map.put("A", "1");
+        map.put("A", "2");
+        Collection coll = (Collection) map.get("A");
+        assertEquals(1, map.size());
+        assertEquals(2, coll.size());
+        
+        MultiHashMap cloned = (MultiHashMap) map.clone();
+        Collection clonedColl = (Collection) cloned.get("A");
+        assertNotSame(map, cloned);
+        assertNotSame(coll, clonedColl);
+        assertEquals(1, map.size());
+        assertEquals(2, coll.size());
+        assertEquals(1, cloned.size());
+        assertEquals(2, clonedColl.size());
+        map.put("A", "3");
+        assertEquals(1, map.size());
+        assertEquals(3, coll.size());
+        assertEquals(1, cloned.size());
+        assertEquals(2, clonedColl.size());
+    }
+
+    public void testConstructor() {
+        MultiHashMap map = new MultiHashMap();
+        map.put("A", "1");
+        map.put("A", "2");
+        Collection coll = (Collection) map.get("A");
+        assertEquals(1, map.size());
+        assertEquals(2, coll.size());
+        
+        MultiHashMap newMap = new MultiHashMap(map);
+        Collection newColl = (Collection) newMap.get("A");
+        assertNotSame(map, newMap);
+        assertNotSame(coll, newColl);
+        assertEquals(1, map.size());
+        assertEquals(2, coll.size());
+        assertEquals(1, newMap.size());
+        assertEquals(2, newColl.size());
+        map.put("A", "3");
+        assertEquals(1, map.size());
+        assertEquals(3, coll.size());
+        assertEquals(1, newMap.size());
+        assertEquals(2, newColl.size());
+    }
 }
