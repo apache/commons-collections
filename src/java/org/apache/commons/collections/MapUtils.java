@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.40 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.41 2003/12/11 23:45:02 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -109,7 +109,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.40 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.41 $ $Date: 2003/12/11 23:45:02 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -120,6 +120,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  * @author Arun Mammen Thomas
  * @author Janek Bogucki
  * @author Max Rydahl Andersen
+ * @author <a href="mailto:equinus100@hotmail.com">Ashwin S</a>
  */
 public class MapUtils {
     
@@ -600,6 +601,280 @@ public class MapUtils {
             answer = defaultValue;
         }
         return answer;
+    }
+    
+
+    // Type safe primitive getters
+    //-------------------------------------------------------------------------
+    /**
+     * Gets a boolean from a Map in a null-safe manner.
+     * <p>
+     * If the value is a <code>Boolean</code> its value is returned.
+     * If the value is a <code>String</code> and it equals 'true' ignoring case
+     * then <code>true</code> is returned, otherwise <code>false</code>.
+     * If the value is a <code>Number</code> an integer zero value returns
+     * <code>false</code> and non-zero returns <code>true</code>.
+     * Otherwise, <code>false</code> is returned.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @return the value in the Map as a Boolean, <code>false</code> if null map input
+     */
+    public static boolean getBooleanValue(final Map map, final Object key) {
+        Boolean booleanObject = getBoolean(map, key);
+        if (booleanObject == null) {
+            return false;
+        }
+        return booleanObject.booleanValue();
+    }
+
+    /**
+     * Gets a byte from a Map in a null-safe manner.
+     * <p>
+     * The byte is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @return the value in the Map as a byte, <code>0</code> if null map input
+     */
+    public static byte getByteValue(final Map map, final Object key) {
+        Byte byteObject = getByte(map, key);
+        if (byteObject == null) {
+            return 0;
+        }
+        return byteObject.byteValue();
+    }
+
+    /**
+     * Gets a short from a Map in a null-safe manner.
+     * <p>
+     * The short is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @return the value in the Map as a short, <code>0</code> if null map input
+     */
+    public static short getShortValue(final Map map, final Object key) {
+        Short shortObject = getShort(map, key);
+        if (shortObject == null) {
+            return 0;
+        }
+        return shortObject.shortValue();
+    }
+
+    /**
+     * Gets an int from a Map in a null-safe manner.
+     * <p>
+     * The int is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @return the value in the Map as an int, <code>0</code> if null map input
+     */
+    public static int getIntValue(final Map map, final Object key) {
+        Integer integerObject = getInteger(map, key);
+        if (integerObject == null) {
+            return 0;
+        }
+        return integerObject.intValue();
+    }
+
+    /**
+     * Gets a long from a Map in a null-safe manner.
+     * <p>
+     * The long is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @return the value in the Map as a long, <code>0L</code> if null map input
+     */
+    public static long getLongValue(final Map map, final Object key) {
+        Long longObject = getLong(map, key);
+        if (longObject == null) {
+            return 0L;
+        }
+        return longObject.longValue();
+    }
+
+    /**
+     * Gets a float from a Map in a null-safe manner.
+     * <p>
+     * The float is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @return the value in the Map as a float, <code>0.0F</code> if null map input
+     */
+    public static float getFloatValue(final Map map, final Object key) {
+        Float floatObject = getFloat(map, key);
+        if (floatObject == null) {
+            return 0f;
+        }
+        return floatObject.floatValue();
+    }
+
+    /**
+     * Gets a double from a Map in a null-safe manner.
+     * <p>
+     * The double is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @return the value in the Map as a double, <code>0.0</code> if null map input
+     */
+    public static double getDoubleValue(final Map map, final Object key) {
+        Double doubleObject = getDouble(map, key);
+        if (doubleObject == null) {
+            return 0d;
+        }
+        return doubleObject.doubleValue();
+    }
+
+    // Type safe primitive getters with default values
+    //-------------------------------------------------------------------------
+    /**
+     * Gets a boolean from a Map in a null-safe manner,
+     * using the default value if the the conversion fails.
+     * <p>
+     * If the value is a <code>Boolean</code> its value is returned.
+     * If the value is a <code>String</code> and it equals 'true' ignoring case
+     * then <code>true</code> is returned, otherwise <code>false</code>.
+     * If the value is a <code>Number</code> an integer zero value returns
+     * <code>false</code> and non-zero returns <code>true</code>.
+     * Otherwise, <code>defaultValue</code> is returned.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @param defaultValue  return if the value is null or if the
+     *     conversion fails
+     * @return the value in the Map as a Boolean, <code>defaultValue</code> if null map input
+     */
+    public static boolean getBooleanValue(final Map map, final Object key, boolean defaultValue) {
+        Boolean booleanObject = getBoolean(map, key);
+        if (booleanObject == null) {
+            return defaultValue;
+        }
+        return booleanObject.booleanValue();
+    }
+
+    /**
+     * Gets a byte from a Map in a null-safe manner,
+     * using the default value if the the conversion fails.     
+     * <p>
+     * The byte is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @param defaultValue  return if the value is null or if the
+     *     conversion fails
+     * @return the value in the Map as a byte, <code>defaultValue</code> if null map input
+     */
+    public static byte getByteValue(final Map map, final Object key, byte defaultValue) {
+        Byte byteObject = getByte(map, key);
+        if (byteObject == null) {
+            return defaultValue;
+        }
+        return byteObject.byteValue();
+    }
+
+    /**
+     * Gets a short from a Map in a null-safe manner,
+     * using the default value if the the conversion fails.     
+     * <p>
+     * The short is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @param defaultValue  return if the value is null or if the
+     *     conversion fails
+     * @return the value in the Map as a short, <code>defaultValue</code> if null map input
+     */
+    public static short getShortValue(final Map map, final Object key, short defaultValue) {
+        Short shortObject = getShort(map, key);
+        if (shortObject == null) {
+            return defaultValue;
+        }
+        return shortObject.shortValue();
+    }
+
+    /**
+     * Gets an int from a Map in a null-safe manner,
+     * using the default value if the the conversion fails.     
+     * <p>
+     * The int is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @param defaultValue  return if the value is null or if the
+     *     conversion fails
+     * @return the value in the Map as an int, <code>defaultValue</code> if null map input
+     */
+    public static int getIntValue(final Map map, final Object key, int defaultValue) {
+        Integer integerObject = getInteger(map, key);
+        if (integerObject == null) {
+            return defaultValue;
+        }
+        return integerObject.intValue();
+    }
+
+    /**
+     * Gets a long from a Map in a null-safe manner,
+     * using the default value if the the conversion fails.     
+     * <p>
+     * The long is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @param defaultValue  return if the value is null or if the
+     *     conversion fails
+     * @return the value in the Map as a long, <code>defaultValue</code> if null map input
+     */
+    public static long getLongValue(final Map map, final Object key, long defaultValue) {
+        Long longObject = getLong(map, key);
+        if (longObject == null) {
+            return defaultValue;
+        }
+        return longObject.longValue();
+    }
+
+    /**
+     * Gets a float from a Map in a null-safe manner,
+     * using the default value if the the conversion fails.     
+     * <p>
+     * The float is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @param defaultValue  return if the value is null or if the
+     *     conversion fails
+     * @return the value in the Map as a float, <code>defaultValue</code> if null map input
+     */
+    public static float getFloatValue(final Map map, final Object key, float defaultValue) {
+        Float floatObject = getFloat(map, key);
+        if (floatObject == null) {
+            return defaultValue;
+        }
+        return floatObject.floatValue();
+    }
+
+    /**
+     * Gets a double from a Map in a null-safe manner,
+     * using the default value if the the conversion fails.     
+     * <p>
+     * The double is obtained from the results of {@link #getNumber(Map,Object)}.
+     *
+     * @param map  the map to use
+     * @param key  the key to look up
+     * @param defaultValue  return if the value is null or if the
+     *     conversion fails
+     * @return the value in the Map as a double, <code>defaultValue</code> if null map input
+     */
+    public static double getDoubleValue(final Map map, final Object key, double defaultValue) {
+        Double doubleObject = getDouble(map, key);
+        if (doubleObject == null) {
+            return defaultValue;
+        }
+        return doubleObject.doubleValue();
     }
 
     // Conversion methods
