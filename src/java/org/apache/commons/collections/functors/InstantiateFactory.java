@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/InstantiateFactory.java,v 1.1 2003/11/23 17:48:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/InstantiateFactory.java,v 1.2 2003/11/27 23:57:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import org.apache.commons.collections.Factory;
  * Factory implementation that creates a new object instance by reflection.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 17:48:19 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/27 23:57:09 $
  *
  * @author Stephen Colebourne
  */
@@ -103,13 +103,12 @@ public class InstantiateFactory implements Factory, Serializable {
         }
 
         if (paramTypes == null || paramTypes.length == 0) {
-            paramTypes = null;
-            args = null;
+            return new InstantiateFactory(classToInstantiate);
         } else {
             paramTypes = (Class[]) paramTypes.clone();
             args = (Object[]) args.clone();
+            return new InstantiateFactory(classToInstantiate, paramTypes, args);
         }
-        return new InstantiateFactory(classToInstantiate, paramTypes, args);
     }
 
     /**

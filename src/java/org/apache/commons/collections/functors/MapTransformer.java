@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/MapTransformer.java,v 1.1 2003/11/23 23:25:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/MapTransformer.java,v 1.2 2003/11/27 23:57:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,11 +63,11 @@ import java.util.Map;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Predicate implementation that returns true the first time an object is
- * passed into the predicate.
+ * Transformer implementation that returns the value held in a specified map
+ * using the input parameter as a key.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 23:25:33 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/27 23:57:09 $
  *
  * @author Stephen Colebourne
  */
@@ -81,13 +81,15 @@ public final class MapTransformer implements Transformer, Serializable {
 
     /**
      * Factory to create the transformer.
+     * <p>
+     * If the map is null, a transformer that always returns null is returned.
      * 
-     * @return the map, not cloned, not null
-     * @throws IllegalArgumentException if the map is null
+     * @param the map, not cloned
+     * @return the transformer
      */
     public static Transformer getInstance(Map map) {
         if (map == null) {
-            throw new IllegalArgumentException("The map must not be null");
+            return ConstantTransformer.NULL_INSTANCE;
         }
         return new MapTransformer(map);
     }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/PrototypeFactory.java,v 1.1 2003/11/23 17:48:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/PrototypeFactory.java,v 1.2 2003/11/27 23:57:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.Factory;
  * Factory implementation that creates a new instance each time based on a prototype.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 17:48:19 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/27 23:57:09 $
  *
  * @author Stephen Colebourne
  */
@@ -97,11 +97,11 @@ public class PrototypeFactory {
      */
     public static Factory getInstance(Object prototype) {
         if (prototype == null) {
-            throw new IllegalArgumentException("The prototype must not be null");
+            return ConstantFactory.NULL_INSTANCE;
         }
         try {
-            prototype.getClass().getMethod("clone", null);
-            return new PrototypeCloneFactory(prototype);
+            Method method = prototype.getClass().getMethod("clone", null);
+            return new PrototypeCloneFactory(prototype, method);
 
         } catch (NoSuchMethodException ex) {
             try {
@@ -145,16 +145,12 @@ public class PrototypeFactory {
         private transient Method iCloneMethod;
 
         /**
-         * Constructor to store prototype
+         * Constructor to store prototype.
          */
-        private PrototypeCloneFactory(Object prototype) {
+        private PrototypeCloneFactory(Object prototype, Method method) {
             super();
-            if (prototype == null) {
-                throw new IllegalArgumentException("PrototypeCloneFactory: The prototype must not be null");
-            }
             iPrototype = prototype;
-
-            findCloneMethod();
+            iCloneMethod = method;
         }
 
         /**
@@ -207,9 +203,6 @@ public class PrototypeFactory {
          */
         private PrototypeSerializationFactory(Serializable prototype) {
             super();
-            if (prototype == null) {
-                throw new IllegalArgumentException("PrototypeSerializationFactory: The prototype must not be null");
-            }
             iPrototype = prototype;
         }
 

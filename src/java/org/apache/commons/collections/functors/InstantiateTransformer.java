@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/InstantiateTransformer.java,v 1.1 2003/11/23 23:25:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/InstantiateTransformer.java,v 1.2 2003/11/27 23:57:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that creates a new object instance by reflection.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 23:25:33 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/27 23:57:09 $
  *
  * @author Stephen Colebourne
  */
@@ -142,7 +142,7 @@ public class InstantiateTransformer implements Transformer, Serializable {
             return con.newInstance(iArgs);
 
         } catch (NoSuchMethodException ex) {
-            throw new IllegalArgumentException("InstantiateTransformer: The constructor must exist and be public ");
+            throw new FunctorException("InstantiateTransformer: The constructor must exist and be public ");
         } catch (InstantiationException ex) {
             throw new FunctorException("InstantiateTransformer: InstantiationException", ex);
         } catch (IllegalAccessException ex) {

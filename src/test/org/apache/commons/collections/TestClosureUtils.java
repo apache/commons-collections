@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestClosureUtils.java,v 1.5 2003/11/23 17:01:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestClosureUtils.java,v 1.6 2003/11/27 23:57:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.functors.NOPClosure;
  * Tests the org.apache.commons.collections.ClosureUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/11/23 17:01:36 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/27 23:57:09 $
  *
  * @author Stephen Colebourne
  */
@@ -124,7 +124,14 @@ public class TestClosureUtils extends junit.framework.TestCase {
         public void execute(Object object) {
             count++;
         }
-
+    }
+    static class MockTransformer implements Transformer {
+        int count = 0;
+        
+        public Object transform(Object object) {
+            count++;
+            return object;
+        }
     }
 
     // exceptionClosure
@@ -189,12 +196,23 @@ public class TestClosureUtils extends junit.framework.TestCase {
         MockClosure cmd = new MockClosure();
         ClosureUtils.whileClosure(PredicateUtils.falsePredicate(), cmd).execute(null);
         assertEquals(0, cmd.count);
+        
+        cmd = new MockClosure();
+        ClosureUtils.whileClosure(PredicateUtils.uniquePredicate(), cmd).execute(null);
+        assertEquals(1, cmd.count);
+        
+        try {
+            ClosureUtils.whileClosure(null, ClosureUtils.nopClosure());
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            ClosureUtils.whileClosure(PredicateUtils.falsePredicate(), null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
             ClosureUtils.whileClosure(null, null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
 
     // doWhileClosure
@@ -204,12 +222,15 @@ public class TestClosureUtils extends junit.framework.TestCase {
         MockClosure cmd = new MockClosure();
         ClosureUtils.doWhileClosure(cmd, PredicateUtils.falsePredicate()).execute(null);
         assertEquals(1, cmd.count);
+        
+        cmd = new MockClosure();
+        ClosureUtils.doWhileClosure(cmd, PredicateUtils.uniquePredicate()).execute(null);
+        assertEquals(2, cmd.count);
+        
         try {
             ClosureUtils.doWhileClosure(null, null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
 
     // chainedClosure
@@ -361,7 +382,9 @@ public class TestClosureUtils extends junit.framework.TestCase {
             fail();
         } catch (IllegalArgumentException ex) {}
         try {
-            ClosureUtils.switchClosure(new Predicate[2], new Closure[1]);
+            ClosureUtils.switchClosure(
+                    new Predicate[] {PredicateUtils.truePredicate()},
+                    new Closure[] {a,b});
             fail();
         } catch (IllegalArgumentException ex) {}
     }
@@ -408,5 +431,18 @@ public class TestClosureUtils extends junit.framework.TestCase {
         } catch (IllegalArgumentException ex) {}
     }
     
+    // asClosure
+    //------------------------------------------------------------------
+
+    public void testTransformerClosure() {
+        MockTransformer mock = new MockTransformer();
+        Closure closure = ClosureUtils.asClosure(mock);
+        closure.execute(null);
+        assertEquals(1, mock.count);
+        closure.execute(null);
+        assertEquals(2, mock.count);
+        
+        assertSame(ClosureUtils.nopClosure(), ClosureUtils.asClosure(null));
+    }
     
 }

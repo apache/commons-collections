@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTransformerUtils.java,v 1.6 2003/11/23 23:25:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTransformerUtils.java,v 1.7 2003/11/27 23:57:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,6 +60,7 @@ package org.apache.commons.collections;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ import org.apache.commons.collections.functors.NOPTransformer;
  * Tests the org.apache.commons.collections.TransformerUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/11/23 23:25:33 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/27 23:57:09 $
  *
  * @author Stephen Colebourne
  * @author James Carman
@@ -171,6 +172,7 @@ public class TestTransformerUtils extends junit.framework.TestCase {
         assertEquals(cObject, TransformerUtils.constantTransformer(cObject).transform(cObject));
         assertEquals(cObject, TransformerUtils.constantTransformer(cObject).transform(cString));
         assertEquals(cObject, TransformerUtils.constantTransformer(cObject).transform(cInteger));
+        assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.constantTransformer(null));
     }
 
     // cloneTransformer
@@ -200,6 +202,7 @@ public class TestTransformerUtils extends junit.framework.TestCase {
         assertEquals(new Integer(1), TransformerUtils.mapTransformer(map).transform(cObject));
         assertEquals(new Integer(2), TransformerUtils.mapTransformer(map).transform(cString));
         assertEquals(null, TransformerUtils.mapTransformer(map).transform(cInteger));
+        assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.mapTransformer(null));
     }
 
     // commandTransformer
@@ -350,7 +353,9 @@ public class TestTransformerUtils extends junit.framework.TestCase {
             fail();
         } catch (IllegalArgumentException ex) {}
         try {
-            TransformerUtils.switchTransformer(new Predicate[2], new Transformer[1]);
+            TransformerUtils.switchTransformer(
+                    new Predicate[] {PredicateUtils.truePredicate()},
+                    new Transformer[] {a,b});
             fail();
         } catch (IllegalArgumentException ex) {}
     }
@@ -425,6 +430,18 @@ public class TestTransformerUtils extends junit.framework.TestCase {
                 "noSuchMethod", new Class[] {Object.class}, new Object[] {cString}).transform(new Object());
             fail();
         } catch (FunctorException ex) {}
+        try {
+            TransformerUtils.invokerTransformer("badArgs", null, new Object[] { cString });
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            TransformerUtils.invokerTransformer("badArgs", new Class[] {Object.class}, null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            TransformerUtils.invokerTransformer("badArgs", new Class[] {}, new Object[] { cString });
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
     
     // stringValueTransformer
@@ -439,4 +456,30 @@ public class TestTransformerUtils extends junit.framework.TestCase {
             TransformerUtils.stringValueTransformer().transform(new Integer(6)));
     }
     
+    // instantiateFactory
+    //------------------------------------------------------------------
+    
+    public void testInstantiateTransformerNull() {
+        try {
+            Transformer trans = TransformerUtils.instantiateTransformer(null, new Object[] {"str"});
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            Transformer trans = TransformerUtils.instantiateTransformer(new Class[] {}, new Object[] {"str"});
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        
+        Transformer trans = TransformerUtils.instantiateTransformer(new Class[] {Long.class}, new Object[] {null});
+        try {
+            trans.transform(String.class);
+            fail();
+        } catch (FunctorException ex) {}
+        
+        trans = TransformerUtils.instantiateTransformer();
+        assertEquals("", trans.transform(String.class));
+        
+        trans = TransformerUtils.instantiateTransformer(new Class[] {Long.TYPE}, new Object[] {new Long(1000L)});
+        assertEquals(new Date(1000L), trans.transform(Date.class));
+    }
+
 }
