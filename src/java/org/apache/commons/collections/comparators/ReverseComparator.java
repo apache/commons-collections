@@ -60,14 +60,16 @@ import java.util.Comparator;
  * Reverses the order of another comparator.
  *
  * @author bayard@generationjava.com
- * @version $Id: ReverseComparator.java,v 1.1 2002/02/26 22:42:31 morgand Exp $
+ * @version $Id: ReverseComparator.java,v 1.2 2002/03/01 18:56:53 morgand Exp $
  */
 public class ReverseComparator implements Comparator {
 
     private Comparator comparator;
 
     /**
-     * Creates a reverse comparator that will invert any list.
+     * Creates a reverse comparator that will invert any List.
+     * It merely reverses the existing order; it does not
+     * reorder the List according to reverse "natural" order.
      */
     public ReverseComparator() {
     }
