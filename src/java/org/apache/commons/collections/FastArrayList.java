@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.11 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.12 2003/12/24 01:13:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -99,7 +99,7 @@ import java.util.ListIterator;
  * Double-Checked Locking Idiom Is Broken Declartion</a>.</p>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.11 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.12 $ $Date: 2003/12/24 01:13:55 $
  * 
  * @author Craig R. McClanahan
  */
@@ -1338,7 +1338,7 @@ public class FastArrayList extends ArrayList {
             int i = nextIndex();
             get().add(i, o);
             iter = get().listIterator(i + 1);
-            lastReturnedIndex = 1;
+            lastReturnedIndex = -1;
         }
 
    }

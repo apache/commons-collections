@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.6 2003/10/05 21:11:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.7 2003/12/24 01:13:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.Test;
 /**
  * Test FastArrayList implementation in <strong>fast</strong> mode.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/10/05 21:11:06 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/24 01:13:55 $
  *
  * @author Jason van Zyl
  */
@@ -92,6 +92,14 @@ public class TestFastArrayList1 extends TestFastArrayList {
         FastArrayList fal = new FastArrayList();
         fal.setFast(true);
         return (fal);
+    }
+    
+    public String[] ignoredTests() {
+        // subList impl result in...
+        return new String[] {
+            "TestFastArrayList1.bulkTestSubList.bulkTestListIterator.testAddThenSet",
+            "TestFastArrayList1.bulkTestSubList.bulkTestListIterator.testAddThenRemove",
+        };
     }
 
 }
