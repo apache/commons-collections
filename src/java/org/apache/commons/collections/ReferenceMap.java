@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.2 2002/08/12 18:16:05 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/12 18:16:05 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.3 2002/08/12 19:59:49 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/12 19:59:49 $
  *
  * ====================================================================
  *
@@ -123,6 +123,11 @@ import java.util.Set;
  *  @see java.lang.ref.Reference
  */
 public class ReferenceMap extends AbstractMap implements Serializable {
+
+    /**
+     *  For serialization.
+     */
+    final private static long serialVersionUID = -3370601314380922368L;
 
 
     /**
