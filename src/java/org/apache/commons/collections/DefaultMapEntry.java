@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.11 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.12 2003/09/25 22:47:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,10 +63,12 @@ import java.util.Map;
  * A default implementation of {@link java.util.Map.Entry}
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.11 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.12 $ $Date: 2003/09/25 22:47:14 $
  * 
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @author James Strachan
+ * @author Michael A. Smith
+ * @author Neil O'Toole
+ * @author Stephen Colebourne
  */
 public class DefaultMapEntry implements Map.Entry {
     
@@ -76,58 +78,43 @@ public class DefaultMapEntry implements Map.Entry {
     private Object value;
     
     /**
-     * Constructs a new <Code>DefaultMapEntry</Code> with a null key
+     * Constructs a new <code>DefaultMapEntry</code> with a null key
      * and null value.
      */
     public DefaultMapEntry() {
+        super();
     }
 
     /**
-     * Constructs a new <Code>DefaultMapEntry</Code> with the given
+     * Constructs a new <code>DefaultMapEntry</code> with the given
+     * key and given value.
+     *
+     * @param entry  the entry to copy, must not be null
+     * @throws NullPointerException if the entry is null
+     */
+    public DefaultMapEntry(Map.Entry entry) {
+        super();
+        this.key = entry.getKey();
+        this.value = entry.getValue();
+    }
+
+    /**
+     * Constructs a new <code>DefaultMapEntry</code> with the given
      * key and given value.
      *
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
     public DefaultMapEntry(Object key, Object value) {
+        super();
         this.key = key;
         this.value = value;
     }
 
-    /**
-     * Implemented per API documentation of 
-     * {@link java.util.Map.Entry#equals(Object)}
-     */
-    public boolean equals(Object o) {
-        if( o == null ) return false;
-        if( o == this ) return true;        
-
-        if ( ! (o instanceof Map.Entry ) )
-            return false;
-        Map.Entry e2 = (Map.Entry)o;    
-        return ((getKey() == null ?
-                 e2.getKey() == null : getKey().equals(e2.getKey())) &&
-                (getValue() == null ?
-                 e2.getValue() == null : getValue().equals(e2.getValue())));
-    }
-     
-     
-    /**
-     * Implemented per API documentation of 
-     * {@link java.util.Map.Entry#hashCode()}
-     */
-    public int hashCode() {
-        return ( ( getKey() == null ? 0 : getKey().hashCode() ) ^
-                 ( getValue() == null ? 0 : getValue().hashCode() ) ); 
-    }
-    
-
-
     // Map.Entry interface
     //-------------------------------------------------------------------------
-
     /**
-     * Returns the key.
+     * Gets the key from the Map Entry.
      *
      * @return the key 
      */
@@ -136,19 +123,9 @@ public class DefaultMapEntry implements Map.Entry {
     }
 
     /**
-     * Returns the value.
-     *
-     * @return the value
-     */
-    public Object getValue() {
-        return value;
-    }
-
-    // Properties
-    //-------------------------------------------------------------------------    
-
-    /**
-     * Sets the key.  This method does not modify any map.
+     * Sets the key stored in this Map Entry.
+     * <p>
+     * This Map Entry is not connected to a Map, so only the local data is changed.
      *
      * @param key  the new key
      */
@@ -156,17 +133,62 @@ public class DefaultMapEntry implements Map.Entry {
         this.key = key;
     }
     
-    /** 
-     * Note that this method only sets the local reference inside this object and
-     * does not modify the original Map.
+    /**
+     * Gets the value from the Map Entry.
      *
-     * @return the old value of the value
-     * @param value the new value
+     * @return the value
+     */
+    public Object getValue() {
+        return value;
+    }
+
+    /** 
+     * Sets the value stored in this Map Entry.
+     * <p>
+     * This Map Entry is not connected to a Map, so only the local data is changed.
+     *
+     * @param value  the new value
+     * @return the previous value
      */
     public Object setValue(Object value) {
         Object answer = this.value;
         this.value = value;
         return answer;
+    }
+
+    // Basics
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this Map Entry with another Map Entry.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
+     * 
+     * @param obj  the object to compare to
+     * @return true if equal key and value
+     */
+    public final boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof Map.Entry == false) {
+            return false;
+        }
+        Map.Entry other = (Map.Entry) obj;
+        return
+            (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
+            (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
+    }
+     
+    /**
+     * Gets a hashCode compatible with the equals method.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
+     * 
+     * @return a suitable hashcode
+     */
+    public final int hashCode() {
+        return (getKey() == null ? 0 : getKey().hashCode()) ^
+               (getValue() == null ? 0 : getValue().hashCode()); 
     }
 
 }
