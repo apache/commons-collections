@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>Developers guide for Jakarta Commons "Collections" Package</title>
+<head>
+<body bgcolor="white">
+
+
+<div align="center">
+<h1>The Jakarta Commons <em>Collections</em> Package</h1>
+<h2>Developers Guide</h2>
+$Id: DEVELOPERS-GUIDE.html,v 1.1 2002/06/29 03:49:01 mas Exp $<br>
+<a href="#Introduction">[Introduction]</a>
+<a href="#CollectionInterfaces">[Collection Interfaces]</a>
+<a href="#CollectionImplementations">[Collection Implementations]</a>
+<a href="#UtilityClasses">[Utility Classes]</a>
+<br><br>
+</div>
+
+
+<a name="Introduction"></a>
+<h3>1.  INTRODUCTION</h3>
+
+<p>The <em>Collections</em> package contains a set of Java classes that extend
+or augment the Java Collections Framework. This developers guide seeks to set
+out rules for the naming of classes and methods within the package. The purpose
+of this, as with all naming standards, is to improve the coherency and
+consistency of the whole API.</p>
+
+<p>The philosophy of the naming standards is to follow those of
+java.util.Collections.</p>
+
+
+<a name="CollectionInterfaces"></a>
+<h3>2.  COLLECTION INTERFACES</h3>
+
+<p>Collection interfaces are new types of collections not included in Java.
+Examples include <code>Bag</code> and <code>SortedBag</code>. These interfaces
+shall:</p>
+<ul>
+<li>be top level interfaces</li>
+<li>have a name that describes their purpose</li>
+</ul>
+
+
+<a name="CollectionImplementations"></a>
+<h3>3.  COLLECTION IMPLEMENTATIONS</h3>
+
+<p>Collection implementation are new implementations of collection interfaces.
+Examples include <code>DoubleOrderedMap</code> and <code>DefaultMapBag</code>.
+These interfaces shall:</p>
+<ul>
+<li>be top level classes</li>
+<li>have a name that ends with the collection type being implemented</li>
+<li>have a name that describes their implementation</li>
+<li>contain no public inner classes</li>
+<li>only contain the collection implementation, and any methods specific to
+that implementation</li>
+</ul>
+
+
+<a name="UtilityClasses"></a>
+<h3>4.  UTILITY CLASSES</h3>
+
+<p>Utility classes provide additional functionality around an interface and
+its basic implementations. Examples include CollectionUtils and ListUtils.</p>
+
+<p>Each class shall follow the naming pattern XxxUtils where Xxx relates to the
+object being returned by the class, for example <code>ListUtils</code> and
+<code>BagUtils</code>. Variations on a theme (<code>SortedBag</code> as opposed
+to <code>Bag</code>) will be dealt with in one Utils class. Each Utils class
+shall:</p>
+
+<ul>
+<li>be a single, static method based, class</li>
+<li>have a name consisting of the interface name plus 'Utils'</li>
+<li>deal with one collection interface and its variations</li>
+<li>provide methods that decorate the interface with additional
+functionality</li>
+<li>provide methods that perform useful utility functions on that
+interface</li>
+</ul>
+
+<p>Where the method in a Utils class is a decorator, the naming pattern
+yyyedXxx shall be used, such as <code>synchronizedMap(Map)</code> or
+<code>predicatedSet(Set)</code>.  Typically, these decorators should be
+implemented as non-public, static, inner classes; however, if warranted due to
+maintenance or other reasons, these decorator classes may be moved to top-level
+classes in a subpackage.  The naming of such a subpackage should be discussed
+and agreed upon on the developers mailing list.</p>
+
+</body>
+</html>
+
+
