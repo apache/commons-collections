@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.5 2002/08/22 01:50:54 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/22 01:50:54 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.6 2002/09/07 20:33:32 rwaldhoff Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/09/07 20:33:32 $
  *
  * ====================================================================
  *
@@ -80,7 +80,7 @@ import java.util.ListIterator;
  * than a {@link java.util.ArrayList} and offers better compile-time type
  * checking.
  *
- * @version $Revision: 1.5 $ $Date: 2002/08/22 01:50:54 $
+ * @version $Revision: 1.6 $ $Date: 2002/09/07 20:33:32 $
  * @author Rodney Waldhoff 
  */
 public class UnsignedShortArrayList extends AbstractIntArrayList implements Serializable {
@@ -101,11 +101,10 @@ public class UnsignedShortArrayList extends AbstractIntArrayList implements Seri
      *  specified initial capacity.
      *
      *  @param capacity  the capacity for this list
-     *  @throws IllegalArgumentException if the given capacity is less than 
-     *    or equal to zero
+     *  @throws IllegalArgumentException if the given capacity is less than zero
      */
     public UnsignedShortArrayList(int capacity) {
-        if (capacity <= 0) {
+        if (capacity < 0) {
             throw new IllegalArgumentException("capacity=" + capacity);
         }
         _data = new short[capacity];
@@ -175,26 +174,26 @@ public class UnsignedShortArrayList extends AbstractIntArrayList implements Seri
         checkRangeIncludingEndpoint(index);
         ensureCapacity(_size+1);
         int numtomove = _size-index;
-	System.arraycopy(_data,index,_data,index+1,numtomove);
-	_data[index] = fromInt(value);
-	_size++;
+        System.arraycopy(_data,index,_data,index+1,numtomove);
+        _data[index] = fromInt(value);
+        _size++;
     }
 
     public void clear() {
-	modCount++;
+        modCount++;
         _size = 0;
     }
 
     public int removeIntAt(int index) {
         checkRange(index);
-	modCount++;
+        modCount++;
         int oldval = toInt(_data[index]);
-	int numtomove = _size - index - 1;
-	if(numtomove > 0) {
-	    System.arraycopy(_data,index+1,_data,index,numtomove);
+        int numtomove = _size - index - 1;
+        if(numtomove > 0) {
+            System.arraycopy(_data,index+1,_data,index,numtomove);
         }
         _size--;
-	return oldval;
+        return oldval;
     }
 
     public boolean removeInt(int value) {
@@ -209,22 +208,22 @@ public class UnsignedShortArrayList extends AbstractIntArrayList implements Seri
     }
 
     public void ensureCapacity(int mincap) {
-	modCount++;
-	if(mincap > _data.length) {
-	    int newcap = (_data.length * 3)/2 + 1;
-	    short[] olddata = _data;
-	    _data = new short[newcap < mincap ? mincap : newcap];
-	    System.arraycopy(olddata,0,_data,0,_size);
-	}
+        modCount++;
+	    if(mincap > _data.length) {
+            int newcap = (_data.length * 3)/2 + 1;
+            short[] olddata = _data;
+            _data = new short[newcap < mincap ? mincap : newcap];
+            System.arraycopy(olddata,0,_data,0,_size);
+        }
     }
 
     public void trimToSize() {
-	modCount++;
-	if(_size < _data.length) {
-	    short[] olddata = _data;
-	    _data = new short[_size];
-	    System.arraycopy(olddata,0,_data,0,_size);
-	}
+        modCount++;
+        if(_size < _data.length) {
+            short[] olddata = _data;
+            _data = new short[_size];
+            System.arraycopy(olddata,0,_data,0,_size);
+        }
     }
 
     //---------------------------------------------------------------
@@ -247,17 +246,17 @@ public class UnsignedShortArrayList extends AbstractIntArrayList implements Seri
     }
 
     private void writeObject(ObjectOutputStream out) throws IOException{
-	out.defaultWriteObject();
+        out.defaultWriteObject();
         out.writeInt(_data.length);
-	for(int i=0;i<_size;i++) {
+        for(int i=0;i<_size;i++) {
             out.writeShort(_data[i]);
         }
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-	in.defaultReadObject();
+        in.defaultReadObject();
         _data = new short[in.readInt()];
-	for(int i=0;i<_size;i++) {
+        for(int i=0;i<_size;i++) {
             _data[i] = in.readShort();
         }
     }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.5 2002/08/22 01:50:54 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/22 01:50:54 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.6 2002/09/07 20:33:32 rwaldhoff Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/09/07 20:33:32 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.ListIterator;
  * {@link java.util.ArrayList} of {@link Integer} values and allows for
  * better compile-time type checking.<P>
  *
- * @version $Revision: 1.5 $ $Date: 2002/08/22 01:50:54 $
+ * @version $Revision: 1.6 $ $Date: 2002/09/07 20:33:32 $
  * @author Rodney Waldhoff 
  */
 public class IntArrayList extends AbstractIntArrayList implements Serializable {
@@ -96,11 +96,10 @@ public class IntArrayList extends AbstractIntArrayList implements Serializable {
      *  Constructs a new <Code>IntArrayList</Code> with the given capacity.
      *
      *  @param the capacity for the list
-     *  @throws IllegalArgumentException  if the capacity is less than or
-     *   equal to zero
+     *  @throws IllegalArgumentException  if the capacity is less than zero
      */
     public IntArrayList(int capacity) {
-        if (capacity <= 0) {
+        if (capacity < 0) {
             throw new IllegalArgumentException("capacity " + capacity);
         }
         _data = new int[capacity];

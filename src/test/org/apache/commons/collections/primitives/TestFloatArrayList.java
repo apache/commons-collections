@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestFloatArrayList.java,v 1.2 2002/06/21 04:01:31 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/21 04:01:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestFloatArrayList.java,v 1.3 2002/09/07 20:33:32 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/09/07 20:33:32 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import org.apache.commons.collections.TestList;
 import java.util.List;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/06/21 04:01:31 $
+ * @version $Revision: 1.3 $ $Date: 2002/09/07 20:33:32 $
  * @author Rodney Waldhoff
  */
 public class TestFloatArrayList extends TestList {
@@ -97,6 +97,10 @@ public class TestFloatArrayList extends TestList {
     }
 
     //------------------------------------------------------------------- Tests
+
+   public void testZeroInitialCapacityIsValid() {
+       FloatArrayList list = new FloatArrayList(0);
+   }
 
     public void testAddGet() {
         FloatArrayList list = createList();

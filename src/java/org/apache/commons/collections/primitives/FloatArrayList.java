@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.4 2002/08/23 17:31:28 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/23 17:31:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.5 2002/09/07 20:33:32 rwaldhoff Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/09/07 20:33:32 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.ListIterator;
  * {@link java.util.ArrayList} of {@link Float} values and allows for
  * better compile-time type checking.<P>
  *
- * @version $Revision: 1.4 $ $Date: 2002/08/23 17:31:28 $
+ * @version $Revision: 1.5 $ $Date: 2002/09/07 20:33:32 $
  * @author Rodney Waldhoff 
  */
 public class FloatArrayList extends AbstractList implements List, Serializable {
@@ -98,11 +98,10 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
      *  capacity.
      *
      *  @param capacity  the initial capacity for the list
-     *  @throws IllegalArgumentException if capacity is less than or equal 
-     *   to zero
+     *  @throws IllegalArgumentException if capacity is less than zero
      */
     public FloatArrayList(int capacity) {
-        if (capacity <= 0) {
+        if (capacity < 0) {
             throw new IllegalArgumentException("capacity=" + capacity);
         }
         _data = new float[capacity];
