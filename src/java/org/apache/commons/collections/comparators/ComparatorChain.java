@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.7 2002/06/12 03:59:17 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/12 03:59:17 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.8 2003/01/07 23:26:47 rwaldhoff Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/01/07 23:26:47 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -96,6 +96,7 @@ import java.util.List;
  * 
  * @since 2.0
  * @author Morgan Delagrange
+ * @version $Revision: 1.8 $ $Date: 2003/01/07 23:26:47 $
  */
 public class ComparatorChain implements Comparator,Serializable {
 
@@ -329,4 +330,51 @@ public class ComparatorChain implements Comparator,Serializable {
         return 0;
     }
 
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals}.
+     * 
+     * @since Collections 2.2
+     */
+    public int hashCode() {
+        int hash = 0;
+        if(null != comparatorChain) {
+            hash ^= comparatorChain.hashCode();
+        }
+        if(null != orderingBits) {
+            hash ^= orderingBits.hashCode();
+        }
+        return hash;
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator} whose ordering is known to be 
+     * equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>that</i>.{@link Object#getClass getClass()}</code>
+     * equals <code>this.getClass()</code>, and the underlying 
+     * comparators and order bits are equal.  Subclasses may want 
+     * to override this behavior to remain consistent with the 
+     * {@link Comparator.equals} contract.
+     * 
+     * @since Collections 2.2
+     */
+    public boolean equals(Object that) {
+        if(this == that) {
+            return true;
+        } else if(null == that) {
+            return false;
+        } else if(that.getClass().equals(this.getClass())) {
+            ComparatorChain chain = (ComparatorChain)that;
+            return ( (null == orderingBits ? null == chain.orderingBits : orderingBits.equals(chain.orderingBits))
+                   && (null == comparatorChain ? null == chain.comparatorChain : comparatorChain.equals(chain.comparatorChain)) );
+        } else {
+            return false;
+        }
+    }
+
+    // use serialVersionUID from Collections 2.0 for interoperability
+    private static final long serialVersionUID = -721644942746081630L;
 }

@@ -3,7 +3,7 @@ package org.apache.commons.collections.comparators;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -63,7 +63,7 @@ import java.util.Comparator;
  * @since 2.0
  * @author bayard@generationjava.com
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: ReverseComparator.java,v 1.9 2003/01/07 23:05:33 rwaldhoff Exp $
+ * @version $Id: ReverseComparator.java,v 1.10 2003/01/07 23:26:47 rwaldhoff Exp $
  */
 public class ReverseComparator implements Comparator,Serializable {
 
