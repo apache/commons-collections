@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.8 2002/02/26 18:08:58 morgand Exp $
- * $Revision: 1.8 $
- * $Date: 2002/02/26 18:08:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.9 2002/02/26 20:52:17 morgand Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/02/26 20:52:17 $
  *
  * ====================================================================
  *
@@ -65,6 +65,7 @@ import junit.framework.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -90,7 +91,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.8 2002/02/26 18:08:58 morgand Exp $
+ * @version $Id: TestObject.java,v 1.9 2002/02/26 20:52:17 morgand Exp $
  */
 public abstract class TestObject extends TestCase {
     public TestObject(String testName) {
@@ -258,5 +259,36 @@ public abstract class TestObject extends TestCase {
         retval.append(getCompatibilityVersion());
         retval.append(".obj");
         return retval.toString();
+    }
+
+
+    /**
+     * If the test object is serializable, confirm that 
+     * a canonical form exists in CVS
+     * 
+     */
+    public void testCanonicalEmptyCollectionExists() {
+        Object object = makeObject();
+        if (!(object instanceof Serializable)) {
+            return;
+        }
+        String name = getCanonicalEmptyCollectionName(object);
+        assertTrue("Canonical empty collection is not in CVS",
+                   new File(name).exists());
+    }
+
+    /**
+     * If the test object is serializable, confirm that 
+     * a canonical form exists in CVS
+     * 
+     */
+    public void testCanonicalFullCollectionExists() {
+        Object object = makeObject();
+        if (!(object instanceof Serializable)) {
+            return;
+        }
+        String name = getCanonicalFullCollectionName(object);
+        assertTrue("Canonical full collection is not in CVS",
+                   new File(name).exists());
     }
 }
