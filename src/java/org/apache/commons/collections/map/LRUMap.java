@@ -41,12 +41,13 @@ import org.apache.commons.collections.BoundedMap;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision: 1.12 $ $Date: 2004/04/25 23:30:07 $
+ * @version $Revision: 1.13 $ $Date: 2004/05/12 19:51:28 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  * @author Mike Pettypiece
+ * @author Mario Ivankovits
  */
 public class LRUMap
         extends AbstractLinkedMap implements BoundedMap, Serializable, Cloneable {
@@ -55,15 +56,19 @@ public class LRUMap
     static final long serialVersionUID = -612114643488955218L;
     /** Default maximum size */
     protected static final int DEFAULT_MAX_SIZE = 100;
+    /** Default scan behaviour */
+    protected static final boolean DEFAULT_SCAN_UNTIL_REMOVABLE = false;
     
     /** Maximum size */
     private transient int maxSize;
+    /** Scan behaviour */
+    private boolean scanUntilRemovable;
 
     /**
      * Constructs a new empty map with a maximum size of 100.
      */
     public LRUMap() {
-        this(DEFAULT_MAX_SIZE, DEFAULT_LOAD_FACTOR);
+        this(DEFAULT_MAX_SIZE, DEFAULT_LOAD_FACTOR, DEFAULT_SCAN_UNTIL_REMOVABLE);
     }
 
     /**
@@ -77,6 +82,17 @@ public class LRUMap
     }
 
     /**
+     * Constructs a new, empty map with the specified maximum size.
+     *
+     * @param maxSize  the maximum size of the map
+     * @param scanUntilRemovable  scan until a removeable entry is found, default false
+     * @throws IllegalArgumentException if the maximum size is less than one
+     */
+    public LRUMap(int maxSize, boolean scanUntilRemovable) {
+        this(maxSize, DEFAULT_LOAD_FACTOR, scanUntilRemovable);
+    }
+
+    /**
      * Constructs a new, empty map with the specified initial capacity and
      * load factor. 
      *
@@ -86,11 +102,26 @@ public class LRUMap
      * @throws IllegalArgumentException if the load factor is less than zero
      */
     public LRUMap(int maxSize, float loadFactor) {
+        this(maxSize, loadFactor, DEFAULT_SCAN_UNTIL_REMOVABLE);
+    }
+
+    /**
+     * Constructs a new, empty map with the specified initial capacity and
+     * load factor.
+     *
+     * @param maxSize  the maximum size of the map, -1 for no limit,
+     * @param loadFactor  the load factor
+     * @param scanUntilRemovable  scan until a removeable entry is found, default false
+     * @throws IllegalArgumentException if the maximum size is less than one
+     * @throws IllegalArgumentException if the load factor is less than zero
+     */
+    public LRUMap(int maxSize, float loadFactor, boolean scanUntilRemovable) {
         super((maxSize < 1 ? DEFAULT_CAPACITY : maxSize), loadFactor);
         if (maxSize < 1) {
             throw new IllegalArgumentException("LRUMap max size must be greater than 0");
         }
         this.maxSize = maxSize;
+        this.scanUntilRemovable = scanUntilRemovable;
     }
 
     /**
@@ -103,7 +134,21 @@ public class LRUMap
      * @throws IllegalArgumentException if the map is empty
      */
     public LRUMap(Map map) {
-        this(map.size(), DEFAULT_LOAD_FACTOR);
+        this(map, DEFAULT_SCAN_UNTIL_REMOVABLE);
+    }
+
+    /**
+     * Constructor copying elements from another map.
+     * <p/>
+     * The maximum size is set from the map's size.
+     *
+     * @param map  the map to copy
+     * @param scanUntilRemovable  scan until a removeable entry is found, default false
+     * @throws NullPointerException if the map is null
+     * @throws IllegalArgumentException if the map is empty
+     */
+    public LRUMap(Map map, boolean scanUntilRemovable) {
+        this(map.size(), DEFAULT_LOAD_FACTOR, scanUntilRemovable);
         putAll(map);
     }
 
@@ -170,6 +215,7 @@ public class LRUMap
      * <p>
      * From Commons Collections 3.1 this method uses {@link #isFull()} rather
      * than accessing <code>size</code> and <code>maxSize</code> directly.
+     * It also handles the scanUntilRemovable functionality.
      * 
      * @param hashIndex  the index into the data array to store at
      * @param hashCode  the hash code of the key to add
@@ -177,8 +223,26 @@ public class LRUMap
      * @param value  the value to add
      */
     protected void addMapping(int hashIndex, int hashCode, Object key, Object value) {
-        if (isFull() && removeLRU(header.after)) {
-            reuseMapping(header.after, hashIndex, hashCode, key, value);
+        if (isFull()) {
+            LinkEntry reuse = header.after;
+            boolean removeLRUEntry = false;
+            if (scanUntilRemovable) {
+                while (reuse != header) {
+                    if (removeLRU(reuse)) {
+                        removeLRUEntry = true;
+                        break;
+                    }
+                    reuse = reuse.after;
+                }
+            } else {
+                removeLRUEntry = removeLRU(reuse);
+            }
+            
+            if (removeLRUEntry) {
+                reuseMapping(reuse, hashIndex, hashCode, key, value);
+            } else {
+                super.addMapping(hashIndex, hashCode, key, value);
+            }
         } else {
             super.addMapping(hashIndex, hashCode, key, value);
         }
@@ -237,7 +301,10 @@ public class LRUMap
      *   }
      * }
      * </pre>
-     * Note that the effect of not removing an LRU is for the Map to exceed the maximum size.
+     * The effect of returning false is dependent on the scanUntilRemovable flag.
+     * If the flag is true, the next LRU entry will be passed to this method and so on
+     * until one returns false and is removed, or every entry in the map has been passed.
+     * If the scanUntilRemovable flag is false, the map will exceed the maximum size.
      * <p>
      * NOTE: Commons Collections 3.0 passed the wrong entry to this method.
      * This is fixed in version 3.1 onwards.
@@ -265,6 +332,16 @@ public class LRUMap
      */
     public int maxSize() {
         return maxSize;
+    }
+
+    /**
+     * Whether this LRUMap will scan until a removable entry is found when the
+     * map is full.
+     *
+     * @return true if this map scans
+     */
+    public boolean scanUntilRemovable() {
+        return scanUntilRemovable;
     }
 
     //-----------------------------------------------------------------------

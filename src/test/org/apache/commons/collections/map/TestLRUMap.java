@@ -30,7 +30,7 @@ import org.apache.commons.collections.ResettableIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.7 $ $Date: 2004/04/16 23:53:59 $
+ * @version $Revision: 1.8 $ $Date: 2004/05/12 19:51:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -240,9 +240,11 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         LinkEntry entry;
         Object key;
         Object value;
+
         MockLRUMapSubclass(int size) {
             super(size);
         }
+
         protected boolean removeLRU(LinkEntry entry) {
             this.entry = entry;
             this.key = entry.getKey();
@@ -252,7 +254,22 @@ public class TestLRUMap extends AbstractTestOrderedMap {
     }
     
     public void testRemoveLRUBlocksRemove() {
-        MockLRUMapSubclassBlocksRemove map = new MockLRUMapSubclassBlocksRemove(2);
+        MockLRUMapSubclassBlocksRemove map = new MockLRUMapSubclassBlocksRemove(2, false);
+        assertEquals(0, map.size());
+        map.put("A", "a");
+        assertEquals(1, map.size());
+        map.put("B", "b");
+        assertEquals(2, map.size());
+        map.put("C", "c");  // should remove oldest, which is A=a, but this is blocked
+        assertEquals(3, map.size());
+        assertEquals(2, map.maxSize());
+        assertEquals(true, map.containsKey("A"));
+        assertEquals(true, map.containsKey("B"));
+        assertEquals(true, map.containsKey("C"));
+    }
+
+    public void testRemoveLRUBlocksRemoveScan() {
+        MockLRUMapSubclassBlocksRemove map = new MockLRUMapSubclassBlocksRemove(2, true);
         assertEquals(0, map.size());
         map.put("A", "a");
         assertEquals(1, map.size());
@@ -267,14 +284,44 @@ public class TestLRUMap extends AbstractTestOrderedMap {
     }
     
     static class MockLRUMapSubclassBlocksRemove extends LRUMap {
-        MockLRUMapSubclassBlocksRemove(int size) {
-            super(size);
+        MockLRUMapSubclassBlocksRemove(int size, boolean scanUntilRemove) {
+            super(size, scanUntilRemove);
         }
+
         protected boolean removeLRU(LinkEntry entry) {
             return false;
         }
     }
     
+    public void testRemoveLRUFirstBlocksRemove() {
+        MockLRUMapSubclassFirstBlocksRemove map = new MockLRUMapSubclassFirstBlocksRemove(2);
+        assertEquals(0, map.size());
+        map.put("A", "a");
+        assertEquals(1, map.size());
+        map.put("B", "b");
+        assertEquals(2, map.size());
+        map.put("C", "c");  // should remove oldest, which is A=a  but this is blocked - so advance to B=b
+        assertEquals(2, map.size());
+        assertEquals(2, map.maxSize());
+        assertEquals(true, map.containsKey("A"));
+        assertEquals(false, map.containsKey("B"));
+        assertEquals(true, map.containsKey("C"));
+    }
+
+    static class MockLRUMapSubclassFirstBlocksRemove extends LRUMap {
+        MockLRUMapSubclassFirstBlocksRemove(int size) {
+            super(size, true);
+        }
+
+        protected boolean removeLRU(LinkEntry entry) {
+            if ("a".equals(entry.getValue())) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/LRUMap.emptyCollection.version3.obj");
