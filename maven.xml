@@ -1,6 +1,30 @@
-<project default="java:jar" xmlns:j="jelly:core">
+<project default="java:jar" xmlns:j="jelly:core" xmlns:ant="jelly:ant">
   <postGoal name="clover:on">
     <j:set var="maven.junit.sysproperties" value="${maven.junit.sysproperties} org.apache.commons.collections:with-clover"/>
     <j:set var="org.apache.commons.collections:with-clover" value="true"/>
   </postGoal>
+
+  <postGoal name="jar:jar">      
+      <ant:tstamp/>
+      <ant:property name="workdir" value="${java.io.tmpdir}/buildtemp_${DSTAMP}${TSTAMP}"/>
+      <ant:unjar dest="${workdir}" src="${maven.build.dir}/${maven.final.name}.jar"/>
+
+      <ant:jar jarfile="${maven.build.dir}/${pom.artifactId}-object-${pom.currentVersion}.jar" manifest="${workdir}/META-INF/MANIFEST.MF">
+         <ant:fileset dir="${workdir}">
+            <ant:exclude name="org/apache/commons/collections/primitives/**"/>
+            <ant:exclude name="META-INF/INDEX.LIST"/>
+         </ant:fileset>
+      </ant:jar>
+
+      <ant:jar jarfile="${maven.build.dir}/${pom.artifactId}-primitive-${pom.currentVersion}.jar" manifest="${workdir}/META-INF/MANIFEST.MF">
+         <ant:fileset dir="${workdir}">
+            <ant:include name="META-INF/**"/>
+            <ant:exclude name="META-INF/INDEX.LIST"/>
+            <ant:include name="org/apache/commons/collections/primitives/**"/>
+         </ant:fileset>
+      </ant:jar>
+      
+      <delete dir="${workdir}"/>
+  </postGoal>
+
 </project>
