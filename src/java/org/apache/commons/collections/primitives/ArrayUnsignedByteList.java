@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedByteList.java,v 1.2 2003/04/13 22:30:57 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedByteList.java,v 1.3 2003/04/22 21:32:55 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -76,7 +76,7 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/04/13 22:30:57 $
+ * @version $Revision: 1.3 $ $Date: 2003/04/22 21:32:55 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -89,7 +89,7 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Shor
      * Construct an empty list with the default
      * initial capacity.
      */
-    protected ArrayUnsignedByteList() {
+    public ArrayUnsignedByteList() {
         this(8);
     }    
 
@@ -98,7 +98,7 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Shor
      * initial capacity.
      * @throws IllegalArgumentException when <i>initialCapacity</i> is negative
      */
-    protected ArrayUnsignedByteList(int initialCapacity) {
+    public ArrayUnsignedByteList(int initialCapacity) {
         if(initialCapacity < 0) {
             throw new IllegalArgumentException("capacity " + initialCapacity);
         }
