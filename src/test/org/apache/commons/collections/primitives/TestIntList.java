@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.4 2003/02/26 15:45:19 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.5 2003/02/26 19:17:23 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.adapters.IntListList;
 import org.apache.commons.collections.primitives.adapters.ListIntList;
 
 /**
- * @version $Revision: 1.4 $ $Date: 2003/02/26 15:45:19 $
+ * @version $Revision: 1.5 $ $Date: 2003/02/26 19:17:23 $
  * @author Rodney Waldhoff
  */
 public abstract class TestIntList extends TestList {
@@ -193,8 +193,8 @@ public abstract class TestIntList extends TestList {
         IntList ilist = makeEmptyIntList();
         List list = new ArrayList();
         
-        assertTrue("Unwrapped, empty List is not equal to empty IntList.",!ilist.equals(list));
-        assertTrue("Unwrapped, empty IntList is not equal to empty List.",!list.equals(ilist));
+        assertTrue("Unwrapped, empty List should not be equal to empty IntList.",!ilist.equals(list));
+        assertTrue("Unwrapped, empty IntList should not be equal to empty List.",!list.equals(ilist));
         
         assertEquals(new ListIntList(list),ilist);
         assertEquals(ilist,new ListIntList(list));

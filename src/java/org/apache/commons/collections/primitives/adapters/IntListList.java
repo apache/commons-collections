@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntListList.java,v 1.3 2003/01/13 21:52:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntListList.java,v 1.4 2003/02/26 19:17:23 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,7 +57,9 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -72,10 +74,10 @@ import org.apache.commons.collections.primitives.IntList;
  * implementation in the "obvious" way.
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.3 $ $Date: 2003/01/13 21:52:28 $
+ * @version $Revision: 1.4 $ $Date: 2003/02/26 19:17:23 $
  * @author Rodney Waldhoff 
  */
-public class IntListList extends IntCollectionCollection implements List {
+public class IntListList extends IntCollectionCollection implements List, Serializable {
     
     /**
      * Create a {@link List List} wrapping
@@ -93,6 +95,12 @@ public class IntListList extends IntCollectionCollection implements List {
         return null == list ? null : new IntListList(list);
     }
 
+    /**
+     * No-arg constructor, for serialization purposes.
+     */
+    protected IntListList() {
+    }
+    
     /**
      * Creates a {@link List List} wrapping
      * the specified {@link IntList IntList}.
@@ -157,24 +165,27 @@ public class IntListList extends IntCollectionCollection implements List {
         return IntListList.wrap(_list.subList(fromIndex,toIndex));
     }
 
-    /**
-     * If <i>that</i> is a {@link List List}, 
-     * it is {@link ListIntList#wrap wrapped} and
-     * compared to my underlying 
-     * {@link org.apache.commons.collections.primitives.IntList IntList},
-     * otherwise this method simply delegates to my parent implementation.
-     */
-    public boolean equals(Object that) {
-        if(that instanceof List) {
-            try {
-                return _list.equals(ListIntList.wrap((List)that));
-            } catch(NullPointerException e) {
-                return false;
-            } catch(ClassCastException e) {
-                return false;
+    public boolean equals(Object obj) {
+        if(obj instanceof List) {
+            List that = (List)obj;
+            if(this == that) {
+                return true;
+            } else if(this.size() != that.size()) {
+                return false;            
+            } else {
+                Iterator thisiter = iterator();
+                Iterator thatiter = that.iterator();
+                while(thisiter.hasNext()) {
+                    Object thiselt = thisiter.next();
+                    Object thatelt = thatiter.next();
+                    if(null == thiselt ? null != thatelt : !(thiselt.equals(thatelt))) {
+                        return false;
+                    }
+                }
+                return true;
             }
         } else {
-            return super.equals(that);
+            return false;
         }
     }
     

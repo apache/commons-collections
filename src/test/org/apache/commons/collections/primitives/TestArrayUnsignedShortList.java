@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.7 2003/02/26 15:45:19 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.8 2003/02/26 19:17:23 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.7 $ $Date: 2003/02/26 15:45:19 $
+ * @version $Revision: 1.8 $ $Date: 2003/02/26 19:17:23 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedShortList extends TestIntList {
@@ -76,8 +76,9 @@ public class TestArrayUnsignedShortList extends TestIntList {
     }
 
     public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestArrayUnsignedShortList.class);
-        return suite;
+        //TestSuite suite = BulkTest.makeSuite(TestArrayUnsignedShortList.class);
+        //return suite;
+        return new TestSuite(TestArrayUnsignedShortList.class);
     }
 
     // collections testing framework
@@ -90,24 +91,28 @@ public class TestArrayUnsignedShortList extends TestIntList {
     // tests
     // ------------------------------------------------------------------------
 
+    /** @todo need to add serialized form to cvs */
     public void testCanonicalEmptyCollectionExists() {
         // XXX FIX ME XXX
-        // need to a serialized form to cvs
+        // need to add a serialized form to cvs
     }
 
+    /** @todo need to add serialized form to cvs */
     public void testCanonicalFullCollectionExists() {
         // XXX FIX ME XXX
-        // need to a serialized form to cvs
+        // need to add a serialized form to cvs
     }
 
+    /** @todo need to add serialized form to cvs */
     public void testEmptyListCompatibility() {
         // XXX FIX ME XXX
-        // need to a serialized form to cvs
+        // need to add a serialized form to cvs
     }
 
+    /** @todo need to add serialized form to cvs */
     public void testFullListCompatibility() {
         // XXX FIX ME XXX
-        // need to a serialized form to cvs
+        // need to add a serialized form to cvs
     }
 
     public void testZeroInitialCapacityIsValid() {

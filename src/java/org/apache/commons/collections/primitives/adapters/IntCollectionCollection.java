@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntCollectionCollection.java,v 1.3 2003/01/13 21:52:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntCollectionCollection.java,v 1.4 2003/02/26 19:17:23 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,6 +57,7 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
@@ -73,10 +74,10 @@ import org.apache.commons.collections.primitives.IntCollection;
  * implementation in the "obvious" way.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.3 $ $Date: 2003/01/13 21:52:28 $
+ * @version $Revision: 1.4 $ $Date: 2003/02/26 19:17:23 $
  * @author Rodney Waldhoff 
  */
-public class IntCollectionCollection implements Collection {
+public class IntCollectionCollection implements Collection, Serializable {
     
     /**
      * Create a {@link Collection Collection} wrapping
@@ -94,6 +95,12 @@ public class IntCollectionCollection implements Collection {
         return null == collection ? null : new IntCollectionCollection(collection);
     }
     
+    /**
+     * No-arg constructor, for serialization purposes.
+     */
+    protected IntCollectionCollection() {
+    }
+
     /**
      * Creates a {@link Collection Collection} wrapping
      * the specified {@link IntCollection IntCollection}.

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.4 2003/01/13 21:52:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.5 2003/02/26 19:17:23 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,9 +57,11 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.collections.primitives.IntCollection;
+import org.apache.commons.collections.primitives.IntIterator;
 import org.apache.commons.collections.primitives.IntList;
 import org.apache.commons.collections.primitives.IntListIterator;
 
@@ -72,10 +74,10 @@ import org.apache.commons.collections.primitives.IntListIterator;
  * implementation in the "obvious" way.
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.4 $ $Date: 2003/01/13 21:52:28 $
+ * @version $Revision: 1.5 $ $Date: 2003/02/26 19:17:23 $
  * @author Rodney Waldhoff 
  */
-public class ListIntList extends CollectionIntCollection implements IntList {
+public class ListIntList extends CollectionIntCollection implements IntList, Serializable {
     
     /**
      * Create an {@link IntList IntList} wrapping
@@ -91,6 +93,12 @@ public class ListIntList extends CollectionIntCollection implements IntList {
      */
     public static IntList wrap(List list) {
         return null == list ? null : new ListIntList(list);
+    }
+
+    /**
+     * No-arg constructor, for serialization purposes.
+     */
+    protected ListIntList() {
     }
 
     /**
@@ -157,18 +165,25 @@ public class ListIntList extends CollectionIntCollection implements IntList {
         return ListIntList.wrap(_list.subList(fromIndex,toIndex));
     }
 
-    /**
-     * If <i>that</i> is an {@link IntList IntList}, 
-     * it is {@link IntListList#wrap wrapped} and
-     * compared to my underlying 
-     * {@link List List},
-     * otherwise this method simply delegates to my parent implementation.
-     */
-    public boolean equals(Object that) {
-        if(that instanceof IntList) {
-            return _list.equals(IntListList.wrap((IntList)that));
+    public boolean equals(Object obj) {
+        if(obj instanceof IntList) {
+            IntList that = (IntList)obj;
+            if(this == that) {
+                return true;
+            } else if(this.size() != that.size()) {
+                return false;            
+            } else {
+                IntIterator thisiter = iterator();
+                IntIterator thatiter = that.iterator();
+                while(thisiter.hasNext()) {
+                    if(thisiter.next() != thatiter.next()) {
+                        return false;
+                    }
+                }
+                return true;
+            }
         } else {
-            return super.equals(that);
+            return false;
         }
     }
         

@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.8 2003/02/26 19:17:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListList.java,v 1.1 2003/02/26 19:17:24 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,42 +55,83 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
+
+import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.TestList;
+import org.apache.commons.collections.primitives.ArrayIntList;
+
 /**
- * @version $Revision: 1.8 $ $Date: 2003/02/26 19:17:23 $
+ * @version $Revision: 1.1 $ $Date: 2003/02/26 19:17:24 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestIntListList extends TestList {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestIntListList(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
-        
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
+        TestSuite suite = BulkTest.makeSuite(TestIntListList.class);
         return suite;
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    protected List makeEmptyList() {
+        return new IntListList(new ArrayIntList());
+    }
+        
+    protected Object[] getFullElements() {
+        Integer[] elts = new Integer[10];
+        for(int i=0;i<elts.length;i++) {
+            elts[i] = new Integer(i);
+        }
+        return elts;
+    }
+
+    protected Object[] getOtherElements() {
+        Integer[] elts = new Integer[10];
+        for(int i=0;i<elts.length;i++) {
+            elts[i] = new Integer(10 + i);
+        }
+        return elts;
+    }
+
+    // tests
+    // ------------------------------------------------------------------------
+
+    /** @todo need to add serialized form to cvs */
+    public void testCanonicalEmptyCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    /** @todo need to add serialized form to cvs */
+    public void testCanonicalFullCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    /** @todo need to add serialized form to cvs */
+    public void testEmptyListCompatibility() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    /** @todo need to add serialized form to cvs */
+    public void testFullListCompatibility() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+}
