@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.1 2002/03/15 05:36:58 morgand Exp $
- * $Revision: 1.1 $
- * $Date: 2002/03/15 05:36:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.2 2002/03/21 03:31:09 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/03/21 03:31:09 $
  *
  * ====================================================================
  *
@@ -65,9 +65,6 @@ import java.util.Map;
 import java.util.Set;
 
 /** 
- * <p>delegate - a person authorized to act as representative for
- * another</p>
- *
  * <p>This <code>Map</code> wraps another <code>Map</code>
  * implementation, using the wrapped instance for its default
  * implementation.  This class is used as a framework on which to
