@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.10 2002/05/24 04:00:30 mas Exp $
- * $Revision: 1.10 $
- * $Date: 2002/05/24 04:00:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.11 2002/06/09 07:14:14 mas Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/06/09 07:14:14 $
  *
  * ====================================================================
  *
@@ -478,19 +478,20 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
 
   // per Map.remove(Object)
   public Object remove(Object key) {
-    modCount++;
-    return removeImpl(key);
+    Entry e = removeImpl(key);
+    return (e == null) ? null : e.getValue();
   }
   
   /**
-   *  Removed an entry without changing the map's modification count.  This
-   *  method should only be called from a collection view's iterator
+   *  Fully remove an entry from the map, returning the old entry or null if
+   *  there was no such entry with the specified key.
    **/
-  private Object removeImpl(Object key) {
+  private Entry removeImpl(Object key) {
     Entry e = (Entry)entries.remove(key);
     if(e == null) return null;
+    modCount++;
     removeEntry(e);
-    return e.getValue();
+    return e;
   }
 
   /**
@@ -568,7 +569,8 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
       // required impls
       public Iterator iterator() { return new OrderedIterator(KEY); }
       public boolean remove(Object o) {
-        return SequencedHashMap.this.remove(o) != null;
+        Entry e = SequencedHashMap.this.removeImpl(o);
+        return (e != null);
       }
 
       // more efficient impls than abstract set
@@ -600,14 +602,14 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
         if(value == null) {
           for(Entry pos = sentinel.next; pos != sentinel; pos = pos.next) {
             if(pos.getValue() == null) {
-              SequencedHashMap.this.remove(pos.getKey());
+              SequencedHashMap.this.removeImpl(pos.getKey());
               return true;
             }
           } 
         } else {
           for(Entry pos = sentinel.next; pos != sentinel; pos = pos.next) {
             if(value.equals(pos.getValue())) {
-              SequencedHashMap.this.remove(pos.getKey());
+              SequencedHashMap.this.removeImpl(pos.getKey());
               return true;
             }
           }
@@ -654,7 +656,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
         Entry e = findEntry(o);
         if(e == null) return false;
 
-        return SequencedHashMap.this.remove(e.getKey()) != null;
+        return SequencedHashMap.this.removeImpl(e.getKey()) != null;
       }        
 
       // more efficient impls than abstract collection
@@ -791,9 +793,10 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
         throw new ConcurrentModificationException();
       }
 
-      // remove the entry by calling the removeImpl method which does not
-      // update the mod count.  This allows the iterator to remain valid.
       SequencedHashMap.this.removeImpl(pos.getKey());
+
+      // update the expected mod count for the remove operation
+      expectedModCount++;
 
       // set the removed flag
       returnType = returnType | REMOVED_MASK;
