@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/TreeBag.java,v 1.3 2003/12/28 14:55:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/TreeBag.java,v 1.4 2003/12/28 16:36:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,8 +81,8 @@ import org.apache.commons.collections.SortedBag;
  * interface javadoc carefully as several methods violate the
  * <code>Collection</code> interface specification.
  *
- * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/28 14:55:46 $
+ * @since Commons Collections 3.0 (previously in main package v2.0)
+ * @version $Revision: 1.4 $ $Date: 2003/12/28 16:36:48 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne

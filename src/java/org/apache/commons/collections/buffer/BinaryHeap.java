@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryHeap.java,v 1.1 2003/11/29 18:04:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryHeap.java,v 1.2 2003/12/28 16:36:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -90,8 +90,8 @@ import org.apache.commons.collections.PriorityQueue;
  * Buffer heap = BufferUtils.synchronizedBuffer(new BinaryHeap());
  * </pre>
  *
- * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/29 18:04:57 $
+ * @since Commons Collections 3.0 (previously in main package v1.0)
+ * @version $Revision: 1.2 $ $Date: 2003/12/28 16:36:48 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram

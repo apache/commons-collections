@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/HashBag.java,v 1.10 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/HashBag.java,v 1.11 2003/12/28 16:36:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,9 +63,9 @@ import java.util.HashMap;
 /**
  * A {@link Bag} that is backed by a {@link HashMap}.
  *
- * @deprecated Moved to bag subpackage. Due to be removed in v4.0.
+ * @deprecated Moved to bag subpackage and rewritten internally. Due to be removed in v4.0.
  * @since Commons Collections 2.0
- * @version $Revision: 1.10 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.11 $ $Date: 2003/12/28 16:36:48 $
  * 
  * @author Chuck Burdick
  */

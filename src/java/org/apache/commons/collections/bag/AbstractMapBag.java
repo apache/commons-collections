@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.8 2003/12/28 14:46:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.9 2003/12/28 16:36:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -78,8 +78,8 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * The map will be used to map bag elements to a number; the number represents
  * the number of occurrences of that element in the bag.
  *
- * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/12/28 14:46:28 $
+ * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
+ * @version $Revision: 1.9 $ $Date: 2003/12/28 16:36:48 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
