@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/LoopingIterator.java,v 1.5 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/LoopingIterator.java,v 1.6 2003/11/14 22:58:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,12 +72,12 @@ import java.util.NoSuchElementException;
  * implementations will throw a ConcurrentModificationException. 
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/14 22:58:27 $
  *
  * @author <a href="mailto:joncrlsn@users.sf.net">Jonathan Carlson</a>
  * @author Stephen Colebourne
  */
-public class LoopingIterator implements ResetableIterator {
+public class LoopingIterator implements ResettableIterator {
     
     /** The collection to base the iterator on */
     private Collection collection;

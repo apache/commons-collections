@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.6 2003/09/29 22:37:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.7 2003/11/14 22:58:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import java.util.NoSuchElementException;
  * the iterator back to the start if required.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.6 $ $Date: 2003/09/29 22:37:40 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/14 22:58:27 $
  *
  * @author James Strachan
  * @author Mauricio S. Moura
@@ -80,7 +80,7 @@ import java.util.NoSuchElementException;
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public class ArrayIterator implements ResetableIterator {
+public class ArrayIterator implements ResettableIterator {
 
     /** The array to iterate over */    
     protected Object array;

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.7 2003/10/09 11:05:27 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.8 2003/11/14 22:58:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import junit.framework.TestSuite;
 /**
  * Tests the SingletonListIterator.
  *
- * @version $Revision: 1.7 $ $Date: 2003/10/09 11:05:27 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/14 22:58:27 $
  * 
  * @author Stephen Colebourne
  */
@@ -157,7 +157,7 @@ public class TestSingletonListIterator extends AbstractTestListIterator {
     }
     
     public void testReset() {
-        ResetableListIterator it = (ResetableListIterator) makeObject();
+        ResettableListIterator it = (ResettableListIterator) makeObject();
         
         assertEquals(true, it.hasNext());
         assertEquals(false, it.hasPrevious());

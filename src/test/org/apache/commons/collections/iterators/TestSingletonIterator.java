@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonIterator.java,v 1.7 2003/10/09 11:05:27 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonIterator.java,v 1.8 2003/11/14 22:58:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import junit.framework.TestSuite;
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  *
- * @version $Revision: 1.7 $ $Date: 2003/10/09 11:05:27 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/14 22:58:27 $
  * 
  * @author James Strachan
  */
@@ -126,7 +126,7 @@ public class TestSingletonIterator extends AbstractTestIterator {
     }
     
     public void testSingletonIteratorRemove() {
-        ResetableIterator iter = new SingletonIterator("xyzzy");
+        ResettableIterator iter = new SingletonIterator("xyzzy");
         assertTrue(iter.hasNext());
         assertEquals("xyzzy",iter.next());
         iter.remove();
@@ -135,7 +135,7 @@ public class TestSingletonIterator extends AbstractTestIterator {
     }
     
     public void testReset() {
-        ResetableIterator it = (ResetableIterator) makeObject();
+        ResettableIterator it = (ResettableIterator) makeObject();
         
         assertEquals(true, it.hasNext());
         assertEquals(testValue, it.next());

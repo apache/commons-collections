@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.16 2003/11/08 19:26:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.17 2003/11/14 22:58:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,11 +83,10 @@ import org.apache.commons.collections.iterators.LoopingIterator;
 import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.iterators.ObjectArrayListIterator;
-import org.apache.commons.collections.iterators.ResetableIterator;
-import org.apache.commons.collections.iterators.ResetableListIterator;
-import org.apache.commons.collections.iterators.ResetableMapIterator;
-import org.apache.commons.collections.iterators.ResetableOrderedIterator;
-import org.apache.commons.collections.iterators.ResetableOrderedMapIterator;
+import org.apache.commons.collections.iterators.OrderedIterator;
+import org.apache.commons.collections.iterators.OrderedMapIterator;
+import org.apache.commons.collections.iterators.ResettableIterator;
+import org.apache.commons.collections.iterators.ResettableListIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -101,7 +100,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.16 $ $Date: 2003/11/08 19:26:28 $
+ * @version $Revision: 1.17 $ $Date: 2003/11/14 22:58:27 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -113,23 +112,23 @@ public class IteratorUtils {
     /**
      * An iterator over no elements
      */    
-    public static final ResetableIterator EMPTY_ITERATOR = new EmptyIterator();
+    public static final ResettableIterator EMPTY_ITERATOR = new EmptyIterator();
     /**
      * A list iterator over no elements
      */    
-    public static final ResetableListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
+    public static final ResettableListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
     /**
      * An ordered iterator over no elements
      */    
-    public static final ResetableOrderedIterator EMPTY_ORDERED_ITERATOR = new EmptyOrderedIterator();
+    public static final OrderedIterator EMPTY_ORDERED_ITERATOR = new EmptyOrderedIterator();
     /**
      * A map iterator over no elements
      */    
-    public static final ResetableMapIterator EMPTY_MAP_ITERATOR = new EmptyMapIterator();
+    public static final MapIterator EMPTY_MAP_ITERATOR = new EmptyMapIterator();
     /**
      * An ordered map iterator over no elements
      */    
-    public static final ResetableOrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = new EmptyOrderedMapIterator();
+    public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = new EmptyOrderedMapIterator();
 
     /**
      * Prevents instantiation.
@@ -137,9 +136,8 @@ public class IteratorUtils {
     private IteratorUtils() {
     }
 
-    // Iterator creators
-    //----------------------------------------------------------------------
-    
+    // Empty
+    //-----------------------------------------------------------------------
     /**
      * Gets an empty iterator.
      * <p>
@@ -148,7 +146,7 @@ public class IteratorUtils {
      *
      * @return  an iterator over nothing
      */
-    public static ResetableIterator emptyIterator() {
+    public static ResettableIterator emptyIterator() {
         return EMPTY_ITERATOR;
     }
 
@@ -160,7 +158,7 @@ public class IteratorUtils {
      *
      * @return  a list iterator over nothing
      */
-    public static ResetableListIterator emptyListIterator() {
+    public static ResettableListIterator emptyListIterator() {
         return EMPTY_LIST_ITERATOR;
     }
 
@@ -172,7 +170,7 @@ public class IteratorUtils {
      *
      * @return  an ordered iterator over nothing
      */
-    public static ResetableOrderedIterator emptyOrderedIterator() {
+    public static OrderedIterator emptyOrderedIterator() {
         return EMPTY_ORDERED_ITERATOR;
     }
 
@@ -184,7 +182,7 @@ public class IteratorUtils {
      *
      * @return  a map iterator over nothing
      */
-    public static ResetableMapIterator emptyMapIterator() {
+    public static MapIterator emptyMapIterator() {
         return EMPTY_MAP_ITERATOR;
     }
 
@@ -196,10 +194,12 @@ public class IteratorUtils {
      *
      * @return  a map iterator over nothing
      */
-    public static ResetableOrderedMapIterator emptyOrderedMapIterator() {
+    public static OrderedMapIterator emptyOrderedMapIterator() {
         return EMPTY_ORDERED_MAP_ITERATOR;
     }
 
+    // Singleton
+    //-----------------------------------------------------------------------
     /**
      * Gets a singleton iterator.
      * <p>
@@ -209,7 +209,7 @@ public class IteratorUtils {
      * @param object  the single object over which to iterate
      * @return  a singleton iterator over the object
      */
-    public static ResetableIterator singletonIterator(Object object) {
+    public static ResettableIterator singletonIterator(Object object) {
         return new SingletonIterator(object);
     }
 
@@ -222,13 +222,12 @@ public class IteratorUtils {
      * @param object  the single object over which to iterate
      * @return  a singleton list iterator over the object
      */
-    public static ResetableListIterator singletonListIterator(Object object) {
+    public static ListIterator singletonListIterator(Object object) {
         return new SingletonListIterator(object);
     }
 
     // Arrays
-    //----------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     /**
      * Gets an iterator over an object array.
      *
@@ -236,7 +235,7 @@ public class IteratorUtils {
      * @return  an iterator over the array
      * @throws NullPointerException if array is null
      */
-    public static ResetableIterator arrayIterator(Object[] array) {
+    public static ResettableIterator arrayIterator(Object[] array) {
         return new ObjectArrayIterator(array);
     }
 
@@ -251,7 +250,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if the array is not an array
      * @throws NullPointerException if array is null
      */
-    public static ResetableIterator arrayIterator(Object array) {
+    public static ResettableIterator arrayIterator(Object array) {
         return new ArrayIterator(array);
     }
 
@@ -265,7 +264,7 @@ public class IteratorUtils {
      *  than the length of the array
      * @throws NullPointerException if array is null
      */
-    public static ResetableIterator arrayIterator(Object[] array, int start) {
+    public static ResettableIterator arrayIterator(Object[] array, int start) {
         return new ObjectArrayIterator(array, start);
     }
 
@@ -283,7 +282,7 @@ public class IteratorUtils {
      *  than the length of the array
      * @throws NullPointerException if array is null
      */
-    public static ResetableIterator arrayIterator(Object array, int start) {
+    public static ResettableIterator arrayIterator(Object array, int start) {
         return new ArrayIterator(array, start);
     }
 
@@ -298,7 +297,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
-    public static ResetableIterator arrayIterator(Object[] array, int start, int end) {
+    public static ResettableIterator arrayIterator(Object[] array, int start, int end) {
         return new ObjectArrayIterator(array, start, end);
     }
 
@@ -317,10 +316,11 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
-    public static ResetableIterator arrayIterator(Object array, int start, int end) {
+    public static ResettableIterator arrayIterator(Object array, int start, int end) {
         return new ArrayIterator(array, start, end);
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Gets a list iterator over an object array.
      *
@@ -328,7 +328,7 @@ public class IteratorUtils {
      * @return  a list iterator over the array
      * @throws NullPointerException if array is null
      */
-    public static ResetableListIterator arrayListIterator(Object[] array) {
+    public static ResettableListIterator arrayListIterator(Object[] array) {
         return new ObjectArrayListIterator(array);
     }
 
@@ -343,7 +343,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if the array is not an array
      * @throws NullPointerException if array is null
      */
-    public static ResetableListIterator arrayListIterator(Object array) {
+    public static ResettableListIterator arrayListIterator(Object array) {
         return new ArrayListIterator(array);
     }
 
@@ -356,7 +356,7 @@ public class IteratorUtils {
      * @throws IndexOutOfBoundsException if start is less than zero
      * @throws NullPointerException if array is null
      */
-    public static ResetableListIterator arrayListIterator(Object[] array, int start) {
+    public static ResettableListIterator arrayListIterator(Object[] array, int start) {
         return new ObjectArrayListIterator(array, start);
     }
 
@@ -373,7 +373,7 @@ public class IteratorUtils {
      * @throws IndexOutOfBoundsException if start is less than zero
      * @throws NullPointerException if array is null
      */
-    public static ResetableListIterator arrayListIterator(Object array, int start) {
+    public static ResettableListIterator arrayListIterator(Object array, int start) {
         return new ArrayListIterator(array, start);
     }
 
@@ -388,7 +388,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
-    public static ResetableListIterator arrayListIterator(Object[] array, int start, int end) {
+    public static ResettableListIterator arrayListIterator(Object[] array, int start, int end) {
         return new ObjectArrayListIterator(array, start, end);
     }
     
@@ -407,13 +407,12 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
-    public static ResetableListIterator arrayListIterator(Object array, int start, int end) {
+    public static ResettableListIterator arrayListIterator(Object array, int start, int end) {
         return new ArrayListIterator(array, start, end);
     }
     
-    // Iterator wrappers
-    //----------------------------------------------------------------------
-    
+    // Unmodifiable
+    //-----------------------------------------------------------------------
     /**
      * Gets an immutable version of an {@link Iterator}. The returned object
      * will always throw an {@link UnsupportedOperationException} for
@@ -451,6 +450,8 @@ public class IteratorUtils {
         return UnmodifiableMapIterator.decorate(mapIterator);
     }
 
+    // Chained
+    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that iterates through two {@link Iterator}s 
      * one after another.
@@ -489,6 +490,8 @@ public class IteratorUtils {
         return new IteratorChain(iterators);
     }
 
+    // Collated
+    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that provides an ordered iteration over the elements
      * contained in a collection of ordered {@link Iterator}s.
@@ -548,6 +551,8 @@ public class IteratorUtils {
         return new CollatingIterator(comparator, iterators);
     }
 
+    // Transformed
+    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that transforms the elements of another iterator.
      * <p>
@@ -568,6 +573,8 @@ public class IteratorUtils {
         return new TransformIterator(iterator, transform);
     }
     
+    // Filtered
+    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that filters another iterator.
      * <p>
@@ -608,6 +615,8 @@ public class IteratorUtils {
         return new FilterListIterator(listIterator, predicate);
     }
     
+    // Looping
+    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that loops continuously over the supplied collection.
      * <p>
@@ -618,13 +627,15 @@ public class IteratorUtils {
      * @param coll  the collection to iterate over, not null
      * @throws NullPointerException if the collection is null
      */
-    public static ResetableIterator loopingIterator(Collection coll) {
+    public static ResettableIterator loopingIterator(Collection coll) {
         if (coll == null) {
             throw new NullPointerException("Collection must not be null");
         }
         return new LoopingIterator(coll);
     }
     
+    // Views
+    //-----------------------------------------------------------------------
     /**
      * Gets an iterator that provides an iterator view of the given enumeration.
      *
@@ -825,7 +836,7 @@ public class IteratorUtils {
     /**
      * EmptyIterator class
      */
-    static class EmptyIterator implements ResetableIterator {
+    static class EmptyIterator implements ResettableIterator {
         
         EmptyIterator() {
             super();
@@ -852,7 +863,7 @@ public class IteratorUtils {
     /**
      * EmptyListIterator class
      */
-    static class EmptyListIterator extends EmptyIterator implements ResetableListIterator {
+    static class EmptyListIterator extends EmptyIterator implements ResettableListIterator {
         
         EmptyListIterator() {
             super();
@@ -887,7 +898,7 @@ public class IteratorUtils {
     /**
      * EmptyOrderedIterator class
      */
-    static class EmptyOrderedIterator extends EmptyIterator implements ResetableOrderedIterator {
+    static class EmptyOrderedIterator extends EmptyIterator implements OrderedIterator, ResettableIterator {
         
         EmptyOrderedIterator() {
             super();
@@ -906,7 +917,7 @@ public class IteratorUtils {
     /**
      * EmptyMapIterator class
      */
-    static class EmptyMapIterator extends EmptyIterator implements ResetableMapIterator {
+    static class EmptyMapIterator extends EmptyIterator implements MapIterator, ResettableIterator {
         
         EmptyMapIterator() {
             super();
@@ -929,7 +940,7 @@ public class IteratorUtils {
     /**
      * EmptyOrderedMapIterator class
      */
-    static class EmptyOrderedMapIterator extends EmptyMapIterator implements ResetableOrderedMapIterator {
+    static class EmptyOrderedMapIterator extends EmptyMapIterator implements OrderedMapIterator, ResettableIterator {
         
         EmptyOrderedMapIterator() {
             super();

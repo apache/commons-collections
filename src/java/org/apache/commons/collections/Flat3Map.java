@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/Flat3Map.java,v 1.2 2003/11/08 18:49:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/Flat3Map.java,v 1.3 2003/11/14 22:58:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.iterators.ResetableMapIterator;
+import org.apache.commons.collections.iterators.ResettableIterator;
 
 /**
  * A <code>Map</code> implementation that stores data in simple fields until
@@ -97,7 +97,7 @@ import org.apache.commons.collections.iterators.ResetableMapIterator;
  * (Note that the impact of this has not actually been tested!)
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/08 18:49:06 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/14 22:58:27 $
  *
  * @author Stephen Colebourne
  */
@@ -588,7 +588,7 @@ public class Flat3Map implements Map {
     /**
      * FlatMapIterator
      */
-    static class FlatMapIterator implements ResetableMapIterator {
+    static class FlatMapIterator implements MapIterator, ResettableIterator {
         private final Flat3Map iFlatMap;
         private int iIndex = 0;
         private boolean iCanRemove = false;

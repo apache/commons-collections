@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonListIterator.java,v 1.9 2003/11/08 18:38:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonListIterator.java,v 1.10 2003/11/14 22:58:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,12 +65,12 @@ import java.util.NoSuchElementException;
  * object instance.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.9 $ $Date: 2003/11/08 18:38:27 $
+ * @version $Revision: 1.10 $ $Date: 2003/11/14 22:58:27 $
  * 
  * @author Stephen Colebourne
  * @author Rodney Waldhoff
  */
-public class SingletonListIterator implements ListIterator, ResetableListIterator {
+public class SingletonListIterator implements ListIterator, ResettableListIterator {
 
     private boolean beforeFirst = true;
     private boolean nextCalled = false;
