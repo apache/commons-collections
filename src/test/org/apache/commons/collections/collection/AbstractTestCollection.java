@@ -112,7 +112,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.7 $ $Date: 2004/05/31 22:39:20 $
+ * @version $Revision: 1.8 $ $Date: 2004/06/01 22:55:14 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -230,7 +230,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
 
     /**
      * Returns true to indicate that the collection supports equals() comparisons.
-     * The default implementation returns false;
+     * This implementation returns false;
      */
     public boolean isEqualsCheckable() {
         return false;

@@ -37,7 +37,7 @@ import java.io.Serializable;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  *
- * @version $Revision: 1.6 $ $Date: 2004/05/31 22:39:20 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/01 22:55:14 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -95,6 +95,14 @@ public abstract class AbstractTestObject extends BulkTest {
         return true;
     }
 
+    /**
+     * Returns true to indicate that the collection supports equals() comparisons.
+     * This implementation returns true;
+     */
+    public boolean isEqualsCheckable() {
+        return true;
+    }
+
     //-----------------------------------------------------------------------
     public void testObjectEqualsSelf() {
         Object obj = makeObject();
@@ -140,7 +148,9 @@ public abstract class AbstractTestObject extends BulkTest {
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
             Object dest = in.readObject();
             in.close();
-            assertEquals("obj != deserialize(serialize(obj))", obj, dest);
+            if (isEqualsCheckable()) {
+                assertEquals("obj != deserialize(serialize(obj))", obj, dest);
+            }
         }
     }
 
