@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorChain.java,v 1.1 2002/04/08 23:38:48 morgand Exp $
- * $Revision: 1.1 $
- * $Date: 2002/04/08 23:38:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorChain.java,v 1.2 2002/04/08 23:59:58 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/04/08 23:59:58 $
  *
  * ====================================================================
  *
@@ -80,11 +80,7 @@ import java.util.NoSuchElementException;
  * in this manner is more efficient (and convenient)
  * than reading out the contents of each Iterator into a
  * List and creating a new Iterator.</p>
- * 
- * <p>IteratorChain is Serializable, but there is no
- * guarantee that the underlying Iterators are
- * Serializable.</p>
- * 
+ *  
  * <p>Calling a method that adds new Iterator<i>after
  * a method in the Iterator interface
  * has been called</i> will result in an
