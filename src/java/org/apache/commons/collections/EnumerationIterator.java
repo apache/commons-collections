@@ -7,24 +7,36 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-/** Adapter to make {@link Enumeration Enumeration} instances appear to be {@link Iterator Iterator} instances
+/** Adapter to make {@link Enumeration Enumeration} instances appear
+  * to be {@link Iterator Iterator} instances.
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
   */
-
 public class EnumerationIterator implements Iterator {
     
+    private Collection collection;
+
     private Enumeration enumeration;
 
+    private Object last;
     
     public EnumerationIterator() {
+        this(null, null);
     }
     
     public EnumerationIterator( Enumeration enumeration ) {
-        this.enumeration = enumeration;
+        this(enumeration, null);
+    }
+
+    public EnumerationIterator( Enumeration enum, Collection collection ) {
+        this.enumeration = enum;
+        this.collection = collection;
+        this.last = null;
     }
 
     // Iterator interface
@@ -34,11 +46,31 @@ public class EnumerationIterator implements Iterator {
     }
 
     public Object next() {
-        return enumeration.nextElement();
+        last = enumeration.nextElement();
+        return last;
     }
 
+    /**
+     * Functions if an associated <code>Collection</code> is known.
+     *
+     * @exception IllegalStateException <code>next()</code> not called.
+     * @exception UnsupportedOperationException No associated
+     * <code>Collection</code>.
+     */
     public void remove() {
-        throw new UnsupportedOperationException( "remove() method is not supported" );
+        if (collection != null) {
+            if (last != null) {
+                collection.remove(last);
+            }
+            else {
+                throw new IllegalStateException
+                    ("next() must have been called for remove() to function");
+            }
+        }
+        else {
+            throw new UnsupportedOperationException
+                ("No Collection associated with this Iterator");
+        }
     }
 
     // Properties
