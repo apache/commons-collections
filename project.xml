@@ -5,7 +5,7 @@
   <name>Collections</name>
   <id>commons-collections</id>
   <currentVersion>2.2-dev</currentVersion>
-  <inceptionYear>2002</inceptionYear>
+  <inceptionYear>2001</inceptionYear>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
   <shortDescription>Commons Collections</shortDescription>
 
@@ -45,8 +45,8 @@
       <organization></organization>
     </developer>
     <developer>
-      <name>Rodney Waldoff</name>
-      <id>rwaldof</id>
+      <name>Rodney Waldhoff</name>
+      <id>rwaldhoff</id>
       <email></email>
       <organization></organization>
     </developer>
