@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestAll.java,v 1.3 2003/12/03 14:03:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestUnmodifiableOrderedBidiMap.java,v 1.1 2003/12/03 14:03:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,41 +57,78 @@
  */
 package org.apache.commons.collections.bidimap;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.textui.TestRunner;
+
+import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.OrderedBidiMap;
 
 /**
- * Entry point for tests.
+ * JUnit tests.
  * 
- * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/03 14:03:35 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/03 14:03:35 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
-        super(testName);
-    }
+public class TestUnmodifiableOrderedBidiMap extends AbstractTestOrderedBidiMap {
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static void main(String[] args) {
+        TestRunner.run(suite());
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestDualHashBidiMap.suite());
-        suite.addTest(TestDualTreeBidiMap.suite());
-        suite.addTest(TestTreeBidiMap.suite());
-        
-        suite.addTest(TestUnmodifiableBidiMap.suite());
-        suite.addTest(TestUnmodifiableOrderedBidiMap.suite());
-        suite.addTest(TestUnmodifiableSortedBidiMap.suite());
-        
-        return suite;
+        return BulkTest.makeSuite(TestUnmodifiableOrderedBidiMap.class);
     }
-        
+
+    public TestUnmodifiableOrderedBidiMap(String testName) {
+        super(testName);
+    }
+
+    public BidiMap makeEmptyBidiMap() {
+        return UnmodifiableOrderedBidiMap.decorate(new TreeBidiMap());
+    }
+    public BidiMap makeFullBidiMap() {
+        OrderedBidiMap bidi = new TreeBidiMap();
+        for (int i = 0; i < entries.length; i++) {
+            bidi.put(entries[i][0], entries[i][1]);
+        }
+        return UnmodifiableOrderedBidiMap.decorate(bidi);
+    }
+    public Map makeFullMap() {
+        OrderedBidiMap bidi = new TreeBidiMap();
+        addSampleMappings(bidi);
+        return UnmodifiableOrderedBidiMap.decorate(bidi);
+    }
+    
+    public Map makeConfirmedMap() {
+        return new TreeMap();
+    }
+
+    /**
+     * Override to prevent infinite recursion of tests.
+     */
+    public String[] ignoredTests() {
+        return new String[] {"TestUnmodifiableOrderedBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
+    }
+    
+    public boolean isAllowNullKey() {
+        return false;
+    }
+    public boolean isAllowNullValue() {
+        return false;
+    }
+    public boolean isPutAddSupported() {
+        return false;
+    }
+    public boolean isPutChangeSupported() {
+        return false;
+    }
+    public boolean isRemoveSupported() {
+        return false;
+    }
+    
 }

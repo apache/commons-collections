@@ -7,12 +7,16 @@ from the new format to the old format and vice versa.
 <p>
 The following implementations are provided in the package:
 <ul>
-<li>DualHash - uses two HashMaps to implement BidiMap
-<li>DualTree - uses two TreeMaps to implement SortedBidiMap
-<li>Tree - red-black tree implementation of OrderedBidiMap
+<li>DualHashBidiMap - uses two HashMaps to implement BidiMap
+<li>DualTreeBidiMap - uses two TreeMaps to implement SortedBidiMap
+<li>TreeBidiMap - red-black tree implementation of OrderedBidiMap
+</ul>
+<p>
+The following decorators are provided in the package:
+<ul>
+<li>Unmodifiable - ensures the map cannot be altered
 <!--
 <li>Synchronized - synchronizes method access for multi-threaded environments
-<li>Unmodifiable - ensures the collection cannot be altered
 <li>Predicated - ensures that only elements that are valid according to a predicate can be added
 <li>Typed - ensures that only elements that are of a specific type can be added
 <li>Transformed - transforms each element added

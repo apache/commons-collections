@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractBidiMapDecorator.java,v 1.1 2003/12/03 12:59:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractBidiMapDecorator.java,v 1.2 2003/12/03 14:03:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.map.AbstractMapDecorator;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/03 12:59:37 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 14:03:35 $
  * 
  * @author Stephen Colebourne
  */
@@ -86,7 +86,7 @@ public abstract class AbstractBidiMapDecorator extends AbstractMapDecorator impl
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractBidiMapDecorator(BidiMap map) {
+    protected AbstractBidiMapDecorator(BidiMap map) {
         super(map);
     }
 
