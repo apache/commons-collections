@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableSortedMap.java,v 1.2 2003/11/20 22:35:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableSortedMap.java,v 1.3 2003/12/03 12:27:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,14 +65,13 @@ import java.util.SortedMap;
 
 import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
-import org.apache.commons.collections.map.UnmodifiableMap.UnmodifiableEntrySet;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>SortedMap</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/20 22:35:50 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/03 12:27:36 $
  * 
  * @author Stephen Colebourne
  */
@@ -98,7 +97,7 @@ public final class UnmodifiableSortedMap extends AbstractSortedMapDecorator impl
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    protected UnmodifiableSortedMap(SortedMap map) {
+    private UnmodifiableSortedMap(SortedMap map) {
         super(map);
     }
 
@@ -121,7 +120,7 @@ public final class UnmodifiableSortedMap extends AbstractSortedMapDecorator impl
 
     public Set entrySet() {
         Set set = super.entrySet();
-        return new UnmodifiableEntrySet(set);
+        return UnmodifiableEntrySet.decorate(set);
     }
 
     public Set keySet() {

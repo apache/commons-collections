@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableMapIterator.java,v 1.3 2003/12/01 22:49:00 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableMapIterator.java,v 1.4 2003/12/03 12:27:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import org.apache.commons.collections.Unmodifiable;
  * Decorates a map iterator such that it cannot be modified.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/01 22:49:00 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/03 12:27:37 $
  * 
  * @author Stephen Colebourne
  */
@@ -96,7 +96,7 @@ public final class UnmodifiableMapIterator implements MapIterator, Unmodifiable 
      *
      * @param iterator  the iterator to decoarate
      */
-    protected UnmodifiableMapIterator(MapIterator iterator) {
+    private UnmodifiableMapIterator(MapIterator iterator) {
         super();
         this.iterator = iterator;
     }

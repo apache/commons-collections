@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableMap.java,v 1.5 2003/12/02 23:51:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableMap.java,v 1.6 2003/12/03 12:27:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,9 +57,7 @@
  */
 package org.apache.commons.collections.map;
 
-import java.lang.reflect.Array;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -67,17 +65,15 @@ import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
-import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
-import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>Map</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/02 23:51:50 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/03 12:27:36 $
  * 
  * @author Stephen Colebourne
  */
@@ -103,7 +99,7 @@ public final class UnmodifiableMap extends AbstractMapDecorator implements Itera
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    protected UnmodifiableMap(Map map) {
+    private UnmodifiableMap(Map map) {
         super(map);
     }
 
@@ -136,7 +132,7 @@ public final class UnmodifiableMap extends AbstractMapDecorator implements Itera
 
     public Set entrySet() {
         Set set = super.entrySet();
-        return new UnmodifiableEntrySet(set);
+        return UnmodifiableEntrySet.decorate(set);
     }
 
     public Set keySet() {
@@ -147,87 +143,6 @@ public final class UnmodifiableMap extends AbstractMapDecorator implements Itera
     public Collection values() {
         Collection coll = super.values();
         return UnmodifiableCollection.decorate(coll);
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Implementation of an entry set that checks (predicates) additions.
-     */
-    protected static class UnmodifiableEntrySet extends UnmodifiableSet {
-        
-        protected UnmodifiableEntrySet(Set set) {
-            super(set);
-        }
-
-        public Iterator iterator() {
-            return new UnmodifiableEntrySetIterator(collection.iterator());
-        }
-        
-        public Object[] toArray() {
-            Object[] array = collection.toArray();
-            for (int i = 0; i < array.length; i++) {
-                array[i] = new UnmodifiableEntry((Map.Entry) array[i]);
-            }
-            return array;
-        }
-        
-        public Object[] toArray(Object array[]) {
-            Object[] result = array;
-            if (array.length > 0) {
-                // we must create a new array to handle multi-threaded situations
-                // where another thread could access data before we decorate it
-                result = (Object[]) Array.newInstance(array.getClass().getComponentType(), 0);
-            }
-            result = collection.toArray(result);
-            for (int i = 0; i < result.length; i++) {
-                result[i] = new UnmodifiableEntry((Map.Entry) result[i]);
-            }
-
-            // check to see if result should be returned straight
-            if (result.length > array.length) {
-                return result;
-            }
-
-            // copy back into input array to fulfil the method contract
-            System.arraycopy(result, 0, array, 0, result.length);
-            if (array.length > result.length) {
-                array[result.length] = null;
-            }
-            return array;
-        }
-    }
-
-    /**
-     * Implementation of an entry set iterator.
-     */
-    protected static class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator {
-        
-        protected UnmodifiableEntrySetIterator(Iterator iterator) {
-            super(iterator);
-        }
-        
-        public Object next() {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            return new UnmodifiableEntry(entry);
-        }
-        
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    /**
-     * Implementation of a map entry that is unmodifiable.
-     */
-    protected static class UnmodifiableEntry extends AbstractMapEntryDecorator {
-
-        protected UnmodifiableEntry(Map.Entry entry) {
-            super(entry);
-        }
-
-        public Object setValue(Object o) {
-            throw new UnsupportedOperationException();
-        }
     }
 
 }

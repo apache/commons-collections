@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/UnmodifiableBoundedCollection.java,v 1.3 2003/11/29 18:14:20 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/UnmodifiableBoundedCollection.java,v 1.4 2003/12/03 12:27:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,8 +58,10 @@
 package org.apache.commons.collections.collection;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.collections.BoundedCollection;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
  * <code>UnmodifiableBoundedCollection</code> decorates another <code>BoundedCollection</code>
@@ -71,11 +73,11 @@ import org.apache.commons.collections.BoundedCollection;
  * examining the package scope variables.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/29 18:14:20 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/03 12:27:37 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiableBoundedCollection extends UnmodifiableCollection implements BoundedCollection {
+public final class UnmodifiableBoundedCollection extends AbstractCollectionDecorator implements BoundedCollection {
     
     /**
      * Factory method to create an unmodifiable bounded collection.
@@ -126,8 +128,37 @@ public class UnmodifiableBoundedCollection extends UnmodifiableCollection implem
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if coll is null
      */
-    protected UnmodifiableBoundedCollection(BoundedCollection coll) {
+    private UnmodifiableBoundedCollection(BoundedCollection coll) {
         super(coll);
+    }
+
+    //-----------------------------------------------------------------------
+    public Iterator iterator() {
+        return UnmodifiableIterator.decorate(getCollection().iterator());
+    }
+
+    public boolean add(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean addAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean remove(Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean removeAll(Collection coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean retainAll(Collection coll) {
+        throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------    

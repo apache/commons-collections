@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/UnmodifiableList.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/UnmodifiableList.java,v 1.3 2003/12/03 12:27:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,11 +70,11 @@ import org.apache.commons.collections.iterators.UnmodifiableListIterator;
  * Decorates another <code>List</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/03 12:27:36 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiableList extends AbstractListDecorator implements Unmodifiable {
+public final class UnmodifiableList extends AbstractListDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable list.
@@ -96,17 +96,8 @@ public class UnmodifiableList extends AbstractListDecorator implements Unmodifia
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected UnmodifiableList(List list) {
+    private UnmodifiableList(List list) {
         super(list);
-    }
-
-    /**
-     * Gets the list being decorated.
-     * 
-     * @return the list being decorated
-     */
-    protected List getList() {
-        return (List) getCollection();
     }
 
     //-----------------------------------------------------------------------
@@ -139,18 +130,6 @@ public class UnmodifiableList extends AbstractListDecorator implements Unmodifia
     }
 
     //-----------------------------------------------------------------------
-    public Object get(int index) {
-        return getList().get(index);
-    }
-
-    public int indexOf(Object object) {
-        return getList().indexOf(object);
-    }
-
-    public int lastIndexOf(Object object) {
-        return getList().lastIndexOf(object);
-    }
-
     public ListIterator listIterator() {
         return UnmodifiableListIterator.decorate(getList().listIterator());
     }

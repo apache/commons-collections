@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/UnmodifiableBuffer.java,v 1.3 2003/12/03 12:27:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableEntrySet.java,v 1.1 2003/12/03 12:27:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,54 +55,54 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.buffer;
+package org.apache.commons.collections.map;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.Unmodifiable;
-import org.apache.commons.collections.iterators.UnmodifiableIterator;
+import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
+import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
+import org.apache.commons.collections.set.AbstractSetDecorator;
 
 /**
- * Decorates another <code>Buffer</code> to ensure it can't be altered.
+ * Decorates a map entry <code>Set</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/03 12:27:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/03 12:27:36 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableBuffer extends AbstractBufferDecorator implements Unmodifiable {
-
+public final class UnmodifiableEntrySet extends AbstractSetDecorator implements Unmodifiable {
+    
     /**
-     * Factory method to create an unmodifiable buffer.
+     * Factory method to create an unmodifiable set of Map Entry objects.
      * 
-     * @param buffer  the buffer to decorate, must not be null
-     * @throws IllegalArgumentException if buffer is null
+     * @param set  the set to decorate, must not be null
+     * @throws IllegalArgumentException if set is null
      */
-    public static Buffer decorate(Buffer buffer) {
-        if (buffer instanceof Unmodifiable) {
-            return buffer;
+    public static Set decorate(Set set) {
+        if (set instanceof Unmodifiable) {
+            return set;
         }
-        return new UnmodifiableBuffer(buffer);
+        return new UnmodifiableEntrySet(set);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * 
-     * @param buffer  the buffer to decorate, must not be null
-     * @throws IllegalArgumentException if buffer is null
+     * @param set  the set to decorate, must not be null
+     * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableBuffer(Buffer buffer) {
-        super(buffer);
+    private UnmodifiableEntrySet(Set set) {
+        super(set);
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
-    }
-
     public boolean add(Object object) {
         throw new UnsupportedOperationException();
     }
@@ -128,8 +128,76 @@ public final class UnmodifiableBuffer extends AbstractBufferDecorator implements
     }
 
     //-----------------------------------------------------------------------
-    public Object remove() {
-        throw new UnsupportedOperationException();
+    public Iterator iterator() {
+        return new UnmodifiableEntrySetIterator(collection.iterator());
+    }
+    
+    public Object[] toArray() {
+        Object[] array = collection.toArray();
+        for (int i = 0; i < array.length; i++) {
+            array[i] = new UnmodifiableEntry((Map.Entry) array[i]);
+        }
+        return array;
+    }
+    
+    public Object[] toArray(Object array[]) {
+        Object[] result = array;
+        if (array.length > 0) {
+            // we must create a new array to handle multi-threaded situations
+            // where another thread could access data before we decorate it
+            result = (Object[]) Array.newInstance(array.getClass().getComponentType(), 0);
+        }
+        result = collection.toArray(result);
+        for (int i = 0; i < result.length; i++) {
+            result[i] = new UnmodifiableEntry((Map.Entry) result[i]);
+        }
+
+        // check to see if result should be returned straight
+        if (result.length > array.length) {
+            return result;
+        }
+
+        // copy back into input array to fulfil the method contract
+        System.arraycopy(result, 0, array, 0, result.length);
+        if (array.length > result.length) {
+            array[result.length] = null;
+        }
+        return array;
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Implementation of an entry set iterator.
+     */
+    final static class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator {
+        
+        protected UnmodifiableEntrySetIterator(Iterator iterator) {
+            super(iterator);
+        }
+        
+        public Object next() {
+            Map.Entry entry = (Map.Entry) iterator.next();
+            return new UnmodifiableEntry(entry);
+        }
+        
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Implementation of a map entry that is unmodifiable.
+     */
+    final static class UnmodifiableEntry extends AbstractMapEntryDecorator {
+
+        protected UnmodifiableEntry(Map.Entry entry) {
+            super(entry);
+        }
+
+        public Object setValue(Object o) {
+            throw new UnsupportedOperationException();
+        }
     }
 
 }

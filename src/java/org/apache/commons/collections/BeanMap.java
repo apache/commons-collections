@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.23 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.24 2003/12/03 12:27:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.23 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.24 $ $Date: 2003/12/03 12:27:37 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
@@ -456,33 +456,14 @@ public class BeanMap extends AbstractMap implements Cloneable {
      * @return the unmodifiable set of mappings
      */
     public Set entrySet() {
-        return new AbstractSet() {
+        return UnmodifiableSet.decorate(new AbstractSet() {
             public Iterator iterator() {
-                return new Iterator() {
-
-                    Iterator methodIter = 
-                      BeanMap.this.readMethods.keySet().iterator();
-
-                    public boolean hasNext() {
-                        return methodIter.hasNext();
-                    }
-
-                    public Object next() {
-                        Object key = (Object)methodIter.next();
-                        return new MyMapEntry( BeanMap.this, key, get(key) );
-                    }
-
-                    public void remove() {
-                      throw new UnsupportedOperationException
-                        ("remove() not supported from BeanMap.entrySet()");
-                    }
-                };
+                return entryIterator();
             }
-
             public int size() {
               return BeanMap.this.readMethods.size();
             }
-        };
+        });
     }
 
     /**
@@ -559,7 +540,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
             }            
             public Object next() {
                 Object key = iter.next();
-                Object value = get( (String) key );
+                Object value = get(key);
                 return new MyMapEntry( BeanMap.this, key, value );
             }            
             public void remove() {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableIterator.java,v 1.1 2003/11/02 17:26:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableIterator.java,v 1.2 2003/12/03 12:27:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import org.apache.commons.collections.Unmodifiable;
  * Decorates an iterator such that it cannot be modified.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 17:26:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 12:27:37 $
  * 
  * @author Stephen Colebourne
  */
@@ -99,7 +99,7 @@ public final class UnmodifiableIterator implements Iterator, Unmodifiable {
      *
      * @param iterator  the iterator to decoarate
      */
-    protected UnmodifiableIterator(Iterator iterator) {
+    private UnmodifiableIterator(Iterator iterator) {
         super();
         this.iterator = iterator;
     }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/UnmodifiablePriorityQueue.java,v 1.2 2003/12/03 11:19:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/UnmodifiablePriorityQueue.java,v 1.3 2003/12/03 12:27:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,11 +67,11 @@ import org.apache.commons.collections.Unmodifiable;
  * to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/03 11:19:10 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/03 12:27:36 $
  * 
  * @author Stephen Colebourne
  */
-public class UnmodifiablePriorityQueue implements PriorityQueue, Unmodifiable {
+public final class UnmodifiablePriorityQueue implements PriorityQueue, Unmodifiable {
 
     /** The priority queue to decorate */
     protected final PriorityQueue priorityQueue;
@@ -86,6 +86,9 @@ public class UnmodifiablePriorityQueue implements PriorityQueue, Unmodifiable {
         if (priorityQueue instanceof Unmodifiable) {
             return priorityQueue;
         }
+        if (priorityQueue == null) {
+            throw new IllegalArgumentException("PriorityQueue must not be null");
+        }
         return new UnmodifiablePriorityQueue(priorityQueue);
     }
     
@@ -95,10 +98,8 @@ public class UnmodifiablePriorityQueue implements PriorityQueue, Unmodifiable {
      *
      * @param priorityQueue  the priority queue to synchronize
      */
-    protected UnmodifiablePriorityQueue(PriorityQueue priorityQueue) {
-        if (priorityQueue == null) {
-            throw new IllegalArgumentException("PriorityQueue must not be null");
-        }
+    private UnmodifiablePriorityQueue(PriorityQueue priorityQueue) {
+        super();
         this.priorityQueue = priorityQueue;
     }
 
