@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/BoundedFifoBuffer.java,v 1.4 2004/01/01 19:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/BoundedFifoBuffer.java,v 1.5 2004/01/04 18:56:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -69,7 +69,7 @@ import org.apache.commons.collections.BufferOverflowException;
 import org.apache.commons.collections.BufferUnderflowException;
 
 /**
- * The BoundedFifoBuffer is a <strong>very</strong> efficient implementation of
+ * The BoundedFifoBuffer is a very efficient implementation of
  * Buffer that does not alter the size of the buffer at runtime.
  * <p>
  * The removal order of a <code>BoundedFifoBuffer</code> is based on the 
@@ -89,7 +89,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This buffer prevents null objects from being added.
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.4 $ $Date: 2004/01/01 19:24:46 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/04 18:56:37 $
  * 
  * @author Avalon
  * @author Berin Loritsch
