@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.49 2003/11/29 18:14:20 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.50 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,7 +59,6 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,7 +83,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.49 $ $Date: 2003/11/29 18:14:20 $
+ * @version $Revision: 1.50 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -107,7 +106,7 @@ public class CollectionUtils {
      * this purpose. However they could be cast to Set or List which might be
      * undesirable. This implementation only implements Collection.
      */
-    public static final Collection EMPTY_COLLECTION = Collections.unmodifiableCollection(new ArrayList());
+    public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.decorate(new ArrayList());
 
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.

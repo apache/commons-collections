@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SetList.java,v 1.4 2003/11/16 00:39:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SetList.java,v 1.5 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,12 +59,13 @@ package org.apache.commons.collections.decorators;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * SetList combines the <code>List</code> and <code>Set</code> interfaces
@@ -80,7 +81,7 @@ import java.util.Set;
  * This class offers the <code>List</code> interface implementation as well.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/11/16 00:39:37 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/03 11:37:44 $
  * @deprecated TO BE REMOVED BEFORE v3.0
  * 
  * @author Matthew Hawthorne
@@ -142,7 +143,7 @@ public class SetList extends AbstractListDecorator {
      * @return an unmodifiable set view
      */
     public Set asSet() {
-        return Collections.unmodifiableSet(set);
+        return UnmodifiableSet.decorate(set);
     }
 
     //-----------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.20 2003/11/27 22:55:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.21 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.20 $ $Date: 2003/11/27 22:55:16 $
+ * @version $Revision: 1.21 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -103,7 +103,7 @@ public class SetUtils {
      * An empty unmodifiable sorted set.
      * This is not provided in the JDK.
      */
-    public static final SortedSet EMPTY_SORTED_SET = Collections.unmodifiableSortedSet(new TreeSet());
+    public static final SortedSet EMPTY_SORTED_SET = UnmodifiableSortedSet.decorate(new TreeSet());
 
     /**
      * <code>SetUtils</code> should not normally be instantiated.

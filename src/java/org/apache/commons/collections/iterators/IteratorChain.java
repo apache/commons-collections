@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.6 2003/09/29 22:02:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.7 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,10 +59,12 @@ package org.apache.commons.collections.iterators;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import org.apache.commons.collections.list.UnmodifiableList;
+
 /**
  * <p>An IteratorChain is an Iterator that wraps one or
  * more Iterators.  When any method from the
@@ -83,7 +85,7 @@ import java.util.NoSuchElementException;
  * to not alter the underlying List of Iterators.</p>
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.6 $ $Date: 2003/09/29 22:02:33 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -211,7 +213,7 @@ public class IteratorChain implements Iterator {
      * @return the unmodifiable list of iterators added
      */
     public List getIterators() {
-        return Collections.unmodifiableList(iteratorChain);
+        return UnmodifiableList.decorate(iteratorChain);
     }
 
     /**

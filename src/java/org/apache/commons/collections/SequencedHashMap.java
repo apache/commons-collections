@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.21 2003/11/23 14:40:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.22 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,6 @@ import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -73,6 +72,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
+import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
  * A map of objects whose mapping entries are sequenced based on the order in
@@ -90,7 +91,7 @@ import java.util.Set;
  *
  * @see org.apache.commons.collections.set.ListOrderedSet
  * @since Commons Collections 2.0
- * @version $Revision: 1.21 $ $Date: 2003/11/23 14:40:41 $
+ * @version $Revision: 1.22 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author Michael A. Smith
  * @author Daniel Rall
@@ -1000,7 +1001,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
             l.add(iter.next());
         }
 
-        return Collections.unmodifiableList(l);
+        return UnmodifiableList.decorate(l);
     }
 
     /**

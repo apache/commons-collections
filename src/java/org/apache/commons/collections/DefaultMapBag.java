@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.11 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.12 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,12 +59,13 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * A skeletal implementation of the {@link Bag}
@@ -79,7 +80,7 @@ import java.util.Set;
  *
  * @deprecated Moved to bag subpackage as AbstractMapBag. Due to be removed in v4.0.
  * @since Commons Collections 2.0
- * @version $Revision: 1.11 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.12 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -391,7 +392,7 @@ public abstract class DefaultMapBag implements Bag {
      * @return the set of unique elements in this bag
      */
     public Set uniqueSet() {
-        return Collections.unmodifiableSet(_map.keySet());
+        return UnmodifiableSet.decorate(_map.keySet());
     }
 
     /**

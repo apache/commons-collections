@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.22 2003/10/03 23:19:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.23 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,12 +68,13 @@ import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.collections.pairs.AbstractMapEntry;
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /** 
  * An implementation of Map for JavaBeans which uses introspection to
@@ -83,7 +84,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.22 $ $Date: 2003/10/03 23:19:32 $
+ * @version $Revision: 1.23 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
@@ -444,7 +445,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
      *        modifiable.
      */
     public Set keySet() {
-        return Collections.unmodifiableSet(readMethods.keySet());
+        return UnmodifiableSet.decorate(readMethods.keySet());
     }
 
     /**
@@ -455,7 +456,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
      * @return the unmodifiable set of mappings
      */
     public Set entrySet() {
-        return Collections.unmodifiableSet(new AbstractSet() {
+        return new AbstractSet() {
             public Iterator iterator() {
                 return new Iterator() {
 
@@ -481,7 +482,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
             public int size() {
               return BeanMap.this.readMethods.size();
             }
-        });
+        };
     }
 
     /**
@@ -495,7 +496,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
         for ( Iterator iter = valueIterator(); iter.hasNext(); ) {
             answer.add( iter.next() );
         }
-        return Collections.unmodifiableList(answer);
+        return UnmodifiableList.decorate(answer);
     }
 
 

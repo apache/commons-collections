@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/set/ListOrderedSet.java,v 1.1 2003/11/16 00:05:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/set/ListOrderedSet.java,v 1.2 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,13 +59,13 @@ package org.apache.commons.collections.set;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
+import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
  * Decorates another <code>Set</code> to ensure that the order of addition
@@ -84,7 +84,7 @@ import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
  * various interface methods (notably equals/hashCode) are incompatable with a set.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:45 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen
@@ -157,7 +157,7 @@ public class ListOrderedSet extends AbstractSetDecorator implements Set {
      * @return an unmodifiable list view
      */
     public List asList() {
-        return Collections.unmodifiableList(setOrder);
+        return UnmodifiableList.decorate(setOrder);
     }
 
     //-----------------------------------------------------------------------

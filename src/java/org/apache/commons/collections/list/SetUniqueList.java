@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/SetUniqueList.java,v 1.1 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/SetUniqueList.java,v 1.2 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,7 +59,6 @@ package org.apache.commons.collections.list;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +67,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates a <code>List</code> to ensure that no duplicates are present
@@ -83,7 +83,7 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  * This class offers the <code>List</code> interface implementation as well.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -144,7 +144,7 @@ public class SetUniqueList extends AbstractListDecorator {
      * @return an unmodifiable set view
      */
     public Set asSet() {
-        return Collections.unmodifiableSet(set);
+        return UnmodifiableSet.decorate(set);
     }
 
     //-----------------------------------------------------------------------

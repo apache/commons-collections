@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.9 2003/09/29 22:37:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.10 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,11 +60,12 @@ package org.apache.commons.collections.iterators;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+
+import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
  * Provides an ordered iteration over the elements contained in
@@ -75,7 +76,7 @@ import java.util.NoSuchElementException;
  * <code>A.next()</code> and <code>B.next()</code>.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.9 $ $Date: 2003/09/29 22:37:40 $
+ * @version $Revision: 1.10 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -225,7 +226,7 @@ public class CollatingIterator implements Iterator {
      * @return the unmodifiable list of iterators added
      */
     public List getIterators() {
-        return Collections.unmodifiableList(iterators);
+        return UnmodifiableList.decorate(iterators);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.39 2003/11/16 00:05:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.40 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -109,7 +109,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.39 $ $Date: 2003/11/16 00:05:44 $
+ * @version $Revision: 1.40 $ $Date: 2003/12/03 11:37:44 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -127,12 +127,12 @@ public class MapUtils {
      * An empty unmodifiable map.
      * This was not provided in JDK1.2.
      */
-    public static final Map EMPTY_MAP = Collections.unmodifiableMap(new HashMap(1));
+    public static final Map EMPTY_MAP = UnmodifiableMap.decorate(new HashMap(1));
     /**
      * An empty unmodifiable sorted map.
      * This is not provided in the JDK.
      */
-    public static final SortedMap EMPTY_SORTED_MAP = Collections.unmodifiableSortedMap(new TreeMap());
+    public static final SortedMap EMPTY_SORTED_MAP = UnmodifiableSortedMap.decorate(new TreeMap());
     /**
      * String used to indent the verbose and debug Map prints.
      */

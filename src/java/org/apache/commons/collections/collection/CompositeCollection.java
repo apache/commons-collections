@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/CompositeCollection.java,v 1.1 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/CompositeCollection.java,v 1.2 2003/12/03 11:37:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,11 +61,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.iterators.IteratorChain;
+import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
  * Decorates a other collections to provide a single unified view.
@@ -75,7 +75,7 @@ import org.apache.commons.collections.iterators.IteratorChain;
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 11:37:44 $
  *
  * @author Brian McCallister
  * @author Stephen Colebourne
@@ -420,7 +420,7 @@ public class CompositeCollection implements Collection {
      * @return Unmodifiable collection of all collections in this composite.
      */
     public Collection getCollections() {
-        return Collections.unmodifiableList(Arrays.asList(this.all));
+        return UnmodifiableList.decorate(Arrays.asList(this.all));
     }
     
     //-----------------------------------------------------------------------
