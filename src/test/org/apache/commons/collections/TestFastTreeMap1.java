@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.2 2002/02/22 02:18:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/22 02:18:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.3 2002/06/18 05:35:58 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/06/18 05:35:58 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.TreeMap;
  * Test FastTreeMap in <strong>fast</strong> mode.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap1.java,v 1.2 2002/02/22 02:18:50 mas Exp $
+ * @version $Id: TestFastTreeMap1.java,v 1.3 2002/06/18 05:35:58 mas Exp $
  */
 public class TestFastTreeMap1 extends TestFastTreeMap
 {
@@ -82,7 +82,7 @@ public class TestFastTreeMap1 extends TestFastTreeMap
 
     public static Test suite()
     {
-        return new TestSuite(TestFastTreeMap1.class);
+        return BulkTest.makeSuite(TestFastTreeMap1.class);
     }
 
     public static void main(String args[])

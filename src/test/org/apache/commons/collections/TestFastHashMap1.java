@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap1.java,v 1.2 2002/02/22 02:18:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/22 02:18:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap1.java,v 1.3 2002/06/18 05:35:58 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/06/18 05:35:58 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.Map;
  * Test FastHashMap in <strong>fast</strong> mode.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastHashMap1.java,v 1.2 2002/02/22 02:18:50 mas Exp $
+ * @version $Id: TestFastHashMap1.java,v 1.3 2002/06/18 05:35:58 mas Exp $
  */
 public class TestFastHashMap1 extends TestFastHashMap
 {
@@ -82,7 +82,7 @@ public class TestFastHashMap1 extends TestFastHashMap
 
     public static Test suite()
     {
-        return new TestSuite(TestFastHashMap1.class);
+        return BulkTest.makeSuite(TestFastHashMap1.class);
     }
 
     public static void main(String args[])

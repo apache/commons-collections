@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.5 2002/03/13 04:59:03 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/03/13 04:59:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.6 2002/06/18 05:35:58 mas Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/06/18 05:35:58 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ public class TestBeanMap extends TestMap {
     }
 
     public static Test suite() {
-        return new TestSuite(TestBeanMap.class);
+        return BulkTest.makeSuite(TestBeanMap.class);
     }
 
 /*
@@ -316,5 +316,19 @@ public class TestBeanMap extends TestMap {
             fail("BeanMap.clone() should not throw a " +
                  "CloneNotSupportedException when clone should succeed.");
         }
+    }
+
+    public String[] ignoredSimpleTests() {
+        // Ignore the serialization tests on collection views.
+        return new String[] {
+         "TestBeanMap.bulkTestMapEntrySet.testCanonicalEmptyCollectionExists",
+         "TestBeanMap.bulkTestMapEntrySet.testCanonicalFullCollectionExists",
+         "TestBeanMap.bulkTestMapKeySet.testCanonicalEmptyCollectionExists",
+         "TestBeanMap.bulkTestMapKeySet.testCanonicalFullCollectionExists",
+         "TestBeanMap.bulkTestMapValues.testCanonicalEmptyCollectionExists",
+         "TestBeanMap.bulkTestMapValues.testCanonicalFullCollectionExists",
+         "TestBeanMap.bulkTestMapEntrySet.testSimpleSerialization",
+         "TestBeanMap.bulkTestMapKeySet.testSimpleSerialization"
+        };
     }
 }

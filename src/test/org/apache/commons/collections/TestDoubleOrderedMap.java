@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.4 2002/05/28 06:51:03 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/05/28 06:51:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.5 2002/06/18 05:35:58 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/06/18 05:35:58 $
  *
  * ====================================================================
  *
@@ -95,7 +95,7 @@ public class TestDoubleOrderedMap extends TestMap  {
      * @return the test suite
      */
     public static Test suite() {
-        return new TestSuite(TestDoubleOrderedMap.class);
+        return BulkTest.makeSuite(TestDoubleOrderedMap.class);
     }
 
     /**

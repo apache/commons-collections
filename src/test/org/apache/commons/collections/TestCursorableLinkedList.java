@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.4 2002/02/25 23:51:24 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/25 23:51:24 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.5 2002/06/18 05:35:58 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/06/18 05:35:58 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCursorableLinkedList.java,v 1.4 2002/02/25 23:51:24 morgand Exp $
+ * @version $Id: TestCursorableLinkedList.java,v 1.5 2002/06/18 05:35:58 mas Exp $
  */
 public class TestCursorableLinkedList extends TestList {
     public TestCursorableLinkedList(String testName) {
@@ -74,7 +74,7 @@ public class TestCursorableLinkedList extends TestList {
     }
 
     public static Test suite() {
-        return new TestSuite(TestCursorableLinkedList.class);
+        return BulkTest.makeSuite(TestCursorableLinkedList.class);
     }
 
     public static void main(String args[]) {

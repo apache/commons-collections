@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSoftRefHashMap.java,v 1.2 2002/02/26 00:31:32 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/26 00:31:32 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSoftRefHashMap.java,v 1.3 2002/06/18 05:35:58 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/06/18 05:35:58 $
  *
  * ====================================================================
  *
@@ -69,9 +69,9 @@ import java.util.HashMap;
 
 /**
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @version $Id: TestSoftRefHashMap.java,v 1.2 2002/02/26 00:31:32 morgand Exp $
+ * @version $Id: TestSoftRefHashMap.java,v 1.3 2002/06/18 05:35:58 mas Exp $
  */
-public class TestSoftRefHashMap extends TestHashMap
+public class TestSoftRefHashMap extends TestMap
 {
     public TestSoftRefHashMap(String testName) {
         super(testName);
@@ -89,10 +89,6 @@ public class TestSoftRefHashMap extends TestHashMap
     public Map makeEmptyMap() {
         SoftRefHashMap map = new SoftRefHashMap();
         return map;
-    }
-
-    public void setUp() {
-        map = (HashMap) makeEmptyMap();
     }
 
 }

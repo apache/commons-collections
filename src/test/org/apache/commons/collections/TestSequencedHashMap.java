@@ -86,7 +86,7 @@ public class TestSequencedHashMap extends TestMap {
     }
 
     public static Test suite() {
-        return new TestSuite(TestSequencedHashMap.class);
+        return BulkTest.makeSuite(TestSequencedHashMap.class);
     }
 
     // current versions of SequencedHashMap and subclasses are not

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.21 2002/05/28 06:51:03 mas Exp $
- * $Revision: 1.21 $
- * $Date: 2002/05/28 06:51:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.22 2002/06/18 05:35:58 mas Exp $
+ * $Revision: 1.22 $
+ * $Date: 2002/06/18 05:35:58 $
  *
  * ====================================================================
  *
@@ -74,7 +74,7 @@ import java.util.Set;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.21 2002/05/28 06:51:03 mas Exp $
+ * @version $Id: TestLRUMap.java,v 1.22 2002/06/18 05:35:58 mas Exp $
  */
 public class TestLRUMap extends TestSequencedHashMap
 {
@@ -83,7 +83,7 @@ public class TestLRUMap extends TestSequencedHashMap
     }
 
     public static Test suite() {
-        return new TestSuite(TestLRUMap.class);
+        return BulkTest.makeSuite(TestLRUMap.class);
     }
 
     public static void main(String args[]) {
