@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.23 2003/02/26 01:33:22 rwaldhoff Exp $
- * $Revision: 1.23 $
- * $Date: 2003/02/26 01:33:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.24 2003/07/12 15:47:53 scolebourne Exp $
+ * $Revision: 1.24 $
+ * $Date: 2003/07/12 15:47:53 $
  *
  * ====================================================================
  *
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.23 $ $Date: 2003/02/26 01:33:22 $
+ * @version $Revision: 1.24 $ $Date: 2003/07/12 15:47:53 $
  */
 public abstract class TestMap extends TestObject {
 
@@ -246,11 +246,24 @@ public abstract class TestMap extends TestObject {
 
 
     protected Object[] getOtherKeys() {
-        return TestCollection.getOtherNonNullStringElements();
+        return getOtherNonNullStringElements();
     }
 
     protected Object[] getOtherValues() {
-        return TestCollection.getOtherNonNullStringElements();
+        return getOtherNonNullStringElements();
+    }
+
+    /**
+     *  Returns a list of string elements suitable for return by
+     *  {@link getOtherElements()}.  Override getOtherElements to return
+     *  the results of this method if your collection does not support
+     *  heterogenous elements or the null element.
+     */
+    protected Object[] getOtherNonNullStringElements() {
+        return new Object[] {
+            "For","then","despite",/* of */"space","I","would","be","brought",
+            "From","limits","far","remote","where","thou","dost","stay"
+        };
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSortedSet.java,v 1.1 2003/05/11 13:11:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSortedSet.java,v 1.2 2003/07/12 15:47:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,27 +57,283 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 /**
- * Tests base {@link java.util.SortedSet} methods and contracts.
+ * Tests base {@link SortedSet} methods and contracts.
+ * <p>
+ * To use, subclass and override the {@link #makeEmptySet()}
+ * method.  You may have to override other protected methods if your
+ * set is not modifiable, or if your set restricts what kinds of
+ * elements may be added; see {@link TestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/11 13:11:37 $
+ * @version $Revision: 1.2 $ $Date: 2003/07/12 15:47:53 $
  * 
  * @author Stephen Colebourne
+ * @author Dieter Wimberger
  */
 public abstract class TestSortedSet extends TestSet {
 
-    public TestSortedSet(String testName) {
-        super(testName);
-    }
-    
-    protected Object[] getFullElements() {
-        return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-    }
-
-    protected Object[] getOtherElements() {
-        return new Object[] {"9", "88", "678", "87", "98", "78", "99"};
+    /**
+     * Constructor.
+     *
+     * @param name  name for test
+     */
+    public TestSortedSet(String name) {
+        super(name);
     }
 
-    // TODO: Add the SortedSet tests!
+    //-----------------------------------------------------------------------
+    /**
+     * Verification extension, will check the order of elements,
+     * the sets should already be verified equal.
+     */
+    protected void verify() {
+        super.verify();
+        //Sorted sets should return in-order iterators by contract
+        Iterator colliter = collection.iterator();
+        Iterator confiter = confirmed.iterator();
+        while (colliter.hasNext()) {
+            assertEquals("Element appears to be out of order.", colliter.next(), confiter.next());
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Overridden because UnboundedFifoBuffer doesn't allow null elements.
+     * @return false
+     */
+    protected boolean isNullSupported() {
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an empty {@link TreeSet} for use in modification testing.
+     *
+     * @return a confirmed empty collection
+     */
+    protected Collection makeConfirmedCollection() {
+        return new TreeSet();
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Return the {@link TestCollection#confirmed} fixture, but cast as a
+     * SortedSet.
+     */
+    protected SortedSet getConfirmedSortedSet() {
+        return (SortedSet) confirmed;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Override to return comparable objects.
+     */
+    protected Object[] getFullNonNullElements() {
+        Object[] elements = new Object[30];
+
+        for (int i = 0; i < 30; i++) {
+            elements[i] = new Integer(i + i + 1);
+        }
+        return elements;
+    }
+
+    /**
+     * Override to return comparable objects.
+     */
+    protected Object[] getOtherNonNullElements() {
+        Object[] elements = new Object[30];
+        for (int i = 0; i < 30; i++) {
+            elements[i] = new Integer(i + i + 2);
+        }
+        return elements;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     *  Bulk test {@link SortedSet#subSet(Object, Object)}.  This method runs through all of
+     *  the tests in {@link TestSortedSet}.
+     *  After modification operations, {@link #verify()} is invoked to ensure
+     *  that the set and the other collection views are still valid.
+     *
+     *  @return a {@link TestSet} instance for testing a subset.
+     */
+    public BulkTest bulkTestSortedSetSubSet() {
+        int length = getFullElements().length;
+
+        int lobound = length / 3;
+        int hibound = lobound * 2;
+        return new TestSortedSetSubSet(lobound, hibound);
+
+    }
+
+    /**
+     *  Bulk test {@link SortedSet#headSet(Object)}.  This method runs through all of
+     *  the tests in {@link TestSortedSet}.
+     *  After modification operations, {@link #verify()} is invoked to ensure
+     *  that the set and the other collection views are still valid.
+     *
+     *  @return a {@link TestSet} instance for testing a headset.
+     */
+    public BulkTest bulkTestSortedSetHeadSet() {
+        int length = getFullElements().length;
+
+        int lobound = length / 3;
+        int hibound = lobound * 2;
+        return new TestSortedSetSubSet(hibound, true);
+
+    }
+
+    /**
+     *  Bulk test {@link SortedSet#tailSet(Object)}.  This method runs through all of
+     *  the tests in {@link TestSortedSet}.
+     *  After modification operations, {@link #verify()} is invoked to ensure
+     *  that the set and the other collection views are still valid.
+     *
+     *  @return a {@link TestSet} instance for testing a tailset.
+     */
+    public BulkTest bulkTestSortedSetTailSet() {
+        int length = getFullElements().length;
+        int lobound = length / 3;
+        return new TestSortedSetSubSet(lobound, false);
+    }
+
+    class TestSortedSetSubSet extends TestSortedSet {
+
+        private int m_Type;
+        private int m_LowBound;
+        private int m_HighBound;
+        private Object[] m_FullElements;
+        private Object[] m_OtherElements;
+
+        public TestSortedSetSubSet(int bound, boolean head) {
+            super("TestSortedSetSubSet");
+            if (head) {
+                //System.out.println("HEADSET");
+                m_Type = TYPE_HEADSET;
+                m_HighBound = bound;
+                m_FullElements = new Object[bound];
+                System.arraycopy(TestSortedSet.this.getFullElements(), 0, m_FullElements, 0, bound);
+                m_OtherElements = new Object[bound - 1];
+                System.arraycopy(//src src_pos dst dst_pos length
+                TestSortedSet.this.getOtherElements(), 0, m_OtherElements, 0, bound - 1);
+                //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
+                //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
+            } else {
+                //System.out.println("TAILSET");
+                m_Type = TYPE_TAILSET;
+                m_LowBound = bound;
+                Object[] allelements = TestSortedSet.this.getFullElements();
+                //System.out.println("bound = "+bound +"::length="+allelements.length);
+                m_FullElements = new Object[allelements.length - bound];
+                System.arraycopy(allelements, bound, m_FullElements, 0, allelements.length - bound);
+                m_OtherElements = new Object[allelements.length - bound - 1];
+                System.arraycopy(//src src_pos dst dst_pos length
+                TestSortedSet.this.getOtherElements(), bound, m_OtherElements, 0, allelements.length - bound - 1);
+                //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
+                //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
+                //resetFull();
+                //System.out.println(collection);
+                //System.out.println(confirmed);
+
+            }
+
+        } //type
+
+        public TestSortedSetSubSet(int lobound, int hibound) {
+            super("TestSortedSetSubSet");
+            //System.out.println("SUBSET");
+            m_Type = TYPE_SUBSET;
+            m_LowBound = lobound;
+            m_HighBound = hibound;
+            int length = hibound - lobound;
+            //System.out.println("Low=" + lobound + "::High=" + hibound + "::Length=" + length);
+            m_FullElements = new Object[length];
+            System.arraycopy(TestSortedSet.this.getFullElements(), lobound, m_FullElements, 0, length);
+            m_OtherElements = new Object[length - 1];
+            System.arraycopy(//src src_pos dst dst_pos length
+            TestSortedSet.this.getOtherElements(), lobound, m_OtherElements, 0, length - 1);
+
+            //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
+            //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
+
+        } //TestSortedSetSubSet
+
+        public boolean isNullSupported() {
+            return TestSortedSet.this.isNullSupported();
+        } //useNullValue
+
+        protected Object[] getFullElements() {
+            //System.out.println("getFullElements()");
+            return m_FullElements;
+        }
+
+        protected Object[] getOtherElements() {
+            return m_OtherElements;
+        }
+
+        private SortedSet getSubSet(SortedSet set) {
+            Object[] elements = TestSortedSet.this.getFullElements();
+            switch (m_Type) {
+                case TYPE_SUBSET :
+                    return set.subSet(elements[m_LowBound], elements[m_HighBound]);
+                case TYPE_HEADSET :
+                    return set.headSet(elements[m_HighBound]);
+                case TYPE_TAILSET :
+                    return set.tailSet(elements[m_LowBound]);
+                default :
+                    return null;
+            }
+        } //getSubSet
+
+        protected Set makeEmptySet() {
+            SortedSet s = (SortedSet) TestSortedSet.this.makeFullSet();
+            s = getSubSet(s);
+            s.clear();
+            return s;
+        } //makeEmptySet
+
+        protected Set makeFullSet() {
+            SortedSet s = (SortedSet) TestSortedSet.this.makeFullCollection();
+            return getSubSet(s);
+        } //makeFullSet
+
+        protected void resetFull() {
+            TestSortedSet.this.resetFull();
+            TestSortedSetSubSet.this.confirmed = getSubSet((SortedSet) TestSortedSet.this.confirmed);
+            TestSortedSetSubSet.this.collection = getSubSet((SortedSet) TestSortedSet.this.collection);
+        }
+
+        protected void resetEmpty() {
+            TestSortedSetSubSet.this.resetFull();
+            TestSortedSetSubSet.this.confirmed.clear();
+            TestSortedSetSubSet.this.collection.clear();
+        }
+
+        public BulkTest bulkTestSortedSetSubSet() {
+            //Override returning null to prevent endless
+            //loop of bulk tests
+            return null;
+        } //bulkTestSortedSetSubSet
+
+        public BulkTest bulkTestSortedSetHeadSet() {
+            return null;
+        }
+
+        public BulkTest bulkTestSortedSetTailSet() {
+            return null;
+        }
+
+        static final int TYPE_SUBSET = 0;
+        static final int TYPE_TAILSET = 1;
+        static final int TYPE_HEADSET = 2;
+
+    }
+
 }

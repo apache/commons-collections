@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedSet.java,v 1.1 2003/05/11 13:18:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedSet.java,v 1.2 2003/07/12 15:47:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,7 +58,6 @@
 package org.apache.commons.collections.decorators;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -73,7 +72,7 @@ import org.apache.commons.collections.TestSortedSet;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/11 13:18:27 $
+ * @version $Revision: 1.2 $ $Date: 2003/07/12 15:47:53 $
  * 
  * @author Stephen Colebourne
  */
@@ -92,26 +91,18 @@ public class TestTransformedSortedSet extends TestSortedSet {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Collection makeConfirmedCollection() {
-        return new TreeSet();
-    }
-
-    protected Collection makeConfirmedFullCollection() {
-        Set set = new TreeSet();
-        set.addAll(Arrays.asList(getFullElements()));
-        return set;
-    }
-    
-    public Set makeEmptySet() {
-        return TransformedSortedSet.decorate(new HashSet(), TestTransformedCollection.NOOP_TRANSFORMER);
+    //-----------------------------------------------------------------------
+    protected Set makeEmptySet() {
+        return TransformedSortedSet.decorate(new TreeSet(), TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     protected Set makeFullSet() {
-        Set list = new TreeSet();
-        list.addAll(Arrays.asList(getFullElements()));
-        return TransformedSortedSet.decorate(list, TestTransformedCollection.NOOP_TRANSFORMER);
+        Set set = new TreeSet();
+        set.addAll(Arrays.asList(getFullElements()));
+        return TransformedSortedSet.decorate(set, TestTransformedCollection.NOOP_TRANSFORMER);
     }
     
+    //-----------------------------------------------------------------------
     public void testTransformedSet() {
         Set set = TransformedSortedSet.decorate(new HashSet(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());

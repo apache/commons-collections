@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.12 2003/07/12 15:11:25 scolebourne Exp $
- * $Revision: 1.12 $
- * $Date: 2003/07/12 15:11:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.13 2003/07/12 15:47:53 scolebourne Exp $
+ * $Revision: 1.13 $
+ * $Date: 2003/07/12 15:47:53 $
  *
  * ====================================================================
  *
@@ -157,7 +157,7 @@ import java.util.NoSuchElementException;
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author Neil O'Toole
  * @author Stephen Colebourne
- * @version $Id: TestCollection.java,v 1.12 2003/07/12 15:11:25 scolebourne Exp $
+ * @version $Id: TestCollection.java,v 1.13 2003/07/12 15:47:53 scolebourne Exp $
  */
 public abstract class TestCollection extends TestObject {
 
@@ -442,6 +442,84 @@ public abstract class TestCollection extends TestObject {
         return getOtherNonNullElements();
     }
     
+    //-----------------------------------------------------------------------
+    /**
+     *  Returns a list of elements suitable for return by
+     *  {@link getFullElements()}.  The array returned by this method
+     *  does not include null, but does include a variety of objects 
+     *  of different types.  Override getFullElements to return
+     *  the results of this method if your collection does not support
+     *  the null element.
+     */
+    protected Object[] getFullNonNullElements() {
+        return new Object[] {
+            new String(""),
+            new String("One"),
+            new Integer(2),
+            "Three",
+            new Integer(4),
+            "One",
+            new Double(5),
+            new Float(6),
+            "Seven",
+            "Eight",
+            new String("Nine"),
+            new Integer(10),
+            new Short((short)11),
+            new Long(12),
+            "Thirteen",
+            "14",
+            "15",
+            new Byte((byte)16)
+        };
+    }
+
+    /**
+     *  Returns the default list of objects returned by 
+     *  {@link getOtherElements()}.  Includes many objects
+     *  of different types.
+     */
+    protected Object[] getOtherNonNullElements() {
+        return new Object[] {
+            new Integer(0),
+            new Float(0),
+            new Double(0),
+            "Zero",
+            new Short((short)0),
+            new Byte((byte)0),
+            new Long(0),
+            new Character('\u0000'),
+            "0"
+        };
+    }
+
+    /**
+     *  Returns a list of string elements suitable for return by
+     *  {@link getFullElements()}.  Override getFullElements to return
+     *  the results of this method if your collection does not support
+     *  heterogenous elements or the null element.
+     */
+    protected Object[] getFullNonNullStringElements() {
+        return new Object[] {
+            "If","the","dull","substance","of","my","flesh","were","thought",
+            "Injurious","distance","could","not","stop","my","way",
+        };
+    }
+
+    /**
+     *  Returns a list of string elements suitable for return by
+     *  {@link getOtherElements()}.  Override getOtherElements to return
+     *  the results of this method if your collection does not support
+     *  heterogenous elements or the null element.
+     */
+    protected Object[] getOtherNonNullStringElements() {
+        return new Object[] {
+            "For","then","despite",/* of */"space","I","would","be","brought",
+            "From","limits","far","remote","where","thou","dost","stay"
+        };
+    }
+
+    // Tests    
     //-----------------------------------------------------------------------
     /**
      *  Tests {@link Collection#add(Object)}.
@@ -1230,84 +1308,4 @@ public abstract class TestCollection extends TestObject {
         }
     }
 
-
-    /**
-     *  Returns a list of elements suitable for return by
-     *  {@link getFullElements()}.  The array returned by this method
-     *  does not include null, but does include a variety of objects 
-     *  of different types.  Override getFullElements to return
-     *  the results of this method if your collection does not support
-     *  the null element.
-     */
-    public static Object[] getFullNonNullElements() {
-        return new Object[] {
-            new String(""),
-            new String("One"),
-            new Integer(2),
-            "Three",
-            new Integer(4),
-            "One",
-            new Double(5),
-            new Float(6),
-            "Seven",
-            "Eight",
-            new String("Nine"),
-            new Integer(10),
-            new Short((short)11),
-            new Long(12),
-            "Thirteen",
-            "14",
-            "15",
-            new Byte((byte)16)
-        };
-    }
-
-
-    /**
-     *  Returns the default list of objects returned by 
-     *  {@link getOtherElements()}.  Includes many objects
-     *  of different types.
-     */
-    public static Object[] getOtherNonNullElements() {
-        return new Object[] {
-            new Integer(0),
-            new Float(0),
-            new Double(0),
-            "Zero",
-            new Short((short)0),
-            new Byte((byte)0),
-            new Long(0),
-            new Character('\u0000'),
-            "0"
-        };
-    }
-
-
-
-    /**
-     *  Returns a list of string elements suitable for return by
-     *  {@link getFullElements()}.  Override getFullElements to return
-     *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
-     */
-    public static Object[] getFullNonNullStringElements() {
-        return new Object[] {
-            "If","the","dull","substance","of","my","flesh","were","thought",
-            "Injurious","distance","could","not","stop","my","way",
-        };
-    }
-
-
-    /**
-     *  Returns a list of string elements suitable for return by
-     *  {@link getOtherElements()}.  Override getOtherElements to return
-     *  the results of this method if your collection does not support
-     *  heterogenous elements or the null element.
-     */
-    public static Object[] getOtherNonNullStringElements() {
-        return new Object[] {
-            "For","then","despite",/* of */"space","I","would","be","brought",
-            "From","limits","far","remote","where","thou","dost","stay"
-        };
-    }
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.3 2003/07/12 15:11:25 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2003/07/12 15:11:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.4 2003/07/12 15:47:53 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/07/12 15:47:53 $
  *
  * ====================================================================
  *
@@ -81,7 +81,7 @@ import java.util.Set;
  *  elements may be added; see {@link TestCollection} for more details.<P>
  *
  *  @author Paul Jack
- *  @version $Id: TestSet.java,v 1.3 2003/07/12 15:11:25 scolebourne Exp $
+ *  @version $Id: TestSet.java,v 1.4 2003/07/12 15:47:53 scolebourne Exp $
  */
 public abstract class TestSet extends TestCollection {
 
@@ -103,7 +103,7 @@ public abstract class TestSet extends TestCollection {
         assertEquals("Sets should be equal", confirmed, collection);
         assertEquals("Sets should have equal hashCodes", 
                      confirmed.hashCode(), collection.hashCode());
-        HashSet set = new HashSet();
+        Collection set = makeConfirmedCollection();
         Iterator iterator = collection.iterator();
         while (iterator.hasNext()) {
             assertTrue("Set.iterator should only return unique elements", 
@@ -113,7 +113,7 @@ public abstract class TestSet extends TestCollection {
 
     //-----------------------------------------------------------------------
     /**
-     *  Returns an empty {@link HashSet} for use in modification testing.
+     *  Returns an empty Set for use in modification testing.
      *
      *  @return a confirmed empty collection
      */
@@ -122,12 +122,12 @@ public abstract class TestSet extends TestCollection {
     }
 
     /**
-     *  Returns a full {@link HashSet} for use in modification testing.
+     *  Returns a full Set for use in modification testing.
      *
      *  @return a confirmed full collection
      */
     protected Collection makeConfirmedFullCollection() {
-        HashSet set = new HashSet();
+        Collection set = makeConfirmedCollection();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
     }
@@ -198,7 +198,7 @@ public abstract class TestSet extends TestCollection {
                      getSet(), getConfirmedSet());
         verify();
 
-        HashSet set2 = new HashSet();
+        Collection set2 = makeConfirmedCollection();
         set2.add("foo");
         assertTrue("Empty set shouldn't equal nonempty set", 
                    !getSet().equals(set2));
