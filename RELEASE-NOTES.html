@@ -62,6 +62,8 @@ No deprecations have occurred.
 <li>LRUMap - Add boolean flag, scanUntilRemovable, giving the removeLRU() method more power [28887]</li>
 <li>InvokerTransformer - Add additional getInstance() method</li>
 <li>Reduced inter-class and inter-package dependencies, especially via *Utils classes</li>
+<li>ListOrderedSet - Add new factory method decorate(Set,List)</li>
+<li>ListOrderedSet - Add constructor that uses a HashSet and ArrayList</li>
 </ul>
 
 <h4>Made Serializable</h4>
@@ -93,6 +95,7 @@ No deprecations have occurred.
 <li>EnumIterator/MapUtils - Changed enum references to enable JDK 1.5 compliance</li>
 <li>UnmodifiableSortedBag - Fix to ensure unmodifiable</li>
 <li>MultiHashMap - Fix copy constructor and clone to work properly [28972]</li>
+<li>ListOrderedSet - Fix to throw IllegalArgumentException instead of NPE on null factory decorate(List)</li>
 </ul>
 
 <center><h3>JAVADOC</h3></center>

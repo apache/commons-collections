@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * Entry point for tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/06/02 22:12:14 $
+ * @version $Revision: 1.9 $ $Date: 2004/06/07 21:42:12 $
  * 
  * @author Stephen Colebourne
  */
@@ -43,6 +43,7 @@ public class TestAll extends TestCase {
         
         suite.addTest(TestCompositeSet.suite());
         suite.addTest(TestListOrderedSet.suite());
+        suite.addTest(TestListOrderedSet2.suite());
         suite.addTest(TestMapBackedSet.suite());
         suite.addTest(TestMapBackedSet2.suite());
         suite.addTest(TestPredicatedSet.suite());

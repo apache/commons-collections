@@ -44,7 +44,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/06/03 22:02:13 $
+ * @version $Revision: 1.9 $ $Date: 2004/06/07 21:42:12 $
  * 
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen
@@ -56,6 +56,28 @@ public class ListOrderedSet extends AbstractSerializableSetDecorator implements 
 
     /** Internal list to hold the sequence of objects */
     protected final List setOrder;
+
+    /**
+     * Factory method to create an ordered set specifying the list and set to use.
+     * 
+     * @param set  the set to decorate, must be empty and not null
+     * @param list  the list to decorate, must be empty and not null
+     * @throws IllegalArgumentException if set or list is null
+     * @throws IllegalArgumentException if either the set or list is not empty
+     * @since Commons Collections 3.1
+     */
+    public static ListOrderedSet decorate(Set set, List list) {
+        if (set == null) {
+            throw new IllegalArgumentException("Set must not be null");
+        }
+        if (list == null) {
+            throw new IllegalArgumentException("List must not be null");
+        }
+        if (set.size() > 0 || list.size() > 0) {
+            throw new IllegalArgumentException("Set and List must be empty");
+        }
+        return new ListOrderedSet(set, list);
+    }
 
     /**
      * Factory method to create an ordered set.
@@ -75,9 +97,12 @@ public class ListOrderedSet extends AbstractSerializableSetDecorator implements 
      * A <code>HashSet</code> is used for the set behaviour.
      * 
      * @param list  the list to decorate, must not be null
-     * @throws IllegalArgumentException if set is null
+     * @throws IllegalArgumentException if list is null
      */
     public static ListOrderedSet decorate(List list) {
+        if (list == null) {
+            throw new IllegalArgumentException("List must not be null");
+        }
         Set set = new HashSet(list);
         list.retainAll(set);
         
@@ -85,6 +110,17 @@ public class ListOrderedSet extends AbstractSerializableSetDecorator implements 
     }
 
     //-----------------------------------------------------------------------
+    /**
+     * Constructs a new empty <code>ListOrderedSet</code> using
+     * a <code>HashSet</code> and an <code>ArrayList</code> internally.
+     * 
+     * @since Commons Collections 3.1
+     */
+    public ListOrderedSet() {
+        super(new HashSet());
+        setOrder = new ArrayList();
+    }
+
     /**
      * Constructor that wraps (not copies).
      * 

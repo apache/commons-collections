@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2004 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 package org.apache.commons.collections.set;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -28,29 +27,29 @@ import junit.framework.TestSuite;
  * Extension of {@link TestSet} for exercising the {@link ListOrderedSet}
  * implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/06/07 21:42:12 $
+ * @since Commons Collections 3.1
+ * @version $Revision: 1.1 $ $Date: 2004/06/07 21:42:12 $
  * 
  * @author Henning P. Schmiedehausen
  * @author Stephen Colebourne
  */
-public class TestListOrderedSet extends AbstractTestSet {
+public class TestListOrderedSet2 extends AbstractTestSet {
 
-    public TestListOrderedSet(String testName) {
+    public TestListOrderedSet2(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestListOrderedSet.class);
+        return new TestSuite(TestListOrderedSet2.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestListOrderedSet.class.getName()};
+        String[] testCaseName = { TestListOrderedSet2.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     public Set makeEmptySet() {
-        return ListOrderedSet.decorate(new HashSet());
+        return new ListOrderedSet();
     }
 
     protected Set setupSet() {
@@ -165,30 +164,7 @@ public class TestListOrderedSet extends AbstractTestSet {
         assertSame(TWO, set.get(2));
         assertSame(ONE, set.get(3));
     }
-
-    public void testDecorator() {
-        try {
-            ListOrderedSet.decorate((List) null);
-            fail();
-        } catch (IllegalArgumentException ex) {}
-        try {
-            ListOrderedSet.decorate((Set) null);
-            fail();
-        } catch (IllegalArgumentException ex) {}
-        try {
-            ListOrderedSet.decorate(null, null);
-            fail();
-        } catch (IllegalArgumentException ex) {}
-        try {
-            ListOrderedSet.decorate(new HashSet(), null);
-            fail();
-        } catch (IllegalArgumentException ex) {}
-        try {
-            ListOrderedSet.decorate(null, new ArrayList());
-            fail();
-        } catch (IllegalArgumentException ex) {}
-    }
-
+    
     public String getCompatibilityVersion() {
         return "3.1";
     }
