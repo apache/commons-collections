@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayIntList.java,v 1.3 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayIntList.java,v 1.4 2003/01/13 12:59:45 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,9 +58,12 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * A list of <code>int</code> elements backed by an <code>int</code> array.
- *
- * @version $Revision: 1.3 $ $Date: 2003/01/11 21:28:02 $
+ * An {@link IntList} backed by an array of <code>int</code>s.
+ * This implementation supports all optional methods.
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.4 $ $Date: 2003/01/13 12:59:45 $
+ * 
  * @author Rodney Waldhoff 
  */
 public class ArrayIntList extends AbstractRandomAccessIntList implements IntList {
@@ -68,16 +71,39 @@ public class ArrayIntList extends AbstractRandomAccessIntList implements IntList
     // constructors
     //-------------------------------------------------------------------------
 
-    protected ArrayIntList() {
+    /** 
+     * Construct an empty list with the default
+     * initial capacity.
+     */
+    public ArrayIntList() {
         this(8);
     }    
 
-    protected ArrayIntList(int initialCapacity) {
+    /**
+     * Construct an empty list with the given
+     * initial capacity.
+     * @throws IllegalArgumentException when <i>initialCapacity</i> is negative
+     */
+    public ArrayIntList(int initialCapacity) {
         if(initialCapacity < 0) {
             throw new IllegalArgumentException("capacity " + initialCapacity);
         }
         _data = new int[initialCapacity];
         _size = 0;
+    }    
+
+    /** 
+     * Constructs a list containing the elements of the given collection, 
+     * in the order they are returned by that collection's iterator.
+     * 
+     * @see ArrayIntList#addAll(org.apache.commons.collections.primitives.IntCollection)
+     * @param that the non-<code>null</code> collection of <code>int</code>s 
+     *        to add
+     * @throws NullPointerException if <i>that</i> is <code>null</code>
+     */
+    public ArrayIntList(IntCollection that) { 
+        this(that.size());
+        addAll(that);
     }    
 
     // IntList methods
@@ -92,6 +118,20 @@ public class ArrayIntList extends AbstractRandomAccessIntList implements IntList
         return _size;
     }
     
+    /** 
+     * Removes the element at the specified position in 
+     * (optional operation).  Any subsequent elements 
+     * are shifted to the left, subtracting one from their 
+     * indices.  Returns the element that was removed from
+     * the list.
+     * 
+     * @param index the index of the element to remove
+     * @return the value of the element that was removed
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IndexOutOfBoundsException if the specified index is out of range
+     */
     public int removeElementAt(int index) {
         checkRange(index);
         incrModCount();
@@ -104,6 +144,19 @@ public class ArrayIntList extends AbstractRandomAccessIntList implements IntList
         return oldval;
     }
     
+    /** 
+     * Replaces the element at the specified 
+     * position in me with the specified element
+     * (optional operation). 
+     * 
+     * @param index the index of the element to change
+     * @param element the value to be stored at the specified position
+     * @return the value previously stored at the specified position
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IndexOutOfBoundsException if the specified index is out of range
+     */
     public int set(int index, int element) {
         checkRange(index);
         incrModCount();
@@ -112,6 +165,21 @@ public class ArrayIntList extends AbstractRandomAccessIntList implements IntList
         return oldval;
     }
         
+    /** 
+     * Inserts the specified element at the specified position 
+     * (optional operation). Shifts the element currently 
+     * at that position (if any) and any subsequent elements to the 
+     * right, increasing their indices.
+     * 
+     * @param index the index at which to insert the element
+     * @param element the value to insert
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IllegalArgumentException if some aspect of the specified element 
+     *         prevents it from being added to me
+     * @throws IndexOutOfBoundsException if the specified index is out of range
+     */
     public void add(int index, int element) {
         checkRangeIncludingEndpoint(index);
         incrModCount();
@@ -125,6 +193,11 @@ public class ArrayIntList extends AbstractRandomAccessIntList implements IntList
     // capacity methods
     //-------------------------------------------------------------------------
 
+    /** 
+     * Increases my capacity, if necessary, to ensure that I can hold at 
+     * least the number of elements specified by the minimum capacity 
+     * argument without growing.
+     */
     public void ensureCapacity(int mincap) {
         incrModCount();
         if(mincap > _data.length) {
@@ -135,6 +208,10 @@ public class ArrayIntList extends AbstractRandomAccessIntList implements IntList
         }
     }
 
+    /** 
+     * Reduce my capacity, if necessary, to match my
+     * current {@link #size}.
+     */
     public void trimToSize() {
         incrModCount();
         if(_size < _data.length) {
@@ -146,6 +223,7 @@ public class ArrayIntList extends AbstractRandomAccessIntList implements IntList
 
     // private methods
     //-------------------------------------------------------------------------
+    
     private final void checkRange(int index) {
         if(index < 0 || index >= _size) {
             throw new IndexOutOfBoundsException("Should be at least 0 and less than " + _size + ", found " + index);

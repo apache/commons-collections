@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.7 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.8 2003/01/13 12:59:45 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -60,13 +60,46 @@ package org.apache.commons.collections.primitives;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
-
+/**
+ * Abstract base class for {@link IntList}s backed 
+ * by random access structures like arrays.
+ * <p />
+ * Read-only subclasses must override {@link #get}
+ * and {@link #size}.  Mutable subclasses
+ * should also override {@link #set}.  Variably-sized
+ * subclasses should also override {@link #add} 
+ * and {@link #removeElementAt}.  All other methods
+ * have at least some base implementation derived from 
+ * these.  Subclasses may choose to override these methods
+ * to provide a more efficient implementation.
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.8 $ $Date: 2003/01/13 12:59:45 $
+ * 
+ * @author Rodney Waldhoff 
+ */
 public abstract class AbstractRandomAccessIntList extends AbstractIntCollection implements IntList {
 
     // constructors
     //-------------------------------------------------------------------------
 
-    protected AbstractRandomAccessIntList() { }    
+    /** Constructs any empty list. */
+    protected AbstractRandomAccessIntList() { 
+    }    
+
+    /** 
+     * Constructs a list containing the elements of the given collection, 
+     * in the order they are returned by that collection's iterator.
+     * 
+     * @see #addAll
+     * @param that the non-<code>null</code> collection of <code>int</code>s 
+     *        to add
+     * @throws NullPointerException if <i>that</i> is <code>null</code>
+     * @throws UnsupportedOperationException if {@link #addAll} does
+     */
+    protected AbstractRandomAccessIntList(IntCollection that) { 
+        addAll(that);
+    }    
 
     // fully abstract methods
     //-------------------------------------------------------------------------
@@ -77,19 +110,33 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
     // unsupported in base
     //-------------------------------------------------------------------------
     
+    /** 
+     * Unsupported in this implementation. 
+     * @throws UnsupportedOperationException since this method is not supported
+     */
     public int removeElementAt(int index) {
         throw new UnsupportedOperationException();
     }
     
+    /** 
+     * Unsupported in this implementation. 
+     * @throws UnsupportedOperationException since this method is not supported
+     */
     public int set(int index, int element) {
         throw new UnsupportedOperationException();
     }
         
+    /** 
+     * Unsupported in this implementation. 
+     * @throws UnsupportedOperationException since this method is not supported
+     */
     public void add(int index, int element) {
         throw new UnsupportedOperationException();
     }
 
     //-------------------------------------------------------------------------
+
+    // javadocs here are inherited
     
     public boolean add(int element) {
         add(size(),element);
@@ -142,12 +189,6 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
         return new RandomAccessIntSubList(this,fromIndex,toIndex);
     }
 
-    /** 
-     * Returns <code>true</code> iff <i>that</i> is 
-     * an {@link IntList} with the same {@link #size size}
-     * as me, and whose {@link #iterator iterator} returns the 
-     * same sequence of values as mine.
-     */
     public boolean equals(Object that) {
         if(this == that) { 
             return true; 
@@ -191,10 +232,12 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
     // protected utilities
     //-------------------------------------------------------------------------
     
+    /** Get my count of structural modifications. */
     protected int getModCount() {
         return _modCount;
     }
 
+    /** Increment my count of structural modifications. */
     protected void incrModCount() {
         _modCount++;
     }
@@ -207,7 +250,7 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
     // inner classes
     //-------------------------------------------------------------------------
     
-    protected static class ComodChecker {
+    private static class ComodChecker {
         ComodChecker(AbstractRandomAccessIntList source) {
             _source = source;  
             resyncModCount();             

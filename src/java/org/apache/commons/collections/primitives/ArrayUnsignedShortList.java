@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedShortList.java,v 1.2 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedShortList.java,v 1.3 2003/01/13 12:59:45 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,11 +63,21 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
- * A list of unsigned 16-bit values backed by a <code>short</code> array.
- * Mutators on this class will reject any <code>int</code> that does not
- * express an unsigned 16-bit value.
- *
- * @version $Revision: 1.2 $ $Date: 2003/01/11 21:28:02 $
+ * An {@link IntList} backed by an array of unsigned
+ * <code>short</code> values.
+ * This list stores <code>int</code> values
+ * in the range [{@link #MIN_VALUE <code>0</code>},
+ * {@link #MAX_VALUE <code>65535</code>}] in 16-bits 
+ * per element.  Attempts to use elements outside this 
+ * range may cause an 
+ * {@link IllegalArgumentException IllegalArgumentException} 
+ * to be thrown.
+ * <p />
+ * This implementation supports all optional methods.
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.3 $ $Date: 2003/01/13 12:59:45 $
+ * 
  * @author Rodney Waldhoff 
  */
 public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implements IntList, Serializable {
@@ -75,10 +85,19 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
     // constructors
     //-------------------------------------------------------------------------
 
+    /** 
+     * Construct an empty list with the default
+     * initial capacity.
+     */
     protected ArrayUnsignedShortList() {
         this(8);
     }    
 
+    /**
+     * Construct an empty list with the given
+     * initial capacity.
+     * @throws IllegalArgumentException when <i>initialCapacity</i> is negative
+     */
     protected ArrayUnsignedShortList(int initialCapacity) {
         if(initialCapacity < 0) {
             throw new IllegalArgumentException("capacity " + initialCapacity);
@@ -87,9 +106,33 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
         _size = 0;
     }    
 
+    /** 
+     * Constructs a list containing the elements of the given collection, 
+     * in the order they are returned by that collection's iterator.
+     * 
+     * @see ArrayIntList#addAll(org.apache.commons.collections.primitives.IntCollection)
+     * @param that the non-<code>null</code> collection of <code>int</code>s 
+     *        to add
+     * @throws NullPointerException if <i>that</i> is <code>null</code>
+     */
+    public ArrayUnsignedShortList(IntCollection that) { 
+        this(that.size());
+        addAll(that);
+    }    
+
     // IntList methods
     //-------------------------------------------------------------------------
 
+    /** 
+     * Returns the element at the specified position within 
+     * me. 
+     * By construction, the returned value will be 
+     * between {@link #MIN_VALUE} and {@link #MAX_VALUE}, inclusive.
+     * 
+     * @param index the index of the element to return
+     * @return the value of the element at the specified position
+     * @throws IndexOutOfBoundsException if the specified index is out of range
+     */
     public int get(int index) {
         checkRange(index);
         return toInt(_data[index]);
@@ -99,6 +142,22 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
         return _size;
     }
     
+    /** 
+     * Removes the element at the specified position in 
+     * (optional operation).  Any subsequent elements 
+     * are shifted to the left, subtracting one from their 
+     * indices.  Returns the element that was removed from
+     * the list.
+     * By construction, the returned value will be 
+     * between {@link #MIN_VALUE} and {@link #MAX_VALUE}, inclusive.
+     * 
+     * @param index the index of the element to remove
+     * @return the value of the element that was removed
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IndexOutOfBoundsException if the specified index is out of range
+     */
     public int removeElementAt(int index) {
         checkRange(index);
         incrModCount();
@@ -111,6 +170,21 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
         return oldval;
     }
     
+    /** 
+     * Replaces the element at the specified 
+     * position in me with the specified element
+     * (optional operation). 
+     * Throws {@link IllegalArgumentException} if <i>element</i>
+     * is less than {@link #MIN_VALUE} or greater than {@link #MAX_VALUE}.
+     * 
+     * @param index the index of the element to change
+     * @param element the value to be stored at the specified position
+     * @return the value previously stored at the specified position
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IndexOutOfBoundsException if the specified index is out of range
+     */
     public int set(int index, int element) {
         assertValidUnsignedShort(element);
         checkRange(index);
@@ -120,6 +194,23 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
         return oldval;
     }
         
+    /** 
+     * Inserts the specified element at the specified position 
+     * (optional operation). Shifts the element currently 
+     * at that position (if any) and any subsequent elements to the 
+     * right, increasing their indices.
+     * Throws {@link IllegalArgumentException} if <i>element</i>
+     * is less than {@link #MIN_VALUE} or greater than {@link #MAX_VALUE}.
+     * 
+     * @param index the index at which to insert the element
+     * @param element the value to insert
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IllegalArgumentException if some aspect of the specified element 
+     *         prevents it from being added to me
+     * @throws IndexOutOfBoundsException if the specified index is out of range
+     */
     public void add(int index, int element) {
         assertValidUnsignedShort(element);
         checkRangeIncludingEndpoint(index);
@@ -134,6 +225,11 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
     // capacity methods
     //-------------------------------------------------------------------------
 
+    /** 
+     * Increases my capacity, if necessary, to ensure that I can hold at 
+     * least the number of elements specified by the minimum capacity 
+     * argument without growing.
+     */
     public void ensureCapacity(int mincap) {
         incrModCount();
         if(mincap > _data.length) {
@@ -144,6 +240,10 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
         }
     }
 
+    /** 
+     * Reduce my capacity, if necessary, to match my
+     * current {@link #size}.
+     */
     public void trimToSize() {
         incrModCount();
         if(_size < _data.length) {
@@ -204,11 +304,11 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
     // attributes
     //-------------------------------------------------------------------------
     
-    /** The maximum possible unsigned 16-bit value. */
+    /** The maximum possible unsigned 16-bit value (<code>0xFFFF</code>). */
     public static final int MAX_VALUE = 0xFFFF;
 
 
-    /** The minimum possible unsigned 16-bit value. */
+    /** The minimum possible unsigned 16-bit value  (<code>0x0000</code>). */
     public static final int MIN_VALUE = 0;
 
     private transient short[] _data = null;

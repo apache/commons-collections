@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.11 2003/01/12 15:23:19 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.12 2003/01/13 12:59:45 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,20 +58,42 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * An ordered collection (a list) of <code>int</code> values.
+ * An ordered collection of <code>int</code> values.
  *
  * @see org.apache.commons.collections.primitives.adapters.IntListList
  * @see org.apache.commons.collections.primitives.adapters.ListIntList
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.11 $ $Date: 2003/01/12 15:23:19 $
+ * @version $Revision: 1.12 $ $Date: 2003/01/13 12:59:45 $
  * 
  * @author Rodney Waldhoff 
  */
 public interface IntList extends IntCollection {
     /** 
+     * Appends the specified element to the end of me
+     * (optional operation).  Returns <code>true</code>
+     * if I changed as a result of this call.
+     * <p/>
+     * If a collection refuses to add the specified
+     * element for any reason other than that it already contains
+     * the element, it <i>must</i> throw an exception (rather than
+     * simply returning <tt>false</tt>).  This preserves the invariant
+     * that a collection always contains the specified element after 
+     * this call returns. 
+     * 
+     * @param element the value whose presence within me is to be ensured
+     * @return <code>true</code> iff I changed as a result of this call
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IllegalArgumentException may be thrown if some aspect of the 
+     *         specified element prevents it from being added to me
+     */
+    boolean add(int element);
+       
+    /** 
      * Inserts the specified element at the specified position 
-     * within me (optional operation). Shifts the element currently 
+     * (optional operation). Shifts the element currently 
      * at that position (if any) and any subsequent elements to the 
      * right, increasing their indices.
      * 
@@ -134,14 +156,14 @@ public interface IntList extends IntCollection {
         
     /**
      * Returns my hash code.
-     * <p>
+     * <p />
      * The hash code of an <code>IntList</code> is defined to be the
      * result of the following calculation:
      * <pre>int hash = 1;
      * for(IntIterator iter = iterator(); iter.hasNext(); ) {
      *   hash = 31*hash + iter.next();
      * }</pre>
-     * <p>
+     * <p />
      * This contract ensures that this method is consistent with 
      * {@link #equals} and with the {@link java.util.List#hashCode hashCode}
      * method of a {@link java.util.List List} of {@link Integer}s. 
@@ -174,20 +196,25 @@ public interface IntList extends IntCollection {
     int lastIndexOf(int element);
     
     /** 
-     * Returns a {@link IntListIterator list iterator} over all 
-     * my elements in the appropriate sequence.
+     * Returns a 
+     * {@link IntListIterator bidirectional iterator}
+     * over all my elements, in the appropriate sequence.
      */
     IntListIterator listIterator();
     
     /** 
-     * Returns a {@link IntListIterator list iterator}
+     * Returns a 
+     * {@link IntListIterator bidirectional iterator}
      * over my elements, in the appropriate sequence, 
      * starting at the specified position. The 
-     * specified index indicates the first element 
-     * that would be returned by an initial call 
-     * to the next method. An initial call to the 
-     * previous method would return the element 
-     * with the specified index minus one.
+     * specified <i>index</i> indicates the first 
+     * element that would be returned by an initial 
+     * call to the 
+     * {@link IntListIterator#next next} 
+     * method. An initial call to the 
+     * {@link IntListIterator#previous previous}
+     * method would return the element with the specified 
+     * <i>index</i> minus one.
      * 
      * @throws IndexOutOfBoundsException if the specified index is out of range
      */
