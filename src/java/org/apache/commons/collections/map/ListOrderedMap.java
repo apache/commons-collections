@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.2 2003/11/20 00:03:05 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.3 2003/11/20 21:46:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/20 00:03:05 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/20 21:46:41 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -104,7 +104,7 @@ public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static Map decorate(Map map) {
+    public static OrderedMap decorate(Map map) {
         return new ListOrderedMap(map);
     }
 
