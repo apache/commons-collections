@@ -4,13 +4,14 @@ package org.apache.commons.collections;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Test;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
  *
  * @author  Jan Sorensen
  */
-public class TestFilterIterator extends TestCase {
+public class TestFilterIterator extends TestIterator {
 
     /** Creates new TestFilterIterator */
     public TestFilterIterator(String name) {
@@ -39,6 +40,30 @@ public class TestFilterIterator extends TestCase {
      */
     public static Test suite() {
         return (new TestSuite(TestFilterIterator.class));
+    }
+
+    /**
+     * Returns an full iterator wrapped in a
+     * FilterIterator that blocks all the elements
+     * 
+     * @return "empty" FilterIterator
+     */
+    public Iterator makeEmptyIterator() {
+        return makeBlockAllFilter(new ArrayIterator(array));
+    }
+
+    /**
+     * Returns an array with elements wrapped in a pass-through
+     * FilterIterator
+     * 
+     * @return 
+     */
+    public Iterator makeFullIterator() {
+        return makePassThroughFilter(new ArrayIterator(array));
+    }
+
+    public Object makeObject() {
+        return makeFullIterator();
     }
 
     public void testRepeatedHasNext() {
@@ -95,11 +120,35 @@ public class TestFilterIterator extends TestCase {
     }
 
     private void initIterator() {
-        iterator = new FilterIterator(new ArrayIterator(array));
+        iterator = makePassThroughFilter(new ArrayIterator(array));
+    }
+
+    /**
+     * Returns a FilterIterator that does not filter
+     * any of its elements
+     * 
+     * @param i      the Iterator to "filter"
+     * @return "filtered" iterator
+     */
+    protected FilterIterator makePassThroughFilter(Iterator i) {
         Predicate pred = new Predicate() {
-            public boolean evaluate(Object x) { return true; }
+                public boolean evaluate(Object x) { return true; }
         };
-        iterator.setPredicate(pred);
+        return new FilterIterator(i,pred);
+    }
+
+    /**
+     * Returns a FilterIterator that blocks
+     * all of its elements
+     * 
+     * @param i      the Iterator to "filter"
+     * @return "filtered" iterator
+     */
+    protected FilterIterator makeBlockAllFilter(Iterator i) {
+        Predicate pred = new Predicate() {
+                public boolean evaluate(Object x) { return false; }
+        };
+        return new FilterIterator(i,pred);
     }
 }
 
