@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.2 2002/02/20 23:48:13 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/20 23:48:13 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.3 2002/02/22 02:18:50 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/22 02:18:50 $
  *
  * ====================================================================
  *
@@ -96,6 +96,32 @@ public class TestDoubleOrderedMap extends TestMap  {
      */
     public static Test suite() {
         return new TestSuite(TestDoubleOrderedMap.class);
+    }
+
+    /**
+     *  The default comparator in double ordered map does not allow null keys.
+     **/
+    public boolean useNullKey() {
+        return false;
+    }
+
+    /**
+     *  The default comparator in double ordered map does not allow null keys,
+     *  and values are keys in this map.
+     **/
+    public boolean useNullValue() {
+        return false;
+    }
+
+    /**
+     *  Double ordered map does not support duplicate values
+     **/
+    public boolean useDuplicateValues() {
+        return false;
+    }
+
+    public Map makeEmptyMap() {
+        return new DoubleOrderedMap();
     }
 
     public Map makeMap() {

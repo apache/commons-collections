@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.2 2002/02/20 21:50:16 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/20 21:50:16 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.3 2002/02/22 02:18:50 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/22 02:18:50 $
  *
  * ====================================================================
  *
@@ -83,14 +83,14 @@ import java.util.NoSuchElementException;
  * Tests base {@link java.util.Object} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
- * the {@link #makeObject} method.
+ * the {@link #makeObject()} method.
  * <p>
  * If your {@link Object} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.2 2002/02/20 21:50:16 morgand Exp $
+ * @version $Id: TestObject.java,v 1.3 2002/02/22 02:18:50 mas Exp $
  */
 public abstract class TestObject extends TestCase {
     public TestObject(String testName) {
@@ -120,6 +120,7 @@ public abstract class TestObject extends TestCase {
         Object obj2 = makeObject();
         if(obj1.equals(obj2)) {
             assertEquals("[2] When two objects are equal, their hashCodes should be also.",obj1.hashCode(),obj2.hashCode());
+            assertTrue("When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true", obj2.equals(obj1));
         }
     }
 

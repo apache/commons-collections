@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.14 2002/02/20 22:38:46 morgand Exp $
- * $Revision: 1.14 $
- * $Date: 2002/02/20 22:38:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.15 2002/02/22 02:18:50 mas Exp $
+ * $Revision: 1.15 $
+ * $Date: 2002/02/22 02:18:50 $
  *
  * ====================================================================
  *
@@ -77,7 +77,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.14 2002/02/20 22:38:46 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.15 2002/02/22 02:18:50 mas Exp $
  */
 public class TestLRUMap extends TestSequencedHashMap
 {
@@ -104,9 +104,21 @@ public class TestLRUMap extends TestSequencedHashMap
         map2.put(new Integer(1),"foo");
         map2.put(new Integer(2),"foo");
         map2.put(new Integer(3),"foo");
-        map2.put(new Integer(4),"foo");
+        map2.put(new Integer(4),"foo"); // removes 1 since max size exceeded
+        map2.removeLRU();  // should be Integer(2)
 
-        assertTrue("last value should exist",map2.get(new Integer(4)).equals("foo"));
+        assertTrue("Second to last value should exist",map2.get(new Integer(3)).equals("foo"));
+        assertTrue("First value inserted should not exist", map2.get(new Integer(1)) == null);
+    }
+
+    public void testMultiplePuts() {
+        LRUMap map2 = new LRUMap(2);
+        map2.put(new Integer(1),"foo");
+        map2.put(new Integer(2),"bar");
+        map2.put(new Integer(3),"foo");
+        map2.put(new Integer(4),"bar");
+
+        assertTrue("last value should exist",map2.get(new Integer(4)).equals("bar"));
         assertTrue("LRU should not exist", map2.get(new Integer(1)) == null);
     }
 

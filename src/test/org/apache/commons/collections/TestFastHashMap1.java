@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap1.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/21 12:22:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap1.java,v 1.2 2002/02/22 02:18:50 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/02/22 02:18:50 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.Map;
  * Test FastHashMap in <strong>fast</strong> mode.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastHashMap1.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestFastHashMap1.java,v 1.2 2002/02/22 02:18:50 mas Exp $
  */
 public class TestFastHashMap1 extends TestFastHashMap
 {
@@ -95,6 +95,36 @@ public class TestFastHashMap1 extends TestFastHashMap
         FastHashMap fhm = new FastHashMap();
         fhm.setFast(true);
         return (fhm);
+    }
+
+    /**
+     *  When the fast hash map is in fast mode, the underlying hash map is
+     *  cloned on modification (i.e. on a put).  Because of that, any
+     *  previously existing entry set will be representing the old (pre-clone)
+     *  map and will not reflect changes made to the map after the clone.  So,
+     *  we must override this test.
+     **/
+    public void testEntrySetChangesWithMapPut() {
+    }
+
+    /**
+     *  When the fast hash map is in fast mode, the underlying hash map is
+     *  cloned on modification (i.e. on a remove).  Because of that, any
+     *  previously existing entry set will be representing the old (pre-clone)
+     *  map and will not reflect changes made to the map after the clone.  So,
+     *  we must override this test.
+     **/
+    public void testEntrySetChangesWithMapRemove() {
+    }
+
+    /**
+     *  When the fast hash map is in fast mode, the underlying hash map is
+     *  cloned on modification (i.e. on a put).  Because of that, any
+     *  previously existing entry set will be representing the old (pre-clone)
+     *  map, so changes to the set will not be seen in the map. So, we must
+     *  override this test.
+     **/
+    public void testEntrySetRemoveCausesMapModification() {
     }
 
     public void setUp()

@@ -98,10 +98,10 @@ implements TestMap.SupportsPut, TestMap.EntrySetSupportsRemove
         super.setUp();
         // use makeMap and cast the result to a SeqHashMap
         // so that subclasses of SeqHashMap can share these tests
-        labRat = (SequencedHashMap) makeMap();
+        labRat = (SequencedHashMap) makeEmptyMap();
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         return new SequencedHashMap();
     }
 
@@ -112,7 +112,7 @@ implements TestMap.SupportsPut, TestMap.EntrySetSupportsRemove
     protected Object[] getValues() {
         return new Object[] { "bar", "frob", new Object() };
     }
-
+ 
     public void testSequenceMap() throws Throwable {
         Object[] keys = getKeys();
         int expectedSize = keys.length;
