@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterListIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:51 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterListIterator.java,v 1.2 2003/01/15 21:45:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -65,17 +62,18 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections.Predicate;
 
 /** 
-  * A proxy {@link ListIterator ListIterator} which 
-  * takes a {@link Predicate Predicate} instance to filter
-  * out objects from an underlying <code>ListIterator</code> 
-  * instance. Only objects for which the specified 
-  * <code>Predicate</code> evaluates to <code>true</code> are
-  * returned by the iterator.
-  * 
-  * @since 2.0
-  * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:51 $
-  * @author Rodney Waldhoff
-  */
+ * A proxy {@link ListIterator ListIterator} which 
+ * takes a {@link Predicate Predicate} instance to filter
+ * out objects from an underlying <code>ListIterator</code> 
+ * instance. Only objects for which the specified 
+ * <code>Predicate</code> evaluates to <code>true</code> are
+ * returned by the iterator.
+ * 
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.2 $ $Date: 2003/01/15 21:45:23 $
+ * 
+ * @author Rodney Waldhoff
+ */
 public class FilterListIterator extends ProxyListIterator {
 
     // Constructors    
@@ -88,23 +86,24 @@ public class FilterListIterator extends ProxyListIterator {
      *  and {@link #setPredicate(Predicate) setPredicate} are invoked.
      */
     public FilterListIterator() {
+        super();
     }
 
     /**
-     *  Constructs a new <Code>FilterListIterator</Code> that will not 
-     *  function until {@link #setPredicate(Predicate) setPredicate} is invoked.
+     * Constructs a new <Code>FilterListIterator</Code> that will not 
+     * function until {@link #setPredicate(Predicate) setPredicate} is invoked.
      *
-     *  @param iterator  the iterator to use
+     * @param iterator  the iterator to use
      */
     public FilterListIterator(ListIterator iterator ) {
         super(iterator);
     }
 
     /**
-     *  Constructs a new <Code>FilterListIterator</Code>.
+     * Constructs a new <Code>FilterListIterator</Code>.
      *
-     *  @param iterator  the iterator to use
-     *  @param predicate  the predicate to use
+     * @param iterator  the iterator to use
+     * @param predicate  the predicate to use
      */
     public FilterListIterator(ListIterator iterator, Predicate predicate) {
         super(iterator);
@@ -112,14 +111,15 @@ public class FilterListIterator extends ProxyListIterator {
     }
 
     /**
-     *  Constructs a new <Code>FilterListIterator</Code> that will not 
-     *  function until 
-     *  {@link ProxyListIterator#setListIterator(ListIterator) setListIterator}
-     *  is invoked.
+     * Constructs a new <Code>FilterListIterator</Code> that will not 
+     * function until 
+     * {@link ProxyListIterator#setListIterator(ListIterator) setListIterator}
+     * is invoked.
      *
-     *  @param predicate  the predicate to use.
+     * @param predicate  the predicate to use.
      */
     public FilterListIterator(Predicate predicate) {
+        super();
         this.predicate = predicate;
     }
 

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.4 2002/12/13 11:03:42 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2002/12/13 11:03:42 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.5 2003/01/15 21:45:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -68,6 +65,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.BitSet;
+
 /**
  * Provides an ordered iteration over the elements contained in
  * a collection of ordered {@link Iterator}s.  In other words,
@@ -75,10 +73,11 @@ import java.util.BitSet;
  * my {@link #next} method will return the lesser of 
  * <code>A.next()</code> and <code>B.next()</code>.
  *
- * @since 2.1
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.5 $ $Date: 2003/01/15 21:45:23 $
+ * 
  * @author Rodney Waldhoff
- * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Revision: 1.4 $ $Date: 2002/12/13 11:03:42 $
+ * @author Stephen Colebourne
  */
 public class CollatingIterator implements Iterator {
 
