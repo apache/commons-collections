@@ -15,13 +15,13 @@
     <menu name="Commons Collections">
       <item name="Overview" href="/index.html"/>
       <item name="Users guide" href="/userguide.html"/>
-      <item name="Javadoc (3.0 release)" href="api-30/index.html"/>
+      <item name="Javadoc (3.0 release)" href="apidocs-COLLECTIONS_3_0/index.html"/>
       <item name="Mailing lists" href="/mail-lists.html"/>
       <item name="Team" href="/team-list.html"/>
       <item name="Tasks" href="/tasks.html"/>
       <item name="CVS" href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/"/>
       <item name="Javadoc (CVS latest)" href="apidocs/index.html"/>
-      <item name="Javadoc (2.1 old)" href="api-21/index.html"/>
+      <item name="Javadoc (2.1 old)" href="apidocs-COLLECTIONS_2_1/index.html"/>
     </menu>
     
     &commons-nav;
