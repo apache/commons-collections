@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project>
-  <extend>../project.xml</extend>
+  <extend>../commons-build/project.xml</extend>
   <name>Collections</name>
   <id>commons-collections</id>
   <currentVersion>3.1-dev</currentVersion>
