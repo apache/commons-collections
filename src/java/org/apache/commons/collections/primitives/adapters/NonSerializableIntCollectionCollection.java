@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/NonSerializableListIntList.java,v 1.2 2003/02/28 21:21:51 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/NonSerializableIntCollectionCollection.java,v 1.1 2003/02/28 21:21:51 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,24 +57,26 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import java.util.List;
+import org.apache.commons.collections.primitives.IntCollection;
 
 /**
- *
  * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/02/28 21:21:51 $
+ * @version $Revision: 1.1 $ $Date: 2003/02/28 21:21:51 $
  * @author Rodney Waldhoff 
  */
-final class NonSerializableListIntList extends AbstractListIntList {
-
-    protected NonSerializableListIntList(List list) {
-        _list = list;
-    }
+final class NonSerializableIntCollectionCollection extends AbstractIntCollectionCollection {
     
-    protected List getList() {
-        return _list;
+    /**
+     * Creates a {@link Collection Collection} wrapping
+     * the specified {@link IntCollection IntCollection}.
+     */
+    public NonSerializableIntCollectionCollection(IntCollection collection) {
+        _collection = collection;
+    }
+
+    protected IntCollection getIntCollection() {
+        return _collection;
     }
         
-    private List _list = null;
-
+    private IntCollection _collection = null;
 }

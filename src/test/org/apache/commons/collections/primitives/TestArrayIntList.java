@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.9 2003/02/28 00:17:53 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.10 2003/02/28 21:21:51 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.9 $ $Date: 2003/02/28 00:17:53 $
+ * @version $Revision: 1.10 $ $Date: 2003/02/28 21:21:51 $
  * @author Rodney Waldhoff
  */
 public class TestArrayIntList extends TestIntList {
@@ -76,8 +76,7 @@ public class TestArrayIntList extends TestIntList {
     }
 
     public static Test suite() {
-        // BulkTests won't work, sublists are not serializable
-        TestSuite suite = new TestSuite(TestArrayIntList.class);
+        TestSuite suite = BulkTest.makeSuite(TestArrayIntList.class);
         return suite;
     }
 
@@ -86,6 +85,20 @@ public class TestArrayIntList extends TestIntList {
 
     protected IntList makeEmptyIntList() {
         return new ArrayIntList();
+    }
+
+    public String[] ignoredSimpleTests() {
+        // sublists are not serializable
+        return new String[] { 
+            "TestArrayIntList.bulkTestSubList.testFullListSerialization",
+            "TestArrayIntList.bulkTestSubList.testEmptyListSerialization",
+            "TestArrayIntList.bulkTestSubList.testCanonicalEmptyCollectionExists",
+            "TestArrayIntList.bulkTestSubList.testCanonicalFullCollectionExists",
+            "TestArrayIntList.bulkTestSubList.testEmptyListCompatibility",
+            "TestArrayIntList.bulkTestSubList.testFullListCompatibility",
+            "TestArrayIntList.bulkTestSubList.testSerializeDeserializeThenCompare",
+            "TestArrayIntList.bulkTestSubList.testSimpleSerialization"
+        };
     }
 
     // tests

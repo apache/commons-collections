@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.9 2003/02/28 00:17:53 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.10 2003/02/28 21:21:51 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.9 $ $Date: 2003/02/28 00:17:53 $
+ * @version $Revision: 1.10 $ $Date: 2003/02/28 21:21:51 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedShortList extends TestIntList {
@@ -76,8 +76,8 @@ public class TestArrayUnsignedShortList extends TestIntList {
     }
 
     public static Test suite() {
-        // BulkTests won't work, sublists are not serializable
-        return new TestSuite(TestArrayUnsignedShortList.class);
+        TestSuite suite = BulkTest.makeSuite(TestArrayUnsignedShortList.class);
+        return suite;
     }
 
     // collections testing framework
@@ -85,6 +85,20 @@ public class TestArrayUnsignedShortList extends TestIntList {
 
     protected IntList makeEmptyIntList() {
         return new ArrayUnsignedShortList();
+    }
+
+    public String[] ignoredSimpleTests() {
+        // sublists are not serializable
+        return new String[] { 
+            "TestArrayUnsignedShortList.bulkTestSubList.testFullListSerialization",
+            "TestArrayUnsignedShortList.bulkTestSubList.testEmptyListSerialization",
+            "TestArrayUnsignedShortList.bulkTestSubList.testCanonicalEmptyCollectionExists",
+            "TestArrayUnsignedShortList.bulkTestSubList.testCanonicalFullCollectionExists",
+            "TestArrayUnsignedShortList.bulkTestSubList.testEmptyListCompatibility",
+            "TestArrayUnsignedShortList.bulkTestSubList.testFullListCompatibility",
+            "TestArrayUnsignedShortList.bulkTestSubList.testSerializeDeserializeThenCompare",
+            "TestArrayUnsignedShortList.bulkTestSubList.testSimpleSerialization"
+        };
     }
 
     // tests

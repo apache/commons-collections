@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntCollectionCollection.java,v 1.5 2003/02/28 21:21:51 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/AbstractIntCollectionCollection.java,v 1.1 2003/02/28 21:21:51 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,67 +57,98 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.collections.primitives.IntCollection;
 
 /**
- * Adapts an {@link IntCollection IntCollection}
- * to the {@link java.util.Collection Collection}
- * interface.
- * <p />
- * This implementation delegates most methods
- * to the provided {@link IntCollection IntCollection} 
- * implementation in the "obvious" way.
- * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/02/28 21:21:51 $
+ * @version $Revision: 1.1 $ $Date: 2003/02/28 21:21:51 $
  * @author Rodney Waldhoff 
  */
-final public class IntCollectionCollection extends AbstractIntCollectionCollection implements Serializable {
+abstract class AbstractIntCollectionCollection implements Collection {
     
-    /**
-     * Create a {@link Collection Collection} wrapping
-     * the specified {@link IntCollection IntCollection}.  When
-     * the given <i>collection</i> is <code>null</code>,
-     * returns <code>null</code>.
-     * 
-     * @param collection the (possibly <code>null</code>) 
-     *        {@link IntCollection IntCollection} to wrap
-     * @return a {@link Collection Collection} wrapping the given 
-     *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
-     *         <code>null</code>.
-     */
-    public static Collection wrap(IntCollection collection) {
-        if(null == collection) {
-            return null;
-        } else if(collection instanceof Serializable) {
-            return new IntCollectionCollection(collection);
-        } else {
-            return new NonSerializableIntCollectionCollection(collection);
-        }
-    }
-    
-    /**
-     * No-arg constructor, for serialization purposes.
-     */
-    protected IntCollectionCollection() {
+    public boolean add(Object element) {
+        return getIntCollection().add(((Number)element).intValue());
     }
 
-    /**
-     * Creates a {@link Collection Collection} wrapping
-     * the specified {@link IntCollection IntCollection}.
-     * @see #wrap
-     */
-    public IntCollectionCollection(IntCollection collection) {
-        _collection = collection;
-    }
-    
-
-    protected IntCollection getIntCollection() {
-        return _collection;
+    public boolean addAll(Collection c) {
+        return getIntCollection().addAll(CollectionIntCollection.wrap(c));
     }
         
-    private IntCollection _collection = null;
+    public void clear() {
+        getIntCollection().clear();
+    }
+
+    public boolean contains(Object element) {
+        return getIntCollection().contains(((Number)element).intValue());
+    }
+   
+    
+    public boolean containsAll(Collection c) {
+        return getIntCollection().containsAll(CollectionIntCollection.wrap(c));
+    }        
+        
+    public String toString() {
+        return getIntCollection().toString();
+    }
+    
+    public boolean isEmpty() {
+        return getIntCollection().isEmpty();
+    }
+    
+    /**
+     * {@link IntIteratorIterator#wrap wraps} the 
+     * {@link org.apache.commons.collections.primitives.IntIterator IntIterator}
+     * returned by my underlying 
+     * {@link IntCollection IntCollection}, 
+     * if any.
+     */
+    public Iterator iterator() {
+        return IntIteratorIterator.wrap(getIntCollection().iterator());
+    }
+     
+    public boolean remove(Object element) {
+        return getIntCollection().removeElement(((Number)element).intValue());
+    }
+    
+    public boolean removeAll(Collection c) {
+        return getIntCollection().removeAll(CollectionIntCollection.wrap(c));
+    }
+    
+    public boolean retainAll(Collection c) {
+        return getIntCollection().retainAll(CollectionIntCollection.wrap(c));
+    }
+    
+    public int size() {
+        return getIntCollection().size();
+    }
+    
+    public Object[] toArray() {
+        int[] a = getIntCollection().toArray();
+        Object[] A = new Object[a.length];
+        for(int i=0;i<a.length;i++) {
+            A[i] = new Integer(a[i]);
+        }
+        return A;
+    }
+    
+    public Object[] toArray(Object[] A) {
+        int[] a = getIntCollection().toArray();
+        if(A.length < a.length) {
+            A = (Object[])(Array.newInstance(A.getClass().getComponentType(), a.length));
+        }
+        for(int i=0;i<a.length;i++) {
+            A[i] = new Integer(a[i]);
+        }
+        if(A.length > a.length) {
+            A[a.length] = null;
+        }
+
+        return A;
+    }
+
+    protected abstract IntCollection getIntCollection();            
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/NonSerializableCollectionIntCollection.java,v 1.1 2003/02/28 00:17:53 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/NonSerializableCollectionIntCollection.java,v 1.2 2003/02/28 21:21:51 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -61,10 +61,10 @@ import java.util.Collection;
 
 /**
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/02/28 00:17:53 $
+ * @version $Revision: 1.2 $ $Date: 2003/02/28 21:21:51 $
  * @author Rodney Waldhoff 
  */
-class NonSerializableCollectionIntCollection extends AbstractCollectionIntCollection {
+final class NonSerializableCollectionIntCollection extends AbstractCollectionIntCollection {
     public NonSerializableCollectionIntCollection(Collection collection) {
         _collection = collection;
     }

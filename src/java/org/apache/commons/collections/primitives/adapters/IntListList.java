@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntListList.java,v 1.4 2003/02/26 19:17:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntListList.java,v 1.5 2003/02/28 21:21:51 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,10 +58,7 @@
 package org.apache.commons.collections.primitives.adapters;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.apache.commons.collections.primitives.IntList;
 
@@ -74,10 +71,10 @@ import org.apache.commons.collections.primitives.IntList;
  * implementation in the "obvious" way.
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.4 $ $Date: 2003/02/26 19:17:23 $
+ * @version $Revision: 1.5 $ $Date: 2003/02/28 21:21:51 $
  * @author Rodney Waldhoff 
  */
-public class IntListList extends IntCollectionCollection implements List, Serializable {
+final public class IntListList extends AbstractIntListList implements Serializable {
     
     /**
      * Create a {@link List List} wrapping
@@ -92,7 +89,13 @@ public class IntListList extends IntCollectionCollection implements List, Serial
      *         <code>null</code>.
      */
     public static List wrap(IntList list) {
-        return null == list ? null : new IntListList(list);
+        if(null == list) {
+            return null;
+        } else if(list instanceof Serializable) {
+            return new IntListList(list);
+        } else {
+            return new NonSerializableIntListList(list);
+        }
     }
 
     /**
@@ -107,88 +110,12 @@ public class IntListList extends IntCollectionCollection implements List, Serial
      * @see #wrap
      */
     public IntListList(IntList list) {
-        super(list);        
         _list = list;
     }
     
-    public void add(int index, Object element) {
-        _list.add(index,((Number)element).intValue());
-    }
-
-    public boolean addAll(int index, Collection c) {
-        return _list.addAll(index,CollectionIntCollection.wrap(c));
-    }
-
-    public Object get(int index) {
-        return new Integer(_list.get(index));
-    }
-
-    public int indexOf(Object element) {
-        return _list.indexOf(((Number)element).intValue());
-    }
-
-    public int lastIndexOf(Object element) {
-        return _list.lastIndexOf(((Number)element).intValue());
-    }
-
-    /**
-     * {@link IntListIteratorListIterator#wrap wraps} the 
-     * {@link org.apache.commons.collections.primitives.IntListIterator IntListIterator}
-     * returned by my underlying 
-     * {@link IntList IntList}, 
-     * if any.
-     */
-    public ListIterator listIterator() {
-        return IntListIteratorListIterator.wrap(_list.listIterator());
-    }
-
-    /**
-     * {@link IntListIteratorListIterator#wrap wraps} the 
-     * {@link org.apache.commons.collections.primitives.IntListIterator IntListIterator}
-     * returned by my underlying 
-     * {@link IntList IntList}, 
-     * if any.
-     */
-    public ListIterator listIterator(int index) {
-        return IntListIteratorListIterator.wrap(_list.listIterator(index));
-    }
-
-    public Object remove(int index) {
-        return new Integer(_list.removeElementAt(index));
-    }
-
-    public Object set(int index, Object element) {
-        return new Integer(_list.set(index, ((Number)element).intValue() ));
-    }
-
-    public List subList(int fromIndex, int toIndex) {
-        return IntListList.wrap(_list.subList(fromIndex,toIndex));
-    }
-
-    public boolean equals(Object obj) {
-        if(obj instanceof List) {
-            List that = (List)obj;
-            if(this == that) {
-                return true;
-            } else if(this.size() != that.size()) {
-                return false;            
-            } else {
-                Iterator thisiter = iterator();
-                Iterator thatiter = that.iterator();
-                while(thisiter.hasNext()) {
-                    Object thiselt = thisiter.next();
-                    Object thatelt = thatiter.next();
-                    if(null == thiselt ? null != thatelt : !(thiselt.equals(thatelt))) {
-                        return false;
-                    }
-                }
-                return true;
-            }
-        } else {
-            return false;
-        }
-    }
+    protected IntList getIntList() {
+        return _list;
+    }    
     
     private IntList _list = null;
-
 }
