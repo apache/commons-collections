@@ -17,7 +17,6 @@ package org.apache.commons.collections.iterators;
 
 import java.util.ListIterator;
 
-import org.apache.commons.collections.OrderedIterator;
 import org.apache.commons.collections.ResettableListIterator;
 
 /** 
@@ -28,11 +27,11 @@ import org.apache.commons.collections.ResettableListIterator;
  * 2.1.1 and 3.1 due to issues with <code>IteratorUtils</code>.
  *
  * @since Commons Collections 2.1.1 and 3.1
- * @version $Revision: 1.1 $ $Date: 2004/05/22 09:46:39 $
+ * @version $Revision: 1.2 $ $Date: 2004/05/26 21:53:18 $
  * 
  * @author Stephen Colebourne
  */
-public class EmptyListIterator extends AbstractEmptyIterator implements ResettableListIterator, OrderedIterator {
+public class EmptyListIterator extends AbstractEmptyIterator implements ResettableListIterator {
 
     /**
      * Singleton instance of the iterator.
@@ -44,11 +43,6 @@ public class EmptyListIterator extends AbstractEmptyIterator implements Resettab
      * @since Commons Collections 2.1.1 and 3.1
      */
     public static final ListIterator INSTANCE = RESETTABLE_INSTANCE;
-    /**
-     * Singleton instance of the iterator.
-     * @since Commons Collections 3.1
-     */
-    public static final OrderedIterator ORDERED_INSTANCE = (OrderedIterator) RESETTABLE_INSTANCE;
 
     /**
      * Constructor.
