@@ -117,7 +117,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.13 $ $Date: 2004/04/12 11:38:33 $
+ * @version $Revision: 1.14 $ $Date: 2004/04/12 12:04:00 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -856,7 +856,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Tests Map.put(null, value)
      */
     public void testMapPutNullKey() {
-        resetEmpty();
+        resetFull();
         Object[] values = getSampleValues();
     
         if (isPutAddSupported()) {
@@ -876,7 +876,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Tests Map.put(null, value)
      */
     public void testMapPutNullValue() {
-        resetEmpty();
+        resetFull();
         Object[] keys = getSampleKeys();
         
         if (isPutAddSupported()) {
