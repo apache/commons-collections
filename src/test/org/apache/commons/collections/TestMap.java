@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.8 2002/02/22 02:18:50 mas Exp $
- * $Revision: 1.8 $
- * $Date: 2002/02/22 02:18:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.9 2002/02/22 06:16:35 morgand Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/02/22 06:16:35 $
  *
  * ====================================================================
  *
@@ -62,6 +62,8 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Collection;
@@ -85,7 +87,7 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.8 2002/02/22 02:18:50 mas Exp $
+ * @version $Id: TestMap.java,v 1.9 2002/02/22 06:16:35 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
     public TestMap(String testName) {
@@ -902,6 +904,30 @@ public abstract class TestMap extends TestObject {
         
 
     }
+
+    public void testEmptyMapSerialization() 
+    throws IOException, ClassNotFoundException {
+        Map map = makeEmptyMap();
+        if (!(map instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) map);
+        Map map2 = (Map) readExternalFormFromBytes(objekt);
+
+        assertTrue("Both maps are empty",map.isEmpty()  == true);
+        assertTrue("Both maps are empty",map2.isEmpty() == true);
+    }
+
+    public void testFullMapSerialization() 
+    throws IOException, ClassNotFoundException {
+        Map map = makeFullMap();
+        if (!(map instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) map);
+        Map map2 = (Map) readExternalFormFromBytes(objekt);
+
+        assertEquals("Both maps are same size",map.size(), getSampleKeys().length);
+        assertEquals("Both maps are same size",map2.size(),getSampleKeys().length);
+    } 
 
     /*
         // optional operation
