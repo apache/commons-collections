@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.33 2002/10/21 00:33:59 bayard Exp $ -->
+<!-- $Id: build.xml,v 1.34 2003/01/06 12:54:05 rwaldhoff Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -80,6 +80,11 @@
       <property name="dest.src.tar.gz"    value="${dest}/${src.name}.tar.gz"/>
       <property name="dest.src.zip" value="${dest}/${src.name}.zip"/>
       
+
+      <property name="javac.debug" value="true"/>
+      <property name="javac.deprecation" value="true"/>
+      <property name="javac.optimize" value="true"/>
+
       <patternset id="patternset-exclude-distros">
         <exclude name="**/${bin.name}.tar.gz"/>
         <exclude name="**/${bin.name}.zip"/>
@@ -201,9 +206,9 @@
       <javac destdir="${dest.classes}"
              srcdir="${source.src.java}"
              classpath="${classpath}"
-             debug="false"
-             deprecation="true"
-             optimize="true"/>
+             debug="${javac.debug}"
+             deprecation="${javac.deprecation}"
+             optimize="${javac.optimize}"/>
    </target>
 
    <target name="build-test" depends="init,build-java" if="available-src-test">
@@ -211,9 +216,9 @@
       <javac destdir="${dest.classes}"
              srcdir="${source.src.test}"
              classpath="${classpath}"
-             debug="false"
-             deprecation="true"
-             optimize="true"/>
+             debug="${javac.debug}"
+             deprecation="${javac.deprecation}"
+             optimize="${javac.optimize}"/>
    </target>
 
    <!-- ######################################################### -->
