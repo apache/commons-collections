@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.13 2003/07/12 15:47:53 scolebourne Exp $
- * $Revision: 1.13 $
- * $Date: 2003/07/12 15:47:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.14 2003/07/12 16:23:33 scolebourne Exp $
+ * $Revision: 1.14 $
+ * $Date: 2003/07/12 16:23:33 $
  *
  * ====================================================================
  *
@@ -93,10 +93,11 @@ import java.util.NoSuchElementException;
  * <p>
  * Override these if your collection doesn't support certain operations:
  * <UL>
- * <LI>{@link #isAddSuppoted()}
+ * <LI>{@link #isAddSupported()}
  * <LI>{@link #isRemoveSupported()}
  * <li>{@link #areEqualElementsDistinguishable()}
  * <LI>{@link #isNullSupported()}
+ * <LI>{@link #isFailFastSupported()}
  * </UL>
  * <p>
  * <B>Fixture Methods</B>
@@ -146,18 +147,14 @@ import java.util.NoSuchElementException;
  * <p>
  * If your {@link Collection} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
- * test case (method) your {@link Collection} fails.  For instance, the
- * {@link #testIteratorFailFast()} method is provided since most collections
- * have fail-fast iterators; however, that's not strictly required by the
- * collection contract, so you may want to override that method to do 
- * nothing.
+ * test case (method) your {@link Collection} fails.
  *
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author Neil O'Toole
  * @author Stephen Colebourne
- * @version $Id: TestCollection.java,v 1.13 2003/07/12 15:47:53 scolebourne Exp $
+ * @version $Id: TestCollection.java,v 1.14 2003/07/12 16:23:33 scolebourne Exp $
  */
 public abstract class TestCollection extends TestObject {
 
@@ -445,7 +442,7 @@ public abstract class TestCollection extends TestObject {
     //-----------------------------------------------------------------------
     /**
      *  Returns a list of elements suitable for return by
-     *  {@link getFullElements()}.  The array returned by this method
+     *  {@link #getFullElements()}.  The array returned by this method
      *  does not include null, but does include a variety of objects 
      *  of different types.  Override getFullElements to return
      *  the results of this method if your collection does not support
@@ -476,7 +473,7 @@ public abstract class TestCollection extends TestObject {
 
     /**
      *  Returns the default list of objects returned by 
-     *  {@link getOtherElements()}.  Includes many objects
+     *  {@link #getOtherElements()}.  Includes many objects
      *  of different types.
      */
     protected Object[] getOtherNonNullElements() {
@@ -495,7 +492,7 @@ public abstract class TestCollection extends TestObject {
 
     /**
      *  Returns a list of string elements suitable for return by
-     *  {@link getFullElements()}.  Override getFullElements to return
+     *  {@link #getFullElements()}.  Override getFullElements to return
      *  the results of this method if your collection does not support
      *  heterogenous elements or the null element.
      */
@@ -508,7 +505,7 @@ public abstract class TestCollection extends TestObject {
 
     /**
      *  Returns a list of string elements suitable for return by
-     *  {@link getOtherElements()}.  Override getOtherElements to return
+     *  {@link #getOtherElements()}.  Override getOtherElements to return
      *  the results of this method if your collection does not support
      *  heterogenous elements or the null element.
      */
@@ -1105,7 +1102,7 @@ public abstract class TestCollection extends TestObject {
 
 
     /**
-     *  Tests {@link Collection.toArray(Object[])}.
+     *  Tests {@link Collection#toArray(Object[])}.
      */
     public void testCollectionToArray2() {
         resetEmpty();
