@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.11 2002/02/22 22:21:50 morgand Exp $
- * $Revision: 1.11 $
- * $Date: 2002/02/22 22:21:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.12 2002/02/25 20:57:08 morgand Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/02/25 20:57:08 $
  *
  * ====================================================================
  *
@@ -87,7 +87,7 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.11 2002/02/22 22:21:50 morgand Exp $
+ * @version $Id: TestMap.java,v 1.12 2002/02/25 20:57:08 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
 
@@ -936,8 +936,8 @@ public abstract class TestMap extends TestObject {
         String mapName = map.getClass().getName();
         mapName = mapName.substring(mapName.lastIndexOf(".")+1,mapName.length());
         retval.append(mapName);
-        retval.append(".emptyMap.");
-        retval.append(COLLECTIONS_VERSION);
+        retval.append(".emptyMap.version");
+        retval.append(COMPATIBILITY_VERSION);
         retval.append(".obj");
         return retval.toString();
     }
@@ -948,8 +948,8 @@ public abstract class TestMap extends TestObject {
         String mapName = map.getClass().getName();
         mapName = mapName.substring(mapName.lastIndexOf(".")+1,mapName.length());
         retval.append(mapName);
-        retval.append(".fullMap.");
-        retval.append(COLLECTIONS_VERSION);
+        retval.append(".fullMap.version");
+        retval.append(COMPATIBILITY_VERSION);
         retval.append(".obj");
         return retval.toString();
     }
