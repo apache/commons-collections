@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.7 2003/04/04 22:22:28 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2003/04/04 22:22:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.8 2003/04/09 23:38:26 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/04/09 23:38:26 $
  *
  * ====================================================================
  *
@@ -167,12 +167,12 @@ public class TestListUtils extends BulkTest {
 		List b = new ArrayList( data );
 		
         assertEquals(true, a.equals(b));
-        assertEquals(true, ListUtils.equals(a, b));
+        assertEquals(true, ListUtils.isEqualList(a, b));
         a.clear();
-        assertEquals(false, ListUtils.equals(a, b));
-        assertEquals(false, ListUtils.equals(a, null));
-        assertEquals(false, ListUtils.equals(null, b));
-        assertEquals(true, ListUtils.equals(null, null));
+        assertEquals(false, ListUtils.isEqualList(a, b));
+        assertEquals(false, ListUtils.isEqualList(a, null));
+        assertEquals(false, ListUtils.isEqualList(null, b));
+        assertEquals(true, ListUtils.isEqualList(null, null));
 	}
 	
 	public void testHashCode() {
@@ -182,12 +182,12 @@ public class TestListUtils extends BulkTest {
 		List b = new ArrayList( data );
 		
         assertEquals(true, a.hashCode() == b.hashCode());
-        assertEquals(true, a.hashCode() == ListUtils.hashCode(a));
-        assertEquals(true, b.hashCode() == ListUtils.hashCode(b));
-        assertEquals(true, ListUtils.hashCode(a) == ListUtils.hashCode(b));
+        assertEquals(true, a.hashCode() == ListUtils.hashCodeForList(a));
+        assertEquals(true, b.hashCode() == ListUtils.hashCodeForList(b));
+        assertEquals(true, ListUtils.hashCodeForList(a) == ListUtils.hashCodeForList(b));
         a.clear();
-        assertEquals(false, ListUtils.hashCode(a) == ListUtils.hashCode(b));
-        assertEquals(0, ListUtils.hashCode(null));
+        assertEquals(false, ListUtils.hashCodeForList(a) == ListUtils.hashCodeForList(b));
+        assertEquals(0, ListUtils.hashCodeForList(null));
 	}	
 	
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.5 2003/04/04 22:22:28 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2003/04/04 22:22:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.6 2003/04/09 23:38:26 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/04/09 23:38:26 $
  *
  * ====================================================================
  *
@@ -148,12 +148,12 @@ public class TestSetUtils extends BulkTest {
         Set b = new HashSet( data );
         
         assertEquals(true, a.equals(b));
-        assertEquals(true, SetUtils.equals(a, b));
+        assertEquals(true, SetUtils.isEqualSet(a, b));
         a.clear();
-        assertEquals(false, SetUtils.equals(a, b));
-        assertEquals(false, SetUtils.equals(a, null));
-        assertEquals(false, SetUtils.equals(null, b));
-        assertEquals(true, SetUtils.equals(null, null));
+        assertEquals(false, SetUtils.isEqualSet(a, b));
+        assertEquals(false, SetUtils.isEqualSet(a, null));
+        assertEquals(false, SetUtils.isEqualSet(null, b));
+        assertEquals(true, SetUtils.isEqualSet(null, null));
     }
     
     public void testHashCode() {
@@ -163,12 +163,12 @@ public class TestSetUtils extends BulkTest {
         Set b = new HashSet( data );
         
         assertEquals(true, a.hashCode() == b.hashCode());
-        assertEquals(true, a.hashCode() == SetUtils.hashCode(a));
-        assertEquals(true, b.hashCode() == SetUtils.hashCode(b));
-        assertEquals(true, SetUtils.hashCode(a) == SetUtils.hashCode(b));
+        assertEquals(true, a.hashCode() == SetUtils.hashCodeForSet(a));
+        assertEquals(true, b.hashCode() == SetUtils.hashCodeForSet(b));
+        assertEquals(true, SetUtils.hashCodeForSet(a) == SetUtils.hashCodeForSet(b));
         a.clear();
-        assertEquals(false, SetUtils.hashCode(a) == SetUtils.hashCode(b));
-        assertEquals(0, SetUtils.hashCode(null));
+        assertEquals(false, SetUtils.hashCodeForSet(a) == SetUtils.hashCodeForSet(b));
+        assertEquals(0, SetUtils.hashCodeForSet(null));
     }   
 
 }
