@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.2 2003/10/03 06:25:03 bayard Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.3 2003/10/03 06:31:03 bayard Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.DefaultMapEntry;
  * The order can be observed via the iterator or toArray methods.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/10/03 06:25:03 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/03 06:31:03 $
  * 
  * @author Henri Yandell
  */
@@ -137,34 +137,16 @@ public class OrderedMap extends AbstractMapDecorator implements Map {
         return result;
     }
 
-    //// From here on down, this becomes hell.
-
     public Set keySet() {
-        // TODO: calling remove on the Set needs to remove from this Map
-        // Iterator.remove, Set.remove, removeAll retainAll, and clear 
-
         return new KeyView( this, this.insertOrder );
-
-        /* OLD
-        Set set = new java.util.HashSet( insertOrder.size() );
-        set = OrderedSet.decorate( set );
-        for (Iterator it = insertOrder.iterator(); it.hasNext();) {
-            set.add( it.next() );
-        }
-        return set;
-        */
     }
 
     public Collection values() {
-        // TODO: calling remove on the Collection needs to remove from this Map
-        // Iterator.remove, Collection.remove, removeAll, retainAll and clear
         return new ValuesView( this, this.insertOrder );
     }
 
     // QUERY: Should a change of value change insertion order?
     public Set entrySet() {
-        // TODO: calling remove on the Set needs to remove from this Map
-        // Iterator.remove, Set.remove, removeAll, retainAll and clear
         return new EntrySetView( this, this.insertOrder );
     }
 
