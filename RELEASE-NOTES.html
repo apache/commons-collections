@@ -28,6 +28,8 @@ The major changes are:
     A new package full of key-value pairs and map entry implementations</li>
 <li><strong>Abstract Hash-based Map</strong> -
     Highly extensible hash-based, and hash-link-based map abstract classes</li>
+<li><strong>PriorityQueue deprecated</strong> -
+    The top level interface PriorityQueue has been deprecated in favour of Buffer</li>
 </ul>
 
 <hr />
@@ -83,6 +85,7 @@ NEW CLASSES
 <p>These classes have changed in a potentially incompatable way:</p>
 
 <ul>
+<li><strong>BufferUnderflowException</strong> - Now extends NoSuchElementException</li>
 <li><strong>BeanMap.MyMapEntry</strong> - Superclass changed</li>
 <li><strong>MultiHashMap</strong> - Name facility and getName() method removed</li>
 <li><strong>FilterIterator</strong> - Superclass changed</li>
@@ -93,6 +96,9 @@ NEW CLASSES
 <p>These collections have changed since <i>Collections 3.0</i>:</p>
 
 <ul>
+<li><strong>PriorityQueue</strong> - Deprecated, use Buffer interface</li>
+<li><strong>BinaryHeap</strong> - Deprecated, use PriorityBuffer</li>
+<li><strong>SynchronizedPriorityQueue</strong> - Deprecated, use SynchronizedBuffer</li>
 <li><strong>BoundedFifoBuffer</strong> - Deprecated, moved to buffer subpackage</li>
 <li><strong>UnboundedFifoBuffer</strong> - Deprecated, moved to buffer subpackage</li>
 <li><strong>SequencedHashMap</strong> - Deprecated, rewritten as LinkedMap in map subpackage</li>
@@ -105,7 +111,6 @@ NEW CLASSES
 <li><strong>ReferenceMap</strong> - Deprecated, moved to map subpackage</li>
 <li><strong>StaticBucketMap</strong> - Deprecated, moved to map subpackage</li>
 <li><strong>ProxyMap</strong> - Deprecated, moved as AbstractMapDecorator in map subpackage</li>
-<li><strong>BinaryHeap</strong> - Bug fixes</li>
 <li><strong>ExtendedProperties</strong> - Bug fixes. Please consider using Commons-Configuration <code>PropertiesConfiguration</code></li>
 </ul>
 
