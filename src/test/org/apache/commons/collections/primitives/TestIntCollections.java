@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.20 2003/05/20 17:05:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntCollections.java,v 1.1 2003/05/20 17:05:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,65 +62,83 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.20 $ $Date: 2003/05/20 17:05:28 $
+ * @version $Revision: 1.1 $ $Date: 2003/05/20 17:05:28 $
  * @author Rodney Waldhoff
+ * @deprecated as the tested classes are deprecated also
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestIntCollections extends TestCase {
+
+    //------------------------------------------------------------ Conventional
+
+    public TestIntCollections(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static Test suite() {
+        return new TestSuite(TestIntCollections.class);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+    //---------------------------------------------------------------- Tests
 
-        suite.addTest(TestAbstractByteCollection.suite());
-        suite.addTest(TestRandomAccessByteList.suite());
-        suite.addTest(TestArrayByteList.suite());
+    public void testUnmodifiableIntListNull() {
+        try {
+            IntCollections.unmodifiableIntList(null);
+            fail("Expected NullPointerException");
+        } catch(NullPointerException e) {
+            // expected
+        }
+    }
 
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        suite.addTest(TestArrayUnsignedByteList.suite());
+    public void testEmptyIntList() {
+        assertSame(IntCollections.EMPTY_INT_LIST,IntCollections.getEmptyIntList());
+        assertTrue(IntCollections.EMPTY_INT_LIST.isEmpty());
+        try {
+            IntCollections.EMPTY_INT_LIST.add(1);
+            fail("Expected UnsupportedOperationExcpetion");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }
+    }
 
-        suite.addTest(TestAbstractCharCollection.suite());
-        suite.addTest(TestRandomAccessCharList.suite());
-        suite.addTest(TestArrayCharList.suite());
+    public void testUnmodifiableIntIteratorNull() {
+        try {
+            IntCollections.unmodifiableIntIterator(null);
+            fail("Expected NullPointerException");
+        } catch(NullPointerException e) {
+            // expected
+        }
+    }
 
-        suite.addTest(TestIntCollections.suite());
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
+    public void testEmptyIntIterator() {
+        assertSame(IntCollections.EMPTY_INT_ITERATOR,IntCollections.getEmptyIntIterator());
+        assertTrue(! IntCollections.EMPTY_INT_ITERATOR.hasNext());
+        try {
+            IntCollections.EMPTY_INT_ITERATOR.remove();
+            fail("Expected UnsupportedOperationExcpetion");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }
+    }
 
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
+    public void testUnmodifiableIntListIteratorNull() {
+        try {
+            IntCollections.unmodifiableIntListIterator(null);
+            fail("Expected NullPointerException");
+        } catch(NullPointerException e) {
+            // expected
+        }
+    }
 
-        suite.addTest(TestAbstractFloatCollection.suite());
-        suite.addTest(TestRandomAccessFloatList.suite());
-        suite.addTest(TestArrayFloatList.suite());
-
-        suite.addTest(TestAbstractDoubleCollection.suite());
-        suite.addTest(TestRandomAccessDoubleList.suite());
-        suite.addTest(TestArrayDoubleList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.primitives.decorators.TestAll.suite());
-        
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+    public void testEmptyIntListIterator() {
+        assertSame(IntCollections.EMPTY_INT_LIST_ITERATOR,IntCollections.getEmptyIntListIterator());
+        assertTrue(! IntCollections.EMPTY_INT_LIST_ITERATOR.hasNext());
+        assertTrue(! IntCollections.EMPTY_INT_LIST_ITERATOR.hasPrevious());
+        try {
+            IntCollections.EMPTY_INT_LIST_ITERATOR.add(1);
+            fail("Expected UnsupportedOperationExcpetion");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }
     }
 }
 

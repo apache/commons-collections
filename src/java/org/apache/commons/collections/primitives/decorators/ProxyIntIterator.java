@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/decorators/Attic/ProxyIntIterator.java,v 1.1 2003/05/20 00:44:11 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/decorators/Attic/ProxyIntIterator.java,v 1.2 2003/05/20 17:05:27 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,7 +62,7 @@ import org.apache.commons.collections.primitives.IntIterator;
 /**
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/05/20 00:44:11 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/20 17:05:27 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -76,10 +76,6 @@ abstract class ProxyIntIterator implements IntIterator {
 
     public int next() {
         return getIterator().next();
-    }
-
-    public void remove() {
-        getIterator().remove();
     }
 
     protected abstract IntIterator getIterator();    

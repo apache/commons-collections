@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/decorators/Attic/ProxyIntListIterator.java,v 1.2 2003/05/20 17:05:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/decorators/Attic/BaseUnmodifiableIntIteratorTest.java,v 1.1 2003/05/20 17:05:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,40 +57,60 @@
 
 package org.apache.commons.collections.primitives.decorators;
 
+import junit.framework.TestCase;
+
+import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.collections.primitives.IntIterator;
-import org.apache.commons.collections.primitives.IntListIterator;
+import org.apache.commons.collections.primitives.IntList;
 
 /**
- * 
- * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/05/20 17:05:28 $
- * 
- * @author Rodney Waldhoff 
+ * @version $Revision: 1.1 $ $Date: 2003/05/20 17:05:28 $
+ * @author Rodney Waldhoff
  */
-abstract class ProxyIntListIterator extends ProxyIntIterator implements IntListIterator {
-    ProxyIntListIterator() {
+public abstract class BaseUnmodifiableIntIteratorTest extends TestCase {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public BaseUnmodifiableIntIteratorTest(String testName) {
+        super(testName);
     }
     
-    public boolean hasPrevious() {
-        return getListIterator().hasPrevious();
+
+    // framework
+    // ------------------------------------------------------------------------
+    protected abstract IntIterator makeUnmodifiableIntIterator();
+
+    protected IntIterator makeIntIterator() {
+        IntList list = new ArrayIntList();
+        for(int i=0;i<10;i++) {
+            list.add(i);
+        }
+        return list.iterator();
     }
 
-    public int nextIndex() {
-        return getListIterator().nextIndex();
+    // tests
+    // ------------------------------------------------------------------------
+
+    public final void testIntIteratorNotModifiable() {
+        IntIterator iter = makeUnmodifiableIntIterator();
+        assertTrue(iter.hasNext());
+        iter.next();
+        try {
+            iter.remove();
+            fail("Expected UnsupportedOperationException");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }
     }
 
-    public int previous() {
-        return getListIterator().previous();
+    public final void testIterateIntIterator() {        
+        IntIterator iter = makeUnmodifiableIntIterator();
+        for(IntIterator expected = makeIntIterator(); expected.hasNext(); ) {
+            assertTrue(iter.hasNext());
+            assertEquals(expected.next(),iter.next());
+        }
+        assertTrue(! iter.hasNext() );
     }
-
-    public int previousIndex() {
-        return getListIterator().previousIndex();
-    }
-
-    protected final IntIterator getIterator() {
-        return getListIterator();    
-    }
-
-    protected abstract IntListIterator getListIterator();
 
 }

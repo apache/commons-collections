@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/decorators/Attic/ProxyIntListIterator.java,v 1.2 2003/05/20 17:05:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/decorators/Attic/TestUnmodifiableIntIterator.java,v 1.1 2003/05/20 17:05:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,40 +57,50 @@
 
 package org.apache.commons.collections.primitives.decorators;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.commons.collections.primitives.IntIterator;
-import org.apache.commons.collections.primitives.IntListIterator;
 
 /**
- * 
- * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/05/20 17:05:28 $
- * 
- * @author Rodney Waldhoff 
+ * @version $Revision: 1.1 $ $Date: 2003/05/20 17:05:28 $
+ * @author Rodney Waldhoff
  */
-abstract class ProxyIntListIterator extends ProxyIntIterator implements IntListIterator {
-    ProxyIntListIterator() {
+public class TestUnmodifiableIntIterator extends BaseUnmodifiableIntIteratorTest {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestUnmodifiableIntIterator(String testName) {
+        super(testName);
     }
     
-    public boolean hasPrevious() {
-        return getListIterator().hasPrevious();
+
+    public static Test suite() {
+        return new TestSuite(TestUnmodifiableIntIterator.class);
     }
 
-    public int nextIndex() {
-        return getListIterator().nextIndex();
+    // framework
+    // ------------------------------------------------------------------------
+
+    protected IntIterator makeUnmodifiableIntIterator() {
+        return UnmodifiableIntIterator.wrap(makeIntIterator());
     }
 
-    public int previous() {
-        return getListIterator().previous();
+    // tests
+    // ------------------------------------------------------------------------
+
+    public void testWrapNotNull() {
+        assertNotNull(UnmodifiableIntIterator.wrap(makeIntIterator()));
     }
 
-    public int previousIndex() {
-        return getListIterator().previousIndex();
+    public void testWrapNull() {
+        assertNull(UnmodifiableIntIterator.wrap(null));
     }
 
-    protected final IntIterator getIterator() {
-        return getListIterator();    
+    public void testWrapUnmodifiableIntIterator() {
+        IntIterator iter = makeUnmodifiableIntIterator();
+        assertSame(iter,UnmodifiableIntIterator.wrap(iter));
     }
-
-    protected abstract IntListIterator getListIterator();
 
 }
