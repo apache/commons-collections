@@ -63,7 +63,7 @@ import java.util.Comparator;
  *  other objects.
  *
  *  @author <a href="mas@apache.org">Michael A. Smith</a>
- *  @version $Id: NullComparator.java,v 1.1 2002/06/09 19:23:53 mas Exp $ 
+ *  @version $Id: NullComparator.java,v 1.2 2002/06/10 05:33:53 mas Exp $ 
  **/
 public class NullComparator implements Comparator, Serializable {
 
@@ -108,7 +108,7 @@ public class NullComparator implements Comparator, Serializable {
     /**
      *  Construct an instance that sorts <code>null</code> higher or lower than
      *  any non-<code>null</code> object it is compared with.  When comparing
-     *  two non-<code>null</code> objects, the {@link ComparableCOmparator} is
+     *  two non-<code>null</code> objects, the {@link ComparableComparator} is
      *  used.
      *
      *  @param nullsAreHigh a <code>true</code> value indicates that
