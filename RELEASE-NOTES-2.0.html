@@ -11,8 +11,9 @@ useful Comparator classes.</p>
 <p>These collections are new to Collections 2.0:</p>
 
 <ul>
-<li><strong>Bag</strong> - A Collection that keeps a count of its members of the same
-    type, using <code>hashCode</code> to check for equality. Suppose
+
+<li><strong>Bag</strong> - A Collection that counts the number of times an
+    object appears in the collection.  Suppose 
     you have a Bag that contains <code>{a, a, b, c}</code>.  Calling
     getCount on <code>a</code> would return 2, while calling
     uniqueSet would return <code>{a, b, c}</code>.  <i>Note: this is an
@@ -96,7 +97,7 @@ promotes the key to the Most Recently Used position.</p>
   <li>"Externalized" LRUMap 1.0 Objects cannot be
     read by LRUMap 2.0.</li>
 </ul>
-        
+    
 <p><i>New features:</i></p>
 <ul>
   <li>True LRU algorithm.</li>
@@ -112,5 +113,42 @@ promotes the key to the Most Recently Used position.</p>
     when the current size of the Map exceeds the new
     maximum size</li>
 </ul>
-    
- 
+
+
+<p><u>BeanMap</u></p>
+
+<p>BeanMap's entrySet() now properly returns a set containing Map.Entry
+objects.  Previously, entrySet() was equivalent to keySet() (returns a set of
+the readable properties) and there was no mechanism to retrieve all of the
+readable properties along with their values.  Additionally, the BeanMap clone
+method has been revamped to work better for subclasses. </p>
+            
+<p><i>BeanMap 2.0 compatibility changes:</i></p>
+<ul>
+
+  <li>BeanMap's clone() method now declares it throws
+  CloneNotSupportedException.  This allows subclasses of BeanMap to not require
+  being Cloneable and facilitates subclasses that wish to be cloneable (allows
+  the subclass to call super.clone() and have it return an instance of the
+  child rather than the parent).</li>
+
+  <li>If a BeanMap is not cloneable because a new instance of the underlying
+  bean cannot be constructed, a CloneNotSupportedException is thrown rather
+  than an UnsupportedOperationException or other RuntimeException.</li>
+
+  <li>BeanMap's entrySet() method now returns a set of Map.Entry objects rather
+  than the set of readable properties.  To retrieve a set of readable
+  properties, use keySet() instead.</li>
+
+</ul>
+
+<p><i>Bugs fixed:</i></p>
+<ul>
+
+  <li>If no bean is set in the BeanMap, or setBean(Object) was called with a
+  null argument, many BeanMap methods threw NullPointerExceptions.  These have
+  been fixed to properly handle the case where there is no bean established in
+  the map.</li>
+
+</ul>
+
