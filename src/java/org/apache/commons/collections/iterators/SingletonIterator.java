@@ -25,7 +25,7 @@ import org.apache.commons.collections.ResettableIterator;
  * object instance.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.12 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision: 1.13 $ $Date: 2004/04/09 14:38:47 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
@@ -34,20 +34,39 @@ import org.apache.commons.collections.ResettableIterator;
 public class SingletonIterator
 		implements Iterator, ResettableIterator {
 
+    /** Whether remove is allowed */
+    private final boolean removeAllowed;
+    /** Is the cursor before the first element */
     private boolean beforeFirst = true;
+    /** Has the element been removed */
     private boolean removed = false;
+    /** The object */
     private Object object;
 
     /**
-     * Constructs a new <code>SingletonIterator</code>.
+     * Constructs a new <code>SingletonIterator</code> where <code>remove</code>
+     * is a permitted operation.
      *
      * @param object  the single object to return from the iterator
      */
     public SingletonIterator(Object object) {
-        super();
-        this.object = object;
+        this(object, true);
     }
 
+    /**
+     * Constructs a new <code>SingletonIterator</code> optionally choosing if
+     * <code>remove</code> is a permitted operation.
+     *
+     * @param object  the single object to return from the iterator
+     * @param removeAllowed  true if remove is allowed
+     */
+    public SingletonIterator(Object object, boolean removeAllowed) {
+        super();
+        this.object = object;
+        this.removeAllowed = removeAllowed;
+    }
+
+    //-----------------------------------------------------------------------
     /**
      * Is another object available from the iterator?
      * <p>
@@ -78,17 +97,23 @@ public class SingletonIterator
 
     /**
      * Remove the object from this iterator.
+     * 
      * @throws IllegalStateException if the <tt>next</tt> method has not
      *        yet been called, or the <tt>remove</tt> method has already
      *        been called after the last call to the <tt>next</tt>
      *        method.
+     * @throws UnsupportedOperationException if remove is not supported
      */
-    public void remove() {       
-        if(removed || beforeFirst) {
-            throw new IllegalStateException();
+    public void remove() {
+        if (removeAllowed) {
+            if (removed || beforeFirst) {
+                throw new IllegalStateException();
+            } else {
+                object = null;
+                removed = true;
+            }
         } else {
-            object = null;
-            removed = true;
+            throw new UnsupportedOperationException();
         }
     }
     
