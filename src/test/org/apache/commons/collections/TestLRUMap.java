@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.5 2002/02/13 23:55:41 morgand Exp $
- * $Revision: 1.5 $
- * $Date: 2002/02/13 23:55:41 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.6 2002/02/14 20:57:59 morgand Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/02/14 20:57:59 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.5 2002/02/13 23:55:41 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.6 2002/02/14 20:57:59 morgand Exp $
  */
 public class TestLRUMap extends TestHashMap
 {
@@ -150,5 +150,73 @@ public class TestLRUMap extends TestHashMap
                    map2.containsKey(new Integer(4)));
     }
 
+    /**
+     * You should be able to subclass LRUMap and perform a 
+     * custom action when items are removed automatically
+     * by the LRU algorithm (the removeLRU() method).
+     */
+    public void testLRUSubclass() {
+        LRUCounter counter = new LRUCounter(3);
+        counter.put(new Integer(1),"foo");
+        counter.put(new Integer(2),"foo");
+        counter.put(new Integer(3),"foo");
+        counter.put(new Integer(1),"foo");
+        counter.put(new Integer(4),"foo");
+        counter.put(new Integer(5),"foo");
+        counter.put(new Integer(2),"foo");
+        counter.remove(new Integer(5));
+
+        assertTrue("size should be 2, but was " + counter.size(), counter.size() == 2);
+        assertTrue("removedCount should be 2 but was " + counter.removedCount,
+                   counter.removedCount == 2);
+    }
+
+    /**
+     * You should be able to subclass LRUMap and perform a 
+     * custom action when items are removed automatically
+     * or when remove is called manually
+     * by overriding the remove(Object) method.
+     */
+    public void testRemoveSubclass() {
+        RemoveCounter counter = new RemoveCounter(3);
+        counter.put(new Integer(1),"foo");
+        counter.put(new Integer(2),"foo");
+        counter.put(new Integer(3),"foo");
+        counter.put(new Integer(1),"foo");
+        counter.put(new Integer(4),"foo");
+        counter.put(new Integer(5),"foo");
+        counter.put(new Integer(2),"foo");
+        counter.remove(new Integer(5));
+
+        assertTrue("size should be 2, but was " + counter.size(), counter.size() == 2);
+        assertTrue("removedCount should be 3 but was " + counter.removedCount,
+                   counter.removedCount == 3);
+    }
+
+    private class LRUCounter extends LRUMap {
+        int removedCount = 0;
+
+        LRUCounter(int i) {
+            super(i);
+        }
+
+        public Object removeLRU() {
+            ++removedCount;
+            return super.removeLRU();
+        }
+    }
+
+    private class RemoveCounter extends LRUMap {
+        int removedCount = 0;
+
+        RemoveCounter(int i) {
+            super(i);
+        }
+
+        public Object remove(Object o) {
+            ++removedCount;
+            return super.remove(o);
+        }
+    }
 
 }
