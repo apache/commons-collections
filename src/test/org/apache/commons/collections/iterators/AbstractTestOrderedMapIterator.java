@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestOrderedMapIterator.java,v 1.1 2003/11/20 00:03:05 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestOrderedMapIterator.java,v 1.2 2003/11/20 21:44:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import java.util.Set;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/20 00:03:05 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/20 21:44:58 $
  * 
  * @author Stephen Colebourne
  */
@@ -90,6 +90,15 @@ public abstract class AbstractTestOrderedMapIterator extends AbstractTestMapIter
     }
 
     //-----------------------------------------------------------------------
+    public final OrderedMapIterator makeEmptyOrderedMapIterator() {
+        return (OrderedMapIterator) makeEmptyMapIterator();
+    }
+
+    public final OrderedMapIterator makeFullOrderedMapIterator() {
+        return (OrderedMapIterator) makeFullMapIterator();
+    }
+    
+    //-----------------------------------------------------------------------
     /**
      * Test that the empty list iterator contract is correct.
      */
@@ -100,7 +109,7 @@ public abstract class AbstractTestOrderedMapIterator extends AbstractTestMapIter
 
         super.testEmptyMapIterator();
         
-        OrderedMapIterator it = (OrderedMapIterator) makeEmptyMapIterator();
+        OrderedMapIterator it = makeEmptyOrderedMapIterator();
         Map map = getMap();
         assertEquals(false, it.hasPrevious());
         try {
@@ -120,7 +129,7 @@ public abstract class AbstractTestOrderedMapIterator extends AbstractTestMapIter
 
         super.testFullMapIterator();
         
-        OrderedMapIterator it = (OrderedMapIterator) makeFullMapIterator();
+        OrderedMapIterator it = makeFullOrderedMapIterator();
         Map map = getMap();
         
         assertEquals(true, it.hasNext());
@@ -171,7 +180,7 @@ public abstract class AbstractTestOrderedMapIterator extends AbstractTestMapIter
             return;
         }
 
-        OrderedMapIterator it = (OrderedMapIterator) makeFullMapIterator();
+        OrderedMapIterator it = makeFullOrderedMapIterator();
         Map map = getMap();
         
         assertEquals("keySet() not consistent", new ArrayList(map.keySet()), new ArrayList(map.keySet()));
