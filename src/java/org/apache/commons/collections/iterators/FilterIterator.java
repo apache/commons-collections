@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterIterator.java,v 1.2 2003/01/15 21:45:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterIterator.java,v 1.3 2003/01/30 23:10:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,10 +69,11 @@ import org.apache.commons.collections.Predicate;
  * returned.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.2 $ $Date: 2003/01/15 21:45:23 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/30 23:10:29 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Jan Sorensen
+ * @author Ralph Wagner
  */
 public class FilterIterator extends ProxyIterator {
     
@@ -150,13 +151,21 @@ public class FilterIterator extends ProxyIterator {
     }
 
     /**
-     * Always throws UnsupportedOperationException as this class 
-     * does look-ahead with its internal iterator.
-     *
-     * @throws UnsupportedOperationException  always
+     * Removes from the underlying collection of the base iterator the last
+     * element returned by this iterator.
+     * This method can only be called
+     * if <code>next()</code> was called, but not after
+     * <code>hasNext()</code>, because the <code>hasNext()</code> call
+     * changes the base iterator.
+     * 
+     * @throws IllegalStateException if <code>hasNext()</code> has already
+     *  been called.
      */
     public void remove() {
-        throw new UnsupportedOperationException();
+        if (nextObjectSet) {
+            throw new IllegalStateException("remove() cannot be called");
+        }
+        getIterator().remove();
     }
         
 
