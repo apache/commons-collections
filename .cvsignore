@@ -11,3 +11,5 @@ junit*.properties
 *.bat
 jcoverage.ser
 target-site
+target-dist
+build2.xml
