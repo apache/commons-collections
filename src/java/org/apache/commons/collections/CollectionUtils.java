@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.44 2003/09/22 02:20:56 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.45 2003/10/05 19:48:00 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.44 $ $Date: 2003/09/22 02:20:56 $
+ * @version $Revision: 1.45 $ $Date: 2003/10/05 19:48:00 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -730,6 +730,8 @@ public class CollectionUtils {
      * @param idx  the index to get
      * @throws IndexOutOfBoundsException
      * @throws ArrayIndexOutOfBoundsException
+     *
+     * @deprecated use {@link #get(Object, int)} instead
      */
     public static Object index(Object obj, int idx) {
         return index(obj, new Integer(idx));
@@ -755,6 +757,8 @@ public class CollectionUtils {
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException
      * @throws ArrayIndexOutOfBoundsException
+     *
+     * @deprecated use {@link #get(Object, int)} instead
      */
     public static Object index(Object obj, Object index) {
         if(obj instanceof Map) {
@@ -812,6 +816,86 @@ public class CollectionUtils {
             }
         }
         return iterator;
+    }
+    
+    /**
+     * Returns the <code>index</code>-th value in <code>object</code>, throwing
+     * <code>IndexOutOfBoundsException</code> if there is no such element or 
+     * <code>IllegalArgumentException</code> if <code>object</code> is not an 
+     * instance of one of the supported types.
+     * <p>
+     * The supported types, and associated semantics are:
+     * <ul>
+     * <li> Map -- the value returned is the <code>Map.Entry</code> in position 
+     *      <code>index</code> in the map's <code>entrySet</code> iterator, 
+     *      if there is such an entry.</li>
+     * <li> List -- this method is equivalent to the list's get method.</li>
+     * <li> Object Array -- the <code>index</code>-th array entry is returned, 
+     *      if there is such an entry; otherwise an <code>ArrayIndexOutOfBoundsException</code>
+     *      is thrown.</li>
+     * <li> Collection -- the value returned is the <code>index</code>-th object 
+     *      returned by the collection's default iterator, if there is such an element.</li>
+     * <li> Iterator or Enumeration -- the value returned is the
+     *      <code>index</code>-th object in the Iterator/Enumeration, if there
+     *      is such an element.  The Iterator/Enumeration is advanced to 
+     *      <code>index</code> (or to the end, if <code>index</code> exceeds the 
+     *      number of entries) as a side effect of this method.</li>
+     * </ul>
+     * 
+     * @param object  the object to get a value from
+     * @param index  the index to get
+     * @return the object at the specified index
+     * @throws IndexOutOfBoundsException
+     * @throws IllegalArgumentException
+     */
+    public static Object get(Object object, int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index cannot be negative.");
+        }
+        if(object instanceof Map) {
+            Map map = (Map)object;
+            Iterator iterator = map.entrySet().iterator();
+            return get(iterator, index);
+        } 
+        else if(object instanceof List) {
+            return ((List)object).get(index);
+        } 
+        else if(object instanceof Object[]) {
+            return ((Object[])object)[index];
+        } 
+        else if(object instanceof Enumeration) {
+            Enumeration enum = (Enumeration)object;
+            while(enum.hasMoreElements()) {
+                index--;
+                if(index == -1) {
+                    return enum.nextElement();
+                } else {
+                    enum.nextElement();
+                }
+            }
+            throw new IndexOutOfBoundsException("Entry does not exist.");
+        } 
+        else if(object instanceof Iterator) {
+            return get((Iterator)object, index);
+        }
+        else if(object instanceof Collection) {
+            Iterator iterator = ((Collection)object).iterator();
+            return get(iterator, index);
+        } else {
+            throw new IllegalArgumentException("Unsupported object type.");
+        }
+    }
+    
+    private static Object get(Iterator iterator, int index) {
+        while(iterator.hasNext()) {
+            index--;
+            if(index == -1) {
+                return iterator.next();
+            } else {
+                iterator.next();
+            }
+        }
+        throw new IndexOutOfBoundsException("Entry does not exist.");
     }
 
     /** 
