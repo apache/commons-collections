@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.5 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/12 03:59:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.12 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,17 +57,20 @@
  */
 package org.apache.commons.collections;
 
-import java.util.NoSuchElementException;
-
 /**
- * Interface for priority queues.
- * This interface does not dictate whether it is min or max heap.
+ * Defines a collection for priority queues, which can insert, peek and pop.
+ * <p>
+ * This interface is now replaced by the <code>Buffer</code> interface.
  *
- * @since 1.0
- * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
+ * @deprecated Replaced by the Buffer interface and implementations in buffer subpackage.
+ *  Due to be removed in v4.0.
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.12 $ $Date: 2004/01/08 22:26:07 $
+ * 
+ * @author Peter Donald
  */
-public interface PriorityQueue
-{
+public interface PriorityQueue {
+    
     /**
      * Clear all elements from queue.
      */
@@ -88,26 +88,26 @@ public interface PriorityQueue
      *
      * @param element the element to be inserted
      *
-     * @exception ClassCastException if the specified <code>element</code>'s
+     * @throws ClassCastException if the specified <code>element</code>'s
      * type prevents it from being compared to other items in the queue to
      * determine its relative priority.  
      */
-    void insert( Object element );
+    void insert(Object element);
 
     /**
      * Return element on top of heap but don't remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if <code>isEmpty() == true</code>
+     * @throws java.util.NoSuchElementException if <code>isEmpty() == true</code>
      */
-    Object peek() throws NoSuchElementException;
+    Object peek();
 
     /**
      * Return element on top of heap and remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if <code>isEmpty() == true</code>
+     * @throws java.util.NoSuchElementException if <code>isEmpty() == true</code>
      */
-    Object pop() throws NoSuchElementException;
+    Object pop();
+    
 }
-

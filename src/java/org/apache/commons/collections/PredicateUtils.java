@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.2 2002/06/16 03:39:40 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/16 03:39:40 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.14 2003/11/23 22:05:24 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,1203 +57,442 @@
  */
 package org.apache.commons.collections;
 
-import java.io.Serializable;
-import java.util.AbstractSet;
 import java.util.Collection;
-import java.util.List;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.Map;
-import java.util.SortedMap;
+
+import org.apache.commons.collections.functors.AllPredicate;
+import org.apache.commons.collections.functors.AndPredicate;
+import org.apache.commons.collections.functors.AnyPredicate;
+import org.apache.commons.collections.functors.EqualPredicate;
+import org.apache.commons.collections.functors.ExceptionPredicate;
+import org.apache.commons.collections.functors.FalsePredicate;
+import org.apache.commons.collections.functors.IdentityPredicate;
+import org.apache.commons.collections.functors.InstanceofPredicate;
+import org.apache.commons.collections.functors.NonePredicate;
+import org.apache.commons.collections.functors.NotNullPredicate;
+import org.apache.commons.collections.functors.NotPredicate;
+import org.apache.commons.collections.functors.NullIsExceptionPredicate;
+import org.apache.commons.collections.functors.NullIsFalsePredicate;
+import org.apache.commons.collections.functors.NullIsTruePredicate;
+import org.apache.commons.collections.functors.NullPredicate;
+import org.apache.commons.collections.functors.OnePredicate;
+import org.apache.commons.collections.functors.OrPredicate;
+import org.apache.commons.collections.functors.TransformerPredicate;
+import org.apache.commons.collections.functors.TruePredicate;
+import org.apache.commons.collections.functors.UniquePredicate;
+
 /**
- * PredicateUtils provides access to common predicate functionality.
- * <p>
- * Included are collections wrapper that support validation.
- * Only elements that pass a predicate (validation test) can 
- * be added to the collection. An <tt>IllegalArgumentException</tt> is
- * thrown if the validation fails.
- * <p>
- * The collections can be accessed by static factory methods. A wrapper
- * is provided for all the java and commons collections.
- * <p>
- * Also included are predicate implementations for True, False, Not,
- * And, Or and instanceof.
+ * <code>PredicateUtils</code> provides reference implementations and utilities
+ * for the Predicate functor interface. The supplied predicates are:
+ * <ul>
+ * <li>Invoker - returns the result of a method call on the input object
+ * <li>InstanceOf - true if the object is an instanceof a class
+ * <li>Equal - true if the object equals() a specified object
+ * <li>Identity - true if the object == a specified object
+ * <li>Null - true if the object is null
+ * <li>NotNull - true if the object is not null
+ * <li>Unique - true if the object has not already been evaluated
+ * <li>And/All - true if all of the predicates are true
+ * <li>Or/Any - true if any of the predicates is true
+ * <li>Either/One - true if only one of the predicate is true
+ * <li>Neither/None - true if none of the predicates are true
+ * <li>Not - true if the predicate is false, and vice versa
+ * <li>Transformer - wraps a Transformer as a Predicate
+ * <li>True - always return true
+ * <li>False - always return false
+ * <li>Exception - always throws an exception
+ * <li>NullIsException/NullIsFalse/NullIsTrue - check for null input
+ * </ul>
+ * All the supplied predicates are Serializable.
+ *
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.14 $ $Date: 2003/11/23 22:05:24 $
  * 
  * @author Stephen Colebourne
+ * @author Ola Berg
  */
 public class PredicateUtils {
-    
-	/**
-	 * A predicate that always returns true
-	 */    
-    public static final Predicate TRUE_PREDICATE = new TruePredicate();
-	/**
-	 * A predicate that always returns false
-	 */    
-    public static final Predicate FALSE_PREDICATE = new FalsePredicate();
-    
-	/**
-	 * Restructive constructor
-	 */
-	private PredicateUtils() {
-	    super();
-	}
 
-	/**
-	 * Create a new Collection that wraps another Collection and validates
-	 * entries. Only objects that pass the test in the predicate can be
-	 * added to the list.
-	 * It is important that the original collection is not used again after
-	 * this call, as it is a backdoor to add non-validated objects.
-	 * @param coll  the collection to wrap and restrict
-	 * @param predicate  the predicate to control what to allow into the collection
-	 */
-	public static Collection predicateCollection(Collection coll, Predicate predicate) {
-         return new PredicateCollection(coll, predicate);
+    /**
+     * This class is not normally instantiated.
+     */
+    public PredicateUtils() {
+        super();
     }
 
-	/**
-	 * Create a new List that wraps another List and validates
-	 * entries. Only objects that pass the test in the predicate can be
-	 * added to the list.
-	 * It is important that the original list is not used again after
-	 * this call, as it is a backdoor to add non-validated objects.
-	 * @param list  the list to wrap and restrict
-	 * @param predicate  the predicate to control what to allow into the list
-	 */
-	public static List predicateList(List list, Predicate predicate) {
-         return new PredicateList(list, predicate);
+    // Simple predicates
+    //-----------------------------------------------------------------------------
+
+    /** 
+     * Gets a Predicate that always throws an exception.
+     * This could be useful during testing as a placeholder.
+     *
+     * @return the predicate
+     */
+    public static Predicate exceptionPredicate() {
+        return ExceptionPredicate.INSTANCE;
     }
 
-	/**
-	 * Create a new Set that wraps another Set and validates
-	 * entries. Only objects that pass the test in the predicate can be
-	 * added to the list.
-	 * It is important that the original set is not used again after
-	 * this call, as it is a backdoor to add non-validated objects.
-	 * @param set  the set to wrap and restrict
-	 * @param predicate  the predicate to control what to allow into the set
-	 */
-	public static Set predicateSet(Set set, Predicate predicate) {
-         return new PredicateSet(set, predicate);
+    /**
+     * Gets a Predicate that always returns true.
+     * 
+     * @return the predicate
+     */
+    public static Predicate truePredicate() {
+        return TruePredicate.INSTANCE;
     }
 
-	/**
-	 * Create a new SortedSet that wraps another SortedSet and validates
-	 * entries. Only objects that pass the test in the predicate can be
-	 * added to the list.
-	 * It is important that the original set is not used again after
-	 * this call, as it is a backdoor to add non-validated objects.
-	 * @param set  the set to wrap and restrict
-	 * @param predicate  the predicate to control what to allow into the set
-	 */
-	public static SortedSet predicateSortedSet(SortedSet set, Predicate predicate) {
-         return new PredicateSortedSet(set, predicate);
+    /**
+     * Gets a Predicate that always returns false.
+     * 
+     * @return the predicate
+     */
+    public static Predicate falsePredicate() {
+        return FalsePredicate.INSTANCE;
     }
 
-	/**
-	 * Create a new Bag that wraps another Bag and validates
-	 * entries. Only objects that pass the test in the predicate can be
-	 * added to the list.
-	 * It is important that the original bag is not used again after
-	 * this call, as it is a backdoor to add non-validated objects.
-	 * @param bag  the bag to wrap and restrict
-	 * @param predicate  the predicate to control what to allow into the bag
-	 */
-	public static Bag predicateBag(Bag bag, Predicate predicate) {
-         return new PredicateBag(bag, predicate);
+    /**
+     * Gets a Predicate that checks if the input object passed in is null.
+     * 
+     * @return the predicate
+     */
+    public static Predicate nullPredicate() {
+        return NullPredicate.INSTANCE;
     }
 
-	/**
-	 * Create a new SortedBag that wraps another SortedBag and validates
-	 * entries. Only objects that pass the test in the predicate can be
-	 * added to the list.
-	 * It is important that the original bag is not used again after
-	 * this call, as it is a backdoor to add non-validated objects.
-	 * @param bag  the bag to wrap and restrict
-	 * @param predicate  the predicate to control what to allow into the bag
-	 */
-	public static SortedBag predicateSortedBag(SortedBag bag, Predicate predicate) {
-         return new PredicateSortedBag(bag, predicate);
+    /**
+     * Gets a Predicate that checks if the input object passed in is not null.
+     * 
+     * @return the predicate
+     */
+    public static Predicate notNullPredicate() {
+        return NotNullPredicate.INSTANCE;
     }
 
-	/**
-	 * Create a new Map that wraps another Map and validates
-	 * entries. Only objects that pass the test in the predicate can be
-	 * added to the list.
-	 * It is important that the original map is not used again after
-	 * this call, as it is a backdoor to add non-validated objects.
-	 * @param map  the map to wrap and restrict
-	 * @param keyPredicate  the predicate to control what to allow into the bag
-	 * @param valuePredicate  the predicate to control what to allow into the bag
-	 */
-	public static Map predicateMap(Map map, Predicate keyPredicate, Predicate valuePredicate) {
-         return new PredicateMap(map, keyPredicate, valuePredicate);
+    /**
+     * Creates a Predicate that checks if the input object is equal to the
+     * specified object using equals().
+     * 
+     * @param value  the value to compare against
+     * @return the predicate
+     */
+    public static Predicate equalPredicate(Object value) {
+        return EqualPredicate.getInstance(value);
     }
 
-	/**
-	 * Create a new SortedMap that wraps another SortedMap and validates
-	 * entries. Only objects that pass the test in the predicate can be
-	 * added to the list.
-	 * It is important that the original map is not used again after
-	 * this call, as it is a backdoor to add non-validated objects.
-	 * @param map  the map to wrap and restrict
-	 * @param keyPredicate  the predicate to control what to allow into the bag
-	 * @param valuePredicate  the predicate to control what to allow into the bag
-	 */
-	public static SortedMap predicateSortedMap(SortedMap map, Predicate keyPredicate, Predicate valuePredicate) {
-         return new PredicateSortedMap(map, keyPredicate, valuePredicate);
-    }
-
-	/**
-	 * Create a new predicate that returns true only if both of the passed
-	 * in predicates are true.
-	 * @param predicate1  the first predicate
-	 * @param predicate2  the second predicate
-	 */
-	public static Predicate andPredicate(Predicate predicate1, Predicate predicate2) {
-         return new AndPredicate(predicate1, predicate2);
-    }
-
-	/**
-	 * Create a new predicate that returns true if either of the passed
-	 * in predicates are true.
-	 * @param predicate1  the first predicate
-	 * @param predicate2  the second predicate
-	 */
-	public static Predicate orPredicate(Predicate predicate1, Predicate predicate2) {
-         return new OrPredicate(predicate1, predicate2);
-    }
-
-	/**
-	 * Create a new predicate that returns true if the passed in predicate
-	 * returns false and vice versa.
-	 * @param predicate  the predicate to not
-	 */
-	public static Predicate notPredicate(Predicate predicate) {
-         return new NotPredicate(predicate);
-    }
-
-	/**
-	 * Create a new predicate that checks if the object passed in is of
-	 * a particular type.
-	 * @param type  the type to check for
-	 */
-	public static Predicate instanceofPredicate(Class type) {
-         return new InstanceofPredicate(type);
-    }
-
-	/**
-	 * Perform the validation against the predicate.
-	 * @param object  object to be validated
-	 */	
-	private static void validate(Predicate predicate, Object object) {
-	    if (predicate.evaluate(object) == false) {
-	        throw new IllegalArgumentException("Predicate validation: " +
-	        	object + " cannot be added to the list");
-	    }
-	}
-
-	/**
-	 * PredicateCollection validates a Collection
-	 */
-	private static class PredicateCollection 
-			implements Collection, Serializable {
-			    
-        /** The predicate to control entry into the collection */
-        protected final Predicate iPredicate;
-        /** The collection being wrapped */
-        protected final Collection iCollection;
-			    
-    	/**
-    	 * Create a new PredicateCollection that wraps another collection.
-    	 * It is important that the original collection is not used again
-    	 * after this call, as it is a backdoor to add non-validated objects.
-    	 * @param coll  the collection to wrap and restrict
-    	 * @param predicate  the predicate used to validate entry into the list
-    	 */
-    	public PredicateCollection(Collection coll, Predicate predicate) {
-    	    super();
-    	    if (coll == null) {
-    	        throw new IllegalArgumentException("Collection to be wrapped must not be null");
-    	    }
-    	    if (predicate == null) {
-    	        throw new IllegalArgumentException("Predicate must not be null");
-    	    }
-    	    iPredicate = predicate;
-    	    iCollection = coll;
-            Iterator it = iCollection.iterator();
-            while (it.hasNext()) {
-                validate(iPredicate, it.next());
-            }
-    	}
-    
-        /**
-         * Add an item to the end of the list. If the item is not an instance
-         * of the list's validation type an exception is thrown. The state of
-         * the list will be unaltered if an exception is thrown.
-         * @see Collection#add(Object)
-         * @param item  the item to add
-         * @throws IllegalArgumentException if the object is not of a valid type
-         */
-        public boolean add(Object item) {
-            validate(iPredicate, item);
-            return iCollection.add(item);
-        }
-    
-        /**
-         * Add a collection to the end of the list. If any of the items in the
-         * collection is not an instance of the list's validation type an
-         * exception is thrown. The state of the list will be unaltered if an
-         * exception is thrown.
-         * @see Collection#addAll(Collection)
-         * @param coll  the collection to add
-         * @throws IllegalArgumentException if the object is not of a valid type
-         */
-        public boolean addAll(Collection coll) {
-            Iterator it = coll.iterator();
-            while (it.hasNext()) {
-    	        validate(iPredicate, it.next());
-            }
-            return iCollection.addAll(coll);
-        }
-    
-        /**
-         * @see Collection#iterator()
-         */
-        public Iterator iterator() {
-            return iCollection.iterator();
-        }
-
-        /**
-         * @see Collection#size()
-         */
-        public int size() {
-            return iCollection.size();
-        }
-
-        /**
-         * @see Collection#clear()
-         */
-        public void clear() {
-            iCollection.clear();
-        }
-
-        /**
-         * @see Collection#isEmpty()
-         */
-        public boolean isEmpty() {
-            return iCollection.isEmpty();
-        }
-
-        /**
-         * @see Collection#contains(Object)
-         */
-        public boolean contains(Object item) {
-            return iCollection.contains(item);
-        }
-
-        /**
-         * @see Collection#containsAll(Collection)
-         */
-        public boolean containsAll(Collection coll) {
-            return iCollection.containsAll(coll);
-        }
-
-        /**
-         * @see Collection#remove(Object)
-         */
-        public boolean remove(Object item) {
-            return iCollection.remove(item);
-        }
-
-        /**
-         * @see Collection#removeAll(Collection)
-         */
-        public boolean removeAll(Collection coll) {
-            return iCollection.remove(coll);
-        }
-
-        /**
-         * @see Collection#retainAll(Collection)
-         */
-        public boolean retainAll(Collection coll) {
-            return iCollection.retainAll(coll);
-        }
-
-        /**
-         * @see Collection#toArray()
-         */
-        public Object[] toArray() {
-            return iCollection.toArray();
-        }
-
-        /**
-         * @see Collection#toArray(Object[])
-         */
-        public Object[] toArray(Object[] array) {
-            return iCollection.toArray(array);
-        }
-
-        /**
-         * @see Object#equals(Object)
-         */
-        public boolean equals(Object obj) {
-            return iCollection.equals(obj);
-        }
-    
-        /**
-         * @see Object#hashCode()
-         */
-        public int hashCode() {
-            return iCollection.hashCode();
-        }
-    
-        /**
-         * @see Object#toString()
-         */
-        public String toString() {
-            return iCollection.toString();
-        }
-	}
-	
-	/**
-	 * PredicateList validates a List
-	 */
-	private static class PredicateList
-			extends PredicateCollection
-			implements List {
-	
-    	/**
-    	 * Create a new PredicateList that wraps another list.
-    	 * It is important that the original list is not used again after
-    	 * this call, as it is a backdoor to add non-validated objects.
-    	 * @param list  the list to wrap and restrict
-    	 * @param predicate  the predicate used to validate entry into the list
-    	 */
-    	public PredicateList(List list, Predicate predicate) {
-    	    super(list, predicate);
-    	}
-    	
-        /**
-         * Add an item to the list at the specified index. If the item is
-         * not an instance of the list's validation type an exception is
-         * thrown. The state of the list will be unaltered if an exception 
-         * is thrown.
-         * @see List#add(int, Object)
-         * @param index  the index at which to add the item
-         * @param item  the item to add
-         * @throws IllegalArgumentException if the object is not of a valid type
-         */
-        public void add(int index, Object item) {
-            validate(iPredicate, item);
-            ((List) iCollection).add(index, item);
-        }
-    
-        /**
-         * Add a collection at the specified index. If any of the items in the
-         * collection is not an instance of the list's validation type an
-         * exception is thrown. The state of the list will be unaltered if an
-         * exception is thrown.
-         * @see List#addAll(int, Collection)
-         * @param index  the index at which to add the collection
-         * @param coll  the collection to add
-         * @throws IllegalArgumentException if the object is not of a valid type
-         */
-        public boolean addAll(int index, Collection coll) {
-            Iterator it = coll.iterator();
-            while (it.hasNext()) {
-    	        validate(iPredicate, it.next());
-            }
-            return ((List) iCollection).addAll(index, coll);
-        }
-    
-        /**
-         * Set the value at the specified index. If the item is not an instance
-         * of the list's validation type an exception is thrown. The state of
-         * the list will be unaltered if an exception is thrown.
-         * @see List#set(int, Object)
-         * @param index  the index to change
-         * @param item  the item to change to
-         * @throws IllegalArgumentException if the object is not of a valid type
-         */
-        public Object set(int index, Object item) {
-            validate(iPredicate, item);
-            return ((List) iCollection).set(index, item);
-        }
-        
-        /**
-         * @see List#listIterator()
-         */
-        public ListIterator listIterator() {
-            return new PredicateListIterator(((List) iCollection).listIterator(), iPredicate);
-        }
-    
-        /**
-         * @see List#listIterator(int)
-         */
-        public ListIterator listIterator(int index) {
-            return new PredicateListIterator(((List) iCollection).listIterator(index), iPredicate);
-        }
-    
-        /**
-         * @see List#subList(int, int)
-         */
-        public List subList(int fromIndex, int toIndex) {
-            return new PredicateList(((List) iCollection).subList(fromIndex, toIndex), iPredicate);
-        }
-
-        /**
-         * @see List#get(int)
-         */
-        public Object get(int index) {
-            return ((List) iCollection).get(index);
-        }
-    
-        /**
-         * @see List#indexOf(Object)
-         */
-        public int indexOf(Object item) {
-            return ((List) iCollection).indexOf(item);
-        }
-    
-        /**
-         * @see List#lastIndexOf(Object)
-         */
-        public int lastIndexOf(Object item) {
-            return ((List) iCollection).lastIndexOf(item);
-        }
-    
-        /**
-         * @see List#remove(int)
-         */
-        public Object remove(int index) {
-            return ((List) iCollection).remove(index);
-        }
-	}
-
-	/**
-	 * PredicateListIterator handles the list iterator for PredicateList
-	 */
-	private static class PredicateListIterator implements ListIterator {
-	    
-	    private final ListIterator iIterator;
-	    private final Predicate iPredicate;
-	    
-	    /**
-	     * Constructor
-	     */
-	    private PredicateListIterator(ListIterator iterator, Predicate predicate) {
-	        super();
-	        iIterator = iterator;
-	        iPredicate = predicate;
-		}
-		
-        /**
-         * @see Iterator#hasNext()
-         */
-        public boolean hasNext() {
-            return iIterator.hasNext();
-        }
-
-        /**
-         * @see ListIterator#hasPrevious()
-         */
-        public boolean hasPrevious() {
-            return iIterator.hasPrevious();
-        }
-
-        /**
-         * @see Iterator#next()
-         */
-        public Object next() {
-            return iIterator.next();
-        }
-
-        /**
-         * @see ListIterator#nextIndex()
-         */
-        public int nextIndex() {
-            return iIterator.nextIndex();
-        }
-
-        /**
-         * @see ListIterator#previous()
-         */
-        public Object previous() {
-            return iIterator.previous();
-        }
-
-        /**
-         * @see ListIterator#previousIndex()
-         */
-        public int previousIndex() {
-            return iIterator.previousIndex();
-        }
-
-        /**
-         * @see Iterator#remove()
-         */
-        public void remove() {
-            iIterator.remove();
-        }
-
-        /**
-         * @see ListIterator#add(Object)
-         */
-        public void add(Object item) {
-	        validate(iPredicate, item);
-            iIterator.add(item);
-        }
-
-        /**
-         * @see ListIterator#set(Object)
-         */
-        public void set(Object item) {
-	        validate(iPredicate, item);
-            iIterator.set(item);
-        }
-	}
-	
-	/**
-	 * PredicateSet validates a Set
-	 */
-	private static class PredicateSet
-			extends PredicateCollection
-			implements Set {
-	
-    	/**
-    	 * Create a new PredicateSet that wraps another Set.
-    	 * It is important that the original set is not used again after
-    	 * this call, as it is a backdoor to add non-validated objects.
-    	 * @param set  the set to wrap and restrict
-    	 * @param predicate  the predicate used to validate entry into the set
-    	 */
-    	public PredicateSet(Set set, Predicate predicate) {
-    	    super(set, predicate);
-    	}
-	}
-	
-	/**
-	 * PredicateSet validates a SortedSet
-	 */
-	private static class PredicateSortedSet
-			extends PredicateSet
-			implements SortedSet {
-	
-    	/**
-    	 * Create a new PredicateSortedSet that wraps another SortedSet.
-    	 * It is important that the original SortedSet is not used again after
-    	 * this call, as it is a backdoor to add non-validated objects.
-    	 * @param set  the set to wrap and restrict
-    	 * @param predicate  the predicate used to validate entry into the SortedSet
-    	 */
-    	public PredicateSortedSet(SortedSet set, Predicate predicate) {
-    	    super(set, predicate);
-    	}
-    	
-        /**
-         * @see SortedSet#headSet(Object)
-         */
-        public SortedSet headSet(Object toElement) {
-            return new PredicateSortedSet(((SortedSet) iCollection).headSet(toElement), iPredicate);
-        }
-    
-        /**
-         * @see SortedSet#subSet(Object, Object)
-         */
-        public SortedSet subSet(Object fromElement, Object toElement) {
-            return new PredicateSortedSet(((SortedSet) iCollection).subSet(fromElement, toElement), iPredicate);
-        }
-    
-        /**
-         * @see SortedSet#tailSet(Object)
-         */
-        public SortedSet tailSet(Object fromElement) {
-            return new PredicateSortedSet(((SortedSet) iCollection).tailSet(fromElement), iPredicate);
-        }
-    
-        /**
-         * @see SortedSet#first()
-         */
-        public Object first() {
-            return ((SortedSet) iCollection).first();
-        }
-    
-        /**
-         * @see SortedSet#last()
-         */
-        public Object last() {
-            return ((SortedSet) iCollection).last();
-        }
-        
-        /**
-         * @see SortedSet#comparator()
-         */
-        public Comparator comparator() {
-            return ((SortedSet) iCollection).comparator();
-        }
-	}
-	
-	/**
-	 * PredicateBag validates a Bag
-	 */
-	private static class PredicateBag
-			extends PredicateCollection
-			implements Bag {
-	
-    	/**
-    	 * Create a new PredicateBag that wraps another Bag.
-    	 * It is important that the original Bag is not used again after
-    	 * this call, as it is a backdoor to add non-validated objects.
-    	 * @param bag  the bag to wrap and restrict
-    	 * @param predicate  the predicate used to validate entry into the Bag
-    	 */
-    	public PredicateBag(Bag bag, Predicate predicate) {
-    	    super(bag, predicate);
-    	}
-    	
-        /**
-         * @see Bag#add(Object, int)
-         */
-        public boolean add(Object item, int i) {
-            validate(iPredicate, item);
-            return ((Bag) iCollection).add(item, i);
-        }
-
-        /**
-         * @see Bag#getCount(Object)
-         */
-        public int getCount(Object item) {
-            return ((Bag) iCollection).getCount(item);
-        }
-
-        /**
-         * @see Bag#remove(Object, int)
-         */
-        public boolean remove(Object item, int i) {
-            return ((Bag) iCollection).remove(item, i);
-        }
-
-        /**
-         * @see Bag#uniqueSet()
-         */
-        public Set uniqueSet() {
-            return ((Bag) iCollection).uniqueSet();
-        }
-	}
-	
-	/**
-	 * PredicateSortedBag validates a SortedBag
-	 */
-	private static class PredicateSortedBag
-			extends PredicateBag
-			implements SortedBag {
-	
-    	/**
-    	 * Create a new PredicateSortedBag that wraps another SortedBag.
-    	 * It is important that the original SortedBag is not used again after
-    	 * this call, as it is a backdoor to add non-validated objects.
-    	 * @param bag  the bag to wrap and restrict
-    	 * @param predicate  the predicate used to validate entry into the SortedBag
-    	 */
-    	public PredicateSortedBag(SortedBag bag, Predicate predicate) {
-    	    super(bag, predicate);
-    	}
-    	
-        /**
-         * @see SortedBag#comparator()
-         */
-        public Comparator comparator() {
-            return ((SortedBag) iCollection).comparator();
-        }
-
-        /**
-         * @see SortedBag#first()
-         */
-        public Object first() {
-            return ((SortedBag) iCollection).first();
-        }
-
-        /**
-         * @see SortedBag#last()
-         */
-        public Object last() {
-            return ((SortedBag) iCollection).last();
-        }
-	}
-	
-	/**
-	 * PredicateBag validates a Map
-	 */
-	private static class PredicateMap
-			implements Map {
-	
-        /** The predicate to control entry into the map */
-        protected final Predicate iKeyPredicate;
-        /** The predicate to control entry into the map */
-        protected final Predicate iValuePredicate;
-        /** The list being wrapped */
-        protected final Map iMap;
-			    
-    	/**
-    	 * Create a new PredicateMap that wraps another Map.
-    	 * It is important that the original Map is not used again after
-    	 * this call, as it is a backdoor to add non-validated objects.
-    	 * @param map  the map to wrap and restrict
-    	 * @param keyPredicate  the predicate used to validate entry into the SortedMap
-    	 * @param valuePredicate  the predicate used to validate entry into the SortedMap
-    	 */
-    	public PredicateMap(Map map, Predicate keyPredicate, Predicate valuePredicate) {
-    	    super();
-    	    if (map == null) {
-    	        throw new IllegalArgumentException("Collection to be wrapped must not be null");
-    	    }
-    	    if (keyPredicate == null) {
-    	        throw new IllegalArgumentException("Key Predicate must not be null");
-    	    }
-    	    if (valuePredicate == null) {
-    	        throw new IllegalArgumentException("Value Predicate must not be null");
-    	    }
-    	    iKeyPredicate = keyPredicate;
-    	    iValuePredicate = valuePredicate;
-    	    iMap = map;
-    	    for (Iterator it = iMap.keySet().iterator(); it.hasNext();) {
-                validate(iKeyPredicate, it.next());
-            }
-    	    for (Iterator it = iMap.values().iterator(); it.hasNext();) {
-                validate(iValuePredicate, it.next());
-            }
-    	}
-    	
-        /**
-         * @see Map#put(Object, Object)
-         */
-        public Object put(Object key, Object value) {
-            validate(iKeyPredicate, key);
-            validate(iValuePredicate, value);
-            return iMap.put(key, value);
-        }
-
-        /**
-         * @see Map#putAll(Map)
-         */
-        public void putAll(Map map) {
-            for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
-                Map.Entry entry = (Map.Entry) it.next();
-	            validate(iKeyPredicate, entry.getKey());
-    	        validate(iValuePredicate, entry.getValue());
-            }
-            iMap.putAll(map);
-        }
-
-        /**
-         * @see Map#entrySet()
-         */
-        public Set entrySet() {
-            return new PredicateMapEntrySet(iMap.entrySet(), iValuePredicate);
-        }
-
-        /**
-         * @see Map#keySet()
-         */
-        public Set keySet() {
-            return new PredicateSet(iMap.keySet(), iKeyPredicate);
-        }
-
-        /**
-         * @see Map#values()
-         */
-        public Collection values() {
-            return new PredicateCollection(iMap.values(), iValuePredicate);
-        }
-
-        /**
-         * @see Map#get(Object)
-         */
-        public Object get(Object key) {
-            return iMap.get(key);
-        }
-
-        /**
-         * @see Map#size()
-         */
-        public int size() {
-            return iMap.size();
-        }
-
-        /**
-         * @see Map#clear()
-         */
-        public void clear() {
-            iMap.clear();
-        }
-
-        /**
-         * @see Map#isEmpty()
-         */
-        public boolean isEmpty() {
-            return iMap.isEmpty();
-        }
-
-        /**
-         * @see Map#containsKey(Object)
-         */
-        public boolean containsKey(Object key) {
-            return iMap.containsKey(key);
-        }
-
-        /**
-         * @see Map#containsValue(Object)
-         */
-        public boolean containsValue(Object value) {
-            return iMap.containsValue(value);
-        }
-
-        /**
-         * @see Map#remove(Object)
-         */
-        public Object remove(Object key) {
-            return iMap.remove(key);
-        }
-
-        /**
-         * @see Object#equals(Object)
-         */
-        public boolean equals(Object obj) {
-            return iMap.equals(obj);
-        }
-    
-        /**
-         * @see Object#hashCode()
-         */
-        public int hashCode() {
-            return iMap.hashCode();
-        }
-    
-        /**
-         * @see Object#toString()
-         */
-        public String toString() {
-            return iMap.toString();
-        }
-	}   
-	
-	/**
-	 * PredicateSortedBag validates a SortedMap
-	 */
-	private static class PredicateSortedMap
-			extends PredicateMap
-			implements SortedMap {
-	
-    	/**
-    	 * Create a new PredicateSortedMap that wraps another SortedMap.
-    	 * It is important that the original SortedBag is not used again after
-    	 * this call, as it is a backdoor to add non-validated objects.
-    	 * @param bag  the bag to wrap and restrict
-    	 * @param keyPredicate  the predicate used to validate entry into the SortedMap
-    	 * @param valuePredicate  the predicate used to validate entry into the SortedMap
-    	 */
-    	public PredicateSortedMap(SortedMap map, Predicate keyPredicate, Predicate valuePredicate) {
-    	    super(map, keyPredicate, valuePredicate);
-    	}
-    	
-        /**
-         * @see SortedMap#comparator()
-         */
-        public Comparator comparator() {
-            return ((SortedMap) iMap).comparator();
-        }
-
-        /**
-         * @see SortedMap#firstKey()
-         */
-        public Object firstKey() {
-            return ((SortedMap) iMap).firstKey();
-        }
-
-        /**
-         * @see SortedMap#lastKey()
-         */
-        public Object lastKey() {
-            return ((SortedMap) iMap).lastKey();
-        }
-
-        /**
-         * @see SortedMap#headMap(Object)
-         */
-        public SortedMap headMap(Object toKey) {
-            return new PredicateSortedMap(
-            	((SortedMap) iMap).headMap(toKey), iKeyPredicate, iValuePredicate);
-        }
-
-        /**
-         * @see SortedMap#tailMap(Object)
-         */
-        public SortedMap tailMap(Object fromKey) {
-            return new PredicateSortedMap(
-            	((SortedMap) iMap).tailMap(fromKey), iKeyPredicate, iValuePredicate);
-        }
-
-        /**
-         * @see SortedMap#subMap(Object, Object)
-         */
-        public SortedMap subMap(Object fromKey, Object toKey) {
-            return new PredicateSortedMap(
-            	((SortedMap) iMap).subMap(fromKey, toKey), iKeyPredicate, iValuePredicate);
-        }
-	}
-	
-	/**
-	 * Map helper class to access iterator
-	 */
-	public static class PredicateMapEntrySet
-	        extends AbstractSet {
-	    private final Set iSet;
-        private final Predicate iValuePredicate;
-	    
-	    /**
-	     * Constructor
-	     */
-	    private PredicateMapEntrySet(Set set, Predicate predicate) {
-	        super();
-	        iSet = set;
-	        iValuePredicate = predicate;
-	    }
-            
-        /**
-         * @see Collection#clear()
-         */
-        public void clear() {
-            iSet.clear();
-        }
-
-        /**
-         * @see Collection#iterator()
-         */
-        public Iterator iterator() {
-            return new PredicateMapEntrySetIterator(iSet.iterator(), iValuePredicate);
-        }
-
-        /**
-         * @see Collection#remove(Object)
-         */
-        public boolean remove(Object obj) {
-            return iSet.remove(obj);
-        }
-
-        /**
-         * @see Collection#size()
-         */
-        public int size() {
-            return iSet.size();
-        }
-
-	}
-	
-	/**
-	 * Iterator to protect the setValue method of Map.Entry
-	 */
-    public static class PredicateMapEntrySetIterator
-    		implements Iterator {
-	    private final Iterator iIterator;
-        private final Predicate iValuePredicate;
-	    
-	    /**
-	     * Constructor
-	     */
-	    private PredicateMapEntrySetIterator(Iterator iterator, Predicate predicate) {
-	        super();
-	        iIterator = iterator;
-	        iValuePredicate = predicate;
-	    }
-            
-        /**
-         * @see Iterator#next()
-         */
-        public Object next() {
-            Object obj = iIterator.next();
-            return new PredicateMapEntry((Map.Entry) obj, iValuePredicate);
-        }
-
-        /**
-         * @see Iterator#hasNext()
-         */
-        public boolean hasNext() {
-            return iIterator.hasNext();
-        }
-
-        /**
-         * @see Iterator#remove()
-         */
-        public void remove() {
-            iIterator.remove();
-        }
-
-    }
-    
-	/**
-	 * MapEntry to protect the setValue method
-	 */
-    public static class PredicateMapEntry
-    		implements Map.Entry {
-	    private final Map.Entry iEntry;
-        private final Predicate iValuePredicate;
-        
-	    /**
-	     * Constructor
-	     */
-	    private PredicateMapEntry(Map.Entry entry, Predicate predicate) {
-	        super();
-	        iEntry = entry;
-	        iValuePredicate = predicate;
-	    }
-	    
-        /**
-         * @see java.util.Map.Entry#getKey()
-         */
-        public Object getKey() {
-            return iEntry.getKey();
-        }
-
-        /**
-         * @see java.util.Map.Entry#getValue()
-         */
-        public Object getValue() {
-            return iEntry.getValue();
-        }
-
-        /**
-         * @see java.util.Map.Entry#setValue(Object)
-         */
-        public Object setValue(Object object) {
-            validate(iValuePredicate, object);
-            return iEntry.setValue(object);
-        }
-
-    }
-    
-	/**
-	 * True predicate implementation
-	 */    
-    private static class TruePredicate implements Predicate {
-        private TruePredicate() {
-            super();
-        }
-	    public boolean evaluate(Object input) {
-	        return true;
-	    }
-    }
-    
-	/**
-	 * False predicate implementation
-	 */    
-    private static class FalsePredicate implements Predicate {
-        private FalsePredicate() {
-            super();
-        }
-	    public boolean evaluate(Object input) {
-	        return false;
-	    }
-    }
-    
-	/**
-	 * And predicate implementation
-	 */    
-    private static class AndPredicate implements Predicate {
-        private final Predicate iPredicate1;
-        private final Predicate iPredicate2;
-        
-        /**
-         * Constructor
-         */
-        private AndPredicate(Predicate predicate1, Predicate predicate2) {
-            super();
-    	    if ((predicate1 == null) || (predicate2 == null)) {
-    	        throw new IllegalArgumentException("Predicate must not be null");
-    	    }
-            iPredicate1 = predicate1;
-            iPredicate2 = predicate2;
-        }
-	    public boolean evaluate(Object input) {
-	        return iPredicate1.evaluate(input) && iPredicate2.evaluate(input);
-	    }
-    }
-    
-	/**
-	 * Or predicate implementation
-	 */    
-    private static class OrPredicate implements Predicate {
-        private final Predicate iPredicate1;
-        private final Predicate iPredicate2;
-        
-        /**
-         * Constructor
-         */
-        private OrPredicate(Predicate predicate1, Predicate predicate2) {
-            super();
-    	    if ((predicate1 == null) || (predicate2 == null)) {
-    	        throw new IllegalArgumentException("Predicate must not be null");
-    	    }
-            iPredicate1 = predicate1;
-            iPredicate2 = predicate2;
-        }
-	    public boolean evaluate(Object input) {
-	        return iPredicate1.evaluate(input) || iPredicate2.evaluate(input);
-	    }
-    }
-    
-	/**
-	 * Not predicate implementation
-	 */    
-    private static class NotPredicate implements Predicate {
-        private final Predicate iPredicate;
-        
-        /**
-         * Constructor
-         */
-        private NotPredicate(Predicate predicate) {
-            super();
-    	    if (predicate == null) {
-    	        throw new IllegalArgumentException("Predicate must not be null");
-    	    }
-            iPredicate = predicate;
-        }
-	    public boolean evaluate(Object input) {
-	        return ! iPredicate.evaluate(input);
-	    }
+    /**
+     * Creates a Predicate that checks if the input object is equal to the
+     * specified object by identity.
+     * 
+     * @param value  the value to compare against
+     * @return the predicate
+     */
+    public static Predicate identityPredicate(Object value) {
+        return IdentityPredicate.getInstance(value);
     }
     
     /**
-     * Predicate that checks the type of an object
+     * Creates a Predicate that checks if the object passed in is of
+     * a particular type, using instanceof. A <code>null</code> input
+     * object will return <code>false</code>.
+     * 
+     * @param type  the type to check for, may not be null
+     * @return the predicate
+     * @throws IllegalArgumentException if the class is null
      */
-    public static class InstanceofPredicate implements Predicate {
-        private final Class iType;
-    
-    	/**
-    	 * Constructor
-    	 * @param type  the type to validate for
-    	 */
-    	public InstanceofPredicate(Class type) {
-    	    super();
-    	    if (type == null) {
-    	        throw new IllegalArgumentException("Type to be checked for must not be null");
-    	    }
-    	    iType = type;
-    	}
-    
-        /**
-         * Validate the input object to see if it is an instanceof the 
-         * type of the predicate.
-         * @param object  the object to be checked
-         * @return true if it is an instance
-         */
-        public boolean evaluate(Object object) {
-            return iType.isInstance(object);
-        }
+    public static Predicate instanceofPredicate(Class type) {
+        return InstanceofPredicate.getInstance(type);
     }
-}
 
+    /**
+     * Creates a Predicate that returns true the first time an object is
+     * encountered, and false if the same object is received 
+     * again. The comparison is by equals(). A <code>null</code> input object
+     * is accepted and will return true the first time, and false subsequently
+     * as well.
+     * 
+     * @return the predicate
+     */
+    public static Predicate uniquePredicate() {
+        // must return new instance each time
+        return UniquePredicate.getInstance();
+    }
+
+    /**
+     * Creates a Predicate that invokes a method on the input object.
+     * The method must return either a boolean or a non-null Boolean,
+     * and have no parameters. If the input object is null, a 
+     * PredicateException is thrown.
+     * <p>
+     * For example, <code>PredicateUtils.invokerPredicate("isEmpty");</code>
+     * will call the <code>isEmpty</code> method on the input object to 
+     * determine the predicate result.
+     * 
+     * @param methodName  the method name to call on the input object, may not be null
+     * @return the predicate
+     * @throws IllegalArgumentException if the methodName is null.
+     */
+    public static Predicate invokerPredicate(String methodName){
+        // reuse transformer as it has caching - this is lazy really, should have inner class here
+        return asPredicate(TransformerUtils.invokerTransformer(methodName));
+    }
+
+    /**
+     * Creates a Predicate that invokes a method on the input object.
+     * The method must return either a boolean or a non-null Boolean,
+     * and have no parameters. If the input object is null, a 
+     * PredicateException is thrown.
+     * <p>
+     * For example, <code>PredicateUtils.invokerPredicate("isEmpty");</code>
+     * will call the <code>isEmpty</code> method on the input object to 
+     * determine the predicate result.
+     * 
+     * @param methodName  the method name to call on the input object, may not be null
+     * @param paramTypes  the parameter types
+     * @param args  the arguments
+     * @return the predicate
+     * @throws IllegalArgumentException if the method name is null
+     * @throws IllegalArgumentException if the paramTypes and args don't match
+     */
+    public static Predicate invokerPredicate(String methodName, Class[] paramTypes, Object[] args){
+        // reuse transformer as it has caching - this is lazy really, should have inner class here
+        return asPredicate(TransformerUtils.invokerTransformer(methodName, paramTypes, args));
+    }
+
+    // Boolean combinations
+    //-----------------------------------------------------------------------------
+
+    /**
+     * Create a new Predicate that returns true only if both of the specified
+     * predicates are true.
+     * 
+     * @param predicate1  the first predicate, may not be null
+     * @param predicate2  the second predicate, may not be null
+     * @return the <code>and</code> predicate
+     * @throws IllegalArgumentException if either predicate is null
+     */
+    public static Predicate andPredicate(Predicate predicate1, Predicate predicate2) {
+        return AndPredicate.getInstance(predicate1, predicate2);
+    }
+
+    /**
+     * Create a new Predicate that returns true only if all of the specified
+     * predicates are true.
+     * 
+     * @param predicates  an array of predicates to check, may not be null
+     * @return the <code>all</code> predicate
+     * @throws IllegalArgumentException if the predicates array is null
+     * @throws IllegalArgumentException if the predicates array has less than 2 elements
+     * @throws IllegalArgumentException if any predicate in the array is null
+     */
+    public static Predicate allPredicate(Predicate[] predicates) {
+        return AllPredicate.getInstance(predicates);
+    }
+
+    /**
+     * Create a new Predicate that returns true only if all of the specified
+     * predicates are true. The predicates are checked in iterator order.
+     * 
+     * @param predicates  a collection of predicates to check, may not be null
+     * @return the <code>all</code> predicate
+     * @throws IllegalArgumentException if the predicates collection is null
+     * @throws IllegalArgumentException if the predicates collection has less than 2 elements
+     * @throws IllegalArgumentException if any predicate in the collection is null
+     */
+    public static Predicate allPredicate(Collection predicates) {
+        return AllPredicate.getInstance(predicates);
+    }
+
+    /**
+     * Create a new Predicate that returns true if either of the specified
+     * predicates are true.
+     * 
+     * @param predicate1  the first predicate, may not be null
+     * @param predicate2  the second predicate, may not be null
+     * @return the <code>or</code> predicate
+     * @throws IllegalArgumentException if either predicate is null
+     */
+    public static Predicate orPredicate(Predicate predicate1, Predicate predicate2) {
+        return OrPredicate.getInstance(predicate1, predicate2);
+    }
+
+    /**
+     * Create a new Predicate that returns true if any of the specified
+     * predicates are true.
+     * 
+     * @param predicates  an array of predicates to check, may not be null
+     * @return the <code>any</code> predicate
+     * @throws IllegalArgumentException if the predicates array is null
+     * @throws IllegalArgumentException if the predicates array has less than 2 elements
+     * @throws IllegalArgumentException if any predicate in the array is null
+     */
+    public static Predicate anyPredicate(Predicate[] predicates) {
+        return AnyPredicate.getInstance(predicates);
+    }
+
+    /**
+     * Create a new Predicate that returns true if any of the specified
+     * predicates are true. The predicates are checked in iterator order.
+     * 
+     * @param predicates  a collection of predicates to check, may not be null
+     * @return the <code>any</code> predicate
+     * @throws IllegalArgumentException if the predicates collection is null
+     * @throws IllegalArgumentException if the predicates collection has less than 2 elements
+     * @throws IllegalArgumentException if any predicate in the collection is null
+     */
+    public static Predicate anyPredicate(Collection predicates) {
+        return AnyPredicate.getInstance(predicates);
+    }
+
+    /**
+     * Create a new Predicate that returns true if one, but not both, of the
+     * specified predicates are true.
+     * 
+     * @param predicate1  the first predicate, may not be null
+     * @param predicate2  the second predicate, may not be null
+     * @return the <code>either</code> predicate
+     * @throws IllegalArgumentException if either predicate is null
+     */
+    public static Predicate eitherPredicate(Predicate predicate1, Predicate predicate2) {
+        return onePredicate(new Predicate[] { predicate1, predicate2 });
+    }
+
+    /**
+     * Create a new Predicate that returns true if only one of the specified
+     * predicates are true.
+     * 
+     * @param predicates  an array of predicates to check, may not be null
+     * @return the <code>one</code> predicate
+     * @throws IllegalArgumentException if the predicates array is null
+     * @throws IllegalArgumentException if the predicates array has less than 2 elements
+     * @throws IllegalArgumentException if any predicate in the array is null
+     */
+    public static Predicate onePredicate(Predicate[] predicates) {
+        return OnePredicate.getInstance(predicates);
+    }
+
+    /**
+     * Create a new Predicate that returns true if only one of the specified
+     * predicates are true. The predicates are checked in iterator order.
+     * 
+     * @param predicates  a collection of predicates to check, may not be null
+     * @return the <code>one</code> predicate
+     * @throws IllegalArgumentException if the predicates collection is null
+     * @throws IllegalArgumentException if the predicates collection has less than 2 elements
+     * @throws IllegalArgumentException if any predicate in the collection is null
+     */
+    public static Predicate onePredicate(Collection predicates) {
+        return OnePredicate.getInstance(predicates);
+    }
+
+    /**
+     * Create a new Predicate that returns true if neither of the specified 
+     * predicates are true.
+     * 
+     * @param predicate1  the first predicate, may not be null
+     * @param predicate2  the second predicate, may not be null
+     * @return the <code>neither</code> predicate
+     * @throws IllegalArgumentException if either predicate is null
+     */
+    public static Predicate neitherPredicate(Predicate predicate1, Predicate predicate2) {
+        return nonePredicate(new Predicate[] { predicate1, predicate2 });
+    }
+
+    /**
+     * Create a new Predicate that returns true if none of the specified
+     * predicates are true.
+     * 
+     * @param predicates  an array of predicates to check, may not be null
+     * @return the <code>none</code> predicate
+     * @throws IllegalArgumentException if the predicates array is null
+     * @throws IllegalArgumentException if the predicates array has less than 2 elements
+     * @throws IllegalArgumentException if any predicate in the array is null
+     */
+    public static Predicate nonePredicate(Predicate[] predicates) {
+        return NonePredicate.getInstance(predicates);
+    }
+
+    /**
+     * Create a new Predicate that returns true if none of the specified
+     * predicates are true. The predicates are checked in iterator order.
+     * 
+     * @param predicates  a collection of predicates to check, may not be null
+     * @return the <code>none</code> predicate
+     * @throws IllegalArgumentException if the predicates collection is null
+     * @throws IllegalArgumentException if the predicates collection has less than 2 elements
+     * @throws IllegalArgumentException if any predicate in the collection is null
+     */
+    public static Predicate nonePredicate(Collection predicates) {
+        return NonePredicate.getInstance(predicates);
+    }
+
+    /**
+     * Create a new Predicate that returns true if the specified predicate
+     * returns false and vice versa.
+     * 
+     * @param predicate  the predicate to not
+     * @return the <code>not</code> predicate
+     * @throws IllegalArgumentException if the predicate is null
+     */
+    public static Predicate notPredicate(Predicate predicate) {
+        return NotPredicate.getInstance(predicate);
+    }
+
+    // Adaptors
+    //-----------------------------------------------------------------------------
+
+    /**
+     * Create a new Predicate that wraps a Transformer. The Transformer must
+     * return either Boolean.TRUE or Boolean.FALSE otherwise a PredicateException
+     * will be thrown.
+     * 
+     * @param transformer  the transformer to wrap, may not be null
+     * @return the transformer wrapping predicate
+     * @throws IllegalArgumentException if the transformer is null
+     */
+    public static Predicate asPredicate(Transformer transformer) {
+        return TransformerPredicate.getInstance(transformer);
+    }
+
+    // Null handlers
+    //-----------------------------------------------------------------------------
+
+    /**
+     * Gets a Predicate that throws an exception if the input object is null, 
+     * otherwise it calls the specified Predicate. This allows null handling 
+     * behaviour to be added to Predicates that don't support nulls.
+     * 
+     * @param predicate  the predicate to wrap, may not be null
+     * @return the predicate
+     * @throws IllegalArgumentException if the predicate is null.
+     */
+    public static Predicate nullIsExceptionPredicate(Predicate predicate){
+        return NullIsExceptionPredicate.getInstance(predicate);
+    }
+
+    /**
+     * Gets a Predicate that returns false if the input object is null, otherwise
+     * it calls the specified Predicate. This allows null handling behaviour to
+     * be added to Predicates that don't support nulls.
+     * 
+     * @param predicate  the predicate to wrap, may not be null
+     * @return the predicate
+     * @throws IllegalArgumentException if the predicate is null.
+     */
+    public static Predicate nullIsFalsePredicate(Predicate predicate){
+        return NullIsFalsePredicate.getInstance(predicate);
+    }
+
+    /**
+     * Gets a Predicate that returns true if the input object is null, otherwise
+     * it calls the specified Predicate. This allows null handling behaviour to
+     * be added to Predicates that don't support nulls.
+     * 
+     * @param predicate  the predicate to wrap, may not be null
+     * @return the predicate
+     * @throws IllegalArgumentException if the predicate is null.
+     */
+    public static Predicate nullIsTruePredicate(Predicate predicate){
+        return NullIsTruePredicate.getInstance(predicate);
+    }
+
+}

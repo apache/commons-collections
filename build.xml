@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.29 2002/07/25 18:08:05 costin Exp $ -->
+<!-- $Id: build.xml,v 1.56 2004/01/04 18:04:16 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -6,25 +6,70 @@
 
    <!-- patternset describing test classes -->
    <patternset id="patternset-test-classes">
+      <include name="**/AbstractTest*.class"/>
+      <include name="**/BulkTest*.class"/>
       <include name="**/Test*.class"/>
    </patternset>
 
    <!-- patternset describing non test classes -->
    <patternset id="patternset-non-test-classes">
       <include name="**/*.class"/>
+      <exclude name="**/AbstractTest*.class"/>
+      <exclude name="**/BulkTest*.class"/>
       <exclude name="**/Test*.class"/>
    </patternset>
 
    <!-- patternset describing non test source files (*.java, *html, etc.) -->
    <patternset id="patternset-javadocable-sources">
       <include name="**/*"/>
+      <exclude name="**/AbstractTest*.java"/>
+      <exclude name="**/BulkTest*.java"/>
       <exclude name="**/Test*.java"/>
    </patternset>
 
+   <!-- patternset describing test framework classes -->
+   <patternset id="patternset-testframework-classes">
+      <include name="**/AbstractTest*.class"/>
+      <include name="**/BulkTest*.class"/>
+   </patternset>
+
+   <!-- patternset describing test framework classes -->
+   <patternset id="patternset-testframework-source">
+      <include name="**/AbstractTest*.java"/>
+      <include name="**/BulkTest*.java"/>
+   </patternset>
+
+   <!-- patternset describing test framework source not dependent on collections jar -->
+   <patternset id="patternset-testframework-validate">
+      <include name="**/AbstractTestObject.java"/>
+      <include name="**/AbstractTestCollection.java"/>
+      <include name="**/AbstractTestSet.java"/>
+      <include name="**/AbstractTestSortedSet.java"/>
+      <include name="**/AbstractTestList.java"/>
+      <include name="**/AbstractTestMap.java"/>
+      <include name="**/AbstractTestSortedMap.java"/>
+      <include name="**/AbstractTestComparator.java"/>
+      <include name="**/AbstractTestIterator.java"/>
+      <include name="**/AbstractTestListIterator.java"/>
+      <include name="**/AbstractTestMapEntry.java"/>
+      <include name="**/BulkTest.java"/>
+   </patternset>
+
+   <patternset id="patternset-exclude-distros">
+     <exclude name="**/*.gz"/>
+     <exclude name="**/*.zip"/>
+     <exclude name="**/classes/**"/>
+     <exclude name="**/classestestframework/**"/>
+      
+     
+   </patternset>
+      
    <!-- ######################################################### -->
 
    <target name="init">
-      <tstamp/>
+      <tstamp>
+        <format property="year" pattern="yyyy"/>
+      </tstamp>
 
       <!-- read properties from the build.properties, if any -->
       <property name="component-propfile" value="${basedir}/build.properties"/>
@@ -46,14 +91,14 @@
 
       <property name="name" value="commons-collections"/>
       <property name="Name" value="Commons-Collections"/>
-      <property name="Name-Long" value="Jakarta Commons Collections Package"/>
+      <property name="Name-Long" value="Apache Jakarta Commons Collections"/>
 
       <!-- The current version number of this component -->
-      <property name="component.version"       value="2.0"/>
-      <property name="doc.release.notes" value="RELEASE-NOTES-${component.version}.html"/>
+      <property name="component.version" value="2.1"/>
+      <property name="doc.release.notes" value="RELEASE-NOTES.html"/>
       <property name="doc.status" value="STATUS.html"/>
 
-      <property name="test.entry" value="org.apache.commons.collections.TestAll"/>
+      <property name="test.entry" value="org.apache.commons.collections.TestAllPackages"/>
       <property name="test.failonerror" value="true" />
       <property name="test.runner" value="junit.textui.TestRunner" />
 
@@ -65,10 +110,13 @@
       <property name="source.doc" value="${basedir}/doc"/>
       <property name="dest" value="${basedir}/dist"/>
       <property name="dest.classes" value="${dest}/classes"/>
+      <property name="dest.classes.testframework" value="${dest}/classestestframework"/>
       <property name="dest.doc" value="${dest}/docs"/>
       <property name="dest.doc.api" value="${dest.doc}/api"/>
+      <property name="dest.doc.testframework" value="${dest.doc}/testframework"/>
       <property name="dest.jardir" value="${dest}"/>
       <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
+      <property name="dest.jardir.testframework.jar" value="${dest.jardir}/${name}-testframework.jar"/>
       
       <property name="bin.name" value="${name}-${component.version}"/>
       <property name="dest.bin.tar" value="${dest}/${bin.name}.tar"/>
@@ -76,19 +124,16 @@
       <property name="dest.bin.zip" value="${dest}/${bin.name}.zip"/>
       
       <property name="src.name" value="${bin.name}-src"/>
-      <property name="dest.src.tar"    value="${dest}/${src.name}.tar"/>
-      <property name="dest.src.tar.gz"    value="${dest}/${src.name}.tar.gz"/>
-      <property name="dest.src.zip" value="${dest}/${src.name}.zip"/>
-      
-      <patternset id="patternset-exclude-distros">
-        <exclude name="**/${bin.name}.tar.gz"/>
-        <exclude name="**/${bin.name}.zip"/>
-        <exclude name="**/${src.name}.tar.gz"/>
-        <exclude name="**/${src.name}.zip"/>
-      </patternset>
-      
+      <property name="dest.src.tar" value="${dest}/${src.name}.tar"/>
+      <property name="dest.src.tar.gz" value="${dest}/${src.name}.tar.gz"/>
+      <property name="dest.src.zip" value="${dest}/${src.name}.zip"/>      
+
+      <property name="javac.debug" value="true"/>
+      <property name="javac.deprecation" value="true"/>
+      <property name="javac.optimize" value="true"/>
+
       <!-- set the cvs.root property in the build.properties file -->
-      <property name="cvs.tag" value="COLLECTIONS_2_0"/>      
+      <property name="cvs.tag" value="COLLECTIONS_2_1"/>      
       
       <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
       <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->
@@ -140,7 +185,9 @@
 
    <!-- ######################################################### -->
 
-   <target name="doc" depends="init,doc-top,doc-copy,doc-javadoc" description="generates javadocs and other documentation">
+   <target name="doc"
+           depends="init,doc-top,doc-copy,doc-javadoc,doc-javadoc-testframework"
+           description="generates javadocs and other documentation">
    </target>
 
    <target name="doc-top" depends="init">
@@ -173,11 +220,11 @@
                destdir="${dest.doc.api}"
                windowtitle="${Name-Long}"
                doctitle="${Name-Long}"
-               bottom="&lt;small&gt;Copyright &amp;copy; 2001-2002 Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
+               bottom="&lt;small&gt;Copyright &amp;copy; 2001-${year} Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
                protected="true"
                version="true"
                author="true"
-               overview="${source.src.java}/org/apache/commons/collections/package.html"
+               overview="${source.src.java}/org/apache/commons/collections/overview.html"
                splitindex="false"
                nodeprecated="true"
                nodeprecatedlist="true"
@@ -186,7 +233,37 @@
                nohelp="true"
                nonavbar="false"
                serialwarn="false">
-          <group title="Jakarta-commons Collections" packages="org.apache.commons.collections"/>
+          <link href="http://java.sun.com/j2se/1.3/docs/api/"/>
+      </javadoc>
+      <delete dir="${workdir}"/>
+   </target>
+
+   <target name="doc-javadoc-testframework" depends="init" if="available-src-test">
+      <!-- copy all the relevant sources out to the work directory and javadoc that -->
+      <mkdir dir="${workdir}"/>
+      <copy todir="${workdir}">
+        <fileset dir="${source.src}/test">
+          <patternset refid="patternset-testframework-source"/>
+        </fileset>
+      </copy>
+      <mkdir dir="${dest.doc.testframework}"/>
+      <javadoc packagenames="org.*"
+               sourcepath="${workdir}"
+               destdir="${dest.doc.testframework}"
+               windowtitle="Apache Jakarta Commons Collections Test Framework"
+               doctitle="Apache Jakarta Commons Collections Test Framework"
+               bottom="&lt;small&gt;Copyright &amp;copy; 2001-${year} Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
+               version="true"
+               author="true"
+               overview="${source.src.test}/org/apache/commons/collections/overview.html"
+               splitindex="false"
+               nodeprecated="true"
+               nodeprecatedlist="true"
+               notree="true"
+               noindex="true"
+               nohelp="true"
+               nonavbar="false"
+               serialwarn="false">
           <link href="http://java.sun.com/products/jdk/1.3/docs/api"/>
       </javadoc>
       <delete dir="${workdir}"/>
@@ -201,9 +278,9 @@
       <javac destdir="${dest.classes}"
              srcdir="${source.src.java}"
              classpath="${classpath}"
-             debug="false"
-             deprecation="true"
-             optimize="true"/>
+             debug="${javac.debug}"
+             deprecation="${javac.deprecation}"
+             optimize="${javac.optimize}"/>
    </target>
 
    <target name="build-test" depends="init,build-java" if="available-src-test">
@@ -211,9 +288,27 @@
       <javac destdir="${dest.classes}"
              srcdir="${source.src.test}"
              classpath="${classpath}"
-             debug="false"
-             deprecation="true"
-             optimize="true"/>
+             debug="${javac.debug}"
+             deprecation="false"
+             optimize="${javac.optimize}"/>
+   </target>
+
+   <!-- validation build to ensure that testframework is independent -->
+   <target name="validate-build-testframework" depends="init" if="available-src-test">
+      <delete dir="${dest.classes.testframework}"/>
+      <mkdir dir="${dest.classes.testframework}"/>
+      <copy todir="${dest.classes.testframework}">
+         <fileset dir="${source.src}">
+            <patternset refid="patternset-testframework-validate"/>
+         </fileset>
+      </copy>
+      
+      <javac destdir="${dest.classes.testframework}"
+             srcdir="${dest.classes.testframework}"
+             classpath="${classpath}"
+             debug="${javac.debug}"
+             deprecation="${javac.deprecation}"
+             optimize="${javac.optimize}"/>
    </target>
 
    <!-- ######################################################### -->
@@ -243,30 +338,49 @@
 
    <!-- ######################################################### -->
 
-   <target name="dist" depends="dist-jar,doc,dist-tar,dist-zip" description="builds binary distribution"/>
+   <target name="dist" depends="test,dist-jar,doc,dist-tar,dist-zip" description="builds binary distribution"/>
 
-   <target name="dist-jar" depends="build">
+   <target name="dist-jar" depends="dist-jar-main,dist-jar-testframework"/>
+   
+   <target name="dist-jar-main" depends="build">
       <mkdir dir="${dest.jardir}"/>
+      
       <mkdir dir="${workdir}"/>
       <copy todir="${workdir}">
          <fileset dir="${dest.classes}">
             <patternset refid="patternset-non-test-classes"/>
          </fileset>
       </copy>
-      
       <mkdir dir="${workdir}/META-INF"/>
       <copy todir="${workdir}/META-INF" file="./LICENSE.txt"/>
       
       <jar jarfile="${dest.jardir.jar}" manifest="${source.src}/conf/MANIFEST.MF">
          <fileset dir="${workdir}"/>
       </jar>
-      <delete dir="${workdir}"/>
-      <delete dir="${dest.classes}"/>
       
+      <delete dir="${workdir}"/>
+   </target>
+         
+   <target name="dist-jar-testframework" depends="validate-build-testframework, build-test">
+      <mkdir dir="${dest.jardir}"/>
+      
+      <mkdir dir="${workdir}"/>
+      <copy todir="${workdir}">
+         <fileset dir="${dest.classes}">
+            <patternset refid="patternset-testframework-classes"/>
+         </fileset>
+      </copy>
+      <mkdir dir="${workdir}/META-INF"/>
+      <copy todir="${workdir}/META-INF" file="./LICENSE.txt"/>
+      
+      <jar jarfile="${dest.jardir.testframework.jar}" manifest="${source.src}/conf/MANIFEST.MF">
+         <fileset dir="${workdir}"/>
+      </jar>
+      
+      <delete dir="${workdir}"/>
    </target>
    
    <target name="dist-tar" depends="dist-jar,doc">
-
       <mkdir dir="${workdir}/${bin.name}"/>
       <copy todir="${workdir}/${bin.name}">
          <fileset dir="${dest}">         
@@ -289,7 +403,6 @@
    </target>  
 
    <target name="dist-zip" depends="dist-jar,doc">
-
       <mkdir dir="${workdir}/${bin.name}"/>
       <copy todir="${workdir}/${bin.name}">
          <fileset dir="${dest}">         

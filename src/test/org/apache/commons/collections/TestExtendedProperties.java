@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.4 2001/09/21 03:15:15 jvanzyl Exp $
- * $Revision: 1.4 $
- * $Date: 2001/09/21 03:15:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.10 2003/10/05 21:11:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,46 +55,46 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- *   Tests some basic functions of the ExtendedProperties
- *   class
+ * Tests some basic functions of the ExtendedProperties class.
  * 
- *   @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
- *   @version $Id: TestExtendedProperties.java,v 1.4 2001/09/21 03:15:15 jvanzyl Exp $
+ * @version $Revision: 1.10 $ $Date: 2003/10/05 21:11:06 $
+ * 
+ * @author Geir Magnusson Jr.
+ * @author Mohan Kishore
+ * @author Stephen Colebourne
  */
-public class TestExtendedProperties extends TestCase
-{
+public class TestExtendedProperties extends TestCase {
+    
     protected ExtendedProperties eprop = new ExtendedProperties();
 
-    public TestExtendedProperties(String testName)
-    {
+    public TestExtendedProperties(String testName) {
         super(testName);
     }
 
-    public static Test suite()
-    {
-        return new TestSuite( TestExtendedProperties.class );
+    public static Test suite() {
+        return new TestSuite(TestExtendedProperties.class);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestExtendedProperties.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestExtendedProperties.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public void testRetrieve()
-    {
+    public void testRetrieve() {
         /*
-         * should be emptry and return null
+         * should be empty and return null
          */
-
         assertEquals("This returns null", eprop.getProperty("foo"), null);
 
         /*
@@ -111,27 +108,27 @@ public class TestExtendedProperties extends TestCase
          * now add another and get a Vector
          */
         eprop.addProperty("number", "2");
-        assertTrue("This returns array", ( eprop.getVector("number") instanceof java.util.Vector ) );
-        
+        assertTrue("This returns array", (eprop.getVector("number") instanceof java.util.Vector));
+
         /*
          *  now test dan's new fix where we get the first scalar 
          *  when we access a vector valued
          *  property
          */
-        assertTrue("This returns scalar", ( eprop.getString("number") instanceof String ) );
+        assertTrue("This returns scalar", (eprop.getString("number") instanceof String));
 
         /*
          * test comma separated string properties
          */
         String prop = "hey, that's a test";
         eprop.setProperty("prop.string", prop);
-        assertTrue("This returns vector", ( eprop.getVector("prop.string") instanceof java.util.Vector ) );
-        
+        assertTrue("This returns vector", (eprop.getVector("prop.string") instanceof java.util.Vector));
+
         String prop2 = "hey\\, that's a test";
         eprop.remove("prop.string");
         eprop.setProperty("prop.string", prop2);
-        assertTrue("This returns array", ( eprop.getString("prop.string") instanceof java.lang.String) );
-        
+        assertTrue("This returns array", (eprop.getString("prop.string") instanceof java.lang.String));
+
         /*
          * test subset : we want to make sure that the EP doesn't reprocess the data 
          *  elements when generating the subset
@@ -139,17 +136,81 @@ public class TestExtendedProperties extends TestCase
 
         ExtendedProperties subEprop = eprop.subset("prop");
 
-        assertTrue("Returns the full string",  subEprop.getString("string").equals( prop ) );
-        assertTrue("This returns string for subset", ( subEprop.getString("string") instanceof java.lang.String) );
-        assertTrue("This returns array for subset", ( subEprop.getVector("string") instanceof java.util.Vector) );
-        
+        assertTrue("Returns the full string", subEprop.getString("string").equals(prop));
+        assertTrue("This returns string for subset", (subEprop.getString("string") instanceof java.lang.String));
+        assertTrue("This returns array for subset", (subEprop.getVector("string") instanceof java.util.Vector));
+
     }
 
-    public void testInterpolation()
-    {
+    public void testInterpolation() {
         eprop.setProperty("applicationRoot", "/home/applicationRoot");
         eprop.setProperty("db", "${applicationRoot}/db/hypersonic");
         String dbProp = "/home/applicationRoot/db/hypersonic";
         assertTrue("Checking interpolated variable", eprop.getString("db").equals(dbProp));
     }
+
+    public void testSaveAndLoad() {
+        ExtendedProperties ep1 = new ExtendedProperties();
+        ExtendedProperties ep2 = new ExtendedProperties();
+
+        try {
+            /* initialize value:
+            one=Hello\World
+            two=Hello\,World
+            three=Hello,World
+            */
+            String s1 = "one=Hello\\World\ntwo=Hello\\,World\nthree=Hello,World";
+            byte[] bytes = s1.getBytes();
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            ep1.load(bais);
+            assertEquals("Back-slashes not interpreted properly", 
+                    "Hello\\World", ep1.getString("one"));
+            assertEquals("Escaped commas not interpreted properly", 
+                    "Hello,World", ep1.getString("two"));
+            assertEquals("Commas not interpreted properly", 
+                    2, ep1.getVector("three").size());
+            assertEquals("Commas not interpreted properly", 
+                    "Hello", ep1.getVector("three").get(0));
+            assertEquals("Commas not interpreted properly", 
+                    "World", ep1.getVector("three").get(1));
+                    
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ep1.save(baos, null);
+            bytes = baos.toByteArray();
+            bais = new ByteArrayInputStream(bytes);
+            ep2.load(bais);
+            assertEquals("Back-slash not same after being saved and loaded",
+                    ep1.getString("one"), ep2.getString("one"));
+            assertEquals("Escaped comma not same after being saved and loaded",
+                    ep1.getString("two"), ep2.getString("two"));
+            assertEquals("Comma not same after being saved and loaded",
+                    ep1.getString("three"), ep2.getString("three"));
+        } catch (IOException ioe) {
+            fail("There was an exception saving and loading the EP");
+        }
+    }
+
+    public void testTrailingBackSlash() {
+        ExtendedProperties ep1 = new ExtendedProperties();
+
+        try {
+            /*
+            initialize using:
+            one=ONE
+            two=TWO \\
+            three=THREE
+            */
+            String s1 = "one=ONE\ntwo=TWO \\\\\nthree=THREE";
+            byte[] bytes = s1.getBytes();
+            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            ep1.load(bais);
+            assertEquals("Trailing back-slashes not interpreted properly", 
+                    3, ep1.size());
+            assertEquals("Back-slash not escaped properly", 
+                    "TWO \\", ep1.getString("two"));
+        } catch (IOException ioe) {
+            fail("There was an exception loading the EP");
+        }
+    }
+    
 }

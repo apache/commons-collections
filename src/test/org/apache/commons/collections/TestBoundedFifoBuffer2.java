@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer2.java,v 1.2 2002/07/03 01:59:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:59:50 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer2.java,v 1.8 2003/11/29 18:14:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,16 +57,18 @@
  */
 package org.apache.commons.collections;
 
-
-import junit.framework.Test;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 
+import junit.framework.Test;
 
 /**
  * Runs tests against a full BoundedFifoBuffer, since many of the algorithms
  * differ depending on whether the fifo is full or not.
+ * 
+ * @version $Revision: 1.8 $ $Date: 2003/11/29 18:14:20 $
+ * 
+ * @author Unknown
  */
 public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
 
@@ -132,6 +131,30 @@ public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
             // expected
         }
         verify();
+    }
+
+    /**
+     * Tests is full
+     */
+    public void testIsFull() {
+        resetFull();
+        assertEquals(true, ((BoundedCollection) collection).isFull());
+        ((BoundedFifoBuffer) collection).remove();
+        assertEquals(false, ((BoundedCollection) collection).isFull());
+        ((BoundedFifoBuffer) collection).add("jj");
+        assertEquals(true, ((BoundedCollection) collection).isFull());
+    }
+
+    /**
+     * Tests max size
+     */
+    public void testMaxSize() {
+        resetFull();
+        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
+        ((BoundedFifoBuffer) collection).remove();
+        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
+        ((BoundedFifoBuffer) collection).add("jj");
+        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
     }
 
 }

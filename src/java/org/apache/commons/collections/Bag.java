@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.7 2002/07/19 01:15:01 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/07/19 01:15:01 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.13 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.Collection;
@@ -67,159 +63,204 @@ import java.util.Set;
 
 /**
  * A {@link Collection} that counts the number of times an object appears in
- * the collection.  Suppose you have a Bag that contains <code>{a, a, b,
- * c}</code>.  Calling {@link #getCount(Object)} on <code>a</code> would return
- * 2, while calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
- *
- * <P><I>Note that this interface violates the {@link Collection} contract.</I> 
+ * the collection.
+ * <p>
+ * Suppose you have a Bag that contains <code>{a, a, b, c}</code>.
+ * Calling {@link #getCount(Object)} on <code>a</code> would return 2, while
+ * calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
+ * <p>
+ * <i>Note that this interface violates the {@link Collection} contract.</i> 
  * The behavior specified in many of these methods is <I>not</I> the same
  * as the behavior specified by {@link Collection}.  The noncompliant methods
- * are clearly marked with "(Violation)" in their summary line.  A future
+ * are clearly marked with "(Violation)".  A future
  * version of this class will specify the same behavior as {@link Collection},
  * which unfortunately will break backwards compatibility with this version.
  *
- * @since 2.0
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.13 $ $Date: 2004/01/05 22:46:33 $
+ * 
  * @author Chuck Burdick
- **/
+ * @author Stephen Colebourne
+ */
 public interface Bag extends Collection {
-   /**
-    * Return the number of occurrences (cardinality) of the given
-    * object currently in the bag. If the object does not exist in the
-    * bag, return 0.
-    **/
-   public int getCount(Object o);
 
-   /**
-    * <I>(Violation)</I>
-    * Add the given object to the bag and keep a count. If the object
-    * is already in the {@link #uniqueSet()} then increment its count as
-    * reported by {@link #getCount(Object)}. Otherwise add it to the {@link
-    * #uniqueSet()} and report its count as 1.<P>
-    *
-    * Since this method always increases the size of the bag,
-    * according to the {@link Collection#add(Object)} contract, it 
-    * should always return <Code>true</Code>.  Since it sometimes returns
-    * <Code>false</Code>, this method violates the contract.  A future
-    * version of this method will comply by always returning <Code>true</Code>.
-    *
-    * @return <code>true</code> if the object was not already in the
-    *         <code>uniqueSet</code>
-    * @see #getCount(Object)
-    **/
-   public boolean add(Object o);
+    /**
+     * Returns the number of occurrences (cardinality) of the given
+     * object currently in the bag. If the object does not exist in the
+     * bag, return 0.
+     * 
+     * @param object  the object to search for
+     * @return the number of occurrences of the object, zero if not found
+     */
+    int getCount(Object object);
 
-   /**
-    * Add <code>i</code> copies of the given object to the bag and
-    * keep a count.
-    * @return <code>true</code> if the object was not already in the
-    *         <code>uniqueSet</code>
-    * @see #add(Object)
-    * @see #getCount(Object)
-    **/
-   public boolean add(Object o, int i);
+    /**
+     * <i>(Violation)</i>
+     * Adds one copy the specified object to the Bag.
+     * <p>
+     * If the object is already in the {@link #uniqueSet()} then increment its
+     * count as reported by {@link #getCount(Object)}. Otherwise add it to the
+     * {@link #uniqueSet()} and report its count as 1.
+     * <p>
+     * Since this method always increases the size of the bag,
+     * according to the {@link Collection#add(Object)} contract, it 
+     * should always return <code>true</code>.  Since it sometimes returns
+     * <code>false</code>, this method violates the contract.  A future
+     * version of this method will comply by always returning <code>true</code>.
+     *
+     * @param object  the object to add
+     * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
+     */
+    boolean add(Object object);
 
-   /**
-    * <I>(Violation)</I>
-    * Remove all occurrences of the given object from the bag, and do
-    * not represent the object in the {@link #uniqueSet()}.
-    *
-    * <P>According to the {@link Collection#remove(Object)} method,
-    * this method should only remove the <I>first</I> occurrence of the
-    * given object, not <I>all</I> occurrences.  A future version of this
-    * method will comply with the contract by only removing one occurrence
-    * of the given object.
-    *
-    * @see #remove(Object, int)
-    * @return <code>true</code> if this call changed the collection
-    **/
-   public boolean remove(Object o);
+    /**
+     * Adds <code>nCopies</code> copies of the specified object to the Bag.
+     * <p>
+     * If the object is already in the {@link #uniqueSet()} then increment its
+     * count as reported by {@link #getCount(Object)}. Otherwise add it to the
+     * {@link #uniqueSet()} and report its count as <code>nCopies</code>.
+     * 
+     * @param object  the object to add
+     * @param nCopies  the number of copies to add
+     * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
+     */
+    boolean add(Object object, int nCopies);
 
-   /**
-    * Remove the given number of occurrences from the bag. If the bag
-    * contains <code>i</code> occurrences or less, the item will be
-    * removed from the {@link #uniqueSet()}.
-    * @see #getCount(Object)
-    * @see #remove(Object)
-    * @return <code>true</code> if this call changed the collection
-    **/
-   public boolean remove(Object o, int i);
+    /**
+     * <i>(Violation)</i>
+     * Removes all occurrences of the given object from the bag.
+     * <p>
+     * This will also remove the object from the {@link #uniqueSet()}.
+     * <p>
+     * According to the {@link Collection#remove(Object)} method,
+     * this method should only remove the <i>first</i> occurrence of the
+     * given object, not <i>all</i> occurrences.  A future version of this
+     * method will comply with the contract by only removing one occurrence
+     * of the given object.
+     *
+     * @return <code>true</code> if this call changed the collection
+     */
+    boolean remove(Object object);
 
-   /**
-    * The {@link Set} of unique members that represent all members in
-    * the bag. Uniqueness constraints are the same as those in {@link
-    * Set}.
-    **/
-   public Set uniqueSet();
+    /**
+     * Removes <code>nCopies</code> copies of the specified object from the Bag.
+     * <p>
+     * If the number of copies to remove is greater than the actual number of
+     * copies in the Bag, no error is thrown.
+     * 
+     * @param object  the object to remove
+     * @param nCopies  the number of copies to remove
+     * @return <code>true</code> if this call changed the collection
+     */
+    boolean remove(Object object, int nCopies);
 
-   /**
-    * Returns the total number of items in the bag across all types.
-    **/
-   public int size();
+    /**
+     * Returns a {@link Set} of unique elements in the Bag.
+     * <p>
+     * Uniqueness constraints are the same as those in {@link java.util.Set}.
+     * 
+     * @return the Set of unique Bag elements
+     */
+    Set uniqueSet();
 
-   /**
-    * <I>(Violation)</I>
-    * Returns <code>true</code> if the bag contains all elements in
-    * the given collection, respecting cardinality.  That is, if the
-    * given collection <code>C</code> contains <code>n</code> copies
-    * of a given object, calling {@link #getCount(Object)} on that object must
-    * be <code>&gt;= n</code> for all <code>n</code> in <code>C</code>.
-    *
-    * <P>The {@link Collection#containsAll(Collection)} method specifies
-    * that cardinality should <I>not</I> be respected; this method should
-    * return true if the bag contains at least one of every object contained
-    * in the given collection.  A future version of this method will comply
-    * with that contract.
-    **/
-   public boolean containsAll(Collection c);
+    /**
+     * Returns the total number of items in the bag across all types.
+     * 
+     * @return the total size of the Bag
+     */
+    int size();
 
-   /**
-    * <I>(Violation)</I>
-    * Remove all elements represented in the given collection,
-    * respecting cardinality.  That is, if the given collection
-    * <code>C</code> contains <code>n</code> copies of a given object,
-    * the bag will have <code>n</code> fewer copies, assuming the bag
-    * had at least <code>n</code> copies to begin with.
-    *
-    * <P>The {@link Collection#removeAll(Collection)} method specifies
-    * that cardinality should <I>not</I> be respected; this method should
-    * remove <I>all</I> occurrences of every object contained in the 
-    * given collection.  A future version of this method will comply
-    * with that contract.
-    *
-    * @return <code>true</code> if this call changed the collection
-    **/
-   public boolean removeAll(Collection c);
+    /**
+     * <i>(Violation)</i>
+     * Returns <code>true</code> if the bag contains all elements in
+     * the given collection, respecting cardinality.  That is, if the
+     * given collection <code>coll</code> contains <code>n</code> copies
+     * of a given object, calling {@link #getCount(Object)} on that object must
+     * be <code>&gt;= n</code> for all <code>n</code> in <code>coll</code>.
+     * <p>
+     * The {@link Collection#containsAll(Collection)} method specifies
+     * that cardinality should <i>not</i> be respected; this method should
+     * return true if the bag contains at least one of every object contained
+     * in the given collection.  A future version of this method will comply
+     * with that contract.
+     * 
+     * @param coll  the collection to check against
+     * @return <code>true</code> if the Bag contains all the collection
+     */
+    boolean containsAll(Collection coll);
 
-   /**
-    * <I>(Violation)</I>
-    * Remove any members of the bag that are not in the given
-    * collection, respecting cardinality.  That is, if the given
-    * collection <code>C</code> contains <code>n</code> copies of a
-    * given object and the bag has <code>m &gt; n</code> copies, then
-    * delete <code>m - n</code> copies from the bag.  In addition, if
-    * <code>e</code> is an object in the bag but
-    * <code>!C.contains(e)</code>, then remove <code>e</code> and any
-    * of its copies.
-    *
-    * <P>The {@link Collection#retainAll(Collection)} method specifies
-    * that cardinality should <I>not</I> be respected; this method should
-    * keep <I>all</I> occurrences of every object contained in the 
-    * given collection.  A future version of this method will comply
-    * with that contract.
-    *
-    * @return <code>true</code> if this call changed the collection
-    **/
-   public boolean retainAll(Collection c);
+    /**
+     * <i>(Violation)</i>
+     * Remove all elements represented in the given collection,
+     * respecting cardinality.  That is, if the given collection
+     * <code>coll</code> contains <code>n</code> copies of a given object,
+     * the bag will have <code>n</code> fewer copies, assuming the bag
+     * had at least <code>n</code> copies to begin with.
+     *
+     * <P>The {@link Collection#removeAll(Collection)} method specifies
+     * that cardinality should <i>not</i> be respected; this method should
+     * remove <i>all</i> occurrences of every object contained in the 
+     * given collection.  A future version of this method will comply
+     * with that contract.
+     *
+     * @param coll  the collection to remove
+     * @return <code>true</code> if this call changed the collection
+     */
+    boolean removeAll(Collection coll);
 
-   /**
-    * Returns an {@link Iterator} over the entire set of members,
-    * including copies due to cardinality. This iterator is fail-fast
-    * and will not tolerate concurrent modifications.
-    **/
-   public Iterator iterator();
+    /**
+     * <i>(Violation)</i>
+     * Remove any members of the bag that are not in the given
+     * collection, respecting cardinality.  That is, if the given
+     * collection <code>coll</code> contains <code>n</code> copies of a
+     * given object and the bag has <code>m &gt; n</code> copies, then
+     * delete <code>m - n</code> copies from the bag.  In addition, if
+     * <code>e</code> is an object in the bag but
+     * <code>!coll.contains(e)</code>, then remove <code>e</code> and any
+     * of its copies.
+     *
+     * <P>The {@link Collection#retainAll(Collection)} method specifies
+     * that cardinality should <i>not</i> be respected; this method should
+     * keep <i>all</i> occurrences of every object contained in the 
+     * given collection.  A future version of this method will comply
+     * with that contract.
+     *
+     * @param coll  the collection to retain
+     * @return <code>true</code> if this call changed the collection
+     */
+    boolean retainAll(Collection coll);
+
+    /**
+     * Returns an {@link Iterator} over the entire set of members,
+     * including copies due to cardinality. This iterator is fail-fast
+     * and will not tolerate concurrent modifications.
+     * 
+     * @return iterator over all elements in the Bag
+     */
+    Iterator iterator();
+
+    // The following is not part of the formal Bag interface, however where possible
+    // Bag implementations should follow these comments.
+//    /**
+//     * Compares this Bag to another.
+//     * This Bag equals another Bag if it contains the same number of occurrences of
+//     * the same elements.
+//     * This equals definition is compatible with the Set interface.
+//     * 
+//     * @param obj  the Bag to compare to
+//     * @return true if equal
+//     */
+//    boolean equals(Object obj);
+//
+//    /**
+//     * Gets a hash code for the Bag compatible with the definition of equals.
+//     * The hash code is defined as the sum total of a hash code for each element.
+//     * The per element hash code is defined as
+//     * <code>(e==null ? 0 : e.hashCode()) ^ noOccurances)</code>.
+//     * This hash code definition is compatible with the Set interface.
+//     * 
+//     * @return the hash code of the Bag
+//     */
+//    int hashCode();
+    
 }
-
-
-
-
-

@@ -1,6 +1,6 @@
-package org.apache.commons.collections.comparators;
-
-/* ====================================================================
+/*
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/NullComparator.java,v 1.10 2004/01/08 22:37:29 scolebourne Exp $
+ * ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2001 The Apache Software Foundation.  All rights
@@ -18,21 +18,21 @@ package org.apache.commons.collections.comparators;
  *    the documentation and/or other materials provided with the
  *    distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Commons" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
+ *    Foundation" must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their names without prior written
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -52,19 +52,22 @@ package org.apache.commons.collections.comparators;
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
+package org.apache.commons.collections.comparators;
 
 import java.io.Serializable;
-import java.lang.Comparable;
 import java.util.Comparator;
 
 /**
- *  A Comparator that will compare nulls to be either lower or higher than
- *  other objects.
+ * A Comparator that will compare nulls to be either lower or higher than
+ * other objects.
  *
- *  @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- *  @version $Id: NullComparator.java,v 1.3 2002/06/11 02:41:47 mas Exp $ 
- **/
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.10 $ $Date: 2004/01/08 22:37:29 $ 
+ *
+ * @author Michael A. Smith
+ */
 public class NullComparator implements Comparator, Serializable {
 
     /**
@@ -85,7 +88,7 @@ public class NullComparator implements Comparator, Serializable {
      *  used.
      **/
     public NullComparator() {
-	this(ComparableComparator.getInstance(), true);
+        this(ComparableComparator.getInstance(), true);
     }
 
     /**
@@ -102,7 +105,7 @@ public class NullComparator implements Comparator, Serializable {
      *  <code>null</code>
      **/
     public NullComparator(Comparator nonNullComparator) {
-	this(nonNullComparator, true);
+        this(nonNullComparator, true);
     }
 
     /**
@@ -118,11 +121,11 @@ public class NullComparator implements Comparator, Serializable {
      *  non-<code>null</code> object.
      **/
     public NullComparator(boolean nullsAreHigh) {
-	this(ComparableComparator.getInstance(), nullsAreHigh);
+        this(ComparableComparator.getInstance(), nullsAreHigh);
     }
     
     /**
-     *  Cosntruct an instance that sorts <code>null</code> higher or lower than
+     *  Construct an instance that sorts <code>null</code> higher or lower than
      *  any non-<code>null</code> object it is compared with.  When comparing
      *  two non-<code>null</code> objects, the specified {@link Comparator} is
      *  used.
@@ -141,12 +144,12 @@ public class NullComparator implements Comparator, Serializable {
      *  <code>null</code>
      **/
     public NullComparator(Comparator nonNullComparator, boolean nullsAreHigh) {
-	this.nonNullComparator = nonNullComparator;
-	this.nullsAreHigh = nullsAreHigh;
-
-	if(nonNullComparator == null) {
-	    throw new NullPointerException("null nonNullComparator");
-	}
+        this.nonNullComparator = nonNullComparator;
+        this.nullsAreHigh = nullsAreHigh;
+        
+        if(nonNullComparator == null) {
+            throw new NullPointerException("null nonNullComparator");
+        }
     }
 
     /**
@@ -168,10 +171,10 @@ public class NullComparator implements Comparator, Serializable {
      *  <code>0</code> if <code>o1</code> and <code>o2</code> are equal.
      **/
     public int compare(Object o1, Object o2) {
-	if(o1 == o2) return 0;
-	if(o1 == null) return (this.nullsAreHigh ? 1 : -1);
-	if(o2 == null) return (this.nullsAreHigh ? -1 : 1);
-	return this.nonNullComparator.compare(o1, o2);
+        if(o1 == o2) { return 0; }
+        if(o1 == null) { return (this.nullsAreHigh ? 1 : -1); }
+        if(o2 == null) { return (this.nullsAreHigh ? -1 : 1); }
+        return this.nonNullComparator.compare(o1, o2);
     }
 
     /**
@@ -181,29 +184,29 @@ public class NullComparator implements Comparator, Serializable {
      *  @return a hash code for this comparator.
      **/
     public int hashCode() {
-	return (nullsAreHigh ? -1 : 1) * nonNullComparator.hashCode();
+        return (nullsAreHigh ? -1 : 1) * nonNullComparator.hashCode();
     }
 
     /**
      *  Determines whether the specified object represents a comparator that is
      *  equal to this comparator.
      *
-     *  @param o the object to compare this comparator with.
+     *  @param obj  the object to compare this comparator with.
      *
      *  @return <code>true</code> if the specified object is a NullComparator
-     *  with equivalant <code>null</code> comparison behavior
+     *  with equivalent <code>null</code> comparison behavior
      *  (i.e. <code>null</code> high or low) and with equivalent underlying
      *  non-<code>null</code> object comparators.
      **/
     public boolean equals(Object obj) {
-	if(obj == null) return false;
-	if(obj == this) return true;
-	if(!obj.getClass().equals(this.getClass())) return false;
+        if(obj == null) { return false; }
+        if(obj == this) { return true; }
+        if(!obj.getClass().equals(this.getClass())) { return false; }
 
-	NullComparator other = (NullComparator)obj;
+        NullComparator other = (NullComparator)obj;
 	
-	return ((this.nullsAreHigh == other.nullsAreHigh) &&
-		(this.nonNullComparator.equals(other.nonNullComparator)));
+        return ((this.nullsAreHigh == other.nullsAreHigh) &&
+                (this.nonNullComparator.equals(other.nonNullComparator)));
     }
 
     private static final long serialVersionUID = -5820772575483504339L;

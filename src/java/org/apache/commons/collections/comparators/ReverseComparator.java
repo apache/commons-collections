@@ -1,9 +1,9 @@
-package org.apache.commons.collections.comparators;
-
-/* ====================================================================
+/*
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ReverseComparator.java,v 1.16 2003/08/31 17:25:49 scolebourne Exp $
+ * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -18,21 +18,21 @@ package org.apache.commons.collections.comparators;
  *    the documentation and/or other materials provided with the
  *    distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Commons" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
+ *    Foundation" must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their names without prior written
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -52,41 +52,46 @@ package org.apache.commons.collections.comparators;
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
+package org.apache.commons.collections.comparators;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * Reverses the order of another comparator.
+ * Reverses the order of another comparator by 
+ * reversing the arguments to its {@link #compare compare} 
+ * method.
  * 
- * @since 2.0
- * @author bayard@generationjava.com
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: ReverseComparator.java,v 1.8 2002/06/12 03:59:17 mas Exp $
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.16 $ $Date: 2003/08/31 17:25:49 $
+ *
+ * @author Henri Yandell
+ * @author Michael A. Smith
+ * 
+ * @see java.util.Collections#reverseOrder
  */
 public class ReverseComparator implements Comparator,Serializable {
-
-    private Comparator comparator;
 
     /**
      * Creates a comparator that compares objects based on the inverse of their
      * natural ordering.  Using this Constructor will create a ReverseComparator
-     * that is functionaly identical to the Comparator returned by
+     * that is functionally identical to the Comparator returned by
      * java.util.Collections.<b>reverseOrder()</b>.
      * 
-     * @see java.util.Collections#reverseOrder()
+     * @see java.util.Collections#reverseOrder
      */
     public ReverseComparator() {
         this(null);
     }
 
     /**
-     * Creates a reverse comparator that inverts the comparison
-     * of the passed in comparator.  If you pass in a null,
+     * Creates a comparator that inverts the comparison
+     * of the given comparator.  If you pass in <code>null</code>,
      * the ReverseComparator defaults to reversing the
      * natural order, as per 
-     * java.util.Collections.<b>reverseOrder()</b>.
+     * {@link java.util.Collections#reverseOrder}</b>.
      * 
      * @param comparator Comparator to reverse
      */
@@ -102,4 +107,45 @@ public class ReverseComparator implements Comparator,Serializable {
         return comparator.compare(o2, o1);
     }
 
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals}.
+     * 
+     * @since Commons Collections 3.0
+     */
+    public int hashCode() {
+        return "ReverseComparator".hashCode() ^ comparator.hashCode();
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator} whose ordering is known to be 
+     * equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>that</i>.{@link Object#getClass getClass()}</code>
+     * equals <code>this.getClass()</code>, and the underlying 
+     * comparators are equal.  Subclasses may want to override
+     * this behavior to remain consistent with the 
+     * {@link Comparator#equals} contract.
+     * 
+     * @since Commons Collections 3.0
+     */
+    public boolean equals(Object that) {
+        if(this == that) {
+            return true;
+        } else if(null == that) {
+            return false;
+        } else if(that.getClass().equals(this.getClass())) {
+            ReverseComparator thatrc = (ReverseComparator)that;
+            return comparator.equals(thatrc.comparator);
+        } else {
+            return false;
+        }
+    }
+
+    // use serialVersionUID from Collections 2.0 for interoperability
+    private static final long serialVersionUID = 2858887242028539265L;
+
+    private Comparator comparator;
 }

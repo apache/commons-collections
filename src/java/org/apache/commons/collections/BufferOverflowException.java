@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferOverflowException.java,v 1.2 2002/07/03 01:45:47 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:45:47 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferOverflowException.java,v 1.7 2003/10/09 20:58:52 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -64,38 +61,55 @@ package org.apache.commons.collections;
  * The BufferOverflowException is used when the buffer's capacity has been
  * exceeded.
  *
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.7 $ $Date: 2003/10/09 20:58:52 $
+ * 
+ * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
+ * @author Paul Jack
+ * @author Stephen Colebourne
  */
-public class BufferOverflowException extends RuntimeException
-{
-    private final Throwable m_throwable;
+public class BufferOverflowException extends RuntimeException {
+    
+    /** The root cause throwable */
+    private final Throwable throwable;
 
-    /** Construct a new BufferOverflowException.
-     * @param message The detail message for this exception.
+    /**
+     * Constructs a new <code>BufferOverflowException</code>.
      */
-    public BufferOverflowException( String message )
-    {
-        this( message, null );
+    public BufferOverflowException() {
+        super();
+        throwable = null;
     }
 
-    /** Construct a new BufferOverflowException.
-     * @param message The detail message for this exception.
-     * @param throwable the root cause of the exception
+    /** 
+     * Construct a new <code>BufferOverflowException</code>.
+     * 
+     * @param message  the detail message for this exception
      */
-    public BufferOverflowException( String message, Throwable exception )
-    {
-        super( message );
-        m_throwable = exception;
+    public BufferOverflowException(String message) {
+        this(message, null);
+    }
+
+    /** 
+     * Construct a new <code>BufferOverflowException</code>.
+     * 
+     * @param message  the detail message for this exception
+     * @param exception  the root cause of the exception
+     */
+    public BufferOverflowException(String message, Throwable exception) {
+        super(message);
+        throwable = exception;
     }
 
     /**
-     * Retrieve root cause of the exception.
+     * Gets the root cause of the exception.
      *
      * @return the root cause
      */
-    public final Throwable getCause()
-    {
-        return m_throwable;
+    public final Throwable getCause() {
+        return throwable;
     }
+    
 }

@@ -1,0 +1,136 @@
+<title>RELEASE NOTES: COLLECTIONS 3.0</title>
+
+<center><h2>RELEASE NOTES: COLLECTIONS 3.0</h2></center>
+
+<p>
+Originally, Collections was a general place for placing useful collection classes.
+With version 3.0, this changes. Collections now has a design and package structure of its own.
+As a result, several well-used classes have been deprecated and moved to new packages.
+<p>
+This release also includes a lot of new functionality, including new interfaces
+and new implementations in addition to various bug fixes and refactoring changes.
+All previously deprecated classes have been removed.
+<p>
+The major changes are:
+<ul>
+<li><strong>New package structure</strong> -
+    One package now exists for each major interface</li>
+<li><strong>Bidirectional maps</strong> -
+    New interface and implementations for maps that need bidirectional lookup</li>
+<li><strong>Map iterator</strong> -
+    New interface to enable iteration over map keys and values in one easy step</li>
+<li><strong>Resettable iterator</strong> - 
+	Interfaces that defines a reset() method to reset the iterator back to the start</li>
+<li><strong>Functors</strong> -
+    A default set of functor implementations is now provided for Predicate, Transformer,
+    Closure and Factory</li>
+<li><strong>KeyValue</strong> -
+    A new package full of key-value pairs and map entry implementations</li>
+<li><strong>Abstract Hash-based Map</strong> -
+    Highly extensible hash-based, and hash-link-based map abstract classes</li>
+<li><strong>PriorityQueue deprecated</strong> -
+    The top level interface PriorityQueue has been deprecated in favour of Buffer</li>
+</ul>
+
+<hr />
+
+<center><h3>
+NEW PACKAGES
+</h3></center>
+
+<p>These packages are new to <i>Collections 3.0</i>:</p>
+
+<ul>
+<li><strong>collection</strong> - Package of Collection implementations</li>
+<li><strong>list</strong> - Package of List implementations</li>
+<li><strong>set</strong> - Package of Set implementations</li>
+<li><strong>bag</strong> - Package of Bag implementations</li>
+<li><strong>buffer</strong> - Package of Buffer implementations</li>
+<li><strong>map</strong> - Package of Map implementations</li>
+<li><strong>bidimap</strong> - Package of BidiMap implementations</li>
+<li><strong>keyvalue</strong> - Package of key-value pair implementations</li>
+</ul>
+
+<center><h3>
+NEW CLASSES
+</h3></center>
+
+<p>These implementations are new to <i>Collections 3.0</i>:</p>
+
+<ul>
+<li><strong>CompositeCollection/Set/Map</strong> - Merges multiple collections into a single view</li>
+<li><strong>NodeCachingLinkedList</strong> - A list that caches nodes, performing well if long-lived</li>
+<li><strong>HashedMap</strong> - An alternative to HashMap that supports a MapIterator</li>
+<li><strong>LinkedMap</strong> - A map that retains the order of its entries</li>
+<li><strong>Flat3Map</strong> - A map optimised for size 3 or less</li>
+<li><strong>IdentityMap</strong> - A map that uses == not equals()</li>
+<li><strong>ListOrderedSet/Map</strong> - A set/map that behaves like a List</li>
+<li><strong>SetUniqueList</strong> - A list that behaves like a Set</li>
+<li><strong>CircularFifoBuffer</strong> - A buffer that eliminates the oldest entry when full</li>
+<li><strong>DualHashBidiMap</strong> - BidiMap implementation</li>
+<li><strong>DualTreeBidiMap</strong> - SortedBidiMap implementation</li>
+<li><strong>TreeBidiMap</strong> - OrderedBidiMap implementation</li>
+<li><strong>FixedOrderComparator</strong> - A comparator in a fixed pre-determined order</li>
+<li><strong>BooleanComparator</strong> - A comparator over Boolean instances</li>
+<li><strong>ArrayListIterator</strong> - A ListIterator over an array of any type (including primitive arrays)</li>
+<li><strong>LoopingIterator</strong> - An Iterator that loops repeatedly over the collection</li>
+<li><strong>ObjectArray*Iterator</strong> - Iterators over an Object array</li>
+<li><strong>EntrySetMapIterator</strong> - A MapIterator implemented using an entry set</li>
+</ul>
+
+<hr />
+
+<center><h3>CHANGED CLASSES</h3></center>
+
+<p>These classes have changed in a potentially incompatable way:</p>
+
+<ul>
+<li><strong>BufferUnderflowException</strong> - Now extends NoSuchElementException</li>
+<li><strong>BeanMap.MyMapEntry</strong> - Superclass changed</li>
+<li><strong>MultiHashMap</strong> - Name facility and getName() method removed</li>
+<li><strong>FilterIterator</strong> - Superclass changed</li>
+<li><strong>FilterListIterator</strong> - Superclass changed</li>
+<li><strong>TransformIterator</strong> - Superclass changed</li>
+</ul>
+
+<p>These collections have changed since <i>Collections 3.0</i>:</p>
+
+<ul>
+<li><strong>PriorityQueue</strong> - Deprecated, use Buffer interface</li>
+<li><strong>BinaryHeap</strong> - Deprecated, use PriorityBuffer</li>
+<li><strong>SynchronizedPriorityQueue</strong> - Deprecated, use SynchronizedBuffer</li>
+<li><strong>BoundedFifoBuffer</strong> - Deprecated, moved to buffer subpackage</li>
+<li><strong>UnboundedFifoBuffer</strong> - Deprecated, moved to buffer subpackage</li>
+<li><strong>SequencedHashMap</strong> - Deprecated, rewritten as LinkedMap in map subpackage</li>
+<li><strong>DefaultMapBag</strong> - Deprecated, rewritten as AbstractMapBag in bag subpackage</li>
+<li><strong>HashBag</strong> - Deprecated, moved and rewritten in bag subpackage</li>
+<li><strong>TreeBag</strong> - Deprecated, moved and rewritten in bag subpackage</li>
+<li><strong>DefaultMapEntry</strong> - Deprecated, moved to keyvalue subpackage</li>
+<li><strong>DoubleOrderedMap</strong> - Deprecated, replaced by bidimap interface and implementations</li>
+<li><strong>LRUMap</strong> - Deprecated, moved and rewritten in map subpackage</li>
+<li><strong>ReferenceMap</strong> - Deprecated, moved to map subpackage</li>
+<li><strong>StaticBucketMap</strong> - Deprecated, moved to map subpackage</li>
+<li><strong>ProxyMap</strong> - Deprecated, moved as AbstractMapDecorator in map subpackage</li>
+<li><strong>ExtendedProperties</strong> - Bug fixes. Please consider using Commons-Configuration <code>PropertiesConfiguration</code></li>
+</ul>
+
+<p>These comparators have changed since <i>Collections 3.0</i>:</p>
+
+<ul>
+<li><strong>ComparableComparator</strong> - Simpler implementation that respects interface better.</li>
+<li><strong>ComparatorChain</strong> - Equals and HashCode added.</li>
+<li><strong>ReverseComparator</strong> - Equals and HashCode added.</li>
+</ul>
+
+<p>These iterators have changed since <i>Collections 3.0</i>:</p>
+
+<ul>
+<li><strong>ArrayIterator</strong> - This now implements the ResetableIterator interface. It also supports a start index to iterate from.</li>
+<li><strong>CollatingIterator</strong> - The remove() method now throws IllegalStateException not NoSuchElementException.</li>
+<li><strong>FilterIterator</strong> - The remove() method is now supported, with some limitations.</li>
+<li><strong>IteratorChain</strong> - Now supports a chain of zero iterators. Bug fix for when remove() called before hasNext()/next().</li>
+<li><strong>Singleton*Iterator</strong> - These now implement the ResetableIterator interface.</li>
+<li><strong>Proxy*Iterator</strong> - Now deprecated in favour of AbstractIteratorDecorator/AbstractListIteratorDecorator.</li>
+<li><strong>Filter*Iterator/TransformIterator</strong> - No longer extend ProxyIterator.</li>
+</ul>
+

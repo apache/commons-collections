@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.3 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/06/12 03:59:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.13 2004/01/06 22:07:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -71,88 +68,137 @@ import java.util.Set;
  * build to extensions for its wrapped <code>Map</code> object which
  * would be unavailable or inconvenient via sub-classing (but usable
  * via composition).</p>
+ * 
+ * <p>This implementation does not perform any special processing with
+ * {@link #entrySet()}, {@link #keySet()} or {@link #values()}. Instead
+ * it simply returns the set/collection from the wrapped map. This may be
+ * undesirable, for example if you are trying to write a validating
+ * implementation it would provide a loophole around the validation. But,
+ * you might want that loophole, so this class is kept simple.</p>
  *
- * <p>An example use case is where the wrapped <code>Map</code> needs
- * synchronization (to make it thread-safe), but the <code>Map</code>
- * returned by <code>Collections.synchronizedMap(map)</code>
- * hides part of <code>map</code>'s public interface.</p>
- *
- * @since 2.0
- * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
+ * @deprecated Moved to map subpackage as AbstractMapDecorator. It will be removed in v4.0.
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.13 $ $Date: 2004/01/06 22:07:47 $
+ * 
+ * @author Daniel Rall
+ * @author Stephen Colebourne
  */
 public abstract class ProxyMap implements Map {
     
     /**
-     * The <code>Map</code> used for default implementations.
+     * The <code>Map</code> to delegate to.
      */
     protected Map map;
 
     /**
-     * Creates a new instance acting as a representative for the
-     * specified <code>Map</code>.
+     * Constructor that uses the specified map to delegate to.
+     * <p>
+     * Note that the map is used for delegation, and is not copied. This is
+     * different to the normal use of a <code>Map</code> parameter in
+     * collections constructors.
      *
-     * @param map The <code>Map</code> to whose operations to wrap.
+     * @param map  the <code>Map</code> to delegate to
      */
     public ProxyMap(Map map) {
         this.map = map;
     }
 
+    /**
+     * Invokes the underlying {@link Map#clear()} method.
+     */
     public void clear() {
         map.clear();
     }
 
+    /**
+     * Invokes the underlying {@link Map#containsKey(Object)} method.
+     */
     public boolean containsKey(Object key) {
         return map.containsKey(key);
     }
 
+    /**
+     * Invokes the underlying {@link Map#containsValue(Object)} method.
+     */
     public boolean containsValue(Object value) {
         return map.containsValue(value);
     }
 
+    /**
+     * Invokes the underlying {@link Map#entrySet()} method.
+     */
     public Set entrySet() {
         return map.entrySet();
     }
 
-    public boolean equals(Object map) {
-        return map.equals(map);
+    /**
+     * Invokes the underlying {@link Map#equals(Object)} method.
+     */
+    public boolean equals(Object m) {
+        return map.equals(m);
     }
 
+    /**
+     * Invokes the underlying {@link Map#get(Object)} method.
+     */
     public Object get(Object key) {
         return map.get(key);
     }
 
+    /**
+     * Invokes the underlying {@link Map#hashCode()} method.
+     */
     public int hashCode() {
         return map.hashCode();
     }
 
+    /**
+     * Invokes the underlying {@link Map#isEmpty()} method.
+     */
     public boolean isEmpty() {
         return map.isEmpty();
     }
 
+    /**
+     * Invokes the underlying {@link Map#keySet()} method.
+     */
     public Set keySet() {
         return map.keySet();
     }
 
+    /**
+     * Invokes the underlying {@link Map#put(Object,Object)} method.
+     */
     public Object put(Object key, Object value) {
         return map.put(key, value);
     }
 
+    /**
+     * Invokes the underlying {@link Map#putAll(Map)} method.
+     */
     public void putAll(Map t) {
         map.putAll(t);
     }
 
+    /**
+     * Invokes the underlying {@link Map#remove(Object)} method.
+     */
     public Object remove(Object key) {
         return map.remove(key);
     }
 
+    /**
+     * Invokes the underlying {@link Map#size()} method.
+     */
     public int size() {
         return map.size();
     }
 
+    /**
+     * Invokes the underlying {@link Map#values()} method.
+     */
     public Collection values() {
         return map.values();
     }
    
 }
-
-

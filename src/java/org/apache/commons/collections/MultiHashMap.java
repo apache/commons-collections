@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.13 2003/10/09 20:58:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,148 +57,318 @@
  */
 package org.apache.commons.collections;
 
-import java.util.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.AbstractCollection;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
-/** see MultiMap for details of an important semantic difference
- * between this and a typical HashMap
+/** 
+ * <code>MultiHashMap</code> is the default implementation of the 
+ * {@link org.apache.commons.collections.MultiMap MultiMap} interface.
+ * <p>
+ * A <code>MultiMap</code> is a Map with slightly different semantics.
+ * Putting a value into the map will add the value to a Collection at that
+ * key. Getting a value will always return a Collection, holding all the
+ * values put to that key. This implementation uses an ArrayList as the 
+ * collection.
+ * <p>
+ * For example:
+ * <pre>
+ * MultiMap mhm = new MultiHashMap();
+ * mhm.put(key, "A");
+ * mhm.put(key, "B");
+ * mhm.put(key, "C");
+ * Collection coll = mhm.get(key);</pre>
+ * <p>
+ * <code>coll</code> will be a list containing "A", "B", "C".
  *
- * @since 2.0
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.13 $ $Date: 2003/10/09 20:58:53 $
+ * 
  * @author Christopher Berry
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author James Strachan
+ * @author Steve Downey
+ * @author Stephen Colebourne
+ * @author Julien Buret
+ * @author Serhiy Yevtushenko
  */
-public class MultiHashMap extends HashMap implements MultiMap
-{
-    //----------------- Data
-    private static int sCount = 0;
-    private String mName = null;
+public class MultiHashMap extends HashMap implements MultiMap {
     
-    public MultiHashMap()
-    {
+    //backed values collection
+    private transient Collection values = null;
+    
+    // compatibility with commons-collection releases 2.0/2.1
+    private static final long serialVersionUID = 1943563828307035349L;
+
+    /**
+     * Constructor.
+     */
+    public MultiHashMap() {
         super();
-        setName();
     }
-    
-    public MultiHashMap( int initialCapacity )
-    {
-        super( initialCapacity );
-        setName();
+
+    /**
+     * Constructor.
+     * 
+     * @param initialCapacity  the initial map capacity
+     */
+    public MultiHashMap(int initialCapacity) {
+        super(initialCapacity);
     }
-    
-    public MultiHashMap(int initialCapacity, float loadFactor )
-    {
-        super( initialCapacity, loadFactor);
-        setName();
+
+    /**
+     * Constructor.
+     * 
+     * @param initialCapacity  the initial map capacity
+     * @param loadFactor  the amount 0.0-1.0 at which to resize the map
+     */
+    public MultiHashMap(int initialCapacity, float loadFactor) {
+        super(initialCapacity, loadFactor);
     }
-    
-    public MultiHashMap( Map mapToCopy )
-    {
-        super( mapToCopy );
+
+    /**
+     * Constructor.
+     * 
+     * @param mapToCopy  a Map to copy
+     */
+    public MultiHashMap(Map mapToCopy) {
+        super(mapToCopy);
     }
-    
-    private void setName()
-    {
-        sCount++;
-        mName = "MultiMap-" + sCount;
-    }
-    
-    public String getName()
-    { return mName; }
-    
-    public Object put( Object key, Object value )
-    {
-        // NOTE:: put might be called during deserialization !!!!!!
-        //        so we must provide a hook to handle this case
-        //        This means that we cannot make MultiMaps of ArrayLists !!!
+
+    /**
+     * Read the object during deserialization.
+     */
+    private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        // This method is needed because the 1.2/1.3 Java deserialisation called
+        // put and thus messed up that method
         
-        if ( value instanceof ArrayList ) {
-            return ( super.put( key, value ) );
+        // default read object
+        s.defaultReadObject();
+
+        // problem only with jvm <1.4
+        String version = "1.2";
+        try {
+            version = System.getProperty("java.version");
+        } catch (SecurityException ex) {
+            // ignore and treat as 1.2/1.3
         }
-        
-        ArrayList keyList = (ArrayList)(super.get( key ));
-        if ( keyList == null ) {
-            keyList = new ArrayList(10);
-            
-            super.put( key, keyList );
+
+        if (version.startsWith("1.2") || version.startsWith("1.3")) {
+            for (Iterator iterator = entrySet().iterator(); iterator.hasNext();) {
+                Map.Entry entry = (Map.Entry) iterator.next();
+                // put has created a extra collection level, remove it
+                super.put(entry.getKey(), ((Collection) entry.getValue()).iterator().next());
+            }
         }
-        
-        boolean results = keyList.add( value );
-        
-        return ( results ? value : null );
     }
     
-    public boolean containsValue( Object value )
-    {
+    /**
+     * Put a key and value into the map.
+     * <p>
+     * The value is added to a collection mapped to the key instead of 
+     * replacing the previous value.
+     * 
+     * @param key  the key to set
+     * @param value  the value to set the key to
+     * @return the value added if the add is successful, <code>null</code> otherwise
+     */    
+    public Object put(Object key, Object value) {
+        // NOTE:: put is called during deserialization in JDK < 1.4 !!!!!!
+        //        so we must have a readObject()
+        Collection coll = (Collection) super.get(key);
+        if (coll == null) {
+            coll = createCollection(null);
+            super.put(key, coll);
+        }
+        boolean results = coll.add(value);
+
+        return (results ? value : null);
+    }
+    
+    /**
+     * Does the map contain a specific value.
+     * <p>
+     * This searches the collection mapped to each key, and thus could be slow.
+     * 
+     * @param value  the value to search for
+     * @return true if the list contains the value
+     */
+    public boolean containsValue(Object value) {
         Set pairs = super.entrySet();
-        
-        if ( pairs == null )
+
+        if (pairs == null) {
             return false;
-        
+        }
         Iterator pairsIterator = pairs.iterator();
-        while ( pairsIterator.hasNext() ) {
-            Map.Entry keyValuePair = (Map.Entry)(pairsIterator.next());
-            ArrayList list = (ArrayList)(keyValuePair.getValue());
-            if( list.contains( value ) )
+        while (pairsIterator.hasNext()) {
+            Map.Entry keyValuePair = (Map.Entry) pairsIterator.next();
+            Collection coll = (Collection) keyValuePair.getValue();
+            if (coll.contains(value)) {
                 return true;
+            }
         }
         return false;
     }
-    
-    public Object remove( Object key, Object item )
-    {
-        ArrayList valuesForKey = (ArrayList) super.get( key );
-        
-        if ( valuesForKey == null )
+
+    /**
+     * Removes a specific value from map.
+     * <p>
+     * The item is removed from the collection mapped to the specified key.
+     * 
+     * @param key  the key to remove from
+     * @param item  the value to remove
+     * @return the value removed (which was passed in)
+     */
+    public Object remove(Object key, Object item) {
+        Collection valuesForKey = (Collection) super.get(key);
+        if (valuesForKey == null) {
             return null;
-        
-        valuesForKey.remove( item );
+        }
+        valuesForKey.remove(item);
+
+        // remove the list if it is now empty
+        // (saves space, and allows equals to work)
+        if (valuesForKey.isEmpty()){
+            remove(key);
+        }
         return item;
     }
-    
-    public void clear()
-    {
+
+    /**
+     * Clear the map.
+     * <p>
+     * This clears each collection in the map, and so may be slow.
+     */
+    public void clear() {
+        // For gc, clear each list in the map
         Set pairs = super.entrySet();
         Iterator pairsIterator = pairs.iterator();
-        while ( pairsIterator.hasNext() ) {
-            Map.Entry keyValuePair = (Map.Entry)(pairsIterator.next());
-            ArrayList list = (ArrayList)(keyValuePair.getValue());
-            list.clear();
+        while (pairsIterator.hasNext()) {
+            Map.Entry keyValuePair = (Map.Entry) pairsIterator.next();
+            Collection coll = (Collection) keyValuePair.getValue();
+            coll.clear();
         }
         super.clear();
     }
-    
-    public void putAll( Map mapToPut )
-    {
-        super.putAll( mapToPut );
+
+    /** 
+     * Gets a view over all the values in the map.
+     * <p>
+     * The values view includes all the entries in the collections at each map key.
+     * 
+     * @return the collection view of all the values in the map
+     */
+    public Collection values() {
+        Collection vs = values;
+        return (vs != null ? vs : (values = new Values()));
     }
-    
-    public Collection values()
-    {
-        ArrayList returnList = new ArrayList( super.size() );
-        
-        Set pairs = super.entrySet();
-        Iterator pairsIterator = pairs.iterator();
-        while ( pairsIterator.hasNext() ) {
-            Map.Entry keyValuePair = (Map.Entry)(pairsIterator.next());
-            ArrayList list = (ArrayList)(keyValuePair.getValue());
-            
-            Object[] values = list.toArray();
-            for( int ii=0; ii < values.length; ii++ ) {
-                boolean successfulAdd = returnList.add( values[ii] );
-            }
+
+    /**
+     * Inner class to view the elements.
+     */
+    private class Values extends AbstractCollection {
+
+        public Iterator iterator() {
+            return new ValueIterator();
         }
-        return returnList;
+
+        public int size() {
+            int compt = 0;
+            Iterator it = iterator();
+            while (it.hasNext()) {
+                it.next();
+                compt++;
+            }
+            return compt;
+        }
+
+        public void clear() {
+            MultiHashMap.this.clear();
+        }
+
     }
-    
-    // FIXME:: do we need to implement this??
-    // public boolean equals( Object obj ) {}
-    
-    // --------------- From Cloneable
-    public Object clone()
-    {
-        MultiHashMap obj = (MultiHashMap)(super.clone());
-        obj.mName = mName;
+
+    /**
+     * Inner iterator to view the elements.
+     */
+    private class ValueIterator implements Iterator {
+        private Iterator backedIterator;
+        private Iterator tempIterator;
+
+        private ValueIterator() {
+            backedIterator = MultiHashMap.super.values().iterator();
+        }
+
+        private boolean searchNextIterator() {
+            while (tempIterator == null || tempIterator.hasNext() == false) {
+                if (backedIterator.hasNext() == false) {
+                    return false;
+                }
+                tempIterator = ((Collection) backedIterator.next()).iterator();
+            }
+            return true;
+        }
+
+        public boolean hasNext() {
+            return searchNextIterator();
+        }
+
+        public Object next() {
+            if (searchNextIterator() == false) {
+                throw new NoSuchElementException();
+            }
+            return tempIterator.next();
+        }
+
+        public void remove() {
+            if (tempIterator == null) {
+                throw new IllegalStateException();
+            }
+            tempIterator.remove();
+        }
+
+    }
+
+    /**
+     * Clone the map.
+     * <p>
+     * The clone will shallow clone the collections as well as the map.
+     * 
+     * @return the cloned map
+     */
+    public Object clone() {
+        MultiHashMap obj = (MultiHashMap) super.clone();
+
+        // clone each Collection container
+        for (Iterator it = entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Collection coll = (Collection) entry.getValue();
+            Collection newColl = createCollection(coll);
+            entry.setValue(newColl);
+        }
         return obj;
     }
     
+    /** 
+     * Creates a new instance of the map value Collection container.
+     * <p>
+     * This method can be overridden to use your own collection type.
+     *
+     * @param coll  the collection to copy, may be null
+     * @return the new collection
+     */
+    protected Collection createCollection(Collection coll) {
+        if (coll == null) {
+            return new ArrayList();
+        } else {
+            return new ArrayList(coll);
+        }
+    }
+
 }

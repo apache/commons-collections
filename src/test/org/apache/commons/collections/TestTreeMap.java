@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.5 2002/02/26 00:31:32 morgand Exp $
- * $Revision: 1.5 $
- * $Date: 2002/02/26 00:31:32 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.11 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,51 +55,46 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.util.TreeMap;
-import java.util.Map;
+
+import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
- * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestTreeMap.java,v 1.5 2002/02/26 00:31:32 morgand Exp $
+ * Tests TreeMap.
+ * 
+ * @version $Revision: 1.11 $ $Date: 2003/11/16 22:15:09 $
+ * 
+ * @author Jason van Zyl
  */
-public abstract class TestTreeMap extends TestMap
-{
-    public TestTreeMap(String testName)
-    {
+public abstract class TestTreeMap extends AbstractTestMap {
+    
+    public TestTreeMap(String testName) {
         super(testName);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestTreeMap.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestTreeMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public boolean useNullKey() {
-      return false;
+    public boolean isAllowNullKey() {
+        return false;
     }
 
     protected TreeMap map = null;
 
-    public void setUp()
-    {
+    public void setUp() {
         map = (TreeMap) makeEmptyMap();
     }
 
-    public void testNewMap()
-    {
+    public void testNewMap() {
         assertTrue("New map is empty", map.isEmpty());
         assertEquals("New map has size zero", map.size(), 0);
     }
 
-    public void testSearch()
-    {
+    public void testSearch() {
         map.put("first", "First Item");
         map.put("second", "Second Item");
         assertEquals("Top item is 'Second Item'", map.get("first"), "First Item");

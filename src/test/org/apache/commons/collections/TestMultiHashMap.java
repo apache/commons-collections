@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.5 2002/06/18 03:28:35 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/18 03:28:35 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.15 2003/11/18 22:37:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,41 +55,42 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * Unit Tests for <code>MultiHashMap</code>.
+ * 
+ * @version $Revision: 1.15 $ $Date: 2003/11/18 22:37:16 $
  *
+ * @author Unknown
  */
-public class TestMultiHashMap extends TestMap
-{
-    public TestMultiHashMap(String testName)
-    {
+public class TestMultiHashMap extends AbstractTestMap {
+
+    public TestMultiHashMap(String testName) {
         super(testName);
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         return new TestSuite(TestMultiHashMap.class);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestMultiHashMap.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestMultiHashMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // MutltiHashMap was introduced in Collections 2.x
-    public int getCompatibilityVersion() {
-        return 2;
+    public String getCompatibilityVersion() {
+        return "2";
     }
 
     public Map makeEmptyMap() {
@@ -102,52 +100,46 @@ public class TestMultiHashMap extends TestMap
     //----------------------------
     //          Tests
     //----------------------------
-    public void testPutNGet()
-    {
+    public void testPutNGet() {
         MultiHashMap map = new MultiHashMap();
-        loadMap( map );
-        checkMap( map );
-        
-        assertTrue( map.get(new Integer(99)) == null );
-        
+        loadMap(map);
+        checkMap(map);
+
+        assertTrue(map.get(new Integer(99)) == null);
+
         map.clear();
-        assertTrue( map.size() == 0 );
+        assertTrue(map.size() == 0);
     }
-    
-    public void testContainsValue()
-    {
+
+    public void testContainsValue() {
         MultiHashMap map = new MultiHashMap();
-        loadMap( map );
-        
-        assertTrue( map.containsValue( "uno" ) );
-        assertTrue( map.containsValue( "quatro" ) );
-        assertTrue( map.containsValue( "two" ) );
-        
-        assertTrue( ! map.containsValue( "uggaBugga" ) );
-        
+        loadMap(map);
+
+        assertTrue(map.containsValue("uno"));
+        assertTrue(map.containsValue("quatro"));
+        assertTrue(map.containsValue("two"));
+
+        assertTrue(!map.containsValue("uggaBugga"));
+
         map.clear();
     }
     
-    public void testValues()
-    {
+    public void testValues() {
         MultiHashMap map = new MultiHashMap();
-        loadMap( map );
-        
+        loadMap(map);
+
         Collection vals = map.values();
-        assertTrue( vals.size() == getFullSize() );
-        
+        assertTrue(vals.size() == getFullSize());
+
         map.clear();
     }
 
-    
-    static private class MapPair
-    {
-        MapPair( int key, String val )
-        {
-            mKey = new Integer( key );
+    static private class MapPair {
+        MapPair(int key, String val) {
+            mKey = new Integer(key);
             mValue = val;
         }
-        
+
         Integer mKey = null;
         String mValue = null;
     }
@@ -161,68 +153,66 @@ public class TestMultiHashMap extends TestMap
         {new MapPair(4,"four"), new MapPair(4,"quatro")}
     };
     
-    private void loadMap( MultiHashMap map )
-    {
+    private void loadMap(MultiHashMap map) {
         // Set up so that we load the keys "randomly"
         // (i.e. we don't want to load int row-order, so that all like keys
         // load together. We want to mix it up...)
-        
+
         int numRows = sMapPairs.length;
         int maxCols = 0;
-        for( int ii=0; ii < sMapPairs.length; ii++ ){
-            if ( sMapPairs[ii].length > maxCols )
+        for (int ii = 0; ii < sMapPairs.length; ii++) {
+            if (sMapPairs[ii].length > maxCols) {
                 maxCols = sMapPairs[ii].length;
+            }
         }
-        for( int ii=0; ii < maxCols; ii++ ){
-            for( int jj=0; jj < numRows; jj++ ){
-                if ( ii < sMapPairs[jj].length ) {
-                    map.put( sMapPairs[jj][ii].mKey, sMapPairs[jj][ii].mValue);
+        for (int ii = 0; ii < maxCols; ii++) {
+            for (int jj = 0; jj < numRows; jj++) {
+                if (ii < sMapPairs[jj].length) {
+                    map.put(sMapPairs[jj][ii].mKey, sMapPairs[jj][ii].mValue);
                     //---------------------------------------------------------
                 }
             }
         }
-        assertTrue( map.size() == sMapPairs.length );
+        assertTrue(map.size() == sMapPairs.length);
     }
     
-    private void checkMap( MultiHashMap map )
-    {
-        for( int ii=0; ii < sMapPairs.length; ii++ ){
-            checkKeyList( map, ii );
+    private void checkMap(MultiHashMap map) {
+        for (int ii = 0; ii < sMapPairs.length; ii++) {
+            checkKeyList(map, ii);
         }
     }
-    
-    private void checkKeyList( MultiHashMap map, int index )
-    {
-        assertTrue( index < sMapPairs.length );
-        Integer key = sMapPairs[index][0].mKey ;
-        
-        Object obj = map.get( key );
+
+    private void checkKeyList(MultiHashMap map, int index) {
+        assertTrue(index < sMapPairs.length);
+        Integer key = sMapPairs[index][0].mKey;
+
+        Object obj = map.get(key);
         //--------------------------
-        
-        assertTrue( obj != null );
-        assertTrue( obj instanceof Collection );
-        Collection keyList = (Collection)obj;
-        
-        assertTrue( keyList.size()  == sMapPairs[index].length );
+
+        assertTrue(obj != null);
+        assertTrue(obj instanceof Collection);
+        Collection keyList = (Collection) obj;
+
+        assertTrue(keyList.size() == sMapPairs[index].length);
         Iterator iter = keyList.iterator();
-        while ( iter.hasNext() ) {
+        while (iter.hasNext()) {
             Object oval = iter.next();
-            assertTrue( oval != null );
-            assertTrue( oval instanceof String );
-            String val = (String)oval;
+            assertTrue(oval != null);
+            assertTrue(oval instanceof String);
+            String val = (String) oval;
             boolean foundIt = false;
-            for( int ii=0; ii < sMapPairs[index].length; ii++ ){
-                if( val.equals( sMapPairs[index][ii].mValue ) )
+            for (int ii = 0; ii < sMapPairs[index].length; ii++) {
+                if (val.equals(sMapPairs[index][ii].mValue)) {
                     foundIt = true;
+                }
             }
-            assertTrue( foundIt );
+            assertTrue(foundIt);
         }
     }
     
-    public int getFullSize()
-    {
+    public int getFullSize() {
         int len = 0;
-        for( int ii=0; ii < sMapPairs.length; ii++ ){
+        for (int ii = 0; ii < sMapPairs.length; ii++) {
             len += sMapPairs[ii].length;
         }
         return len;
@@ -262,6 +252,13 @@ public class TestMultiHashMap extends TestMap
     }
 
     public void testMapEquals() {
+        MultiHashMap one = new MultiHashMap();
+        Integer value = new Integer(1);
+        one.put("One", value);
+        one.remove("One", value);
+        
+        MultiHashMap two = new MultiHashMap();
+        assertEquals(two, one);
     }
 
     public void testMapHashCode() {

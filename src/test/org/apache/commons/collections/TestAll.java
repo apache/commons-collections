@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.30 2002/07/09 16:48:56 rwaldhoff Exp $
- * $Revision: 1.30 $
- * $Date: 2002/07/09 16:48:56 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.55 2004/01/04 18:02:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,16 +55,19 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import org.apache.commons.collections.comparators.*;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * Entry point for all Collections tests.
+ * Entry point for all Collections package tests.
+ * 
+ * @version $Revision: 1.55 $ $Date: 2004/01/04 18:02:58 $
+ * 
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.30 2002/07/09 16:48:56 rwaldhoff Exp $
+ * @author Stephen Colebourne
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -76,17 +76,23 @@ public class TestAll extends TestCase {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
+        suite.addTest(TestBagUtils.suite());
+        suite.addTest(TestClosureUtils.suite());
+        suite.addTest(TestCollectionUtils.suite());
+        suite.addTest(TestBufferUtils.suite());
+        suite.addTest(TestEnumerationUtils.suite());
+        suite.addTest(TestFactoryUtils.suite());
+        suite.addTest(TestListUtils.suite());
+        suite.addTest(TestMapUtils.suite());
+        suite.addTest(TestPredicateUtils.suite());
+        suite.addTest(TestSetUtils.suite());
+        suite.addTest(TestTransformerUtils.suite());
+        
         suite.addTest(TestArrayStack.suite());
         suite.addTest(TestBeanMap.suite());
         suite.addTest(TestBinaryHeap.suite());
         suite.addTest(TestBoundedFifoBuffer.suite());
         suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCollatingIterator.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestComparableComparator.suite());
-        suite.addTest(TestComparatorChain.suite());
         suite.addTest(TestCursorableLinkedList.suite());
         suite.addTest(TestDoubleOrderedMap.suite());
         suite.addTest(TestExtendedProperties.suite());
@@ -96,22 +102,15 @@ public class TestAll extends TestCase {
         suite.addTest(TestFastHashMap1.suite());
         suite.addTest(TestFastTreeMap.suite());
         suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestFilterIterator.suite());
-        suite.addTest(TestFilterListIterator.suite());
         suite.addTest(TestHashBag.suite());
-        suite.addTest(TestIteratorChain.suite());
-        suite.addTest(TestListIteratorWrapper.suite());
+        suite.addTest(TestIteratorUtils.suite());
         suite.addTest(TestLRUMap.suite());
         suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestReverseComparator.suite());
-	suite.addTest(TestNullComparator.suite());
+        suite.addTest(TestReferenceMap.suite());
         suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestSingletonIterator.suite());
         suite.addTest(TestStaticBucketMap.suite());
         suite.addTest(TestTreeBag.suite());
         suite.addTest(TestUnboundedFifoBuffer.suite());
-        suite.addTest(TestUniqueFilterIterator.suite());
-        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
         return suite;
     }
         

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.22 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.22 $
- * $Date: 2002/06/18 05:35:58 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.27 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,26 +55,27 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Set;
 
+import junit.framework.Test;
+
 /**
+ * Tests LRUMap.
  * 
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.22 2002/06/18 05:35:58 mas Exp $
+ * @version $Revision: 1.27 $ $Date: 2003/11/18 22:37:15 $
+ * 
+ * @author James Strachan
+ * @author Morgan Delagrange
+ * @author Stephen Colebourne
  */
-public class TestLRUMap extends TestSequencedHashMap
-{
+public class TestLRUMap extends TestSequencedHashMap {
+    
     public TestLRUMap(String testName) {
         super(testName);
     }
@@ -91,11 +89,20 @@ public class TestLRUMap extends TestSequencedHashMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    //-----------------------------------------------------------------------
     public Map makeEmptyMap() {
         LRUMap map = new LRUMap();
         return map;
     }
 
+    /**
+     * Override as test uses iterator() and getKey() in combination which doesn't work.
+     */
+    public String[] ignoredTests() {
+        return new String[] {"TestLRUMap.bulkTestMapEntrySet.testMapEntrySetIteratorEntry"};
+    }
+
+    //-----------------------------------------------------------------------
     public void testRemoveLRU() {
         LRUMap map2 = new LRUMap(3);
         map2.put(new Integer(1),"foo");

@@ -1,0 +1,23 @@
+<BODY>
+<p>
+This package contains implementations of the
+{@link org.apache.commons.collections.Bag Bag} and 
+{@link org.apache.commons.collections.SortedBag SortedBag} interfaces.
+A bag stores an object and a count of the number of occurences of the object.
+<p>
+The following implementations are provided in the package:
+<ul>
+<li>HashBag - implementation that uses a HashMap to store the data
+<li>TreeBag - implementation that uses a TreeMap to store the data
+</ul>
+<p>
+The following decorators are provided in the package:
+<ul>
+<li>Synchronized - synchronizes method access for multi-threaded environments
+<li>Unmodifiable - ensures the bag cannot be altered
+<li>Predicated - ensures that only elements that are valid according to a predicate can be added
+<li>Typed - ensures that only elements that are of a specific type can be added
+<li>Transformed - transforms each element added to the bag
+</ul>
+</pre>
+</BODY>

@@ -1,13 +1,21 @@
 Jakarta Commons Collections
 ===========================
 
-Welcome to the Collections component of the Jakarta Commons
-project.
+Welcome to the Collections component of the Jakarta Commons project.
+This component contains many new collections and collection utilities.
 
-This component requires the excellent Ant utility.  It can 
-be found here :
+Two jar files are produced by this component.
+The first, commons-collections.jar is the main jar used by applications.
+The second, commons-collections-testframework.jar is an extension to junit
+for testing new collection implementations and is not normally used by applications.
 
-  http://jakarta.apache.org/ant/
+
+Building from source
+--------------------
+This component requires the excellent Ant utility.
+It can be found here :
+
+  http://ant.apache.org/
 
 For testing the project, you will also need JUnit :
 
@@ -40,3 +48,7 @@ To build the jar and API doc at once :
 $ ant dist
 
 
+Maven
+-----
+The component can also be built using Maven.
+http://maven.apache.org

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.7 2002/06/16 03:39:40 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/16 03:39:40 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.19 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -62,81 +59,146 @@ package org.apache.commons.collections;
 
 import java.util.Map;
 
-/** A default implementation of {@link java.util.Map.Entry}
-  *
-  * @since 1.0
-  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
-  */
-  
-public class DefaultMapEntry implements Map.Entry {
+/**
+ * A default implementation of {@link java.util.Map.Entry}
+ *
+ * @deprecated Use the version in the keyvalue subpackage. Will be removed in v4.0
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.19 $ $Date: 2004/01/05 22:46:33 $
+ * 
+ * @author James Strachan
+ * @author Michael A. Smith
+ * @author Neil O'Toole
+ * @author Stephen Colebourne
+ */
+public class DefaultMapEntry implements Map.Entry, KeyValue {
     
+    /** The key */
     private Object key;
+    /** The value */
     private Object value;
     
+    /**
+     * Constructs a new <code>DefaultMapEntry</code> with a null key
+     * and null value.
+     */
     public DefaultMapEntry() {
+        super();
     }
 
+    /**
+     * Constructs a new <code>DefaultMapEntry</code> with the given
+     * key and given value.
+     *
+     * @param entry  the entry to copy, must not be null
+     * @throws NullPointerException if the entry is null
+     */
+    public DefaultMapEntry(Map.Entry entry) {
+        super();
+        this.key = entry.getKey();
+        this.value = entry.getValue();
+    }
+
+    /**
+     * Constructs a new <code>DefaultMapEntry</code> with the given
+     * key and given value.
+     *
+     * @param key  the key for the entry, may be null
+     * @param value  the value for the entry, may be null
+     */
     public DefaultMapEntry(Object key, Object value) {
+        super();
         this.key = key;
         this.value = value;
     }
 
-    /**
-     *  Implemented per API documentation of 
-     *  {@link java.util.Map.Entry#equals(Object)}
-     **/
-    public boolean equals(Object o) {
-        if( o == null ) return false;
-        if( o == this ) return true;        
-
-        if ( ! (o instanceof Map.Entry ) )
-            return false;
-        Map.Entry e2 = (Map.Entry)o;    
-        return ((getKey() == null ?
-                 e2.getKey() == null : getKey().equals(e2.getKey())) &&
-                (getValue() == null ?
-                 e2.getValue() == null : getValue().equals(e2.getValue())));
-    }
-     
-     
-    /**
-     *  Implemented per API documentation of 
-     *  {@link java.util.Map.Entry#hashCode()}
-     **/
-    public int hashCode() {
-        return ( ( getKey() == null ? 0 : getKey().hashCode() ) ^
-                 ( getValue() == null ? 0 : getValue().hashCode() ) ); 
-    }
-    
-
-
     // Map.Entry interface
     //-------------------------------------------------------------------------
+    /**
+     * Gets the key from the Map Entry.
+     *
+     * @return the key 
+     */
     public Object getKey() {
         return key;
     }
 
-    public Object getValue() {
-        return value;
-    }
-
-    // Properties
-    //-------------------------------------------------------------------------    
+    /**
+     * Sets the key stored in this Map Entry.
+     * <p>
+     * This Map Entry is not connected to a Map, so only the local data is changed.
+     *
+     * @param key  the new key
+     */
     public void setKey(Object key) {
         this.key = key;
     }
     
-    /** Note that this method only sets the local reference inside this object and
-      * does not modify the original Map.
-      *
-      * @return the old value of the value
-      * @param value the new value
-      */
+    /**
+     * Gets the value from the Map Entry.
+     *
+     * @return the value
+     */
+    public Object getValue() {
+        return value;
+    }
+
+    /** 
+     * Sets the value stored in this Map Entry.
+     * <p>
+     * This Map Entry is not connected to a Map, so only the local data is changed.
+     *
+     * @param value  the new value
+     * @return the previous value
+     */
     public Object setValue(Object value) {
         Object answer = this.value;
         this.value = value;
         return answer;
+    }
+
+    // Basics
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this Map Entry with another Map Entry.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
+     * 
+     * @param obj  the object to compare to
+     * @return true if equal key and value
+     */
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof Map.Entry == false) {
+            return false;
+        }
+        Map.Entry other = (Map.Entry) obj;
+        return
+            (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
+            (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
+    }
+     
+    /**
+     * Gets a hashCode compatible with the equals method.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
+     * 
+     * @return a suitable hash code
+     */
+    public int hashCode() {
+        return (getKey() == null ? 0 : getKey().hashCode()) ^
+               (getValue() == null ? 0 : getValue().hashCode()); 
+    }
+
+    /**
+     * Written to match the output of the Map.Entry's used in 
+     * a {@link java.util.HashMap}. 
+     * @since 3.0
+     */
+    public String toString() {
+        return ""+getKey()+"="+getValue();
     }
 
 }

@@ -1,0 +1,31 @@
+<BODY>
+<p>
+This package contains implementations of the
+{@link org.apache.commons.collections.BidiMap BidiMap},
+{@link org.apache.commons.collections.OrderedBidiMap OrderedBidiMap} and 
+{@link org.apache.commons.collections.SortedBidiMap SortedBidiMap} interfaces.
+A BidiMap is an extension to Map that allows keys and values to be looked up with equal ease.
+One example usage is a system communicating to a legacy datasource that must convert codes
+from the new format to the old format and vice versa.
+<p>
+The following implementations are provided in the package:
+<ul>
+<li>DualHashBidiMap - uses two HashMaps to implement BidiMap
+<li>DualTreeBidiMap - uses two TreeMaps to implement SortedBidiMap
+<li>TreeBidiMap - red-black tree implementation of OrderedBidiMap
+</ul>
+<p>
+The following decorators are provided in the package:
+<ul>
+<li>Unmodifiable - ensures the map cannot be altered
+<!--
+<li>Synchronized - synchronizes method access for multi-threaded environments
+<li>Predicated - ensures that only elements that are valid according to a predicate can be added
+<li>Typed - ensures that only elements that are of a specific type can be added
+<li>Transformed - transforms each element added
+<li>FixedSize - ensures that the size of the map cannot change
+<li>Lazy - creates objects in the map on demand
+<li>ListOrdered - ensures that insertion order is retained-->
+</ul>
+</pre>
+</BODY>

@@ -1,12 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.1 2002/05/29 02:57:41 arron Exp $
- * $Revision: 1.1 $
- * $Date: 2002/05/29 02:57:41 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.11 2003/11/23 17:48:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,20 +20,20 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
- * 4. The names "The Jakarta Project", "Struts", and "Apache Software
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
  *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -59,119 +57,115 @@
  */
 package org.apache.commons.collections;
 
-import java.util.*;
-import java.lang.reflect.*;
+import org.apache.commons.collections.functors.ConstantFactory;
+import org.apache.commons.collections.functors.InstantiateFactory;
+import org.apache.commons.collections.functors.ExceptionFactory;
+import org.apache.commons.collections.functors.PrototypeFactory;
 
 /**
- * A Factory for the creation of Factories. This is more of the factory
- * "pattern" by definition, but what it creates, is objects which subscribe to
- * a factory interface which other systems can rely on them to manufacture
- * objects.
+ * <code>FactoryUtils</code> provides reference implementations and utilities
+ * for the Factory functor interface. The supplied factories are:
+ * <ul>
+ * <li>Prototype - clones a specified object
+ * <li>Reflection - creates objects using reflection
+ * <li>Constant - always returns the same object
+ * <li>Null - always returns null
+ * <li>Exception - always throws an exception
+ * </ul>
+ * All the supplied factories are Serializable.
+ * 
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.11 $ $Date: 2003/11/23 17:48:20 $
  *
- * @author Arron Bates
- * @version $Revision: 1.1 $
+ * @author Stephen Colebourne
  */
 public class FactoryUtils {
-  
-  /** Creates a SimpleObjectFactory whith a class definition, which will be
-   * used to create a new object from an empty constructor.
-   *
-   * @param inClass class definition which will be ued to create the new object
-   * @return the simple object factory.
-   */
-  public static SimpleObjectFactory createStandardFactory(Class inClass) {
-    return new StandardFactory(inClass);
-  }
-  
-  /** Creates a SimpleObjectFactory whith the class definition and argument
-   * details, which can create a new object from a constructor which requires
-   * arguments.
-   *
-   * @param inClass class definition which will be ued to create the new object
-   * @param argTypes argument class types for the constructor
-   * @param argObjects the objects for the arguments themselves
-   * @return the simple object factory.
-   */
-  public static SimpleObjectFactory createStandardFactory(Class inClass,
-                                                          Class[] argTypes,
-                                                          Object[] argObjects) {
-    return new StandardFactory(inClass, argTypes, argObjects);
-  }
-  
-  
-  
-  /* A simple factory, which takes the bare bones of object creation to do just
-   * that, create new objects.
-   */
-  private static class StandardFactory implements SimpleObjectFactory {
-    
-    /* builds the object factory. The class definition can creat objects which
-     * have no-argument constructors.
+
+    /**
+     * This class is not normally instantiated.
      */
-    public StandardFactory(Class inClass) {
-      this.classDefinition = inClass;
+    public FactoryUtils() {
+        super();
     }
-    
-    /* builds the object factory taking all the options needed to provide
-     * arguments to a constructor.
-     */
-    public StandardFactory(Class inClass, Class[] argTypes, Object[] argObjects) {
-      this(inClass);
-      this.argTypes = argTypes;
-      this.argObjects = argObjects;
-    }
-  
-  
-  
-    /* This method is the beast that creates the new objects. Problem faced is that
-     * the Exceptions thrown are all RuntimeExceptions, meaning that for this class
-     * to be used as a java.util.Map implementation itself, it has to guide the
-     * exceptions as the runtime excpetions commonly thrown by these objects.
+
+    /**
+     * Gets a Factory that always throws an exception.
+     * This could be useful during testing as a placeholder.
      *
-     * Thinly disguising the error as a null pointer, with a modified message for
-     * debugging.
+     * @return the factory
      */
-    public Object createObject() {
-      
-      Object obj = null;
-      /* for catching error specifics */
-      String fubar = null;
-      
-      try {
-        if ((argTypes == null) || (argObjects == null)) {
-          /* no arguments, make object with empty constructor */
-          obj = this.classDefinition.newInstance();
-        } else {
-          /* construct object with argument details */
-          Constructor constructor = this.classDefinition.getConstructor(argTypes);
-          obj = constructor.newInstance(argObjects);
-        }
-      } catch (InstantiationException ex) {
-        fubar = ex.getMessage();
-      } catch (IllegalAccessException ex) {
-        fubar = ex.getMessage();
-      } catch (IllegalArgumentException ex) {
-        fubar = ex.getMessage();
-      } catch (NoSuchMethodException ex) {
-        fubar = ex.getMessage();
-      } catch (InvocationTargetException ex) {
-        fubar = ex.getMessage();
-      }
-      
-      /* fake our Exception if required */
-      if (fubar != null) {
-        /* guise the error as a more typical error */
-  	    throw new NullPointerException("Failed object creation :: "+ fubar +"\n");
-      }
-      
-      return obj;
+    public static Factory exceptionFactory() {
+        return ExceptionFactory.INSTANCE;
     }
-  
-    /* class definition for new object creation */
-    private Class classDefinition;
-  
-    /* construcor details, optional */
-    private Class[] argTypes;
-    private Object[] argObjects;
-  }
+
+    /**
+     * Gets a Factory that will return null each time the factory is used.
+     * This could be useful during testing as a placeholder.
+     *
+     * @return the factory
+     */
+    public static Factory nullFactory() {
+        return ConstantFactory.NULL_INSTANCE;
+    }
+
+    /**
+     * Creates a Factory that will return the same object each time the factory
+     * is used. No check is made that the object is immutable. In general, only
+     * immutable objects should use the constant factory. Mutable objects should
+     * use the prototype factory.
+     *
+     * @param constantToReturn  the constant object to return each time in the factory
+     * @return the <code>constant</code> factory.
+     */
+    public static Factory constantFactory(Object constantToReturn) {
+        return ConstantFactory.getInstance(constantToReturn);
+    }
+
+    /**
+     * Creates a Factory that will return a clone of the same prototype object
+     * each time the factory is used. The prototype will be cloned using one of these
+     * techniques (in order):
+     * <ul>
+     * <li>public clone method
+     * <li>public copy constructor
+     * <li>serialization clone
+     * <ul>
+     *
+     * @param prototype  the object to clone each time in the factory
+     * @return the <code>prototype</code> factory
+     * @throws IllegalArgumentException if the prototype is null
+     * @throws IllegalArgumentException if the prototype cannot be cloned
+     */
+    public static Factory prototypeFactory(Object prototype) {
+        return PrototypeFactory.getInstance(prototype);
+    }
+
+    /**
+     * Creates a Factory that can create objects of a specific type using
+     * a no-args constructor.
+     *
+     * @param classToInstantiate  the Class to instantiate each time in the factory
+     * @return the <code>reflection</code> factory
+     * @throws IllegalArgumentException if the classToInstantiate is null
+     */
+    public static Factory instantiateFactory(Class classToInstantiate) {
+        return InstantiateFactory.getInstance(classToInstantiate, null, null);
+    }
+
+    /**
+     * Creates a Factory that can create objects of a specific type using
+     * the arguments specified to this method.
+     *
+     * @param classToInstantiate  the Class to instantiate each time in the factory
+     * @param paramTypes  parameter types for the constructor, can be null
+     * @param args  the arguments to pass to the constructor, can be null
+     * @return the <code>reflection</code> factory
+     * @throws IllegalArgumentException if the classToInstantiate is null
+     * @throws IllegalArgumentException if the paramTypes and args don't match
+     * @throws IllegalArgumentException if the constructor doesn't exist
+     */
+    public static Factory instantiateFactory(Class classToInstantiate, Class[] paramTypes, Object[] args) {
+        return InstantiateFactory.getInstance(classToInstantiate, paramTypes, args);
+    }
+
 }

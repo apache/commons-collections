@@ -1,9 +1,10 @@
-package org.apache.commons.collections;
-
-/* ====================================================================
+/*
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestStaticBucketMap.java,v 1.9 2003/11/18 22:37:16 scolebourne Exp $
+ * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -18,21 +19,21 @@ package org.apache.commons.collections;
  *    the documentation and/or other materials provided with the
  *    distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Turbine" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
+ *    Foundation" must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their names without prior written
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -52,32 +53,32 @@ package org.apache.commons.collections;
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
+package org.apache.commons.collections;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * Unit tests 
  * {@link org.apache.commons.collections.StaticBucketMap}.
  * 
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @version $Revision: 1.9 $ $Date: 2003/11/18 22:37:16 $
+ * 
+ * @author Michael A. Smith
  */
-public class TestStaticBucketMap extends TestMap {
+public class TestStaticBucketMap extends AbstractTestMap {
 
     public TestStaticBucketMap(String name) {
         super(name);
     }
 
     public static Test suite() {
-        return new TestSuite(TestStaticBucketMap.class);
+        return BulkTest.makeSuite(TestStaticBucketMap.class);
     }
 
     public static void main(String[] args[]) {
@@ -88,29 +89,14 @@ public class TestStaticBucketMap extends TestMap {
     public Map makeEmptyMap() {
         return new StaticBucketMap(30);
     }
-   
-    // The verification method must be overridden because the collection views
-    // are not backed by the map.
-        
-    public void verifyEntrySet() {
-        // update the entrySet view to the latest version, then proceed to
-        // verify as usual.
-        entrySet = map.entrySet();
-        super.verifyEntrySet();
-    }
-    
-    public void verifyKeySet() {
-        // update the keySet view to the latest version, then proceed to verify
-        // as usual.
-        keySet = map.keySet();
-        super.verifyKeySet();
-    }
-    
-    public void verifyValues() {
-        // update the values view to the latest version, then proceed to verify
-        // as usual.  
-        values = map.values();
-        super.verifyValues();
-    }
 
+    public String[] ignoredTests() {
+        String pre = "TestStaticBucketMap.bulkTestMap";
+        String post = ".testCollectionIteratorFailFast";
+        return new String[] {
+            pre + "EntrySet" + post,
+            pre + "KeySet" + post,
+            pre + "Values" + post
+        };
+    }   
 }

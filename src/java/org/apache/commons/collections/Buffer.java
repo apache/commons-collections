@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.2 2002/07/03 01:45:47 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:45:47 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.8 2004/01/05 22:27:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,49 +57,49 @@
  */
 package org.apache.commons.collections;
 
-
 import java.util.Collection;
 
-
 /**
- * A Buffer is a collection that allows objects to be removed in some
- * well-defined order.  The removal order can be based on insertion order
- * (eg, a FIFO queue or a LIFO stack), on access order (eg, an LRU cache), 
- * on some arbitrary comparator (eg, a priority queue) or on any other 
- * well-defined ordering.<P>
- *
+ * Defines a collection that allows objects to be removed in some well-defined order.
+ * <p>
+ * The removal order can be based on insertion order (eg, a FIFO queue or a
+ * LIFO stack), on access order (eg, an LRU cache), on some arbitrary comparator
+ * (eg, a priority queue) or on any other well-defined ordering.
+ * <p>
  * Note that the removal order is not necessarily the same as the iteration
- * order.  A <Code>Buffer</Code> implementation may have equivalent removal
- * and iteration orders, but this is not required.<P>
- *
+ * order.  A <code>Buffer</code> implementation may have equivalent removal
+ * and iteration orders, but this is not required.
+ * <p>
  * This interface does not specify any behavior for 
  * {@link Object#equals(Object)} and {@link Object#hashCode} methods.  It
- * is therefore possible for a <Code>Buffer</Code> implementation to also
+ * is therefore possible for a <code>Buffer</code> implementation to also
  * also implement {@link java.util.List}, {@link java.util.Set} or 
  * {@link Bag}.
  *
- * @author  <a href="bloritsch@apache.org">Berin Loritsch</a>
- * @version CVS $Revision: 1.2 $ $Date: 2002/07/03 01:45:47 $
- * @since Avalon 4.0
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.8 $ $Date: 2004/01/05 22:27:08 $
+ * 
+ * @author Avalon
+ * @author Berin Loritsch
+ * @author Paul Jack
+ * @author Stephen Colebourne
  */
-public interface Buffer extends Collection
-{
+public interface Buffer extends Collection {
 
     /**
-     * Removes the next object from the buffer.
+     * Gets and removes the next object from the buffer.
      *
-     * @return  the removed object
+     * @return the next object in the buffer, which is also removed
      * @throws BufferUnderflowException if the buffer is already empty
      */
     Object remove();
 
-
-
     /**
-     *  Returns the next object in the buffer without removing it.
+     * Gets the next object from the buffer without removing it.
      *
-     *  @return  the next object in the buffer
-     *  @throws BufferUnderflowException if the buffer is empty
+     * @return the next object in the buffer, which is not removed
+     * @throws BufferUnderflowException if the buffer is empty
      */
     Object get();
+
 }

@@ -1,9 +1,9 @@
-package org.apache.commons.collections.comparators;
-
-/* ====================================================================
+/*
+ * $Header$ 
+ * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -19,11 +19,11 @@ package org.apache.commons.collections.comparators;
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ *    if any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "Apache" and "Apache Software Foundation" and
  *    "Apache Commons" must not be used to endorse or promote products
@@ -53,6 +53,7 @@ package org.apache.commons.collections.comparators;
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
  */
+package org.apache.commons.collections.comparators;
 
 import java.util.Comparator;
 
@@ -61,8 +62,12 @@ import org.apache.commons.collections.Transformer;
 /**
  * Decorates another Comparator with transformation behavior. That is, the
  * return value from the transform operation will be passed to the decorated
- * <CODE>Comparator#compare</CODE> method.
- * <p>
+ * {@link Comparator#compare compare} method.
+ * <p />
+ * 
+ * @since Commons Collections 2.0 (?)
+ * @version $Revision$ $Date$
+ * 
  * @see org.apache.commons.collections.Transformer
  * @see org.apache.commons.collections.comparators.ComparableComparator
  */
@@ -72,8 +77,10 @@ public class TransformingComparator implements Comparator
     protected Transformer transformer;
 
     /**
-     * Constructs an instance with the given Transformer and a ComparableComparator.
-     * @param transformer what will transform the instance.
+     * Constructs an instance with the given Transformer and a 
+     * {@link ComparableComparator ComparableComparator}.
+     * @param transformer what will transform the arguments to 
+     *        {@link #compare compare}
      */
     public TransformingComparator(Transformer transformer)
     {
@@ -82,8 +89,8 @@ public class TransformingComparator implements Comparator
 
     /**
      * Constructs an instance with the given Transformer and Comparator
-     * @param decorated  the decorated Comparator
-     * @param getterName    the getter name
+     * @param transformer what will transform the arguments to {@link #compare compare}
+     * @param decorated the decorated Comparator
      */
     public TransformingComparator(Transformer transformer, Comparator decorated)
     {

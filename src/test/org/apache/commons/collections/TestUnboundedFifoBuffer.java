@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestUnboundedFifoBuffer.java,v 1.2 2002/07/03 01:59:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:59:50 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestUnboundedFifoBuffer.java,v 1.10 2003/11/18 22:37:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,17 +57,22 @@
  */
 package org.apache.commons.collections;
 
-
-import junit.framework.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import junit.framework.Test;
+
+import org.apache.commons.collections.collection.AbstractTestCollection;
 
 /**
- *  Test cases for UnboundedFifoBuffer.
+ * Test cases for UnboundedFifoBuffer.
+ * 
+ * @version $Revision: 1.10 $ $Date: 2003/11/18 22:37:16 $
+ * 
+ * @author Unknown
  */
-public class TestUnboundedFifoBuffer extends TestCollection {
+public class TestUnboundedFifoBuffer extends AbstractTestCollection {
 
     public TestUnboundedFifoBuffer(String n) {
         super(n);
@@ -80,55 +82,7 @@ public class TestUnboundedFifoBuffer extends TestCollection {
         return BulkTest.makeSuite(TestUnboundedFifoBuffer.class);
     }
 
-    /**
-     *  Returns an empty UnboundedFifoBuffer with a small capacity.
-     *
-     *  @return an empty UnboundedFifoBuffer
-     */
-    public Collection makeCollection() {
-        return new UnboundedFifoBuffer(5);
-    }
-
-
-    /**
-     *  Returns an empty ArrayList.
-     *
-     *  @return an empty ArrayList
-     */
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
-    }
-
-
-    /**
-     *  Returns a full ArrayList.
-     *
-     *  @return a full ArrayList
-     */
-    public Collection makeConfirmedFullCollection() {
-        Collection c = makeConfirmedCollection();
-        c.addAll(java.util.Arrays.asList(getFullElements()));
-        return c;
-    }
-
-
-    /**
-     *  Overridden because UnboundedFifoBuffer doesn't allow null elements.
-     *
-     *  @return an array of random elements without the null element
-     */
-    public Object[] getFullElements() {
-        return getFullNonNullElements();
-    }
-
-
-    /**
-     *  Overridden because UnboundedFifoBuffer's iterators aren't fail-fast.
-     */
-    public void testCollectionIteratorFailFast() {
-    }
-
-
+    //-----------------------------------------------------------------------
     /**
      *  Verifies that the ArrayList has the same elements in the same 
      *  sequence as the UnboundedFifoBuffer.
@@ -145,7 +99,54 @@ public class TestUnboundedFifoBuffer extends TestCollection {
         }
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Overridden because UnboundedFifoBuffer doesn't allow null elements.
+     * @return false
+     */
+    public boolean isNullSupported() {
+        return false;
+    }
 
+    /**
+     * Overridden because UnboundedFifoBuffer isn't fail fast.
+     * @return false
+     */
+    public boolean isFailFastSupported() {
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     *  Returns an empty ArrayList.
+     *
+     *  @return an empty ArrayList
+     */
+    public Collection makeConfirmedCollection() {
+        return new ArrayList();
+    }
+
+    /**
+     *  Returns a full ArrayList.
+     *
+     *  @return a full ArrayList
+     */
+    public Collection makeConfirmedFullCollection() {
+        Collection c = makeConfirmedCollection();
+        c.addAll(java.util.Arrays.asList(getFullElements()));
+        return c;
+    }
+
+    /**
+     *  Returns an empty UnboundedFifoBuffer with a small capacity.
+     *
+     *  @return an empty UnboundedFifoBuffer
+     */
+    public Collection makeCollection() {
+        return new UnboundedFifoBuffer(5);
+    }
+
+    //-----------------------------------------------------------------------
     /**
      *  Tests that UnboundedFifoBuffer removes elements in the right order.
      */
@@ -160,5 +161,28 @@ public class TestUnboundedFifoBuffer extends TestCollection {
         }
     }
 
+    /**
+     * Tests that the constructor correctly throws an exception.
+     */
+    public void testConstructorException1() {
+        try {
+            new UnboundedFifoBuffer(0);
+        } catch (IllegalArgumentException ex) {
+            return;
+        }
+        fail();
+    }
+    
+    /**
+     * Tests that the constructor correctly throws an exception.
+     */
+    public void testConstructorException2() {
+        try {
+            new UnboundedFifoBuffer(-20);
+        } catch (IllegalArgumentException ex) {
+            return;
+        }
+        fail();
+    }
 }
 

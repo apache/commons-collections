@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TreeBag.java,v 1.5 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/12 03:59:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TreeBag.java,v 1.11 2003/12/28 16:36:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.Collection;
@@ -67,52 +63,56 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 /**
- * An implementation of {@link Bag} that is backed by a {@link
- * TreeMap}. Order will be maintained among the unique representative
+ * A {@link Bag} that is backed by a {@link TreeMap}. 
+ * Order will be maintained among the unique representative
  * members.
  *
- * @since 2.0
+ * @deprecated Moved to bag subpackage and rewritten internally. Due to be removed in v4.0.
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.11 $ $Date: 2003/12/28 16:36:48 $
+ * 
  * @author Chuck Burdick
- **/
-public class TreeBag extends DefaultMapBag implements SortedBag, Bag {
-   public TreeBag() {
-      setMap(new TreeMap());
-   }
+ */
+public class TreeBag extends DefaultMapBag implements SortedBag {
 
-   /**
-    * New {@link Bag} that maintains order on its unique
-    * representative members according to the given {@link
-    * Comparator}.
-    **/
-   public TreeBag(Comparator c) {
-      setMap(new TreeMap(c));
-   }
+    /**
+     * Constructs an empty <code>TreeBag</code>.
+     */
+    public TreeBag() {
+        super(new TreeMap());
+    }
 
-   /**
-    * New {@link Bag} containing all the members of the given
-    * collection.
-    * @see #addAll
-    **/
-   public TreeBag(Collection c) {
-      this();
-      addAll(c);
-   }
+    /**
+     * Constructs an empty {@link Bag} that maintains order on its unique
+     * representative members according to the given {@link Comparator}.
+     * 
+     * @param comparator  the comparator to use
+     */
+    public TreeBag(Comparator comparator) {
+        super(new TreeMap(comparator));
+    }
 
-   public Object first() {
-      return ((SortedMap)getMap()).firstKey();
-   }
+    /**
+     * Constructs a {@link Bag} containing all the members of the given
+     * collection.
+     * 
+     * @param coll  the collection to copy into the bag
+     */
+    public TreeBag(Collection coll) {
+        this();
+        addAll(coll);
+    }
 
-   public Object last() {
-      return ((SortedMap)getMap()).lastKey();
-   }
+    public Object first() {
+        return ((SortedMap) getMap()).firstKey();
+    }
 
-   public Comparator comparator() {
-      return ((SortedMap)getMap()).comparator();
-   }
+    public Object last() {
+        return ((SortedMap) getMap()).lastKey();
+    }
+
+    public Comparator comparator() {
+        return ((SortedMap) getMap()).comparator();
+    }
+    
 }
-
-
-
-
-
-

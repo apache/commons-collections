@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.2 2002/06/21 03:33:28 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/21 03:33:28 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.7 2003/12/24 01:13:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,49 +55,51 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Test;
+
 /**
  * Test FastArrayList implementation in <strong>fast</strong> mode.
+ * 
+ * @version $Revision: 1.7 $ $Date: 2003/12/24 01:13:55 $
  *
- * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList1.java,v 1.2 2002/06/21 03:33:28 mas Exp $
+ * @author Jason van Zyl
  */
-public class TestFastArrayList1 extends TestFastArrayList
-{
-    public TestFastArrayList1(String testName)
-    {
+public class TestFastArrayList1 extends TestFastArrayList {
+    
+    public TestFastArrayList1(String testName) {
         super(testName);
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         return BulkTest.makeSuite(TestFastArrayList1.class);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestFastArrayList1.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestFastArrayList1.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public void setUp()
-    {
-        list = (ArrayList) makeList();
+    public void setUp() {
+        list = (ArrayList) makeEmptyList();
     }
 
-    public List makeList()
-    {
+    public List makeEmptyList() {
         FastArrayList fal = new FastArrayList();
         fal.setFast(true);
         return (fal);
+    }
+    
+    public String[] ignoredTests() {
+        // subList impl result in...
+        return new String[] {
+            "TestFastArrayList1.bulkTestSubList.bulkTestListIterator.testAddThenSet",
+            "TestFastArrayList1.bulkTestSubList.bulkTestListIterator.testAddThenRemove",
+        };
     }
 
 }

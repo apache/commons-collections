@@ -1,9 +1,10 @@
-package org.apache.commons.collections;
-
-/* ====================================================================
+/*
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSequencedHashMap.java,v 1.24 2003/11/18 22:37:15 scolebourne Exp $
+ * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -18,21 +19,21 @@ package org.apache.commons.collections;
  *    the documentation and/or other materials provided with the
  *    distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Turbine" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
+ *    Foundation" must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their names without prior written
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -52,7 +53,9 @@ package org.apache.commons.collections;
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
+package org.apache.commons.collections;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -61,8 +64,8 @@ import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * Unit tests 
@@ -70,12 +73,14 @@ import junit.framework.TestSuite;
  * Be sure to use the "labRat" instance whenever possible,
  * so that subclasses will be tested correctly.
  * 
- * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
- * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @version $Revision: 1.24 $ $Date: 2003/11/18 22:37:15 $
+ * 
+ * @author Morgan Delagrange
+ * @author Daniel Rall
+ * @author Henning P. Schmiedehausen
+ * @author James Strachan
  */
-public class TestSequencedHashMap extends TestMap {
+public class TestSequencedHashMap extends AbstractTestMap {
     /**
      * The instance to experiment on.
      */
@@ -91,11 +96,11 @@ public class TestSequencedHashMap extends TestMap {
 
     // current versions of SequencedHashMap and subclasses are not
     // compatible with Collections 1.x
-    public int getCompatibilityVersion() {
-        return 2;
+    public String getCompatibilityVersion() {
+        return "2";
     }
 
-    public static void main(String[] args[]) {
+    public static void main(String[] args) {
         String[] testCaseName = { TestSequencedHashMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
@@ -144,7 +149,7 @@ public class TestSequencedHashMap extends TestMap {
                          origEntry.getKey(), copiedEntry.getKey());
             assertEquals("Cloned value does not match original",
                          origEntry.getValue(), copiedEntry.getValue());
-            assertEquals("Cloned entry does not match orginal",
+            assertEquals("Cloned entry does not match original",
                          origEntry, copiedEntry);
         }
         assertTrue("iterator() returned different number of elements than keys()",
@@ -208,7 +213,23 @@ public class TestSequencedHashMap extends TestMap {
                      map2.getLastKey(),getSampleKeys()[getSampleKeys().length - 1]);
     }
 
-    protected void tearDown() {
+    public void testIndexOf() throws Exception {
+        Object[] keys = getKeys();
+        int expectedSize = keys.length;
+        Object[] values = getValues();
+        for (int i = 0; i < expectedSize; i++) {
+            labRat.put(keys[i], values[i]);
+        }
+        // test that the index returned are in the same order that they were 
+        // placed in the map
+        for (int i = 0; i < keys.length; i++) {
+            assertEquals("indexOf with existing key failed", i, labRat.indexOf(keys[i]));
+        }
+        // test non existing key..
+        assertEquals("test with non-existing key failed", -1, labRat.indexOf("NonExistingKey"));
+    }
+    
+    public void tearDown() throws Exception {
         labRat = null;
     }
 }

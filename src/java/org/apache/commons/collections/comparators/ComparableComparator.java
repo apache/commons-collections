@@ -1,9 +1,9 @@
-package org.apache.commons.collections.comparators;
-
-/* ====================================================================
+/* 
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparableComparator.java,v 1.12 2003/08/31 17:25:49 scolebourne Exp $
+ * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -18,21 +18,21 @@ package org.apache.commons.collections.comparators;
  *    the documentation and/or other materials provided with the
  *    distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Commons" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
+ *    Foundation" must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their names without prior written
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -52,30 +52,38 @@ package org.apache.commons.collections.comparators;
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
 
+package org.apache.commons.collections.comparators;
+
 import java.io.Serializable;
-import java.lang.Comparable;
 import java.util.Comparator;
 
 /**
- * A Comparator that compares Comparable objects.
- * Throws ClassCastExceptions if the objects are not 
- * Comparable, or if they are null.
- * Throws ClassCastException if the compareTo of both 
- * objects do not provide an inverse result of each other 
- * as per the Comparable javadoc.  This Comparator is useful, for example,
+ * A {@link Comparator Comparator} that compares 
+ * {@link Comparable Comparable} objects.
+ * <p />
+ * This Comparator is useful, for example,
  * for enforcing the natural order in custom implementations
  * of SortedSet and SortedMap.
+ * <p />
+ * Note: In the 2.0 and 2.1 releases of Commons Collections, 
+ * this class would throw a {@link ClassCastException} if
+ * either of the arguments to {@link #compare compare}
+ * were <code>null</code>, not {@link Comparable Comparable},
+ * or for which {@link Comparable#compareTo compareTo} gave
+ * inconsistent results.  This is no longer the case.  See
+ * {@link #compare} for details.
  *
- * @since 2.0
- * @author bayard@generationjava.com
- * @version $Id: ComparableComparator.java,v 1.5 2002/06/12 03:59:17 mas Exp $
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.12 $ $Date: 2003/08/31 17:25:49 $
+ *
+ * @author Henri Yandell
+ *
+ * @see java.util.Collections#reverseOrder
  */
-public class ComparableComparator implements Comparator,Serializable {
-
-    private static final ComparableComparator instance = 
-        new ComparableComparator();
+public class ComparableComparator implements Comparator, Serializable {
 
     /**
      *  Return a shared instance of a ComparableComparator.  Developers are
@@ -87,58 +95,53 @@ public class ComparableComparator implements Comparator,Serializable {
         return instance;
     }
 
-    private static final long serialVersionUID=-291439688585137865L;
-
     public ComparableComparator() {
     }
 
+    /**
+     * Compare the two {@link Comparable Comparable} arguments.
+     * This method is equivalent to:
+     * <pre>(({@link Comparable Comparable})o1).{@link Comparable#compareTo compareTo}(o2)</pre>
+     * @throws NullPointerException when <i>o1</i> is <code>null</code>, 
+     *         or when <code>((Comparable)o1).compareTo(o2)</code> does
+     * @throws ClassCastException when <i>o1</i> is not a {@link Comparable Comparable}, 
+     *         or when <code>((Comparable)o1).compareTo(o2)</code> does
+     */
     public int compare(Object o1, Object o2) {
-        if( (o1 == null) || (o2 == null) ) {
-            throw new ClassCastException(
-                "There were nulls in the arguments for this method: "+
-                "compare("+o1 + ", " + o2 + ")"
-                );
-        }
-        
-        if(o1 instanceof Comparable) {
-            if(o2 instanceof Comparable) {
-                int result1 = ((Comparable)o1).compareTo(o2);
-                int result2 = ((Comparable)o2).compareTo(o1);
-
-                // enforce comparable contract
-                if(result1 == 0 && result2 == 0) {
-                    return 0;
-                } else
-                if(result1 < 0 && result2 > 0) {
-                    return result1;
-                } else
-                if(result1 > 0 && result2 < 0) {
-                    return result1;
-                } else {
-                    // results inconsistent
-                    throw new ClassCastException("o1 not comparable to o2");
-                }
-            } else {
-                // o2 wasn't comparable
-                throw new ClassCastException(
-                    "The first argument of this method was not a Comparable: " +
-                    o2.getClass().getName()
-                    );
-            }
-        } else 
-        if(o2 instanceof Comparable) {
-            // o1 wasn't comparable
-            throw new ClassCastException(
-                "The second argument of this method was not a Comparable: " +
-                o1.getClass().getName()
-                );
-        } else {
-            // neither were comparable
-            throw new ClassCastException(
-                "Both arguments of this method were not Comparables: " +
-                o1.getClass().getName() + " and " + o2.getClass().getName()
-                );
-        }
+        return ((Comparable)o1).compareTo(o2);
     }
+
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals}.
+     *
+     * @return a hash code for this comparator.
+     * @since Commons Collections 3.0
+     */
+    public int hashCode() {
+        return "ComparableComparator".hashCode();
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator Comparator} whose ordering is 
+     * known to be equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>that</i>.{@link Object#getClass getClass()}</code>
+     * equals <code>this.getClass()</code>.  Subclasses may want to override
+     * this behavior to remain consistent with the {@link Comparator#equals}
+     * contract.
+     * @since Commons Collections 3.0
+     */
+    public boolean equals(Object that) {
+        return (this == that) || 
+               ((null != that) && (that.getClass().equals(this.getClass())));
+    }
+
+    private static final ComparableComparator instance = 
+        new ComparableComparator();
+
+    private static final long serialVersionUID=-291439688585137865L;
 
 }

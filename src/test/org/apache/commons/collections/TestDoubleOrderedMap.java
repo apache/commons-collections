@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.5 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/18 05:35:58 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.13 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,27 +55,36 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
+import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
+import junit.framework.Test;
 
-import junit.framework.*;
-
-import java.util.*;
-
+import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * Class TestDoubleOrderedMap
- * 
+ * <p>
  * Test cases for DoubleOrderedMap.  This class cannot
  * implement TestMap.SupportsPut, because it is a special
  * Map that does not support duplicate keys, duplicate 
  * values, or null values.
  * 
- * @author Marc Johnson (marcj at users dot sourceforge dot net)
+ * @version $Revision: 1.13 $ $Date: 2003/11/18 22:37:15 $
+ * 
+ * @author Marc Johnson
+ * @author Stephen Colebourne
  */
-public class TestDoubleOrderedMap extends TestMap  {
+public class TestDoubleOrderedMap extends AbstractTestMap  {
 
     /**
      * constructor
@@ -101,7 +107,7 @@ public class TestDoubleOrderedMap extends TestMap  {
     /**
      *  The default comparator in double ordered map does not allow null keys.
      **/
-    public boolean useNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
 
@@ -109,14 +115,33 @@ public class TestDoubleOrderedMap extends TestMap  {
      *  The default comparator in double ordered map does not allow null keys,
      *  and values are keys in this map.
      **/
-    public boolean useNullValue() {
+    public boolean isAllowNullValue() {
         return false;
     }
 
     /**
      *  Double ordered map does not support duplicate values
      **/
-    public boolean useDuplicateValues() {
+    public boolean isAllowDuplicateValues() {
+        return false;
+    }
+    
+    /**
+     * Change the Map.put() test because it tries put with the same key
+     * which is invalid in the modified double ordered map contract. (The
+     * DoubleOrderedMap documentation states that an IllegalArgumentException
+     * is thrown when a key is tried to be put into the map again.  This
+     * differs from the standard Map contract which would replace the value
+     * for that key and return it.
+     */
+    public boolean isPutChangeSupported() {
+        return false;
+    }
+
+    /**
+     * setValue() is not supported as it can change the map.
+     */
+    public boolean isSetValueSupported() {
         return false;
     }
 
@@ -124,7 +149,7 @@ public class TestDoubleOrderedMap extends TestMap  {
         return new DoubleOrderedMap();
     }
 
-    public Map makeMap() {
+    protected Map makeMap() {
         return new DoubleOrderedMap();
     }
 
@@ -2829,14 +2854,4 @@ public class TestDoubleOrderedMap extends TestMap  {
         junit.textui.TestRunner.run(TestDoubleOrderedMap.class);
     }
 
-    /**
-     *  Override the Map.put() test because it tries put with the same key
-     *  which is invalid in the modified double ordered map contract. (The
-     *  DoubleOrderedMap documentation states that an IllegalArgumentException
-     *  is thrown when a key is tried to be put into the map again.  This
-     *  differs from the standard Map contract which would replace the value
-     *  for that key and return it.
-     **/
-    public void testMapPut() {
-    }
 }

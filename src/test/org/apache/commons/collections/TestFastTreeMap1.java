@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.3 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/06/18 05:35:58 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.7 2003/10/05 21:11:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,77 +55,43 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.util.Map;
 import java.util.TreeMap;
 
+import junit.framework.Test;
+
 /**
  * Test FastTreeMap in <strong>fast</strong> mode.
+ * 
+ * @version $Revision: 1.7 $ $Date: 2003/10/05 21:11:06 $
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap1.java,v 1.3 2002/06/18 05:35:58 mas Exp $
  */
-public class TestFastTreeMap1 extends TestFastTreeMap
-{
-    public TestFastTreeMap1(String testName)
-    {
+public class TestFastTreeMap1 extends TestFastTreeMap {
+    
+    public TestFastTreeMap1(String testName) {
         super(testName);
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         return BulkTest.makeSuite(TestFastTreeMap1.class);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestFastTreeMap1.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestFastTreeMap1.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         FastTreeMap ftm = new FastTreeMap();
         ftm.setFast(true);
         return (ftm);
     }
 
-    public void setUp()
-    {
-        map = (TreeMap) makeMap();
+    public void setUp() {
+        map = (TreeMap) makeEmptyMap();
     }
 
-    /**
-     *  When the fast tree map is in fast mode, the underlying tree map is
-     *  cloned on modification (i.e. on a put).  Because of that, any
-     *  previously existing entry set will be representing the old (pre-clone)
-     *  map and will not reflect changes made to the map after the clone.  So,
-     *  we must override this test.
-     **/
-    public void testMapEntrySetChangesWithMapPut() {
-    }
-
-    /**
-     *  When the fast tree map is in fast mode, the underlying tree map is
-     *  cloned on modification (i.e. on a put).  Because of that, any
-     *  previously existing entry set will be representing the old (pre-clone)
-     *  map and will not reflect changes made to the map after the clone.  So,
-     *  we must override this test.
-     **/
-    public void testMapEntrySetChangesWithMapRemove() {
-    }
-
-    /**
-     *  When the fast tree map is in fast mode, the underlying tree map is
-     *  cloned on modification (i.e. on a put).  Because of that, any
-     *  previously existing entry set will be representing the old (pre-clone)
-     *  map, so changes to the set will not be seen in the map. So, we must
-     *  override this test.
-     **/
-    public void testMapEntrySetRemoveCausesMapModification() {
-    }
 }

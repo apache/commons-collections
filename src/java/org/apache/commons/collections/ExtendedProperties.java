@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.7 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/12 03:59:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.19 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,12 +55,11 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
@@ -71,11 +67,11 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -85,8 +81,11 @@ import java.util.Vector;
  * This class extends normal Java properties by adding the possibility
  * to use the same key many times concatenating the value strings
  * instead of overwriting them.
- *
- * <p>The Extended Properties syntax is explained here:
+ * <p>
+ * <b>Please consider using the <code>PropertiesConfiguration</code> class in
+ * Commons-Configuration as soon as it is released.</b>
+ * <p>
+ * The Extended Properties syntax is explained here:
  *
  * <ul>
  *  <li>
@@ -106,6 +105,9 @@ import java.util.Vector;
  *  <li>
  *   Commas in each token are escaped placing a backslash right before
  *   the comma.
+ *  </li>
+ *  <li>
+ *   Backslashes are escaped by using two consecutive backslashes i.e. \\
  *  </li>
  *  <li>
  *   If a <i>key</i> is used more than once, the values are appended
@@ -152,7 +154,7 @@ import java.util.Vector;
  *      tokens_on_multiple_lines = second token
  *
  *      # commas may be escaped in tokens
- *      commas.excaped = Hi\, what'up?
+ *      commas.escaped = Hi\, what'up?
  * </pre>
  *
  * <p><b>NOTE</b>: this class has <b>not</b> been written for
@@ -162,8 +164,9 @@ import java.util.Vector;
  * much time to improve it), I wrote it this way.  If you don't like
  * it, go ahead and tune it up!
  *
- *
- * @since 1.0
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.19 $ $Date: 2004/01/05 22:46:33 $
+ * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
  * @author <a href="mailto:daveb@miceda-data">Dave Bryson</a>
@@ -173,10 +176,12 @@ import java.util.Vector;
  * @author <a href="mailto:kjohnson@transparent.com">Kent Johnson</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
- * @version $Id: ExtendedProperties.java,v 1.7 2002/06/12 03:59:15 mas Exp $
+ * @author Janek Bogucki
+ * @author Mohan Kishore
+ * @author Stephen Colebourne
  */
-public class ExtendedProperties extends Hashtable
-{
+public class ExtendedProperties extends Hashtable {
+    
     /**
      * Default configurations repository.
      */
@@ -223,34 +228,155 @@ public class ExtendedProperties extends Hashtable
     protected final static String START_TOKEN="${";
     protected final static String END_TOKEN="}";
 
-    protected String interpolate(String base)
-    {
-        if (base == null)
-        {
+
+    /**
+     * Interpolate key names to handle ${key} stuff
+     *
+     * @param base string to interpolate
+     * @return returns the key name with the ${key} substituted
+     */
+    protected String interpolate(String base) {
+        // COPIED from [configuration] 2003-12-29
+        return (interpolateHelper(base, null));
+    }
+
+    /**
+     * Recursive handler for multiple levels of interpolation.
+     *
+     * When called the first time, priorVariables should be null.
+     *
+     * @param base string with the ${key} variables
+     * @param priorVariables serves two purposes: to allow checking for
+     * loops, and creating a meaningful exception message should a loop
+     * occur.  It's 0'th element will be set to the value of base from
+     * the first call.  All subsequent interpolated variables are added
+     * afterward.
+     *
+     * @return the string with the interpolation taken care of
+     */
+    protected String interpolateHelper(String base, List priorVariables) {
+        // COPIED from [configuration] 2003-12-29
+        if (base == null) {
             return null;
-        }                        
-        
+        }
+
+        // on the first call initialize priorVariables
+        // and add base as the first element
+        if (priorVariables == null) {
+            priorVariables = new ArrayList();
+            priorVariables.add(base);
+        }
+
         int begin = -1;
         int end = -1;
         int prec = 0 - END_TOKEN.length();
         String variable = null;
         StringBuffer result = new StringBuffer();
-        
+
         // FIXME: we should probably allow the escaping of the start token
-        while ( ((begin=base.indexOf(START_TOKEN,prec+END_TOKEN.length()))>-1)
-                && ((end=base.indexOf(END_TOKEN,begin))>-1) ) 
-        {
-            result.append(base.substring(prec+END_TOKEN.length(),begin));
-            variable = base.substring(begin+START_TOKEN.length(),end);
-            if (get(variable)!=null) 
-            {
-                result.append(get(variable));
+        while (((begin = base.indexOf(START_TOKEN, prec + END_TOKEN.length())) > -1)
+            && ((end = base.indexOf(END_TOKEN, begin)) > -1)) {
+            result.append(base.substring(prec + END_TOKEN.length(), begin));
+            variable = base.substring(begin + START_TOKEN.length(), end);
+
+            // if we've got a loop, create a useful exception message and throw
+            if (priorVariables.contains(variable)) {
+                String initialBase = priorVariables.remove(0).toString();
+                priorVariables.add(variable);
+                StringBuffer priorVariableSb = new StringBuffer();
+
+                // create a nice trace of interpolated variables like so:
+                // var1->var2->var3
+                for (Iterator it = priorVariables.iterator(); it.hasNext();) {
+                    priorVariableSb.append(it.next());
+                    if (it.hasNext()) {
+                        priorVariableSb.append("->");
+                    }
+                }
+
+                throw new IllegalStateException(
+                    "infinite loop in property interpolation of " + initialBase + ": " + priorVariableSb.toString());
             }
-            prec=end;
+            // otherwise, add this variable to the interpolation list.
+            else {
+                priorVariables.add(variable);
+            }
+
+            //QUESTION: getProperty or getPropertyDirect
+            Object value = getProperty(variable);
+            if (value != null) {
+                result.append(interpolateHelper(value.toString(), priorVariables));
+
+                // pop the interpolated variable off the stack
+                // this maintains priorVariables correctness for
+                // properties with multiple interpolations, e.g.
+                // prop.name=${some.other.prop1}/blahblah/${some.other.prop2}
+                priorVariables.remove(priorVariables.size() - 1);
+            } else if (defaults != null && defaults.getString(variable, null) != null) {
+                result.append(defaults.getString(variable));
+            } else {
+                //variable not defined - so put it back in the value
+                result.append(START_TOKEN).append(variable).append(END_TOKEN);
+            }
+            prec = end;
         }
-        result.append(base.substring(prec+END_TOKEN.length(),base.length()));
-        
+        result.append(base.substring(prec + END_TOKEN.length(), base.length()));
+
         return result.toString();
+    }
+    
+    /**
+     * Inserts a backslash before every comma and backslash. 
+     */
+    private static String escape(String s) {
+        StringBuffer buf = new StringBuffer(s);
+        for (int i = 0; i < buf.length(); i++) {
+            char c = buf.charAt(i);
+            if (c == ',' || c == '\\') {
+                buf.insert(i, '\\');
+                i++;
+            }
+        }
+        return buf.toString();
+    }
+    
+    /**
+     * Removes a backslash from every pair of backslashes. 
+     */
+    private static String unescape(String s) {
+        StringBuffer buf = new StringBuffer(s);
+        for (int i = 0; i < buf.length() - 1; i++) {
+            char c1 = buf.charAt(i);
+            char c2 = buf.charAt(i + 1);
+            if (c1 == '\\' && c2 == '\\') {
+                buf.deleteCharAt(i);
+            }
+        }
+        return buf.toString();
+    }
+
+    /**
+     * Counts the number of successive times 'ch' appears in the
+     * 'line' before the position indicated by the 'index'.
+     */
+    private static int countPreceding(String line, int index, char ch) {
+        int i;
+        for (i = index - 1; i >= 0; i--) {
+            if (line.charAt(i) != ch) {
+                break;
+            }
+        }
+        return index - 1 - i;
+    }
+
+    /**
+     * Checks if the line ends with odd number of backslashes 
+     */
+    private static boolean endsWithSlash(String line) {
+        if (!line.endsWith("\\")) {
+            return false;
+        }
+        return (countPreceding(line, line.length() - 1, '\\') % 2 == 0);
     }
 
     /**
@@ -259,50 +385,39 @@ public class ExtendedProperties extends Hashtable
      * backslash sign a the end of the line.  This is used to
      * concatenate multiple lines for readability.
      */
-    class PropertiesReader extends LineNumberReader
-    {
+    static class PropertiesReader extends LineNumberReader {
         /**
          * Constructor.
          *
          * @param reader A Reader.
          */
-        public PropertiesReader(Reader reader)
-        {
+        public PropertiesReader(Reader reader) {
             super(reader);
         }
 
         /**
          * Read a property.
          *
-         * @return A String.
-         * @exception IOException.
+         * @return a String property
+         * @throws IOException if there is difficulty reading the source.
          */
-        public String readProperty() throws IOException
-        {
+        public String readProperty() throws IOException {
             StringBuffer buffer = new StringBuffer();
 
-            try
-            {
-                while (true)
-                {
+            try {
+                while (true) {
                     String line = readLine().trim();
-                    if ((line.length() != 0) && (line.charAt(0) != '#'))
-                    {
-                        if (line.endsWith("\\"))
-                        {
+                    if ((line.length() != 0) && (line.charAt(0) != '#')) {
+                        if (endsWithSlash(line)) {
                             line = line.substring(0, line.length() - 1);
                             buffer.append(line);
-                        }
-                        else
-                        {
+                        } else {
                             buffer.append(line);
                             break;
                         }
                     }
                 }
-            }
-            catch (NullPointerException e)
-            {
+            } catch (NullPointerException ex) {
                 return null;
             }
 
@@ -315,8 +430,7 @@ public class ExtendedProperties extends Hashtable
      * separator is "," but commas into the property value are escaped
      * using the backslash in front.
      */
-    class PropertiesTokenizer extends StringTokenizer
-    {
+    static class PropertiesTokenizer extends StringTokenizer {
         /**
          * The property delimiter used while parsing (a comma).
          */
@@ -327,8 +441,7 @@ public class ExtendedProperties extends Hashtable
          *
          * @param string A String.
          */
-        public PropertiesTokenizer(String string)
-        {
+        public PropertiesTokenizer(String string) {
             super(string, DELIMITER);
         }
 
@@ -337,8 +450,7 @@ public class ExtendedProperties extends Hashtable
          *
          * @return True if the object has more tokens.
          */
-        public boolean hasMoreTokens()
-        {
+        public boolean hasMoreTokens() {
             return super.hasMoreTokens();
         }
 
@@ -347,20 +459,15 @@ public class ExtendedProperties extends Hashtable
          *
          * @return A String.
          */
-        public String nextToken()
-        {
+        public String nextToken() {
             StringBuffer buffer = new StringBuffer();
 
-            while (hasMoreTokens())
-            {
+            while (hasMoreTokens()) {
                 String token = super.nextToken();
-                if (token.endsWith("\\"))
-                {
+                if (endsWithSlash(token)) {
                     buffer.append(token.substring(0, token.length() - 1));
                     buffer.append(DELIMITER);
-                }
-                else
-                {
+                } else {
                     buffer.append(token);
                     break;
                 }
@@ -373,8 +480,7 @@ public class ExtendedProperties extends Hashtable
     /**
      * Creates an empty extended properties object.
      */
-    public ExtendedProperties()
-    {
+    public ExtendedProperties() {
         super();
     }
 
@@ -382,56 +488,41 @@ public class ExtendedProperties extends Hashtable
      * Creates and loads the extended properties from the specified
      * file.
      *
-     * @param file A String.
-     * @exception IOException.
+     * @param file  the filename to load
+     * @throws IOException if a file error occurs
      */
-    public ExtendedProperties(String file) throws IOException
-    {
-        this(file,null);
+    public ExtendedProperties(String file) throws IOException {
+        this(file, null);
     }
 
     /**
      * Creates and loads the extended properties from the specified
      * file.
      *
-     * @param file A String.
-     * @exception IOException.
+     * @param file  the filename to load
+     * @param defaultFile  a second filename to load default values from
+     * @throws IOException if a file error occurs
      */
-    public ExtendedProperties(String file, String defaultFile)
-        throws IOException
-    {
+    public ExtendedProperties(String file, String defaultFile) throws IOException {
         this.file = file;
-        
+
         basePath = new File(file).getAbsolutePath();
         basePath = basePath.substring(0, basePath.lastIndexOf(fileSeparator) + 1);
-        
+
         this.load(new FileInputStream(file));
-        
-        if (defaultFile != null)
-        {
+
+        if (defaultFile != null) {
             defaults = new ExtendedProperties(defaultFile);
-        }            
+        }
     }
 
-    /**
-     * Private initializer method that sets up the generic
-     * resources.
-     *
-     * @exception IOException, if there was an I/O problem.
-     */
-    private void init( ExtendedProperties exp ) throws IOException
-    {
-        isInitialized = true;
-    }
-    
     /**
      * Indicate to client code whether property
      * resources have been initialized or not.
      */
-    public boolean isInitialized()
-    {
+    public boolean isInitialized() {
         return isInitialized;
-    }        
+    }
 
     /**
      * Gets the property value for including other properties files.
@@ -439,9 +530,8 @@ public class ExtendedProperties extends Hashtable
      *
      * @return A String.
      */
-    public String getInclude()
-    {
-        return this.include;
+    public String getInclude() {
+        return include;
     }
 
     /**
@@ -450,153 +540,120 @@ public class ExtendedProperties extends Hashtable
      *
      * @param inc A String.
      */
-    public void setInclude(String inc)
-    {
-        this.include = inc;
+    public void setInclude(String inc) {
+        include = inc;
     }
 
     /**
      * Load the properties from the given input stream.
      *
-     * @param input An InputStream.
-     * @exception IOException.
+     * @param input  the InputStream to load from
+     * @throws IOException if an IO error occurs
      */
-    public void load( InputStream input )
-        throws IOException
-    {
-        load(input,null);
+    public void load(InputStream input) throws IOException {
+        load(input, null);
     }
-    
+
     /**
      * Load the properties from the given input stream
      * and using the specified encoding.
      *
-     * @param input An InputStream.
-     * @param enc An encoding.
-     * @exception IOException.
+     * @param input  the InputStream to load from
+     * @param enc  the encoding to use
+     * @throws IOException if an IO error occurs
      */
-    public synchronized void load(InputStream input, String enc)
-        throws IOException
-    {
+    public synchronized void load(InputStream input, String enc) throws IOException {
         PropertiesReader reader = null;
-        if (enc != null)
-        {
-            try
-            {
-                reader =
-                    new PropertiesReader(new InputStreamReader(input,enc));
-            }
-            catch (UnsupportedEncodingException e)
-            {
-                // Get one with the default encoding...
+        if (enc != null) {
+            try {
+                reader = new PropertiesReader(new InputStreamReader(input, enc));
+                
+            } catch (UnsupportedEncodingException ex) {
+                // Another try coming up....
             }
         }
         
-        if (reader == null)
-        {
-            reader =
-                new PropertiesReader(new InputStreamReader(input));
+        if (reader == null) {
+            try {
+                reader = new PropertiesReader(new InputStreamReader(input, "8859_1"));
+                
+            } catch (UnsupportedEncodingException ex) {
+                // ISO8859-1 support is required on java platforms but....
+                // If it's not supported, use the system default encoding
+                reader = new PropertiesReader(new InputStreamReader(input));
+            }
         }
 
-        try
-        {
-            while (true)
-            {
+        try {
+            while (true) {
                 String line = reader.readProperty();
                 int equalSign = line.indexOf('=');
 
-                if (equalSign > 0)
-                {
+                if (equalSign > 0) {
                     String key = line.substring(0, equalSign).trim();
                     String value = line.substring(equalSign + 1).trim();
 
-                    /*
-                     * Configure produces lines like this ... just
-                     * ignore them.
-                     */
-                    if ("".equals(value))
+                    // Configure produces lines like this ... just ignore them
+                    if ("".equals(value)) {
                         continue;
+                    }
 
-                    if (getInclude() != null && 
-                        key.equalsIgnoreCase(getInclude()))
-                    {
-                        /*
-                         * Recursively load properties files.
-                         */
+                    if (getInclude() != null && key.equalsIgnoreCase(getInclude())) {
+                        // Recursively load properties files.
                         File file = null;
-                        
-                        if (value.startsWith(fileSeparator))
-                        {
-                            /*
-                             * We have an absolute path so we'll
-                             * use this.
-                             */
+
+                        if (value.startsWith(fileSeparator)) {
+                            // We have an absolute path so we'll use this
                             file = new File(value);
-                        }
-                        else
-                        {   
-                            /* 
-                             * We have a relative path, and we have
-                             * two possible forms here. If we have the
-                             * "./" form then just strip that off first
-                             * before continuing.
-                             */
-                            if (value.startsWith("." + fileSeparator))
-                            {
+                            
+                        } else {
+                            // We have a relative path, and we have two 
+                            // possible forms here. If we have the "./" form
+                            // then just strip that off first before continuing.
+                            if (value.startsWith("." + fileSeparator)) {
                                 value = value.substring(2);
                             }
-                            
+
                             file = new File(basePath + value);
                         }
-                        
-                        if (file != null && file.exists() && file.canRead())
-                        {
-                            load ( new FileInputStream(file));
+
+                        if (file != null && file.exists() && file.canRead()) {
+                            load(new FileInputStream(file));
                         }
+                    } else {
+                        addProperty(key, value);
                     }
-                    else
-                    {
-                        addProperty(key,value);
-                    }                       
                 }
             }
-        }
-        catch (NullPointerException e)
-        {
-            /*
-             * Should happen only when EOF is reached.
-             */
+        } catch (NullPointerException ex) {
+            // Should happen only when EOF is reached.
             return;
+        } finally {
+            // Loading is initializing
+            isInitialized = true;
         }
     }
 
     /**
-     *  Gets a property from the configuration.
+     * Gets a property from the configuration.
      *
-     *  @param key property to retrieve
-     *  @return value as object. Will return user value if exists,
-     *          if not then default value if exists, otherwise null
+     * @param key property to retrieve
+     * @return value as object. Will return user value if exists,
+     *        if not then default value if exists, otherwise null
      */
-    public Object getProperty( String key)
-    {
-        /*
-         *  first, try to get from the 'user value' store
-         */
-        Object o = this.get(key);
+    public Object getProperty(String key) {
+        // first, try to get from the 'user value' store
+        Object obj = this.get(key);
 
-        if ( o == null)
-        {
-            /*
-             *  if there isn't a value there, get it from the
-             *  defaults if we have them
-             */
-            if (defaults != null)
-            {
-                o = defaults.get(key);
+        if (obj == null) {
+            // if there isn't a value there, get it from the
+            // defaults if we have them
+            if (defaults != null) {
+                obj = defaults.get(key);
             }
         }
 
-        return o;
+        return obj;
     }
     
     /**
@@ -604,23 +661,22 @@ public class ExtendedProperties extends Hashtable
      * exists then the value stated here will be added
      * to the configuration entry. For example, if
      *
-     * resource.loader = file
+     * <code>resource.loader = file</code>
      *
      * is already present in the configuration and you
      *
-     * addProperty("resource.loader", "classpath")
+     * <code>addProperty("resource.loader", "classpath")</code>
      *
      * Then you will end up with a Vector like the
      * following:
      *
-     * ["file", "classpath"]
+     * <code>["file", "classpath"]</code>
      *
-     * @param String key
-     * @param String value
+     * @param key  the key to add
+     * @param token  the value to add
      */
-    public void addProperty(String key, Object token)
-    {
-        Object o = this.get(key);
+    public void addProperty(String key, Object token) {
+        Object obj = this.get(key);
 
         /*
          *  $$$ GMJ
@@ -634,20 +690,17 @@ public class ExtendedProperties extends Hashtable
          *
          *  This applies throughout
          */
-        
-        if (o instanceof String)
-        {
+
+        if (obj instanceof String) {
             Vector v = new Vector(2);
-            v.addElement(o);
+            v.addElement(obj);
             v.addElement(token);
             put(key, v);
-        }
-        else if (o instanceof Vector)
-        {
-            ((Vector) o).addElement(token);
-        }
-        else
-        {
+            
+        } else if (obj instanceof Vector) {
+            ((Vector) obj).addElement(token);
+            
+        } else {
             /*
              * This is the first time that we have seen
              * request to place an object in the 
@@ -663,25 +716,21 @@ public class ExtendedProperties extends Hashtable
              * values.
              */
             if (token instanceof String &&
-                ((String)token).indexOf(PropertiesTokenizer.DELIMITER) > 0)
-            {
-                PropertiesTokenizer tokenizer = 
-                    new PropertiesTokenizer((String)token);
+                ((String) token).indexOf(PropertiesTokenizer.DELIMITER) > 0) {
                     
-                while (tokenizer.hasMoreTokens())
-                {
+                PropertiesTokenizer tokenizer = new PropertiesTokenizer((String) token);
+
+                while (tokenizer.hasMoreTokens()) {
                     String value = tokenizer.nextToken();
-                   
+
                     /*
-                     * we know this is a string, so make sure it
+                     * We know this is a string, so make sure it
                      * just goes in rather than risking vectorization
                      * if it contains an escaped comma
                      */
-                    addStringProperty(key,value);
+                    addStringProperty(key, unescape(value));
                 }
-            }
-            else
-            {
+            } else {
                 /*
                  * We want to keep track of the order the keys
                  * are parsed, or dynamically entered into
@@ -691,48 +740,43 @@ public class ExtendedProperties extends Hashtable
                  * to perform operations with configuration
                  * in a definite order it will be possible.
                  */
-
-                addPropertyDirect( key, token );
-            }                
+                if (token instanceof String) {
+                    token = unescape((String) token);
+                }
+                addPropertyDirect(key, token);
+            }
         }
+
+        // Adding a property connotes initialization
+        isInitialized = true;
     }
 
     /**
-     *   Adds a key/value pair to the map.  This routine does
-     *   no magic morphing.  It ensures the keylist is maintained
+     * Adds a key/value pair to the map.  This routine does
+     * no magic morphing.  It ensures the keylist is maintained
      *
-     *  @param key key to use for mapping
-     *  @param obj object to store
+     * @param key key to use for mapping
+     * @param obj object to store
      */
-    private void addPropertyDirect( String key, Object obj )
-    {
-        /*
-         * safety check
-         */
-        
-        if( !containsKey( key ) )
-        {
+    private void addPropertyDirect(String key, Object obj) {
+        // safety check
+        if (!containsKey(key)) {
             keysAsListed.add(key);
         }
-        
-        /*
-         * and the value
-         */
         put(key, obj);
     }
 
     /**
-     *  Sets a string property w/o checking for commas - used
-     *  internally when a property has been broken up into
-     *  strings that could contain escaped commas to prevent
-     *  the inadvertant vectorization.
-     *
-     *  Thanks to Leon Messerschmidt for this one.
+     * Sets a string property w/o checking for commas - used
+     * internally when a property has been broken up into
+     * strings that could contain escaped commas to prevent
+     * the inadvertent vectorization.
+     * <p>
+     * Thanks to Leon Messerschmidt for this one.
      *
      */
-    private  void addStringProperty(String key, String token)
-    {
-        Object o = this.get(key);
+    private void addStringProperty(String key, String token) {
+        Object obj = this.get(key);
 
         /*
          *  $$$ GMJ
@@ -747,26 +791,20 @@ public class ExtendedProperties extends Hashtable
          *  This applies throughout
          */
 
-        /*
-         *  do the usual thing - if we have a value and 
-         *  it's scalar, make a vector, otherwise add
-         *  to the vector
-         */
- 
-        if (o instanceof String)
-        {
+        // do the usual thing - if we have a value and 
+        // it's scalar, make a vector, otherwise add
+        // to the vector
+        if (obj instanceof String) {
             Vector v = new Vector(2);
-            v.addElement(o);
+            v.addElement(obj);
             v.addElement(token);
             put(key, v);
-        }
-        else if (o instanceof Vector)
-        {
-            ((Vector) o).addElement(token);
-        }
-        else
-        {
-            addPropertyDirect( key, token );
+            
+        } else if (obj instanceof Vector) {
+            ((Vector) obj).addElement(token);
+            
+        } else {
+            addPropertyDirect(key, token);
         }
     }
 
@@ -775,121 +813,102 @@ public class ExtendedProperties extends Hashtable
      * set values. Set values is implicitly a call
      * to clearProperty(key), addProperty(key,value).
      *
-     * @param String key
-     * @param String value
+     * @param key  the key to set
+     * @param value  the value to set
      */
-    public void setProperty(String key, Object value)
-    {
+    public void setProperty(String key, Object value) {
         clearProperty(key);
-        addProperty(key,value);
+        addProperty(key, value);
     }
     
     /**
-     * Save the properties to the given outputstream.
+     * Save the properties to the given output stream.
+     * <p>
+     * The stream is not closed, but it is flushed.
      *
-     * @param output An OutputStream.
-     * @param header A String.
-     * @exception IOException.
+     * @param output  an OutputStream, may be null
+     * @param header  a textual comment to act as a file header
+     * @throws IOException if an IO error occurs
      */
-    public synchronized void save(OutputStream output,
-                                  String Header)
-        throws IOException
-    {
-        if(output != null)
-        {
-            PrintWriter theWrtr = new PrintWriter(output);
-            if(Header != null)
-            {
-                theWrtr.println(Header);
-            }
-            Enumeration theKeys = keys();
-            while(theKeys.hasMoreElements())
-            {
-                String key = (String) theKeys.nextElement();
-                Object value = get((Object) key);
-                if(value != null)
-                {
-                    if(value instanceof String)
-                    {
+    public synchronized void save(OutputStream output, String header) throws IOException {
+        if (output == null) {
+            return;
+        }
+        PrintWriter theWrtr = new PrintWriter(output);
+        if (header != null) {
+            theWrtr.println(header);
+        }
+        
+        Enumeration theKeys = keys();
+        while (theKeys.hasMoreElements()) {
+            String key = (String) theKeys.nextElement();
+            Object value = get(key);
+            if (value != null) {
+                if (value instanceof String) {
+                    StringBuffer currentOutput = new StringBuffer();
+                    currentOutput.append(key);
+                    currentOutput.append("=");
+                    currentOutput.append(escape((String) value));
+                    theWrtr.println(currentOutput.toString());
+                    
+                } else if (value instanceof Vector) {
+                    Vector values = (Vector) value;
+                    Enumeration valuesEnum = values.elements();
+                    while (valuesEnum.hasMoreElements()) {
+                        String currentElement = (String) valuesEnum.nextElement();
                         StringBuffer currentOutput = new StringBuffer();
                         currentOutput.append(key);
                         currentOutput.append("=");
-                        currentOutput.append((String) value);
+                        currentOutput.append(escape(currentElement));
                         theWrtr.println(currentOutput.toString());
                     }
-                    else if(value instanceof Vector)
-                    {
-                        Vector values = (Vector) value;
-                        Enumeration valuesEnum = values.elements();
-                        while(valuesEnum.hasMoreElements())
-                        {
-                            String currentElement = 
-                                   (String) valuesEnum.nextElement();
-                            StringBuffer currentOutput = new StringBuffer();
-                            currentOutput.append(key);
-                            currentOutput.append("=");
-                            currentOutput.append(currentElement);
-                            theWrtr.println(currentOutput.toString());
-                        }
-                    }
-                }    
-                theWrtr.println();
-                theWrtr.flush();
-            }    
-        }        
+                }
+            }
+            theWrtr.println();
+            theWrtr.flush();
+        }
     }
 
     /**
      * Combines an existing Hashtable with this Hashtable.
-     *
+     * <p>
      * Warning: It will overwrite previous entries without warning.
      *
-     * @param ExtendedProperties
+     * @param props  the properties to combine
      */
-    public void combine( ExtendedProperties c )
-    {
-        for (Iterator i = c.getKeys() ; i.hasNext() ;)
-        {
-            String key = (String) i.next();
-            setProperty( key, c.get(key) );
+    public void combine(ExtendedProperties props) {
+        for (Iterator it = props.getKeys(); it.hasNext();) {
+            String key = (String) it.next();
+            setProperty(key, props.get(key));
         }
     }
     
     /**
      * Clear a property in the configuration.
      *
-     * @param String key to remove along with corresponding value.
+     * @param key  the property key to remove along with corresponding value
      */
-    public void clearProperty(String key)
-    {
-        if (containsKey(key))
-        {
-            /*
-             * we also need to rebuild the keysAsListed or else
-             * things get *very* confusing
-             */
-
-            for(int i = 0; i < keysAsListed.size(); i++)
-            {
-                if ( ( (String) keysAsListed.get(i)).equals( key ) )
-                {
+    public void clearProperty(String key) {
+        if (containsKey(key)) {
+            // we also need to rebuild the keysAsListed or else
+            // things get *very* confusing
+            for (int i = 0; i < keysAsListed.size(); i++) {
+                if (( keysAsListed.get(i)).equals(key)) {
                     keysAsListed.remove(i);
                     break;
                 }
             }
-
             remove(key);
-        }            
+        }
     }
 
     /**
      * Get the list of the keys contained in the configuration
      * repository.
      *
-     * @return An Iterator.
+     * @return an Iterator over the keys
      */
-    public Iterator getKeys()
-    {
+    public Iterator getKeys() {
         return keysAsListed.iterator();
     }
 
@@ -897,20 +916,17 @@ public class ExtendedProperties extends Hashtable
      * Get the list of the keys contained in the configuration
      * repository that match the specified prefix.
      *
-     * @param prefix The prefix to test against.
-     * @return An Iterator of keys that match the prefix.
+     * @param prefix  the prefix to match
+     * @return an Iterator of keys that match the prefix
      */
-    public Iterator getKeys(String prefix)
-    {
+    public Iterator getKeys(String prefix) {
         Iterator keys = getKeys();
         ArrayList matchingKeys = new ArrayList();
-        
-        while( keys.hasNext() )
-        {
+
+        while (keys.hasNext()) {
             Object key = keys.next();
-            
-            if( key instanceof String && ((String) key).startsWith(prefix) )
-            {
+
+            if (key instanceof String && ((String) key).startsWith(prefix)) {
                 matchingKeys.add(key);
             }
         }
@@ -922,88 +938,73 @@ public class ExtendedProperties extends Hashtable
      * of this one. Take into account duplicate keys
      * by using the setProperty() in ExtendedProperties.
      *
-     * @param String prefix
+     * @param prefix  the prefix to get a subset for
+     * @return a new independent ExtendedProperties
      */
-    public ExtendedProperties subset(String prefix)
-    {
+    public ExtendedProperties subset(String prefix) {
         ExtendedProperties c = new ExtendedProperties();
         Iterator keys = getKeys();
         boolean validSubset = false;
-        
-        while( keys.hasNext() )
-        {
+
+        while (keys.hasNext()) {
             Object key = keys.next();
-            
-            if( key instanceof String && ((String) key).startsWith(prefix) )
-            {
-                if (!validSubset)
-                {
+
+            if (key instanceof String && ((String) key).startsWith(prefix)) {
+                if (!validSubset) {
                     validSubset = true;
                 }
-                
-                String newKey = null;
-                
+
                 /*
                  * Check to make sure that c.subset(prefix) doesn't
                  * blow up when there is only a single property
                  * with the key prefix. This is not a useful
                  * subset but it is a valid subset.
                  */
-                if ( ((String)key).length() == prefix.length())
-                {
+                String newKey = null;
+                if (((String) key).length() == prefix.length()) {
                     newKey = prefix;
+                } else {
+                    newKey = ((String) key).substring(prefix.length() + 1);
                 }
-                else
-                {
-                    newKey = ((String)key).substring(prefix.length() + 1);
-                }                    
-                
+
                 /*
                  *  use addPropertyDirect() - this will plug the data as 
                  *  is into the Map, but will also do the right thing
                  *  re key accounting
                  */
-
-                c.addPropertyDirect( newKey, get(key) );
+                c.addPropertyDirect(newKey, get(key));
             }
         }
-        
-        if (validSubset)
-        {
+
+        if (validSubset) {
             return c;
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
 
     /**
-     * Display the configuration for debugging
-     * purposes.
+     * Display the configuration for debugging purposes to System.out.
      */
-    public void display()
-    {
+    public void display() {
         Iterator i = getKeys();
-        
-        while (i.hasNext())
-        {
+
+        while (i.hasNext()) {
             String key = (String) i.next();
             Object value = get(key);
             System.out.println(key + " => " + value);
         }
-    }     
+    }
 
     /**
      * Get a string associated with the given configuration key.
      *
      * @param key The configuration key.
      * @return The associated string.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String.
      */
-    public String getString(String key)
-    {
+    public String getString(String key) {
         return getString(key, null);
     }
 
@@ -1014,37 +1015,25 @@ public class ExtendedProperties extends Hashtable
      * @param defaultValue The default value.
      * @return The associated string if key is found,
      * default value otherwise.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String.
      */
-    public String getString(String key,
-                            String defaultValue)
-    {
+    public String getString(String key, String defaultValue) {
         Object value = get(key);
 
-        if (value instanceof String)
-        {
-            return (String) interpolate((String)value);
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+        if (value instanceof String) {
+            return interpolate((String) value);
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return interpolate(defaults.getString(key, defaultValue));
-            }
-            else
-            {
+            } else {
                 return interpolate(defaultValue);
             }
-        }
-        else if (value instanceof Vector)
-        {
+        } else if (value instanceof Vector) {
             return interpolate((String) ((Vector) value).get(0));
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a String object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a String object");
         }
     }
 
@@ -1054,13 +1043,12 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated properties if key is found.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String/Vector.
-     * @exception IllegalArgumentException if one of the tokens is
+     * @throws IllegalArgumentException if one of the tokens is
      * malformed (does not contain an equals sign).
      */
-    public Properties getProperties(String key)
-    {
+    public Properties getProperties(String key) {
         return getProperties(key, new Properties());
     }
 
@@ -1070,38 +1058,28 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated properties if key is found.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String/Vector.
-     * @exception IllegalArgumentException if one of the tokens is
+     * @throws IllegalArgumentException if one of the tokens is
      * malformed (does not contain an equals sign).
      */
-    public Properties getProperties(String key,
-                                    Properties defaults)
-    {
+    public Properties getProperties(String key, Properties defaults) {
         /*
          * Grab an array of the tokens for this key.
          */
         String[] tokens = getStringArray(key);
 
-        /* 
-         * Each token is of the form 'key=value'.
-         */
+        // Each token is of the form 'key=value'.
         Properties props = new Properties(defaults);
-        for (int i = 0; i < tokens.length; i++)
-        {
+        for (int i = 0; i < tokens.length; i++) {
             String token = tokens[i];
             int equalSign = token.indexOf('=');
-            if (equalSign > 0)
-            {
+            if (equalSign > 0) {
                 String pkey = token.substring(0, equalSign).trim();
                 String pvalue = token.substring(equalSign + 1).trim();
                 props.put(pkey, pvalue);
-            }
-            else
-            {
-                throw new IllegalArgumentException('\'' + token +
-                                                   "' does not contain " +
-                                                   "an equals sign");
+            } else {
+                throw new IllegalArgumentException('\'' + token + "' does not contain " + "an equals sign");
             }
         }
         return props;
@@ -1113,45 +1091,34 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated string array if key is found.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String/Vector.
      */
-    public String[] getStringArray(String key)
-    {
+    public String[] getStringArray(String key) {
         Object value = get(key);
 
         // What's your vector, Victor?
         Vector vector;
-        if (value instanceof String)
-        {
+        if (value instanceof String) {
             vector = new Vector(1);
             vector.addElement(value);
-        }
-        else if (value instanceof Vector)
-        {
-            vector = (Vector)value;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value instanceof Vector) {
+            vector = (Vector) value;
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getStringArray(key);
-            }
-            else
-            {
+            } else {
                 return new String[0];
             }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a String/Vector object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a String/Vector object");
         }
 
         String[] tokens = new String[vector.size()];
-        for (int i = 0; i < tokens.length; i++)
-        {
-            tokens[i] = (String)vector.elementAt(i);
+        for (int i = 0; i < tokens.length; i++) {
+            tokens[i] = (String) vector.elementAt(i);
         }
 
         return tokens;
@@ -1163,11 +1130,10 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated Vector.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Vector.
      */
-    public Vector getVector(String key)
-    {
+    public Vector getVector(String key) {
         return getVector(key, null);
     }
 
@@ -1178,41 +1144,29 @@ public class ExtendedProperties extends Hashtable
      * @param key The configuration key.
      * @param defaultValue The default value.
      * @return The associated Vector.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Vector.
      */
-    public Vector getVector(String key,
-                            Vector defaultValue)
-    {
+    public Vector getVector(String key, Vector defaultValue) {
         Object value = get(key);
 
-        if (value instanceof Vector)
-        {
+        if (value instanceof Vector) {
             return (Vector) value;
-        }
-        else if (value instanceof String)
-        {
+            
+        } else if (value instanceof String) {
             Vector v = new Vector(1);
-            v.addElement((String) value);
+            v.addElement(value);
             put(key, v);
             return v;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getVector(key, defaultValue);
+            } else {
+                return ((defaultValue == null) ? new Vector() : defaultValue);
             }
-            else
-            {
-                return ((defaultValue == null) ?
-                        new Vector() : defaultValue);
-            }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a Vector object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a Vector object");
         }
     }
 
@@ -1221,22 +1175,17 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated boolean.
-     * @exception NoSuchElementException is thrown if the key doesn't
+     * @throws NoSuchElementException is thrown if the key doesn't
      * map to an existing object.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Boolean.
      */
-    public boolean getBoolean(String key)
-    {
-        Boolean b = getBoolean(key, (Boolean) null);
-        if (b != null)
-        {
+    public boolean getBoolean(String key) {
+        Boolean b = getBoolean(key, null);
+        if (b != null) {
             return b.booleanValue();
-        }
-        else
-        {
-            throw new NoSuchElementException(
-                '\'' + key + "' doesn't map to an existing object");
+        } else {
+            throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1246,11 +1195,10 @@ public class ExtendedProperties extends Hashtable
      * @param key The configuration key.
      * @param defaultValue The default value.
      * @return The associated boolean.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Boolean.
      */
-    public boolean getBoolean(String key, boolean defaultValue)
-    {
+    public boolean getBoolean(String key, boolean defaultValue) {
         return getBoolean(key, new Boolean(defaultValue)).booleanValue();
     }
 
@@ -1261,43 +1209,33 @@ public class ExtendedProperties extends Hashtable
      * @param defaultValue The default value.
      * @return The associated boolean if key is found and has valid
      * format, default value otherwise.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Boolean.
      */
-    public Boolean getBoolean(String key, Boolean defaultValue)
-    {
-    
+    public Boolean getBoolean(String key, Boolean defaultValue) {
+
         Object value = get(key);
 
-        if (value instanceof Boolean)
-        {
+        if (value instanceof Boolean) {
             return (Boolean) value;
-        }
-        else if (value instanceof String)
-        {
-            String s = testBoolean((String)value);
+            
+        } else if (value instanceof String) {
+            String s = testBoolean((String) value);
             Boolean b = new Boolean(s);
             put(key, b);
             return b;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getBoolean(key, defaultValue);
-            }
-            else
-            {
+            } else {
                 return defaultValue;
             }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a Boolean object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a Boolean object");
         }
     }
-    
+
     /**
      * Test whether the string represent by value maps to a boolean
      * value or not. We will allow <code>true</code>, <code>on</code>,
@@ -1306,24 +1244,18 @@ public class ExtendedProperties extends Hashtable
      * <code>false</code> boolean values.  Case of value to test for
      * boolean status is ignored.
      *
-     * @param String The value to test for boolean state.
+     * @param value  the value to test for boolean state
      * @return <code>true</code> or <code>false</code> if the supplied
      * text maps to a boolean value, or <code>null</code> otherwise.
      */
-    public String testBoolean(String value)
-    {
-        String s = ((String)value).toLowerCase();
-    
-        if (s.equals("true") || s.equals("on") || s.equals("yes"))
-        {
+    public String testBoolean(String value) {
+        String s = value.toLowerCase();
+
+        if (s.equals("true") || s.equals("on") || s.equals("yes")) {
             return "true";
-        }
-        else if (s.equals("false") || s.equals("off") || s.equals("no"))
-        {
+        } else if (s.equals("false") || s.equals("off") || s.equals("no")) {
             return "false";
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -1333,24 +1265,19 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated byte.
-     * @exception NoSuchElementException is thrown if the key doesn't
+     * @throws NoSuchElementException is thrown if the key doesn't
      * map to an existing object.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Byte.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public byte getByte(String key)
-    {
+    public byte getByte(String key) {
         Byte b = getByte(key, null);
-        if (b != null)
-        {
+        if (b != null) {
             return b.byteValue();
-        }
-        else
-        {
-            throw new NoSuchElementException(
-                '\'' + key + " doesn't map to an existing object");
+        } else {
+            throw new NoSuchElementException('\'' + key + " doesn't map to an existing object");
         }
     }
 
@@ -1360,14 +1287,12 @@ public class ExtendedProperties extends Hashtable
      * @param key The configuration key.
      * @param defaultValue The default value.
      * @return The associated byte.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Byte.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public byte getByte(String key,
-                        byte defaultValue)
-    {
+    public byte getByte(String key, byte defaultValue) {
         return getByte(key, new Byte(defaultValue)).byteValue();
     }
 
@@ -1378,41 +1303,30 @@ public class ExtendedProperties extends Hashtable
      * @param defaultValue The default value.
      * @return The associated byte if key is found and has valid
      * format, default value otherwise.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Byte.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Byte getByte(String key,
-                        Byte defaultValue)
-    {
+    public Byte getByte(String key, Byte defaultValue) {
         Object value = get(key);
 
-        if (value instanceof Byte)
-        {
+        if (value instanceof Byte) {
             return (Byte) value;
-        }
-        else if (value instanceof String)
-        {
+            
+        } else if (value instanceof String) {
             Byte b = new Byte((String) value);
             put(key, b);
             return b;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getByte(key, defaultValue);
-            }
-            else
-            {
+            } else {
                 return defaultValue;
             }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a Byte object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a Byte object");
         }
     }
 
@@ -1421,24 +1335,19 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated short.
-     * @exception NoSuchElementException is thrown if the key doesn't
+     * @throws NoSuchElementException is thrown if the key doesn't
      * map to an existing object.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Short.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public short getShort(String key)
-    {
+    public short getShort(String key) {
         Short s = getShort(key, null);
-        if (s != null)
-        {
+        if (s != null) {
             return s.shortValue();
-        }
-        else
-        {
-            throw new NoSuchElementException(
-                '\'' + key + "' doesn't map to an existing object");
+        } else {
+            throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1448,14 +1357,12 @@ public class ExtendedProperties extends Hashtable
      * @param key The configuration key.
      * @param defaultValue The default value.
      * @return The associated short.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Short.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public short getShort(String key,
-                          short defaultValue)
-    {
+    public short getShort(String key, short defaultValue) {
         return getShort(key, new Short(defaultValue)).shortValue();
     }
 
@@ -1466,41 +1373,30 @@ public class ExtendedProperties extends Hashtable
      * @param defaultValue The default value.
      * @return The associated short if key is found and has valid
      * format, default value otherwise.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Short.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Short getShort(String key,
-                          Short defaultValue)
-    {
+    public Short getShort(String key, Short defaultValue) {
         Object value = get(key);
 
-        if (value instanceof Short)
-        {
+        if (value instanceof Short) {
             return (Short) value;
-        }
-        else if (value instanceof String)
-        {
+            
+        } else if (value instanceof String) {
             Short s = new Short((String) value);
             put(key, s);
             return s;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getShort(key, defaultValue);
-            }
-            else
-            {
+            } else {
                 return defaultValue;
             }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a Short object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a Short object");
         }
     }
 
@@ -1511,8 +1407,7 @@ public class ExtendedProperties extends Hashtable
      * @param name The resource name.
      * @return The value of the resource as an integer.
      */
-    public int getInt(String name)
-    {
+    public int getInt(String name) {
         return getInteger(name);
     }
 
@@ -1524,9 +1419,7 @@ public class ExtendedProperties extends Hashtable
      * @param def The default value of the resource.
      * @return The value of the resource as an integer.
      */
-    public int getInt(String name,
-                      int def)
-    {
+    public int getInt(String name, int def) {
         return getInteger(name, def);
     }
 
@@ -1535,24 +1428,19 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated int.
-     * @exception NoSuchElementException is thrown if the key doesn't
+     * @throws NoSuchElementException is thrown if the key doesn't
      * map to an existing object.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Integer.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public int getInteger(String key)
-    {
+    public int getInteger(String key) {
         Integer i = getInteger(key, null);
-        if (i != null)
-        {
+        if (i != null) {
             return i.intValue();
-        }
-        else
-        {
-            throw new NoSuchElementException(
-                '\'' + key + "' doesn't map to an existing object");
+        } else {
+            throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1562,24 +1450,19 @@ public class ExtendedProperties extends Hashtable
      * @param key The configuration key.
      * @param defaultValue The default value.
      * @return The associated int.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Integer.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public int getInteger(String key,
-                          int defaultValue)
-    {    
+    public int getInteger(String key, int defaultValue) {
         Integer i = getInteger(key, null);
-        
-        if (i == null)
-        {
+
+        if (i == null) {
             return defaultValue;
         }
-        
         return i.intValue();
-      }
-
+    }
 
     /**
      * Get a int associated with the given configuration key.
@@ -1588,41 +1471,30 @@ public class ExtendedProperties extends Hashtable
      * @param defaultValue The default value.
      * @return The associated int if key is found and has valid
      * format, default value otherwise.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Integer.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Integer getInteger(String key,
-                              Integer defaultValue)
-    {
+    public Integer getInteger(String key, Integer defaultValue) {
         Object value = get(key);
 
-        if (value instanceof Integer)
-        {
+        if (value instanceof Integer) {
             return (Integer) value;
-        }
-        else if (value instanceof String)
-        {
+            
+        } else if (value instanceof String) {
             Integer i = new Integer((String) value);
             put(key, i);
             return i;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getInteger(key, defaultValue);
-            }
-            else
-            {
+            } else {
                 return defaultValue;
             }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a Integer object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a Integer object");
         }
     }
 
@@ -1631,24 +1503,19 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated long.
-     * @exception NoSuchElementException is thrown if the key doesn't
+     * @throws NoSuchElementException is thrown if the key doesn't
      * map to an existing object.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Long.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public long getLong(String key)
-    {
+    public long getLong(String key) {
         Long l = getLong(key, null);
-        if (l != null)
-        {
+        if (l != null) {
             return l.longValue();
-        }
-        else
-        {
-            throw new NoSuchElementException(
-                '\'' + key + "' doesn't map to an existing object");
+        } else {
+            throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1658,14 +1525,12 @@ public class ExtendedProperties extends Hashtable
      * @param key The configuration key.
      * @param defaultValue The default value.
      * @return The associated long.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Long.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public long getLong(String key,
-                        long defaultValue)
-    {
+    public long getLong(String key, long defaultValue) {
         return getLong(key, new Long(defaultValue)).longValue();
     }
 
@@ -1676,41 +1541,30 @@ public class ExtendedProperties extends Hashtable
      * @param defaultValue The default value.
      * @return The associated long if key is found and has valid
      * format, default value otherwise.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Long.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Long getLong(String key,
-                        Long defaultValue)
-    {
+    public Long getLong(String key, Long defaultValue) {
         Object value = get(key);
 
-        if (value instanceof Long)
-        {
+        if (value instanceof Long) {
             return (Long) value;
-        }
-        else if (value instanceof String)
-        {
+            
+        } else if (value instanceof String) {
             Long l = new Long((String) value);
             put(key, l);
             return l;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getLong(key, defaultValue);
-            }
-            else
-            {
+            } else {
                 return defaultValue;
             }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a Long object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a Long object");
         }
     }
 
@@ -1719,24 +1573,19 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated float.
-     * @exception NoSuchElementException is thrown if the key doesn't
+     * @throws NoSuchElementException is thrown if the key doesn't
      * map to an existing object.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Float.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public float getFloat(String key)
-    {
+    public float getFloat(String key) {
         Float f = getFloat(key, null);
-        if (f != null)
-        {
+        if (f != null) {
             return f.floatValue();
-        }
-        else
-        {
-            throw new NoSuchElementException(
-                '\'' + key + "' doesn't map to an existing object");
+        } else {
+            throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1746,14 +1595,12 @@ public class ExtendedProperties extends Hashtable
      * @param key The configuration key.
      * @param defaultValue The default value.
      * @return The associated float.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Float.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public float getFloat(String key,
-                          float defaultValue)
-    {
+    public float getFloat(String key, float defaultValue) {
         return getFloat(key, new Float(defaultValue)).floatValue();
     }
 
@@ -1764,41 +1611,30 @@ public class ExtendedProperties extends Hashtable
      * @param defaultValue The default value.
      * @return The associated float if key is found and has valid
      * format, default value otherwise.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Float.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Float getFloat(String key,
-                          Float defaultValue)
-    {
+    public Float getFloat(String key, Float defaultValue) {
         Object value = get(key);
 
-        if (value instanceof Float)
-        {
+        if (value instanceof Float) {
             return (Float) value;
-        }
-        else if (value instanceof String)
-        {
+            
+        } else if (value instanceof String) {
             Float f = new Float((String) value);
             put(key, f);
             return f;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getFloat(key, defaultValue);
-            }
-            else
-            {
+            } else {
                 return defaultValue;
             }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a Float object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a Float object");
         }
     }
 
@@ -1807,24 +1643,19 @@ public class ExtendedProperties extends Hashtable
      *
      * @param key The configuration key.
      * @return The associated double.
-     * @exception NoSuchElementException is thrown if the key doesn't
+     * @throws NoSuchElementException is thrown if the key doesn't
      * map to an existing object.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Double.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public double getDouble(String key)
-    {
+    public double getDouble(String key) {
         Double d = getDouble(key, null);
-        if (d != null)
-        {
+        if (d != null) {
             return d.doubleValue();
-        }
-        else
-        {
-            throw new NoSuchElementException(
-                '\'' + key + "' doesn't map to an existing object");
+        } else {
+            throw new NoSuchElementException('\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1834,14 +1665,12 @@ public class ExtendedProperties extends Hashtable
      * @param key The configuration key.
      * @param defaultValue The default value.
      * @return The associated double.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Double.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public double getDouble(String key,
-                            double defaultValue)
-    {
+    public double getDouble(String key, double defaultValue) {
         return getDouble(key, new Double(defaultValue)).doubleValue();
     }
 
@@ -1852,64 +1681,48 @@ public class ExtendedProperties extends Hashtable
      * @param defaultValue The default value.
      * @return The associated double if key is found and has valid
      * format, default value otherwise.
-     * @exception ClassCastException is thrown if the key maps to an
+     * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Double.
-     * @exception NumberFormatException is thrown if the value mapped
+     * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Double getDouble(String key,
-                            Double defaultValue)
-    {
+    public Double getDouble(String key, Double defaultValue) {
         Object value = get(key);
 
-        if (value instanceof Double)
-        {
+        if (value instanceof Double) {
             return (Double) value;
-        }
-        else if (value instanceof String)
-        {
+            
+        } else if (value instanceof String) {
             Double d = new Double((String) value);
             put(key, d);
             return d;
-        }
-        else if (value == null)
-        {
-            if (defaults != null)
-            {
+            
+        } else if (value == null) {
+            if (defaults != null) {
                 return defaults.getDouble(key, defaultValue);
-            }
-            else
-            {
+            } else {
                 return defaultValue;
             }
-        }
-        else
-        {
-            throw new ClassCastException(
-                '\'' + key + "' doesn't map to a Double object");
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a Double object");
         }
     }
 
     /**
-     * Convert a standard properties class into a configuration
-     * class.
+     * Convert a standard properties class into a configuration class.
      *
-     * @param p properties object to convert into
-     *                   a ExtendedProperties object.
-     *
-     * @return ExtendedProperties configuration created from the
-     *                      properties object.
+     * @param props  the properties object to convert
+     * @return new ExtendedProperties created from props
      */
-    public static ExtendedProperties convertProperties(Properties p)
-    {
+    public static ExtendedProperties convertProperties(Properties props) {
         ExtendedProperties c = new ExtendedProperties();
-    
-        for (Enumeration e = p.keys(); e.hasMoreElements() ; ) 
-        {
+
+        for (Enumeration e = props.keys(); e.hasMoreElements();) {
             String s = (String) e.nextElement();
-            c.setProperty(s, p.getProperty(s));
+            c.setProperty(s, props.getProperty(s));
         }
-    
+
         return c;
     }
+    
 }

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.5 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/12 03:59:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.13 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,18 +55,14 @@
  * <http://www.apache.org/>.
  *
  */
-
-
 package org.apache.commons.collections;
 
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 
 /**
  * <p>A customized implementation of <code>java.util.ArrayList</code> designed
@@ -93,11 +86,23 @@ import java.util.ListIterator;
  * <code>java.util.ArrayList</code> directly (with no synchronization), for
  * maximum performance.</p>
  *
- * @since 1.0
+ * <p><strong>NOTE</strong>: <i>This class is not cross-platform.
+ * Using it may cause unexpected failures on some architectures.</i>
+ * It suffers from the same problems as the double-checked locking idiom.  
+ * In particular, the instruction that clones the internal collection and the 
+ * instruction that sets the internal reference to the clone can be executed 
+ * or perceived out-of-order.  This means that any read operation might fail 
+ * unexpectedly, as it may be reading the state of the internal collection
+ * before the internal collection is fully formed.
+ * For more information on the double-checked locking idiom, see the
+ * <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">
+ * Double-Checked Locking Idiom Is Broken Declaration</a>.</p>
+ *
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.13 $ $Date: 2004/01/05 22:46:33 $
+ * 
  * @author Craig R. McClanahan
- * @version $Revision: 1.5 $ $Date: 2002/06/12 03:59:15 $
  */
-
 public class FastArrayList extends ArrayList {
 
 
@@ -160,10 +165,21 @@ public class FastArrayList extends ArrayList {
      */
     protected boolean fast = false;
 
+
+    /**
+     *  Returns true if this list is operating in fast mode.
+     *
+     *  @return true if this list is operating in fast mode
+     */
     public boolean getFast() {
         return (this.fast);
     }
 
+    /**
+     *  Sets whether this list will operate in fast mode.
+     *
+     *  @param fast true if the list should operate in fast mode
+     */
     public void setFast(boolean fast) {
         this.fast = fast;
     }
@@ -520,15 +536,11 @@ public class FastArrayList extends ArrayList {
      * failing due to concurrent modifications.
      */
     public Iterator iterator() {
-
         if (fast) {
-            return (list.iterator());
+            return new ListIter(0);
         } else {
-            synchronized (list) {
-                return (list.iterator());
-            }
+            return list.iterator();
         }
-
     }
 
 
@@ -557,15 +569,11 @@ public class FastArrayList extends ArrayList {
      * See the implementation note on <code>iterator()</code>.
      */
     public ListIterator listIterator() {
-
         if (fast) {
-            return (list.listIterator());
+            return new ListIter(0);
         } else {
-            synchronized (list) {
-                return (list.listIterator());
-            }
+            return list.listIterator();
         }
-
     }
 
 
@@ -579,15 +587,11 @@ public class FastArrayList extends ArrayList {
      * @exception IndexOutOfBoundsException if the index is out of range
      */
     public ListIterator listIterator(int index) {
-
         if (fast) {
-            return (list.listIterator(index));
+            return new ListIter(index);
         } else {
-            synchronized (list) {
-                return (list.listIterator(index));
-            }
+            return list.listIterator(index);
         }
-
     }
 
 
@@ -750,15 +754,11 @@ public class FastArrayList extends ArrayList {
      * @exception IndexOutOfBoundsException if an index is out of range
      */
     public List subList(int fromIndex, int toIndex) {
-
         if (fast) {
-            return (list.subList(fromIndex, toIndex));
+            return new SubList(fromIndex, toIndex);
         } else {
-            synchronized (list) {
-                return (list.subList(fromIndex, toIndex));
-            }
+            return list.subList(fromIndex, toIndex);
         }
-
     }
 
 
@@ -839,4 +839,507 @@ public class FastArrayList extends ArrayList {
     }
 
 
+
+    private class SubList implements List {
+
+        private int first;
+        private int last;
+        private List expected;
+
+
+        public SubList(int first, int last) {
+            this.first = first;
+            this.last = last;
+            this.expected = list;
+        }
+
+        private List get(List l) {
+            if (list != expected) {
+                throw new ConcurrentModificationException();
+            }
+            return l.subList(first, last);
+        }
+
+        public void clear() {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    get(temp).clear();
+                    last = first;
+                    list = temp;
+                    expected = temp;
+                }
+            } else {
+                synchronized (list) {
+                    get(expected).clear();
+                }
+            }
+        }
+
+        public boolean remove(Object o) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    boolean r = get(temp).remove(o);
+                    if (r) last--;
+                    list = temp;
+                    expected = temp;
+                    return r;
+                }
+            } else {
+                synchronized (list) {
+                    return get(expected).remove(o);
+                }
+            }
+        }
+
+        public boolean removeAll(Collection o) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    List sub = get(temp);
+                    boolean r = sub.removeAll(o);
+                    if (r) last = first + sub.size();
+                    list = temp;
+                    expected = temp;
+                    return r;
+                }
+            } else {
+                synchronized (list) {
+                    return get(expected).removeAll(o);
+                }
+            }
+        }
+
+        public boolean retainAll(Collection o) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    List sub = get(temp);
+                    boolean r = sub.retainAll(o);
+                    if (r) last = first + sub.size();
+                    list = temp;
+                    expected = temp;
+                    return r;
+                }
+            } else {
+                synchronized (list) {
+                    return get(expected).retainAll(o);
+                }
+            }
+        }
+
+        public int size() {
+            if (fast) {
+                return get(expected).size();
+            } else {
+                synchronized (list) {
+                    return get(expected).size();
+                }
+            }
+        }
+
+
+        public boolean isEmpty() {
+            if (fast) {
+                return get(expected).isEmpty();
+            } else {
+                synchronized (list) {
+                    return get(expected).isEmpty();
+                }
+            }
+        }
+
+        public boolean contains(Object o) {
+            if (fast) {
+                return get(expected).contains(o);
+            } else {
+                synchronized (list) {
+                    return get(expected).contains(o);
+                }
+            }
+        }
+
+        public boolean containsAll(Collection o) {
+            if (fast) {
+                return get(expected).containsAll(o);
+            } else {
+                synchronized (list) {
+                    return get(expected).containsAll(o);
+                }
+            }
+        }
+
+        public Object[] toArray(Object[] o) {
+            if (fast) {
+                return get(expected).toArray(o);
+            } else {
+                synchronized (list) {
+                    return get(expected).toArray(o);
+                }
+            }
+        }
+
+        public Object[] toArray() {
+            if (fast) {
+                return get(expected).toArray();
+            } else {
+                synchronized (list) {
+                    return get(expected).toArray();
+                }
+            }
+        }
+
+
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (fast) {
+                return get(expected).equals(o);
+            } else {
+                synchronized (list) {
+                    return get(expected).equals(o);
+                }
+            }
+        }
+
+        public int hashCode() {
+            if (fast) {
+                return get(expected).hashCode();
+            } else {
+                synchronized (list) {
+                    return get(expected).hashCode();
+                }
+            }
+        }
+
+        public boolean add(Object o) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    boolean r = get(temp).add(o);
+                    if (r) last++;
+                    list = temp;
+                    expected = temp;
+                    return r;
+                }
+            } else {
+                synchronized (list) {
+                    return get(expected).add(o);
+                }
+            }
+        }
+
+        public boolean addAll(Collection o) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    boolean r = get(temp).addAll(o);
+                    if (r) last += o.size();
+                    list = temp;
+                    expected = temp;
+                    return r;
+                }
+            } else {
+                synchronized (list) {
+                    return get(expected).addAll(o);
+                }
+            }
+        }
+
+        public void add(int i, Object o) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    get(temp).add(i, o);
+                    last++;
+                    list = temp;
+                    expected = temp;
+                }
+            } else {
+                synchronized (list) {
+                    get(expected).add(i, o);
+                }
+            }
+        }
+
+        public boolean addAll(int i, Collection o) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    boolean r = get(temp).addAll(i, o);
+                    list = temp;
+                    if (r) last += o.size();
+                    expected = temp;
+                    return r;
+                }
+            } else {
+                synchronized (list) {
+                    return get(expected).addAll(i, o);
+                }
+            }
+        }
+
+        public Object remove(int i) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    Object o = get(temp).remove(i);
+                    last--;
+                    list = temp;
+                    expected = temp;
+                    return o;
+                }
+            } else {
+                synchronized (list) {
+                    return get(expected).remove(i);
+                }
+            }
+        }
+
+        public Object set(int i, Object a) {
+            if (fast) {
+                synchronized (FastArrayList.this) {
+                    ArrayList temp = (ArrayList) list.clone();
+                    Object o = get(temp).set(i, a);
+                    list = temp;
+                    expected = temp;
+                    return o;
+                }
+            } else {
+                synchronized (list) {
+                    return get(expected).set(i, a);
+                }
+            }
+        }
+
+
+        public Iterator iterator() {
+            return new SubListIter(0);
+        }
+
+        public ListIterator listIterator() {
+            return new SubListIter(0);
+        }
+
+        public ListIterator listIterator(int i) {
+            return new SubListIter(i);
+        }
+
+
+        public Object get(int i) {
+            if (fast) {
+                return get(expected).get(i);
+            } else {
+                synchronized (list) {
+                    return get(expected).get(i);
+                }
+            }
+        }
+
+        public int indexOf(Object o) {
+            if (fast) {
+                return get(expected).indexOf(o);
+            } else {
+                synchronized (list) {
+                    return get(expected).indexOf(o);
+                }
+            }
+        }
+
+
+        public int lastIndexOf(Object o) {
+            if (fast) {
+                return get(expected).lastIndexOf(o);
+            } else {
+                synchronized (list) {
+                    return get(expected).lastIndexOf(o);
+                }
+            }
+        }
+
+
+        public List subList(int f, int l) {
+            if (list != expected) {
+                throw new ConcurrentModificationException();
+            }
+            return new SubList(first + f, f + l);
+        }
+
+
+    private class SubListIter implements ListIterator {
+
+        private List expected;
+        private ListIterator iter;
+        private int lastReturnedIndex = -1;
+
+
+        public SubListIter(int i) {
+            this.expected = list;
+            this.iter = SubList.this.get(expected).listIterator(i);
+        }
+
+        private void checkMod() {
+            if (list != expected) {
+                throw new ConcurrentModificationException();
+            }
+        }
+
+        List get() {
+            return SubList.this.get(expected);
+        }
+
+        public boolean hasNext() {
+            checkMod();
+            return iter.hasNext();     
+        }
+
+        public Object next() {
+            checkMod();
+            lastReturnedIndex = iter.nextIndex();
+            return iter.next();
+        }
+
+        public boolean hasPrevious() {
+            checkMod();
+            return iter.hasPrevious();
+        }
+
+        public Object previous() {
+            checkMod();
+            lastReturnedIndex = iter.previousIndex();
+            return iter.previous();
+        }
+
+        public int previousIndex() {
+            checkMod();
+            return iter.previousIndex();
+        }
+
+        public int nextIndex() {
+            checkMod();
+            return iter.nextIndex();
+        }
+
+        public void remove() {
+            checkMod();
+            if (lastReturnedIndex < 0) {
+                throw new IllegalStateException();
+            }
+            get().remove(lastReturnedIndex);
+            last--;
+            expected = list;
+            iter = get().listIterator(previousIndex());
+            lastReturnedIndex = -1;
+        }
+
+        public void set(Object o) {
+            checkMod();
+            if (lastReturnedIndex < 0) {
+                throw new IllegalStateException();
+            }
+            get().set(lastReturnedIndex, o);
+            expected = list;
+            iter = get().listIterator(previousIndex() + 1);
+        } 
+
+        public void add(Object o) {
+            checkMod();
+            int i = nextIndex();
+            get().add(i, o);
+            last++;
+            iter = get().listIterator(i + 1);
+            lastReturnedIndex = 1;
+        }
+
+   }
+
+
+    }
+
+
+
+    private class ListIter implements ListIterator {
+
+        private List expected;
+        private ListIterator iter;
+        private int lastReturnedIndex = -1;
+
+
+        public ListIter(int i) {
+            this.expected = list;
+            this.iter = get().listIterator(i);
+        }
+
+        private void checkMod() {
+            if (list != expected) {
+                throw new ConcurrentModificationException();
+            }
+        }
+
+        List get() {
+            return expected;
+        }
+
+        public boolean hasNext() {
+            checkMod();
+            return iter.hasNext();     
+        }
+
+        public Object next() {
+            checkMod();
+            lastReturnedIndex = iter.nextIndex();
+            return iter.next();
+        }
+
+        public boolean hasPrevious() {
+            checkMod();
+            return iter.hasPrevious();
+        }
+
+        public Object previous() {
+            checkMod();
+            lastReturnedIndex = iter.previousIndex();
+            return iter.previous();
+        }
+
+        public int previousIndex() {
+            checkMod();
+            return iter.previousIndex();
+        }
+
+        public int nextIndex() {
+            checkMod();
+            return iter.nextIndex();
+        }
+
+        public void remove() {
+            checkMod();
+            if (lastReturnedIndex < 0) {
+                throw new IllegalStateException();
+            }
+            get().remove(lastReturnedIndex);
+            expected = list;
+            iter = get().listIterator(previousIndex());
+            lastReturnedIndex = -1;
+        }
+
+        public void set(Object o) {
+            checkMod();
+            if (lastReturnedIndex < 0) {
+                throw new IllegalStateException();
+            }
+            get().set(lastReturnedIndex, o);
+            expected = list;
+            iter = get().listIterator(previousIndex() + 1);
+        } 
+
+        public void add(Object o) {
+            checkMod();
+            int i = nextIndex();
+            get().add(i, o);
+            iter = get().listIterator(i + 1);
+            lastReturnedIndex = -1;
+        }
+
+   }
 }

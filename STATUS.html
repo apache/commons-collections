@@ -7,7 +7,7 @@
 
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
-$Id: STATUS.html,v 1.13 2002/03/15 05:41:23 morgand Exp $<br>
+$Id: STATUS.html,v 1.32 2004/01/03 23:46:07 scolebourne Exp $<br>
 <a href="#Introduction">[Introduction]</a>
 <a href="#Dependencies">[Dependencies]</a>
 <a href="#Release Info">[Release Info]</a>
@@ -21,101 +21,10 @@ $Id: STATUS.html,v 1.13 2002/03/15 05:41:23 morgand Exp $<br>
 <h3>1.  INTRODUCTION</h3>
 
 <p>The <em>Collections</em> package contains a set of Java classes that
-extend or augment the Java Collections Framework.
-The following classes are included:</p>
-<ul>
-<li><strong>ArrayEnumeration</strong> - a java.util.Enumeration wrapper for arrays.</li>
-<li><strong>ArrayIterator</strong> - a java.util.Iterator wrapper for arrays.</li>
-<li><strong>ArrayStack</strong> - An implementation of the java.util.Stack API
-    that is based on an ArrayList instead of a Vector, so it is not synchronized to
-    protect against multi-threaded access.</li>
-<li><strong>Bag</strong> - A Collection that keeps a count of its members of the same
-    type, using <code>hashCode</code> to check for equality. Suppose
-    you have a Bag that contains <code>{a, a, b, c}</code>.  Calling
-    getCount on <code>a</code> would return 2, while calling
-    uniqueSet would return <code>{a, b, c}</code>.  <i>Note: this is an
-    interface with several implementations.</i></li>
-<li><strong>BeanMap</strong> - An implementation of the java.util.Map API
-    that is based on a JavaBean using introspection. The property names are the
-    keys of the map and the property values are the values of the map.</li>
-<li><strong>CollectionUtils</strong> - a variety of helper methods
-    for working with collections.</li>
-<li><strong>ComparableComparator</strong> - A Comparator that compares Comparable objects.
-    This Comparator is useful, for example,
-    for enforcing the natural order in custom implementations
-    of SortedSet and SortedMap.</li>
-<li><strong>ComparatorChain</strong> -  ComparatorChain is a Comparator that wraps one or
-    more Comparators in sequence.  The ComparatorChain
-    calls each Comparator in sequence until either 1)
-    any single Comparator returns a non-zero result
-   (and that result is then returned),
-   or 2) the ComparatorChain is exhausted (and zero is
-   returned).  This type of sorting is very similar
-   to multi-column sorting in SQL, and this class
-   allows Java classes to emulate that kind of behaviour
-   when sorting a List.</li>
-<li><strong>CursorableLinkedList</strong> - an implementation of the java.util.List
-    interface supporting a java.util.ListIterator that allows concurrent
-    modifications to the underlying list.</li>
-<li><strong>DoubleOrderedMap</strong> - Red-Black tree-based implementation of Map. 
-    This class guarantees
-    that the map will be in both ascending key order and ascending
-    value order, sorted according to the natural order for the key's
-    and value's classes.</li>
-<li><strong>ExtendedProperties</strong> - extends normal Java properties by adding
-    the possibility to use the same key many times, concatenating the value strings
-    instead of overwriting them.</li>
-<li><strong>FastArrayList</strong> - a custom implementation of java.util.ArrayList
-    designed to operate in a multithreaded environment where the large majority of
-    method calls are read-only, instead of structural changes.</li>
-<li><strong>FastHashMap</strong> - a custom implementation of java.util.HashMap
-    designed to operate in a multithreaded environment where the large majority of
-    method calls are read-only, instead of structural changes.</li>
-<li><strong>FastTreeMap</strong> - a custom implementation of java.util.TreeMap
-    designed to operate in a multithreaded environment where the large majority of
-    method calls are read-only, instead of structural changes.</li>
-<li><strong>FilterIterator</strong> - A Proxy <code>Iterator</code> which takes a 
-    <code>Predicate</code> 
-    instance to filter out objects from an underlying <code>Iterator</code> instance.
-    Only objects for which the
-    specified <code>Predicate</code> evaluates to <code>true</code> are
-    returned.</li>
-<li><strong>FilterListIterator</strong> - A proxy <code>ListIterator</code> which 
-    takes a <code>Predicate</code> instance to filter
-    out objects from an underlying <code>ListIterator</code> 
-    instance. Only objects for which the specified 
-    <code>Predicate</code> evaluates to <code>true</code> are
-    returned by the iterator.</li>
-<li><strong>HashBag</strong> -  An implementation of <strong>Bag</strong> that is backed by a 
-    HashMap.</li>
-<li><strong>ListUtils</strong> - miscelaneous utilities to manipulate Lists.</li>
-<li><strong>MultiMap</strong> - This is simply a Map with slightly different semantics.
-    Instead of returning an Object, it returns a Collection.
-    So for example, you can put( key, new Integer(1) ); 
-    and then a Object get( key ); will return you a Collection 
-    instead of an Integer.  This is an interface implemented
-    by <strong>MultiHashMap</strong>.</li>
-<li><strong>PriorityQueue</strong> - a PriorityQueue interface, with
-    <strong>BinaryHeap</strong> and <strong>SynchronizedPriorityQueue</strong>
-    implementations.</li>
-<li><strong>ProxyMap</strong> - This <code>Map</code> wraps another <code>Map</code>
-    implementation, using the wrapped instance for its default
-    implementation.  This class is used as a framework on which to
-    build to extensions for its wrapped <code>Map</code> object which
-    would be unavailable or inconvenient via sub-classing (but usable
-    via composition).</li>
-<li><strong>ReverseComparator</strong> - Reverses the order of another comparator.</li>
-<li><strong>SequencedHashMap</strong> -  A map of objects whose mapping entries are 
-    sequenced based on the order in
-    which they were added.</li>
-<li><strong>SingletonIterator</strong> - An Iterator over a single 
-    object instance.</li>
-<li><strong>SortedBag</strong> - A type of <strong>Bag</strong> that maintains order among its unique
-    representative members</li>
-<li><strong>TreeBag</strong> - An implementation of <strong>Bag</strong> that is backed by a 
-    TreeMap. Order will be maintained among the unique representative
-    members.</li>
-</ul>
+extend or augment the Java Collections Framework. This includes new interfaces
+and new implementations together with supporting utility classes.
+
+<p>In addition to the main commons-collections jar, a testframework jar file is also produced.
 
 <a name="Dependencies"></a>
 <h3>2.  DEPENDENCIES</h3>
@@ -126,7 +35,7 @@ components for development and use:</p>
 <li><a href="http://java.sun.com/j2se">Java Development Kit</a>
     (Version 1.2 or later)</li>
 <li><a href="http://www.junit.org">JUnit Testing Framework</a>
-    (Version 3.7 or later) - for unit tests only, not required
+    (Version 3.8.1 or later) - for unit tests only, not required
     for deployment</li>
 </ul>
 
@@ -135,9 +44,9 @@ components for development and use:</p>
 <h3>3.  RELEASE INFO</h3>
 
 <p>Current Release:
-<a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v1.0">Version 1.0</a>
+<a href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v2.1">Version 2.1</a>
 
-<p>Planned Next Release:  TBD</p>
+<p>Planned Next Release:  3.0</p>
 
 <a name="Committers"></a>
 <h3>4.  COMMITTERS</h3>
@@ -156,6 +65,12 @@ component to ensure that it continues to meet a variety of needs.</p>
    <li><a href="mailto:rwaldhoff@apache.org">Rodney Waldhoff</a></li>
    <li><a href="mailto:jvanzyl@apache.org">Jason van Zyl</a></li>
    <li><a href="mailto:bayard@apache.org">Henri Yandell</a></li>
+   <li><a href="mailto:pjack@apache.org">Paul Jack</a></li>
+   <li><a href="mailto:scolebourne@apache.org">Stephen Colebourne</a></li>
+   <li><a href="mailto:rdonkin@apache.org">Robert Burrell Donkin</a></li>
+   <li><a href="mailto:psteitz@apache.org">Phil Steitz</a></li>
+   <li><a href="mailto:matth@apache.org">Matthew Hawthorne</a></li>
+   <li>Arun M. Thomas</li>
 </ul>
 
 <a name="Action Items"></a>
@@ -171,14 +86,13 @@ component to ensure that it continues to meet a variety of needs.</p>
 
   <tr>
     <td><strong>Additional Contributions</strong>.  Other collection
-    or collection-related classes.</td>
+    or collection-related classes or decorators.</td>
     <td align="center">&nbsp;</td>
   </tr>
-
+  
   <tr>
-    <td><strong>Generalized Unit Tests</strong>.  Create a generic
-    set of Unit Tests that test the standard contracts of the basic
-    Java Collections interfaces (List, Set, Map, etc.)</td>
+    <td><strong>MultiMap ideas</strong>.  Updates to MultiMap, maybe based on
+	 <a href="http://www.innig.org/util/innig-util/build/javadoc">this library</a>.</td>
     <td align="center">&nbsp;</td>
   </tr>
 
@@ -187,6 +101,33 @@ component to ensure that it continues to meet a variety of needs.</p>
         User's Guide, examples, or other documentation for this package.</td>
     <td align="center">&nbsp;</td>
   </tr>
+
+  <tr>
+    <td><strong>Serializable Collections</strong>.  All of the concrete
+        Collection and Map implementations should be properly Serializable
+        across all versions of the JDK.  Also, decorators should be 
+        Serializable if the underlying instance is.</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><strong>Fail-Fast Iterators</strong>.  All concrete Collection and
+        Map implementations that can have fail-fast iterators should have
+        them.  Some classes, like StaticBucketMap, cannot possibly have 
+        fail-fast iterators, but otherwise everything else should.</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><strong>LoopingListIterator</strong>.  A ListIterator similar to LoopingIterator</td>
+  </tr>
+
+  <tr>
+    <td><strong>Additional Unit Tests</strong>.  Create generic unit tests
+        for SortedSet and Buffer.</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+    
 </table>
 
 </body>
