@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListIteratorListIterator.java,v 1.2 2003/03/03 23:23:40 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListIteratorListIterator.java,v 1.3 2003/03/05 19:10:51 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,8 +68,8 @@ import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.collections.primitives.IntList;
 
 /**
- * @todo should extend TestListIterator when there is one
- * @version $Revision: 1.2 $ $Date: 2003/03/03 23:23:40 $
+ * @TODO should extend TestListIterator when there is one
+ * @version $Revision: 1.3 $ $Date: 2003/03/05 19:10:51 $
  * @author Rodney Waldhoff
  */
 public class TestIntListIteratorListIterator extends TestIterator {

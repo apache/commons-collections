@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.10 2003/02/28 21:21:51 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.11 2003/03/05 19:10:50 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.10 $ $Date: 2003/02/28 21:21:51 $
+ * @version $Revision: 1.11 $ $Date: 2003/03/05 19:10:50 $
  * @author Rodney Waldhoff
  */
 public class TestArrayIntList extends TestIntList {
@@ -104,25 +104,22 @@ public class TestArrayIntList extends TestIntList {
     // tests
     // ------------------------------------------------------------------------
 
-    /** @todo need to add serialized form to cvs */
+    /** @TODO need to add serialized form to cvs */
     public void testCanonicalEmptyCollectionExists() {
         // XXX FIX ME XXX
         // need to add a serialized form to cvs
     }
 
-    /** @todo need to add serialized form to cvs */
     public void testCanonicalFullCollectionExists() {
         // XXX FIX ME XXX
         // need to add a serialized form to cvs
     }
 
-    /** @todo need to add serialized form to cvs */
     public void testEmptyListCompatibility() {
         // XXX FIX ME XXX
         // need to add a serialized form to cvs
     }
 
-    /** @todo need to add serialized form to cvs */
     public void testFullListCompatibility() {
         // XXX FIX ME XXX
         // need to add a serialized form to cvs

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.5 2003/01/12 15:23:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.6 2003/03/05 19:10:50 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,7 +62,7 @@ import java.util.List;
 import org.apache.commons.collections.TestList;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/01/12 15:23:20 $
+ * @version $Revision: 1.6 $ $Date: 2003/03/05 19:10:50 $
  * @author Rodney Waldhoff
  */
 public abstract class TestAbstractLongArrayList extends TestList {
@@ -133,8 +133,6 @@ public abstract class TestAbstractLongArrayList extends TestList {
         return result;
     }
 
-    // TODO:  Create canonical primitive lists in CVS
-
     public void testCanonicalEmptyCollectionExists() {
     }
 
@@ -147,8 +145,6 @@ public abstract class TestAbstractLongArrayList extends TestList {
 
     public void testFullListCompatibility() {
     }
-
-    // TODO: Make primitive lists fail-fast
 
     public void testCollectionIteratorFailFast() {
     }
