@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.31 2002/08/12 18:13:09 pjack Exp $
- * $Revision: 1.31 $
- * $Date: 2002/08/12 18:13:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.32 2002/08/13 00:26:52 pjack Exp $
+ * $Revision: 1.32 $
+ * $Date: 2002/08/13 00:26:52 $
  *
  * ====================================================================
  *
@@ -67,7 +67,7 @@ import junit.framework.*;
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.31 2002/08/12 18:13:09 pjack Exp $
+ * @version $Id: TestAll.java,v 1.32 2002/08/13 00:26:52 pjack Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -85,6 +85,10 @@ public class TestAll extends TestCase {
         suite.addTest(TestBoundedFifoBuffer2.suite());
         suite.addTest(TestCollatingIterator.suite());
         suite.addTest(TestCollectionUtils.suite());
+        suite.addTest(TestBufferUtils.suite());
+        suite.addTest(TestSetUtils.suite());
+        suite.addTest(TestListUtils.suite());
+        suite.addTest(TestMapUtils.suite());
         suite.addTest(TestComparableComparator.suite());
         suite.addTest(TestComparatorChain.suite());
         suite.addTest(TestCursorableLinkedList.suite());

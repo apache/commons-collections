@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.10 2002/06/21 03:28:54 mas Exp $
- * $Revision: 1.10 $
- * $Date: 2002/06/21 03:28:54 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.11 2002/08/13 00:26:52 pjack Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/08/13 00:26:52 $
  *
  * ====================================================================
  *
@@ -90,7 +90,7 @@ import java.util.NoSuchElementException;
  *
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Id: TestList.java,v 1.10 2002/06/21 03:28:54 mas Exp $
+ * @version $Id: TestList.java,v 1.11 2002/08/13 00:26:52 pjack Exp $
  */
 public abstract class TestList extends TestCollection {
 
@@ -981,7 +981,7 @@ public abstract class TestList extends TestCollection {
      *  modified when the sublist is.
      */
     public BulkTest bulkTestSubList() {
-        if (getFullElements().length < 10) return null;
+        if (getFullElements().length - 6 < 10) return null;
         return new BulkTestSubList(this);
     }
 

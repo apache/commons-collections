@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.3 2002/08/10 00:36:34 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/10 00:36:34 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.4 2002/08/13 00:26:52 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/13 00:26:52 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCollectionUtils.java,v 1.3 2002/08/10 00:36:34 pjack Exp $
+ * @version $Id: TestCollectionUtils.java,v 1.4 2002/08/13 00:26:52 pjack Exp $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -328,4 +328,42 @@ public class TestCollectionUtils extends TestCase {
         test = CollectionUtils.index(bag, 0);
         assertTrue(test.equals("element"));
     }
+
+
+    public BulkTest bulkTestPredicatedCollection1() {
+        return new TestPredicatedCollection("") {
+            public Collection predicatedCollection() {
+                Predicate p = getPredicate();
+                return CollectionUtils.predicatedCollection(new ArrayList(), p);
+            }
+
+            public BulkTest bulkTestAll() {
+                return new TestCollection("") {
+                    public Collection makeCollection() {
+                        return predicatedCollection();
+                    }
+
+                    public Collection makeConfirmedCollection() {
+                        return new ArrayList();
+                    }
+
+                    public Collection makeConfirmedFullCollection() {
+                        ArrayList list = new ArrayList();
+                        list.addAll(java.util.Arrays.asList(getFullElements()));
+                        return list;
+                    }
+
+                    public Object[] getFullElements() {
+                        return getFullNonNullStringElements();
+                    }
+
+                    public Object[] getOtherElements() {
+                        return getOtherNonNullStringElements();
+                    }
+
+                };
+            }
+        };
+    }
+
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.3 2002/07/03 02:16:48 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/07/03 02:16:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.4 2002/08/13 00:26:51 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/13 00:26:51 $
  *
  * ====================================================================
  *
@@ -69,9 +69,13 @@ import java.util.Iterator;
  *  Contains static utility methods for operating on {@link Buffer} objects.
  *
  *  @author Paul Jack
- *  @version $Id: BufferUtils.java,v 1.3 2002/07/03 02:16:48 mas Exp $
+ *  @version $Id: BufferUtils.java,v 1.4 2002/08/13 00:26:51 pjack Exp $
  */
 public class BufferUtils {
+
+
+    private BufferUtils() {
+    }
 
 
     /**
@@ -113,124 +117,39 @@ public class BufferUtils {
         return new SynchronizedBuffer(buf) {
 
             public synchronized boolean add(Object o) {
-                boolean r = b.add(o);
+                boolean r = collection.add(o);
                 notify();
                 return r;
             }
 
             public synchronized boolean addAll(Collection c) {
-                boolean r = b.addAll(c);
+                boolean r = collection.addAll(c);
                 notifyAll();
                 return r;
             }
 
             public synchronized Object get() {
-                while (b.isEmpty()) {
+                while (collection.isEmpty()) {
                     try {
                         wait();
                     } catch (InterruptedException e) {
                         throw new BufferUnderflowException();
                     }
                 }
-                return b.get();
+                return ((Buffer)collection).get();
             }
 
             public synchronized Object remove() {
-                while (b.isEmpty()) {
+                while (collection.isEmpty()) {
                     try {
                         wait();
                     } catch (InterruptedException e) {
                         throw new BufferUnderflowException();
                     }
                 }
-                return b.remove();
+                return ((Buffer)collection).remove();
             }
         };
-    }
-
-
-    private static class SynchronizedBuffer implements Buffer {
-
-            Buffer b;
-
-
-            public SynchronizedBuffer(Buffer b) {
-                 this.b = b;
-            }
-
-            public synchronized int size() {
-                return b.size();
-            }
-
-            public synchronized boolean isEmpty() {
-                return b.isEmpty();
-            }
-
-            public synchronized boolean contains(Object o) {
-                return b.contains(o);
-            }
-
-            public Iterator iterator() {
-                return b.iterator();
-            }
-
-            public synchronized Object[] toArray() {
-                return b.toArray();
-            }
-
-            public synchronized Object[] toArray(Object[] o) {
-                return b.toArray(o);
-            }
-
-            public synchronized boolean add(Object o) {
-                return b.add(o);
-            }
-
-            public synchronized boolean remove(Object o) {
-                return b.remove(o);
-            }
-
-            public synchronized boolean containsAll(Collection c) {
-                return b.containsAll(c);
-            }
-
-            public synchronized boolean addAll(Collection c) {
-                return b.addAll(c);
-            }
-
-            public synchronized boolean removeAll(Collection c) {
-                return b.removeAll(c);
-            }
-
-            public synchronized boolean retainAll(Collection c) {
-                return b.retainAll(c);
-            }
-
-            public synchronized void clear() {
-                b.clear();
-            }
-
-            public synchronized boolean equals(Object o) {
-                return b.equals(o);
-            }
-
-            public synchronized int hashCode() {
-                return b.hashCode();
-            }
-
-            public synchronized String toString() {
-                return b.toString();
-            }
-
-            public synchronized Object get() {
-                return b.get();
-            }
-
-            public synchronized Object remove() {
-                return b.remove();
-            }          
-
-        
     }
 
 
@@ -241,35 +160,7 @@ public class BufferUtils {
      *  @return  an unmodifiable buffer backed by that buffer
      */
     public static Buffer unmodifiableBuffer(Buffer b) {
-        return new BufferDecorator(b) {
-            public boolean addAll(Collection c) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public boolean removeAll(Collection c) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public boolean retainAll(Collection c) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public boolean add(Object o) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public boolean remove(Object o) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public void clear() {
-                throw new UnsupportedOperationException();
-            }
-
-            public Object remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        return new UnmodifiableBuffer(b);
     }
 
 
@@ -285,116 +176,87 @@ public class BufferUtils {
      *  @return  a predicated buffer
      */
     public static Buffer predicatedBuffer(Buffer buf, final Predicate p) {
-        if (buf == null) {
-            throw new IllegalArgumentException("Buffer must not be null.");
-        }
-        if (p == null) {
-            throw new IllegalArgumentException("Predicate must not be null.");
-        }
-        return new BufferDecorator(buf) {
-
-            public boolean add(Object o) {
-                test(o);
-                return b.add(o);
-            }
-
-            public boolean addAll(Collection c) {
-                Iterator iterator = c.iterator();
-                while (iterator.hasNext()) {
-                    test(iterator.next());
-                }
-                return b.addAll(c);
-            }
-
-            private void test(Object o) {
-                if (!p.evaluate(o)) {
-                    throw new IllegalArgumentException("Invalid: " + o);
-                }
-            }
-        };
+        return new PredicatedBuffer(buf, p);
     }
 
 
-    private static class BufferDecorator implements Buffer {
+    public static Buffer boundedBuffer(Buffer buf, int maxSize) {
+        return new BoundedBuffer(buf, maxSize);
+    }
 
-        Buffer b;
 
-        BufferDecorator(Buffer b) {
-            this.b = b;
+    private static class SynchronizedBuffer 
+    extends CollectionUtils.SynchronizedCollection
+    implements Buffer {
+
+        public SynchronizedBuffer(Buffer b) {
+            super(b);
         }
 
-        public int size() {
-            return b.size();
+        public synchronized Object get() {
+            return ((Buffer)collection).get();
         }
 
-        public boolean isEmpty() {
-            return b.isEmpty();
-        }
+        public synchronized Object remove() {
+            return ((Buffer)collection).remove();
+        }        
+    }
 
-        public boolean contains(Object o) {
-            return b.contains(o);
-        }
 
-        public Iterator iterator() {
-            return b.iterator();
-        }
+    private static class UnmodifiableBuffer 
+    extends CollectionUtils.UnmodifiableCollection
+    implements Buffer {
 
-        public Object[] toArray() {
-            return b.toArray();
-        }
-
-        public Object[] toArray(Object[] o) {
-            return b.toArray(o);
-        }
-
-        public boolean add(Object o) {
-            return b.add(o);
-        }
-
-        public boolean remove(Object o) {
-            return b.remove(o);
-        }
-
-        public boolean containsAll(Collection c) {
-            return b.containsAll(c);
-        }
-
-        public boolean addAll(Collection c) {
-            return b.addAll(c);
-        }
-
-        public boolean removeAll(Collection c) {
-            return b.removeAll(c);
-        }
-
-        public boolean retainAll(Collection c) {
-            return b.retainAll(c);
-        }
-
-        public void clear() {
-            b.clear();
-        }
-
-        public boolean equals(Object o) {
-            return b.equals(o);
-        }
-
-        public int hashCode() {
-            return b.hashCode();
-        }
-
-        public String toString() {
-            return b.toString();
+        public UnmodifiableBuffer(Buffer b) {
+            super(b);
         }
 
         public Object get() {
-            return b.get();
+            return ((Buffer)collection).get();
         }
 
         public Object remove() {
-            return b.remove();
+            throw new UnsupportedOperationException();
         }
+
     }
 
+
+    private static class PredicatedBuffer 
+    extends CollectionUtils.PredicatedCollection
+    implements Buffer {
+
+        public PredicatedBuffer(Buffer b, Predicate p) {
+            super(b, p);
+        }
+
+        public Object get() {
+            return ((Buffer)collection).get();
+        }
+
+        public Object remove() {
+            return ((Buffer)collection).remove();
+        }
+
+    }
+
+
+    private static class BoundedBuffer
+    extends CollectionUtils.BoundedCollection
+    implements Buffer {
+
+        public BoundedBuffer(Buffer b, int maxSize) {
+            super(b, maxSize);
+        }
+
+        public Object get() {
+            return ((Buffer)collection).get();
+        }
+
+        public Object remove() {
+            return ((Buffer)collection).remove();
+        }
+
+    }
 
 }

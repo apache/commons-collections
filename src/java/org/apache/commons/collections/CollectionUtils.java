@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.9 2002/08/10 00:36:34 pjack Exp $
- * $Revision: 1.9 $
- * $Date: 2002/08/10 00:36:34 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.10 2002/08/13 00:26:51 pjack Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/08/13 00:26:51 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  *
  * @since 1.0
- * @version $Id: CollectionUtils.java,v 1.9 2002/08/10 00:36:34 pjack Exp $
+ * @version $Id: CollectionUtils.java,v 1.10 2002/08/13 00:26:51 pjack Exp $
  */
 public class CollectionUtils {
 
@@ -555,4 +555,336 @@ public class CollectionUtils {
         }
         return 0;
     }
+
+
+    /**
+     *  Base class for collection decorators.  I decided to do it this way
+     *  because it seemed to result in the most reuse.  
+     *
+     *  Inner class tree looks like:
+     *       CollectionWrapper
+     *          PredicatedCollection
+     *             PredicatedSet
+     *             PredicatedList
+     *             PredicatedBag
+     *          BoundedCollection
+     *             BoundedSet
+     *             BoundedList
+     *             BoundedBag
+     *          LazyCollection
+     *             LazyList
+     *             LazyBag
+     *       SynchronizedCollection
+     *          SynchronizedBuffer
+     *          SynchronizedBag
+     */
+    static class CollectionWrapper implements Collection {
+
+        final protected Collection collection;
+
+        public CollectionWrapper(Collection collection) {
+            if (collection == null) {
+                throw new IllegalArgumentException("Collection must not be null.");
+            }
+            this.collection = collection;
+        }
+
+        public int size() {
+            return collection.size();
+        }
+
+        public boolean isEmpty() {
+            return collection.isEmpty();
+        }
+
+        public boolean contains(Object o) {
+            return collection.contains(o);
+        }
+
+        public Iterator iterator() {
+            return collection.iterator();
+        }
+
+        public Object[] toArray() {
+            return collection.toArray();
+        }
+
+        public Object[] toArray(Object[] o) {
+            return collection.toArray(o);
+        }
+
+        public boolean add(Object o) {
+            return collection.add(o);
+        }
+
+        public boolean remove(Object o) {
+            return collection.remove(o);
+        }
+
+        public boolean containsAll(Collection c2) {
+            return collection.containsAll(c2);
+        }
+
+        public boolean addAll(Collection c2) {
+            return collection.addAll(c2);
+        }
+
+        public boolean removeAll(Collection c2) {
+            return collection.removeAll(c2);
+        }
+
+        public boolean retainAll(Collection c2) {
+            return collection.retainAll(c2);
+        }
+
+        public void clear() {
+            collection.clear();
+        }
+
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            return collection.equals(o);
+        }
+
+        public int hashCode() {
+            return collection.hashCode();
+        }
+
+        public String toString() {
+            return collection.toString();
+        }
+
+    }
+
+
+    static class PredicatedCollection extends CollectionWrapper {
+
+        final protected Predicate predicate;
+
+        public PredicatedCollection(Collection c, Predicate p) {
+            super(c);
+            if (p == null) {
+                throw new IllegalArgumentException("Predicate must not be null.");
+            }
+            this.predicate = p;
+            for (Iterator iter = c.iterator(); iter.hasNext(); ) {
+                validate(iter.next());
+            }
+        }
+
+        public boolean add(Object o) {
+            validate(o);
+            return collection.add(o);
+        }
+
+
+        public boolean addAll(Collection c2) {
+            for (Iterator iter = c2.iterator(); iter.hasNext(); ) {
+                validate(iter.next());
+            }
+            return collection.addAll(c2);
+        }
+
+
+        protected void validate(Object o) {
+            if (!predicate.evaluate(o)) {
+                throw new IllegalArgumentException("Object failed predicate.");
+            }
+        }
+
+    }
+
+
+    static class UnmodifiableCollection extends CollectionWrapper {
+
+
+        public UnmodifiableCollection(Collection c) {
+            super(c);
+        }
+
+        public boolean add(Object o) {
+            throw new UnsupportedOperationException();
+        }
+
+        public boolean addAll(Collection c) {
+            throw new UnsupportedOperationException();
+        }
+
+        public boolean remove(Object o) {
+            throw new UnsupportedOperationException();
+        }
+
+        public boolean removeAll(Collection c) {
+            throw new UnsupportedOperationException();
+        }
+
+        public boolean retainAll(Collection c) {
+            throw new UnsupportedOperationException();
+        }
+
+        public void clear() {
+            throw new UnsupportedOperationException();
+        }
+
+        public Iterator iterator() {
+            return new UnmodifiableIterator(collection.iterator());
+        }
+
+    }
+
+
+    static class BoundedCollection extends CollectionWrapper {
+
+        final protected int maxSize;
+
+
+        public BoundedCollection(Collection c, int maxSize) {
+            super(c);
+            this.maxSize = maxSize;
+        }
+
+        public boolean add(Object o) {
+            if (!collection.contains(o)) {
+                validate(1);
+            }
+            return collection.add(o);
+        }
+
+        public boolean addAll(Collection c) {
+            int delta = 0;
+            for (Iterator iter = c.iterator(); iter.hasNext(); ) {
+                if (!collection.contains(iter.next())) delta++;
+            }
+            validate(delta);
+            return collection.addAll(c);
+        }
+
+
+        protected void validate(int delta) {
+            if (delta + size() > maxSize) {
+                throw new IllegalStateException("Maximum size reached.");
+            }
+        }
+
+    }
+
+
+
+
+    static class SynchronizedCollection {
+
+        final protected Collection collection;
+
+        public SynchronizedCollection(Collection collection) {
+            if (collection == null) {
+                throw new IllegalArgumentException("Collection must not be null.");
+            }
+            this.collection = collection;
+        }
+
+        public synchronized int size() {
+            return collection.size();
+        }
+
+        public synchronized boolean isEmpty() {
+            return collection.isEmpty();
+        }
+
+        public synchronized boolean contains(Object o) {
+            return collection.contains(o);
+        }
+
+        public Iterator iterator() {
+            return collection.iterator();
+        }
+
+        public synchronized Object[] toArray() {
+            return collection.toArray();
+        }
+
+        public synchronized Object[] toArray(Object[] o) {
+            return collection.toArray(o);
+        }
+
+        public synchronized boolean add(Object o) {
+            return collection.add(o);
+        }
+
+        public synchronized boolean remove(Object o) {
+            return collection.remove(o);
+        }
+
+        public synchronized boolean containsAll(Collection c2) {
+            return collection.containsAll(c2);
+        }
+
+        public synchronized boolean addAll(Collection c2) {
+            return collection.addAll(c2);
+        }
+
+        public synchronized boolean removeAll(Collection c2) {
+            return collection.removeAll(c2);
+        }
+
+        public synchronized boolean retainAll(Collection c2) {
+            return collection.retainAll(c2);
+        }
+
+        public synchronized void clear() {
+            collection.clear();
+        }
+
+        public synchronized boolean equals(Object o) {
+            return collection.equals(o);
+        }
+
+        public synchronized int hashCode() {
+            return collection.hashCode();
+        }
+
+        public synchronized String toString() {
+            return collection.toString();
+        }
+
+    }
+
+
+    static class UnmodifiableIterator implements Iterator {
+
+        final protected Iterator iterator;
+
+        public UnmodifiableIterator(Iterator iterator) {
+            this.iterator = iterator;
+        }
+
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        public Object next() {
+            return iterator.next();
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
+
+    /**
+     *  Returns a predicated collection backed by the given collection.
+     *  Only objects that pass the test in the given predicate can be 
+     *  added to the collection.
+     *  It is important not to use the original collection after invoking this 
+     *  method, as it is a backdoor for adding unvalidated objects.
+     *
+     *  @param b  the collection to predicate
+     *  @param p  the predicate for the collection
+     *  @return  a predicated collection backed by the given collection
+     */
+    public static Collection predicatedCollection(Collection c, Predicate p) {
+        return new PredicatedCollection(c, p);
+    }
+
+
 }
