@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedCollection.java,v 1.2 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedCollection.java,v 1.3 2003/08/31 21:09:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,7 +61,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.collections.event.ModificationHandler;
-import org.apache.commons.collections.event.ModificationListener;
 import org.apache.commons.collections.event.StandardModificationHandler;
 import org.apache.commons.collections.event.StandardModificationListener;
 
@@ -82,7 +81,7 @@ import org.apache.commons.collections.event.StandardModificationListener;
  * uses a technique other than listeners to communicate events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.3 $ $Date: 2003/08/31 21:09:49 $
  * 
  * @author Stephen Colebourne
  */
@@ -244,7 +243,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * @return the listeners
      * @throws UnsupportedOperationException if the handler does not support listeners
      */
-    public ModificationListener[] getModificationListeners() {
+    public Object[] getModificationListeners() {
         return getHandler().getModificationListeners();
     }
     
@@ -253,12 +252,17 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * This method simply delegates to the handler.
      * <p>
      * No error occurs if the listener is <code>null</code>.
+     * <p>
+     * The listener does not necessarily have to be a listener in the classic
+     * JavaBean sense. It is entirely up to the handler as to how it interprets
+     * the listener parameter. A ClassCastException is thrown if the handler
+     * cannot interpret the parameter.
      * 
      * @param listener  the listener to add, may be null (ignored)
      * @throws ClassCastException if the listener is not of the correct type
      * @throws UnsupportedOperationException if the handler does not support listeners
      */
-    public void addModificationListener(ModificationListener listener) {
+    public void addModificationListener(Object listener) {
         getHandler().addModificationListener(listener);
     }
     
@@ -274,7 +278,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * @param listener  the listener to remove, may be null (ignored)
      * @throws UnsupportedOperationException if the handler does not support listeners
      */
-    public void removeModificationListener(ModificationListener listener) {
+    public void removeModificationListener(Object listener) {
         getHandler().removeModificationListener(listener);
     }
     

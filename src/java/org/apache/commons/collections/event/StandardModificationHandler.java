@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationHandler.java,v 1.2 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationHandler.java,v 1.3 2003/08/31 21:09:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ package org.apache.commons.collections.event;
  * </ul>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.3 $ $Date: 2003/08/31 21:09:49 $
  * 
  * @author Stephen Colebourne
  */
@@ -123,8 +123,8 @@ public class StandardModificationHandler extends ModificationHandler {
      * 
      * @return the listeners
      */
-    public synchronized ModificationListener[] getModificationListeners() {
-        ModificationListener[] lnrs = new ModificationListener[holders.length];
+    public synchronized Object[] getModificationListeners() {
+        Object[] lnrs = new Object[holders.length];
         for (int i = 0; i < holders.length; i++) {
             lnrs[i] = holders[i].listener;
         }
@@ -139,8 +139,8 @@ public class StandardModificationHandler extends ModificationHandler {
      * @param listener  the listener to add, may be null (ignored)
      * @throws ClassCastException if the listener is not a StandardModificationListener
      */
-    public void addModificationListener(ModificationListener listener) {
-        addModificationListener(listener, -1, -1);
+    public void addModificationListener(Object listener) {
+        addModificationListener((StandardModificationListener) listener, -1, -1);
     }
     
     /**
@@ -151,14 +151,13 @@ public class StandardModificationHandler extends ModificationHandler {
      * @param listener  the listener to add, may be null (ignored)
      * @param preMask  the mask for pre events (0 for none, -1 for all)
      * @param postMask  the mask for post events (0 for none, -1 for all)
-     * @throws ClassCastException if the listener is not a StandardModificationListener
      */
-    public synchronized void addModificationListener(ModificationListener listener, int preMask, int postMask) {
+    public synchronized void addModificationListener(StandardModificationListener listener, int preMask, int postMask) {
         if (listener != null) {
             int oldSize = holders.length;
             Holder[] array = new Holder[oldSize + 1];
             System.arraycopy(holders, 0, array, 0, oldSize);
-            array[oldSize] = new Holder((StandardModificationListener) listener, preMask, postMask);
+            array[oldSize] = new Holder(listener, preMask, postMask);
             holders = array;
             calculateMasks();
         }
@@ -173,7 +172,7 @@ public class StandardModificationHandler extends ModificationHandler {
      * 
      * @param listener  the listener to remove, may be null (ignored)
      */
-    public synchronized void removeModificationListener(ModificationListener listener) {
+    public synchronized void removeModificationListener(Object listener) {
         if (listener != null) {
             switch (holders.length) {
                 case 0:

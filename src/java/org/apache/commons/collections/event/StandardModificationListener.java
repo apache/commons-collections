@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationListener.java,v 1.2 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationListener.java,v 1.3 2003/08/31 21:09:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,8 @@
  */
 package org.apache.commons.collections.event;
 
+import java.util.EventListener;
+
 /**
  * A listener that receives events from the <code>StandardModificationHandler</code>.
  * <p>
@@ -69,11 +71,11 @@ package org.apache.commons.collections.event;
  * </ol>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.3 $ $Date: 2003/08/31 21:09:49 $
  * 
  * @author Stephen Colebourne
  */
-public interface StandardModificationListener extends ModificationListener {
+public interface StandardModificationListener extends EventListener {
 
     /**
      * A collection modification is occurring.

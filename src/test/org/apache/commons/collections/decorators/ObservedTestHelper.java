@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/ObservedTestHelper.java,v 1.2 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/ObservedTestHelper.java,v 1.3 2003/08/31 21:09:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,6 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.apache.commons.collections.event.ModificationEventType;
-import org.apache.commons.collections.event.ModificationListener;
 import org.apache.commons.collections.event.StandardModificationEvent;
 import org.apache.commons.collections.event.StandardModificationHandler;
 import org.apache.commons.collections.event.StandardModificationListener;
@@ -74,7 +73,7 @@ import org.apache.commons.collections.event.StandardModificationListener;
  * {@link ObservedCollection} implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.3 $ $Date: 2003/08/31 21:09:49 $
  * 
  * @author Stephen Colebourne
  */
@@ -157,7 +156,7 @@ public class ObservedTestHelper {
         Assert.assertEquals(0, coll.getModificationListeners().length);
         
         try {
-            coll.addModificationListener(new ModificationListener() {});
+            coll.addModificationListener(new Object());
             Assert.fail();
         } catch (ClassCastException ex) {
         }
