@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.12 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.13 2003/10/09 20:58:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -89,13 +89,13 @@ import java.util.Set;
  * <code>coll</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.12 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.13 $ $Date: 2003/10/09 20:58:53 $
  * 
  * @author Christopher Berry
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author James Strachan
  * @author Steve Downey
  * @author Stephen Colebourne
- * @author <a href="mailto:jburet@yahoo.com">Julien Buret</a>
+ * @author Julien Buret
  * @author Serhiy Yevtushenko
  */
 public class MultiHashMap extends HashMap implements MultiMap {
@@ -222,7 +222,7 @@ public class MultiHashMap extends HashMap implements MultiMap {
      * The item is removed from the collection mapped to the specified key.
      * 
      * @param key  the key to remove from
-     * @param value  the value to remove
+     * @param item  the value to remove
      * @return the value removed (which was passed in)
      */
     public Object remove(Object key, Object item) {

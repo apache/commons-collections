@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUnderflowException.java,v 1.7 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUnderflowException.java,v 1.8 2003/10/09 20:58:52 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,7 +61,7 @@ package org.apache.commons.collections;
  * The BufferUnderflowException is used when the buffer is already empty.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/09 20:58:52 $
  *
  * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
@@ -95,7 +95,7 @@ public class BufferUnderflowException extends RuntimeException {
      * Construct a new <code>BufferUnderflowException</code>.
      * 
      * @param message  the detail message for this exception
-     * @param throwable  the root cause of the exception
+     * @param exception  the root cause of the exception
      */
     public BufferUnderflowException(String message, Throwable exception) {
         super(message);

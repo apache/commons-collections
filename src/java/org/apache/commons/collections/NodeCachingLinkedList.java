@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.8 2003/10/05 06:41:08 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.9 2003/10/09 20:58:52 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import java.util.Collection;
  * improvement.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/10/05 06:41:08 $
+ * @version $Revision: 1.9 $ $Date: 2003/10/09 20:58:52 $
  * 
  * @author Jeff Varszegi
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
@@ -229,8 +229,6 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
      * Calls the superclass' implementation then calls
      * <code>addNodeToCache</code> on the node which has 
      * been removed.
-     * 
-     * @see CommonsLinkedList#removeNode(Node)
      */
     protected void removeNode(Node node) {
         super.removeNode(node);

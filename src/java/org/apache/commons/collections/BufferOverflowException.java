@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferOverflowException.java,v 1.6 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferOverflowException.java,v 1.7 2003/10/09 20:58:52 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,7 +62,7 @@ package org.apache.commons.collections;
  * exceeded.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.6 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/09 20:58:52 $
  * 
  * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
@@ -96,7 +96,7 @@ public class BufferOverflowException extends RuntimeException {
      * Construct a new <code>BufferOverflowException</code>.
      * 
      * @param message  the detail message for this exception
-     * @param throwable  the root cause of the exception
+     * @param exception  the root cause of the exception
      */
     public BufferOverflowException(String message, Throwable exception) {
         super(message);

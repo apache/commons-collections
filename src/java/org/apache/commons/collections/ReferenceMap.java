@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.15 2003/10/03 23:19:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.16 2003/10/09 20:58:52 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -118,7 +118,7 @@ import org.apache.commons.collections.pairs.DefaultMapEntry;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.15 $ $Date: 2003/10/03 23:19:32 $
+ * @version $Revision: 1.16 $ $Date: 2003/10/09 20:58:52 $
  * 
  * @author Paul Jack
  */
@@ -188,7 +188,7 @@ public class ReferenceMap extends AbstractMap {
 
     /**
      *  ReferenceQueue used to eliminate stale mappings.
-     *  @see #purge
+     *  See purge.
      */
     private transient ReferenceQueue queue = new ReferenceQueue();
 
@@ -207,7 +207,7 @@ public class ReferenceMap extends AbstractMap {
 
     /**
      *  When size reaches threshold, the map is resized.  
-     *  @see resize
+     *  See resize().
      */
     private transient int threshold;
 

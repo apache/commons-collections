@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.16 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.17 2003/10/09 20:58:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -161,7 +161,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.16 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.17 $ $Date: 2003/10/09 20:58:53 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -323,8 +323,8 @@ public class ExtendedProperties extends Hashtable {
         /**
          * Read a property.
          *
-         * @return A String.
-         * @throws IOException.
+         * @return a String property
+         * @throws IOException if there is difficulty reading the source.
          */
         public String readProperty() throws IOException {
             StringBuffer buffer = new StringBuffer();
@@ -767,7 +767,7 @@ public class ExtendedProperties extends Hashtable {
         Enumeration theKeys = keys();
         while (theKeys.hasMoreElements()) {
             String key = (String) theKeys.nextElement();
-            Object value = get((Object) key);
+            Object value = get(key);
             if (value != null) {
                 if (value instanceof String) {
                     StringBuffer currentOutput = new StringBuffer();
@@ -799,12 +799,12 @@ public class ExtendedProperties extends Hashtable {
      * <p>
      * Warning: It will overwrite previous entries without warning.
      *
-     * @param ExtendedProperties
+     * @param props  the properties to combine
      */
-    public void combine(ExtendedProperties c) {
-        for (Iterator i = c.getKeys(); i.hasNext();) {
-            String key = (String) i.next();
-            setProperty(key, c.get(key));
+    public void combine(ExtendedProperties props) {
+        for (Iterator it = props.getKeys(); it.hasNext();) {
+            String key = (String) it.next();
+            setProperty(key, props.get(key));
         }
     }
     
@@ -818,7 +818,7 @@ public class ExtendedProperties extends Hashtable {
             // we also need to rebuild the keysAsListed or else
             // things get *very* confusing
             for (int i = 0; i < keysAsListed.size(); i++) {
-                if (((String) keysAsListed.get(i)).equals(key)) {
+                if (( keysAsListed.get(i)).equals(key)) {
                     keysAsListed.remove(i);
                     break;
                 }
@@ -947,7 +947,7 @@ public class ExtendedProperties extends Hashtable {
         Object value = get(key);
 
         if (value instanceof String) {
-            return (String) interpolate((String) value);
+            return interpolate((String) value);
             
         } else if (value == null) {
             if (defaults != null) {
@@ -1080,7 +1080,7 @@ public class ExtendedProperties extends Hashtable {
             
         } else if (value instanceof String) {
             Vector v = new Vector(1);
-            v.addElement((String) value);
+            v.addElement(value);
             put(key, v);
             return v;
             
@@ -1106,7 +1106,7 @@ public class ExtendedProperties extends Hashtable {
      * object that is not a Boolean.
      */
     public boolean getBoolean(String key) {
-        Boolean b = getBoolean(key, (Boolean) null);
+        Boolean b = getBoolean(key, null);
         if (b != null) {
             return b.booleanValue();
         } else {
@@ -1169,12 +1169,12 @@ public class ExtendedProperties extends Hashtable {
      * <code>false</code> boolean values.  Case of value to test for
      * boolean status is ignored.
      *
-     * @param String The value to test for boolean state.
+     * @param value  the value to test for boolean state
      * @return <code>true</code> or <code>false</code> if the supplied
      * text maps to a boolean value, or <code>null</code> otherwise.
      */
     public String testBoolean(String value) {
-        String s = ((String) value).toLowerCase();
+        String s = value.toLowerCase();
 
         if (s.equals("true") || s.equals("on") || s.equals("yes")) {
             return "true";

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.8 2003/09/07 08:48:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.9 2003/10/09 20:58:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,7 +83,7 @@ import java.util.NoSuchElementException;
  * This buffer prevents null objects from being added.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.8 $ $Date: 2003/09/07 08:48:46 $
+ * @version $Revision: 1.9 $ $Date: 2003/10/09 20:58:53 $
  *
  * @author Avalon
  * @author Federico Barbieri
@@ -153,7 +153,7 @@ public final class UnboundedFifoBuffer extends AbstractCollection implements Buf
     /**
      * Adds the given element to this buffer.
      *
-     * @param element  the element to add
+     * @param o  the element to add
      * @return true, always
      * @throws NullPointerException  if the given element is null
      * @throws BufferOverflowException  if this buffer is full

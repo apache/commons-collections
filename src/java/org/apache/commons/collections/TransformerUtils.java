@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.4 2003/09/17 20:28:30 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.5 2003/10/09 20:58:52 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -87,7 +87,7 @@ import java.util.Map;
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/17 20:28:30 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/09 20:58:52 $
  * 
  * @author Stephen Colebourne
  * @author James Carman
@@ -189,7 +189,7 @@ public class TransformerUtils {
      * Creates a Transformer that calls a Closure each time the transformer is used.
      * The transformer returns the input object.
      *
-     * @param command  the command to run each time in the transformer
+     * @param closure  the closure to run each time in the transformer
      * @return the transformer.
      */
     public static Transformer asTransformer(Closure closure) {
