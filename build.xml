@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.51 2003/11/16 21:39:42 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.52 2003/11/22 12:06:34 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -33,19 +33,26 @@
       <include name="**/BulkTest*.class"/>
    </patternset>
 
-   <!-- patternset describing test framework source -->
+   <!-- patternset describing test framework classes -->
    <patternset id="patternset-testframework-source">
-      <include name="**/Bag.java"/>
-      <include name="**/BidiMap.java"/>
-      <include name="**/MapIterator.java"/>
-      <include name="**/OrderedBidiMap.java"/>
-      <include name="**/OrderedIterator.java"/>
-      <include name="**/map/OrderedMap.java"/>
-      <include name="**/OrderedMapIterator.java"/>
-      <include name="**/SortedBag.java"/>
-      <include name="**/SortedBidiMap.java"/>
-      <include name="**/AbstractTest*.java"/>
-      <include name="**/BulkTest*.java"/>
+      <include name="**/AbstractTest*.class"/>
+      <include name="**/BulkTest*.class"/>
+   </patternset>
+
+   <!-- patternset describing test framework source not dependent on collections jar -->
+   <patternset id="patternset-testframework-validate">
+      <include name="**/AbstractTestObject.java"/>
+      <include name="**/AbstractTestCollection.java"/>
+      <include name="**/AbstractTestSet.java"/>
+      <include name="**/AbstractTestSortedSet.java"/>
+      <include name="**/AbstractTestList.java"/>
+      <include name="**/AbstractTestMap.java"/>
+      <include name="**/AbstractTestSortedMap.java"/>
+      <include name="**/AbstractTestComparator.java"/>
+      <include name="**/AbstractTestIterator.java"/>
+      <include name="**/AbstractTestListIterator.java"/>
+      <include name="**/AbstractTestMapEntry.java"/>
+      <include name="**/BulkTest.java"/>
    </patternset>
 
    <patternset id="patternset-exclude-distros">
@@ -298,7 +305,7 @@
       <mkdir dir="${dest.classes.testframework}"/>
       <copy todir="${dest.classes.testframework}">
          <fileset dir="${source.src}">
-            <patternset refid="patternset-testframework-source"/>
+            <patternset refid="patternset-testframework-validate"/>
          </fileset>
       </copy>
       
