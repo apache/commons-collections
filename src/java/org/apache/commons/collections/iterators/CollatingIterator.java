@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.3 2002/09/07 00:28:53 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2002/09/07 00:28:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.4 2002/12/13 11:03:42 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/12/13 11:03:42 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.BitSet;
  * @since 2.1
  * @author Rodney Waldhoff
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Revision: 1.3 $ $Date: 2002/09/07 00:28:53 $
+ * @version $Revision: 1.4 $ $Date: 2002/12/13 11:03:42 $
  */
 public class CollatingIterator implements Iterator {
 
@@ -294,7 +294,7 @@ public class CollatingIterator implements Iterator {
      */
     public void remove() {
         if(-1 == lastReturned) {
-            throw new NoSuchElementException("No value has been returned yet.");
+            throw new IllegalStateException("No value can be removed at present");
         } else {
             Iterator iter = (Iterator)(iterators.get(lastReturned));
             iter.remove();
