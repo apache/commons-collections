@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntCollection.java,v 1.4 2003/01/13 23:07:08 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntCollection.java,v 1.5 2003/03/03 23:23:39 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -69,7 +69,7 @@ package org.apache.commons.collections.primitives;
  * these methods to provide a more efficient implementation. 
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.4 $ $Date: 2003/01/13 23:07:08 $
+ * @version $Revision: 1.5 $ $Date: 2003/03/03 23:23:39 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -78,21 +78,6 @@ public abstract class AbstractIntCollection implements IntCollection {
     public abstract int size();
           
     protected AbstractIntCollection() { }
-
-    /** 
-     * Constructs a collection containing the elements of 
-     * the given collection, added in the order they are 
-     * returned by that collection's iterator.
-     * 
-     * @see #addAll
-     * @param that the non-<code>null</code> collection of <code>int</code>s 
-     *        to add
-     * @throws NullPointerException if <i>that</i> is <code>null</code>
-     * @throws UnsupportedOperationException if {@link #addAll addAll} does
-     */
-    protected AbstractIntCollection(IntCollection that) { 
-        addAll(that);
-    }    
               
     /** Unsupported in this base implementation. */
     public boolean add(int element) {

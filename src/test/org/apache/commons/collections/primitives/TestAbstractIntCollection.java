@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.9 2003/03/03 23:23:40 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractIntCollection.java,v 1.1 2003/03/03 23:23:40 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,43 +57,57 @@
 
 package org.apache.commons.collections.primitives;
 
+import java.util.Collections;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.adapters.IteratorIntIterator;
+
 /**
- * @version $Revision: 1.9 $ $Date: 2003/03/03 23:23:40 $
+ * @version $Revision: 1.1 $ $Date: 2003/03/03 23:23:40 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestAbstractIntCollection extends TestCase {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestAbstractIntCollection(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static Test suite() {
+        return new TestSuite(TestAbstractIntCollection.class);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+    // tests
+    // ------------------------------------------------------------------------
+    
+    public void testAddIsUnsupportedByDefault() {
+        IntCollection col = new IntCollectionImpl();
+        try {
+            col.add(1);
+            fail("Expected UnsupportedOperationException");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }        
+    }
+    // inner classes
+    // ------------------------------------------------------------------------
 
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestAbstractRandomAccessIntList.suite());
-        
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
 
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
+    static class IntCollectionImpl extends AbstractIntCollection {
+        public IntCollectionImpl() {
+        }
         
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+        public IntIterator iterator() {
+            return new IteratorIntIterator(Collections.EMPTY_LIST.iterator());
+        }
+
+        public int size() {
+            return 0;
+        }
     }
 }
-

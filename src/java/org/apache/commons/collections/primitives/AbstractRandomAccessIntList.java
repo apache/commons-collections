@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.13 2003/03/01 00:47:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.14 2003/03/03 23:23:39 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -74,7 +74,7 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.13 $ $Date: 2003/03/01 00:47:28 $
+ * @version $Revision: 1.14 $ $Date: 2003/03/03 23:23:39 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -85,20 +85,6 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
 
     /** Constructs an empty list. */
     protected AbstractRandomAccessIntList() { 
-    }    
-
-    /** 
-     * Constructs a list containing the elements of the given collection, 
-     * in the order they are returned by that collection's iterator.
-     * 
-     * @see #addAll
-     * @param that the non-<code>null</code> collection of <code>int</code>s 
-     *        to add
-     * @throws NullPointerException if <i>that</i> is <code>null</code>
-     * @throws UnsupportedOperationException if {@link #addAll addAll} does
-     */
-    protected AbstractRandomAccessIntList(IntCollection that) { 
-        super(that);
     }    
 
     // fully abstract methods
@@ -275,14 +261,10 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
     }
     
     protected static class RandomAccessIntListIterator extends ComodChecker implements IntListIterator {
-        RandomAccessIntListIterator(AbstractRandomAccessIntList list) {
-            this(list,0);
-        }
-            
         RandomAccessIntListIterator(AbstractRandomAccessIntList list, int index) {
             super(list);
             if(index < 0 || index > getList().size()) {
-                throw new IllegalArgumentException("Index " + index + " not in [0," + getList().size() + ")");
+                throw new IndexOutOfBoundsException("Index " + index + " not in [0," + getList().size() + ")");
             } else {
                 _nextIndex = index;
                 resyncModCount();

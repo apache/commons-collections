@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.7 2003/03/01 00:47:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.8 2003/03/03 23:23:40 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,6 +58,7 @@
 package org.apache.commons.collections.primitives;
 
 import java.io.Serializable;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,7 @@ import org.apache.commons.collections.primitives.adapters.IntListList;
 import org.apache.commons.collections.primitives.adapters.ListIntList;
 
 /**
- * @version $Revision: 1.7 $ $Date: 2003/03/01 00:47:28 $
+ * @version $Revision: 1.8 $ $Date: 2003/03/03 23:23:40 $
  * @author Rodney Waldhoff
  */
 public abstract class TestIntList extends TestList {
@@ -297,7 +298,6 @@ public abstract class TestIntList extends TestList {
         assertEquals(50,list.size());        
     }
     
-
     public void testAddGet() {
         IntList list = makeEmptyIntList();
         for (int i = 0; i < 1000; i++) {
@@ -374,6 +374,51 @@ public abstract class TestIntList extends TestList {
             makeFullIntList().subList(2,makeFullIntList().size()+2);
             fail("Expected IndexOutOfBoundsException");
         } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+    }
+
+    public void testListIteratorOutOfBounds() throws Exception {
+        try {
+            makeEmptyIntList().listIterator(2);
+            fail("Expected IndexOutOfBoundsException");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            makeFullIntList().listIterator(-1);
+            fail("Expected IndexOutOfBoundsException");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            makeFullIntList().listIterator(makeFullIntList().size()+2);
+            fail("Expected IndexOutOfBoundsException");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+    }
+
+    public void testListIteratorSetWithoutNext() throws Exception {
+        IntListIterator iter = makeFullIntList().listIterator();
+        try {
+            iter.set(3);
+            fail("Expected IllegalStateException");
+        } catch(IllegalStateException e) {
+            // expected
+        }
+    }
+
+    public void testListIteratorSetAfterRemove() throws Exception {
+        IntListIterator iter = makeFullIntList().listIterator();
+        iter.next();
+        iter.remove();
+        try {            
+            iter.set(3);
+            fail("Expected IllegalStateException");
+        } catch(IllegalStateException e) {
             // expected
         }
     }
