@@ -20,7 +20,7 @@ package org.apache.commons.collections;
  * <p>
  * This extended <code>Map</code> represents a mapping where a key may
  * lookup a value and a value may lookup a key with equal ease.
- * Th interface extends <code>Map</code> and so may be used anywhere a map
+ * This interface extends <code>Map</code> and so may be used anywhere a map
  * is required. The interface provides an inverse map view, enabling
  * full access to both directions of the <code>BidiMap</code>.
  * <p>
@@ -33,7 +33,7 @@ package org.apache.commons.collections;
  * duplicate keys. See the {@link #put} method description for more information.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.15 $ $Date: 2004/04/14 20:15:42 $
+ * @version $Revision: 1.16 $ $Date: 2004/05/10 20:37:19 $
  *
  * @author Stephen Colebourne
  */
