@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestBidiMap.java,v 1.5 2003/12/01 22:49:00 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestBidiMap.java,v 1.6 2003/12/03 12:59:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/12/01 22:49:00 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/03 12:59:36 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -92,7 +92,7 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
             new Object[] { "value2", "key2" },
             new Object[] { "value3", "key3" }
     };
-    private final Object[][] entries;
+    protected final Object[][] entries;
 
     public AbstractTestBidiMap(String testName) {
         super(testName);
@@ -149,6 +149,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
     // BidiPut
     //-----------------------------------------------------------------------
     public void testBidiPut() {
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+
         BidiMap map = makeEmptyBidiMap();
         BidiMap inverse = map.inverseBidiMap();
         assertEquals(0, map.size());
@@ -275,6 +277,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiClear() {
+        if (isRemoveSupported() == false) return;
+
         BidiMap map = makeFullBidiMap();
         map.clear();
         assertTrue("Map was not cleared.", map.isEmpty());
@@ -290,6 +294,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiRemove() {
+        if (isRemoveSupported() == false) return;
+        
         remove(makeFullBidiMap(), entries[0][0]);
         remove(makeFullBidiMap().inverseBidiMap(), entries[0][1]);
 
@@ -325,6 +331,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByKeySet() {
+        if (isRemoveSupported() == false) return;
+        
         removeByKeySet(makeFullBidiMap(), entries[0][0], entries[0][1]);
         removeByKeySet(makeFullBidiMap().inverseBidiMap(), entries[0][1], entries[0][0]);
     }
@@ -345,6 +353,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByEntrySet() {
+        if (isRemoveSupported() == false) return;
+        
         removeByEntrySet(makeFullBidiMap(), entries[0][0], entries[0][1]);
         removeByEntrySet(makeFullBidiMap().inverseBidiMap(), entries[0][1], entries[0][0]);
     }
@@ -365,6 +375,7 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
             !map.inverseBidiMap().containsKey(value));
     }
 
+    //-----------------------------------------------------------------------
     public BulkTest bulkTestMapEntrySet() {
         return new TestBidiMapEntrySet();
     }
@@ -447,6 +458,9 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         }
         public BidiMap makeFullBidiMap() {
             return main.makeFullBidiMap().inverseBidiMap();
+        }
+        public Map makeFullMap() {
+            return ((BidiMap) main.makeFullMap()).inverseBidiMap();
         }
         public Object[] getSampleKeys() {
             return main.getSampleValues();

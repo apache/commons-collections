@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestAll.java,v 1.2 2003/12/03 12:59:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractBidiMapDecorator.java,v 1.1 2003/12/03 12:59:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,39 +57,63 @@
  */
 package org.apache.commons.collections.bidimap;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.MapIterator;
+import org.apache.commons.collections.map.AbstractMapDecorator;
 
-/**
- * Entry point for tests.
- * 
+/** 
+ * Provides a base decorator that enables additional functionality to be added
+ * to a BidiMap via decoration.
+ * <p>
+ * Methods are forwarded directly to the decorated map.
+ * <p>
+ * This implementation does not perform any special processing with the map views.
+ * Instead it simply returns the set/collection from the wrapped map. This may be
+ * undesirable, for example if you are trying to write a validating implementation
+ * it would provide a loophole around the validation.
+ * But, you might want that loophole, so this class is kept simple.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/03 12:59:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/03 12:59:37 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public abstract class AbstractBidiMapDecorator extends AbstractMapDecorator implements BidiMap {
     
-    public TestAll(String testName) {
-        super(testName);
+    /**
+     * Constructor that wraps (not copies).
+     *
+     * @param map  the map to decorate, must not be null
+     * @throws IllegalArgumentException if the collection is null
+     */
+    public AbstractBidiMapDecorator(BidiMap map) {
+        super(map);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Gets the map being decorated.
+     * 
+     * @return the decorated map
+     */
+    protected BidiMap getBidiMap() {
+        return (BidiMap) map;
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestDualHashBidiMap.suite());
-        suite.addTest(TestDualTreeBidiMap.suite());
-        suite.addTest(TestTreeBidiMap.suite());
-        
-        suite.addTest(TestUnmodifiableBidiMap.suite());
-        
-        return suite;
+
+    //-----------------------------------------------------------------------
+    public MapIterator mapIterator() {
+        return getBidiMap().mapIterator();
     }
-        
+
+    public Object getKey(Object value) {
+        return getBidiMap().getKey(value);
+    }
+
+    public Object removeValue(Object value) {
+        return getBidiMap().removeValue(value);
+    }
+
+    public BidiMap inverseBidiMap() {
+        return getBidiMap().inverseBidiMap();
+    }
+
 }
