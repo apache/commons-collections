@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/Attic/TestBinaryHeap.java,v 1.1 2003/11/29 18:04:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/Attic/TestBinaryBuffer.java,v 1.1 2004/01/01 19:01:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,11 +61,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.Buffer;
+import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.collections.collection.AbstractTestCollection;
 import org.apache.commons.collections.comparators.ComparableComparator;
@@ -74,38 +75,44 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * Tests the BinaryHeap.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/29 18:04:56 $
+ * @version $Revision: 1.1 $ $Date: 2004/01/01 19:01:34 $
  * 
  * @author Michael A. Smith
  */
-public class TestBinaryHeap extends AbstractTestCollection {
+public class TestBinaryBuffer extends AbstractTestCollection {
 
-    public static Test suite() {
-        return new TestSuite(TestBinaryHeap.class);
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
     }
 
-    public TestBinaryHeap(String testName) {
+    public static Test suite() {
+        return new TestSuite(TestBinaryBuffer.class);
+    }
+
+    public TestBinaryBuffer(String testName) {
         super(testName);
     }
 
     //-----------------------------------------------------------------------  
     public void verify() {
         super.verify();
-        BinaryHeap heap = (BinaryHeap) collection;
+        BinaryBuffer heap = (BinaryBuffer) collection;
 
-        Comparator c = heap.m_comparator;
-        if (c == null)
+        Comparator c = heap.comparator;
+        if (c == null) {
             c = ComparatorUtils.naturalComparator();
-        if (!heap.m_isMinHeap)
+        }
+        if (!heap.ascendingOrder) {
             c = ComparatorUtils.reversedComparator(c);
+        }
 
-        Object[] tree = heap.m_elements;
-        for (int i = 1; i <= heap.m_size; i++) {
+        Object[] tree = heap.elements;
+        for (int i = 1; i <= heap.size; i++) {
             Object parent = tree[i];
-            if (i * 2 <= heap.m_size) {
+            if (i * 2 <= heap.size) {
                 assertTrue("Parent is less than or equal to its left child", c.compare(parent, tree[i * 2]) <= 0);
             }
-            if (i * 2 + 1 < heap.m_size) {
+            if (i * 2 + 1 < heap.size) {
                 assertTrue("Parent is less than or equal to its right child", c.compare(parent, tree[i * 2 + 1]) <= 0);
             }
         }
@@ -113,7 +120,7 @@ public class TestBinaryHeap extends AbstractTestCollection {
 
     //-----------------------------------------------------------------------  
     /**
-     * Overridden because UnboundedFifoBuffer isn't fail fast.
+     * Overridden because BinaryBuffer isn't fail fast.
      * @return false
      */
     public boolean isFailFastSupported() {
@@ -135,7 +142,7 @@ public class TestBinaryHeap extends AbstractTestCollection {
      * Return a new, empty {@link Object} to used for testing.
      */
     public Collection makeCollection() {
-        return new BinaryHeap();
+        return new BinaryBuffer();
     }
 
     //-----------------------------------------------------------------------  
@@ -148,110 +155,103 @@ public class TestBinaryHeap extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------  
+    public void testBufferEmpty() {
+        resetEmpty();
+        Buffer buffer = (Buffer) collection;
+
+        assertEquals(0, buffer.size());
+        assertEquals(true, buffer.isEmpty());
+        try {
+            buffer.get();
+            fail();
+        } catch (BufferUnderflowException ex) {}
+
+        try {
+            buffer.remove();
+            fail();
+        } catch (BufferUnderflowException ex) {}
+    }
+    
     public void testBasicOps() {
-        BinaryHeap heap = new BinaryHeap();
+        BinaryBuffer heap = new BinaryBuffer();
 
-        assertTrue("heap should be empty after create", heap.isEmpty());
+        heap.add("a");
+        heap.add("c");
+        heap.add("e");
+        heap.add("b");
+        heap.add("d");
+        heap.add("n");
+        heap.add("m");
+        heap.add("l");
+        heap.add("k");
+        heap.add("j");
+        heap.add("i");
+        heap.add("h");
+        heap.add("g");
+        heap.add("f");
 
-        try {
-            heap.peek();
-            fail("NoSuchElementException should be thrown if peek is called before any elements are inserted");
-        } catch (NoSuchElementException e) {
-            // expected
-        }
-
-        try {
-            heap.pop();
-            fail("NoSuchElementException should be thrown if pop is called before any elements are inserted");
-        } catch (NoSuchElementException e) {
-            // expected
-        }
-
-        heap.insert("a");
-        heap.insert("c");
-        heap.insert("e");
-        heap.insert("b");
-        heap.insert("d");
-        heap.insert("n");
-        heap.insert("m");
-        heap.insert("l");
-        heap.insert("k");
-        heap.insert("j");
-        heap.insert("i");
-        heap.insert("h");
-        heap.insert("g");
-        heap.insert("f");
-
-        assertTrue("heap should not be empty after inserts", !heap.isEmpty());
+        assertTrue("heap should not be empty after adds", !heap.isEmpty());
 
         for (int i = 0; i < 14; i++) {
             assertEquals(
-                "peek using default constructor should return minimum value in the binary heap",
+                "get using default constructor should return minimum value in the binary heap",
                 String.valueOf((char) ('a' + i)),
-                heap.peek());
+                heap.get());
 
             assertEquals(
-                "pop using default constructor should return minimum value in the binary heap",
+                "remove using default constructor should return minimum value in the binary heap",
                 String.valueOf((char) ('a' + i)),
-                heap.pop());
+                heap.remove());
 
             if (i + 1 < 14) {
-                assertTrue("heap should not be empty before all elements are popped", !heap.isEmpty());
+                assertTrue("heap should not be empty before all elements are removed", !heap.isEmpty());
             } else {
-                assertTrue("heap should be empty after all elements are popped", heap.isEmpty());
+                assertTrue("heap should be empty after all elements are removed", heap.isEmpty());
             }
         }
 
         try {
-            heap.peek();
-            fail("NoSuchElementException should be thrown if peek is called after all elements are popped");
-        } catch (NoSuchElementException e) {
-            // expected
-        }
+            heap.get();
+            fail("NoSuchElementException should be thrown if get is called after all elements are removed");
+        } catch (BufferUnderflowException ex) {}
 
         try {
-            heap.pop();
-            fail("NoSuchElementException should be thrown if pop is called after all elements are popped");
-        } catch (NoSuchElementException e) {
-            // expected
-        }
+            heap.remove();
+            fail("NoSuchElementException should be thrown if remove is called after all elements are removed");
+        } catch (BufferUnderflowException ex) {}
     }
 
     public void testBasicComparatorOps() {
-        BinaryHeap heap = new BinaryHeap(new ReverseComparator(new ComparableComparator()));
+        BinaryBuffer heap = new BinaryBuffer(new ReverseComparator(new ComparableComparator()));
 
         assertTrue("heap should be empty after create", heap.isEmpty());
 
         try {
-            heap.peek();
-            fail("NoSuchElementException should be thrown if peek is called before any elements are inserted");
-        } catch (NoSuchElementException e) {
-            // expected
-        }
+            heap.get();
+            fail("NoSuchElementException should be thrown if get is called before any elements are added");
+        } catch (BufferUnderflowException ex) {}
 
         try {
-            heap.pop();
-            fail("NoSuchElementException should be thrown if pop is called before any elements are inserted");
-        } catch (NoSuchElementException e) {
-            // expected
-        }
+            heap.remove();
+            fail("NoSuchElementException should be thrown if remove is called before any elements are added");
+        } catch (BufferUnderflowException ex) {}
 
-        heap.insert("a");
-        heap.insert("c");
-        heap.insert("e");
-        heap.insert("b");
-        heap.insert("d");
-        heap.insert("n");
-        heap.insert("m");
-        heap.insert("l");
-        heap.insert("k");
-        heap.insert("j");
-        heap.insert("i");
-        heap.insert("h");
-        heap.insert("g");
-        heap.insert("f");
+        heap.add("a");
+        heap.add("c");
+        heap.add("e");
+        heap.add("b");
+        heap.add("d");
+        heap.add("n");
+        heap.add("m");
+        heap.add("l");
+        heap.add("k");
+        heap.add("j");
+        heap.add("i");
+        heap.add("h");
+        heap.add("g");
+        heap.add("f");
 
-        assertTrue("heap should not be empty after inserts", !heap.isEmpty());
+        assertTrue("heap should not be empty after adds", !heap.isEmpty());
 
         for (int i = 0; i < 14; i++) {
 
@@ -259,35 +259,51 @@ public class TestBinaryHeap extends AbstractTestCollection {
             // "minimum" item is "n", and the "maximum" item is "a".
 
             assertEquals(
-                "peek using default constructor should return minimum value in the binary heap",
+                "get using default constructor should return minimum value in the binary heap",
                 String.valueOf((char) ('n' - i)),
-                heap.peek());
+                heap.get());
 
             assertEquals(
-                "pop using default constructor should return minimum value in the binary heap",
+                "remove using default constructor should return minimum value in the binary heap",
                 String.valueOf((char) ('n' - i)),
-                heap.pop());
+                heap.remove());
 
             if (i + 1 < 14) {
-                assertTrue("heap should not be empty before all elements are popped", !heap.isEmpty());
+                assertTrue("heap should not be empty before all elements are removed", !heap.isEmpty());
             } else {
-                assertTrue("heap should be empty after all elements are popped", heap.isEmpty());
+                assertTrue("heap should be empty after all elements are removed", heap.isEmpty());
             }
         }
 
         try {
-            heap.peek();
-            fail("NoSuchElementException should be thrown if peek is called after all elements are popped");
-        } catch (NoSuchElementException e) {
-            // expected
-        }
+            heap.get();
+            fail("NoSuchElementException should be thrown if get is called after all elements are removed");
+        } catch (BufferUnderflowException ex) {}
 
         try {
-            heap.pop();
-            fail("NoSuchElementException should be thrown if pop is called after all elements are popped");
-        } catch (NoSuchElementException e) {
-            // expected
-        }
+            heap.remove();
+            fail("NoSuchElementException should be thrown if remove is called after all elements are removed");
+        } catch (BufferUnderflowException ex) {}
     }
 
+//    public void testAddRemove() {
+//        resetEmpty();
+//        BinaryBuffer heap = (BinaryBuffer) collection;
+//        heap.add(new Integer(0));
+//        heap.add(new Integer(2));
+//        heap.add(new Integer(4));
+//        heap.add(new Integer(3));
+//        heap.add(new Integer(8));
+//        heap.add(new Integer(10));
+//        heap.add(new Integer(12));
+//        heap.add(new Integer(3));
+//        confirmed.addAll(heap);
+//        System.out.println(heap);
+//        Object obj = new Integer(10);
+//        heap.remove(obj);
+//        confirmed.remove(obj);
+//        System.out.println(heap);
+//        verify();
+//    }
+    
 }

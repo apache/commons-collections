@@ -1,15 +1,14 @@
 <BODY>
 <p>
 This package contains implementations of the
-{@link org.apache.commons.collections.Buffer Buffer} and
-{@link org.apache.commons.collections.PriorityQueue PriorityQueue} interfaces.
+{@link org.apache.commons.collections.Buffer Buffer} interface.
 <p>
 The following implementations are provided in the package:
 <ul>
-<li>BinaryHeap - implements both Buffer and PriorityQueue
-<li>BoundedBuffer - implements a buffer with a fixed size that throws exceptions when full
-<li>CircularBuffer - implements a buffer with a fixed size that discards oldest when full
-<li>UnboundedBuffer - implements a buffer that grows in size if necessary
+<li>BinaryBuffer - provides for removal based on a comparator ordering (priority queue)
+<li>BoundedFifoBuffer - implements a buffer with a fixed size that throws exceptions when full
+<li>CircularFifoBuffer - implements a buffer with a fixed size that discards oldest when full
+<li>UnboundedFifoBuffer - implements a buffer that grows in size if necessary
 </ul>
 <p>
 The following decorators are provided in the package:
