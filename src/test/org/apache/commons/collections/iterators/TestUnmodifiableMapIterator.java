@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.9 2003/11/02 18:29:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableMapIterator.java,v 1.1 2003/11/02 18:29:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,49 +57,73 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.Map;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.DualHashBidiMap;
+import org.apache.commons.collections.Unmodifiable;
+
 /**
- * Entry point for all iterator tests.
+ * Tests the UnmodifiableMapIterator.
  * 
- * @version $Revision: 1.9 $ $Date: 2003/11/02 18:29:59 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/02 18:29:59 $
  * 
- * @author Rodney Waldhoff
+ * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestUnmodifiableMapIterator extends AbstractTestMapIterator {
+
+    public static Test suite() {
+        return new TestSuite(TestUnmodifiableMapIterator.class);
+    }
+
+    public TestUnmodifiableMapIterator(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
-        suite.addTest(TestArrayListIterator.suite());
-        suite.addTest(TestArrayListIterator2.suite());
-        suite.addTest(TestObjectArrayIterator.suite());
-        suite.addTest(TestObjectArrayListIterator.suite());
-        suite.addTest(TestObjectArrayListIterator2.suite());
-        suite.addTest(TestCollatingIterator.suite());
-        suite.addTest(TestFilterIterator.suite());
-        suite.addTest(TestFilterListIterator.suite());
-        suite.addTest(TestIteratorChain.suite());
-        suite.addTest(TestListIteratorWrapper.suite());
-        suite.addTest(TestLoopingIterator.suite());
-        suite.addTest(TestSingletonIterator.suite());
-        suite.addTest(TestSingletonListIterator.suite());
-        suite.addTest(TestUniqueFilterIterator.suite());
-        suite.addTest(TestUnmodifiableIterator.suite());
-        suite.addTest(TestUnmodifiableListIterator.suite());
-        suite.addTest(TestUnmodifiableMapIterator.suite());
-        return suite;
+    public MapIterator makeEmptyMapIterator() {
+        return UnmodifiableMapIterator.decorate(new DualHashBidiMap().mapIterator());
     }
+
+    public MapIterator makeFullMapIterator() {
+        return UnmodifiableMapIterator.decorate(((BidiMap) getMap()).mapIterator());
+    }
+    
+    protected Map getMap() {
+        Map testMap = new DualHashBidiMap();
+        testMap.put("A", "a");
+        testMap.put("B", "b");
+        testMap.put("C", "c");
+        return testMap;
+    }
+
+
+    public boolean supportsRemove() {
+        return false;
+    }
+
+    public boolean supportsSetValue() {
+        return false;
+    }
+    
+    //-----------------------------------------------------------------------
+    public void testMapIterator() {
+        assertTrue(makeEmptyMapIterator() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        MapIterator it = makeFullMapIterator();
+        assertSame(it, UnmodifiableMapIterator.decorate(it));
         
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+        it = ((BidiMap) getMap()).mapIterator() ;
+        assertTrue(it != UnmodifiableMapIterator.decorate(it));
+        
+        try {
+            UnmodifiableMapIterator.decorate(null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
+
 }
