@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedMap.java,v 1.3 2003/10/02 23:01:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedMap.java,v 1.4 2003/10/06 23:44:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,9 +57,9 @@
  */
 package org.apache.commons.collections.decorators;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -67,11 +67,11 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.AbstractTestSortedMap;
 
 /**
- * Extension of {@link TestSortedMap} for exercising the {@link TransformedSortedMap}
+ * Extension of {@link AbstractTestSortedMap} for exercising the {@link TransformedSortedMap}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/10/02 23:01:09 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/06 23:44:23 $
  * 
  * @author Stephen Colebourne
  */
@@ -91,27 +91,33 @@ public class TestTransformedSortedMap extends AbstractTestSortedMap {
     }
 
     public Map makeEmptyMap() {
-        return TransformedMap.decorate(new HashMap(), TestTransformedCollection.NOOP_TRANSFORMER, TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSortedMap.decorate(new TreeMap(), TestTransformedCollection.NOOP_TRANSFORMER, TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     public void testTransformedMap() {
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
 
-        Map map = TransformedMap.decorate(new HashMap(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER, null);
+        Map map = TransformedSortedMap.decorate(new TreeMap(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER, null);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
             map.put(els[i], els[i]);
             assertEquals(i + 1, map.size());
             assertEquals(true, map.containsKey(new Integer((String) els[i])));
-            assertEquals(false, map.containsKey(els[i]));
+            try {
+                map.containsKey(els[i]);
+                fail();
+            } catch (ClassCastException ex) {}
             assertEquals(true, map.containsValue(els[i]));
             assertEquals(els[i], map.get(new Integer((String) els[i])));
         }
         
-        assertEquals(null, map.remove(els[0]));
+        try {
+            map.remove(els[0]);
+            fail();
+        } catch (ClassCastException ex) {}
         assertEquals(els[0], map.remove(new Integer((String) els[0])));
         
-        map = TransformedMap.decorate(new HashMap(), null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        map = TransformedSortedMap.decorate(new TreeMap(), null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
             map.put(els[i], els[i]);
