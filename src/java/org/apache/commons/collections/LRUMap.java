@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.2 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.3 2002/02/10 12:56:39 jstrachan Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/10 12:56:39 $
  *
  * ====================================================================
  *
@@ -198,7 +198,11 @@ public class LRUMap extends HashMap implements Externalizable {
 
     public Object remove( Object key ) {
         ValuePositionPair pair = removePair( key );
-        return ( pair != null ) ? pair.value : null;
+        if ( pair != null ) {
+            bubbleList.remove( pair.position );
+            return pair.value;
+        }
+        return null;
     }
     
     public boolean containsKey( Object key ) {
