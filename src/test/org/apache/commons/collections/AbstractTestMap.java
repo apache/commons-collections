@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.11 2003/11/02 15:27:05 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.12 2003/11/04 23:35:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -153,7 +153,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.11 $ $Date: 2003/11/02 15:27:05 $
+ * @version $Revision: 1.12 $ $Date: 2003/11/04 23:35:35 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -1027,14 +1027,17 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         Collection values = map.values();
         for (int i = 0; i < sampleValues.length; i++) {
             if (map.containsValue(sampleValues[i])) {
-                while (values.contains(sampleValues[i])) {
+                int j = 0;  // loop counter prevents infinite loops when remove is broken
+                while (values.contains(sampleValues[i]) && j < 10000) {
                     try {
                         values.remove(sampleValues[i]);
                     } catch (UnsupportedOperationException e) {
                         // if values.remove is unsupported, just skip this test
                         return;
                     }
+                    j++;
                 }
+                assertTrue("values().remove(obj) is broken", j < 10000);
                 assertTrue(
                     "Value should have been removed from the underlying map.",
                     !map.containsValue(sampleValues[i]));
@@ -1490,8 +1493,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         assertEquals("entrySet hashCodes should be the same" +
                      "\nTest: " + entrySet + "\nReal: " + confirmed.entrySet(),
                      confirmed.entrySet().hashCode(), entrySet.hashCode());
-        assertEquals("Map's entry set should still equal HashMap's" +
-                     "\nTest: " + entrySet + "\nReal: " + confirmed.entrySet(),
+        assertEquals("Map's entry set should still equal HashMap's",
                      confirmed.entrySet(), entrySet);
     }
 
@@ -1510,8 +1512,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         assertEquals("keySet hashCodes should be the same" +
                      "\nTest: " + keySet + "\nReal: " + confirmed.keySet(),
                      confirmed.keySet().hashCode(), keySet.hashCode());
-        assertEquals("Map's key set should still equal HashMap's" +
-                     "\nTest: " + keySet + "\nReal: " + confirmed.keySet(),
+        assertEquals("Map's key set should still equal HashMap's",
                      confirmed.keySet(), keySet);
     }
 
