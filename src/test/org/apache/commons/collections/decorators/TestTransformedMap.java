@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.4 2003/05/17 14:53:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedMap.java,v 1.1 2003/05/17 14:53:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,45 +57,82 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestMap;
+
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestMap} for exercising the {@link TransformedMap}
+ * implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/05/17 14:53:11 $
+ * @version $Revision: 1.1 $ $Date: 2003/05/17 14:53:11 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public class TestTransformedMap extends TestMap {
     
-    public TestAll(String testName) {
+    public TestTransformedMap(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestTransformedMap.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestTransformedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestSequencedSet.suite());
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        return suite;
+
+    public Map makeEmptyMap() {
+        return TransformedMap.decorate(new HashMap(), TestTransformedCollection.NOOP_TRANSFORMER, TestTransformedCollection.NOOP_TRANSFORMER);
     }
+
+    public void testTransformedMap() {
+        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+
+        Map map = TransformedMap.decorate(new HashMap(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER, null);
+        assertEquals(0, map.size());
+        for (int i = 0; i < els.length; i++) {
+            map.put(els[i], els[i]);
+            assertEquals(i + 1, map.size());
+            assertEquals(true, map.containsKey(new Integer((String) els[i])));
+            assertEquals(false, map.containsKey(els[i]));
+            assertEquals(true, map.containsValue(els[i]));
+            assertEquals(els[i], map.get(new Integer((String) els[i])));
+        }
         
+        assertEquals(null, map.remove(els[0]));
+        assertEquals(els[0], map.remove(new Integer((String) els[0])));
+        
+        map = TransformedMap.decorate(new HashMap(), null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(0, map.size());
+        for (int i = 0; i < els.length; i++) {
+            map.put(els[i], els[i]);
+            assertEquals(i + 1, map.size());
+            assertEquals(true, map.containsValue(new Integer((String) els[i])));
+            assertEquals(false, map.containsValue(els[i]));
+            assertEquals(true, map.containsKey(els[i]));
+            assertEquals(new Integer((String) els[i]), map.get(els[i]));
+        }
+
+        assertEquals(new Integer((String) els[0]), map.remove(els[0]));
+        
+        Set entrySet = map.entrySet();
+        Map.Entry[] array = (Map.Entry[]) entrySet.toArray(new Map.Entry[0]);
+        array[0].setValue("66");
+        assertEquals(new Integer(66), array[0].getValue());
+        assertEquals(new Integer(66), map.get(array[0].getKey()));
+        
+        Map.Entry entry = (Map.Entry) entrySet.iterator().next();
+        entry.setValue("88");
+        assertEquals(new Integer(88), entry.getValue());
+        assertEquals(new Integer(88), map.get(entry.getKey()));
+    }
 }
