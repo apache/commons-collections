@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.8 2003/11/02 17:26:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableListIterator.java,v 1.1 2003/11/02 17:26:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,48 +57,73 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.Unmodifiable;
+
 /**
- * Entry point for all iterator tests.
+ * Tests the UnmodifiableListIterator.
  * 
- * @version $Revision: 1.8 $ $Date: 2003/11/02 17:26:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/02 17:26:36 $
  * 
- * @author Rodney Waldhoff
+ * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestUnmodifiableListIterator extends AbstractTestListIterator {
+
+    protected String[] testArray = { "One", "Two", "Three" };
+    protected List testList = new ArrayList(Arrays.asList(testArray));
+
+    public static Test suite() {
+        return new TestSuite(TestUnmodifiableListIterator.class);
+    }
+
+    public TestUnmodifiableListIterator(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
-        suite.addTest(TestArrayListIterator.suite());
-        suite.addTest(TestArrayListIterator2.suite());
-        suite.addTest(TestObjectArrayIterator.suite());
-        suite.addTest(TestObjectArrayListIterator.suite());
-        suite.addTest(TestObjectArrayListIterator2.suite());
-        suite.addTest(TestCollatingIterator.suite());
-        suite.addTest(TestFilterIterator.suite());
-        suite.addTest(TestFilterListIterator.suite());
-        suite.addTest(TestIteratorChain.suite());
-        suite.addTest(TestListIteratorWrapper.suite());
-        suite.addTest(TestLoopingIterator.suite());
-        suite.addTest(TestSingletonIterator.suite());
-        suite.addTest(TestSingletonListIterator.suite());
-        suite.addTest(TestUniqueFilterIterator.suite());
-        suite.addTest(TestUnmodifiableIterator.suite());
-        suite.addTest(TestUnmodifiableListIterator.suite());
-        return suite;
+    public ListIterator makeEmptyListIterator() {
+        return UnmodifiableListIterator.decorate(Collections.EMPTY_LIST.listIterator());
     }
+
+    public ListIterator makeFullListIterator() {
+        return UnmodifiableListIterator.decorate(testList.listIterator());
+    }
+
+    public boolean supportsRemove() {
+        return false;
+    }
+
+    public boolean supportsAdd() {
+        return false;
+    }
+
+    public boolean supportsSet() {
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    public void testListIterator() {
+        assertTrue(makeEmptyListIterator() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        ListIterator it = makeFullListIterator();
+        assertSame(it, UnmodifiableListIterator.decorate(it));
         
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+        it = testList.listIterator();
+        assertTrue(it != UnmodifiableListIterator.decorate(it));
+        
+        try {
+            UnmodifiableListIterator.decorate(null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
+
 }

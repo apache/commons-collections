@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.8 2003/11/02 17:26:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableIterator.java,v 1.1 2003/11/02 17:26:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,48 +57,65 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.Unmodifiable;
+
 /**
- * Entry point for all iterator tests.
+ * Tests the UnmodifiableIterator.
  * 
- * @version $Revision: 1.8 $ $Date: 2003/11/02 17:26:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/02 17:26:36 $
  * 
- * @author Rodney Waldhoff
+ * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestUnmodifiableIterator extends AbstractTestIterator {
+
+    protected String[] testArray = { "One", "Two", "Three" };
+    protected List testList = new ArrayList(Arrays.asList(testArray));
+
+    public static Test suite() {
+        return new TestSuite(TestUnmodifiableIterator.class);
+    }
+
+    public TestUnmodifiableIterator(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
-        suite.addTest(TestArrayListIterator.suite());
-        suite.addTest(TestArrayListIterator2.suite());
-        suite.addTest(TestObjectArrayIterator.suite());
-        suite.addTest(TestObjectArrayListIterator.suite());
-        suite.addTest(TestObjectArrayListIterator2.suite());
-        suite.addTest(TestCollatingIterator.suite());
-        suite.addTest(TestFilterIterator.suite());
-        suite.addTest(TestFilterListIterator.suite());
-        suite.addTest(TestIteratorChain.suite());
-        suite.addTest(TestListIteratorWrapper.suite());
-        suite.addTest(TestLoopingIterator.suite());
-        suite.addTest(TestSingletonIterator.suite());
-        suite.addTest(TestSingletonListIterator.suite());
-        suite.addTest(TestUniqueFilterIterator.suite());
-        suite.addTest(TestUnmodifiableIterator.suite());
-        suite.addTest(TestUnmodifiableListIterator.suite());
-        return suite;
+    public Iterator makeEmptyIterator() {
+        return UnmodifiableIterator.decorate(Collections.EMPTY_LIST.iterator());
     }
+
+    public Iterator makeFullIterator() {
+        return UnmodifiableIterator.decorate(testList.iterator());
+    }
+
+    public boolean supportsRemove() {
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    public void testIterator() {
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        Iterator it = makeFullIterator();
+        assertSame(it, UnmodifiableIterator.decorate(it));
         
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+        it = testList.iterator();
+        assertTrue(it != UnmodifiableIterator.decorate(it));
+        
+        try {
+            UnmodifiableIterator.decorate(null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
+
 }
