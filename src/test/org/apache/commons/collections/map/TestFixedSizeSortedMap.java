@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/02 23:12:34 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/09 09:40:15 $
  * 
  * @author Stephen Colebourne
  */
@@ -47,6 +47,7 @@ public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    //-----------------------------------------------------------------------
     public Map makeEmptyMap() {
         return FixedSizeSortedMap.decorate(new TreeMap());
     }
@@ -57,6 +58,11 @@ public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
         return FixedSizeSortedMap.decorate(map);
     }
     
+    public boolean isSubMapViewsSerializable() {
+        // TreeMap sub map views have a bug in deserialization.
+        return false;
+    }
+
     public boolean isPutAddSupported() {
         return false;
     }
@@ -65,25 +71,11 @@ public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
         return false;
     }
 
+    //-----------------------------------------------------------------------
     public String getCompatibilityVersion() {
         return "3.1";
     }
     
-    public String[] ignoredTests() {
-        // TreeMap has a bug (it doesn't deserialize SubMaps properly), thus ignore...
-        return new String [] {
-            "TestFixedSizeSortedMap.bulkTestHeadMap.testEmptyMapCompatibility",
-            "TestFixedSizeSortedMap.bulkTestHeadMap.testFullMapCompatibility",
-            "TestFixedSizeSortedMap.bulkTestHeadMap.testSerializeDeserializeThenCompare",
-            "TestFixedSizeSortedMap.bulkTestTailMap.testEmptyMapCompatibility",
-            "TestFixedSizeSortedMap.bulkTestTailMap.testFullMapCompatibility",
-            "TestFixedSizeSortedMap.bulkTestTailMap.testSerializeDeserializeThenCompare",
-            "TestFixedSizeSortedMap.bulkTestSubMap.testEmptyMapCompatibility",
-            "TestFixedSizeSortedMap.bulkTestSubMap.testFullMapCompatibility",
-            "TestFixedSizeSortedMap.bulkTestSubMap.testSerializeDeserializeThenCompare",
-        };
-    }
-
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
