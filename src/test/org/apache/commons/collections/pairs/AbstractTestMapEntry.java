@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/AbstractTestMapEntry.java,v 1.1 2003/10/01 22:36:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/AbstractTestMapEntry.java,v 1.2 2003/11/02 19:44:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import junit.framework.TestCase;
  * type being tested.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/01 22:36:49 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/02 19:44:37 $
  * 
  * @author Neil O'Toole
  */
@@ -192,11 +192,11 @@ public abstract class AbstractTestMapEntry extends TestCase {
 
     public void testToString() {
         Map.Entry entry = makeMapEntry(key, value);
-        assertTrue(entry.toString().equals("[" + entry.getKey() + "=" + entry.getValue() + "]"));
+        assertTrue(entry.toString().equals(entry.getKey() + "=" + entry.getValue()));
 
         // test with nulls
         entry = makeMapEntry();
-        assertTrue(entry.toString().equals("[" + entry.getKey() + "=" + entry.getValue() + "]"));
+        assertTrue(entry.toString().equals(entry.getKey() + "=" + entry.getValue()));
     }
 
 }

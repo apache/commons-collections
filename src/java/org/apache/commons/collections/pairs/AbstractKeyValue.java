@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/AbstractKeyValue.java,v 1.1 2003/09/27 10:33:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/AbstractKeyValue.java,v 1.2 2003/11/02 19:44:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,7 +61,7 @@ package org.apache.commons.collections.pairs;
  * Abstract pair class to assist with creating KeyValue and MapEntry implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/27 10:33:34 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/02 19:44:37 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
@@ -112,11 +112,10 @@ public abstract class AbstractKeyValue implements KeyValue {
      */
     public String toString() {
         return new StringBuffer()
-            .append('[')
             .append(getKey())
             .append('=')
             .append(getValue())
-            .append(']').toString();
+            .toString();
     }
 
 }

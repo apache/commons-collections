@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestDefaultKeyValue.java,v 1.1 2003/10/01 22:36:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestDefaultKeyValue.java,v 1.2 2003/11/02 19:44:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import junit.framework.TestSuite;
  * Test the DefaultKeyValue class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/01 22:36:49 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/02 19:44:37 $
  * 
  * @author Neil O'Toole
  */
@@ -217,11 +217,11 @@ public class TestDefaultKeyValue extends TestCase {
 
     public void testToString() {
         DefaultKeyValue kv = makeDefaultKeyValue(key, value);
-        assertTrue(kv.toString().equals("[" + kv.getKey() + "=" + kv.getValue() + "]"));
+        assertTrue(kv.toString().equals(kv.getKey() + "=" + kv.getValue()));
 
         // test with nulls
         kv = makeDefaultKeyValue(null, null);
-        assertTrue(kv.toString().equals("[" + kv.getKey() + "=" + kv.getValue() + "]"));
+        assertTrue(kv.toString().equals(kv.getKey() + "=" + kv.getValue()));
     }
 
     public void testToMapEntry() {
