@@ -50,7 +50,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Phil Steitz
  * @author Steven Melzer
  * 
- * @version $Revision: 1.38 $ $Date: 2004/04/27 20:00:18 $
+ * @version $Revision: 1.39 $ $Date: 2004/06/26 10:00:42 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -530,16 +530,16 @@ public class TestCollectionUtils extends TestCase {
         
         // Enumeration, entry exists
         Vector vector = new Vector(list);
-        Enumeration enum = vector.elements();
-        test = CollectionUtils.index(enum,0);
+        Enumeration en = vector.elements();
+        test = CollectionUtils.index(en,0);
         assertTrue(test.equals("zero"));
-        enum = vector.elements();
-        test = CollectionUtils.index(enum,1);
+        en = vector.elements();
+        test = CollectionUtils.index(en,1);
         assertTrue(test.equals("one"));
         
         // Enumeration, non-existent entry -- "dead" enumerator returned
-        test = CollectionUtils.index(enum,3);
-        assertTrue(test.equals(enum) && !enum.hasMoreElements());
+        test = CollectionUtils.index(en,3);
+        assertTrue(test.equals(en) && !en.hasMoreElements());
         
         // Collection, entry exists
         Bag bag = new HashBag();
@@ -652,19 +652,19 @@ public class TestCollectionUtils extends TestCase {
             Vector vector = new Vector();
             vector.addElement("zero");
             vector.addElement("one");
-            Enumeration enum = vector.elements();
-            assertEquals("zero",CollectionUtils.get(enum,0));
-            enum = vector.elements();
-            assertEquals("one",CollectionUtils.get(enum,1));
+            Enumeration en = vector.elements();
+            assertEquals("zero",CollectionUtils.get(en,0));
+            en = vector.elements();
+            assertEquals("one",CollectionUtils.get(en,1));
         
             // Enumerator, non-existent entry 
             try {
-                CollectionUtils.get(enum,3);
+                CollectionUtils.get(en,3);
                 fail("Expecting IndexOutOfBoundsException.");
             } catch (IndexOutOfBoundsException e) {
                 // expected
             }
-            assertTrue(!enum.hasMoreElements());
+            assertTrue(!en.hasMoreElements());
         }
         
         {
