@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ListIteratorWrapper.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ListIteratorWrapper.java,v 1.2 2002/08/17 11:33:09 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/17 11:33:09 $
  *
  * ====================================================================
  *
@@ -64,28 +64,45 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
-
 /**
  * As the wrapped Iterator is traversed, ListIteratorWrapper
  * builds a LinkedList of its values, permitting all required
  * operations of ListIterator.
  * 
- * @author Morgan Delagrange
- * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:51 $
  * @since 2.1
+ * @author Morgan Delagrange
+ * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
+ * @version $Id: ListIteratorWrapper.java,v 1.2 2002/08/17 11:33:09 scolebourne Exp $
  */
 public class ListIteratorWrapper implements ListIterator {
+
+    /** Holds value of property "iterator" */
+    private final Iterator iterator;
+    private final LinkedList list = new LinkedList();
+    
+    // position of this iterator
+    private int currentIndex = 0;
+    // position of the wrapped iterator
+    // this Iterator should only be used to populate the list
+    private int wrappedIteratorIndex = 0;
+
+    private static final String UNSUPPORTED_OPERATION_MESSAGE =
+        "ListIteratorWrapper does not support optional operations of ListIterator.";
 
     // Constructor
     //-------------------------------------------------------------------------
 
     /**
-     *  Constructs a new <Code>ListIteratorWrapper</Code> that will wrap
-     *  the given iterator.
+     * Constructs a new <Code>ListIteratorWrapper</Code> that will wrap
+     * the given iterator.
      *
-     *  @param iterator  the iterator to wrap
+     * @param iterator  the iterator to wrap
+     * @throws NullPointerException if the iterator is null
      */
     public ListIteratorWrapper(Iterator iterator) {
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
         this.iterator = iterator;
     }
 
@@ -199,22 +216,6 @@ public class ListIteratorWrapper implements ListIterator {
     public void set(Object o) throws UnsupportedOperationException {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }
-
-    // Attributes
-    //-------------------------------------------------------------------------
-
-    /** Holds value of property "iterator". */
-    private Iterator iterator = null;
-    private LinkedList list = new LinkedList();
-    
-    // position of this iterator
-    private int currentIndex = 0;
-    // position of the wrapped iterator
-    // this Iterator should only be used to populate the list
-    private int wrappedIteratorIndex = 0;
-
-    private static final String UNSUPPORTED_OPERATION_MESSAGE =
-        "ListIteratorWrapper does not support optional operations of ListIterator.";
 
 }
 
