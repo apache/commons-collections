@@ -117,7 +117,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.14 $ $Date: 2004/04/12 12:04:00 $
+ * @version $Revision: 1.15 $ $Date: 2004/05/31 22:39:20 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -739,7 +739,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
         // test to make sure the canonical form has been preserved
         Map map = makeEmptyMap();
-        if (map instanceof Serializable && !skipSerializedCanonicalTests()) {
+        if (map instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             Map map2 = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
             assertEquals("Map is empty", 0, map2.size());
         }
@@ -760,7 +760,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
         // test to make sure the canonical form has been preserved
         Map map = makeFullMap();
-        if (map instanceof Serializable && !skipSerializedCanonicalTests()) {
+        if (map instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             Map map2 = (Map) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
             assertEquals("Map is the right size", getSampleKeys().length, map2.size());
         }
@@ -1255,13 +1255,10 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         public boolean isGetStructuralModify() {
             return AbstractTestMap.this.isGetStructuralModify();
         }
-        public boolean supportsEmptyCollections() {
-            return AbstractTestMap.this.supportsEmptyCollections();
+        public boolean isTestSerialization() {
+            return false;
         }
-        public boolean supportsFullCollections() {
-            return AbstractTestMap.this.supportsFullCollections();
-        }
-        
+
         public void resetFull() {
             AbstractTestMap.this.resetFull();
             collection = map.entrySet();
@@ -1415,11 +1412,8 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         public boolean isRemoveSupported() {
             return AbstractTestMap.this.isRemoveSupported();
         }
-        public boolean supportsEmptyCollections() {
-            return AbstractTestMap.this.supportsEmptyCollections();
-        }
-        public boolean supportsFullCollections() {
-            return AbstractTestMap.this.supportsFullCollections();
+        public boolean isTestSerialization() {
+            return false;
         }
         
         public void resetEmpty() {
@@ -1484,13 +1478,10 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         public boolean isRemoveSupported() {
             return AbstractTestMap.this.isRemoveSupported();
         }
-        public boolean supportsEmptyCollections() {
-            return AbstractTestMap.this.supportsEmptyCollections();
+        public boolean isTestSerialization() {
+            return false;
         }
-        public boolean supportsFullCollections() {
-            return AbstractTestMap.this.supportsFullCollections();
-        }
-
+        
         public boolean areEqualElementsDistinguishable() {
             // equal values are associated with different keys, so they are
             // distinguishable.  

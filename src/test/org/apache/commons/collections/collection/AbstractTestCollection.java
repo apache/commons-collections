@@ -112,7 +112,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.6 $ $Date: 2004/05/31 19:09:14 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/31 22:39:20 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -1300,7 +1300,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
 
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeCollection();
-        if (obj instanceof Serializable) {
+        if (obj instanceof Serializable && isTestSerialization()) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(buffer);
             out.writeObject(obj);
@@ -1314,7 +1314,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
             }
         }
         obj = makeFullCollection();
-        if (obj instanceof Serializable) {
+        if (obj instanceof Serializable && isTestSerialization()) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(buffer);
             out.writeObject(obj);

@@ -36,7 +36,7 @@ import org.apache.commons.collections.Bag;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your bag fails.
  *
- * @version $Revision: 1.8 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.9 $ $Date: 2004/05/31 22:39:20 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -425,7 +425,7 @@ public abstract class AbstractTestBag extends AbstractTestObject {
     //-----------------------------------------------------------------------
     public void testEmptyBagSerialization() throws IOException, ClassNotFoundException {
         Bag bag = makeBag();
-        if (!(bag instanceof Serializable)) return;
+        if (!(bag instanceof Serializable && isTestSerialization())) return;
         
         byte[] objekt = writeExternalFormToBytes((Serializable) bag);
         Bag bag2 = (Bag) readExternalFormFromBytes(objekt);
@@ -442,7 +442,7 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         bag.add("B");
         bag.add("C");
         int size = bag.size();
-        if (!(bag instanceof Serializable)) return;
+        if (!(bag instanceof Serializable && isTestSerialization())) return;
         
         byte[] objekt = writeExternalFormToBytes((Serializable) bag);
         Bag bag2 = (Bag) readExternalFormFromBytes(objekt);
@@ -458,7 +458,7 @@ public abstract class AbstractTestBag extends AbstractTestObject {
     public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         Bag bag = makeBag();
-        if(bag instanceof Serializable && !skipSerializedCanonicalTests()) {
+        if(bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             Bag bag2 = (Bag) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
             assertTrue("Bag is empty",bag2.size()  == 0);
             assertEquals(bag, bag2);
@@ -477,7 +477,7 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         bag.add("B");
         bag.add("B");
         bag.add("C");
-        if(bag instanceof Serializable && !skipSerializedCanonicalTests()) {
+        if(bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             Bag bag2 = (Bag) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
             assertEquals("Bag is the right size",bag.size(), bag2.size());
             assertEquals(bag, bag2);

@@ -32,7 +32,7 @@ import org.apache.commons.collections.BulkTest;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/31 22:39:20 $
  * 
  * @author Stephen Colebourne
  * @author Dieter Wimberger
@@ -284,7 +284,11 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
             SortedSet s = (SortedSet) AbstractTestSortedSet.this.makeFullCollection();
             return getSubSet(s);
         }
-
+        
+        public boolean isTestSerialization() {
+            return false;
+        }
+        
         public BulkTest bulkTestSortedSetSubSet() {
             return null;  // prevent infinite recursion
         }

@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.8 $ $Date: 2004/04/09 15:17:11 $
+ * @version $Revision: 1.9 $ $Date: 2004/05/31 22:39:20 $
  * 
  * @author Stephen Colebourne
  */
@@ -155,28 +155,25 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
         public boolean isRemoveSupported() {
             return main.isRemoveSupported();
         }
-        public boolean supportsEmptyCollections() {
+        public boolean isTestSerialization() {
             return false;
         }
-        public boolean supportsFullCollections() {
-            return false;
-        }
-        public void testSimpleSerialization() throws Exception {
-            if (main.isSubMapViewsSerializable() == false) return;
-            super.testSimpleSerialization();
-        }
-        public void testSerializeDeserializeThenCompare() throws Exception {
-            if (main.isSubMapViewsSerializable() == false) return;
-            super.testSerializeDeserializeThenCompare();
-        }
-        public void testEmptyMapCompatibility() throws Exception {
-            if (main.isSubMapViewsSerializable() == false) return;
-            super.testEmptyMapCompatibility();
-        }
-        public void testFullMapCompatibility() throws Exception {
-            if (main.isSubMapViewsSerializable() == false) return;
-            super.testFullMapCompatibility();
-        }
+//        public void testSimpleSerialization() throws Exception {
+//            if (main.isSubMapViewsSerializable() == false) return;
+//            super.testSimpleSerialization();
+//        }
+//        public void testSerializeDeserializeThenCompare() throws Exception {
+//            if (main.isSubMapViewsSerializable() == false) return;
+//            super.testSerializeDeserializeThenCompare();
+//        }
+//        public void testEmptyMapCompatibility() throws Exception {
+//            if (main.isSubMapViewsSerializable() == false) return;
+//            super.testEmptyMapCompatibility();
+//        }
+//        public void testFullMapCompatibility() throws Exception {
+//            if (main.isSubMapViewsSerializable() == false) return;
+//            super.testFullMapCompatibility();
+//        }
     }
     
     public static class TestHeadMap extends TestViewMap {

@@ -32,7 +32,7 @@ import org.apache.commons.collections.list.AbstractTestList;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.7 $ $Date: 2004/02/27 00:25:14 $
+ * @version $Revision: 1.8 $ $Date: 2004/05/31 22:39:20 $
  * 
  * @author Stephen Colebourne
  */
@@ -252,7 +252,9 @@ public class TestLinkedMap extends AbstractTestOrderedMap {
         public boolean isNullSupported() {
             return TestLinkedMap.this.isAllowNullKey();
         }
-
+        public boolean isTestSerialization() {
+            return false;
+        }
     }
 
     public void testClone() {

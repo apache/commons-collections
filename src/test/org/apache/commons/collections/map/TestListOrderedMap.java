@@ -31,7 +31,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/04/07 23:17:25 $
+ * @version $Revision: 1.10 $ $Date: 2004/05/31 22:39:20 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -188,7 +188,9 @@ public class TestListOrderedMap extends AbstractTestOrderedMap {
         public boolean isNullSupported() {
             return TestListOrderedMap.this.isAllowNullKey();
         }
-
+        public boolean isTestSerialization() {
+            return false;
+        }
     }
 
     public String getCompatibilityVersion() {

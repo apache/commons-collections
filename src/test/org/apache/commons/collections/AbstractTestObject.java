@@ -37,7 +37,7 @@ import java.io.Serializable;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  *
- * @version $Revision: 1.5 $ $Date: 2004/04/09 15:17:11 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/31 22:39:20 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -87,6 +87,14 @@ public abstract class AbstractTestObject extends BulkTest {
         return true;
     }
 
+    /**
+     * Is serialization testing supported.
+     * Default is true.
+     */
+    public boolean isTestSerialization() {
+        return true;
+    }
+
     //-----------------------------------------------------------------------
     public void testObjectEqualsSelf() {
         Object obj = makeObject();
@@ -123,7 +131,7 @@ public abstract class AbstractTestObject extends BulkTest {
 
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();
-        if (obj instanceof Serializable) {
+        if (obj instanceof Serializable && isTestSerialization()) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(buffer);
             out.writeObject(obj);
@@ -146,7 +154,7 @@ public abstract class AbstractTestObject extends BulkTest {
      */
     public void testSimpleSerialization() throws Exception {
         Object o = makeObject();
-        if (o instanceof Serializable) {
+        if (o instanceof Serializable && isTestSerialization()) {
             byte[] objekt = writeExternalFormToBytes((Serializable) o);
             Object p = readExternalFormFromBytes(objekt);
         }
@@ -157,7 +165,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * If the test object is serializable, confirm that a canonical form exists.
      */
     public void testCanonicalEmptyCollectionExists() {
-        if (supportsEmptyCollections()) {
+        if (supportsEmptyCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
             Object object = makeObject();
             if (object instanceof Serializable) {
                 String name = getCanonicalEmptyCollectionName(object);
@@ -173,7 +181,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * If the test object is serializable, confirm that a canonical form exists.
      */
     public void testCanonicalFullCollectionExists() {
-        if (supportsFullCollections()) {
+        if (supportsFullCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
             Object object = makeObject();
             if (object instanceof Serializable) {
                 String name = getCanonicalFullCollectionName(object);

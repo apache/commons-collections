@@ -45,7 +45,7 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.8 $ $Date: 2004/05/31 19:09:14 $
+ * @version $Revision: 1.9 $ $Date: 2004/05/31 22:39:20 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -946,7 +946,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     public void testEmptyListSerialization() 
     throws IOException, ClassNotFoundException {
         List list = makeEmptyList();
-        if (!(list instanceof Serializable)) return;
+        if (!(list instanceof Serializable && isTestSerialization())) return;
         
         byte[] objekt = writeExternalFormToBytes((Serializable) list);
         List list2 = (List) readExternalFormFromBytes(objekt);
@@ -959,7 +959,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     throws IOException, ClassNotFoundException {
         List list = makeFullList();
         int size = getFullElements().length;
-        if (!(list instanceof Serializable)) return;
+        if (!(list instanceof Serializable && isTestSerialization())) return;
         
         byte[] objekt = writeExternalFormToBytes((Serializable) list);
         List list2 = (List) readExternalFormFromBytes(objekt);
@@ -983,7 +983,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
 
         // test to make sure the canonical form has been preserved
         List list = makeEmptyList();
-        if(list instanceof Serializable && !skipSerializedCanonicalTests()) {
+        if(list instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             List list2 = (List) readExternalFormFromDisk(getCanonicalEmptyCollectionName(list));
             assertTrue("List is empty",list2.size()  == 0);
             assertEquals(list, list2);
@@ -1005,7 +1005,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
 
         // test to make sure the canonical form has been preserved
         List list = makeFullList();
-        if(list instanceof Serializable && !skipSerializedCanonicalTests()) {
+        if(list instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             List list2 = (List) readExternalFormFromDisk(getCanonicalFullCollectionName(list));
             if (list2.size() == 4) {
                 // old serialized tests
@@ -1098,6 +1098,9 @@ public abstract class AbstractTestList extends AbstractTestCollection {
            outer.verify();
        }
 
+       public boolean isTestSerialization() {
+           return false;
+       }
    }
 
 
