@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CircularFifoBuffer.java,v 1.4 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CircularFifoBuffer.java,v 1.5 2003/11/29 18:04:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,8 +59,6 @@ package org.apache.commons.collections;
 
 import java.util.Collection;
 
-import org.apache.commons.collections.BoundedFifoBuffer;
-
 /** 
  * CircularFifoBuffer is a first in first out buffer with a fixed size that
  * replaces its oldest element if full.
@@ -81,8 +79,9 @@ import org.apache.commons.collections.BoundedFifoBuffer;
  * <p>
  * This buffer prevents null objects from being added.
  * 
+ * @deprecated WILL BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/29 18:04:57 $
  * 
  * @author Stefano Fornari
  * @author Stephen Colebourne

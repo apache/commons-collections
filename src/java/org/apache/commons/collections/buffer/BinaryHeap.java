@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.15 2003/11/29 18:04:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryHeap.java,v 1.1 2003/11/29 18:04:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,12 +55,16 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.buffer;
 
 import java.util.AbstractCollection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import org.apache.commons.collections.Buffer;
+import org.apache.commons.collections.BufferUnderflowException;
+import org.apache.commons.collections.PriorityQueue;
 
 /**
  * Binary heap implementation of {@link PriorityQueue} and {@link Buffer}.
@@ -86,13 +90,12 @@ import java.util.NoSuchElementException;
  * Buffer heap = BufferUtils.synchronizedBuffer(new BinaryHeap());
  * </pre>
  *
- * @deprecated Moved to buffer subpackage. Due to be removed in v4.0.
- * @since Commons Collections 1.0
- * @version $Revision: 1.15 $ $Date: 2003/11/29 18:04:57 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/11/29 18:04:57 $
  * 
- * @author <a href="mailto:donaldp@apache.org">Peter Donald</a>
- * @author <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a>
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @author Peter Donald
+ * @author Ram Chidambaram
+ * @author Michael A. Smith
  * @author Paul Jack
  * @author Stephen Colebourne
  */

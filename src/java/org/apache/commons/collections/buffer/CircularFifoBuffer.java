@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestAll.java,v 1.2 2003/11/29 18:04:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/CircularFifoBuffer.java,v 1.1 2003/11/29 18:04:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,42 +57,76 @@
  */
 package org.apache.commons.collections.buffer;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Collection;
 
-/**
- * Entry point for tests.
+/** 
+ * CircularFifoBuffer is a first in first out buffer with a fixed size that
+ * replaces its oldest element if full.
+ * <p>
+ * The removal order of a <code>CircularFifoBuffer</code> is based on the 
+ * insertion order; elements are removed in the same order in which they
+ * were added.  The iteration order is the same as the removal order.
+ * <p>
+ * The {@link #add(Object)}, {@link #remove()} and {@link #get()} operations
+ * all perform in constant time.  All other operations perform in linear
+ * time or worse.
+ * <p>
+ * Note that this implementation is not synchronized.  The following can be
+ * used to provide synchronized access to your <code>CircularFifoBuffer</code>:
+ * <pre>
+ *   Buffer fifo = BufferUtils.synchronizedBuffer(new CircularFifoBuffer());
+ * </pre>
+ * <p>
+ * This buffer prevents null objects from being added.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/29 18:04:56 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/29 18:04:57 $
  * 
+ * @author Stefano Fornari
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
-        super(testName);
+public class CircularFifoBuffer extends BoundedFifoBuffer {
+
+    /**
+     * Constructor that creates a buffer with the default size of 32.
+     */
+    public CircularFifoBuffer() {
+        super(32);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Constructor that creates a buffer with the specified size.
+     * 
+     * @param size  the size of the buffer (cannot be changed)
+     * @throws IllegalArgumentException  if the size is less than 1
+     */
+    public CircularFifoBuffer(int size) {
+        super(size);
+    }
+
+    /**
+     * Constructor that creates a buffer from the specified collection.
+     * The collection size also sets the buffer size
+     * 
+     * @param coll  the collection to copy into the buffer, may not be null
+     * @throws NullPointerException if the collection is null
+     */
+    public CircularFifoBuffer(Collection coll) {
+        super(coll);
+    }
+
+    /**
+     * If the buffer is full, the least recently added element is discarded so
+     * that a new element can be inserted.
+     *
+     * @param element the element to add
+     * @return true, always
+     */
+    public boolean add(Object element) {
+        if (isFull()) {
+            remove();
+        }
+        return super.add(element);
     }
     
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestBinaryHeap.suite());
-        suite.addTest(TestBlockingBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCircularFifoBuffer.suite());
-        suite.addTest(TestPredicatedBuffer.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
-        
-        return suite;
-    }
-        
 }
