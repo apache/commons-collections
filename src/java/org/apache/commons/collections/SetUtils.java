@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.13 2003/05/09 18:41:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.14 2003/05/11 13:29:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,6 +66,8 @@ import java.util.TreeSet;
 
 import org.apache.commons.collections.decorators.PredicatedSet;
 import org.apache.commons.collections.decorators.PredicatedSortedSet;
+import org.apache.commons.collections.decorators.TransformedSet;
+import org.apache.commons.collections.decorators.TransformedSortedSet;
 import org.apache.commons.collections.decorators.TypedSet;
 import org.apache.commons.collections.decorators.TypedSortedSet;
 
@@ -74,7 +76,7 @@ import org.apache.commons.collections.decorators.TypedSortedSet;
  * and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.13 $ $Date: 2003/05/09 18:41:34 $
+ * @version $Revision: 1.14 $ $Date: 2003/05/11 13:29:16 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -238,6 +240,22 @@ public class SetUtils {
         return TypedSet.decorate(set, type);
     }
     
+    /**
+     * Returns a transformed set backed by the given set.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * Set. It is important not to use the original set after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param set  the set to predicate, must not be null
+     * @param transformer  the transformer for the set, must not be null
+     * @return a transformed set backed by the given set
+     * @throws IllegalArgumentException  if the Set or Transformer is null
+     */
+    public static Set transformedSet(Set set, Transformer transformer) {
+        return TransformedSet.decorate(set, transformer);
+    }
+    
     //-----------------------------------------------------------------------
     /**
      * Returns a synchronized sorted set backed by the given sorted set.
@@ -305,6 +323,22 @@ public class SetUtils {
      */
     public static SortedSet typedSortedSet(SortedSet set, Class type) {
         return TypedSortedSet.decorate(set, type);
+    }
+    
+    /**
+     * Returns a transformed sorted set backed by the given set.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * Set. It is important not to use the original set after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param set  the set to predicate, must not be null
+     * @param transformer  the transformer for the set, must not be null
+     * @return a transformed set backed by the given set
+     * @throws IllegalArgumentException  if the Set or Transformer is null
+     */
+    public static SortedSet transformedSortedSet(SortedSet set, Transformer transformer) {
+        return TransformedSortedSet.decorate(set, transformer);
     }
     
 }

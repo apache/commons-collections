@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.11 2003/05/09 18:41:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.12 2003/05/11 13:29:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,6 +60,7 @@ package org.apache.commons.collections;
 import org.apache.commons.collections.decorators.BlockingBuffer;
 import org.apache.commons.collections.decorators.PredicatedBuffer;
 import org.apache.commons.collections.decorators.SynchronizedBuffer;
+import org.apache.commons.collections.decorators.TransformedBuffer;
 import org.apache.commons.collections.decorators.TypedBuffer;
 import org.apache.commons.collections.decorators.UnmodifiableBuffer;
 
@@ -67,7 +68,7 @@ import org.apache.commons.collections.decorators.UnmodifiableBuffer;
  * Contains static utility methods for operating on {@link Buffer} objects.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.11 $ $Date: 2003/05/09 18:41:34 $
+ * @version $Revision: 1.12 $ $Date: 2003/05/11 13:29:16 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -166,4 +167,20 @@ public class BufferUtils {
         return TypedBuffer.decorate(buffer, type);
     }
 
+    /**
+     * Returns a transformed buffer backed by the given buffer.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * Buffer. It is important not to use the original buffer after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param buffer  the buffer to predicate, must not be null
+     * @param transformer  the transformer for the buffer, must not be null
+     * @return a transformed buffer backed by the given buffer
+     * @throws IllegalArgumentException  if the Buffer or Transformer is null
+     */
+    public static Buffer transformedBuffer(Buffer buffer, Transformer transformer) {
+        return TransformedBuffer.decorate(buffer, transformer);
+    }
+    
 }

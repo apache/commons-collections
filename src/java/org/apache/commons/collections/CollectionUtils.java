@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.30 2003/05/09 18:41:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.31 2003/05/11 13:29:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,6 +71,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections.decorators.PredicatedCollection;
+import org.apache.commons.collections.decorators.TransformedCollection;
 import org.apache.commons.collections.decorators.TypedCollection;
 import org.apache.commons.collections.decorators.UnmodifiableBoundedCollection;
 import org.apache.commons.collections.iterators.ArrayIterator;
@@ -80,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.30 $ $Date: 2003/05/09 18:41:34 $
+ * @version $Revision: 1.31 $ $Date: 2003/05/11 13:29:16 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -937,6 +938,22 @@ public class CollectionUtils {
      */
     public static Collection typedCollection(Collection collection, Class type) {
         return TypedCollection.decorate(collection, type);
+    }
+    
+    /**
+     * Returns a transformed bag backed by the given collection.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * Collection. It is important not to use the original collection after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param collection  the collection to predicate, must not be null
+     * @param transformer  the transformer for the collection, must not be null
+     * @return a transformed collection backed by the given collection
+     * @throws IllegalArgumentException  if the Collection or Transformer is null
+     */
+    public static Collection transformedCollection(Collection collection, Transformer transformer) {
+        return TransformedCollection.decorate(collection, transformer);
     }
     
 }

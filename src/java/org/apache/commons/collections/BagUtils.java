@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.10 2003/05/09 18:41:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.11 2003/05/11 13:29:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,6 +61,8 @@ import org.apache.commons.collections.decorators.PredicatedBag;
 import org.apache.commons.collections.decorators.PredicatedSortedBag;
 import org.apache.commons.collections.decorators.SynchronizedBag;
 import org.apache.commons.collections.decorators.SynchronizedSortedBag;
+import org.apache.commons.collections.decorators.TransformedBag;
+import org.apache.commons.collections.decorators.TransformedSortedBag;
 import org.apache.commons.collections.decorators.TypedBag;
 import org.apache.commons.collections.decorators.TypedSortedBag;
 import org.apache.commons.collections.decorators.UnmodifiableBag;
@@ -71,7 +73,7 @@ import org.apache.commons.collections.decorators.UnmodifiableSortedBag;
  * and {@link SortedBag} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.10 $ $Date: 2003/05/09 18:41:34 $
+ * @version $Revision: 1.11 $ $Date: 2003/05/11 13:29:16 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -155,7 +157,7 @@ public class BagUtils {
     public static Bag predicatedBag(Bag bag, Predicate predicate) {
         return PredicatedBag.decorate(bag, predicate);
     }
-
+    
     /**
      * Returns a typed bag backed by the given bag.
      * <p>
@@ -167,6 +169,22 @@ public class BagUtils {
      */
     public static Bag typedBag(Bag bag, Class type) {
         return TypedBag.decorate(bag, type);
+    }
+    
+    /**
+     * Returns a transformed bag backed by the given bag.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * Bag. It is important not to use the original bag after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param bag  the bag to predicate, must not be null
+     * @param transformer  the transformer for the bag, must not be null
+     * @return a transformed bag backed by the given bag
+     * @throws IllegalArgumentException  if the Bag or Transformer is null
+     */
+    public static Bag transformedBag(Bag bag, Transformer transformer) {
+        return TransformedBag.decorate(bag, transformer);
     }
     
     //-----------------------------------------------------------------------
@@ -241,6 +259,22 @@ public class BagUtils {
      */
     public static SortedBag typedSortedBag(SortedBag bag, Class type) {
         return TypedSortedBag.decorate(bag, type);
+    }
+    
+    /**
+     * Returns a transformed sorted bag backed by the given bag.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * Bag. It is important not to use the original bag after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param bag  the bag to predicate, must not be null
+     * @param transformer  the transformer for the bag, must not be null
+     * @return a transformed bag backed by the given bag
+     * @throws IllegalArgumentException  if the Bag or Transformer is null
+     */
+    public static SortedBag transformedSortedBag(SortedBag bag, Transformer transformer) {
+        return TransformedSortedBag.decorate(bag, transformer);
     }
         
 }

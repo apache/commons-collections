@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.17 2003/05/09 18:41:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.18 2003/05/11 13:29:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,6 +66,7 @@ import java.util.List;
 import org.apache.commons.collections.decorators.FixedSizeList;
 import org.apache.commons.collections.decorators.LazyList;
 import org.apache.commons.collections.decorators.PredicatedList;
+import org.apache.commons.collections.decorators.TransformedList;
 import org.apache.commons.collections.decorators.TypedList;
 
 /**
@@ -73,7 +74,7 @@ import org.apache.commons.collections.decorators.TypedList;
  * instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.17 $ $Date: 2003/05/09 18:41:34 $
+ * @version $Revision: 1.18 $ $Date: 2003/05/11 13:29:16 $
  * 
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
@@ -323,6 +324,22 @@ public class ListUtils {
      */
     public static List typedList(List list, Class type) {
         return TypedList.decorate(list, type);
+    }
+    
+    /**
+     * Returns a transformed list backed by the given list.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * List. It is important not to use the original list after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param list  the list to predicate, must not be null
+     * @param transformer  the transformer for the list, must not be null
+     * @return a transformed list backed by the given list
+     * @throws IllegalArgumentException  if the List or Transformer is null
+     */
+    public static List transformedList(List list, Transformer transformer) {
+        return TransformedList.decorate(list, transformer);
     }
     
     /**
