@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.13 2003/10/03 06:20:54 bayard Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.14 2003/10/03 23:19:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,12 +63,14 @@ import java.util.Map;
  * A default implementation of {@link java.util.Map.Entry}
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.13 $ $Date: 2003/10/03 06:20:54 $
+ * @version $Revision: 1.14 $ $Date: 2003/10/03 23:19:32 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
  * @author Neil O'Toole
  * @author Stephen Colebourne
+ * 
+ * @deprecated Use the version in the pairs subpackage.
  */
 public class DefaultMapEntry implements Map.Entry {
     

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.21 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.22 2003/10/03 23:19:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,6 +73,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.commons.collections.pairs.AbstractMapEntry;
+
 /** 
  * An implementation of Map for JavaBeans which uses introspection to
  * get and put properties in the bean.
@@ -81,9 +83,9 @@ import java.util.Set;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.21 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.22 $ $Date: 2003/10/03 23:19:32 $
  * 
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author James Strachan
  * @author Stephen Colebourne
  */
 public class BeanMap extends AbstractMap implements Cloneable {
@@ -446,10 +448,11 @@ public class BeanMap extends AbstractMap implements Cloneable {
     }
 
     /**
-     * Get the mappings for this BeanMap
+     * Gets a Set of MapEntry objects that are the mappings for this BeanMap.
+     * <p>
+     * Each MapEntry can be set but not removed.
      * 
-     * @return BeanMap mappings.  The Set returned by this method
-     *        is not modifiable.
+     * @return the unmodifiable set of mappings
      */
     public Set entrySet() {
         return Collections.unmodifiableSet(new AbstractSet() {
@@ -465,7 +468,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
 
                     public Object next() {
                         Object key = (Object)methodIter.next();
-                        return new DefaultMapEntry(key, get(key));
+                        return new MyMapEntry( BeanMap.this, key, get(key) );
                     }
 
                     public void remove() {
@@ -699,7 +702,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
     /**
      * Map entry used by {@link BeanMap}.
      */
-    protected static class MyMapEntry extends DefaultMapEntry {        
+    protected static class MyMapEntry extends AbstractMapEntry {        
         private BeanMap owner;
         
         /**

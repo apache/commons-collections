@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.14 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.15 2003/10/03 23:19:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -76,6 +76,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.pairs.DefaultMapEntry;
+
 /**
  *  Hashtable-based {@link Map} implementation that allows
  *  mappings to be removed by the garbage collector.<p>
@@ -116,7 +118,7 @@ import java.util.Set;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.14 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.15 $ $Date: 2003/10/03 23:19:32 $
  * 
  * @author Paul Jack
  */
@@ -643,17 +645,17 @@ public class ReferenceMap extends AbstractMap {
      *  @return a set view of this map's entries
      */
     public Set entrySet() {
-        if (entrySet != null) return entrySet;
+        if (entrySet != null) {
+            return entrySet;
+        } 
         entrySet = new AbstractSet() {
             public int size() {
                 return ReferenceMap.this.size();
             }
 
-
             public void clear() {
                 ReferenceMap.this.clear();
             }
-
 
             public boolean contains(Object o) {
                 if (o == null) return false;
@@ -662,7 +664,6 @@ public class ReferenceMap extends AbstractMap {
                 Entry e2 = getEntry(e.getKey());
                 return (e2 != null) && e.equals(e2);
             }
-
 
             public boolean remove(Object o) {
                 boolean r = contains(o);
@@ -673,7 +674,6 @@ public class ReferenceMap extends AbstractMap {
                 return r;
             }
 
-
             public Iterator iterator() {
                 return new EntryIterator();
             }
@@ -681,7 +681,6 @@ public class ReferenceMap extends AbstractMap {
             public Object[] toArray() {
                 return toArray(new Object[0]);
             }
-
 
             public Object[] toArray(Object[] arr) {
                 ArrayList list = new ArrayList();
