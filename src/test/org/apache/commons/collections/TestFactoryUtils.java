@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.2 2003/05/16 15:11:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.3 2003/05/21 22:22:24 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.FactoryUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/16 15:11:54 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/21 22:22:24 $
  *
  * @author Stephen Colebourne
  */
@@ -254,6 +254,17 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         }
     }
     
+    public static class Mock3 {
+        private static int cCounter = 0;
+        private final int iVal;
+        public Mock3() {
+            iVal = cCounter++;
+        }
+        public int getValue() {
+            return iVal;
+        }
+    }
+    
     // reflectionFactory
     //------------------------------------------------------------------
     
@@ -268,11 +279,12 @@ public class TestFactoryUtils extends junit.framework.TestCase {
     }
 
     public void testReflectionFactorySimple() {
-        Factory factory = FactoryUtils.reflectionFactory(Date.class);
+        Factory factory = FactoryUtils.reflectionFactory(Mock3.class);
         assertNotNull(factory);
         Object created = factory.create();
-        assertTrue(created instanceof Date);
-        assertEquals((double) System.currentTimeMillis(), (double) ((Date) created).getTime(), 0.05d);
+        assertEquals(0, ((Mock3) created).getValue());
+        created = factory.create();
+        assertEquals(1, ((Mock3) created).getValue());
     }
 
     public void testReflectionFactoryMismatch() {
@@ -297,12 +309,14 @@ public class TestFactoryUtils extends junit.framework.TestCase {
 
     public void testReflectionFactoryComplex() {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
+        // 2nd Jan 1970
         Factory factory = FactoryUtils.reflectionFactory(Date.class,
             new Class[] {Integer.TYPE, Integer.TYPE, Integer.TYPE},
             new Object[] {new Integer(70), new Integer(0), new Integer(2)});
         assertNotNull(factory);
         Object created = factory.create();
         assertTrue(created instanceof Date);
+        // long time of 1 day (== 2nd Jan 1970)
         assertEquals(new Date(1000 * 60 * 60 * 24), created);
     }
 
