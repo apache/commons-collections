@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollection.java,v 1.2 2003/01/10 18:47:15 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollection.java,v 1.3 2003/01/10 18:55:13 rwaldhoff Exp $
  *
  * ====================================================================
  *
@@ -66,9 +66,8 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.CollectionIntCollection
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/01/10 18:47:15 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/10 18:55:13 $
  * 
- * @version $Revision: 1.2 $ $Date: 2003/01/10 18:47:15 $
  * @author Rodney Waldhoff 
  */
 public interface IntCollection {
