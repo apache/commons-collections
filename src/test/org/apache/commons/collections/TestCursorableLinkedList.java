@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.5 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/18 05:35:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.6 2002/06/21 03:32:06 mas Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/06/21 03:32:06 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCursorableLinkedList.java,v 1.5 2002/06/18 05:35:58 mas Exp $
+ * @version $Id: TestCursorableLinkedList.java,v 1.6 2002/06/21 03:32:06 mas Exp $
  */
 public class TestCursorableLinkedList extends TestList {
     public TestCursorableLinkedList(String testName) {
@@ -947,6 +947,32 @@ public class TestCursorableLinkedList extends TestList {
         assertTrue(list != list2);
         assertTrue(list2.equals(list));
         assertTrue(list.equals(list2));
+    }
+
+
+    /**
+     *  Ignore the serialization tests for sublists and sub-sublists.
+     *
+     *  @return an array of sublist serialization test names 
+     */
+    public String[] ignoredSimpleTests() {
+        ArrayList list = new ArrayList();
+        String prefix = "TestCursorableLinkedList";
+        String bulk = ".bulkTestSubList";
+        String[] ignored = new String[] {
+          ".testEmptyListSerialization",
+          ".testFullListSerialization", 
+          ".testEmptyListCompatibility", 
+          ".testFullListCompatibility", 
+          ".testSimpleSerialization",
+          ".testCanonicalEmptyCollectionExists",
+          ".testCanonicalFullCollectionExists"
+        };
+        for (int i = 0; i < ignored.length; i++) {
+            list.add(prefix + bulk + ignored[i]);
+            list.add(prefix + bulk + bulk + ignored[i]);
+        }
+        return (String[])list.toArray(new String[0]);
     }
 
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.7 2002/06/18 02:51:12 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/18 02:51:12 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.8 2002/06/21 03:32:06 mas Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/06/21 03:32:06 $
  *
  * ====================================================================
  *
@@ -157,7 +157,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestCollection.java,v 1.7 2002/06/18 02:51:12 mas Exp $
+ * @version $Id: TestCollection.java,v 1.8 2002/06/21 03:32:06 mas Exp $
  */
 public abstract class TestCollection extends TestObject {
 
@@ -1209,37 +1209,6 @@ public abstract class TestCollection extends TestObject {
     }
 
 
-    /**
-     * Try to add the given object to the given Collection.
-     * Returns <tt>true</tt> if the element was added,
-     * <tt>false</tt> otherwise.
-     *
-     * Fails any Throwable except UnsupportedOperationException,
-     * ClassCastException, or IllegalArgumentException is thrown.
-     *
-     * @deprecated explicitly check for allowed exceptions rather than using
-     * this method to assume any of UnsupportedOperationException,
-     * ClassCaseException, or IllegalArgumentException are allowed.  
-     */
-    protected boolean tryToAdd(Collection c,Object obj) {
-        // FIXME: Delete this method after TestList is patched
-        try {
-            return c.add(obj);
-        } catch(UnsupportedOperationException e) {
-            return false;
-        } catch(ClassCastException e) {
-            return false;
-        } catch(IllegalArgumentException e) {
-            return false;
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Collection.add should only throw UnsupportedOperationException, ClassCastException or IllegalArgumentException. Found " + t.toString());
-            return false; // never get here, since fail throws exception
-        }
-    }
-
-
-    
     /**
      *  Returns a list of elements suitable for return by
      *  {@link getFullElements()}.  The array returned by this method
