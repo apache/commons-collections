@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
+import junit.textui.TestRunner;
 
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
@@ -34,7 +35,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for CircularFifoBuffer.
  * 
- * @version $Revision: 1.5 $ $Date: 2004/10/16 22:23:41 $
+ * @version $Revision: 1.6 $ $Date: 2005/01/22 00:47:49 $
  * 
  * @author Stephen Colebourne
  */
@@ -46,6 +47,10 @@ public class TestCircularFifoBuffer extends AbstractTestCollection {
 
     public static Test suite() {
         return BulkTest.makeSuite(TestCircularFifoBuffer.class);
+    }
+
+    public static void main(String args[]) {
+        TestRunner.run(TestCircularFifoBuffer.class);
     }
 
     //-----------------------------------------------------------------------
@@ -198,6 +203,171 @@ public class TestCircularFifoBuffer extends AbstractTestCollection {
         fail();
     }
     
+    public void testRemoveError1() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");
+        
+        assertEquals("[1, 2, 3, 4, 5]", fifo.toString());
+        
+        fifo.remove("3");
+        assertEquals("[1, 2, 4, 5]", fifo.toString());
+        
+        fifo.remove("4");
+        assertEquals("[1, 2, 5]", fifo.toString());
+    }
+
+    public void testRemoveError2() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");
+        fifo.add("6");
+        
+        assertEquals(5, fifo.size());
+        assertEquals("[2, 3, 4, 5, 6]", fifo.toString());
+        
+        fifo.remove("3");
+        assertEquals("[2, 4, 5, 6]", fifo.toString());
+        
+        fifo.remove("4");
+        assertEquals("[2, 5, 6]", fifo.toString());
+    }
+
+    public void testRemoveError3() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");
+        
+        assertEquals("[1, 2, 3, 4, 5]", fifo.toString());
+        
+        fifo.remove("3");
+        assertEquals("[1, 2, 4, 5]", fifo.toString());
+        
+        fifo.add("6");
+        fifo.add("7");
+        assertEquals("[2, 4, 5, 6, 7]", fifo.toString());
+        
+        fifo.remove("4");
+        assertEquals("[2, 5, 6, 7]", fifo.toString());
+    }
+
+    public void testRemoveError4() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");  // end=0
+        fifo.add("6");  // end=1
+        fifo.add("7");  // end=2
+        
+        assertEquals("[3, 4, 5, 6, 7]", fifo.toString());
+        
+        fifo.remove("4");  // remove element in middle of array, after start
+        assertEquals("[3, 5, 6, 7]", fifo.toString());
+    }
+
+    public void testRemoveError5() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");  // end=0
+        fifo.add("6");  // end=1
+        fifo.add("7");  // end=2
+        
+        assertEquals("[3, 4, 5, 6, 7]", fifo.toString());
+        
+        fifo.remove("5");  // remove element at last pos in array
+        assertEquals("[3, 4, 6, 7]", fifo.toString());
+    }
+
+    public void testRemoveError6() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");  // end=0
+        fifo.add("6");  // end=1
+        fifo.add("7");  // end=2
+        
+        assertEquals("[3, 4, 5, 6, 7]", fifo.toString());
+        
+        fifo.remove("6");  // remove element at position zero in array
+        assertEquals("[3, 4, 5, 7]", fifo.toString());
+    }
+
+    public void testRemoveError7() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");  // end=0
+        fifo.add("6");  // end=1
+        fifo.add("7");  // end=2
+        
+        assertEquals("[3, 4, 5, 6, 7]", fifo.toString());
+        
+        fifo.remove("7");  // remove element at position one in array
+        assertEquals("[3, 4, 5, 6]", fifo.toString());
+    }
+
+    public void testRemoveError8() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");  // end=0
+        fifo.add("6");  // end=1
+        fifo.add("7");  // end=2
+        fifo.add("8");  // end=3
+        
+        assertEquals("[4, 5, 6, 7, 8]", fifo.toString());
+        
+        fifo.remove("7");  // remove element at position one in array, need to shift 8
+        assertEquals("[4, 5, 6, 8]", fifo.toString());
+    }
+
+    public void testRemoveError9() throws Exception {
+        // based on bug 33071
+        CircularFifoBuffer fifo = new CircularFifoBuffer(5);
+        fifo.add("1");
+        fifo.add("2");
+        fifo.add("3");
+        fifo.add("4");
+        fifo.add("5");  // end=0
+        fifo.add("6");  // end=1
+        fifo.add("7");  // end=2
+        fifo.add("8");  // end=3
+        
+        assertEquals("[4, 5, 6, 7, 8]", fifo.toString());
+        
+        fifo.remove("8");  // remove element at position two in array
+        assertEquals("[4, 5, 6, 7]", fifo.toString());
+    }
+
+    //-----------------------------------------------------------------------
     public void testRepeatedSerialization() throws Exception {
         // bug 31433
         CircularFifoBuffer b = new CircularFifoBuffer(2);
