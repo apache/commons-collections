@@ -9,16 +9,17 @@ The following decorator types are provided in the package:
 <li>Unmodifiable - ensures the collection cannot be altered
 <li>Predicated - ensures that only elements that are valid according to a predicate can be added
 <li>Typed - ensures that only elements that are of a specific type can be added
-<li>Lazy - creates objects in the collection on demand
-<li>FixedSize - ensures that the size of the collection cannot change
 <li>Blocking - blocks until data available when calling get() on an empty collection
+<li>FixedSize - ensures that the size of the collection cannot change
+<li>Lazy - creates objects in the collection on demand
+<li>Ordered - ensures that insertion order is remembered in a Map/Set
 </ul>
 <p>
 Each collection can be constructed using a static <code>decorate()</code> method on
 the class. They can also be constructed from the <code>XxxUtils</code> class where
 Xxx is the collection type.
 <pre>
-List stringOnlyList = TypedList(new ArrayList(), String.class);
+List stringOnlyList = TypedList.decorate(new ArrayList(), String.class);
 List otherStringOnlyList = ListUtils.typedList(new ArrayList(), String.class);
 </pre>
 </BODY>
