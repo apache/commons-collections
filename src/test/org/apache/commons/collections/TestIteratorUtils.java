@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.34 2002/08/17 22:14:47 scolebourne Exp $
- * $Revision: 1.34 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.1 2002/08/17 22:14:47 scolebourne Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/08/17 22:14:47 $
  *
  * ====================================================================
@@ -58,63 +58,53 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import org.apache.commons.collections.comparators.*;
-import junit.framework.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.34 2002/08/17 22:14:47 scolebourne Exp $
+ *  Tests for IteratorUtils.
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+public class TestIteratorUtils extends BulkTest {
+
+    public TestIteratorUtils(String name) {
+        super(name);
     }
+
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestBinaryHeap.suite());
-        suite.addTest(TestBoundedFifoBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestBufferUtils.suite());
-        suite.addTest(TestSetUtils.suite());
-        suite.addTest(TestListUtils.suite());
-        suite.addTest(TestMapUtils.suite());
-        suite.addTest(TestComparableComparator.suite());
-        suite.addTest(TestComparatorChain.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestReverseComparator.suite());
-	suite.addTest(TestNullComparator.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(TestIteratorUtils.suite());
-        suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
-        return suite;
+        return BulkTest.makeSuite(TestIteratorUtils.class);
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    public void testToList() {
+        List list = new ArrayList();
+        list.add(new Integer(1));
+        list.add("Two");
+        list.add(null);
+        List result = IteratorUtils.toList(list.iterator());
+        assertEquals(list, result);
     }
+
+    public void testToArray() {
+        List list = new ArrayList();
+        list.add(new Integer(1));
+        list.add("Two");
+        list.add(null);
+        Object[] result = IteratorUtils.toArray(list.iterator());
+        assertEquals(list, Arrays.asList(result));
+    }
+
+    public void testToArray2() {
+        List list = new ArrayList();
+        list.add("One");
+        list.add("Two");
+        list.add(null);
+        String[] result = (String[]) IteratorUtils.toArray(list.iterator(), String.class);
+        assertEquals(list, Arrays.asList(result));
+    }
+
 }
