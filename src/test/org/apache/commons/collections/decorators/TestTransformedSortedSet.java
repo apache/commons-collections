@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedSet.java,v 1.3 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedSet.java,v 1.4 2003/10/02 22:48:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,18 +65,18 @@ import java.util.TreeSet;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestSortedSet;
+import org.apache.commons.collections.AbstractTestSortedSet;
 
 /**
  * Extension of {@link TestSortedSet} for exercising the {@link TransformedSortedSet}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/02 22:48:41 $
  * 
  * @author Stephen Colebourne
  */
-public class TestTransformedSortedSet extends TestSortedSet {
+public class TestTransformedSortedSet extends AbstractTestSortedSet {
     
     public TestTransformedSortedSet(String testName) {
         super(testName);

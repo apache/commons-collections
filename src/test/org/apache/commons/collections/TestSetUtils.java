@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.9 2003/09/20 17:02:03 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2003/09/20 17:02:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.10 2003/10/02 22:48:41 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2003/10/02 22:48:41 $
  *
  * ====================================================================
  *
@@ -122,7 +122,7 @@ public class TestSetUtils extends BulkTest {
             }
 
             public BulkTest bulkTestAll() {
-                return new TestSet("") {
+                return new AbstractTestSet("") {
                     public Set makeEmptySet() {
                         return (Set)typedCollection();
                     }

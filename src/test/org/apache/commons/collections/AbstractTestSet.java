@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.6 2003/10/02 22:14:29 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2003/10/02 22:14:29 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSet.java,v 1.1 2003/10/02 22:48:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -67,39 +64,42 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- *  Tests base {@link Set} methods and contracts.<P>
+ * Abstract test class for {@link Set} methods and contracts.
+ * <p>
+ * Since {@link Set} doesn't stipulate much new behavior that isn't already
+ * found in {@link Collection}, this class basically just adds tests for
+ * {@link Set#equals()} and {@link Set#hashCode()} along with an updated
+ * {@link #verify()} that ensures elements do not appear more than once in the
+ * set.
+ * <p>
+ * To use, subclass and override the {@link #makeEmptySet()}
+ * method.  You may have to override other protected methods if your
+ * set is not modifiable, or if your set restricts what kinds of
+ * elements may be added; see {@link TestCollection} for more details.
  *
- *  Since {@link Set} doesn't stipulate much new behavior that isn't already
- *  found in {@link Collection}, this class basically just adds tests for
- *  {@link Set#equals()} and {@link Set#hashCode()} along with an updated
- *  {@link #verify()} that ensures elements do not appear more than once in the
- *  set.<P>
- *
- *  To use, subclass and override the {@link #makeEmptySet()}
- *  method.  You may have to override other protected methods if your
- *  set is not modifiable, or if your set restricts what kinds of
- *  elements may be added; see {@link TestCollection} for more details.<P>
- *
- *  @author Paul Jack
- *  @version $Id: TestSet.java,v 1.6 2003/10/02 22:14:29 scolebourne Exp $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/10/02 22:48:41 $
+ * 
+ * @author Paul Jack
  */
-public abstract class TestSet extends AbstractTestCollection {
+public abstract class AbstractTestSet extends AbstractTestCollection {
 
     /**
-     *  Constructor.
+     * JUnit constructor.
      *
-     *  @param name  name for test
+     * @param name  name for test
      */
-    public TestSet(String name) {
+    public AbstractTestSet(String name) {
         super(name);
     }
 
     //-----------------------------------------------------------------------
     /**
-     *  Provides additional verifications for sets.
+     * Provides additional verifications for sets.
      */
     protected void verify() {
         super.verify();
+        
         assertEquals("Sets should be equal", confirmed, collection);
         assertEquals("Sets should have equal hashCodes", 
                      confirmed.hashCode(), collection.hashCode());
@@ -113,18 +113,18 @@ public abstract class TestSet extends AbstractTestCollection {
 
     //-----------------------------------------------------------------------
     /**
-     *  Returns an empty Set for use in modification testing.
+     * Returns an empty Set for use in modification testing.
      *
-     *  @return a confirmed empty collection
+     * @return a confirmed empty collection
      */
     protected Collection makeConfirmedCollection() {
         return new HashSet();
     }
 
     /**
-     *  Returns a full Set for use in modification testing.
+     * Returns a full Set for use in modification testing.
      *
-     *  @return a confirmed full collection
+     * @return a confirmed full collection
      */
     protected Collection makeConfirmedFullCollection() {
         Collection set = makeConfirmedCollection();
@@ -133,19 +133,19 @@ public abstract class TestSet extends AbstractTestCollection {
     }
 
     /**
-     *  Makes an empty set.  The returned set should have no elements.
+     * Makes an empty set.  The returned set should have no elements.
      *
-     *  @return an empty set
+     * @return an empty set
      */
     protected abstract Set makeEmptySet();
 
     /**
-     *  Makes a full set by first creating an empty set and then adding
-     *  all the elements returned by {@link #getFullElements()}.
+     * Makes a full set by first creating an empty set and then adding
+     * all the elements returned by {@link #getFullElements()}.
      *
-     *  Override if your set does not support the add operation.
+     * Override if your set does not support the add operation.
      *
-     *  @return a full set
+     * @return a full set
      */
     protected Set makeFullSet() {
         Set set = makeEmptySet();
@@ -154,18 +154,18 @@ public abstract class TestSet extends AbstractTestCollection {
     }
 
     /**
-     *  Makes an empty collection by invoking {@link #makeEmptySet()}.  
+     * Makes an empty collection by invoking {@link #makeEmptySet()}.  
      *
-     *  @return an empty collection
+     * @return an empty collection
      */
     protected final Collection makeCollection() {
         return makeEmptySet();
     }
 
     /**
-     *  Makes a full collection by invoking {@link #makeFullSet()}.
+     * Makes a full collection by invoking {@link #makeFullSet()}.
      *
-     *  @return a full collection
+     * @return a full collection
      */
     protected final Collection makeFullCollection() {
         return makeFullSet();
@@ -173,24 +173,22 @@ public abstract class TestSet extends AbstractTestCollection {
 
     //-----------------------------------------------------------------------
     /**
-     *  Return the {@link TestCollection#collection} fixture, but cast as a
-     *  Set.  
+     * Return the {@link TestCollection#collection} fixture, but cast as a Set.  
      */
     protected Set getSet() {
         return (Set)collection;
     }
 
     /**
-     *  Return the {@link TestCollection#confirmed} fixture, but cast as a 
-     *  Set.
-     **/
+     * Return the {@link TestCollection#confirmed} fixture, but cast as a Set.
+     */
     protected Set getConfirmedSet() {
         return (Set)confirmed;
     }
 
     //-----------------------------------------------------------------------
     /**
-     *  Tests {@link Set#equals(Object)}.
+     * Tests {@link Set#equals(Object)}.
      */
     public void testSetEquals() {
         resetEmpty();
@@ -213,9 +211,8 @@ public abstract class TestSet extends AbstractTestCollection {
                    !getSet().equals(set2));
     }
 
-
     /**
-     *  Tests {@link Set#hashCode()}.
+     * Tests {@link Set#hashCode()}.
      */
     public void testSetHashCode() {
         resetEmpty();
@@ -226,6 +223,5 @@ public abstract class TestSet extends AbstractTestCollection {
         assertEquals("Equal sets have equal hashCodes", 
                      getSet().hashCode(), getConfirmedSet().hashCode());
     }
-
 
 }

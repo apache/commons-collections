@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSet.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSet.java,v 1.2 2003/10/02 22:48:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,18 +64,18 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestSet;
+import org.apache.commons.collections.AbstractTestSet;
 
 /**
  * Extension of {@link TestSet} for exercising the
  * {@link ObservedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/02 22:48:40 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservableSet extends TestSet implements ObservedTestHelper.ObservedFactory {
+public class TestObservableSet extends AbstractTestSet implements ObservedTestHelper.ObservedFactory {
     
     public TestObservableSet(String testName) {
         super(testName);
@@ -91,7 +91,7 @@ public class TestObservableSet extends TestSet implements ObservedTestHelper.Obs
     }
 
     //-----------------------------------------------------------------------
-    public Set makeEmptySet() {
+    protected Set makeEmptySet() {
         return ObservableSet.decorate(new HashSet(), ObservedTestHelper.LISTENER);
     }
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.29 2003/10/02 22:14:28 scolebourne Exp $
- * $Revision: 1.29 $
- * $Date: 2003/10/02 22:14:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.30 2003/10/02 22:48:40 scolebourne Exp $
+ * $Revision: 1.30 $
+ * $Date: 2003/10/02 22:48:40 $
  *
  * ====================================================================
  *
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.29 $ $Date: 2003/10/02 22:14:28 $
+ * @version $Revision: 1.30 $ $Date: 2003/10/02 22:48:40 $
  */
 public abstract class TestMap extends AbstractTestObject {
 
@@ -874,7 +874,7 @@ public abstract class TestMap extends AbstractTestObject {
         return new TestMapEntrySet();
     }
 
-    class TestMapEntrySet extends TestSet {
+    class TestMapEntrySet extends AbstractTestSet {
         public TestMapEntrySet() {
             super("");
         }
@@ -942,7 +942,7 @@ public abstract class TestMap extends AbstractTestObject {
         return new TestMapKeySet();
     }
 
-    class TestMapKeySet extends TestSet {
+    class TestMapKeySet extends AbstractTestSet {
         public TestMapKeySet() {
             super("");
         }
