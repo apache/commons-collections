@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/CaseInsensitiveMap.java,v 1.1 2004/01/05 05:26:56 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/CaseInsensitiveMap.java,v 1.2 2004/01/05 05:40:40 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import java.util.Map;
  * equals <code>{"one", "two", null}.</code>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2004/01/05 05:26:56 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/05 05:40:40 $
  *
  * @author Commons-Collections team
  */
@@ -146,7 +146,7 @@ public class CaseInsensitiveMap extends AbstractHashedMap implements Serializabl
      * Overrides convertKey() from {@link AbstractHashedMap} to convert keys to 
      * lower case.
      * <p>
-     * Returns null if key is null or does not implement toString().
+     * Returns null if key is null.
      * 
      * @param key  the key convert
      * @return the converted key
