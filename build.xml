@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.18 2001/07/15 00:17:24 craigmcc Exp $ -->
+<!-- $Id: build.xml,v 1.19 2001/08/17 23:00:26 rwaldhoff Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -153,6 +153,7 @@
                public="true"
                version="true"
                author="true"
+               overview="${source.src.java}/org/apache/commons/collections/package.html"
                splitindex="false"
                nodeprecated="true"
                nodeprecatedlist="true"
@@ -161,6 +162,7 @@
                nohelp="true"
                nonavbar="false"
                serialwarn="false">
+          <group title="Jakarta-commons Collections" packages="org.apache.commons.collections"/>
           <link href="http://java.sun.com/products/jdk/1.3/docs/api"/>
       </javadoc>
       <delete dir="${workdir}"/>
