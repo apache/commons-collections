@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.3 2003/01/10 13:27:55 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.4 2003/01/10 13:28:34 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,17 +58,13 @@
 
 package org.apache.commons.collections.primitives;
 
-import java.util.List;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.TestList;
-import org.apache.commons.collections.primitives.adapters.IntListList;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/01/10 13:27:55 $
+ * @version $Revision: 1.4 $ $Date: 2003/01/10 13:28:34 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedShortList extends TestIntList {
