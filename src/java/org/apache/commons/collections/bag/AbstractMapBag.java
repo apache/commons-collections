@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.11 2004/01/08 22:26:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.12 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
- * @version $Revision: 1.11 $ $Date: 2004/01/08 22:26:08 $
+ * @version $Revision: 1.12 $ $Date: 2004/01/08 22:37:30 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -538,7 +538,7 @@ public abstract class AbstractMapBag implements Bag {
     //-----------------------------------------------------------------------
     /**
      * Compares this Bag to another.
-     * This Bag equals another Bag if it contains the same number of occurances of
+     * This Bag equals another Bag if it contains the same number of occurrences of
      * the same elements.
      * 
      * @param object  the Bag to compare to
@@ -565,11 +565,11 @@ public abstract class AbstractMapBag implements Bag {
     }
 
     /**
-     * Gets a hash code for the Bag compatable with the definition of equals.
+     * Gets a hash code for the Bag compatible with the definition of equals.
      * The hash code is defined as the sum total of a hash code for each element.
      * The per element hash code is defined as
      * <code>(e==null ? 0 : e.hashCode()) ^ noOccurances)</code>.
-     * This hash code is compatable with the Set interface.
+     * This hash code is compatible with the Set interface.
      * 
      * @return the hash code of the Bag
      */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.10 2004/01/05 22:04:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.11 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -98,7 +98,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/01/05 22:04:19 $
+ * @version $Revision: 1.11 $ $Date: 2004/01/08 22:37:30 $
  *
  * @author Stephen Colebourne
  */
@@ -1041,7 +1041,7 @@ public class Flat3Map implements IterableMap {
     /**
      * Gets the standard Map hashCode.
      * 
-     * @return the hashcode defined in the Map interface
+     * @return the hash code defined in the Map interface
      */
     public int hashCode() {
         if (delegateMap != null) {

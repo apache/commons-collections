@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.8 2004/01/05 22:15:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.9 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.KeyValue;
  * {@link #remove(Object) remove} and {@link #containsKey(Object) containsKey}
  * operations, assuming (approximate) uniform hashing and
  * that the number of entries does not exceed the number of buckets.  If the
- * number of entries exceeds the number of buckets or if the hashcodes of the
+ * number of entries exceeds the number of buckets or if the hash codes of the
  * objects are not uniformly distributed, these operations have a worst case
  * scenario that is proportional to the number of elements in the map
  * (<i>O(n)</i>).<p>
@@ -132,7 +132,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.8 $ $Date: 2004/01/05 22:15:14 $
+ * @version $Revision: 1.9 $ $Date: 2004/01/08 22:37:30 $
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich
@@ -461,9 +461,9 @@ public final class StaticBucketMap implements Map {
     }
 
     /**
-     * Gets the hashcode, as per the Map specification.
+     * Gets the hash code, as per the Map specification.
      * 
-     * @return the hashcode
+     * @return the hash code
      */
     public int hashCode() {
         int hashCode = 0;

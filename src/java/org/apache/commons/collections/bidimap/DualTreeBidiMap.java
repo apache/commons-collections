@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.9 2004/01/05 21:46:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.10 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * not store each object twice, which can save on memory use.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.9 2004/01/05 21:46:49 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.10 2004/01/08 22:37:30 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -96,7 +96,7 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
 public class DualTreeBidiMap
         extends AbstractDualBidiMap implements SortedBidiMap, Serializable {
 
-    /** Ensure serialization compatability */
+    /** Ensure serialization compatibility */
     private static final long serialVersionUID = 721969328361809L;
     /** The comparator to use */
     protected final Comparator comparator;

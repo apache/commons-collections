@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/ChainedClosure.java,v 1.1 2003/11/23 17:01:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/ChainedClosure.java,v 1.2 2004/01/08 22:37:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,10 +64,10 @@ import java.util.Iterator;
 import org.apache.commons.collections.Closure;
 
 /**
- * Closure implementation that chains the specifed closures together.
+ * Closure implementation that chains the specified closures together.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 17:01:35 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/08 22:37:29 $
  *
  * @author Stephen Colebourne
  */

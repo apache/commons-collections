@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/LazyList.java,v 1.1 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/LazyList.java,v 1.2 2004/01/08 22:37:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -89,7 +89,7 @@ import org.apache.commons.collections.Factory;
  * and third element are all set to <code>null</code>.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/08 22:37:31 $
  * 
  * @author Stephen Colebourne
  * @author Arron Bates
@@ -133,7 +133,7 @@ public class LazyList extends AbstractListDecorator {
      * <p>
      * If the requested index is greater than the current size, the list will 
      * grow to the new size and a new object will be returned from the factory.
-     * Indexes inbetween the old size and the requested size are left with a 
+     * Indexes in-between the old size and the requested size are left with a 
      * placeholder that is replaced with a factory object when requested.
      * 
      * @param index  the index to retrieve

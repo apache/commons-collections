@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.8 2003/12/01 22:49:00 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.9 2004/01/08 22:37:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.ResettableIterator;
  * the iterator back to the start if required.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.8 $ $Date: 2003/12/01 22:49:00 $
+ * @version $Revision: 1.9 $ $Date: 2004/01/08 22:37:29 $
  *
  * @author James Strachan
  * @author Mauricio S. Moura
@@ -164,7 +164,7 @@ public class ArrayIterator implements ResettableIterator {
      * Checks whether the index is valid or not.
      * 
      * @param bound  the index to check
-     * @param type  the index type (for error messges)
+     * @param type  the index type (for error messages)
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     protected void checkBound(final int bound, final String type ) {

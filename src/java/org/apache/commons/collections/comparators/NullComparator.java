@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/NullComparator.java,v 1.9 2003/10/09 20:44:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/NullComparator.java,v 1.10 2004/01/08 22:37:29 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,7 +64,7 @@ import java.util.Comparator;
  * other objects.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.9 $ $Date: 2003/10/09 20:44:32 $ 
+ * @version $Revision: 1.10 $ $Date: 2004/01/08 22:37:29 $ 
  *
  * @author Michael A. Smith
  */
@@ -125,7 +125,7 @@ public class NullComparator implements Comparator, Serializable {
     }
     
     /**
-     *  Cosntruct an instance that sorts <code>null</code> higher or lower than
+     *  Construct an instance that sorts <code>null</code> higher or lower than
      *  any non-<code>null</code> object it is compared with.  When comparing
      *  two non-<code>null</code> objects, the specified {@link Comparator} is
      *  used.

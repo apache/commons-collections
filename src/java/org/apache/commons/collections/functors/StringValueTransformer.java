@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/StringValueTransformer.java,v 1.1 2003/11/23 23:25:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/StringValueTransformer.java,v 1.2 2004/01/08 22:37:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,10 +62,10 @@ import java.io.Serializable;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Transformer implementation that returns the <code>String.valueof</code>.
+ * Transformer implementation that returns the <code>String.valueOf</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 23:25:33 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/08 22:37:29 $
  *
  * @author Stephen Colebourne
  */

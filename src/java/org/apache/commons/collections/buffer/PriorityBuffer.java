@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/PriorityBuffer.java,v 1.1 2004/01/02 02:14:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/PriorityBuffer.java,v 1.2 2004/01/08 22:37:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -92,7 +92,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * </pre>
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
- * @version $Revision: 1.1 $ $Date: 2004/01/02 02:14:29 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/08 22:37:31 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
@@ -341,7 +341,7 @@ public class PriorityBuffer extends AbstractCollection implements Buffer {
     /**
      * Percolates element down heap from the position given by the index.
      * <p>
-     * Assumes it is a mimimum heap.
+     * Assumes it is a minimum heap.
      *
      * @param index the index for the element
      */

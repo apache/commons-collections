@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.9 2004/01/08 22:26:07 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.10 2004/01/08 22:37:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
 /**
  * An IteratorChain is an Iterator that wraps a number of Iterators.
  * <p>
- * This class makes mutiple iterators look like one to the caller
+ * This class makes multiple iterators look like one to the caller
  * When any method from the Iterator interface is called, the IteratorChain
  * will delegate to a single underlying Iterator. The IteratorChain will
  * invoke the Iterators in sequence until all Iterators are exhausted.
@@ -85,7 +85,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * iterators. In this case the class will function as an empty iterator.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.9 $ $Date: 2004/01/08 22:26:07 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/08 22:37:29 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne

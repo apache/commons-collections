@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractLinkedMap.java,v 1.6 2004/01/05 22:04:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractLinkedMap.java,v 1.7 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -98,7 +98,7 @@ import org.apache.commons.collections.ResettableIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/01/05 22:04:19 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/08 22:37:30 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -120,10 +120,10 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * 
      * @param initialCapacity  the initial capacity, must be a power of two
      * @param loadFactor  the load factor, must be > 0.0f and generally < 1.0f
-     * @param threshhold  the threshold, must be sensible
+     * @param threshold  the threshold, must be sensible
      */
-    protected AbstractLinkedMap(int initialCapacity, float loadFactor, int threshhold) {
-        super(initialCapacity, loadFactor, threshhold);
+    protected AbstractLinkedMap(int initialCapacity, float loadFactor, int threshold) {
+        super(initialCapacity, loadFactor, threshold);
     }
 
     /**
@@ -341,7 +341,6 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * A MapIterator returns the keys in the map. It also provides convenient
      * methods to get the key and value, and set the value.
      * It avoids the need to create an entrySet/keySet/values object.
-     * It also avoids creating the Mep Entry object.
      * 
      * @return the map iterator
      */
@@ -359,7 +358,6 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * A MapIterator returns the keys in the map. It also provides convenient
      * methods to get the key and value, and set the value.
      * It avoids the need to create an entrySet/keySet/values object.
-     * It also avoids creating the Mep Entry object.
      * 
      * @return the map iterator
      */

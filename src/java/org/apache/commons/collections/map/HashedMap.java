@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.12 2004/01/05 22:04:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.13 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,12 +67,12 @@ import java.util.Map;
  * A <code>Map</code> implementation that is a general purpose alternative
  * to <code>HashMap</code>.
  * <p>
- * This implementation improves on the JDK1.4 HahMap by adding the 
+ * This implementation improves on the JDK1.4 HashMap by adding the 
  * {@link org.apache.commons.collections.MapIterator MapIterator}
  * functionality and many methods for subclassing.
  * <p>
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2004/01/05 22:04:19 $
+ * @version $Revision: 1.13 $ $Date: 2004/01/08 22:37:30 $
  *
  * @author Stephen Colebourne
  */

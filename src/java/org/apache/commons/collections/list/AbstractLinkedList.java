@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.5 2003/12/29 01:04:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.6 2004/01/08 22:37:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.OrderedIterator;
  * is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/29 01:04:44 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/08 22:37:31 $
  *
  * @author Rich Dougherty
  * @author Phil Steitz
@@ -701,7 +701,7 @@ public abstract class AbstractLinkedList implements List {
          * #previous()}. Set to <code>null</code> if {@link #next()} or {@link
          * #previous()} haven't been called, or if the node has been removed
          * with {@link #remove()} or a new node added with {@link #add(Object)}.
-         * Should be accesed through {@link #getLastNodeReturned()} to enforce
+         * Should be accessed through {@link #getLastNodeReturned()} to enforce
          * this behaviour.
          */
         protected Node current;

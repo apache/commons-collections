@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/CompositeMap.java,v 1.4 2004/01/05 22:04:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/CompositeMap.java,v 1.5 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.set.CompositeSet;
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/01/05 22:04:19 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/08 22:37:30 $
  *
  * @author Brian McCallister
  */
@@ -519,7 +519,7 @@ public class CompositeMap implements Map {
          * Called when adding a new Composited Map results in a
          * key collision.
          *
-         * @param composite  the CompositeMap withthe collision
+         * @param composite  the CompositeMap with the collision
          * @param existing  the Map already in the composite which contains the
          *        offending key
          * @param added  the Map being added

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.8 2004/01/05 22:04:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.9 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/01/05 22:04:19 $
+ * @version $Revision: 1.9 $ $Date: 2004/01/08 22:37:30 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -142,13 +142,13 @@ public class AbstractHashedMap implements IterableMap {
      * 
      * @param initialCapacity  the initial capacity, must be a power of two
      * @param loadFactor  the load factor, must be &gt; 0.0f and generally &lt; 1.0f
-     * @param threshhold  the threshold, must be sensible
+     * @param threshold  the threshold, must be sensible
      */
-    protected AbstractHashedMap(int initialCapacity, float loadFactor, int threshhold) {
+    protected AbstractHashedMap(int initialCapacity, float loadFactor, int threshold) {
         super();
         this.loadFactor = loadFactor;
         this.data = new HashEntry[initialCapacity];
-        this.threshold = threshhold;
+        this.threshold = threshold;
         init();
     }
 
@@ -693,7 +693,7 @@ public class AbstractHashedMap implements IterableMap {
      * A MapIterator returns the keys in the map. It also provides convenient
      * methods to get the key and value, and set the value.
      * It avoids the need to create an entrySet/keySet/values object.
-     * It also avoids creating the Mep Entry object.
+     * It also avoids creating the Map.Entry object.
      * 
      * @return the map iterator
      */
@@ -1247,7 +1247,7 @@ public class AbstractHashedMap implements IterableMap {
     /**
      * Gets the standard Map hashCode.
      * 
-     * @return the hashcode defined in the Map interface
+     * @return the hash code defined in the Map interface
      */
     public int hashCode() {
         int total = 0;

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualHashBidiMap.java,v 1.3 2004/01/05 21:46:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualHashBidiMap.java,v 1.4 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.BidiMap;
  * Implementation of <code>BidiMap</code> that uses two <code>HashMap</code> instances.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualHashBidiMap.java,v 1.3 2004/01/05 21:46:49 scolebourne Exp $
+ * @version $Id: DualHashBidiMap.java,v 1.4 2004/01/08 22:37:30 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -78,7 +78,7 @@ import org.apache.commons.collections.BidiMap;
 public class DualHashBidiMap
         extends AbstractDualBidiMap implements Serializable {
 
-    /** Ensure serialization compatability */
+    /** Ensure serialization compatibility */
     private static final long serialVersionUID = 721969328361808L;
 
     /**

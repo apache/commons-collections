@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/HashBag.java,v 1.5 2004/01/05 21:54:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/HashBag.java,v 1.6 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,13 +71,13 @@ import org.apache.commons.collections.Bag;
  * data storage. This is the standard implementation of a bag.
  * <p>
  * A <code>Bag</code> stores each object in the collection together with a
- * count of occurances. Extra methods on the interface allow multiple copies
+ * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once. It is important to read the
  * interface javadoc carefully as several methods violate the
  * <code>Collection</code> interface specification.
  *
  * @since Commons Collections 3.0 (previously in main package v2.0)
- * @version $Revision: 1.5 $ $Date: 2004/01/05 21:54:06 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/08 22:37:30 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne

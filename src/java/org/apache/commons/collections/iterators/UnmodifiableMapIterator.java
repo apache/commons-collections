@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableMapIterator.java,v 1.4 2003/12/03 12:27:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableMapIterator.java,v 1.5 2004/01/08 22:37:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import org.apache.commons.collections.Unmodifiable;
  * Decorates a map iterator such that it cannot be modified.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/03 12:27:37 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/08 22:37:29 $
  * 
  * @author Stephen Colebourne
  */
@@ -77,7 +77,7 @@ public final class UnmodifiableMapIterator implements MapIterator, Unmodifiable 
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
-     * @param iterator  the iterator to decoarate
+     * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
     public static MapIterator decorate(MapIterator iterator) {
@@ -94,7 +94,7 @@ public final class UnmodifiableMapIterator implements MapIterator, Unmodifiable 
     /**
      * Constructor.
      *
-     * @param iterator  the iterator to decoarate
+     * @param iterator  the iterator to decorate
      */
     private UnmodifiableMapIterator(MapIterator iterator) {
         super();

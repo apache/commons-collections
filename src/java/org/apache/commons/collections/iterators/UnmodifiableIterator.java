@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableIterator.java,v 1.2 2003/12/03 12:27:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableIterator.java,v 1.3 2004/01/08 22:37:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import org.apache.commons.collections.Unmodifiable;
  * Decorates an iterator such that it cannot be modified.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/03 12:27:37 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/08 22:37:29 $
  * 
  * @author Stephen Colebourne
  */
@@ -80,7 +80,7 @@ public final class UnmodifiableIterator implements Iterator, Unmodifiable {
      * <p>
      * If the iterator is already unmodifiable it is returned directly.
      *
-     * @param iterator  the iterator to decoarate
+     * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
     public static Iterator decorate(Iterator iterator) {
@@ -97,7 +97,7 @@ public final class UnmodifiableIterator implements Iterator, Unmodifiable {
     /**
      * Constructor.
      *
-     * @param iterator  the iterator to decoarate
+     * @param iterator  the iterator to decorate
      */
     private UnmodifiableIterator(Iterator iterator) {
         super();

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/DefaultKeyValue.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/DefaultKeyValue.java,v 1.2 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import org.apache.commons.collections.KeyValue;
  * itself as a key or value.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/08 22:37:30 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
@@ -189,7 +189,7 @@ public class DefaultKeyValue extends AbstractKeyValue {
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()},
      * however subclasses may override this.
      * 
-     * @return a suitable hashcode
+     * @return a suitable hash code
      */
     public int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^

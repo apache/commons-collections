@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/MultiKey.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/MultiKey.java,v 1.2 2004/01/08 22:37:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.util.Arrays;
  * can be used instead by creating an instance passing in the key and locale.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/08 22:37:30 $
  * 
  * @author Howard Lewis Ship
  * @author Stephen Colebourne
@@ -203,14 +203,14 @@ public class MultiKey implements Serializable {
     }
 
     /**
-     * Gets the combined hashcode that is computed from all the keys.
+     * Gets the combined hash code that is computed from all the keys.
      * <p>
      * This value is computed once and then cached, so elements should not
      * change their hash codes once created (note that this is the same 
      * constraint that would be used if the individual keys elements were
      * themselves {@link java.util.Map Map} keys.
      * 
-     * @return the hashcode
+     * @return the hash code
      */
     public int hashCode() {
         return hashCode;

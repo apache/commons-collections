@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/ChainedTransformer.java,v 1.2 2004/01/02 01:36:51 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/ChainedTransformer.java,v 1.3 2004/01/08 22:37:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,10 +64,10 @@ import java.util.Iterator;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Transformer implementation that chains the specifed closures together.
+ * Transformer implementation that chains the specified closures together.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2004/01/02 01:36:51 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/08 22:37:29 $
  *
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/CursorableLinkedList.java,v 1.2 2003/12/29 00:38:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/CursorableLinkedList.java,v 1.3 2004/01/08 22:37:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import java.util.ListIterator;
  * with changes to the iterator. Note that the {@link #iterator()} method and
  * sublists  do <b>not</b> provide this cursor behaviour.
  * <p>
- * The <code>Cursor</code> class is provided partly for backwards compatability
+ * The <code>Cursor</code> class is provided partly for backwards compatibility
  * and partly because it allows the cursor to be directly closed. Closing the
  * cursor is optional because references are held via a <code>WeakReference</code>.
  * For most purposes, simply modify the iterator and list at will, and then let
@@ -94,7 +94,7 @@ import java.util.ListIterator;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.2 $ $Date: 2003/12/29 00:38:08 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/08 22:37:31 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki
@@ -103,7 +103,7 @@ import java.util.ListIterator;
  */
 public class CursorableLinkedList extends AbstractLinkedList implements Serializable {
 
-    /** Ensure serialization compatability */
+    /** Ensure serialization compatibility */
     private static final long serialVersionUID = 8836393098519411393L;
 
     /** A list of the cursor currently open on this list */
