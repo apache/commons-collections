@@ -25,7 +25,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Tests for ReferenceMap. 
  * 
- * @version $Revision: 1.5 $ $Date: 2004/04/09 22:18:17 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/27 21:35:23 $
  *
  * @author Paul Jack
  */
@@ -184,7 +184,7 @@ public class TestReferenceMap extends AbstractTestIterableMap {
 
 
     public String getCompatibilityVersion() {
-        return "2.1";  // previously in main package
+        return "3.1";
     }
 
     /** Tests whether purge values setting works */

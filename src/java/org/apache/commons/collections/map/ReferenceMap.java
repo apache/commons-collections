@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * A <code>Map</code> implementation that allows mappings to be
@@ -35,29 +39,37 @@ package org.apache.commons.collections.map;
  * weak values, or any other combination. The default constructor uses
  * hard keys and soft values, providing a memory-sensitive cache.
  * <p>
+ * This map is similar to
+ * {@link org.apache.commons.collections.map.ReferenceIdentityMap ReferenceIdentityMap}.
+ * It differs in that keys and values in this class are compared using <code>equals()</code>.
+ * <p>
  * This {@link Map} implementation does <i>not</i> allow null elements.
  * Attempting to add a null key or value to the map will raise a <code>NullPointerException</code>.
  * <p>
  * This implementation is not synchronized.
  * You can use {@link java.util.Collections#synchronizedMap} to 
  * provide synchronized access to a <code>ReferenceMap</code>.
+ * Remember that synchronization will not stop the garbage collecter removing entries.
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * <p>
- * NOTE: As from Commons Collections 3.1 this map extends <code>AbstractHashedMap</code>
+ * NOTE: As from Commons Collections 3.1 this map extends <code>AbstractReferenceMap</code>
  * (previously it extended AbstractMap). As a result, the implementation is now
  * extensible and provides a <code>MapIterator</code>.
  *
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.12 $ $Date: 2004/04/09 22:18:18 $
+ * @version $Revision: 1.13 $ $Date: 2004/04/27 21:35:23 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public class ReferenceMap extends AbstractReferenceMap {
+public class ReferenceMap extends AbstractReferenceMap implements Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 1555089888138299607L;
 
     /**
      * Constructs a new <code>ReferenceMap</code> that will
@@ -128,6 +140,23 @@ public class ReferenceMap extends AbstractReferenceMap {
     public ReferenceMap(int keyType, int valueType, int capacity,
                         float loadFactor, boolean purgeValues) {
         super(keyType, valueType, capacity, loadFactor, purgeValues);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
     }
 
 }
