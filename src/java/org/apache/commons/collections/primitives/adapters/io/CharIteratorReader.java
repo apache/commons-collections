@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestAll.java,v 1.3 2003/04/16 19:45:13 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/CharIteratorReader.java,v 1.1 2003/04/16 19:45:13 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,29 +57,42 @@
 
 package org.apache.commons.collections.primitives.adapters.io;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.Reader;
+
+import org.apache.commons.collections.primitives.CharIterator;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/16 19:45:13 $
+ * Adapts a {@link CharIterator} to the {@link Reader} interface.
+ * 
+ * @version $Revision: 1.1 $ $Date: 2003/04/16 19:45:13 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+public class CharIteratorReader extends Reader {
+
+    public CharIteratorReader(CharIterator in) {
+        this.iterator= in;
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestInputStreamByteIterator.suite());
-        suite.addTest(TestByteIteratorInputStream.suite());
-
-        suite.addTest(TestReaderCharIterator.suite());
-        suite.addTest(TestCharIteratorReader.suite());
-
-        return suite;
+    public int read(char[] buf, int off, int len) {
+        if(iterator.hasNext()) {
+            int count = 0;
+            while(iterator.hasNext() && count < len) {
+                buf[off + count] = iterator.next();
+                count++;
+            }
+            return count;
+        } else {
+            return -1;
+        }
     }
+    
+    public void close() {        
+    }
+
+    public static Reader adapt(CharIterator in) {
+        return null == in ? null : new CharIteratorReader(in);
+    }
+    
+    private CharIterator iterator = null;
+
 }
-

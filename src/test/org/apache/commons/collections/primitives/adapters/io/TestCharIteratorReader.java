@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestAll.java,v 1.3 2003/04/16 19:45:13 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestCharIteratorReader.java,v 1.1 2003/04/16 19:45:13 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,29 +57,66 @@
 
 package org.apache.commons.collections.primitives.adapters.io;
 
+import java.io.Reader;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.ArrayCharList;
+import org.apache.commons.collections.primitives.CharList;
+
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/16 19:45:13 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/16 19:45:13 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestCharIteratorReader extends TestCase {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestCharIteratorReader(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestInputStreamByteIterator.suite());
-        suite.addTest(TestByteIteratorInputStream.suite());
-
-        suite.addTest(TestReaderCharIterator.suite());
-        suite.addTest(TestCharIteratorReader.suite());
-
-        return suite;
+        return new TestSuite(TestCharIteratorReader.class);
     }
-}
 
+    // ------------------------------------------------------------------------
+    
+
+
+    // ------------------------------------------------------------------------
+    
+    public void testReadNonEmpty() throws Exception {
+        String str = "The quick brown fox jumped over the lazy dogs.";
+        CharList list = new ArrayCharList();
+        for(int i = 0; i < str.length(); i++) {
+            list.add(str.charAt(i));
+        }
+       
+        Reader in = new CharIteratorReader(list.iterator());
+        for(int i = 0; i < str.length(); i++) {
+            assertEquals(str.charAt(i),in.read());
+        }
+        assertEquals(-1,in.read());
+        assertEquals(-1,in.read());
+    }
+
+    public void testReadEmpty() throws Exception {
+        CharList list = new ArrayCharList();
+        Reader in = new CharIteratorReader(list.iterator());
+        assertEquals(-1,in.read());
+        assertEquals(-1,in.read());
+    }
+
+    public void testAdaptNull() {
+        assertNull(CharIteratorReader.adapt(null));
+    }
+
+    public void testAdaptNonNull() {
+        assertNotNull(CharIteratorReader.adapt(new ArrayCharList().iterator()));
+    }
+    
+}

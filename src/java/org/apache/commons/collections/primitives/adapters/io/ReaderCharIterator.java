@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestAll.java,v 1.3 2003/04/16 19:45:13 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/ReaderCharIterator.java,v 1.1 2003/04/16 19:45:13 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,29 +57,70 @@
 
 package org.apache.commons.collections.primitives.adapters.io;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.NoSuchElementException;
+
+import org.apache.commons.collections.primitives.CharIterator;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/16 19:45:13 $
+ * Adapts a {@link Reader} to the {@link CharIterator} interface.
+ * 
+ * @version $Revision: 1.1 $ $Date: 2003/04/16 19:45:13 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+public class ReaderCharIterator implements CharIterator {
+
+    public ReaderCharIterator(Reader in) {
+        this.reader = in;
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestInputStreamByteIterator.suite());
-        suite.addTest(TestByteIteratorInputStream.suite());
-
-        suite.addTest(TestReaderCharIterator.suite());
-        suite.addTest(TestCharIteratorReader.suite());
-
-        return suite;
+    public static CharIterator adapt(Reader in) {
+        return null == in ? null : new ReaderCharIterator(in);
     }
+    
+    public boolean hasNext() {
+        ensureNextAvailable();
+        return (-1 != next);
+    }
+
+    public char next() {
+        if(!hasNext()) {
+            throw new NoSuchElementException("No next element");
+        } else {
+            nextAvailable = false;
+            return (char)next;
+        }
+    }
+    
+    /**
+     * Not supported.
+     * @throws UnsupportedOperationException
+     */
+    public void remove() throws UnsupportedOperationException {
+        throw new UnsupportedOperationException("remove() is not supported here");
+    }
+
+    private void ensureNextAvailable() {
+        if(!nextAvailable) {
+            readNext();
+        }
+    }
+
+    private void readNext() {
+        try {
+            next = reader.read();
+            nextAvailable = true;
+        } catch(IOException e) {
+            // TODO: Fix me using tunneled exception, see 
+            // http://radio.weblogs.com/0122027/2003/04/01.html#a7
+            // for example            
+            throw new RuntimeException(e.toString());
+        }
+    }
+    
+    private Reader reader = null;
+    private boolean nextAvailable = false;
+    private int next;
+
 }
-

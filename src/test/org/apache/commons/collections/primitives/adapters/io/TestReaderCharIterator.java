@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestAll.java,v 1.3 2003/04/16 19:45:13 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestReaderCharIterator.java,v 1.1 2003/04/16 19:45:13 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,29 +57,84 @@
 
 package org.apache.commons.collections.primitives.adapters.io;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.CharIterator;
+import org.apache.commons.collections.primitives.TestCharIterator;
+
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/16 19:45:13 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/16 19:45:13 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestReaderCharIterator extends TestCharIterator {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestReaderCharIterator(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
+        return new TestSuite(TestReaderCharIterator.class);
+    }
+
+    // ------------------------------------------------------------------------
+    
+    public boolean supportsRemove() {
+        return false;
+    }
+
+    protected CharIterator makeEmptyCharIterator() {
+        return new ReaderCharIterator(new StringReader(""));
+    }
+
+    protected CharIterator makeFullCharIterator() {
+        return new ReaderCharIterator(new StringReader(new String(getFullElements())));
+    }
+
+    protected char[] getFullElements() {
+        return "The quick brown fox jumped over the lazy dogs.".toCharArray();
+    }
+
+
+    // ------------------------------------------------------------------------
+    
+    public void testErrorThrowingReader() {
+        Reader errReader = new Reader() {
+            public int read(char[] buf, int off, int len) throws IOException {
+                throw new IOException();
+            }
+            
+            public void close() throws IOException {
+            }
+        };
         
-        suite.addTest(TestInputStreamByteIterator.suite());
-        suite.addTest(TestByteIteratorInputStream.suite());
+        CharIterator iter = new ReaderCharIterator(errReader);
+        try {
+            iter.hasNext();
+            fail("Expected RuntimeException");
+        } catch(RuntimeException e) {
+            // expected
+        } 
+        try {
+            iter.next();
+            fail("Expected RuntimeException");
+        } catch(RuntimeException e) {
+            // expected
+        } 
+    }
+    
+    public void testAdaptNull() {
+        assertNull(ReaderCharIterator.adapt(null));
+    }
 
-        suite.addTest(TestReaderCharIterator.suite());
-        suite.addTest(TestCharIteratorReader.suite());
-
-        return suite;
+    public void testAdaptNonNull() {
+        assertNotNull(ReaderCharIterator.adapt(new StringReader("")));
     }
 }
-
