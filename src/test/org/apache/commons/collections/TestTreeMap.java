@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.3 2002/02/22 02:18:50 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/22 02:18:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.4 2002/02/26 00:21:46 morgand Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/26 00:21:46 $
  *
  * ====================================================================
  *
@@ -69,18 +69,13 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestTreeMap.java,v 1.3 2002/02/22 02:18:50 mas Exp $
+ * @version $Id: TestTreeMap.java,v 1.4 2002/02/26 00:21:46 morgand Exp $
  */
-public class TestTreeMap extends TestMap
+public abstract class TestTreeMap extends TestMap
 {
     public TestTreeMap(String testName)
     {
         super(testName);
-    }
-
-    public static Test suite()
-    {
-        return new TestSuite(TestTreeMap.class);
     }
 
     public static void main(String args[])

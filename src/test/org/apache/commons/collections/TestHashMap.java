@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestHashMap.java,v 1.4 2002/02/22 22:01:48 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/22 22:01:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestHashMap.java,v 1.5 2002/02/26 00:21:46 morgand Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/02/26 00:21:46 $
  *
  * ====================================================================
  *
@@ -69,18 +69,13 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestHashMap.java,v 1.4 2002/02/22 22:01:48 morgand Exp $
+ * @version $Id: TestHashMap.java,v 1.5 2002/02/26 00:21:46 morgand Exp $
  */
-public class TestHashMap extends TestMap
+public abstract class TestHashMap extends TestMap
 {
     public TestHashMap(String testName)
     {
         super(testName);
-    }
-
-    public static Test suite()
-    {
-        return new TestSuite(TestHashMap.class);
     }
 
     public static void main(String args[])
@@ -115,20 +110,4 @@ public class TestHashMap extends TestMap
         assertEquals("Next Item is 'First Item'", map.get("second"), "Second Item");
     }
 
-
-    /**
-     * We don't need to test compatibility for JVM collections.  Override in 
-     * subclasses.
-     */
-    public void testEmptyMapCompatibility() {
-
-    }
-
-    /**
-     * We don't need to test compatibility for JVM collections.  Override in 
-     * subclasses.
-     */
-    public void testFullMapCompatibility() {
-
-    }
 }
