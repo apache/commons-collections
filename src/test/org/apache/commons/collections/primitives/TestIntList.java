@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.5 2003/02/26 19:17:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.6 2003/02/28 00:17:53 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.adapters.IntListList;
 import org.apache.commons.collections.primitives.adapters.ListIntList;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/02/26 19:17:23 $
+ * @version $Revision: 1.6 $ $Date: 2003/02/28 00:17:53 $
  * @author Rodney Waldhoff
  */
 public abstract class TestIntList extends TestList {
@@ -173,6 +173,12 @@ public abstract class TestIntList extends TestList {
         two.add(1); two.add(2); two.add(3); two.add(5); two.add(8);
         assertEquals("Larger non empty lists are equal",one,two);
         assertEquals("Equals is symmetric on larger non empty list",two,one);
+
+        one.add(9);
+        two.add(10);
+        assertTrue(!one.equals(two));
+        assertTrue(!two.equals(one));
+
     }
 
     public void testIntSubListEquals() {
@@ -290,5 +296,18 @@ public abstract class TestIntList extends TestList {
         assertEquals(deser,list);
     }
 
+    public void testIntListSerializeDeserializeThenCompare() throws Exception {
+        IntList list = makeFullIntList();
+        if(list instanceof Serializable) {
+            byte[] ser = writeExternalFormToBytes((Serializable)list);
+            IntList deser = (IntList)(readExternalFormFromBytes(ser));
+            assertEquals("obj != deserialize(serialize(obj))",list,deser);
+        }
+    }
+
+    public void testSubListsAreNotSerializable() throws Exception {
+        IntList list = makeFullIntList().subList(2,3);
+        assertTrue( ! (list instanceof Serializable) );
+    }
 
 }

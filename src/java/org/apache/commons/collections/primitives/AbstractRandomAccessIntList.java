@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.11 2003/02/26 19:17:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.12 2003/02/28 00:17:52 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,7 +57,6 @@
 
 package org.apache.commons.collections.primitives;
 
-import java.io.Serializable;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
@@ -75,11 +74,11 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.11 $ $Date: 2003/02/26 19:17:22 $
+ * @version $Revision: 1.12 $ $Date: 2003/02/28 00:17:52 $
  * 
  * @author Rodney Waldhoff 
  */
-public abstract class AbstractRandomAccessIntList extends AbstractIntCollection implements IntList, Serializable {
+public abstract class AbstractRandomAccessIntList extends AbstractIntCollection implements IntList {
 
     // constructors
     //-------------------------------------------------------------------------
@@ -251,7 +250,7 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
     // inner classes
     //-------------------------------------------------------------------------
     
-    private static class ComodChecker implements Serializable {
+    private static class ComodChecker {
         ComodChecker(AbstractRandomAccessIntList source) {
             _source = source;  
             resyncModCount();             
@@ -368,7 +367,7 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
         private int _lastReturnedIndex = -1;        
     }   
 
-    protected static class RandomAccessIntSubList extends AbstractRandomAccessIntList implements IntList, Serializable {
+    protected static class RandomAccessIntSubList extends AbstractRandomAccessIntList implements IntList {
         RandomAccessIntSubList(AbstractRandomAccessIntList list, int fromIndex, int toIndex) {
             if(fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
                 throw new IndexOutOfBoundsException();

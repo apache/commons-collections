@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.8 2003/02/26 19:17:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.9 2003/02/28 00:17:53 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.8 $ $Date: 2003/02/26 19:17:23 $
+ * @version $Revision: 1.9 $ $Date: 2003/02/28 00:17:53 $
  * @author Rodney Waldhoff
  */
 public class TestArrayIntList extends TestIntList {
@@ -76,7 +76,7 @@ public class TestArrayIntList extends TestIntList {
     }
 
     public static Test suite() {
-        //TestSuite suite = BulkTest.makeSuite(TestArrayIntList.class);
+        // BulkTests won't work, sublists are not serializable
         TestSuite suite = new TestSuite(TestArrayIntList.class);
         return suite;
     }

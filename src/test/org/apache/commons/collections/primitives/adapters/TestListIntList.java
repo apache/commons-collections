@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestListIntList.java,v 1.1 2003/02/26 19:17:24 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestListIntList.java,v 1.2 2003/02/28 00:17:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,11 +62,12 @@ import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.primitives.IntList;
 import org.apache.commons.collections.primitives.TestIntList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/02/26 19:17:24 $
+ * @version $Revision: 1.2 $ $Date: 2003/02/28 00:17:56 $
  * @author Rodney Waldhoff
  */
 public class TestListIntList extends TestIntList {
@@ -79,15 +80,12 @@ public class TestListIntList extends TestIntList {
     }
 
     public static Test suite() {
-        //TestSuite suite = BulkTest.makeSuite(TestListIntList.class);
-        // java.util.SubList is not serializable
-        TestSuite suite = new TestSuite(TestListIntList.class);
+        TestSuite suite = BulkTest.makeSuite(TestListIntList.class);
         return suite;
     }
 
     // collections testing framework
     // ------------------------------------------------------------------------
-
 
     /**
      * @see org.apache.commons.collections.primitives.TestIntList#makeEmptyIntList()
@@ -96,6 +94,20 @@ public class TestListIntList extends TestIntList {
         return new ListIntList(new ArrayList());
     }
     
+    public String[] ignoredSimpleTests() {
+        // sublists are not serializable
+        return new String[] { 
+            "TestListIntList.bulkTestSubList.testFullListSerialization",
+            "TestListIntList.bulkTestSubList.testEmptyListSerialization",
+            "TestListIntList.bulkTestSubList.testCanonicalEmptyCollectionExists",
+            "TestListIntList.bulkTestSubList.testCanonicalFullCollectionExists",
+            "TestListIntList.bulkTestSubList.testEmptyListCompatibility",
+            "TestListIntList.bulkTestSubList.testFullListCompatibility",
+            "TestListIntList.bulkTestSubList.testSerializeDeserializeThenCompare",
+            "TestListIntList.bulkTestSubList.testSimpleSerialization"
+        };
+    }
+
     // tests
     // ------------------------------------------------------------------------
 
@@ -122,6 +134,5 @@ public class TestListIntList extends TestIntList {
         // XXX FIX ME XXX
         // need to add a serialized form to cvs
     }
-
 
 }

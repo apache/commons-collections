@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/CollectionIntCollection.java,v 1.5 2003/02/28 00:17:53 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/NonSerializableCollectionIntCollection.java,v 1.1 2003/02/28 00:17:53 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,64 +57,22 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import java.io.Serializable;
 import java.util.Collection;
 
-import org.apache.commons.collections.primitives.IntCollection;
-
 /**
- * Adapts a {@link java.lang.Number Number}-valued
- * {@link java.util.Collection Collection} to the
- * {@link IntCollection IntCollection} interface.
- * <p />
- * This implementation delegates most methods
- * to the provided {@link Collection Collection} 
- * implementation in the "obvious" way.
- * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/02/28 00:17:53 $
+ * @version $Revision: 1.1 $ $Date: 2003/02/28 00:17:53 $
  * @author Rodney Waldhoff 
  */
-public class CollectionIntCollection extends AbstractCollectionIntCollection implements Serializable {
-    /**
-     * Create an {@link IntCollection IntCollection} wrapping
-     * the specified {@link Collection Collection}.  When
-     * the given <i>collection</i> is <code>null</code>,
-     * returns <code>null</code>.
-     * 
-     * @param collection the (possibly <code>null</code>) {@link Collection} to wrap
-     * @return an {@link IntCollection IntCollection} wrapping the given 
-     *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
-     *         <code>null</code>.
-     */
-    public static IntCollection wrap(Collection collection) {
-        if(null == collection) {
-            return null;
-        } else if(collection instanceof Serializable) {
-            return new CollectionIntCollection(collection);
-        } else {
-            return new NonSerializableCollectionIntCollection(collection);
-        }
-    }
-    
-    /**
-     * No-arg constructor, for serialization purposes.
-     */
-    protected CollectionIntCollection() {
-    }
-
-    /**
-     * Creates an {@link IntCollection IntCollection} wrapping
-     * the specified {@link Collection Collection}.
-     * @see #wrap
-     */
-    public CollectionIntCollection(Collection collection) {
+class NonSerializableCollectionIntCollection extends AbstractCollectionIntCollection {
+    public NonSerializableCollectionIntCollection(Collection collection) {
         _collection = collection;
     }
-    
+
     protected Collection getCollection() {
         return _collection;
     }
- 
-    private Collection _collection = null;         
+              
+    private Collection _collection = null;
+    
 }
