@@ -50,7 +50,7 @@ import org.apache.commons.collections.OrderedIterator;
  * does use sligtly more memory.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.2 $ $Date: 2004/05/12 23:24:45 $
+ * @version $Revision: 1.3 $ $Date: 2004/05/26 21:56:05 $
  *
  * @author Joerg Schmuecker
  * @author Stephen Colebourne
@@ -135,7 +135,7 @@ public class TreeList extends AbstractList {
      */
     public ListIterator listIterator(int fromIndex) {
         // override to go 75% faster
-        // cannot use IteratorUtils.EMPTY_ITERATOR as iterator.add() must work
+        // cannot use EmptyIterator as iterator.add() must work
         checkInterval(fromIndex, 0, size());
         return new TreeListIterator(this, fromIndex);
     }

@@ -20,7 +20,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
@@ -43,7 +42,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * iterators. In this case the class will function as an empty iterator.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.12 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision: 1.13 $ $Date: 2004/05/26 21:58:02 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -222,7 +221,7 @@ public class IteratorChain implements Iterator {
     protected void updateCurrentIterator() {
         if (currentIterator == null) {
             if (iteratorChain.isEmpty()) {
-                currentIterator = IteratorUtils.EMPTY_ITERATOR;
+                currentIterator = EmptyIterator.INSTANCE;
             } else {
                 currentIterator = (Iterator) iteratorChain.get(0);
             }

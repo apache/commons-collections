@@ -24,12 +24,12 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections.BidiMap;
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.KeyValue;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedBidiMap;
 import org.apache.commons.collections.OrderedIterator;
 import org.apache.commons.collections.OrderedMapIterator;
+import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
 
 /**
@@ -67,7 +67,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.13 $ $Date: 2004/05/15 11:59:15 $
+ * @version $Revision: 1.14 $ $Date: 2004/05/26 21:58:02 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -406,7 +406,7 @@ public class TreeBidiMap implements OrderedBidiMap {
      */
     public MapIterator mapIterator() {
         if (isEmpty()) {
-            return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
+            return EmptyOrderedMapIterator.INSTANCE;
         }
         return new ViewMapIterator(this, KEY);
     }
@@ -420,7 +420,7 @@ public class TreeBidiMap implements OrderedBidiMap {
      */
     public OrderedMapIterator orderedMapIterator() {
         if (isEmpty()) {
-            return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
+            return EmptyOrderedMapIterator.INSTANCE;
         }
         return new ViewMapIterator(this, KEY);
     }
@@ -2048,14 +2048,14 @@ public class TreeBidiMap implements OrderedBidiMap {
         
         public MapIterator mapIterator() {
             if (isEmpty()) {
-                return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
+                return EmptyOrderedMapIterator.INSTANCE;
             }
             return new ViewMapIterator(main, VALUE);
         }
 
         public OrderedMapIterator orderedMapIterator() {
             if (isEmpty()) {
-                return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
+                return EmptyOrderedMapIterator.INSTANCE;
             }
             return new ViewMapIterator(main, VALUE);
         }

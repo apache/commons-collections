@@ -28,9 +28,10 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections.IterableMap;
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.ResettableIterator;
+import org.apache.commons.collections.iterators.EmptyIterator;
+import org.apache.commons.collections.iterators.EmptyMapIterator;
 
 /**
  * A <code>Map</code> implementation that stores data in simple fields until
@@ -60,7 +61,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.17 $ $Date: 2004/05/03 22:57:40 $
+ * @version $Revision: 1.18 $ $Date: 2004/05/26 21:56:05 $
  *
  * @author Stephen Colebourne
  */
@@ -566,7 +567,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             return delegateMap.mapIterator();
         }
         if (size == 0) {
-            return IteratorUtils.EMPTY_MAP_ITERATOR;
+            return EmptyMapIterator.INSTANCE;
         }
         return new FlatMapIterator(this);
     }
@@ -717,7 +718,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                 return parent.delegateMap.entrySet().iterator();
             }
             if (parent.size() == 0) {
-                return IteratorUtils.EMPTY_ITERATOR;
+                return EmptyIterator.INSTANCE;
             }
             return new EntrySetIterator(parent);
         }
@@ -885,7 +886,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                 return parent.delegateMap.keySet().iterator();
             }
             if (parent.size() == 0) {
-                return IteratorUtils.EMPTY_ITERATOR;
+                return EmptyIterator.INSTANCE;
             }
             return new KeySetIterator(parent);
         }
@@ -948,7 +949,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                 return parent.delegateMap.values().iterator();
             }
             if (parent.size() == 0) {
-                return IteratorUtils.EMPTY_ITERATOR;
+                return EmptyIterator.INSTANCE;
             }
             return new ValuesIterator(parent);
         }

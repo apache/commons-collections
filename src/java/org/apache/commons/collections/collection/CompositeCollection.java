@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.iterators.EmptyIterator;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.list.UnmodifiableList;
 
@@ -33,7 +33,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/05/15 12:39:13 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/26 21:58:02 $
  *
  * @author Brian McCallister
  * @author Stephen Colebourne
@@ -137,7 +137,7 @@ public class CompositeCollection implements Collection {
      */
     public Iterator iterator() {
         if (this.all.length == 0) {
-            return IteratorUtils.EMPTY_ITERATOR;
+            return EmptyIterator.INSTANCE;
         }
         IteratorChain chain = new IteratorChain();
         for (int i = 0; i < this.all.length; ++i) {

@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.iterators.EmptyIterator;
+
 /** 
  * <code>MultiHashMap</code> is the default implementation of the 
  * {@link org.apache.commons.collections.MultiMap MultiMap} interface.
@@ -50,7 +52,7 @@ import java.util.Set;
  * <code>list</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.18 $ $Date: 2004/05/14 22:33:31 $
+ * @version $Revision: 1.19 $ $Date: 2004/05/26 21:56:05 $
  * 
  * @author Christopher Berry
  * @author James Strachan
@@ -199,7 +201,7 @@ public class MultiHashMap extends HashMap implements MultiMap {
     public Iterator iterator(Object key) {
         Collection coll = getCollection(key);
         if (coll == null) {
-            return IteratorUtils.EMPTY_ITERATOR;
+            return EmptyIterator.INSTANCE;
         }
         return coll.iterator();
     }

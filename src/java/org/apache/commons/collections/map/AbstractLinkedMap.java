@@ -20,12 +20,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.ResettableIterator;
+import org.apache.commons.collections.iterators.EmptyOrderedIterator;
+import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 
 /**
  * An abstract implementation of a hash-based map that links entries to create an
@@ -56,7 +57,7 @@ import org.apache.commons.collections.ResettableIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2004/04/09 22:52:48 $
+ * @version $Revision: 1.12 $ $Date: 2004/05/26 21:56:05 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -331,7 +332,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     public MapIterator mapIterator() {
         if (size == 0) {
-            return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
+            return EmptyOrderedMapIterator.INSTANCE;
         }
         return new LinkMapIterator(this);
     }
@@ -348,7 +349,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     public OrderedMapIterator orderedMapIterator() {
         if (size == 0) {
-            return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
+            return EmptyOrderedMapIterator.INSTANCE;
         }
         return new LinkMapIterator(this);
     }
@@ -404,7 +405,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     protected Iterator createEntrySetIterator() {
         if (size() == 0) {
-            return IteratorUtils.EMPTY_ORDERED_ITERATOR;
+            return EmptyOrderedIterator.INSTANCE;
         }
         return new EntrySetIterator(this);
     }
@@ -436,7 +437,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     protected Iterator createKeySetIterator() {
         if (size() == 0) {
-            return IteratorUtils.EMPTY_ORDERED_ITERATOR;
+            return EmptyOrderedIterator.INSTANCE;
         }
         return new KeySetIterator(this);
     }
@@ -468,7 +469,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     protected Iterator createValuesIterator() {
         if (size() == 0) {
-            return IteratorUtils.EMPTY_ORDERED_ITERATOR;
+            return EmptyOrderedIterator.INSTANCE;
         }
         return new ValuesIterator(this);
     }

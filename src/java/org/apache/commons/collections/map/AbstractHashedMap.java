@@ -28,9 +28,10 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections.IterableMap;
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.KeyValue;
 import org.apache.commons.collections.MapIterator;
+import org.apache.commons.collections.iterators.EmptyIterator;
+import org.apache.commons.collections.iterators.EmptyMapIterator;
 
 /**
  * An abstract implementation of a hash-based map which provides numerous points for
@@ -46,7 +47,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.17 $ $Date: 2004/04/27 21:28:40 $
+ * @version $Revision: 1.18 $ $Date: 2004/05/26 21:56:05 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -713,7 +714,7 @@ public class AbstractHashedMap implements IterableMap {
      */
     public MapIterator mapIterator() {
         if (size == 0) {
-            return IteratorUtils.EMPTY_MAP_ITERATOR;
+            return EmptyMapIterator.INSTANCE;
         }
         return new HashMapIterator(this);
     }
@@ -779,7 +780,7 @@ public class AbstractHashedMap implements IterableMap {
      */
     protected Iterator createEntrySetIterator() {
         if (size() == 0) {
-            return IteratorUtils.EMPTY_ITERATOR;
+            return EmptyIterator.INSTANCE;
         }
         return new EntrySetIterator(this);
     }
@@ -868,7 +869,7 @@ public class AbstractHashedMap implements IterableMap {
      */
     protected Iterator createKeySetIterator() {
         if (size() == 0) {
-            return IteratorUtils.EMPTY_ITERATOR;
+            return EmptyIterator.INSTANCE;
         }
         return new KeySetIterator(this);
     }
@@ -945,7 +946,7 @@ public class AbstractHashedMap implements IterableMap {
      */
     protected Iterator createValuesIterator() {
         if (size() == 0) {
-            return IteratorUtils.EMPTY_ITERATOR;
+            return EmptyIterator.INSTANCE;
         }
         return new ValuesIterator(this);
     }
