@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.3 2002/02/18 20:34:57 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/18 20:34:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.4 2002/02/21 13:46:25 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/21 13:46:25 $
  *
  * ====================================================================
  *
@@ -587,7 +587,7 @@ public class SequencedHashMap extends HashMap {
         
         Map.Entry e = (Map.Entry)o;
         Entry entry = (Entry)entries.get(e.getKey());
-        if(entry.equals(e)) return entry;
+        if(entry != null && entry.equals(e)) return entry;
         else return null;
       }
 
