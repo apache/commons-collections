@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.19 2002/10/12 22:36:22 scolebourne Exp $
- * $Revision: 1.19 $
- * $Date: 2002/10/12 22:36:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.20 2002/10/13 13:55:35 scolebourne Exp $
+ * $Revision: 1.20 $
+ * $Date: 2002/10/13 13:55:35 $
  *
  * ====================================================================
  *
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Id: TestMap.java,v 1.19 2002/10/12 22:36:22 scolebourne Exp $
+ * @version $Id: TestMap.java,v 1.20 2002/10/13 13:55:35 scolebourne Exp $
  */
 public abstract class TestMap extends TestObject {
 
@@ -335,7 +335,7 @@ public abstract class TestMap extends TestObject {
 
     /**
      *  Return a new, populated map.  The mappings in the map should match the
-     *  keys and values returned from {@linke #getSampleKeys()} and {@link
+     *  keys and values returned from {@link #getSampleKeys()} and {@link
      *  #getSampleValues()}.  The default implementation uses makeEmptyMap()
      *  and calls {@link #addSampleMappings()} to add all the mappings to the
      *  map.

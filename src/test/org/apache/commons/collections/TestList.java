@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.12 2002/10/12 22:36:22 scolebourne Exp $
- * $Revision: 1.12 $
- * $Date: 2002/10/12 22:36:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.13 2002/10/13 13:55:35 scolebourne Exp $
+ * $Revision: 1.13 $
+ * $Date: 2002/10/13 13:55:35 $
  *
  * ====================================================================
  *
@@ -89,7 +89,7 @@ import java.util.NoSuchElementException;
  *
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Id: TestList.java,v 1.12 2002/10/12 22:36:22 scolebourne Exp $
+ * @version $Id: TestList.java,v 1.13 2002/10/13 13:55:35 scolebourne Exp $
  */
 public abstract class TestList extends TestCollection {
 
@@ -1051,7 +1051,7 @@ public abstract class TestList extends TestCollection {
 
 
    /**
-    *  Tests that a sublist raises a {@link ConcurrentModificationException}
+    *  Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
     *  if elements are added to the original list.
     */
    public void testListSubListFailFastOnAdd() {
@@ -1082,7 +1082,7 @@ public abstract class TestList extends TestCollection {
 
 
    /**
-    *  Tests that a sublist raises a {@link ConcurrentModificationException}
+    *  Tests that a sublist raises a {@link java.util.ConcurrentModificationException ConcurrentModificationException}
     *  if elements are removed from the original list.
     */
    public void testListSubListFailFastOnRemove() {
@@ -1118,7 +1118,7 @@ public abstract class TestList extends TestCollection {
 
    /**
     *  Invokes all the methods on the given sublist to make sure they raise
-    *  a {@link ConcurrentModificationException}.
+    *  a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
     */
    protected void failFastAll(List list) {
        Method[] methods = List.class.getMethods();
@@ -1130,7 +1130,7 @@ public abstract class TestList extends TestCollection {
 
    /**
     *  Invokes the given method on the given sublist to make sure it raises
-    *  a {@link ConcurrentModificationException}.
+    *  a {@link java.util.ConcurrentModificationException ConcurrentModificationException}.
     *
     *  Unless the method happens to be the equals() method, in which case
     *  the test is skipped.  There seems to be a bug in

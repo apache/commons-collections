@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.12 2002/10/12 22:36:22 scolebourne Exp $
- * $Revision: 1.12 $
- * $Date: 2002/10/12 22:36:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.13 2002/10/13 13:55:35 scolebourne Exp $
+ * $Revision: 1.13 $
+ * $Date: 2002/10/13 13:55:35 $
  *
  * ====================================================================
  *
@@ -74,7 +74,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 /**
- * Tests base {@link java.util.Object} methods and contracts.
+ * Tests base {@link java.lang.Object} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject()} method.
@@ -84,7 +84,7 @@ import java.io.Serializable;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.12 2002/10/12 22:36:22 scolebourne Exp $
+ * @version $Id: TestObject.java,v 1.13 2002/10/13 13:55:35 scolebourne Exp $
  */
 public abstract class TestObject extends BulkTest {
     public TestObject(String testName) {
