@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.7 2002/02/26 17:32:20 morgand Exp $
- * $Revision: 1.7 $
- * $Date: 2002/02/26 17:32:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.8 2002/02/26 18:45:46 morgand Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/02/26 18:45:46 $
  *
  * ====================================================================
  *
@@ -82,7 +82,7 @@ import java.util.ListIterator;
  * test case (method) your {@link List} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestList.java,v 1.7 2002/02/26 17:32:20 morgand Exp $
+ * @version $Id: TestList.java,v 1.8 2002/02/26 18:45:46 morgand Exp $
  */
 public abstract class TestList extends TestCollection {
     public TestList(String testName) {
@@ -822,6 +822,44 @@ public abstract class TestList extends TestCollection {
 
         assertEquals("Both lists are same size",list.size(), 4);
         assertEquals("Both lists are same size",list2.size(),4);
+    }
+
+    /**
+     * Compare the current serialized form of the List
+     * against the canonical version in CVS.
+     */
+    public void testEmptyListCompatibility() throws IOException, ClassNotFoundException {
+        /**
+         * Create canonical objects with this code
+        List list = makeEmptyList();
+        if (!(list instanceof Serializable)) return;
+        
+        writeExternalFormToDisk((Serializable) list, getCanonicalEmptyCollectionName(list));
+        */
+
+        // test to make sure the canonical form has been preserved
+        if (!(makeEmptyList() instanceof Serializable)) return;
+        List list = (List) readExternalFormFromDisk(getCanonicalEmptyCollectionName(makeEmptyList()));
+        assertTrue("List is empty",list.size()  == 0);
+    }
+
+        /**
+     * Compare the current serialized form of the List
+     * against the canonical version in CVS.
+     */
+    public void testFullListCompatibility() throws IOException, ClassNotFoundException {
+        /**
+         * Create canonical objects with this code
+        List list = makeFullList();
+        if (!(list instanceof Serializable)) return;
+        
+        writeExternalFormToDisk((Serializable) list, getCanonicalFullCollectionName(list));
+        */
+
+        // test to make sure the canonical form has been preserved
+        if (!(makeFullList() instanceof Serializable)) return;
+        List list = (List) readExternalFormFromDisk(getCanonicalFullCollectionName(makeFullList()));
+        assertEquals("List is the right size",list.size(), 4);
     }
 
 }
