@@ -4,6 +4,19 @@ Jakarta Commons Collections
 Welcome to the Collections component of the Jakarta Commons
 project.
 
+
+***********************************************************
+
+   This is a patch release of Commons Collections 2.1
+
+ This release has been created due to the discovery of
+ binary incompatibility between 2.1 and 3.0  in the
+ IteratorUtils class (sorry!).
+ 
+         See the release notes for more detail.
+
+***********************************************************
+
 This component requires the excellent Ant utility.  It can 
 be found here :
 

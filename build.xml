@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.33 2002/10/21 00:33:59 bayard Exp $ -->
+<!-- $Id: build.xml,v 1.33.2.1 2004/05/22 11:18:45 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -49,7 +49,7 @@
       <property name="Name-Long" value="Jakarta Commons Collections Package"/>
 
       <!-- The current version number of this component -->
-      <property name="component.version"       value="2.1"/>
+      <property name="component.version"       value="2.1.1"/>
       <property name="doc.release.notes" value="RELEASE-NOTES-${component.version}.html"/>
       <property name="doc.status" value="STATUS.html"/>
 
@@ -88,7 +88,7 @@
       </patternset>
       
       <!-- set the cvs.root property in the build.properties file -->
-      <property name="cvs.tag" value="COLLECTIONS_2_1"/>      
+      <property name="cvs.tag" value="COLLECTIONS_2_1_1"/>      
       
       <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
       <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->
@@ -146,6 +146,8 @@
    <target name="doc-top" depends="init">
       <mkdir  dir="${dest}"/>
       <copy todir="${dest}" file="./LICENSE.txt"/>
+      <copy todir="${dest}" file="./NOTICE.txt"/>
+      <copy todir="${dest}" file="./README.txt"/>
       <copy todir="${dest}" file="${doc.status}"/>
       <copy todir="${dest}" file="${doc.release.notes}"/>
    </target>
@@ -278,11 +280,11 @@
       <tar longfile="gnu" tarfile="${dest.bin.tar}">
         <tarfileset dir="${workdir}"/>
       </tar>
-      
       <gzip zipfile="${dest.bin.tar.gz}"
       	    src="${dest.bin.tar}">
       </gzip>
       <delete file="${dest.bin.tar}" />
+      <checksum file="${dest.bin.tar.gz}"/>
       
       <delete dir="${workdir}"/>
    
@@ -301,6 +303,7 @@
       <zip zipfile="${dest.bin.zip}" >
         <zipfileset dir="${workdir}" />
       </zip>
+      <checksum file="${dest.bin.zip}"/>
       
       <delete dir="${workdir}"/>
    
@@ -328,16 +331,17 @@
       <tar longfile="gnu" tarfile="${dest.src.tar}">
         <tarfileset dir="${workdir}"/>
       </tar>
-      
       <gzip zipfile="${dest.src.tar.gz}"
       	    src="${dest.src.tar}">
       </gzip>
       <delete file="${dest.src.tar}" />
+      <checksum file="${dest.src.tar.gz}"/>
       
       <!-- create a zip file -->
       <zip zipfile="${dest.src.zip}" >
         <zipfileset dir="${workdir}" />
       </zip>
+      <checksum file="${dest.src.zip}"/>
              
       <delete dir="${workdir}"/>
    

@@ -1,0 +1,43 @@
+<title>RELEASE NOTES: COLLECTIONS 2.1.1</title>
+
+<center><h2>RELEASE NOTES: COLLECTIONS 2.1.1</h2></center>
+
+<p>
+<b>This is a patch release of Commons Collections 2.1</b>
+</p>
+<p>
+The latest version of Commons Collections is 3.0.
+Unfortunately, the release of version 3.0 introduced a binary incompatibility
+with 2.1 in the <code>IteratorUtils</code> class. We apologise for this error.
+</p>
+<p>
+Regrettably, despite the issue being discovered by other teams, no feedback was
+given to the Commons Collections team, preventing a simple solution.
+<i>Please provide feedback to Commons Collections when you find issues like this!</i>
+</p>
+<p>
+This patch to Commons Collections is designed to allow version 2.1.1 to co-exist
+with version 3.0.1. The patch contains the following changes:
+<ul>
+<li>Deprecated <code>IteratorUtils.arrayIterator(...)</code> -
+     use <code>new ArrayIterator(...)</code> instead</li>
+<li>Deprecated <code>IteratorUtils.singletonIterator(...)</code> -
+     use <code>new SingletonIterator(...)</code> instead</li>
+<li>Deprecated <code>IteratorUtils.emptyIterator()</code> -
+     use <code>EmptyIterator.INSTANCE</code> instead</li>
+<li>Deprecated <code>IteratorUtils.emptyListIterator()</code> -
+     use <code>EmptyListIterator.INSTANCE</code> instead</li>
+<li>Deprecated <code>IteratorUtils.EMPTY_ITERATOR</code> -
+     use <code>EmptyIterator.INSTANCE</code> instead</li>
+<li>Deprecated <code>IteratorUtils.EMPTY_LIST_ITERATOR</code> -
+     use <code>EmptyIterator.INSTANCE</code> instead</li>
+<li>Added <code>EmptyIterator</code></li>
+<li>Added <code>EmptyListIterator</code></li>
+</ul>
+</p>
+<p>
+To make your code compatible with both 2.1.1 and 3.0.1 and later, remove all
+deprecation warnings from your code and re-release.
+If you have no deprecation warnings after installing this jar, your code is
+already compatible, and will run with versions 2.1, 2.1.1, 3.0, 3.0.1 and later.
+</p>
