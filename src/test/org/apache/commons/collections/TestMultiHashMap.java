@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.6 2002/10/12 22:36:22 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2002/10/12 22:36:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.7 2002/11/01 19:36:54 rwaldhoff Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/11/01 19:36:54 $
  *
  * ====================================================================
  *
@@ -266,6 +266,15 @@ public class TestMultiHashMap extends TestMap
     }
 
     public void testMapHashCode() {
+    }
+
+    // since the MultiHashMap.values Collection isn't currently
+    // backed by the map, we need to skip this test for now
+    // fix bug 9573 <http://issues.apache.org/bugzilla/show_bug.cgi?id=9573>
+    // and enable this test
+    public void testValuesRemovedFromValuesCollectionAreRemovedFromMap() {
+        // TODO: fix bug 9573 <http://issues.apache.org/bugzilla/show_bug.cgi?id=9573>
+        // and enable this test
     }
 
     // The verification for the map and its entry set must also be overridden

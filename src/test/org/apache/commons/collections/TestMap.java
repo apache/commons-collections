@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.21 2002/11/01 19:07:53 rwaldhoff Exp $
- * $Revision: 1.21 $
- * $Date: 2002/11/01 19:07:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.22 2002/11/01 19:36:54 rwaldhoff Exp $
+ * $Revision: 1.22 $
+ * $Date: 2002/11/01 19:36:54 $
  *
  * ====================================================================
  *
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.21 $ $Date: 2002/11/01 19:07:53 $
+ * @version $Revision: 1.22 $ $Date: 2002/11/01 19:36:54 $
  */
 public abstract class TestMap extends TestObject {
 
@@ -769,6 +769,36 @@ public abstract class TestMap extends TestObject {
         verify();
     }
 
+    /**
+     * Tests that the {@link Map#values} collection is backed by
+     * the underlying map by removing from the values collection
+     * and testing if the value was removed from the map.
+     * <p/>
+     * We should really test the "vice versa" case--that values removed
+     * from the map are removed from the values collection--also,
+     * but that's a more difficult test to construct (lacking a
+     * "removeValue" method.)
+     * 
+     * @see http://issues.apache.org/bugzilla/show_bug.cgi?id=9573
+     */
+    public void testValuesRemovedFromValuesCollectionAreRemovedFromMap() {
+        resetFull();
+        Object[] sampleValues = getSampleValues();
+        Collection values = map.values();
+        for(int i=0;i<sampleValues.length;i++) {
+            if(map.containsValue(sampleValues[i])) {
+                while(values.contains(sampleValues[i])) {
+                    try {
+                        values.remove(sampleValues[i]);
+                    } catch(UnsupportedOperationException e) {
+                        // if values.remove is unsupported, just skip this test
+                        return;
+                    }
+                }
+                assertTrue("Value should have been removed from the underlying map.",!map.containsValue(sampleValues[i]));
+            }
+        }
+    }
 
     /**
      *  Utility methods to create an array of Map.Entry objects
