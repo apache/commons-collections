@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator2.java,v 1.2 2002/02/25 22:48:52 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/25 22:48:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator2.java,v 1.3 2002/03/19 00:05:16 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/03/19 00:05:16 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import java.util.NoSuchElementException;
  * 
  * @author Morgan Delagrange
  * @author James Strachan
- * @version $Id: TestArrayIterator2.java,v 1.2 2002/02/25 22:48:52 morgand Exp $
+ * @version $Id: TestArrayIterator2.java,v 1.3 2002/03/19 00:05:16 morgand Exp $
  */
 public class TestArrayIterator2 extends TestIterator {
     
@@ -118,6 +118,31 @@ public class TestArrayIterator2 extends TestIterator {
 	  assertTrue("NoSuchElementException must be thrown", 
 		 e.getClass().equals((new NoSuchElementException()).getClass()));
 	}
+    }
+
+    // proves that an ArrayIterator set with the constructor has the same number of elements
+    // as an ArrayIterator set with setArray(Object) 
+    public void testSetArray() {
+        Iterator iter1 = new ArrayIterator(testArray);
+        int count1 = 0;
+        while (iter1.hasNext()) {
+            ++count1;
+            iter1.next();
+        }
+
+        assertEquals("the count should be right using the constructor",
+                     count1,testArray.length);
+
+        ArrayIterator iter2 = new ArrayIterator();
+        iter2.setArray(testArray);
+        int count2 = 0;
+        while (iter2.hasNext()) {
+            ++count2;
+            iter2.next();
+        }
+
+        assertEquals("the count should be right using setArray(Object)",
+                     count2,testArray.length);
     }
 }
 

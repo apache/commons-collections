@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.9 2002/03/15 17:33:52 morgand Exp $
- * $Revision: 1.9 $
- * $Date: 2002/03/15 17:33:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.10 2002/03/19 00:05:10 morgand Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/03/19 00:05:10 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import java.util.NoSuchElementException;
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
-  * @version $Revision: 1.9 $
+  * @version $Revision: 1.10 $
   */
 public class ArrayIterator implements Iterator {
     
@@ -108,6 +108,6 @@ public class ArrayIterator implements Iterator {
     
     public void setArray( Object array ) {
         this.array = array;
-        this.index = -1;
+        this.index = 0;
     }
 }
