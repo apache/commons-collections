@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.10 2002/12/08 15:29:26 scolebourne Exp $
- * $Revision: 1.10 $
- * $Date: 2002/12/08 15:29:26 $
+ * $Id: TestCollectionUtils.java,v 1.11 2003/01/25 11:31:12 scolebourne Exp $
+ * $Revision: 1.11 $
+ * $Date: 2003/01/25 11:31:12 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Revision: 1.10 $ $Date: 2002/12/08 15:29:26 $
+ * @version $Revision: 1.11 $ $Date: 2003/01/25 11:31:12 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -416,19 +416,33 @@ public class TestCollectionUtils extends TestCase {
     }
 
 
+    private static Predicate EQUALS_TWO = new Predicate() {
+        public boolean evaluate(Object input) {
+            return (input.equals("Two"));
+        }
+    };
+    
     public void testFilter() {
         List list = new ArrayList();
         list.add("One");
         list.add("Two");
         list.add("Three");
         list.add("Four");
-        CollectionUtils.filter(list, new Predicate() {
-            public boolean evaluate(Object input) {
-                return (input.equals("Two"));
-            }
-        });
+        CollectionUtils.filter(list, EQUALS_TWO);
         assertEquals(1, list.size());
         assertEquals("Two", list.get(0));
+        
+        list = new ArrayList();
+        list.add("One");
+        list.add("Two");
+        list.add("Three");
+        list.add("Four");
+        CollectionUtils.filter(list, null);
+        assertEquals(4, list.size());
+        CollectionUtils.filter(null, EQUALS_TWO);
+        assertEquals(4, list.size());
+        CollectionUtils.filter(null, null);
+        assertEquals(4, list.size());
     }
 
     public void testCountMatches() {
@@ -437,13 +451,12 @@ public class TestCollectionUtils extends TestCase {
         list.add("Two");
         list.add("Three");
         list.add("Four");
-        int count = CollectionUtils.countMatches(list, new Predicate() {
-            public boolean evaluate(Object input) {
-                return (input.equals("Two"));
-            }
-        });
+        int count = CollectionUtils.countMatches(list, EQUALS_TWO);
         assertEquals(4, list.size());
         assertEquals(1, count);
+        assertEquals(0, CollectionUtils.countMatches(list, null));
+        assertEquals(0, CollectionUtils.countMatches(null, EQUALS_TWO));
+        assertEquals(0, CollectionUtils.countMatches(null, null));
     }
 
     public void testSelect() {
@@ -452,11 +465,7 @@ public class TestCollectionUtils extends TestCase {
         list.add("Two");
         list.add("Three");
         list.add("Four");
-        Collection output = CollectionUtils.select(list, new Predicate() {
-            public boolean evaluate(Object input) {
-                return (input.equals("Two"));
-            }
-        });
+        Collection output = CollectionUtils.select(list, EQUALS_TWO);
         assertEquals(4, list.size());
         assertEquals(1, output.size());
         assertEquals("Two", output.iterator().next());
@@ -468,11 +477,7 @@ public class TestCollectionUtils extends TestCase {
         list.add("Two");
         list.add("Three");
         list.add("Four");
-        Collection output = CollectionUtils.selectRejected(list, new Predicate() {
-            public boolean evaluate(Object input) {
-                return (input.equals("Two"));
-            }
-        });
+        Collection output = CollectionUtils.selectRejected(list, EQUALS_TWO);
         assertEquals(4, list.size());
         assertEquals(3, output.size());
         assertTrue(output.contains("One"));
@@ -480,20 +485,33 @@ public class TestCollectionUtils extends TestCase {
         assertTrue(output.contains("Four"));
     }
 
+    Transformer TRANSFORM_TO_INTEGER = new Transformer() {
+        public Object transform(Object input) {
+            return new Integer((String) input);
+        }
+    };
+    
     public void testTransform1() {
         List list = new ArrayList();
         list.add("1");
         list.add("2");
         list.add("3");
-        CollectionUtils.transform(list, new Transformer() {
-            public Object transform(Object input) {
-                return new Integer((String) input);
-            }
-        });
+        CollectionUtils.transform(list, TRANSFORM_TO_INTEGER);
         assertEquals(3, list.size());
         assertEquals(new Integer(1), list.get(0));
         assertEquals(new Integer(2), list.get(1));
         assertEquals(new Integer(3), list.get(2));
+        
+        list = new ArrayList();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        CollectionUtils.transform(null, TRANSFORM_TO_INTEGER);
+        assertEquals(3, list.size());
+        CollectionUtils.transform(list, null);
+        assertEquals(3, list.size());
+        CollectionUtils.transform(null, null);
+        assertEquals(3, list.size());
     }
     
     public void testTransform2() {
