@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongList.java,v 1.5 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongList.java,v 1.6 2003/08/31 12:59:57 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -70,7 +70,7 @@ import java.util.AbstractList;
  * and returned from {@link #get(int)}.<p>
  *
  * Concrete implementations offer substantial memory savings by not storing
- * primitives as wrapped objects.  If you excuslively use the primitive 
+ * primitives as wrapped objects.  If you exclusively use the primitive 
  * signatures, there can also be substantial performance gains, since 
  * temporary wrapper objects do not need to be created.<p>
  *
@@ -81,7 +81,7 @@ import java.util.AbstractList;
  * {@link #removeLongAt(int)} and {@link #clear()} methods.  You may want 
  * to override the other methods to increase performance.<P>
  *
- * @version $Revision: 1.5 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.6 $ $Date: 2003/08/31 12:59:57 $
  * @author Rodney Waldhoff 
  */
 public abstract class AbstractLongList extends AbstractList {

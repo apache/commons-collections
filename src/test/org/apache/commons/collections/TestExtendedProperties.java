@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.6 2003/08/24 11:29:52 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2003/08/24 11:29:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.7 2003/08/31 13:09:53 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2003/08/31 13:09:53 $
  *
  * ====================================================================
  *
@@ -74,7 +74,7 @@ import java.io.*;
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
  * @author Mohan Kishore
  * @author Stephen Colebourne
- * @version $Id: TestExtendedProperties.java,v 1.6 2003/08/24 11:29:52 scolebourne Exp $
+ * @version $Id: TestExtendedProperties.java,v 1.7 2003/08/31 13:09:53 scolebourne Exp $
  */
 public class TestExtendedProperties extends TestCase {
     protected ExtendedProperties eprop = new ExtendedProperties();
@@ -94,7 +94,7 @@ public class TestExtendedProperties extends TestCase {
 
     public void testRetrieve() {
         /*
-         * should be emptry and return null
+         * should be empty and return null
          */
         assertEquals("This returns null", eprop.getProperty("foo"), null);
 

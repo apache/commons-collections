@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.9 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.10 2003/08/31 12:59:57 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ package org.apache.commons.collections.primitives;
  * Abstract base class for lists of primitive <Code>int</Code> elements
  * backed by an array.<P>
  *
- * @version $Revision: 1.9 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.10 $ $Date: 2003/08/31 12:59:57 $
  * @author Rodney Waldhoff 
  * 
  * @deprecated An {@link IntList} implementation, such as {@link ArrayIntList} 
@@ -86,7 +86,7 @@ public abstract class AbstractIntArrayList extends AbstractIntList {
      *  Ensures that the length of the internal <Code>int</Code> array is
      *  at list the given value.
      *
-     *  @param mincap  the minimum capcity for this list
+     *  @param mincap  the minimum capacity for this list
      */
     abstract public void ensureCapacity(int mincap);
 

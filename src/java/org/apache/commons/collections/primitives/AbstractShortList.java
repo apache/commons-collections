@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortList.java,v 1.6 2003/04/11 22:01:25 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortList.java,v 1.7 2003/08/31 12:59:57 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -70,7 +70,7 @@ import java.util.AbstractList;
  * and returned from {@link #get(int)}.<p>
  *
  * Concrete implementations offer substantial memory savings by not storing
- * primitives as wrapped objects.  If you excuslively use the primitive 
+ * primitives as wrapped objects.  If you exclusively use the primitive 
  * signatures, there can also be substantial performance gains, since 
  * temporary wrapper objects do not need to be created.<p>
  *
@@ -81,7 +81,7 @@ import java.util.AbstractList;
  * {@link #removeShortAt(int)} and {@link #clear()} methods.  You may want 
  * to override the other methods to increase performance.<P>
  *
- * @version $Revision: 1.6 $ $Date: 2003/04/11 22:01:25 $
+ * @version $Revision: 1.7 $ $Date: 2003/08/31 12:59:57 $
  * @author Rodney Waldhoff 
  * @deprecated See {@link ShortList}.
  */

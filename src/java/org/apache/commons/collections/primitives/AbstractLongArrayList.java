@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongArrayList.java,v 1.8 2003/04/09 06:24:07 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongArrayList.java,v 1.9 2003/08/31 12:59:57 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,7 +68,7 @@ package org.apache.commons.collections.primitives;
  * primitive values will be stored in an underlying primitive array, and
  * provides methods for manipulating the capacity of that array.<P>
  *
- * @version $Revision: 1.8 $ $Date: 2003/04/09 06:24:07 $
+ * @version $Revision: 1.9 $ $Date: 2003/08/31 12:59:57 $
  * @author Rodney Waldhoff
  *  
  * @deprecated A {@link LongList} implementation, such as {@link ArrayLongList} 
@@ -93,7 +93,7 @@ public abstract class AbstractLongArrayList extends AbstractLongList {
      *  Ensures that the length of the internal <Code>long</Code> array is
      *  at list the given value.
      *
-     *  @param mincap  the minimum capcity for this list
+     *  @param mincap  the minimum capacity for this list
      */
     abstract public void ensureCapacity(int mincap);
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.7 2003/05/16 13:41:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.8 2003/08/31 13:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import java.util.Set;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/05/16 13:41:10 $
+ * @version $Revision: 1.8 $ $Date: 2003/08/31 13:05:44 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg
@@ -218,7 +218,7 @@ public class PredicateUtils {
 
     /**
      * Creates a Predicate that returns true the first time an object is
-     * encoutered, and false if the same object is received 
+     * encountered, and false if the same object is received 
      * again. The comparison is by equals(). A <code>null</code> input object
      * is accepted and will return true the first time, and false subsequently
      * as well.
@@ -837,7 +837,7 @@ public class PredicateUtils {
 
     /**
      * UniquePredicate returns true the first time an object is
-     * encoutered, and false if the same object is received 
+     * encountered, and false if the same object is received 
      * again using equals().
      */
     private static class UniquePredicate implements Predicate, Serializable {
@@ -852,7 +852,7 @@ public class PredicateUtils {
         }
 
         /**
-         * Return true the first time, and false subsequant times
+         * Return true the first time, and false subsequent times
          * that an object is encountered, using equals().
          */
         public boolean evaluate(Object object) {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyListIterator.java,v 1.2 2003/01/15 21:49:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyListIterator.java,v 1.3 2003/08/31 12:57:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import java.util.ListIterator;
  *
  * @see ProxyIterator
  * @since Commons Collections 2.0
- * @version $Revision: 1.2 $ $Date: 2003/01/15 21:49:14 $
+ * @version $Revision: 1.3 $ $Date: 2003/08/31 12:57:42 $
  * 
  * @author Rodney Waldhoff
  */
@@ -103,7 +103,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#add(Object)} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public void add(Object o) {
         getListIterator().add(o);
@@ -112,7 +112,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#hasNext()} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public boolean hasNext() {
         return getListIterator().hasNext();
@@ -121,7 +121,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#hasPrevious()} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public boolean hasPrevious() {
         return getListIterator().hasPrevious();
@@ -130,7 +130,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#next()} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public Object next() {
         return getListIterator().next();
@@ -139,7 +139,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#nextIndex()} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public int nextIndex() {
         return getListIterator().nextIndex();
@@ -148,7 +148,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#previous()} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public Object previous() {
         return getListIterator().previous();
@@ -157,7 +157,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#previousIndex()} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public int previousIndex() {
         return getListIterator().previousIndex();
@@ -166,7 +166,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#remove()} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public void remove() {
         getListIterator().remove();
@@ -175,7 +175,7 @@ public class ProxyListIterator implements ListIterator {
     /**
      *  Invokes the underlying {@link ListIterator#set(Object)} method.
      *
-     *  @throws NullPointerException  if the underyling iterator is null
+     *  @throws NullPointerException  if the underlying iterator is null
      */
     public void set(Object o) {
         getListIterator().set(o);

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/FixedOrderComparator.java,v 1.2 2003/05/16 15:08:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/FixedOrderComparator.java,v 1.3 2003/08/31 12:54:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,7 +83,7 @@ import java.util.Map;
  * multiple comparisons  after all the setup operations are complete.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/16 15:08:44 $
+ * @version $Revision: 1.3 $ $Date: 2003/08/31 12:54:49 $
  *
  * @author David Leppik
  * @author Stephen Colebourne
@@ -207,7 +207,7 @@ public class FixedOrderComparator implements Comparator {
         if (unknownObjectBehavior != UNKNOWN_AFTER 
             && unknownObjectBehavior != UNKNOWN_BEFORE 
             && unknownObjectBehavior != UNKNOWN_THROW_EXCEPTION) {
-            throw new IllegalArgumentException("Unrecognised value for unkown behaviour flag");    
+            throw new IllegalArgumentException("Unrecognised value for unknown behaviour flag");    
         }
         this.unknownObjectBehavior = unknownObjectBehavior;
     }

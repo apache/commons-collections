@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.20 2003/02/26 01:33:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.21 2003/08/31 13:09:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,7 +83,7 @@ import java.io.Serializable;
  * @author Rodney Waldhoff
  * @author Anonymous
  * 
- * @version $Revision: 1.20 $ $Date: 2003/02/26 01:33:22 $
+ * @version $Revision: 1.21 $ $Date: 2003/08/31 13:09:53 $
  */
 public abstract class TestObject extends BulkTest {
 
@@ -305,7 +305,7 @@ public abstract class TestObject extends BulkTest {
 
     /**
      * Reads a Serialized or Externalized Object from disk.
-     * Useful for creating compatibility tests betweeen
+     * Useful for creating compatibility tests between
      * different CVS versions of the same class
      * 
      * @param path path to the serialized Object

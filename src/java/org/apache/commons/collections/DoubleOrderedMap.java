@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.4 2003/05/16 14:24:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.5 2003/08/31 13:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -134,7 +134,7 @@ import java.util.Set;
  * iterator will iterate over the values in ascending order.<p>
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.4 $ $Date: 2003/05/16 14:24:54 $
+ * @version $Revision: 1.5 $ $Date: 2003/08/31 13:05:44 $
  * 
  * @author Marc Johnson (marcj at users dot sourceforge dot net)
  */
@@ -571,7 +571,7 @@ public final class DoubleOrderedMap extends AbstractMap {
         } else if (node.getRight(index) != null) {
 
             // everything to the node's right is larger. The least of
-            // the right node's descendents is the next larger node
+            // the right node's descendants is the next larger node
             rval = leastNode(node.getRight(index), index);
         } else {
 
@@ -830,7 +830,7 @@ public final class DoubleOrderedMap extends AbstractMap {
 
     /**
      * complicated red-black insert stuff. Based on Sun's TreeMap
-     * implementation, though it's barely recognizeable any more
+     * implementation, though it's barely recognizable any more
      *
      * @param insertedNode the node to be inserted
      * @param index KEY or VALUE
@@ -902,7 +902,7 @@ public final class DoubleOrderedMap extends AbstractMap {
 
     /**
      * complicated red-black delete stuff. Based on Sun's TreeMap
-     * implementation, though it's barely recognizeable any more
+     * implementation, though it's barely recognizable any more
      *
      * @param deletedNode the node to be deleted
      */
@@ -976,7 +976,7 @@ public final class DoubleOrderedMap extends AbstractMap {
 
     /**
      * complicated red-black delete stuff. Based on Sun's TreeMap
-     * implementation, though it's barely recognizeable any more. This
+     * implementation, though it's barely recognizable any more. This
      * rebalances the tree (somewhat, as red-black trees are not
      * perfectly balanced -- perfect balancing takes longer)
      *

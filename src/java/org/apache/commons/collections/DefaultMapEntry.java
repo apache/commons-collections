@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.9 2003/05/16 14:24:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.10 2003/08/31 13:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,7 +63,7 @@ import java.util.Map;
  * A default implementation of {@link java.util.Map.Entry}
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.9 $ $Date: 2003/05/16 14:24:54 $
+ * @version $Revision: 1.10 $ $Date: 2003/08/31 13:05:44 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
@@ -87,7 +87,7 @@ public class DefaultMapEntry implements Map.Entry {
      * key and given value.
      *
      * @param key  the key for the entry, may be null
-     * @param value  the value for the entyr, may be null
+     * @param value  the value for the entry, may be null
      */
     public DefaultMapEntry(Object key, Object value) {
         this.key = key;

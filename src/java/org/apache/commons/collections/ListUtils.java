@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.18 2003/05/11 13:29:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.19 2003/08/31 13:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.decorators.TypedList;
  * instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.18 $ $Date: 2003/05/11 13:29:16 $
+ * @version $Revision: 1.19 $ $Date: 2003/08/31 13:05:44 $
  * 
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
@@ -133,7 +133,7 @@ public class ListUtils {
      * one occurrence.
      *
      * @param list1  the list to subtract from
-     * @param list2  the lsit to subtract
+     * @param list2  the list to subtract
      * @return  a new list containing the results
      * @throws NullPointerException if either list is null
      */

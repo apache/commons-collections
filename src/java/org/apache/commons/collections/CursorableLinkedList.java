@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.14 2003/06/24 16:08:42 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.15 2003/08/31 13:03:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import java.util.NoSuchElementException;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.14 $ $Date: 2003/06/24 16:08:42 $
+ * @version $Revision: 1.15 $ $Date: 2003/08/31 13:03:12 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki
@@ -320,7 +320,7 @@ public class CursorableLinkedList implements List, Serializable {
      * elements of this list, initialized such that
      * {@link ListIterator#next} will return the element at
      * the specified index (if any) and {@link ListIterator#previous}
-     * will return the element immediately preceeding it (if any).
+     * will return the element immediately preceding it (if any).
      * Unlike {@link #iterator}, a cursor
      * is not bothered by concurrent modifications to the
      * underlying list.
@@ -848,7 +848,7 @@ public class CursorableLinkedList implements List, Serializable {
     }
 
     /**
-     * Informs all of my registerd cursors that they are now
+     * Informs all of my registered cursors that they are now
      * invalid.
      */
     protected void invalidateCursors() {
@@ -860,7 +860,7 @@ public class CursorableLinkedList implements List, Serializable {
     }
 
     /**
-     * Informs all of my registerd cursors that the specified
+     * Informs all of my registered cursors that the specified
      * element was changed.
      * @see #set(int,java.lang.Object)
      */
@@ -872,7 +872,7 @@ public class CursorableLinkedList implements List, Serializable {
     }
 
     /**
-     * Informs all of my registered cursors tha the specifed
+     * Informs all of my registered cursors that the specified
      * element was just removed from my list.
      */
     protected void broadcastListableRemoved(Listable elt) {
@@ -883,7 +883,7 @@ public class CursorableLinkedList implements List, Serializable {
     }
 
     /**
-     * Informs all of my registered cursors tha the specifed
+     * Informs all of my registered cursors that the specified
      * element was just added to my list.
      */
     protected void broadcastListableInserted(Listable elt) {

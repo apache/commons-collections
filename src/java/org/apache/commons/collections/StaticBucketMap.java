@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.10 2003/06/20 07:59:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.11 2003/08/31 13:07:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -130,7 +130,7 @@ import java.util.Set;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.10 $ $Date: 2003/06/20 07:59:59 $
+ * @version $Revision: 1.11 $ $Date: 2003/08/31 13:07:26 $
  * 
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
@@ -695,9 +695,9 @@ public final class StaticBucketMap implements Map {
 
 
     /**
-     *  Prevents any operations from occuring on this map while the
+     *  Prevents any operations from occurring on this map while the
      *  given {@link Runnable} executes.  This method can be used, for
-     *  instance, to execute a bulk operation atomicly: 
+     *  instance, to execute a bulk operation atomically: 
      *
      *  <pre>
      *    staticBucketMapInstance.atomic(new Runnable() {
@@ -726,7 +726,7 @@ public final class StaticBucketMap implements Map {
      *  in your map, then the recursive method will be invoked twenty thousand
      *  times.  You have been warned.
      *
-     *  @param r  the code to execute atomicly
+     *  @param r  the code to execute atomically
      */
     public void atomic(Runnable r) {
         if (r == null) throw new NullPointerException();

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedSortedBag.java,v 1.1 2003/05/07 13:19:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedSortedBag.java,v 1.2 2003/08/31 12:56:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,11 +66,11 @@ import org.apache.commons.collections.SortedBag;
  * <code>PredicatedSortedBag</code> decorates another <code>SortedBag</code>
  * to validate additions match a specified predicate.
  * <p>
- * If an object cannot be addded to the list, an IllegalArgumentException
+ * If an object cannot be added to the list, an IllegalArgumentException
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/07 13:19:18 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/31 12:56:23 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

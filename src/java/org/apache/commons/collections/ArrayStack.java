@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.11 2003/05/11 14:15:24 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.12 2003/08/31 13:03:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import java.util.EmptyStackException;
  *
  * @see java.util.Stack
  * @since Commons Collections 1.0
- * @version $Revision: 1.11 $ $Date: 2003/05/11 14:15:24 $
+ * @version $Revision: 1.12 $ $Date: 2003/08/31 13:03:12 $
  * 
  * @author Craig R. McClanahan
  * @author Paul Jack
@@ -110,7 +110,7 @@ public class ArrayStack extends ArrayList implements Buffer {
     /**
      * Return <code>true</code> if this stack is currently empty.
      * <p>
-     * This method exists for compatability with <code>java.util.Stack</code>.
+     * This method exists for compatibility with <code>java.util.Stack</code>.
      * New users of this class should use <code>isEmpty</code> instead.
      * 
      * @return true if the stack is currently empty

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.12 2003/05/16 14:58:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.13 2003/08/31 13:07:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -116,7 +116,7 @@ import java.util.Set;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.12 $ $Date: 2003/05/16 14:58:42 $
+ * @version $Revision: 1.13 $ $Date: 2003/08/31 13:07:26 $
  * 
  * @author Paul Jack
  */
@@ -135,7 +135,7 @@ public class ReferenceMap extends AbstractMap {
 
 
     /**
-     *  Constant indiciating that soft references should be used.
+     *  Constant indicating that soft references should be used.
      */
     final public static int SOFT = 1;
 

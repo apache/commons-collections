@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.17 2003/05/16 14:58:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.18 2003/08/31 13:07:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -89,7 +89,7 @@ import java.util.Set;
  *  or use explicit synchronization controls.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.17 $ $Date: 2003/05/16 14:58:42 $
+ * @version $Revision: 1.18 $ $Date: 2003/08/31 13:07:26 $
  * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</A>
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
@@ -108,7 +108,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
         // difficult.  If a shallow clone is implemented, then entry.next.prev !=
         // entry, which is unintuitive and probably breaks all sorts of assumptions
         // in code that uses this implementation.  If a deep clone is
-        // implementated, then what happens when the linked list is cyclical (as is
+        // implemented, then what happens when the linked list is cyclical (as is
         // the case with SequencedHashMap)?  It's impossible to know in the clone
         // when to stop cloning, and thus you end up in a recursive loop,
         // continuously cloning the "next" in the list.
@@ -170,7 +170,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
 
     /**
      *  Construct an empty sentinel used to hold the head (sentinel.next) and the
-     *  tail (sentinel.prev) of the list.  The sentinal has a <code>null</code>
+     *  tail (sentinel.prev) of the list.  The sentinel has a <code>null</code>
      *  key and value.
      **/
     private static final Entry createSentinel() {
@@ -363,7 +363,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
         // does not need to be tested.  In cases where the list is empty,
         // sentinel.next will point to the sentinel itself which has a null key,
         // which is exactly what we would want to return if the list is empty (a
-        // nice convient way to avoid test for an empty list)
+        // nice convenient way to avoid test for an empty list)
         return sentinel.next.getKey();
     }
 
@@ -383,7 +383,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
         // list does not need to be tested.  In cases where the list is empty,
         // sentinel.next will point to the sentinel itself which has a null value,
         // which is exactly what we would want to return if the list is empty (a
-        // nice convient way to avoid test for an empty list)
+        // nice convenient way to avoid test for an empty list)
         return sentinel.next.getValue();
     }
 
@@ -430,7 +430,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
         // does not need to be tested.  In cases where the list is empty,
         // sentinel.prev will point to the sentinel itself which has a null key,
         // which is exactly what we would want to return if the list is empty (a
-        // nice convient way to avoid test for an empty list)
+        // nice convenient way to avoid test for an empty list)
         return sentinel.prev.getKey();
     }
 
@@ -450,7 +450,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
         // list does not need to be tested.  In cases where the list is empty,
         // sentinel.prev will point to the sentinel itself which has a null value,
         // which is exactly what we would want to return if the list is empty (a
-        // nice convient way to avoid test for an empty list)
+        // nice convenient way to avoid test for an empty list)
         return sentinel.prev.getValue();
     }
 
@@ -974,7 +974,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
      * @return the index, or -1 if not found
      */
     public int lastIndexOf(Object key) {
-        // keys in a map are guarunteed to be unique
+        // keys in a map are guaranteed to be unique
         return indexOf(key);
     }
 
@@ -1006,7 +1006,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
      * Removes the element at the specified index.
      *
      * @param index The index of the object to remove.
-     * @return      The previous value coressponding the <code>key</code>, or
+     * @return      The previous value corresponding the <code>key</code>, or
      *              <code>null</code> if none existed.
      *
      * @throws ArrayIndexOutOfBoundsException if the <code>index</code> is

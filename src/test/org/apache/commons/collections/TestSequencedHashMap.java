@@ -142,7 +142,7 @@ public class TestSequencedHashMap extends TestMap {
                          origEntry.getKey(), copiedEntry.getKey());
             assertEquals("Cloned value does not match original",
                          origEntry.getValue(), copiedEntry.getValue());
-            assertEquals("Cloned entry does not match orginal",
+            assertEquals("Cloned entry does not match original",
                          origEntry, copiedEntry);
         }
         assertTrue("iterator() returned different number of elements than keys()",

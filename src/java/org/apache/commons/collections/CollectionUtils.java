@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.33 2003/07/19 00:30:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.34 2003/08/31 13:03:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.33 $ $Date: 2003/07/19 00:30:08 $
+ * @version $Revision: 1.34 $ $Date: 2003/08/31 13:03:12 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -233,7 +233,7 @@ public class CollectionUtils {
     /**
      * Returns a {@link Map} mapping each unique element in
      * the given {@link Collection} to an {@link Integer}
-     * representing the number of occurances of that element
+     * representing the number of occurences of that element
      * in the {@link Collection}.
      * An entry that maps to <tt>null</tt> indicates that the
      * element does not appear in the given {@link Collection}.
@@ -552,7 +552,7 @@ public class CollectionUtils {
      * Transforms all elements from inputCollection with the given transformer 
      * and adds them to the outputCollection.
      * <p>
-     * If the input transfomer is null, the result is an empty list.
+     * If the input transformer is null, the result is an empty list.
      * 
      * @param inputCollection  the collection to get the input from, may not be null
      * @param transformer  the transformer to use, may be null
@@ -569,7 +569,7 @@ public class CollectionUtils {
      * Transforms all elements from the inputIterator  with the given transformer 
      * and adds them to the outputCollection.
      * <p>
-     * If the input iterator or transfomer is null, the result is an empty list.
+     * If the input iterator or transformer is null, the result is an empty list.
      * 
      * @param inputIterator  the iterator to get the input from, may be null
      * @param transformer  the transformer to use, may be null
@@ -585,7 +585,7 @@ public class CollectionUtils {
      * Transforms all elements from inputCollection with the given transformer 
      * and adds them to the outputCollection.
      * <p>
-     * If the input collection or transfomer is null, there is no change to the 
+     * If the input collection or transformer is null, there is no change to the 
      * output collection.
      *
      * @param inputCollection  the collection to get the input from, may be null
@@ -605,7 +605,7 @@ public class CollectionUtils {
      * Transforms all elements from the inputIterator with the given transformer 
      * and adds them to the outputCollection.
      * <p>
-     * If the input iterator or transfomer is null, there is no change to the 
+     * If the input iterator or transformer is null, there is no change to the 
      * output collection.
      *
      * @param inputIterator  the iterator to get the input from, may be null

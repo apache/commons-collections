@@ -120,7 +120,7 @@ import junit.framework.TestSuite;
  *  interpret bulk test methods.
  *
  *  @author Paul Jack
- *  @version $Id: BulkTest.java,v 1.3 2003/02/19 20:33:11 scolebourne Exp $
+ *  @version $Id: BulkTest.java,v 1.4 2003/08/31 13:09:53 scolebourne Exp $
  */
 public class BulkTest extends TestCase implements Cloneable {
 
@@ -128,7 +128,7 @@ public class BulkTest extends TestCase implements Cloneable {
     // Note:  BulkTest is Cloneable to make it easier to construct 
     // BulkTest instances for simple test methods that are defined in 
     // anonymous inner classes.  Basically we don't have to worry about
-    // finding wierd constructors.  (And even if we found them, techinically
+    // finding weird constructors.  (And even if we found them, technically
     // it'd be illegal for anyone but the outer class to invoke them).  
     // Given one BulkTest instance, we can just clone it and reset the 
     // method name for every simple test it defines.  
@@ -322,7 +322,7 @@ class BulkTestSuiteMaker {
      *  Adds the simple test defined by the given method to the TestSuite.
      *
      *  @param bulk  The instance of the class that defined the method
-     *   (I know it's wierd.  But the point is, we can clone the instance
+     *   (I know it's weird.  But the point is, we can clone the instance
      *   and not have to worry about constructors.)
      *  @param m  The simple test method
      */

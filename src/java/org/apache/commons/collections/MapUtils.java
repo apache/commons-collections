@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.28 2003/08/25 20:38:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.29 2003/08/31 13:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.28 $ $Date: 2003/08/25 20:38:40 $
+ * @version $Revision: 1.29 $ $Date: 2003/08/31 13:05:44 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -682,7 +682,7 @@ public class MapUtils {
     /**
      * Prints the given map with nice line breaks.
      * <p>
-     * This method prints a nicely formatted String decribing the Map.
+     * This method prints a nicely formatted String describing the Map.
      * Each map entry will be printed with key and value.
      * When the value is a Map, recursive behaviour occurs.
      *
@@ -706,7 +706,7 @@ public class MapUtils {
     /**
      * Prints the given map with nice line breaks.
      * <p>
-     * This method prints a nicely formatted String decribing the Map.
+     * This method prints a nicely formatted String describing the Map.
      * Each map entry will be printed with key, value and value classname.
      * When the value is a Map, recursive behaviour occurs.
      *

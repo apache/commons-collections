@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/InputStreamByteIterator.java,v 1.1 2003/04/15 03:07:50 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/InputStreamByteIterator.java,v 1.2 2003/08/31 12:58:19 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.ByteIterator;
 /**
  * Adapts an {@link InputStream} to the {@link ByteIterator} interface.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/04/15 03:07:50 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/31 12:58:19 $
  * @author Rodney Waldhoff
  */
 public class InputStreamByteIterator implements ByteIterator {
@@ -112,7 +112,7 @@ public class InputStreamByteIterator implements ByteIterator {
             next = stream.read();
             nextAvailable = true;
         } catch(IOException e) {
-            // TODO: Fix me using tunneled exception, see 
+            // TODO: Fix me using tunnelled exception, see 
             // http://radio.weblogs.com/0122027/2003/04/01.html#a7
             // for example            
             throw new RuntimeException(e.toString());

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ReverseComparator.java,v 1.13 2003/05/16 15:08:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ReverseComparator.java,v 1.14 2003/08/31 12:54:49 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -65,7 +65,7 @@ import java.util.Comparator;
  * method.
  * 
  * @since Commons Collections 2.0
- * @version $Revision: 1.13 $ $Date: 2003/05/16 15:08:45 $
+ * @version $Revision: 1.14 $ $Date: 2003/08/31 12:54:49 $
  *
  * @author bayard@generationjava.com
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
@@ -77,7 +77,7 @@ public class ReverseComparator implements Comparator,Serializable {
     /**
      * Creates a comparator that compares objects based on the inverse of their
      * natural ordering.  Using this Constructor will create a ReverseComparator
-     * that is functionaly identical to the Comparator returned by
+     * that is functionally identical to the Comparator returned by
      * java.util.Collections.<b>reverseOrder()</b>.
      * 
      * @see java.util.Collections#reverseOrder

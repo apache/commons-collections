@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedCollection.java,v 1.4 2003/05/16 14:19:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedCollection.java,v 1.5 2003/08/31 12:56:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,11 +67,11 @@ import org.apache.commons.collections.PredicateUtils;
  * to validate that elements added are of a specific type.
  * <p>
  * The validation of additions is performed via an instanceof test against 
- * a specified <code>Class</code>. If an object cannot be addded to the
+ * a specified <code>Class</code>. If an object cannot be added to the
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/05/16 14:19:31 $
+ * @version $Revision: 1.5 $ $Date: 2003/08/31 12:56:23 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne

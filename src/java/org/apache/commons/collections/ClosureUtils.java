@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ClosureUtils.java,v 1.1 2003/05/16 13:41:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ClosureUtils.java,v 1.2 2003/08/31 13:03:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import java.util.Map;
  * All the supplied closures are Serializable.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/16 13:41:10 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/31 13:03:12 $
  *
  * @author Stephen Colebourne
  */
@@ -417,7 +417,7 @@ public class ClosureUtils {
         Closure[] trs = null;
         Predicate[] preds = null;
         if (objectsAndClosures == null) {
-            throw new IllegalArgumentException("The obejct and closure map must not be null");
+            throw new IllegalArgumentException("The object and closure map must not be null");
         }
         Closure def = (Closure) objectsAndClosures.remove(null);
         int size = objectsAndClosures.size();
@@ -643,7 +643,7 @@ public class ClosureUtils {
     //----------------------------------------------------------------------------------
 
     /**
-     * ForClosure calls the closure a fixed nunmber of times.
+     * ForClosure calls the closure a fixed number of times.
      */
     private static class ForClosure implements Closure, Serializable {
         /** The number of times to loop */

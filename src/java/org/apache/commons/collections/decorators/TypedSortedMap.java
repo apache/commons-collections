@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedSortedMap.java,v 1.1 2003/05/09 16:42:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedSortedMap.java,v 1.2 2003/08/31 12:56:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,11 +64,11 @@ import java.util.SortedMap;
  * to validate that elements added are of a specific type.
  * <p>
  * The validation of additions is performed via an instanceof test against 
- * a specified <code>Class</code>. If an object cannot be addded to the
+ * a specified <code>Class</code>. If an object cannot be added to the
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/09 16:42:35 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/31 12:56:23 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne

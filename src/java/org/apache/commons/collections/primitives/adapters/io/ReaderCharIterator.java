@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/ReaderCharIterator.java,v 1.1 2003/04/16 19:45:13 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/ReaderCharIterator.java,v 1.2 2003/08/31 12:58:19 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.CharIterator;
 /**
  * Adapts a {@link Reader} to the {@link CharIterator} interface.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/04/16 19:45:13 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/31 12:58:19 $
  * @author Rodney Waldhoff
  */
 public class ReaderCharIterator implements CharIterator {
@@ -112,7 +112,7 @@ public class ReaderCharIterator implements CharIterator {
             next = reader.read();
             nextAvailable = true;
         } catch(IOException e) {
-            // TODO: Fix me using tunneled exception, see 
+            // TODO: Fix me using tunnelled exception, see 
             // http://radio.weblogs.com/0122027/2003/04/01.html#a7
             // for example            
             throw new RuntimeException(e.toString());

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationVetoedException.java,v 1.1 2003/08/28 18:31:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationVetoedException.java,v 1.2 2003/08/31 12:57:03 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,11 +58,11 @@
 package org.apache.commons.collections.event;
 
 /**
- * Exception thrown when a modifcation to a collection is vetoed.
- * It extends IllegalArgumentException for compatability with the collections API.
+ * Exception thrown when a modification to a collection is vetoed.
+ * It extends IllegalArgumentException for compatibility with the collections API.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/08/28 18:31:13 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/31 12:57:03 $
  * 
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.19 2003/05/11 14:15:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.20 2003/08/31 13:03:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import java.util.Set;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.19 $ $Date: 2003/05/11 14:15:23 $
+ * @version $Revision: 1.20 $ $Date: 2003/08/31 13:03:12 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Stephen Colebourne
@@ -214,7 +214,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
      * <li>If the instantiation fails, throw a CloneNotSupportedException
      *
      * <li>Clone the bean map and set the newly instantiated bean as the
-     * underyling bean for the bean map.
+     * underlying bean for the bean map.
      *
      * <li>Copy each property that is both readable and writable from the
      * existing object to a cloned bean map.  
@@ -788,7 +788,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
      * primitive type, this method returns the original value.
      *
      * @param newType  the type to convert the value to
-     * @param value  the value to conert
+     * @param value  the value to convert
      * @return the converted value
      * @throws NumberFormatException if newType is a primitive type, and 
      *  the string representation of the given value cannot be converted

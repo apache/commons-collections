@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.1 2003/05/16 13:41:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.2 2003/08/31 13:07:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import java.util.Map;
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/16 13:41:10 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/31 13:07:26 $
  * 
  * @author Stephen Colebourne
  */
@@ -403,7 +403,7 @@ public class TransformerUtils {
         Transformer[] trs = null;
         Predicate[] preds = null;
         if (objectsAndTransformers == null) {
-            throw new IllegalArgumentException("The obejct and transformer map must not be null");
+            throw new IllegalArgumentException("The object and transformer map must not be null");
         }
         Transformer def = (Transformer) objectsAndTransformers.remove(null);
         int size = objectsAndTransformers.size();

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.24 2003/07/12 15:47:53 scolebourne Exp $
- * $Revision: 1.24 $
- * $Date: 2003/07/12 15:47:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.25 2003/08/31 13:09:53 scolebourne Exp $
+ * $Revision: 1.25 $
+ * $Date: 2003/08/31 13:09:53 $
  *
  * ====================================================================
  *
@@ -77,7 +77,7 @@ import java.util.Set;
  * operations, simply extend this class, and implement the {@link
  * #makeEmptyMap()} method.
  * <p>
- * On the other hand, if your map implemenation is wierd, you may have to
+ * On the other hand, if your map implementation is weird, you may have to
  * override one or more of the other protected methods.  They're described
  * below.<P>
  *
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.24 $ $Date: 2003/07/12 15:47:53 $
+ * @version $Revision: 1.25 $ $Date: 2003/08/31 13:09:53 $
  */
 public abstract class TestMap extends TestObject {
 
@@ -269,7 +269,7 @@ public abstract class TestMap extends TestObject {
     /**
      *  Returns the set of values in the mappings used to test the map.  This
      *  method must return an array with the same length as {@link
-     *  #getSampleKeys()}.  The default implementation contructs a set of
+     *  #getSampleKeys()}.  The default implementation constructs a set of
      *  String values and includes a single null value if {@link
      *  #useNullValue()} returns <code>true</code>, and includes two values
      *  that are the same if {@link #useDuplicateValues()} returns
@@ -708,7 +708,7 @@ public abstract class TestMap extends TestObject {
 	    assertTrue("Map should contain new value after put",
 		       map.containsValue(newValues[i]));
 
-	    // if duplicates are allowed, we're not guarunteed that the value
+	    // if duplicates are allowed, we're not guaranteed that the value
 	    // no longer exists, so don't try checking that.
 	    if(!useDuplicateValues()) {
 		assertTrue("Map should not contain old value after second put",
@@ -1110,7 +1110,7 @@ public abstract class TestMap extends TestObject {
         //assertEquals("Map should still equal HashMap", confirmed, map);
         // this works though and performs the same verification:
         assertTrue("Map should still equal HashMap", map.equals(confirmed));
-        // TODO: this should really be rexamined to figure out why LRU map
+        // TODO: this should really be reexamined to figure out why LRU map
         // behaves like it does (the equals shouldn't modify since all accesses
         // by the confirmed collection should be through an iterator, thus not
         // causing LRUMap to change).

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.8 2003/04/13 23:05:35 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.9 2003/08/31 12:59:57 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -71,7 +71,7 @@ import java.util.List;
  * {@link java.util.ArrayList} of {@link Float} values and allows for
  * better compile-time type checking.<P>
  *
- * @version $Revision: 1.8 $ $Date: 2003/04/13 23:05:35 $
+ * @version $Revision: 1.9 $ $Date: 2003/08/31 12:59:57 $
  * @author Rodney Waldhoff 
  * @deprecated See {@link FloatList}
  */
@@ -344,7 +344,7 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
      *  Ensures that the internal array is big enough to hold the specified
      *  number of elements.
      *
-     *  @param mincap  the minium capacity
+     *  @param mincap  the minimum capacity
      */
     public void ensureCapacity(int mincap) {
         modCount++;

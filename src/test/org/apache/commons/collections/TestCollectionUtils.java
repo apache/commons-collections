@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.15 2003/04/04 22:22:28 scolebourne Exp $
- * $Revision: 1.15 $
- * $Date: 2003/04/04 22:22:28 $
+ * $Id: TestCollectionUtils.java,v 1.16 2003/08/31 13:09:53 scolebourne Exp $
+ * $Revision: 1.16 $
+ * $Date: 2003/08/31 13:09:53 $
  *
  * ====================================================================
  *
@@ -81,7 +81,7 @@ import junit.framework.TestSuite;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  * 
- * @version $Revision: 1.15 $ $Date: 2003/04/04 22:22:28 $
+ * @version $Revision: 1.16 $ $Date: 2003/08/31 13:09:53 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -701,7 +701,7 @@ public class TestCollectionUtils extends TestCase {
         Collection colb = new ArrayList();
         
         // ...which contain elta and eltb, 
-        // repsectively.
+        // respectively.
         cola.add(elta);
         colb.add(eltb);
         

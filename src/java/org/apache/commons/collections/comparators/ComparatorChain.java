@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.11 2003/05/16 15:08:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.12 2003/08/31 12:54:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -93,7 +93,7 @@ import java.util.List;
  * 
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision: 1.11 $ $Date: 2003/05/16 15:08:45 $
+ * @version $Revision: 1.12 $ $Date: 2003/08/31 12:54:49 $
  */
 public class ComparatorChain implements Comparator,Serializable {
 
@@ -290,7 +290,7 @@ public class ComparatorChain implements Comparator,Serializable {
     }
 
     /**
-     * Perform comaparisons on the Objects as per
+     * Perform comparisons on the Objects as per
      * Comparator.compare(o1,o2).
      * 
      * @param o1     object 1

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.14 2003/08/24 11:29:52 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.15 2003/08/31 13:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -150,7 +150,7 @@ import java.util.Vector;
  *      tokens_on_multiple_lines = second token
  *
  *      # commas may be escaped in tokens
- *      commas.excaped = Hi\, what'up?
+ *      commas.escaped = Hi\, what'up?
  * </pre>
  *
  * <p><b>NOTE</b>: this class has <b>not</b> been written for
@@ -161,7 +161,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.14 $ $Date: 2003/08/24 11:29:52 $
+ * @version $Revision: 1.15 $ $Date: 2003/08/31 13:05:44 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -695,7 +695,7 @@ public class ExtendedProperties extends Hashtable {
      * Sets a string property w/o checking for commas - used
      * internally when a property has been broken up into
      * strings that could contain escaped commas to prevent
-     * the inadvertant vectorization.
+     * the inadvertent vectorization.
      * <p>
      * Thanks to Leon Messerschmidt for this one.
      *
