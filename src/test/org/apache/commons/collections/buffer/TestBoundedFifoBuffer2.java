@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestBoundedFifoBuffer2.java,v 1.1 2003/11/29 18:04:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestBoundedFifoBuffer2.java,v 1.2 2003/11/29 18:14:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,15 +62,15 @@ import java.util.Collection;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.BoundedCollection;
 import org.apache.commons.collections.BufferOverflowException;
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.collection.BoundedCollection;
 
 /**
  * Runs tests against a full BoundedFifoBuffer, since many of the algorithms
  * differ depending on whether the fifo is full or not.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/29 18:04:56 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/29 18:14:20 $
  * 
  * @author Unknown
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/UnmodifiableBoundedCollection.java,v 1.2 2003/11/18 22:50:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/UnmodifiableBoundedCollection.java,v 1.3 2003/11/29 18:14:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,6 +59,8 @@ package org.apache.commons.collections.collection;
 
 import java.util.Collection;
 
+import org.apache.commons.collections.BoundedCollection;
+
 /**
  * <code>UnmodifiableBoundedCollection</code> decorates another <code>BoundedCollection</code>
  * to ensure it can't be altered.
@@ -69,7 +71,7 @@ import java.util.Collection;
  * examining the package scope variables.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/18 22:50:44 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/29 18:14:20 $
  * 
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableBoundedCollection.java,v 1.6 2003/11/18 22:50:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableBoundedCollection.java,v 1.7 2003/11/29 18:14:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,7 +59,7 @@ package org.apache.commons.collections.decorators;
 
 import java.util.Collection;
 
-import org.apache.commons.collections.collection.BoundedCollection;
+import org.apache.commons.collections.BoundedCollection;
 
 /**
  * <code>UnmodifiableBoundedCollection</code> decorates another <code>BoundedCollection</code>
@@ -71,7 +71,7 @@ import org.apache.commons.collections.collection.BoundedCollection;
  * examining the package scope variables.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/11/18 22:50:44 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/29 18:14:20 $
  * @deprecated TO BE REMOVED BEFORE v3.0
  * 
  * @author Stephen Colebourne

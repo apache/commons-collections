@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.12 2003/11/29 18:04:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.13 2003/11/29 18:14:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,8 +63,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.collection.BoundedCollection;
-
 /**
  * The BoundedFifoBuffer is a <strong>very</strong> efficient implementation of
  * Buffer that does not alter the size of the buffer at runtime.
@@ -87,7 +85,7 @@ import org.apache.commons.collections.collection.BoundedCollection;
  *
  * @deprecated Moved to buffer subpackage. Due to be removed in v4.0.
  * @since 2.1
- * @version $Revision: 1.12 $ $Date: 2003/11/29 18:04:57 $
+ * @version $Revision: 1.13 $ $Date: 2003/11/29 18:14:20 $
  * 
  * @author Avalon
  * @author Berin Loritsch
