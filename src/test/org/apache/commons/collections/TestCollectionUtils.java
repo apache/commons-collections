@@ -50,7 +50,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Phil Steitz
  * @author Steven Melzer
  * 
- * @version $Revision: 1.39 $ $Date: 2004/06/26 10:00:42 $
+ * @version $Revision: 1.40 $ $Date: 2004/07/17 21:38:33 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -965,6 +965,22 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(new Integer(4), set.iterator().next());
     }
 
+    //-----------------------------------------------------------------------
+    public void testAddIgnoreNull() {
+        Set set = new HashSet();
+        set.add("1");
+        set.add("2");
+        set.add("3");
+        assertEquals(false, CollectionUtils.addIgnoreNull(set, null));
+        assertEquals(3, set.size());
+        assertEquals(false, CollectionUtils.addIgnoreNull(set, "1"));
+        assertEquals(3, set.size());
+        assertEquals(true, CollectionUtils.addIgnoreNull(set, "4"));
+        assertEquals(4, set.size());
+        assertEquals(true, set.contains("4"));
+    }
+
+    //-----------------------------------------------------------------------
     public void testPredicatedCollection() {
         Predicate predicate = new Predicate() {
             public boolean evaluate(Object o) {

@@ -38,7 +38,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.61 $ $Date: 2004/04/27 20:00:18 $
+ * @version $Revision: 1.62 $ $Date: 2004/07/17 21:38:33 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -633,11 +633,24 @@ public class CollectionUtils {
         return outputCollection;
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Adds an element to the collection unless the element is null.
+     * 
+     * @param collection  the collection to add to, must not be null
+     * @param object  the object to add, if null it will not be added
+     * @return true if the collection changed
+     * @throws NullPointerException if the collection is null
+     */
+    public static boolean addIgnoreNull(Collection collection, Object object) {
+        return (object == null ? false : collection.add(object));
+    }
+    
     /**
      * Adds all elements in the iteration to the given collection.
      * 
-     * @param collection  the collection to add to
-     * @param iterator  the iterator of elements to add, may not be null
+     * @param collection  the collection to add to, must not be null
+     * @param iterator  the iterator of elements to add, must not be null
      * @throws NullPointerException if the collection or iterator is null
      */
     public static void addAll(Collection collection, Iterator iterator) {
@@ -649,8 +662,8 @@ public class CollectionUtils {
     /**
      * Adds all elements in the enumeration to the given collection.
      * 
-     * @param collection  the collection to add to
-     * @param enumeration  the enumeration of elements to add, may not be null
+     * @param collection  the collection to add to, must not be null
+     * @param enumeration  the enumeration of elements to add, must not be null
      * @throws NullPointerException if the collection or enumeration is null
      */
     public static void addAll(Collection collection, Enumeration enumeration) {
@@ -662,8 +675,8 @@ public class CollectionUtils {
     /** 
      * Adds all elements in the array to the given collection.
      * 
-     * @param collection  the collection to add to, may not be null
-     * @param elements  the array of elements to add, may not be null
+     * @param collection  the collection to add to, must not be null
+     * @param elements  the array of elements to add, must not be null
      * @throws NullPointerException if the collection or array is null
      */
     public static void addAll(Collection collection, Object[] elements) {
