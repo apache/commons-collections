@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.1 2003/10/02 22:14:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.2 2003/10/04 00:49:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -146,7 +146,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.1 $ $Date: 2003/10/02 22:14:29 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/04 00:49:27 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -529,8 +529,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
             confirmed.add(elements[i]);
             verify();
             assertTrue("Empty collection changed after add", r);
-            assertTrue("Collection size is 1 after first add", 
-                       collection.size() == 1);
+            assertEquals("Collection size is 1 after first add", 1, collection.size());
         }
         
         resetEmpty();
