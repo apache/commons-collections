@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/Flat3Map.java,v 1.3 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.1 2003/11/18 23:23:05 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.map;
 
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
@@ -66,6 +66,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.ResettableIterator;
@@ -86,18 +87,19 @@ import org.apache.commons.collections.iterators.ResettableIterator;
  * The design uses two distinct modes of operation - flat and delegate.
  * While the map is size 3 or less, operations map straight onto fields using
  * switch statements. Once size 4 is reached, the map switches to delegate mode
- * and never switches back. In delegate mode, all operations are forwarded 
- * straight to a HashMap resulting in the 5% performance loss.
+ * and only switches back when cleared. In delegate mode, all operations are
+ * forwarded straight to a HashMap resulting in the 5% performance loss.
  * <p>
  * The performance gains on puts are due to not needing to create a Map Entry
  * object. This is a large saving not only in performance but in garbage collection.
  * <p>
  * Whilst in flat mode this map is also easy for the garbage collector to dispatch.
  * This is because it contains no complex objects or arrays which slow the progress.
- * (Note that the impact of this has not actually been tested!)
+ * <p>
+ * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/18 23:23:05 $
  *
  * @author Stephen Colebourne
  */
@@ -556,11 +558,14 @@ public class Flat3Map implements Map {
      */
     public void clear() {
         if (iMap != null) {
-            iMap.clear();
+            iMap.clear();  // should aid gc
+            iMap = null;  // switch back to flat mode
+        } else {
+            iSize = 0;
+            iHash1 = iHash2 = iHash3 = 0;
+            iKey1 = iKey2 = iKey3 = null;
+            iValue1 = iValue2 = iValue3 = null;
         }
-        iSize = 0;
-        iHash1 = iHash2 = iHash3 = 0;
-        iKey1 = iKey2 = iKey3 = iValue1 = iValue2 = iValue3 = null;
     }
 
     //-----------------------------------------------------------------------

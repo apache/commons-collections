@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestFlat3Map.java,v 1.4 2003/11/18 22:37:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestFlat3Map.java,v 1.1 2003/11/18 23:23:05 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,21 +55,21 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.map;
 
 import java.util.Map;
 
 import junit.framework.Test;
 import junit.textui.TestRunner;
 
+import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:16 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/18 23:23:05 $
  * 
  * @author Stephen Colebourne
  */
