@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/OrderedMapIterator.java,v 1.1 2003/11/08 18:43:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/OrderedMapIterator.java,v 1.2 2003/11/08 19:26:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,11 +63,11 @@ package org.apache.commons.collections.iterators;
  * This iterator allows both forward and reverse iteration through the map.
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/08 18:43:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/08 19:26:28 $
  *
  * @author Stephen Colebourne
  */
-public interface OrderedMapIterator extends MapIterator {
+public interface OrderedMapIterator extends MapIterator, OrderedIterator {
     
     /**
      * Checks to see if there is a previous entry that can be iterated to.

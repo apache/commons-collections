@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.15 2003/11/08 18:43:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.16 2003/11/08 19:26:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,7 +57,6 @@
  */
 package org.apache.commons.collections;
 
-import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -81,15 +80,20 @@ import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.LoopingIterator;
+import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections.iterators.ResetableIterator;
 import org.apache.commons.collections.iterators.ResetableListIterator;
 import org.apache.commons.collections.iterators.ResetableMapIterator;
+import org.apache.commons.collections.iterators.ResetableOrderedIterator;
 import org.apache.commons.collections.iterators.ResetableOrderedMapIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
+import org.apache.commons.collections.iterators.UnmodifiableListIterator;
+import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
 
 /**
  * Provides static utility methods and decorators for {@link Iterator} 
@@ -97,7 +101,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.15 $ $Date: 2003/11/08 18:43:12 $
+ * @version $Revision: 1.16 $ $Date: 2003/11/08 19:26:28 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -115,11 +119,15 @@ public class IteratorUtils {
      */    
     public static final ResetableListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
     /**
+     * An ordered iterator over no elements
+     */    
+    public static final ResetableOrderedIterator EMPTY_ORDERED_ITERATOR = new EmptyOrderedIterator();
+    /**
      * A map iterator over no elements
      */    
     public static final ResetableMapIterator EMPTY_MAP_ITERATOR = new EmptyMapIterator();
     /**
-     * A map iterator over no elements
+     * An ordered map iterator over no elements
      */    
     public static final ResetableOrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = new EmptyOrderedMapIterator();
 
@@ -157,12 +165,24 @@ public class IteratorUtils {
     }
 
     /**
+     * Gets an empty ordered iterator.
+     * <p>
+     * This iterator is a valid iterator object that will iterate 
+     * over nothing.
+     *
+     * @return  an ordered iterator over nothing
+     */
+    public static ResetableOrderedIterator emptyOrderedIterator() {
+        return EMPTY_ORDERED_ITERATOR;
+    }
+
+    /**
      * Gets an empty map iterator.
      * <p>
      * This iterator is a valid map iterator object that will iterate 
      * over nothing.
      *
-     * @return  a list iterator over nothing
+     * @return  a map iterator over nothing
      */
     public static ResetableMapIterator emptyMapIterator() {
         return EMPTY_MAP_ITERATOR;
@@ -174,7 +194,7 @@ public class IteratorUtils {
      * This iterator is a valid map iterator object that will iterate 
      * over nothing.
      *
-     * @return  a list iterator over nothing
+     * @return  a map iterator over nothing
      */
     public static ResetableOrderedMapIterator emptyOrderedMapIterator() {
         return EMPTY_ORDERED_MAP_ITERATOR;
@@ -403,10 +423,7 @@ public class IteratorUtils {
      * @return an immutable version of the iterator
      */
     public static Iterator unmodifiableIterator(Iterator iterator) {
-        if (iterator instanceof ResetableIterator) {
-            return new ResetableUnmodifiableIterator((ResetableIterator) iterator);
-        }
-        return new UnmodifiableIterator(iterator);
+        return UnmodifiableIterator.decorate(iterator);
     }
     
     /**
@@ -419,10 +436,19 @@ public class IteratorUtils {
      * @return an immutable version of the iterator
      */
     public static ListIterator unmodifiableListIterator(ListIterator listIterator) {
-        if (listIterator instanceof ResetableListIterator) {
-            return new ResetableUnmodifiableListIterator((ResetableListIterator) listIterator);
-        }
-        return new UnmodifiableListIterator(listIterator);
+        return UnmodifiableListIterator.decorate(listIterator);
+    }
+
+    /**
+     * Gets an immutable version of a {@link MapIterator}. The returned object
+     * will always throw an {@link UnsupportedOperationException} for
+     * the {@link Iterator#remove}, {@link MapIterator#setValue(Object)} methods.
+     *
+     * @param mapIterator  the iterator to make immutable
+     * @return an immutable version of the iterator
+     */
+    public static MapIterator unmodifiableMapIterator(MapIterator mapIterator) {
+        return UnmodifiableMapIterator.decorate(mapIterator);
     }
 
     /**
@@ -859,6 +885,25 @@ public class IteratorUtils {
 
     //-----------------------------------------------------------------------    
     /**
+     * EmptyOrderedIterator class
+     */
+    static class EmptyOrderedIterator extends EmptyIterator implements ResetableOrderedIterator {
+        
+        EmptyOrderedIterator() {
+            super();
+        }
+        
+        public boolean hasPrevious() {
+            return false;
+        }
+        
+        public Object previous() {
+            throw new NoSuchElementException("Iterator contains no elements");
+        }
+    }
+
+    //-----------------------------------------------------------------------    
+    /**
      * EmptyMapIterator class
      */
     static class EmptyMapIterator extends EmptyIterator implements ResetableMapIterator {
@@ -899,158 +944,4 @@ public class IteratorUtils {
         }
     }
 
-    //-----------------------------------------------------------------------    
-    /**
-     * A wrapper for an {@link java.util.Iterator} which makes it immutable. All
-     * calls are passed through to the delegate. The {@link #remove()} method
-     * always throws an {@link java.lang.UnsupportedOperationException}.
-     *
-     * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
-     * @author Stephen Colebourne
-     */
-    static class UnmodifiableIterator implements Iterator, Serializable {
-
-        /**
-         * All calls to this iterator are passed to the delegate.
-         */
-        protected Iterator delegate;
-
-        /**
-         * Create an UnmodifiableIterator.
-         *
-         * @param delegate  the delegate to pass all calls to
-         */
-        public UnmodifiableIterator(Iterator delegate) {
-            this.delegate = delegate;
-        }
-
-        public boolean hasNext() {
-            return delegate.hasNext();
-        }
-
-        public Object next() {
-            return delegate.next();
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException("This iterator is immutable");
-        }
-
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * An unmodifiable resetable iterator.
-     *
-     * @author Stephen Colebourne
-     */
-    static class ResetableUnmodifiableIterator extends UnmodifiableIterator implements ResetableIterator {
-        
-        /**
-         * Create a ResetableUnmodifiableIterator.
-         *
-         * @param delegate  the delegate to pass all calls to
-         */
-        public ResetableUnmodifiableIterator(ResetableIterator delegate) {
-            super(delegate);
-        }
-
-        /**
-         * Reset the iterator
-         */
-        public void reset() {
-            ((ResetableIterator) delegate).reset();
-        }
-
-    }
-    
-    //-----------------------------------------------------------------------
-    /**
-     * A wrapper for an {@link java.util.ListIterator} which makes it immutable.
-     * All calls are passed through to the delegate. The {@link #remove()},
-     * {@link #add(Object)} and (@link #set(Object)} methods always throw an
-     * {@link java.lang.UnsupportedOperationException}.
-     *
-     * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
-     */
-    static class UnmodifiableListIterator
-        implements ListIterator, Serializable {
-
-        /**
-         * All calls to this iterator are passed to the delegate.
-         */
-        protected ListIterator delegate;
-
-        /**
-         * Create an UnmodifiableListIterator.
-         *
-         * @param delegate The delegate to pass all calls to.
-         */
-        public UnmodifiableListIterator(ListIterator delegate) {
-            this.delegate = delegate;
-        }
-
-        public boolean hasNext() {
-            return delegate.hasNext();
-        }
-
-        public Object next() {
-            return delegate.next();
-        }
-
-        public boolean hasPrevious() {
-            return delegate.hasPrevious();
-        }
-
-        public Object previous() {
-            return delegate.previous();
-        }
-
-        public int nextIndex() {
-            return delegate.nextIndex();
-        }
-
-        public int previousIndex() {
-            return delegate.previousIndex();
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException("This iterator is immutable");
-        }
-
-        public void set(Object o) {
-            throw new UnsupportedOperationException("This iterator is immutable");
-        }
-
-        public void add(Object o) {
-            throw new UnsupportedOperationException("This iterator is immutable");
-        }
-    }
-    
-    //-----------------------------------------------------------------------
-    /**
-     * An unmodifiable resetable list iterator.
-     *
-     * @author Stephen Colebourne
-     */
-    static class ResetableUnmodifiableListIterator extends UnmodifiableListIterator implements ResetableListIterator {
-            
-        /**
-         * Create a ResetableUnmodifiableListIterator.
-         *
-         * @param delegate  the delegate to pass all calls to
-         */
-        public ResetableUnmodifiableListIterator(ResetableListIterator delegate) {
-            super(delegate);
-        }
-    
-        /**
-         * Reset the iterator
-         */
-        public void reset() {
-            ((ResetableListIterator) delegate).reset();
-        }
-    
-    }
-        
 }

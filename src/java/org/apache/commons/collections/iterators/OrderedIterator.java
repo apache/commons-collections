@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/ResetableOrderedMapIterator.java,v 1.2 2003/11/08 19:26:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/OrderedIterator.java,v 1.1 2003/11/08 19:26:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,22 +57,33 @@
  */
 package org.apache.commons.collections.iterators;
 
-/** 
- * Interface implemented by those map iterators that can be reset back 
- * to an initial state.
- *
+import java.util.Iterator;
+
+/**
+ * Defines an iterator that operates over a ordered collections.
+ * <p>
+ * This iterator allows both forward and reverse iteration through the collection.
+ *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/08 19:26:28 $
- * 
+ * @version $Revision: 1.1 $ $Date: 2003/11/08 19:26:28 $
+ *
  * @author Stephen Colebourne
  */
-public interface ResetableOrderedMapIterator
-        extends OrderedMapIterator, ResetableMapIterator, ResetableOrderedIterator {
+public interface OrderedIterator extends Iterator {
+    
+    /**
+     * Checks to see if there is a previous entry that can be iterated to.
+     *
+     * @return <code>true</code> if the iterator has a previous element
+     */
+    boolean hasPrevious();
 
     /**
-     * Resets the iterator back to the position at which the iterator
-     * was created.
+     * Gets the previous element from the collection.
+     *
+     * @return the previous key in the iteration
+     * @throws NoSuchElementException if the iteration is finished
      */
-    public void reset();
+    Object previous();
 
 }

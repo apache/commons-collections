@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/ResetableOrderedMapIterator.java,v 1.2 2003/11/08 19:26:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/ResetableOrderedIterator.java,v 1.1 2003/11/08 19:26:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,16 +58,15 @@
 package org.apache.commons.collections.iterators;
 
 /** 
- * Interface implemented by those map iterators that can be reset back 
+ * Interface implemented by those ordered iterators that can be reset back 
  * to an initial state.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/08 19:26:28 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/08 19:26:28 $
  * 
  * @author Stephen Colebourne
  */
-public interface ResetableOrderedMapIterator
-        extends OrderedMapIterator, ResetableMapIterator, ResetableOrderedIterator {
+public interface ResetableOrderedIterator extends OrderedIterator, ResetableIterator {
 
     /**
      * Resets the iterator back to the position at which the iterator

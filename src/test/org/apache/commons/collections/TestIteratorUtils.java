@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.9 2003/11/08 18:47:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.10 2003/11/08 19:26:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,16 +67,18 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 
 import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.iterators.OrderedIterator;
 import org.apache.commons.collections.iterators.OrderedMapIterator;
 import org.apache.commons.collections.iterators.ResetableIterator;
 import org.apache.commons.collections.iterators.ResetableListIterator;
 import org.apache.commons.collections.iterators.ResetableMapIterator;
+import org.apache.commons.collections.iterators.ResetableOrderedIterator;
 import org.apache.commons.collections.iterators.ResetableOrderedMapIterator;
 
 /**
  * Tests for IteratorUtils.
  * 
- * @version $Revision: 1.9 $ $Date: 2003/11/08 18:47:38 $
+ * @version $Revision: 1.10 $ $Date: 2003/11/08 19:26:29 $
  * 
  * @author Unknown
  */
@@ -525,12 +527,41 @@ public class TestIteratorUtils extends BulkTest {
     /**
      * Test empty map iterator
      */
+    public void testEmptyOrderedIterator() {
+        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof OrderedIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ResetableIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ResetableOrderedIterator);
+        assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR.hasNext());
+        assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR.hasPrevious());
+        IteratorUtils.EMPTY_ORDERED_ITERATOR.reset();
+        assertSame(IteratorUtils.EMPTY_ORDERED_ITERATOR, IteratorUtils.EMPTY_ORDERED_ITERATOR);
+        assertSame(IteratorUtils.EMPTY_ORDERED_ITERATOR, IteratorUtils.emptyOrderedIterator());
+        try {
+            IteratorUtils.EMPTY_ORDERED_ITERATOR.next();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            IteratorUtils.EMPTY_ORDERED_ITERATOR.previous();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            IteratorUtils.EMPTY_ORDERED_ITERATOR.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Test empty map iterator
+     */
     public void testEmptyOrderedMapIterator() {
         assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof Iterator);
         assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof MapIterator);
         assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof OrderedMapIterator);
         assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResetableIterator);
         assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResetableMapIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResetableOrderedIterator);
         assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResetableOrderedMapIterator);
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasNext());
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasPrevious());
@@ -590,21 +621,6 @@ public class TestIteratorUtils extends BulkTest {
     }
 
     /**
-     * Test resetability
-     */
-    public void testResetableUnmodifiableIterator() {
-        Integer four = new Integer(4);
-        ResetableIterator it = (ResetableIterator) 
-            IteratorUtils.unmodifiableIterator(IteratorUtils.singletonIterator(four));
-        
-        assertEquals(true, it.hasNext());
-        assertSame(four, it.next());
-        assertEquals(false, it.hasNext());
-        it.reset();
-        assertEquals(true, it.hasNext());
-    }
-    
-    /**
      * Test next(), hasNext(), previous() and hasPrevious() for an immutable
      * ListIterator.
      */
@@ -655,21 +671,6 @@ public class TestIteratorUtils extends BulkTest {
         assertTrue(listIterator.hasNext());
     }
 
-    /**
-     * Test resetability
-     */
-    public void testResetableUnmodifiableListIterator() {
-        Integer four = new Integer(4);
-        ResetableListIterator it = (ResetableListIterator) 
-            IteratorUtils.unmodifiableListIterator(IteratorUtils.singletonListIterator(four));
-        
-        assertEquals(true, it.hasNext());
-        assertSame(four, it.next());
-        assertEquals(false, it.hasNext());
-        it.reset();
-        assertEquals(true, it.hasNext());
-    }
-    
     /**
      * Test remove() for an immutable Iterator.
      */
