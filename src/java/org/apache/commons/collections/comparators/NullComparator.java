@@ -23,11 +23,14 @@ import java.util.Comparator;
  * other objects.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.12 $ $Date: 2004/02/18 00:59:06 $ 
+ * @version $Revision: 1.13 $ $Date: 2004/05/15 13:24:11 $ 
  *
  * @author Michael A. Smith
  */
 public class NullComparator implements Comparator, Serializable {
+
+    /** Serialization version. */
+    private static final long serialVersionUID = -5820772575483504339L;
 
     /**
      *  The comparator to use when comparing two non-<code>null</code> objects.
@@ -40,7 +43,8 @@ public class NullComparator implements Comparator, Serializable {
      **/
     private boolean nullsAreHigh;
 
-    /** 
+    //-----------------------------------------------------------------------
+    /**
      *  Construct an instance that sorts <code>null</code> higher than any
      *  non-<code>null</code> object it is compared with. When comparing two
      *  non-<code>null</code> objects, the {@link ComparableComparator} is
@@ -111,6 +115,7 @@ public class NullComparator implements Comparator, Serializable {
         }
     }
 
+    //-----------------------------------------------------------------------
     /**
      *  Perform a comparison between two objects.  If both objects are
      *  <code>null</code>, a <code>0</code> value is returned.  If one object
@@ -120,10 +125,8 @@ public class NullComparator implements Comparator, Serializable {
      *  underlying comparator specified in the constructor (or the default) is
      *  used to compare the non-<code>null</code> objects.
      *
-     *  @param o1 the first object to compare
-     *
-     *  @param o2 the object to compare it to.
-     *
+     *  @param o1  the first object to compare
+     *  @param o2  the object to compare it to.
      *  @return <code>-1</code> if <code>o1</code> is "lower" than (less than,
      *  before, etc.) <code>o2</code>; <code>1</code> if <code>o1</code> is
      *  "higher" than (greater than, after, etc.) <code>o2</code>; or
@@ -136,6 +139,7 @@ public class NullComparator implements Comparator, Serializable {
         return this.nonNullComparator.compare(o1, o2);
     }
 
+    //-----------------------------------------------------------------------
     /**
      *  Implement a hash code for this comparator that is consistent with
      *  {@link #equals(Object)}.
@@ -168,5 +172,4 @@ public class NullComparator implements Comparator, Serializable {
                 (this.nonNullComparator.equals(other.nonNullComparator)));
     }
 
-    private static final long serialVersionUID = -5820772575483504339L;
 }

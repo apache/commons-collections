@@ -20,18 +20,82 @@ import java.util.Comparator;
 
 /**
  * A {@link Comparator} for {@link Boolean} objects.
- * 
- * @see #getTrueFirstComparator
- * @see #getFalseFirstComparator
- * @see #getBooleanComparator
+ * <p>
+ * @see #getTrueFirstComparator()
+ * @see #getFalseFirstComparator()
+ * @see #getBooleanComparator(boolean)
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2004/04/27 22:57:00 $
+ * @version $Revision: 1.13 $ $Date: 2004/05/15 13:24:11 $
  * 
  * @author Rodney Waldhoff
  */
 public final class BooleanComparator implements Comparator, Serializable {
+    
+    // TODO: Serialization version
 
+    /** Constant "true first" reference. */
+    private static final BooleanComparator TRUE_FIRST = new BooleanComparator(true);
+
+    /** Constant "false first" reference. */
+    private static final BooleanComparator FALSE_FIRST = new BooleanComparator(false);
+
+    /** <code>true</code> iff <code>true</code> values sort before <code>false</code> values. */
+    private boolean trueFirst = false;
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a BooleanComparator instance that sorts 
+     * <code>true</code> values before <code>false</code> values.
+     * <p />
+     * Clients are encouraged to use the value returned from 
+     * this method instead of constructing a new instance 
+     * to reduce allocation and garbage collection overhead when
+     * multiple BooleanComparators may be used in the same 
+     * virtual machine.
+     * 
+     * @return the true first singleton BooleanComparator
+     */
+    public static BooleanComparator getTrueFirstComparator() {
+        return TRUE_FIRST;
+    }
+    
+    /**
+     * Returns a BooleanComparator instance that sorts 
+     * <code>false</code> values before <code>true</code> values.
+     * <p />
+     * Clients are encouraged to use the value returned from 
+     * this method instead of constructing a new instance 
+     * to reduce allocation and garbage collection overhead when
+     * multiple BooleanComparators may be used in the same 
+     * virtual machine.
+     * 
+     * @return the false first singleton BooleanComparator
+     */
+    public static BooleanComparator getFalseFirstComparator() {
+        return FALSE_FIRST;
+    }
+        
+    /**
+     * Returns a BooleanComparator instance that sorts 
+     * <code><i>trueFirst</i></code> values before 
+     * <code>&#x21;<i>trueFirst</i></code> values.
+     * <p />
+     * Clients are encouraged to use the value returned from 
+     * this method instead of constructing a new instance 
+     * to reduce allocation and garbage collection overhead when
+     * multiple BooleanComparators may be used in the same 
+     * virtual machine.
+     * 
+     * @param trueFirst when <code>true</code>, sort 
+     * <code>true</code> <code>Boolean</code>s before <code>false</code>
+     * @return a singleton BooleanComparator instance
+     */
+    public static BooleanComparator getBooleanComparator(boolean trueFirst) {
+        return trueFirst ? TRUE_FIRST : FALSE_FIRST;
+    }
+
+    //-----------------------------------------------------------------------
     /**
      * Creates a <code>BooleanComparator</code> that sorts
      * <code>false</code> values before <code>true</code> values.
@@ -62,20 +126,26 @@ public final class BooleanComparator implements Comparator, Serializable {
     /**
      * Compares two arbitrary Objects.
      * When both arguments are <code>Boolean</code>, this method is equivalent to 
-     * {@link #compare(Boolean,Boolean) compare((Boolean)<i>o1</i>,(Boolean)<i>o2</i>)}.
+     * {@link #compare(Boolean,Boolean) compare((Boolean)<i>obj1</i>,(Boolean)<i>obj2</i>)}.
      * When either argument is not a <code>Boolean</code>, this methods throws
      * a {@link ClassCastException}.
      * 
+     * @param obj1  the first object to compare
+     * @param obj2  the second object to compare
+     * @return negative if obj1 is less, positive if greater, zero if equal
      * @throws ClassCastException when either argument is not <code>Boolean</code>
      */
-    public int compare(Object o1, Object o2) {
-        return compare((Boolean)o1,(Boolean)o2);
+    public int compare(Object obj1, Object obj2) {
+        return compare((Boolean)obj1, (Boolean)obj2);
     }
     
     /**
      * Compares two non-<code>null</code> <code>Boolean</code> objects
-     * according to the value of {@link #sortsTrueFirst}.
+     * according to the value of {@link #trueFirst}.
      * 
+     * @param b1  the first boolean to compare
+     * @param b2  the second boolean to compare
+     * @return negative if obj1 is less, positive if greater, zero if equal
      * @throws NullPointerException when either argument <code>null</code>
      */
     public int compare(Boolean b1, Boolean b2) {
@@ -85,9 +155,10 @@ public final class BooleanComparator implements Comparator, Serializable {
         return (v1 ^ v2) ? ( (v1 ^ trueFirst) ? 1 : -1 ) : 0;
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
-     * {@link #equals equals}.
+     * {@link #equals(Object) equals}.
      *
      * @return a hash code for this comparator.
      */
@@ -103,14 +174,18 @@ public final class BooleanComparator implements Comparator, Serializable {
      * <p>
      * This implementation returns <code>true</code>
      * iff <code><i>that</i></code> is a {@link BooleanComparator} 
-     * whose {@link #sortsTrueFirst} value is equal to mine.
+     * whose {@link #trueFirst} value is equal to mine.
+     * 
+     * @param object  the object to compare to
+     * @return true if equal
      */
-    public boolean equals(Object that) {
-        return (this == that) || 
-               ((that instanceof BooleanComparator) && 
-                (this.trueFirst == ((BooleanComparator)that).trueFirst));
+    public boolean equals(Object object) {
+        return (this == object) || 
+               ((object instanceof BooleanComparator) && 
+                (this.trueFirst == ((BooleanComparator)object).trueFirst));
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Returns <code>true</code> iff
      * I sort <code>true</code> values before 
@@ -118,65 +193,11 @@ public final class BooleanComparator implements Comparator, Serializable {
      * returns <code>true</code> iff
      * {@link #compare(Boolean,Boolean) compare(Boolean.FALSE,Boolean.TRUE)}
      * returns a positive value.
+     * 
+     * @return the trueFirst flag
      */
     public boolean sortsTrueFirst() {
         return trueFirst;
     }
-    
-    //-----------------------------------------------------------------------
-    /**
-     * Returns a BooleanComparator instance that sorts 
-     * <code>true</code> values before <code>false</code> values.
-     * <p />
-     * Clients are encouraged to use the value returned from 
-     * this method instead of constructing a new instance 
-     * to reduce allocation and garbage collection overhead when
-     * multiple BooleanComparators may be used in the same 
-     * virtual machine.
-     */
-    public static BooleanComparator getTrueFirstComparator() {
-        return TRUE_FIRST;
-    }
-    
-    /**
-     * Returns a BooleanComparator instance that sorts 
-     * <code>false</code> values before <code>true</code> values.
-     * <p />
-     * Clients are encouraged to use the value returned from 
-     * this method instead of constructing a new instance 
-     * to reduce allocation and garbage collection overhead when
-     * multiple BooleanComparators may be used in the same 
-     * virtual machine.
-     */
-    public static BooleanComparator getFalseFirstComparator() {
-        return FALSE_FIRST;
-    }
-        
-    /**
-     * Returns a BooleanComparator instance that sorts 
-     * <code><i>trueFirst</i></code> values before 
-     * <code>&#x21;<i>trueFirst</i></code> values.
-     * <p />
-     * Clients are encouraged to use the value returned from 
-     * this method instead of constructing a new instance 
-     * to reduce allocation and garbage collection overhead when
-     * multiple BooleanComparators may be used in the same 
-     * virtual machine.
-     * 
-     * @param trueFirst when <code>true</code>, sort 
-     * <code>true</code> <code>Boolean</code>s before <code>false</code>
-     * @return a cached BooleanComparator instance
-     */
-    public static BooleanComparator getBooleanComparator(boolean trueFirst) {
-        return trueFirst ? TRUE_FIRST : FALSE_FIRST;
-    }
-    
-    /** <code>true</code> iff <code>true</code> values sort before <code>false</code> values. */
-    private boolean trueFirst = false;
 
-    /** My static "true first" reference. */
-    private static final BooleanComparator TRUE_FIRST = new BooleanComparator(true);
-
-    /** My static "false first" reference. */
-    private static final BooleanComparator FALSE_FIRST = new BooleanComparator(false);
 }

@@ -51,18 +51,21 @@ import java.util.List;
  * 
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision: 1.16 $ $Date: 2004/02/18 00:59:06 $
+ * @version $Revision: 1.17 $ $Date: 2004/05/15 13:24:11 $
  */
 public class ComparatorChain implements Comparator,Serializable {
 
+    /** Serialization version from Collections 2.0. */
+    private static final long serialVersionUID = -721644942746081630L;
+    
+    /** The list of comparators in the chain. */
     protected List comparatorChain = null;
-    // false (clear) = ascend; true (set) = descend
+    /** Order - false (clear) = ascend; true (set) = descend. */
     protected BitSet orderingBits = null;
-
-    // ComparatorChain is "locked" after the first time
-    // compare(Object,Object) is called
+   /** Whether the chain has been "locked". */
     protected boolean isLocked = false;
 
+    //-----------------------------------------------------------------------
     /**
      * Construct a ComparatorChain with no Comparators.
      * You must add at least one Comparator before calling
@@ -131,6 +134,7 @@ public class ComparatorChain implements Comparator,Serializable {
         orderingBits = bits;
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Add a Comparator to the end of the chain using the
      * forward sort order
@@ -247,12 +251,13 @@ public class ComparatorChain implements Comparator,Serializable {
         }
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Perform comparisons on the Objects as per
      * Comparator.compare(o1,o2).
      * 
-     * @param o1     object 1
-     * @param o2     object 2
+     * @param o1  the first object to compare
+     * @param o2  the second object to compare
      * @return -1, 0, or 1
      * @exception UnsupportedOperationException
      *                   if the ComparatorChain does not contain at least one
@@ -289,10 +294,12 @@ public class ComparatorChain implements Comparator,Serializable {
         return 0;
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
-     * {@link #equals}.
+     * {@link #equals(Object) equals}.
      * 
+     * @return a suitable hash code
      * @since Commons Collections 3.0
      */
     public int hashCode() {
@@ -312,21 +319,23 @@ public class ComparatorChain implements Comparator,Serializable {
      * equivalent to mine.
      * <p>
      * This implementation returns <code>true</code>
-     * iff <code><i>that</i>.{@link Object#getClass getClass()}</code>
+     * iff <code><i>object</i>.{@link Object#getClass() getClass()}</code>
      * equals <code>this.getClass()</code>, and the underlying 
-     * comparators and order bits are equal.  Subclasses may want 
-     * to override this behavior to remain consistent with the 
-     * {@link Comparator#equals} contract.
+     * comparators and order bits are equal.
+     * Subclasses may want to override this behavior to remain consistent
+     * with the {@link Comparator#equals(Object)} contract.
      * 
+     * @param object  the object to compare with
+     * @return true if equal
      * @since Commons Collections 3.0
      */
-    public boolean equals(Object that) {
-        if(this == that) {
+    public boolean equals(Object object) {
+        if(this == object) {
             return true;
-        } else if(null == that) {
+        } else if(null == object) {
             return false;
-        } else if(that.getClass().equals(this.getClass())) {
-            ComparatorChain chain = (ComparatorChain)that;
+        } else if(object.getClass().equals(this.getClass())) {
+            ComparatorChain chain = (ComparatorChain)object;
             return ( (null == orderingBits ? null == chain.orderingBits : orderingBits.equals(chain.orderingBits))
                    && (null == comparatorChain ? null == chain.comparatorChain : comparatorChain.equals(chain.comparatorChain)) );
         } else {
@@ -334,6 +343,4 @@ public class ComparatorChain implements Comparator,Serializable {
         }
     }
 
-    // use serialVersionUID from Collections 2.0 for interoperability
-    private static final long serialVersionUID = -721644942746081630L;
 }

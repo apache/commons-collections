@@ -24,7 +24,7 @@ import java.util.Map;
 /** 
  * A Comparator which imposes a specific order on a specific set of Objects.
  * Objects are presented to the FixedOrderComparator in a specified order and
- * subsequent calls to {@link #compare} yield that order.
+ * subsequent calls to {@link #compare(Object, Object) compare} yield that order.
  * For example:
  * <pre>
  * String[] planets = {"Mercury", "Venus", "Earth", "Mars"};
@@ -33,15 +33,15 @@ import java.util.Map;
  * Arrays.sort(planets, distanceFromSun);    // Back to original order
  * </pre>
  * <p>
- * Once {@link #compare} has been called, the FixedOrderComparator is locked and
- * attempts to modify it yield an UnsupportedOperationException.
+ * Once <code>compare</code> has been called, the FixedOrderComparator is locked
+ * and attempts to modify it yield an UnsupportedOperationException.
  * <p>
  * Instances of FixedOrderComparator are not synchronized.  The class is not
  * thread-safe at construction time, but it is thread-safe to perform
  * multiple comparisons  after all the setup operations are complete.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/02/18 00:59:06 $
+ * @version $Revision: 1.10 $ $Date: 2004/05/15 13:24:11 $
  *
  * @author David Leppik
  * @author Stephen Colebourne
@@ -150,6 +150,9 @@ public class FixedOrderComparator implements Comparator {
 
     /** 
      * Gets the behavior for comparing unknown objects.
+     * 
+     * @return the flag for unknown behaviour - UNKNOWN_AFTER,
+     * UNKNOWN_BEFORE or UNKNOWN_THROW_EXCEPTION
      */
     public int getUnknownObjectBehavior() {
         return unknownObjectBehavior;
@@ -158,6 +161,8 @@ public class FixedOrderComparator implements Comparator {
     /** 
      * Sets the behavior for comparing unknown objects.
      * 
+     * @param unknownObjectBehavior  the flag for unknown behaviour -
+     * UNKNOWN_AFTER, UNKNOWN_BEFORE or UNKNOWN_THROW_EXCEPTION
      * @throws UnsupportedOperationException if a comparison has been performed
      * @throws IllegalArgumentException if the unknown flag is not valid
      */
@@ -223,7 +228,8 @@ public class FixedOrderComparator implements Comparator {
      * 
      * @param obj1  the first object to compare
      * @param obj2  the second object to compare
-     * @throws IllegalArgumentException if o1 or o2 are not known 
+     * @return negative if obj1 is less, positive if greater, zero if equal
+     * @throws IllegalArgumentException if obj1 or obj2 are not known 
      *  to this Comparator and an alternative behavior has not been set
      *  via {@link #setUnknownObjectBehavior(int)}.
      */

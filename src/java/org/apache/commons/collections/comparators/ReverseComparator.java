@@ -19,27 +19,33 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * Reverses the order of another comparator by 
- * reversing the arguments to its {@link #compare compare} 
- * method.
+ * Reverses the order of another comparator by reversing the arguments
+ * to its {@link #compare(Object, Object) compare} method.
  * 
  * @since Commons Collections 2.0
- * @version $Revision: 1.18 $ $Date: 2004/02/18 00:59:06 $
+ * @version $Revision: 1.19 $ $Date: 2004/05/15 13:24:11 $
  *
  * @author Henri Yandell
  * @author Michael A. Smith
  * 
- * @see java.util.Collections#reverseOrder
+ * @see java.util.Collections#reverseOrder()
  */
 public class ReverseComparator implements Comparator,Serializable {
 
+    /** Serialization version from Collections 2.0. */
+    private static final long serialVersionUID = 2858887242028539265L;
+
+    /** The comparator being decorated. */
+    private Comparator comparator;
+
+    //-----------------------------------------------------------------------
     /**
      * Creates a comparator that compares objects based on the inverse of their
      * natural ordering.  Using this Constructor will create a ReverseComparator
      * that is functionally identical to the Comparator returned by
      * java.util.Collections.<b>reverseOrder()</b>.
      * 
-     * @see java.util.Collections#reverseOrder
+     * @see java.util.Collections#reverseOrder()
      */
     public ReverseComparator() {
         this(null);
@@ -50,7 +56,7 @@ public class ReverseComparator implements Comparator,Serializable {
      * of the given comparator.  If you pass in <code>null</code>,
      * the ReverseComparator defaults to reversing the
      * natural order, as per 
-     * {@link java.util.Collections#reverseOrder}</b>.
+     * {@link java.util.Collections#reverseOrder()}</b>.
      * 
      * @param comparator Comparator to reverse
      */
@@ -62,14 +68,24 @@ public class ReverseComparator implements Comparator,Serializable {
         }
     }
 
-    public int compare(Object o1, Object o2) {
-        return comparator.compare(o2, o1);
+    //-----------------------------------------------------------------------
+    /**
+     * Compares two objects in reverse order.
+     * 
+     * @param obj1  the first object to compare
+     * @param obj2  the second object to compare
+     * @return negative if obj1 is less, positive if greater, zero if equal
+     */
+    public int compare(Object obj1, Object obj2) {
+        return comparator.compare(obj2, obj1);
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Implement a hash code for this comparator that is consistent with
-     * {@link #equals}.
+     * {@link #equals(Object) equals}.
      * 
+     * @return a suitable hash code
      * @since Commons Collections 3.0
      */
     public int hashCode() {
@@ -82,29 +98,27 @@ public class ReverseComparator implements Comparator,Serializable {
      * equivalent to mine.
      * <p>
      * This implementation returns <code>true</code>
-     * iff <code><i>that</i>.{@link Object#getClass getClass()}</code>
+     * iff <code><i>object</i>.{@link Object#getClass() getClass()}</code>
      * equals <code>this.getClass()</code>, and the underlying 
-     * comparators are equal.  Subclasses may want to override
-     * this behavior to remain consistent with the 
-     * {@link Comparator#equals} contract.
+     * comparators are equal.
+     * Subclasses may want to override this behavior to remain consistent
+     * with the {@link Comparator#equals(Object) equals} contract.
      * 
+     * @param object  the object to compare to
+     * @return true if equal
      * @since Commons Collections 3.0
      */
-    public boolean equals(Object that) {
-        if(this == that) {
+    public boolean equals(Object object) {
+        if(this == object) {
             return true;
-        } else if(null == that) {
+        } else if(null == object) {
             return false;
-        } else if(that.getClass().equals(this.getClass())) {
-            ReverseComparator thatrc = (ReverseComparator)that;
+        } else if(object.getClass().equals(this.getClass())) {
+            ReverseComparator thatrc = (ReverseComparator)object;
             return comparator.equals(thatrc.comparator);
         } else {
             return false;
         }
     }
 
-    // use serialVersionUID from Collections 2.0 for interoperability
-    private static final long serialVersionUID = 2858887242028539265L;
-
-    private Comparator comparator;
 }
