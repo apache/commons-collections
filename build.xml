@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.22 2002/03/19 01:21:53 jefft Exp $ -->
+<!-- $Id: build.xml,v 1.23 2002/03/28 05:13:54 morgand Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -69,7 +69,13 @@
       <property name="dest.doc.api" value="${dest.doc}/api"/>
       <property name="dest.jardir" value="${dest}"/>
       <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
-
+      
+      <property name="bin.name" value="${name}-${component.version}"/>
+      <property name="dest.bin.tar" value="${dest}/${bin.name}.tar"/>
+      <property name="dest.bin.tar.gz" value="${dest}/${bin.name}.tar.gz"/>
+      <property name="dest.bin.zip" value="${dest}/${bin.name}.zip"/>
+      
+      
       <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
       <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->
       <available property="available-src-test" file="${source.src.test}"/> <!-- does this module have test src? -->
@@ -223,7 +229,7 @@
 
    <!-- ######################################################### -->
 
-   <target name="dist" depends="dist-jar,doc" description="builds binary distribution"/>
+   <target name="dist" depends="dist-jar,doc,dist-tar,dist-zip" description="builds binary distribution"/>
 
    <target name="dist-jar" depends="build">
       <mkdir dir="${dest.jardir}"/>
@@ -238,7 +244,51 @@
       </jar>
       <delete dir="${workdir}"/>
       <delete dir="${dest.classes}"/>
+      
    </target>
+   
+   <target name="dist-tar" depends="dist-jar,doc">
+
+      <mkdir dir="${workdir}/${bin.name}"/>
+      <copy todir="${workdir}/${bin.name}">
+         <fileset dir="${dest}">         
+           <exclude name="${bin.name}.zip"/>
+           <exclude name="${bin.name}.tar.gz"/>    
+         </fileset>
+      </copy>
+      
+      <!-- create tar.gz -->
+      <tar longfile="gnu" tarfile="${dest.bin.tar}">
+        <tarfileset dir="${workdir}"/>
+      </tar>
+      
+      <gzip zipfile="${dest.bin.tar.gz}"
+      	    src="${dest.bin.tar}">
+      </gzip>
+      <delete file="${dest.bin.tar}" />
+      
+      <delete dir="${workdir}"/>
+   
+   </target>  
+
+   <target name="dist-zip" depends="dist-jar,doc">
+
+      <mkdir dir="${workdir}/${bin.name}"/>
+      <copy todir="${workdir}/${bin.name}">
+         <fileset dir="${dest}">         
+           <exclude name="${bin.name}.zip"/>
+           <exclude name="${bin.name}.tar.gz"/>    
+         </fileset>
+      </copy>
+            
+      <!-- create a zip file -->
+      <zip zipfile="${dest.bin.zip}" >
+        <zipfileset dir="${workdir}" />
+      </zip>
+      
+      <delete dir="${workdir}"/>
+   
+   </target>     
 
    <!-- ######################################################### -->
 
