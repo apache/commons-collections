@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.11 2002/02/19 21:28:53 morgand Exp $
- * $Revision: 1.11 $
- * $Date: 2002/02/19 21:28:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.12 2002/02/20 18:01:34 morgand Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/02/20 18:01:34 $
  *
  * ====================================================================
  *
@@ -69,6 +69,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -76,7 +77,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.11 2002/02/19 21:28:53 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.12 2002/02/20 18:01:34 morgand Exp $
  */
 public class TestLRUMap extends TestMap
 {
@@ -99,15 +100,14 @@ public class TestLRUMap extends TestMap
     }
 
     public void testRemoveLRU() {
-        LRUMap map2 = new LRUMap(4);
+        LRUMap map2 = new LRUMap(3);
         map2.put(new Integer(1),"foo");
         map2.put(new Integer(2),"foo");
         map2.put(new Integer(3),"foo");
         map2.put(new Integer(4),"foo");
-        map2.removeLRU();  // should be Integer(4)
 
-        assertTrue("Second to last value should exist",map2.get(new Integer(3)).equals("foo"));
-        assertTrue("Last value inserted should not exist", map2.get(new Integer(4)) == null);
+        assertTrue("last value should exist",map2.get(new Integer(4)).equals("foo"));
+        assertTrue("LRU should not exist", map2.get(new Integer(1)) == null);
     }
 
     public void testMultiplePuts() {
@@ -165,14 +165,6 @@ public class TestLRUMap extends TestMap
     }
 
     /**
-     * Test performs a complex series of puts, then makes sure
-     * that they have ended up in the correct LRU order.
-     */
-    public void testTrueLRU() {
-        // implement when subclass of SequencedHashMap
-    }
-
-    /**
      * Test that the size of the map is reduced immediately
      * when setMaximumSize(int) is called
      */
@@ -218,65 +210,47 @@ public class TestLRUMap extends TestMap
      */
     public void testLRUSubclass() {
         LRUCounter counter = new LRUCounter(3);
-        counter.put(new Integer(1),"foo");
-        counter.put(new Integer(2),"foo");
-        counter.put(new Integer(3),"foo");
-        counter.put(new Integer(1),"foo");
-        counter.put(new Integer(4),"foo");
-        counter.put(new Integer(5),"foo");
-        counter.put(new Integer(2),"foo");
-        counter.remove(new Integer(5));
-
-        assertTrue("size should be 2, but was " + counter.size(), counter.size() == 2);
-        assertTrue("removedCount should be 2 but was " + counter.removedCount,
-                   counter.removedCount == 2);
-    }
-
-    /**
-     * You should be able to subclass LRUMap and perform a 
-     * custom action when items are removed automatically
-     * or when remove is called manually
-     * by overriding the remove(Object) method.
-     */
-    public void testRemoveSubclass() {
-        RemoveCounter counter = new RemoveCounter(3);
-        counter.put(new Integer(1),"foo");
-        counter.put(new Integer(2),"foo");
-        counter.put(new Integer(3),"foo");
-        counter.put(new Integer(1),"foo");
-        counter.put(new Integer(4),"foo");
-        counter.put(new Integer(5),"foo");
-        counter.put(new Integer(2),"foo");
-        counter.remove(new Integer(5));
+        // oldest <--> newest
+        // 1
+        counter.put("1","foo");
+        // 1 2
+        counter.put("2","foo");
+        // 1 2 3
+        counter.put("3","foo");
+        // 2 3 1
+        counter.put("1","foo");
+        // 3 1 4 (2 goes out)
+        counter.put("4","foo");
+        // 1 4 5 (3 goes out)
+        counter.put("5","foo");
+        // 4 5 2 (1 goes out)
+        counter.put("2","foo");
+        // 4 2
+        counter.remove("5");
 
         assertTrue("size should be 2, but was " + counter.size(), counter.size() == 2);
         assertTrue("removedCount should be 3 but was " + counter.removedCount,
                    counter.removedCount == 3);
+
+        assertTrue("first removed was '2'",counter.list.get(0).equals("2"));
+        assertTrue("second removed was '3'",counter.list.get(1).equals("3"));
+        assertTrue("third removed was '1'",counter.list.get(2).equals("1"));
+
+        assertTrue("oldest key is '4'",counter.get(0).equals("4"));
+        assertTrue("newest key is '2'",counter.get(1).equals("2"));
     }
 
     private class LRUCounter extends LRUMap {
         int removedCount = 0;
+        ArrayList list = new ArrayList(3); 
 
         LRUCounter(int i) {
             super(i);
         }
 
-        public Object removeLRU() {
+        protected void processRemovedLRU(Object key, Object value) {
             ++removedCount;
-            return super.removeLRU();
-        }
-    }
-
-    private class RemoveCounter extends LRUMap {
-        int removedCount = 0;
-
-        RemoveCounter(int i) {
-            super(i);
-        }
-
-        public Object remove(Object o) {
-            ++removedCount;
-            return super.remove(o);
+            list.add(key);
         }
     }
 
