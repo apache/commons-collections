@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.3 2003/01/12 15:23:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.4 2003/02/26 15:45:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,6 +57,7 @@
 
 package org.apache.commons.collections.primitives;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,7 @@ import org.apache.commons.collections.primitives.adapters.IntListList;
 import org.apache.commons.collections.primitives.adapters.ListIntList;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/01/12 15:23:20 $
+ * @version $Revision: 1.4 $ $Date: 2003/02/26 15:45:19 $
  * @author Rodney Waldhoff
  */
 public abstract class TestIntList extends TestList {
@@ -279,5 +280,15 @@ public abstract class TestIntList extends TestList {
             assertEquals("Should get entry back", i, list.get(i));
         }
     }
+
+    public void testIsSerializable() throws Exception {
+        IntList list = makeFullIntList();
+        assertTrue(list instanceof Serializable);
+        byte[] ser = writeExternalFormToBytes((Serializable)list);
+        IntList deser = (IntList)(readExternalFormFromBytes(ser));
+        assertEquals(list,deser);
+        assertEquals(deser,list);
+    }
+
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.6 2003/01/13 21:52:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.7 2003/02/26 15:45:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.6 $ $Date: 2003/01/13 21:52:28 $
+ * @version $Revision: 1.7 $ $Date: 2003/02/26 15:45:19 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedShortList extends TestIntList {
@@ -129,6 +129,82 @@ public class TestArrayUnsignedShortList extends TestIntList {
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
+        }
+    }
+
+    public void testNegativeInitialCapacityIsInvalid() {
+        try {
+            ArrayUnsignedShortList list = new ArrayUnsignedShortList(-1);
+            fail("Expected IllegalArgumentException");
+        } catch(IllegalArgumentException e) {
+            // expected
+        }
+    }
+
+    public void testCopyConstructor() {
+        ArrayUnsignedShortList expected = new ArrayUnsignedShortList();
+        for(int i=0;i<10;i++) {
+            expected.add(i);
+        }
+        ArrayUnsignedShortList list = new ArrayUnsignedShortList(expected);
+        assertEquals(10,list.size());
+        assertEquals(expected,list);
+    }
+
+    public void testCopyConstructorWithNull() {
+        try {
+            ArrayUnsignedShortList list = new ArrayUnsignedShortList(null);
+            fail("Expected NullPointerException");
+        } catch(NullPointerException e) {
+            // expected
+        }
+    }
+
+
+    public void testTrimToSize() {
+        ArrayUnsignedShortList list = new ArrayUnsignedShortList();
+        for(int j=0;j<3;j++) {
+            assertTrue(list.isEmpty());
+    
+            list.trimToSize();
+    
+            assertTrue(list.isEmpty());
+            
+            for(int i=0;i<10;i++) {
+                list.add(i);
+            }
+            
+            for(int i=0;i<10;i++) {
+                assertEquals(i,list.get(i));
+            }
+            
+            list.trimToSize();
+    
+            for(int i=0;i<10;i++) {
+                assertEquals(i,list.get(i));
+            }
+    
+            for(int i=0;i<10;i+=2) {
+                list.removeElement(i);
+            }
+            
+            for(int i=0;i<5;i++) {
+                assertEquals((2*i)+1,list.get(i));
+            }
+    
+            list.trimToSize();
+                    
+            for(int i=0;i<5;i++) {
+                assertEquals((2*i)+1,list.get(i));
+            }
+    
+            list.trimToSize();
+                    
+            for(int i=0;i<5;i++) {
+                assertEquals((2*i)+1,list.get(i));
+            }
+
+            list.clear();
         }
     }
 

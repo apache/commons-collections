@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayIntList.java,v 1.5 2003/01/13 21:52:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayIntList.java,v 1.6 2003/02/26 15:45:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,16 +57,21 @@
 
 package org.apache.commons.collections.primitives;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 /**
  * An {@link IntList} backed by an array of <code>int</code>s.
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/01/13 21:52:28 $
+ * @version $Revision: 1.6 $ $Date: 2003/02/26 15:45:19 $
  * 
  * @author Rodney Waldhoff 
  */
-public class ArrayIntList extends AbstractRandomAccessIntList implements IntList {
+public class ArrayIntList extends AbstractRandomAccessIntList implements IntList, Serializable {
 
     // constructors
     //-------------------------------------------------------------------------
@@ -222,6 +227,22 @@ public class ArrayIntList extends AbstractRandomAccessIntList implements IntList
 
     // private methods
     //-------------------------------------------------------------------------
+    
+    private void writeObject(ObjectOutputStream out) throws IOException{
+        out.defaultWriteObject();
+        out.writeInt(_data.length);
+        for(int i=0;i<_size;i++) {
+            out.writeInt(_data[i]);
+        }
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        _data = new int[in.readInt()];
+        for(int i=0;i<_size;i++) {
+            _data[i] = in.readInt();
+        }
+    }
     
     private final void checkRange(int index) {
         if(index < 0 || index >= _size) {
