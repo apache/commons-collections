@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.7 2002/06/21 03:33:28 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/21 03:33:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.8 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -61,12 +61,14 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
-import java.util.*;
+import java.util.EmptyStackException;
+import java.util.List;
+
+import junit.framework.Test;
 
 /**
  * @author Craig McClanahan
- * @version $Id: TestArrayStack.java,v 1.7 2002/06/21 03:33:28 mas Exp $
+ * @version $Id: TestArrayStack.java,v 1.8 2003/02/19 20:33:11 scolebourne Exp $
  */
 
 public class TestArrayStack extends TestArrayList {

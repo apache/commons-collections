@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.5 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/18 05:35:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.6 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -63,9 +63,17 @@ package org.apache.commons.collections;
 
 
 
-import junit.framework.*;
+import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
-import java.util.*;
+import junit.framework.Test;
 
 
 /**

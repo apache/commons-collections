@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLinkedList.java,v 1.1 2003/01/07 15:18:14 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/07 15:18:14 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLinkedList.java,v 1.2 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -61,20 +61,10 @@
 
 package org.apache.commons.collections;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.AbstractCollection;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 
@@ -89,7 +79,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link List} fails.
  *
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
- * @version $Id: TestLinkedList.java,v 1.1 2003/01/07 15:18:14 rwaldhoff Exp $
+ * @version $Id: TestLinkedList.java,v 1.2 2003/02/19 20:33:11 scolebourne Exp $
  */
 public abstract class TestLinkedList extends TestList {
 

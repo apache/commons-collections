@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.7 2003/01/07 23:44:19 rwaldhoff Exp $
- * $Revision: 1.7 $
- * $Date: 2003/01/07 23:44:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.8 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -61,12 +61,17 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import junit.framework.Test;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCursorableLinkedList.java,v 1.7 2003/01/07 23:44:19 rwaldhoff Exp $
+ * @version $Id: TestCursorableLinkedList.java,v 1.8 2003/02/19 20:33:11 scolebourne Exp $
  */
 public class TestCursorableLinkedList extends TestList {
     public TestCursorableLinkedList(String testName) {

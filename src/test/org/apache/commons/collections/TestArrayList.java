@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.5 2002/10/12 22:36:21 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/10/12 22:36:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.6 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -61,13 +61,14 @@
 
 package org.apache.commons.collections;
 
+import java.util.ArrayList;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import java.util.ArrayList;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestArrayList.java,v 1.5 2002/10/12 22:36:21 scolebourne Exp $
+ * @version $Id: TestArrayList.java,v 1.6 2003/02/19 20:33:11 scolebourne Exp $
  */
 public abstract class TestArrayList extends TestList
 {

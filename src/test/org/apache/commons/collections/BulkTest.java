@@ -1,15 +1,16 @@
 package org.apache.commons.collections;
 
 
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 
 /**
@@ -119,7 +120,7 @@ import java.util.List;
  *  interpret bulk test methods.
  *
  *  @author Paul Jack
- *  @version $Id: BulkTest.java,v 1.2 2002/10/12 22:36:22 scolebourne Exp $
+ *  @version $Id: BulkTest.java,v 1.3 2003/02/19 20:33:11 scolebourne Exp $
  */
 public class BulkTest extends TestCase implements Cloneable {
 

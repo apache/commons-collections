@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.3 2002/10/13 13:00:23 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2002/10/13 13:00:23 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.4 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -60,10 +60,11 @@
  */
 package org.apache.commons.collections;
 
-import junit.framework.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
+import junit.framework.Test;
 /**
  *  Test cases for BoundedFifoBuffer.
  */

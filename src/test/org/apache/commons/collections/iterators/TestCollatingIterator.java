@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestCollatingIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestCollatingIterator.java,v 1.2 2003/02/19 20:33:10 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/02/19 20:33:10 $
  *
  * ====================================================================
  *
@@ -61,15 +61,18 @@
 
 package org.apache.commons.collections.iterators;
 
-import junit.framework.*;
-import java.util.Iterator;
-import java.util.Comparator;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.commons.collections.comparators.ComparableComparator;
 
 /**
  * Unit test suite for {@link CollatingIterator}.
- * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:52 $
+ * @version $Revision: 1.2 $ $Date: 2003/02/19 20:33:10 $
  * @author Rodney Waldhoff
  */
 public class TestCollatingIterator extends TestIterator {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.39 2003/01/07 15:18:14 rwaldhoff Exp $
- * $Revision: 1.39 $
- * $Date: 2003/01/07 15:18:14 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.40 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.40 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -61,12 +61,14 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.39 2003/01/07 15:18:14 rwaldhoff Exp $
+ * @version $Id: TestAll.java,v 1.40 2003/02/19 20:33:11 scolebourne Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {

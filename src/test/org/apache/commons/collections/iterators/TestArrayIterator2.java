@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayIterator2.java,v 1.2 2002/12/13 12:10:48 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/12/13 12:10:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayIterator2.java,v 1.3 2003/02/19 20:33:10 scolebourne Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/02/19 20:33:10 $
  *
  * ====================================================================
  *
@@ -60,15 +60,17 @@
  */
 package org.apache.commons.collections.iterators;
 
-import junit.framework.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 /**
  * Tests the ArrayIterator with primitive type arrays
  * 
  * @author Morgan Delagrange
  * @author James Strachan
- * @version $Id: TestArrayIterator2.java,v 1.2 2002/12/13 12:10:48 scolebourne Exp $
+ * @version $Id: TestArrayIterator2.java,v 1.3 2003/02/19 20:33:10 scolebourne Exp $
  */
 public class TestArrayIterator2 extends TestIterator {
 

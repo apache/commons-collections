@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.4 2003/01/07 15:18:15 rwaldhoff Exp $
- * $Revision: 1.4 $
- * $Date: 2003/01/07 15:18:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.5 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -61,9 +61,7 @@
 
 package org.apache.commons.collections;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import junit.framework.Test;
 
@@ -72,7 +70,7 @@ import junit.framework.Test;
  * Tests for ReferenceMap. 
  *
  * @author Paul Jack
- * @version $Id: TestReferenceMap.java,v 1.4 2003/01/07 15:18:15 rwaldhoff Exp $
+ * @version $Id: TestReferenceMap.java,v 1.5 2003/02/19 20:33:11 scolebourne Exp $
  */
 public class TestReferenceMap extends TestMap {
 

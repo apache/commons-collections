@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.13 2003/01/27 23:19:28 rwaldhoff Exp $
- * $Revision: 1.13 $
- * $Date: 2003/01/27 23:19:28 $
+ * $Id: TestCollectionUtils.java,v 1.14 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.14 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -61,12 +61,22 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * @author Rodney Waldhoff
- * @version $Revision: 1.13 $ $Date: 2003/01/27 23:19:28 $
+ * @version $Revision: 1.14 $ $Date: 2003/02/19 20:33:11 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {

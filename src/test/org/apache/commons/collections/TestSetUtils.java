@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.2 2002/08/18 20:11:38 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/18 20:11:38 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.3 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -60,10 +60,11 @@
  */
 package org.apache.commons.collections;
 
-import junit.framework.Test;
 import java.util.Collection;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
+
+import junit.framework.Test;
 
 
 /**

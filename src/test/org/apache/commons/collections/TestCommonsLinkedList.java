@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCommonsLinkedList.java,v 1.1 2003/01/07 15:18:14 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/07 15:18:14 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCommonsLinkedList.java,v 1.2 2003/02/19 20:33:11 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/02/19 20:33:11 $
  *
  * ====================================================================
  *
@@ -60,7 +60,7 @@
  */
 package org.apache.commons.collections;
 
-import java.util.*;
+import java.util.LinkedList;
 
 import junit.framework.Test;
 
