@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.8 2003/01/07 23:44:19 rwaldhoff Exp $
- * $Revision: 1.8 $
- * $Date: 2003/01/07 23:44:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.9 2003/01/25 12:06:55 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2003/01/25 12:06:55 $
  *
  * ====================================================================
  *
@@ -61,6 +61,7 @@
 package org.apache.commons.collections;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -344,4 +345,16 @@ public class TestBeanMap extends TestMap {
         assertEquals(map1.get("someIntValue"), new Integer(0));
     }
 
+    public void testMethodAccessor() throws Exception {
+        BeanMap map = (BeanMap) makeFullMap();
+        Method method = BeanWithProperties.class.getDeclaredMethod("getSomeIntegerValue", null);
+        assertEquals(method, map.getReadMethod("someIntegerValue"));
+    }
+    
+    public void testMethodMutator() throws Exception {
+        BeanMap map = (BeanMap) makeFullMap();
+        Method method = BeanWithProperties.class.getDeclaredMethod("setSomeIntegerValue", new Class[] {Integer.class});
+        assertEquals(method, map.getWriteMethod("someIntegerValue"));
+    }
+    
 }

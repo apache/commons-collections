@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.14 2002/10/12 22:15:19 scolebourne Exp $
- * $Revision: 1.14 $
- * $Date: 2002/10/12 22:15:19 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.15 2003/01/25 12:06:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -77,16 +74,19 @@ import java.util.Iterator;
 import java.util.Set;
 
 
-/** An implementation of Map for JavaBeans which uses introspection to
-  * get and put properties in the bean.
-  *
-  * If an exception occurs during attempts to get or set a property then the
-  * property is considered non existent in the Map
-  *
-  * @since 1.0
-  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  */
-
+/** 
+ * An implementation of Map for JavaBeans which uses introspection to
+ * get and put properties in the bean.
+ * <p>
+ * If an exception occurs during attempts to get or set a property then the
+ * property is considered non existent in the Map
+ *
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.15 $ $Date: 2003/01/25 12:06:55 $
+ * 
+ * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author Stephen Colebourne
+ */
 public class BeanMap extends AbstractMap implements Cloneable {
 
     private transient Object bean;
@@ -571,6 +571,26 @@ public class BeanMap extends AbstractMap implements Cloneable {
     public void setBean( Object newBean ) {
         bean = newBean;
         reinitialise();
+    }
+
+    /**
+     * Returns the accessor for the property with the given name.
+     *
+     * @param name  the name of the property 
+     * @return the accessor method for the property, or null
+     */
+    public Method getReadMethod(String name) {
+        return (Method) readMethods.get(name);
+    }
+
+    /**
+     * Returns the mutator for the property with the given name.
+     *
+     * @param name  the name of the property
+     * @return the mutator method for the property, or null
+     */
+    public Method getWriteMethod(String name) {
+        return (Method) writeMethods.get(name);
     }
 
 
