@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.4 2002/08/21 23:54:18 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/21 23:54:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.5 2002/08/22 01:50:54 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/22 01:50:54 $
  *
  * ====================================================================
  *
@@ -72,11 +72,15 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * A list of unsigned 16-bit values, stored in an <Code>int</Code> array.
+ * A list of unsigned 16-bit values backed by a <Code>short</Code> array.
+ * The unsigned 8-bit values are converted to and from a signed 16-bit
+ * <code>short</code> that's stored in the stored in the array.  
  * Mutators on this class will reject any <Code>int</Code> that does not
- * express an unsigned 16-bit value.
+ * express an unsigned 16-bit value.  This implementation uses less memory
+ * than a {@link java.util.ArrayList} and offers better compile-time type
+ * checking.
  *
- * @version $Revision: 1.4 $ $Date: 2002/08/21 23:54:18 $
+ * @version $Revision: 1.5 $ $Date: 2002/08/22 01:50:54 $
  * @author Rodney Waldhoff 
  */
 public class UnsignedShortArrayList extends AbstractIntArrayList implements Serializable {

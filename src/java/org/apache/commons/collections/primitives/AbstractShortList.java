@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortList.java,v 1.2 2002/08/21 23:54:18 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/21 23:54:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortList.java,v 1.3 2002/08/22 01:50:54 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/22 01:50:54 $
  *
  * ====================================================================
  *
@@ -69,9 +69,28 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Abstract base class for lists backed by a <Code>short</Code> array.
+ * Abstract base class for lists of primitive <Code>short</Code> elements.<P>
  *
- * @version $Revision: 1.2 $ $Date: 2002/08/21 23:54:18 $
+ * The {@link List} methods are all implemented, but they forward to 
+ * abstract methods that operate on <Code>short</Code> elements.  For 
+ * instance, the {@link #get(int)} method simply forwards to 
+ * {@link #getShort(int)}.  The primitive <Code>short</Code> that is 
+ * returned from {@link #getShort(int)} is wrapped in a {@link java.lang.Short}
+ * and returned from {@link #get(int)}.<p>
+ *
+ * Concrete implementations offer substantial memory savings by not storing
+ * primitives as wrapped objects.  If you excuslively use the primitive 
+ * signatures, there can also be substantial performance gains, since 
+ * temporary wrapper objects do not need to be created.<p>
+ *
+ * To implement a read-only list of <Code>short</Code> elements, you need
+ * only implement the {@link #getShort(int)} and {@link #size()} methods.
+ * To implement a modifiable list, you will also need to implement the
+ * {@link #setShort(int,short)}, {@link #addShort(int,short)}, 
+ * {@link #removeShortAt(int)} and {@link #clear()} methods.  You may want 
+ * to override the other methods to increase performance.<P>
+ *
+ * @version $Revision: 1.3 $ $Date: 2002/08/22 01:50:54 $
  * @author Rodney Waldhoff 
  */
 public abstract class AbstractShortList extends AbstractList {
@@ -97,37 +116,65 @@ public abstract class AbstractShortList extends AbstractList {
      */
     abstract public short getShort(int index);
 
+    //--------------------------------------------------------------- Accessors
+    
     /**
      *  Returns <Code>true</Code> if this list contains the given 
-     *  <Code>short</Code> element.
+     *  <Code>short</Code> element.  The default implementation uses 
+     *  {@link #indexOfShort(short)} to determine if the given value is
+     *  in this list.
      *
      *  @param value  the element to search for
      *  @return true if this list contains the given value, false otherwise
      */
-    abstract public boolean containsShort(short value);
+    public boolean containsShort(short value) {
+        return indexOfShort(value) >= 0;
+    }
 
     /**
      *  Returns the first index of the given <Code>short</Code> element, or
-     *  -1 if the value is not in this list.
+     *  -1 if the value is not in this list.  The default implementation is:
+     *
+     *  <pre>
+     *   for (int i = 0; i < size(); i++) {
+     *       if (getShort(i) == value) return i;
+     *   }
+     *   return -1;
+     *  </pre>
      *
      *  @param value  the element to search for
      *  @return  the first index of that element, or -1 if the element is
      *    not in this list
      */
-    abstract public int indexOfShort(short value);
+    public int indexOfShort(short value) {
+        for (int i = 0; i < size(); i++) {
+            if (getShort(i) == value) return i;
+        }
+        return -1;
+    }
 
     /**
      *  Returns the last index of the given <Code>short</Code> element, or
-     *  -1 if the value is not in this list.
+     *  -1 if the value is not in this list.  The default implementation is:
+     *
+     *  <pre>
+     *   for (int i = size() - 1; i >= 0; i--) {
+     *       if (getShort(i) == value) return i;
+     *   }
+     *   return -1;
+     *  </pre>
      *
      *  @param value  the element to search for
      *  @return  the last index of that element, or -1 if the element is
      *    not in this list
      */
-    abstract public int lastIndexOfShort(short value);
+    public int lastIndexOfShort(short value) {
+        for (int i = size() - 1; i >= 0; i--) {
+            if (getShort(i) == value) return i;
+        }
+        return -1;
+    }
 
-    //--------------------------------------------------------------- Accessors
-    
     /** 
      *  Returns <code>new Short({@link #getShort getShort(index)})</code>. 
      *
@@ -209,14 +256,6 @@ public abstract class AbstractShortList extends AbstractList {
     abstract public short setShort(int index, short value);
 
     /**
-     *  Adds the given <Code>short</Code> value to the end of this list.
-     *
-     *  @param value  the value to add
-     *  @return  true, always
-     */
-    abstract public boolean addShort(short value);
-
-    /**
      *  Inserts the given <Code>short</Code> value into this list at the
      *  specified index.
      *
@@ -238,22 +277,47 @@ public abstract class AbstractShortList extends AbstractList {
     abstract public short removeShortAt(int index);
 
     /**
-     *  Removes the first occurrence of the given <Code>short</Code> value
-     *  from this list.
-     *
-     *  @param value  the value to remove
-     *  @return  true if this list contained that value and removed it,
-     *   or false if this list didn't contain the value
-     */
-    abstract public boolean removeShort(short value);
-
-    /**
      *  Removes all <Code>short</Code> values from this list.
      */
     abstract public void clear();
 
     //--------------------------------------------------------------- Modifiers
     
+    /**
+     *  Adds the given <Code>short</Code> value to the end of this list.
+     *  The default implementation invokes {@link #addShort(int,short)
+     *  addShort(size(), value)}.
+     *
+     *  @param value  the value to add
+     *  @return  true, always
+     */
+    public boolean addShort(short value) {
+        addShort(size(), value);
+        return true;
+    }
+
+    /**
+     *  Removes the first occurrence of the given <Code>short</Code> value
+     *  from this list.  The default implementation is:
+     *
+     *  <pre>
+     *   int i = indexOfShort(value);
+     *   if (i < 0) return false;
+     *   removeShortAt(i);
+     *   return true;
+     *  </pre>
+     *
+     *  @param value  the value to remove
+     *  @return  true if this list contained that value and removed it,
+     *   or false if this list didn't contain the value
+     */
+    public boolean removeShort(short value) {
+        int i = indexOfShort(value);
+        if (i < 0) return false;
+        removeShortAt(i);
+        return true;
+    }
+
     /** 
      * Returns <code>new Short({@link #setShort(int,short) 
      * setShort(index,((Short)value.shortValue())})</code>. 

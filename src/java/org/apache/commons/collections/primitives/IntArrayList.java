@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.4 2002/08/21 23:54:18 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/21 23:54:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.5 2002/08/22 01:50:54 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/22 01:50:54 $
  *
  * ====================================================================
  *
@@ -72,9 +72,13 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * A list of <Code>int</Code> elements.
+ * A list of <Code>int</Code> elements backed by an <Code>int</Code> array.
+ * This class implements the {@link List} interface for an array of 
+ * <Code>int</Code> values.  This class uses less memory than an
+ * {@link java.util.ArrayList} of {@link Integer} values and allows for
+ * better compile-time type checking.<P>
  *
- * @version $Revision: 1.4 $ $Date: 2002/08/21 23:54:18 $
+ * @version $Revision: 1.5 $ $Date: 2002/08/22 01:50:54 $
  * @author Rodney Waldhoff 
  */
 public class IntArrayList extends AbstractIntArrayList implements Serializable {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedByteArrayList.java,v 1.4 2002/08/21 23:54:18 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/21 23:54:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedByteArrayList.java,v 1.5 2002/08/22 01:50:54 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/22 01:50:54 $
  *
  * ====================================================================
  *
@@ -72,11 +72,15 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * A list of unsigned 8-bit values, stored in a <Code>short</Code> array.
+ * A list of unsigned 8-bit values backed by a <Code>byte</Code> array.
+ * The unsigned 8-bit values are converted to and from a signed 8-bit
+ * <code>byte</code> that's stored in the stored in the array.  
  * Mutators on this class will reject any <Code>short</Code> that does not
- * express an unsigned 8-bit value.
+ * express an unsigned 8-bit value.  This implementation uses less memory
+ * than a {@link java.util.ArrayList} and offers better compile-time type
+ * checking.
  *
- * @version $Revision: 1.4 $ $Date: 2002/08/21 23:54:18 $
+ * @version $Revision: 1.5 $ $Date: 2002/08/22 01:50:54 $
  * @author Rodney Waldhoff 
  */
 public class UnsignedByteArrayList extends AbstractShortArrayList implements Serializable {

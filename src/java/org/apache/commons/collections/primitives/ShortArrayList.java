@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ShortArrayList.java,v 1.4 2002/08/21 23:54:18 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/21 23:54:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ShortArrayList.java,v 1.5 2002/08/22 01:50:54 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/22 01:50:54 $
  *
  * ====================================================================
  *
@@ -72,9 +72,13 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * A list of <Code>short</Code> elements.
- * 
- * @version $Revision: 1.4 $ $Date: 2002/08/21 23:54:18 $
+ * A list of <Code>short</Code> elements backed by an <Code>short</Code> array.
+ * This class implements the {@link List} interface for an array of 
+ * <Code>short</Code> values.  This class uses less memory than an
+ * {@link java.util.ArrayList} of {@link Short} values and allows for
+ * better compile-time type checking.<P>
+ *
+ * @version $Revision: 1.5 $ $Date: 2002/08/22 01:50:54 $
  * @author Rodney Waldhoff 
  */
 public class ShortArrayList extends AbstractShortArrayList implements Serializable {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongList.java,v 1.2 2002/08/21 23:54:18 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/21 23:54:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongList.java,v 1.3 2002/08/22 01:50:54 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/22 01:50:54 $
  *
  * ====================================================================
  *
@@ -69,9 +69,28 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Abstract base class for lists backed by a <Code>long</Code> array.
+ * Abstract base class for lists of primitive <Code>long</Code> elements.<P>
  *
- * @version $Revision: 1.2 $ $Date: 2002/08/21 23:54:18 $
+ * The {@link List} methods are all implemented, but they forward to 
+ * abstract methods that operate on <Code>long</Code> elements.  For 
+ * instance, the {@link #get(int)} method simply forwards to 
+ * {@link #getLong(int)}.  The primitive <Code>long</Code> that is 
+ * returned from {@link #getLong(int)} is wrapped in a {@link java.lang.Long}
+ * and returned from {@link #get(int)}.<p>
+ *
+ * Concrete implementations offer substantial memory savings by not storing
+ * primitives as wrapped objects.  If you excuslively use the primitive 
+ * signatures, there can also be substantial performance gains, since 
+ * temporary wrapper objects do not need to be created.<p>
+ *
+ * To implement a read-only list of <Code>long</Code> elements, you need
+ * only implement the {@link #getLong(int)} and {@link #size()} methods.
+ * To implement a modifiable list, you will also need to implement the
+ * {@link #setLong(int,long)}, {@link #addLong(int,long)}, 
+ * {@link #removeLongAt(int)} and {@link #clear()} methods.  You may want 
+ * to override the other methods to increase performance.<P>
+ *
+ * @version $Revision: 1.3 $ $Date: 2002/08/22 01:50:54 $
  * @author Rodney Waldhoff 
  */
 public abstract class AbstractLongList extends AbstractList {
@@ -97,37 +116,65 @@ public abstract class AbstractLongList extends AbstractList {
      */
     abstract public long getLong(int index);
 
+    //--------------------------------------------------------------- Accessors
+    
     /**
      *  Returns <Code>true</Code> if this list contains the given 
-     *  <Code>long</Code> element.
+     *  <Code>long</Code> element.  The default implementation uses 
+     *  {@link #indexOfLong(long)} to determine if the given value is
+     *  in this list.
      *
      *  @param value  the element to search for
      *  @return true if this list contains the given value, false otherwise
      */
-    abstract public boolean containsLong(long value);
+    public boolean containsLong(long value) {
+        return indexOfLong(value) >= 0;
+    }
 
     /**
      *  Returns the first index of the given <Code>long</Code> element, or
-     *  -1 if the value is not in this list.
+     *  -1 if the value is not in this list.  The default implementation is:
+     *
+     *  <pre>
+     *   for (int i = 0; i < size(); i++) {
+     *       if (getLong(i) == value) return i;
+     *   }
+     *   return -1;
+     *  </pre>
      *
      *  @param value  the element to search for
      *  @return  the first index of that element, or -1 if the element is
      *    not in this list
      */
-    abstract public int indexOfLong(long value);
+    public int indexOfLong(long value) {
+        for (int i = 0; i < size(); i++) {
+            if (getLong(i) == value) return i;
+        }
+        return -1;
+    }
 
     /**
      *  Returns the last index of the given <Code>long</Code> element, or
-     *  -1 if the value is not in this list.
+     *  -1 if the value is not in this list.  The default implementation is:
+     *
+     *  <pre>
+     *   for (int i = size() - 1; i >= 0; i--) {
+     *       if (getLong(i) == value) return i;
+     *   }
+     *   return -1;
+     *  </pre>
      *
      *  @param value  the element to search for
      *  @return  the last index of that element, or -1 if the element is
      *    not in this list
      */
-    abstract public int lastIndexOfLong(long value);
+    public int lastIndexOfLong(long value) {
+        for (int i = size() - 1; i >= 0; i--) {
+            if (getLong(i) == value) return i;
+        }
+        return -1;
+    }
 
-    //--------------------------------------------------------------- Accessors
-    
     /** 
      *  Returns <code>new Long({@link #getLong getLong(index)})</code>. 
      *
@@ -209,14 +256,6 @@ public abstract class AbstractLongList extends AbstractList {
     abstract public long setLong(int index, long value);
 
     /**
-     *  Adds the given <Code>long</Code> value to the end of this list.
-     *
-     *  @param value  the value to add
-     *  @return  true, always
-     */
-    abstract public boolean addLong(long value);
-
-    /**
      *  Inserts the given <Code>long</Code> value into this list at the
      *  specified index.
      *
@@ -238,22 +277,47 @@ public abstract class AbstractLongList extends AbstractList {
     abstract public long removeLongAt(int index);
 
     /**
-     *  Removes the first occurrence of the given <Code>long</Code> value
-     *  from this list.
-     *
-     *  @param value  the value to remove
-     *  @return  true if this list contained that value and removed it,
-     *   or false if this list didn't contain the value
-     */
-    abstract public boolean removeLong(long value);
-
-    /**
      *  Removes all <Code>long</Code> values from this list.
      */
     abstract public void clear();
 
     //--------------------------------------------------------------- Modifiers
     
+    /**
+     *  Adds the given <Code>long</Code> value to the end of this list.
+     *  The default implementation invokes {@link #addLong(int,long)
+     *  addLong(size(), value)}.
+     *
+     *  @param value  the value to add
+     *  @return  true, always
+     */
+    public boolean addLong(long value) {
+        addLong(size(), value);
+        return true;
+    }
+
+    /**
+     *  Removes the first occurrence of the given <Code>long</Code> value
+     *  from this list.  The default implementation is:
+     *
+     *  <pre>
+     *   int i = indexOfLong(value);
+     *   if (i < 0) return false;
+     *   removeLongAt(i);
+     *   return true;
+     *  </pre>
+     *
+     *  @param value  the value to remove
+     *  @return  true if this list contained that value and removed it,
+     *   or false if this list didn't contain the value
+     */
+    public boolean removeLong(long value) {
+        int i = indexOfLong(value);
+        if (i < 0) return false;
+        removeLongAt(i);
+        return true;
+    }
+
     /** 
      * Returns <code>new Long({@link #setLong(int,long) 
      * setLong(index,((Long).longValue())})</code>. 

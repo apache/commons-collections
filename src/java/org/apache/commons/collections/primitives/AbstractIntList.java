@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntList.java,v 1.2 2002/08/21 23:54:18 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/21 23:54:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntList.java,v 1.3 2002/08/22 01:50:54 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/22 01:50:54 $
  *
  * ====================================================================
  *
@@ -69,9 +69,28 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Abstract base class for lists backed by an <Code>int</Code> array.
+ * Abstract base class for lists of primitive <Code>int</Code> elements.<P>
  *
- * @version $Revision: 1.2 $ $Date: 2002/08/21 23:54:18 $
+ * The {@link List} methods are all implemented, but they forward to 
+ * abstract methods that operate on <Code>int</Code> elements.  For 
+ * instance, the {@link #get(int)} method simply forwards to 
+ * {@link #getInt(int)}.  The primitive <Code>int</Code> that is 
+ * returned from {@link #getInt(int)} is wrapped in a {@link java.lang.Integer}
+ * and returned from {@link #get(int)}.<p>
+ *
+ * Concrete implementations offer substantial memory savings by not storing
+ * primitives as wrapped objects.  If you excuslively use the primitive 
+ * signatures, there can also be substantial performance gains, since 
+ * temporary wrapper objects do not need to be created.<p>
+ *
+ * To implement a read-only list of <Code>int</Code> elements, you need
+ * only implement the {@link #getInt(int)} and {@link #size()} methods.
+ * To implement a modifiable list, you will also need to implement the
+ * {@link #setInt(int,int)}, {@link #addInt(int,int)}, 
+ * {@link #removeIntAt(int)} and {@link #clear()} methods.  You may want 
+ * to override the other methods to increase performance.<P>
+ *
+ * @version $Revision: 1.3 $ $Date: 2002/08/22 01:50:54 $
  * @author Rodney Waldhoff 
  */
 public abstract class AbstractIntList extends AbstractList {
@@ -98,40 +117,65 @@ public abstract class AbstractIntList extends AbstractList {
      */
     abstract public int getInt(int index);
 
-
+    //--------------------------------------------------------------- Accessors
+    
     /**
      *  Returns <Code>true</Code> if this list contains the given 
-     *  <Code>int</Code> element.
+     *  <Code>int</Code> element.  The default implementation uses 
+     *  {@link #indexOfInt(int)} to determine if the given value is
+     *  in this list.
      *
      *  @param value  the element to search for
      *  @return true if this list contains the given value, false otherwise
      */
-    abstract public boolean containsInt(int value);
-
+    public boolean containsInt(int value) {
+        return indexOfInt(value) >= 0;
+    }
 
     /**
      *  Returns the first index of the given <Code>int</Code> element, or
-     *  -1 if the value is not in this list.
+     *  -1 if the value is not in this list.  The default implementation is:
+     *
+     *  <pre>
+     *   for (int i = 0; i < size(); i++) {
+     *       if (getInt(i) == value) return i;
+     *   }
+     *   return -1;
+     *  </pre>
      *
      *  @param value  the element to search for
      *  @return  the first index of that element, or -1 if the element is
      *    not in this list
      */
-    abstract public int indexOfInt(int value);
-
+    public int indexOfInt(int value) {
+        for (int i = 0; i < size(); i++) {
+            if (getInt(i) == value) return i;
+        }
+        return -1;
+    }
 
     /**
      *  Returns the last index of the given <Code>int</Code> element, or
-     *  -1 if the value is not in this list.
+     *  -1 if the value is not in this list.  The default implementation is:
+     *
+     *  <pre>
+     *   for (int i = size() - 1; i >= 0; i--) {
+     *       if (getInt(i) == value) return i;
+     *   }
+     *   return -1;
+     *  </pre>
      *
      *  @param value  the element to search for
      *  @return  the last index of that element, or -1 if the element is
      *    not in this list
      */
-    abstract public int lastIndexOfInt(int value);
+    public int lastIndexOfInt(int value) {
+        for (int i = size() - 1; i >= 0; i--) {
+            if (getInt(i) == value) return i;
+        }
+        return -1;
+    }
 
-    //--------------------------------------------------------------- Accessors
-    
     /** 
      *  Returns <code>new Integer({@link #getInt getInt(index)})</code>. 
      *
@@ -213,15 +257,6 @@ public abstract class AbstractIntList extends AbstractList {
     abstract public int setInt(int index, int value);
 
     /**
-     *  Adds the given <Code>int</Code> value to the end of this list.
-     *
-     *  @param value  the value to add
-     *  @return  true, always
-     */
-    abstract public boolean addInt(int value);
-
-
-    /**
      *  Inserts the given <Code>int</Code> value into this list at the
      *  specified index.
      *
@@ -243,17 +278,6 @@ public abstract class AbstractIntList extends AbstractList {
      */
     abstract public int removeIntAt(int index);
 
-
-    /**
-     *  Removes the first occurrence of the given <Code>int</COde> value
-     *  from this list.
-     *
-     *  @param value  the value to remove
-     *  @return  true if this list contained that value and removed it,
-     *   or false if this list didn't contain the value
-     */
-    abstract public boolean removeInt(int value);
-
     /**
      *  Removes all <Code>int</Code> values from this list.
      */
@@ -261,6 +285,41 @@ public abstract class AbstractIntList extends AbstractList {
 
     //--------------------------------------------------------------- Modifiers
     
+    /**
+     *  Adds the given <Code>int</Code> value to the end of this list.
+     *  The default implementation invokes {@link #addInt(int,int)
+     *  addInt(size(), value)}.
+     *
+     *  @param value  the value to add
+     *  @return  true, always
+     */
+    public boolean addInt(int value) {
+        addInt(size(), value);
+        return true;
+    }
+
+    /**
+     *  Removes the first occurrence of the given <Code>int</Code> value
+     *  from this list.  The default implementation is:
+     *
+     *  <pre>
+     *   int i = indexOfInt(value);
+     *   if (i < 0) return false;
+     *   removeIntAt(i);
+     *   return true;
+     *  </pre>
+     *
+     *  @param value  the value to remove
+     *  @return  true if this list contained that value and removed it,
+     *   or false if this list didn't contain the value
+     */
+    public boolean removeInt(int value) {
+        int i = indexOfInt(value);
+        if (i < 0) return false;
+        removeIntAt(i);
+        return true;
+    }
+
     /** 
      * Returns <code>new Integer({@link #setInt(int,int) 
      * setInt(index,((Integer)value).intValue())})</code>. 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortArrayList.java,v 1.4 2002/08/21 23:54:18 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/21 23:54:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortArrayList.java,v 1.5 2002/08/22 01:50:54 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/22 01:50:54 $
  *
  * ====================================================================
  *
@@ -69,9 +69,15 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Abstract base class for lists backed by a <Code>short</Code> array.
+ * Abstract base class for lists of primitive <Code>short</Code> elements
+ * backed by an array.<P>
  *
- * @version $Revision: 1.4 $ $Date: 2002/08/21 23:54:18 $
+ * Extending this class is essentially the same as extending its superclass
+ * ({@link AbstractShortList}.  However, this class assumes that the 
+ * primitive values will be stored in an underlying primitive array, and
+ * provides methods for manipulating the capacity of that array.<P>
+ *
+ * @version $Revision: 1.5 $ $Date: 2002/08/22 01:50:54 $
  * @author Rodney Waldhoff 
  */
 public abstract class AbstractShortArrayList extends AbstractShortList {
