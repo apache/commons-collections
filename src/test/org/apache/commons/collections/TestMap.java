@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.5 2002/02/21 19:57:33 morgand Exp $
- * $Revision: 1.5 $
- * $Date: 2002/02/21 19:57:33 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.6 2002/02/21 20:08:15 morgand Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/02/21 20:08:15 $
  *
  * ====================================================================
  *
@@ -77,7 +77,7 @@ import java.util.Set;
  * test case (method) your {@link Map} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.5 2002/02/21 19:57:33 morgand Exp $
+ * @version $Id: TestMap.java,v 1.6 2002/02/21 20:08:15 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
     public TestMap(String testName) {
@@ -206,7 +206,8 @@ public abstract class TestMap extends TestObject {
 
     public void testEntrySetRemove() {
 
-        if ((this instanceof TestMap.EntrySetSupportsRemove) == false) {
+        if ((this instanceof TestMap.EntrySetSupportsRemove) == false ||
+            (this instanceof TestMap.SupportsPut) == false) {
             return;
         }
 
@@ -225,6 +226,29 @@ public abstract class TestMap extends TestObject {
         set.remove(o);
 
         assertTrue("size of Map should be 2, but was " + map.size(), map.size() == 2);
+
+    }
+
+    public void testEntrySetContains() {
+
+        if ((this instanceof TestMap.SupportsPut) == false) {
+            return;
+        }
+
+        Map map = makeMap();
+        map.put("1","1");
+        map.put("2","2");
+        map.put("3","3");
+
+        Set set = map.entrySet();
+        Object o = set.iterator().next();
+        assertTrue("entry set should contain valid element",set.contains(o));
+
+        // make a bogus entry
+        DefaultMapEntry entry = new DefaultMapEntry("4","4");
+        assertTrue("entry set should not contain a bogus element",
+                   set.contains(entry) == false);
+        
 
     }
 
