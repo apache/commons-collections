@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.11 2003/01/18 12:47:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.12 2003/01/18 13:37:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -99,9 +99,10 @@ import java.util.Set;
  * Double-Checked Locking Idiom Is Broken Declartion</A>.</P>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.11 $ $Date: 2003/01/18 12:47:34 $
+ * @version $Revision: 1.12 $ $Date: 2003/01/18 13:37:12 $
  * 
  * @author Craig R. McClanahan
+ * @author Stephen Colebourne
  */
 public class FastHashMap extends HashMap {
 
@@ -346,9 +347,7 @@ public class FastHashMap extends HashMap {
     public void clear() {
         if (fast) {
             synchronized (this) {
-                HashMap temp = (HashMap) map.clone();
-                temp.clear();
-                map = temp;
+                map = new HashMap();
             }
         } else {
             synchronized (map) {
@@ -514,9 +513,7 @@ public class FastHashMap extends HashMap {
         public void clear() {
             if (fast) {
                 synchronized (FastHashMap.this) {
-                    HashMap temp = (HashMap) map.clone();
-                    get(temp).clear();
-                    map = temp;
+                    map = new HashMap();
                 }
             } else {
                 synchronized (map) {
