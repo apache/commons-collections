@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.13 2002/04/16 21:15:13 morgand Exp $
- * $Revision: 1.13 $
- * $Date: 2002/04/16 21:15:13 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.14 2002/05/08 18:11:36 morgand Exp $
+ * $Revision: 1.14 $
+ * $Date: 2002/05/08 18:11:36 $
  *
  * ====================================================================
  *
@@ -118,6 +118,24 @@ public class LRUMap extends SequencedHashMap implements Externalizable {
         maximumSize = i;
     }
 
+    /**
+     * <p>Get the value for a key from the Map.  The key
+     * will be promoted to the Most Recently Used position.
+     * Note that get(Object) operations will modify
+     * the underlying Collection.  Calling get(Object)
+     * inside of an iteration over keys, values, etc. is
+     * currently unsupported.</p>
+     * 
+     * @param key    Key to retrieve
+     * @return Returns the value.  Returns null if the key has a
+     *         null value <i>or</i> if the key has no value.
+     */
+    public Object get(Object key) {
+        Object value = remove(key);
+        super.put(key,value);
+        return value;
+    }
+
      /**
       * <p>Removes the key and its Object from the Map.</p>
       * 
@@ -157,7 +175,9 @@ public class LRUMap extends SequencedHashMap implements Externalizable {
      */
     protected void removeLRU() {
         Object key = getFirstKey();
-        Object value = get(key);
+        // be sure to call super.get(key), or you're likely to 
+        // get infinite promotion recursion
+        Object value = super.get(key);
         
         remove(key);
 
@@ -195,7 +215,9 @@ public class LRUMap extends SequencedHashMap implements Externalizable {
         for( Iterator iterator = keySet().iterator(); iterator.hasNext(); ) {
             Object key = iterator.next();
             out.writeObject( key );
-            Object value = get( key );
+            // be sure to call super.get(key), or you're likely to 
+            // get infinite promotion recursion
+            Object value = super.get( key );
             out.writeObject( value );
         }
     }
