@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.6 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.7 2002/06/15 03:52:24 mas Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/06/15 03:52:24 $
  *
  * ====================================================================
  *
@@ -92,7 +92,7 @@ import java.lang.UnsupportedOperationException; // stops a javadoc warning
  *
  * @since 1.0
  * @author Rodney Waldhoff
- * @version $Id: CursorableLinkedList.java,v 1.6 2002/06/12 03:59:15 mas Exp $
+ * @version $Id: CursorableLinkedList.java,v 1.7 2002/06/15 03:52:24 mas Exp $
  * @see java.util.LinkedList
  */
 public class CursorableLinkedList implements List, Serializable {
@@ -263,7 +263,8 @@ public class CursorableLinkedList implements List, Serializable {
      */
     public boolean contains(Object o) {
         for(Listable elt = _head.next(), past = null; null != elt && past != _head.prev(); elt = (past = elt).next()) {
-            if((null == o && null == elt.value()) || (o.equals(elt.value()))) {
+            if((null == o && null == elt.value()) || 
+               (o != null && o.equals(elt.value()))) {
                 return true;
             }
         }
@@ -530,7 +531,7 @@ public class CursorableLinkedList implements List, Serializable {
             if(null == o && null == elt.value()) {
                 removeListable(elt);
                 return true;
-            } else if(o.equals(elt.value())) {
+            } else if(o != null && o.equals(elt.value())) {
                 removeListable(elt);
                 return true;
             }
