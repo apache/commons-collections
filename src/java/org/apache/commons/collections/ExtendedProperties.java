@@ -56,6 +56,7 @@ package org.apache.commons.collections;
  *
  */
 
+
 import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -65,6 +66,7 @@ import java.io.LineNumberReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -163,7 +165,10 @@ import java.util.Vector;
  * @author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
  * @author <a href="mailto:leon@opticode.co.za">Leon Messerschmidt</a>
- * @version $Id: ExtendedProperties.java,v 1.1 2001/04/16 05:01:03 geirm Exp $
+ * @author <a href="mailto:kjohnson@transparent.com>Kent Johnson</a>
+ * @author <a href="mailto:dlr@finemaltcoding.com>Daniel Rall</a>
+ * @author <a href="mailto:ipriha@surfeu.fi>Ilkka Priha</a>
+ * @version $Id: ExtendedProperties.java,v 1.2 2001/05/04 02:22:48 geirm Exp $
  */
 public class ExtendedProperties extends Hashtable
 {
@@ -182,7 +187,7 @@ public class ExtendedProperties extends Hashtable
 
     /**
      * Base path of the configuration file used to create
-     * this Configuration object.
+     * this ExtendedProperties object.
      */
     protected String basePath;
 
@@ -275,13 +280,18 @@ public class ExtendedProperties extends Hashtable
     class PropertiesTokenizer extends StringTokenizer
     {
         /**
+         * The property delimiter used while parsing (a comma).
+         */
+        static final String DELIMITER = ",";
+
+        /**
          * Constructor.
          *
          * @param string A String.
          */
         public PropertiesTokenizer(String string)
         {
-            super(string, ",");
+            super(string, DELIMITER);
         }
 
         /**
@@ -309,7 +319,7 @@ public class ExtendedProperties extends Hashtable
                 if (token.endsWith("\\"))
                 {
                     buffer.append(token.substring(0, token.length() - 1));
-                    buffer.append(",");
+                    buffer.append(DELIMITER);
                 }
                 else
                 {
@@ -325,7 +335,7 @@ public class ExtendedProperties extends Hashtable
     /**
      * Creates an empty extended properties object.
      */
-    public ExtendedProperties ()
+    public ExtendedProperties()
     {
         super();
     }
@@ -337,8 +347,7 @@ public class ExtendedProperties extends Hashtable
      * @param file A String.
      * @exception IOException.
      */
-    public ExtendedProperties(String file) 
-        throws IOException
+    public ExtendedProperties(String file) throws IOException
     {
         this(file,null);
     }
@@ -350,7 +359,7 @@ public class ExtendedProperties extends Hashtable
      * @param file A String.
      * @exception IOException.
      */
-    public ExtendedProperties (String file, String defaultFile)
+    public ExtendedProperties(String file, String defaultFile)
         throws IOException
     {
         this.file = file;
@@ -414,11 +423,42 @@ public class ExtendedProperties extends Hashtable
      * @param input An InputStream.
      * @exception IOException.
      */
-    public synchronized void load(InputStream input)
+    public void load( InputStream input )
         throws IOException
     {
-        PropertiesReader reader =
-            new PropertiesReader(new InputStreamReader(input));
+        load(input,null);
+    }
+    
+    /**
+     * Load the properties from the given input stream
+     * and using the specified encoding.
+     *
+     * @param input An InputStream.
+     * @param enc An encoding.
+     * @exception IOException.
+     */
+    public synchronized void load(InputStream input, String enc)
+        throws IOException
+    {
+        PropertiesReader reader = null;
+        if (enc != null)
+        {
+            try
+            {
+                reader =
+                    new PropertiesReader(new InputStreamReader(input,enc));
+            }
+            catch (UnsupportedEncodingException e)
+            {
+                // Get one with the default encoding...
+            }
+        }
+        
+        if (reader == null)
+        {
+            reader =
+                new PropertiesReader(new InputStreamReader(input));
+        }
 
         try
         {
@@ -513,7 +553,6 @@ public class ExtendedProperties extends Hashtable
              *  if there isn't a value there, get it from the
              *  defaults if we have them
              */
-            
             if (defaults != null)
             {
                 o = defaults.get(key);
@@ -587,7 +626,8 @@ public class ExtendedProperties extends Hashtable
              * like that cannot parse multiple same key
              * values.
              */
-            if (token instanceof String && ((String)token).indexOf(",") > 0)
+            if (token instanceof String &&
+                ((String)token).indexOf(PropertiesTokenizer.DELIMITER) > 0)
             {
                 PropertiesTokenizer tokenizer = 
                     new PropertiesTokenizer((String)token);
@@ -762,9 +802,9 @@ public class ExtendedProperties extends Hashtable
      *
      * Warning: It will overwrite previous entries without warning.
      *
-     * @param Configuration
+     * @param ExtendedProperties
      */
-    public void combine( ExtendedProperties c)
+    public void combine( ExtendedProperties c )
     {
         for (Iterator i = c.getKeys() ; i.hasNext() ;)
         {
@@ -837,9 +877,9 @@ public class ExtendedProperties extends Hashtable
     }
 
     /**
-     * Create a Configurations object that is a subset
+     * Create an ExtendedProperties object that is a subset
      * of this one. Take into account duplicate keys
-     * by using the setProperty() in Configuration.
+     * by using the setProperty() in ExtendedProperties.
      *
      * @param String prefix
      */
@@ -958,10 +998,14 @@ public class ExtendedProperties extends Hashtable
                 return defaultValue;
             }
         }
+        else if (value instanceof Vector)
+        {
+            return (String) ((Vector) value).get(0);
+        }
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a String object");
+                '\'' + key + "' doesn't map to a String object");
         }
     }
 
@@ -1016,8 +1060,7 @@ public class ExtendedProperties extends Hashtable
             }
             else
             {
-                throw new IllegalArgumentException("'" +
-                                                   token +
+                throw new IllegalArgumentException('\'' + token +
                                                    "' does not contain " +
                                                    "an equals sign");
             }
@@ -1063,12 +1106,14 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a String/Vector object");
+                '\'' + key + "' doesn't map to a String/Vector object");
         }
 
         String[] tokens = new String[vector.size()];
         for (int i = 0; i < tokens.length; i++)
-        tokens[i] = (String)vector.elementAt(i);
+        {
+            tokens[i] = (String)vector.elementAt(i);
+        }
 
         return tokens;
     }
@@ -1128,7 +1173,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a Vector object");
+                '\'' + key + "' doesn't map to a Vector object");
         }
     }
 
@@ -1152,7 +1197,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new NoSuchElementException(
-                key + "doesn't map to an existing object");
+                '\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1210,7 +1255,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a Boolean object");
+                '\'' + key + "' doesn't map to a Boolean object");
         }
     }
     
@@ -1266,7 +1311,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new NoSuchElementException(
-                key + " doesn't map to an existing object");
+                '\'' + key + " doesn't map to an existing object");
         }
     }
 
@@ -1328,7 +1373,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a Byte object");
+                '\'' + key + "' doesn't map to a Byte object");
         }
     }
 
@@ -1354,7 +1399,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new NoSuchElementException(
-                key + " doesn't map to an existing object");
+                '\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1416,7 +1461,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a Short object");
+                '\'' + key + "' doesn't map to a Short object");
         }
     }
 
@@ -1468,7 +1513,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new NoSuchElementException(
-                key + " doesn't map to an existing object");
+                '\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1485,9 +1530,17 @@ public class ExtendedProperties extends Hashtable
      */
     public int getInteger(String key,
                           int defaultValue)
-    {
-        return getInteger(key, new Integer(defaultValue)).intValue();
-    }
+    {    
+        Integer i = getInteger(key, null);
+        
+        if (i == null)
+        {
+            return defaultValue;
+        }
+        
+        return i.intValue();
+      }
+
 
     /**
      * Get a int associated with the given configuration key.
@@ -1530,7 +1583,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a Integer object");
+                '\'' + key + "' doesn't map to a Integer object");
         }
     }
 
@@ -1556,7 +1609,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new NoSuchElementException(
-                key + " doesn't map to an existing object");
+                '\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1618,7 +1671,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a Long object");
+                '\'' + key + "' doesn't map to a Long object");
         }
     }
 
@@ -1644,7 +1697,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new NoSuchElementException(
-                key + " doesn't map to an existing object");
+                '\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1706,7 +1759,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a Float object");
+                '\'' + key + "' doesn't map to a Float object");
         }
     }
 
@@ -1732,7 +1785,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new NoSuchElementException(
-                key + " doesn't map to an existing object");
+                '\'' + key + "' doesn't map to an existing object");
         }
     }
 
@@ -1794,7 +1847,7 @@ public class ExtendedProperties extends Hashtable
         else
         {
             throw new ClassCastException(
-                key + " doesn't map to a Double object");
+                '\'' + key + "' doesn't map to a Double object");
         }
     }
 
@@ -1802,15 +1855,15 @@ public class ExtendedProperties extends Hashtable
      * Convert a standard properties class into a configuration
      * class.
      *
-     * @param Properties properties object to convert into
-     *                   a Configuration object.
+     * @param p properties object to convert into
+     *                   a ExtendedProperties object.
      *
-     * @return Configuration configuration created from the
+     * @return ExtendedProperties configuration created from the
      *                      properties object.
      */
     public static ExtendedProperties convertProperties(Properties p)
     {
-         ExtendedProperties c = new ExtendedProperties();
+        ExtendedProperties c = new ExtendedProperties();
     
         for (Enumeration e = p.keys(); e.hasMoreElements() ; ) 
         {
