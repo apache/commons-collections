@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.8 2002/11/24 19:38:09 scolebourne Exp $
- * $Revision: 1.8 $
- * $Date: 2002/11/24 19:38:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.9 2002/11/24 20:24:49 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/11/24 20:24:49 $
  *
  * ====================================================================
  *
@@ -263,6 +263,13 @@ public class TestMultiHashMap extends TestMap
     }
 
     public void testMapEquals() {
+        MultiHashMap one = new MultiHashMap();
+        Integer value = new Integer(1);
+        one.put("One", value);
+        one.remove("One", value);
+        
+        MultiHashMap two = new MultiHashMap();
+        assertEquals(two, one);
     }
 
     public void testMapHashCode() {
