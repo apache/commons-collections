@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.11 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.12 2003/09/29 03:38:44 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -95,9 +95,10 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.11 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.12 $ $Date: 2003/09/29 03:38:44 $
  * 
  * @author Stephen Colebourne
+ * @author Phil Steitz
  */
 public class IteratorUtils {
     // validation is done in this class in certain cases because the
@@ -206,7 +207,8 @@ public class IteratorUtils {
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @return an iterator over part of the array
-     * @throws IndexOutOfBoundsException if start is less than zero
+     * @throws IndexOutOfBoundsException if start is less than zero or greater
+     *  than the length of the array
      * @throws NullPointerException if array is null
      */
     public static ResetableIterator arrayIterator(Object[] array, int start) {
@@ -223,7 +225,8 @@ public class IteratorUtils {
      * @param start  the index to start iterating at
      * @return an iterator over part of the array
      * @throws IllegalArgumentException if the array is not an array
-     * @throws IndexOutOfBoundsException if start is less than zero
+     * @throws IndexOutOfBoundsException if start is less than zero or greater
+     *  than the length of the array
      * @throws NullPointerException if array is null
      */
     public static ResetableIterator arrayIterator(Object array, int start) {
@@ -579,7 +582,7 @@ public class IteratorUtils {
      * that will remove elements from the specified collection.
      *
      * @param enumeration  the enumeration to use
-     * @param collection  the collection to remove elements form
+     * @param removeCollection  the collection to remove elements form
      */
     public static Iterator asIterator(Enumeration enumeration, Collection removeCollection) {
         if (enumeration == null) {
