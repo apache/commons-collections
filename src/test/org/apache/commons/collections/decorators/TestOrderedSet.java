@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestOrderedSet.java,v 1.1 2003/09/09 22:28:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestOrderedSet.java,v 1.2 2003/09/20 16:57:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,8 +57,10 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import junit.framework.Test;
@@ -71,7 +73,7 @@ import org.apache.commons.collections.TestSet;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/09 22:28:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/20 16:57:47 $
  * 
  * @author Henning P. Schmiedehausen
  * @author Stephen Colebourne
@@ -134,6 +136,78 @@ public class TestOrderedSet extends TestSet {
         for (int i = 0; i < 10; i += 2) {
             assertEquals("Sequence is wrong", Integer.toString(i), it.next());
         }
+    }
+    
+    private static final Integer ZERO = new Integer(0);
+    private static final Integer ONE = new Integer(1);
+    private static final Integer TWO = new Integer(2);
+    private static final Integer THREE = new Integer(3);
+    
+    public void testListAddRemove() {
+        OrderedSet set = (OrderedSet) makeEmptySet();
+        List view = set.asList();
+        set.add(ZERO);
+        set.add(ONE);
+        set.add(TWO);
+        
+        assertEquals(3, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(ONE, set.get(1));
+        assertSame(TWO, set.get(2));
+        assertEquals(3, view.size());
+        assertSame(ZERO, view.get(0));
+        assertSame(ONE, view.get(1));
+        assertSame(TWO, view.get(2));
+        
+        assertEquals(0, set.indexOf(ZERO));
+        assertEquals(1, set.indexOf(ONE));
+        assertEquals(2, set.indexOf(TWO));
+        
+        set.remove(1);
+        assertEquals(2, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(TWO, set.get(1));
+        assertEquals(2, view.size());
+        assertSame(ZERO, view.get(0));
+        assertSame(TWO, view.get(1));
+    }        
+    
+    public void testListAddIndexed() {
+        OrderedSet set = (OrderedSet) makeEmptySet();
+        List view = set.asList();
+        set.add(ZERO);
+        set.add(TWO);
+        
+        set.add(1, ONE);
+        assertEquals(3, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(ONE, set.get(1));
+        assertSame(TWO, set.get(2));
+        
+        set.add(0, ONE);
+        assertEquals(3, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(ONE, set.get(1));
+        assertSame(TWO, set.get(2));
+        
+        List list = new ArrayList();
+        list.add(ZERO);
+        list.add(TWO);
+        
+        set.addAll(0, list);
+        assertEquals(3, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(ONE, set.get(1));
+        assertSame(TWO, set.get(2));
+        
+        list.add(0, THREE); // list = [3,0,2]
+        set.remove(TWO);    //  set = [0,1]
+        set.addAll(1, list);
+        assertEquals(4, set.size());
+        assertSame(ZERO, set.get(0));
+        assertSame(THREE, set.get(1));
+        assertSame(TWO, set.get(2));
+        assertSame(ONE, set.get(3));
     }
     
 }

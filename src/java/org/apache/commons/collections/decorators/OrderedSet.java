@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedSet.java,v 1.1 2003/09/09 22:28:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedSet.java,v 1.2 2003/09/20 16:57:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,6 +59,8 @@ package org.apache.commons.collections.decorators;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -67,13 +69,20 @@ import java.util.Set;
  * Decorates a <code>Set</code> to ensure that the order of addition
  * is retained and used by the iterator.
  * <p>
- * If an object is added to the Set for a second time, it will remain in the
+ * If an object is added to the set for a second time, it will remain in the
  * original position in the iteration.
+ * The order can be observed from the set via the iterator or toArray methods.
  * <p>
- * The order can be observed via the iterator or toArray methods.
+ * The OrderedSet also has various useful direct methods. These include many
+ * from <code>List</code>, such as <code>get(int)</code>, <code>remove(int)</code>
+ * and <code>indexOf(int)</code>. An unmodifiable <code>List</code> view of 
+ * the set can be obtained via <code>asList()</code>.
+ * <p>
+ * This class cannot implement the <code>List</code> interface directly as
+ * various interface methods (notably equals/hashCode) are incompatable with a set.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/09 22:28:35 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/20 16:57:47 $
  * 
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen
@@ -81,16 +90,33 @@ import java.util.Set;
 public class OrderedSet extends AbstractSetDecorator implements Set {
 
     /** Internal list to hold the sequence of objects */
-    protected final List setOrder = new ArrayList();
+    protected final List setOrder;
 
     /**
      * Factory method to create an ordered set.
+     * <p>
+     * An <code>ArrayList</code> is used to retain order.
      * 
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static Set decorate(Set set) {
+    public static OrderedSet decorate(Set set) {
         return new OrderedSet(set);
+    }
+
+    /**
+     * Factory method to create an ordered set using the supplied list to retain order.
+     * <p>
+     * A <code>HashSet</code> is used for the set behaviour.
+     * 
+     * @param list  the list to decorate, must not be null
+     * @throws IllegalArgumentException if set is null
+     */
+    public static OrderedSet decorate(List list) {
+        Set set = new HashSet(list);
+        list.retainAll(set);
+        
+        return new OrderedSet(set, list);
     }
 
     /**
@@ -101,7 +127,34 @@ public class OrderedSet extends AbstractSetDecorator implements Set {
      */
     protected OrderedSet(Set set) {
         super(set);
-        setOrder.addAll(set);
+        setOrder = new ArrayList(set);
+    }
+
+    /**
+     * Constructor that wraps (not copies) the Set and specifies the list to use.
+     * <p>
+     * The set and list must both be correctly initialised to the same elements.
+     * 
+     * @param set  the set to decorate, must not be null
+     * @param list  the list to decorate, must not be null
+     * @throws IllegalArgumentException if set or list is null
+     */
+    protected OrderedSet(Set set, List list) {
+        super(set);
+        if (list == null) {
+            throw new IllegalArgumentException("List must not be null");
+        }
+        setOrder = list;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets an unmodifiable view of the order of the Set.
+     * 
+     * @return an unmodifiable list view
+     */
+    public List asList() {
+        return Collections.unmodifiableList(setOrder);
     }
 
     //-----------------------------------------------------------------------
@@ -175,6 +228,43 @@ public class OrderedSet extends AbstractSetDecorator implements Set {
         return setOrder.toArray(a);
     }
 
+    //-----------------------------------------------------------------------
+    public Object get(int index) {
+        return setOrder.get(index);
+    }
+
+    public int indexOf(Object object) {
+        return setOrder.indexOf(object);
+    }
+
+    public void add(int index, Object object) {
+        if (contains(object) == false) {
+            collection.add(object);
+            setOrder.add(index, object);
+        }
+    }
+
+    public boolean addAll(int index, Collection coll) {
+        boolean changed = false;
+        for (Iterator it = coll.iterator(); it.hasNext();) {
+            Object object = (Object) it.next();
+            if (contains(object) == false) {
+                collection.add(object);
+                setOrder.add(index, object);
+                index++;
+                changed = true;
+            }
+        }
+        return changed;
+    }
+
+    public Object remove(int index) {
+        Object obj = setOrder.remove(index);
+        remove(obj);
+        return obj;
+    }
+
+    //-----------------------------------------------------------------------
     /**
      * Internal iterator handle remove.
      */
