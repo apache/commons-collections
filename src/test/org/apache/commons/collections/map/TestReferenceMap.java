@@ -16,18 +16,16 @@
 package org.apache.commons.collections.map;
 
 import java.lang.ref.WeakReference;
-import java.util.Iterator;
 import java.util.Map;
 
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.MapIterator;
 
 /**
  * Tests for ReferenceMap. 
  * 
- * @version $Revision: 1.7 $ $Date: 2004/04/30 22:53:16 $
+ * @version $Revision: 1.8 $ $Date: 2004/05/03 22:03:06 $
  *
  * @author Paul Jack
  */
@@ -88,6 +86,9 @@ public class TestReferenceMap extends AbstractTestIterableMap {
     }
 
     //-----------------------------------------------------------------------
+/*
+    // Tests often fail because gc is uncontrollable
+
     public void testPurge() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -193,6 +194,7 @@ public class TestReferenceMap extends AbstractTestIterableMap {
         }
 
     }
+*/
 
     /** Tests whether purge values setting works */
     public void testPurgeValues() throws Exception {
