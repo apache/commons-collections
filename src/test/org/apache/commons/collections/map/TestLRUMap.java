@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestLRUMap.java,v 1.2 2003/12/07 23:59:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestLRUMap.java,v 1.3 2003/12/11 00:46:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,11 +58,9 @@
 package org.apache.commons.collections.map;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 import junit.textui.TestRunner;
@@ -74,7 +72,7 @@ import org.apache.commons.collections.ResettableIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/12/07 23:59:12 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/11 00:46:12 $
  * 
  * @author Stephen Colebourne
  */
@@ -126,44 +124,44 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(true, map.isFull());
         assertEquals(2, map.maxSize());
         it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
         assertSame(keys[0], it.next());
+        assertSame(keys[1], it.next());
         it = map.values().iterator();
-        assertSame(values[1], it.next());
         assertSame(values[0], it.next());
+        assertSame(values[1], it.next());
 
         map.put(keys[2], values[2]);
         assertEquals(2, map.size());
         assertEquals(true, map.isFull());
         assertEquals(2, map.maxSize());
         it = map.keySet().iterator();
-        assertSame(keys[2], it.next());
         assertSame(keys[1], it.next());
+        assertSame(keys[2], it.next());
         it = map.values().iterator();
-        assertSame(values[2], it.next());
         assertSame(values[1], it.next());
+        assertSame(values[2], it.next());
 
         map.put(keys[2], values[0]);
         assertEquals(2, map.size());
         assertEquals(true, map.isFull());
         assertEquals(2, map.maxSize());
         it = map.keySet().iterator();
-        assertSame(keys[2], it.next());
         assertSame(keys[1], it.next());
+        assertSame(keys[2], it.next());
         it = map.values().iterator();
-        assertSame(values[0], it.next());
         assertSame(values[1], it.next());
+        assertSame(values[0], it.next());
 
         map.put(keys[1], values[3]);
         assertEquals(2, map.size());
         assertEquals(true, map.isFull());
         assertEquals(2, map.maxSize());
         it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
         assertSame(keys[2], it.next());
+        assertSame(keys[1], it.next());
         it = map.values().iterator();
-        assertSame(values[3], it.next());
         assertSame(values[0], it.next());
+        assertSame(values[3], it.next());
     }
     
     //-----------------------------------------------------------------------    
@@ -190,8 +188,8 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         Iterator it = null;
         
         resetEmpty();
-        map.put(keys[1], values[1]);
         map.put(keys[0], values[0]);
+        map.put(keys[1], values[1]);
         it = map.keySet().iterator();
         assertSame(keys[0], it.next());
         assertSame(keys[1], it.next());
@@ -199,142 +197,59 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertSame(values[0], it.next());
         assertSame(values[1], it.next());
 
-        // change to order
+        // no change to order
         map.put(keys[1], values[1]);
         it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
         assertSame(keys[0], it.next());
+        assertSame(keys[1], it.next());
         it = map.values().iterator();
-        assertSame(values[1], it.next());
         assertSame(values[0], it.next());
+        assertSame(values[1], it.next());
 
         // no change to order
         map.put(keys[1], values[2]);
         it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
         assertSame(keys[0], it.next());
+        assertSame(keys[1], it.next());
         it = map.values().iterator();
-        assertSame(values[2], it.next());
         assertSame(values[0], it.next());
+        assertSame(values[2], it.next());
 
         // change to order
         map.put(keys[0], values[3]);
         it = map.keySet().iterator();
-        assertSame(keys[0], it.next());
         assertSame(keys[1], it.next());
+        assertSame(keys[0], it.next());
         it = map.values().iterator();
-        assertSame(values[3], it.next());
         assertSame(values[2], it.next());
+        assertSame(values[3], it.next());
 
         // change to order
         map.get(keys[1]);
         it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
         assertSame(keys[0], it.next());
+        assertSame(keys[1], it.next());
         it = map.values().iterator();
-        assertSame(values[2], it.next());
         assertSame(values[3], it.next());
+        assertSame(values[2], it.next());
 
         // change to order
         map.get(keys[0]);
         it = map.keySet().iterator();
-        assertSame(keys[0], it.next());
         assertSame(keys[1], it.next());
+        assertSame(keys[0], it.next());
         it = map.values().iterator();
-        assertSame(values[3], it.next());
         assertSame(values[2], it.next());
+        assertSame(values[3], it.next());
 
         // no change to order
         map.get(keys[0]);
         it = map.keySet().iterator();
-        assertSame(keys[0], it.next());
         assertSame(keys[1], it.next());
+        assertSame(keys[0], it.next());
         it = map.values().iterator();
-        assertSame(values[3], it.next());
         assertSame(values[2], it.next());
-    }
-    
-    //-----------------------------------------------------------------------
-    public void testFirstKey() {  // override
-        resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
-        try {
-            ordered.firstKey();
-            fail();
-        } catch (NoSuchElementException ex) {}
-        
-        resetFull();
-        ordered = (OrderedMap) map;
-        Object confirmedFirst = confirmed.keySet().iterator().next();
-        ordered.get(confirmedFirst);
-        assertEquals(confirmedFirst, ordered.firstKey());
-    }
-    
-    public void testLastKey() {  // override
-        resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
-        try {
-            ordered.lastKey();
-            fail();
-        } catch (NoSuchElementException ex) {}
-        
-        resetFull();
-        ordered = (OrderedMap) map;
-        Object confirmedFirst = confirmed.keySet().iterator().next();
-        // access order, thus first in is now in last place
-        assertEquals(confirmedFirst, ordered.lastKey());
-    }
-
-    //-----------------------------------------------------------------------    
-    public void testNextKey() {  // override
-        resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
-        assertEquals(null, ordered.nextKey(getOtherKeys()[0]));
-        if (isAllowNullKey() == false) {
-            try {
-                assertEquals(null, ordered.nextKey(null)); // this is allowed too
-            } catch (NullPointerException ex) {}
-        } else {
-            assertEquals(null, ordered.nextKey(null));
-        }
-        
-        resetFull();
-        ordered = (OrderedMap) map;
-        List list = new ArrayList(confirmed.keySet());
-        Collections.reverse(list);  // first into map is eldest
-        Iterator it = list.iterator();
-        Object confirmedLast = it.next();
-        while (it.hasNext()) {
-            Object confirmedObject = it.next();
-            assertEquals(confirmedObject, ordered.nextKey(confirmedLast));
-            confirmedLast = confirmedObject;
-        }
-        assertEquals(null, ordered.nextKey(confirmedLast));
-    }
-    
-    public void testPreviousKey() {  // override
-        resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
-        assertEquals(null, ordered.previousKey(getOtherKeys()[0]));
-        if (isAllowNullKey() == false) {
-            try {
-                assertEquals(null, ordered.previousKey(null)); // this is allowed too
-            } catch (NullPointerException ex) {}
-        } else {
-            assertEquals(null, ordered.previousKey(null));
-        }
-        
-        resetFull();
-        ordered = (OrderedMap) map;
-        List list = new ArrayList(confirmed.keySet());
-        Iterator it = list.iterator();
-        Object confirmedLast = it.next();
-        while (it.hasNext()) {
-            Object confirmedObject = it.next();
-            assertEquals(confirmedObject, ordered.previousKey(confirmedLast));
-            confirmedLast = confirmedObject;
-        }
-        assertEquals(null, ordered.previousKey(confirmedLast));
+        assertSame(values[3], it.next());
     }
     
 //    public void testCreate() throws Exception {

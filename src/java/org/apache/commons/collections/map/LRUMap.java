@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.2 2003/12/07 23:59:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.3 2003/12/11 00:46:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,18 +74,14 @@ import java.util.Map;
  * <p>
  * The map implements <code>OrderedMap</code> and entries may be queried using
  * the bidirectional <code>OrderedMapIterator</code>. The order returned is
- * most recently used to least recently used. Iterators from map views can 
+ * least recently used to most recently used. Iterators from map views can 
  * also be cast to <code>OrderedIterator</code> if required.
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
- * <p>
- * NOTE: The order of the map has changed from the previous version located
- * in the main collections package. The map is now ordered most recently used
- * to least recently used.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/07 23:59:13 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/11 00:46:12 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
@@ -164,30 +160,30 @@ public class LRUMap extends AbstractLinkedMap implements Serializable, Cloneable
         if (entry == null) {
             return null;
         }
-        moveFirst(entry);
+        moveToMRU(entry);
         return entry.getValue();
     }
 
     //-----------------------------------------------------------------------
     /**
-     * Updates an existing key-value mapping.
-     * This implementation moves the updated entry to the top of the list.
+     * Moves an entry to the MRU position at the end of the list.
+     * This implementation moves the updated entry to the end of the list.
      * 
      * @param entry  the entry to update
      * @param newValue  the new value to store
      * @return value  the previous value
      */
-    protected void moveFirst(LinkEntry entry) {
-        if (entry.before != header) {
+    protected void moveToMRU(LinkEntry entry) {
+        if (entry.after != header) {
             modCount++;
             // remove
-            entry.after.before = entry.before;
             entry.before.after = entry.after;
+            entry.after.before = entry.before;
             // add first
-            entry.before = header;
-            entry.after = header.after;
-            header.after.before = entry;
-            header.after = entry;
+            entry.after = header;
+            entry.before = header.before;
+            header.before.after = entry;
+            header.before = entry;
         }
     }
     
@@ -200,7 +196,7 @@ public class LRUMap extends AbstractLinkedMap implements Serializable, Cloneable
      * @return value  the previous value
      */
     protected void updateEntry(HashEntry entry, Object newValue) {
-        moveFirst((LinkEntry) entry);  // handles modCount
+        moveToMRU((LinkEntry) entry);  // handles modCount
         entry.setValue(newValue);
     }
     
@@ -217,41 +213,39 @@ public class LRUMap extends AbstractLinkedMap implements Serializable, Cloneable
      */
     protected void addMapping(int hashIndex, int hashCode, Object key, Object value) {
         if (size >= maxSize && removeLRU(header.before)) {
-            LinkEntry entry = header.before;
-            // remove from current location
-            int removeIndex = hashIndex(entry.hashCode, data.length);
-            HashEntry loop = data[removeIndex];
-            HashEntry previous = null;
-            while (loop != entry) {
-                previous = loop;
-                loop = loop.next;
-            }
-            modCount++;
-            removeEntry(entry, removeIndex, previous);
-            reuseEntry(entry, hashIndex, hashCode, key, value);
-            addEntry(entry, hashIndex);
-            
+            reuseMapping(header.after, hashIndex, hashCode, key, value);
         } else {
             super.addMapping(hashIndex, hashCode, key, value);
         }
     }
     
     /**
-     * Adds a new entry into this map using access order.
-     * <p>
-     * This implementation adds the entry to the data storage table and
-     * to the start of the linked list.
+     * Reuses an entry by removing it and moving it to a new place in the map.
      * 
-     * @param entry  the entry to add
+     * @param entry  the entry to reuse
      * @param hashIndex  the index into the data array to store at
+     * @param hashCode  the hash code of the key to add
+     * @param key  the key to add
+     * @param value  the value to add
+     * @return the value previously mapped to this key, null if none
      */
-    protected void addEntry(HashEntry entry, int hashIndex) {
-        LinkEntry link = (LinkEntry) entry;
-        link.before = header;
-        link.after = header.after;
-        header.after.before = link;
-        header.after = link;
-        data[hashIndex] = entry;
+    protected void reuseMapping(LinkEntry entry, int hashIndex, int hashCode, Object key, Object value) {
+        // find the entry before the entry specified in the hash table
+        // remember that the parameters (except the first) refer to the new entry,
+        // not the old one
+        int removeIndex = hashIndex(entry.hashCode, data.length);
+        HashEntry loop = data[removeIndex];
+        HashEntry previous = null;
+        while (loop != entry) {
+            previous = loop;
+            loop = loop.next;
+        }
+        
+        // reuse the entry
+        modCount++;
+        removeEntry(entry, removeIndex, previous);
+        reuseEntry(entry, hashIndex, hashCode, key, value);
+        addEntry(entry, hashIndex);
     }
     
     /**
