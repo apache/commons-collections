@@ -1,6 +1,6 @@
 <BODY>
 <p>
-This package contains implementations of the Set and SortedSet interfaces.
+This package contains implementations of the Bag and SortedBag interfaces.
 <p>
 The implementations are in the form of direct implementations and decorators.
 A decorator wraps another implementation of the interface to add some
@@ -8,8 +8,14 @@ specific additional functionality.
 <p>
 The following implementations are provided in the package:
 <ul>
+<li>HashBag - implementation that uses a HashMap to store the data
+<li>TreeBag - implementation that uses a TreeMap to store the data
+</ul>
+<p>
+The following decorators are provided in the package:
+<ul>
 <li>Synchronized - synchronizes method access for multi-threaded environments
-<li>Unmodifiable - ensures the collection cannot be altered
+<li>Unmodifiable - ensures the bag cannot be altered
 <li>Predicated - ensures that only elements that are valid according to a predicate can be added
 <li>Typed - ensures that only elements that are of a specific type can be added
 <li>Transformed - transforms each element added to the bag
