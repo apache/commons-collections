@@ -37,7 +37,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.57 $ $Date: 2004/03/31 21:43:27 $
+ * @version $Revision: 1.58 $ $Date: 2004/03/31 23:13:50 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -860,6 +860,7 @@ public class CollectionUtils {
      * @param object  the object to get the size of
      * @return the size of the specified collection
      * @throws IllegalArgumentException thrown if object is not recognised or null
+     * @since Commons Collections 3.1
      */
     public static int size(Object object) {
         int total = 0;
