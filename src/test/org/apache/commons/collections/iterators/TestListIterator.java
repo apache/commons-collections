@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestListIterator.java,v 1.1 2003/04/13 23:26:09 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/04/13 23:26:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestListIterator.java,v 1.2 2003/04/15 00:27:37 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/04/15 00:27:37 $
  *
  * ====================================================================
  *
@@ -60,13 +60,13 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.ListIterator;
+
 /**
- * @TODO implement me
- * (Having this type around, even without specific tests, consolidates
- * a bunch of "to dos" of the form "this should extend TestListIterator once
- * it exists (see subclasses).
+ * @version $Revision: 1.2 $ $Date: 2003/04/15 00:27:37 $ 
+ * @author Rodney Waldhoff
  */
 public abstract class TestListIterator extends TestIterator {
 
@@ -86,4 +86,28 @@ public abstract class TestListIterator extends TestIterator {
         return makeFullListIterator();
     }
 
+    // tests
+
+    public void testEmptyListIteratorIsIndeedEmpty() {
+        ListIterator iter = makeEmptyListIterator();
+        assertTrue(!iter.hasNext());
+        assertTrue(!iter.hasPrevious());
+    }
+    
+    public void testWalkForwardAndBack() {
+        ArrayList list = new ArrayList();
+        ListIterator iter = makeFullListIterator();
+        while(iter.hasNext()) {
+            list.add(iter.next());
+        }
+        for(int i = list.size()-1;i>=0;i--) {
+            Object obj = list.get(i);
+            if(null == obj) {
+                assertNull(iter.previous());
+            } else {
+                assertEquals(obj,iter.previous());
+            }
+        }
+        assertTrue(!iter.hasPrevious());
+    }
 }
