@@ -249,7 +249,7 @@
   <build>
     <unitTest>
       <includes>
-        <include>org/apache/commons/collections/TestAll.java</include>
+        <include>org/apache/commons/collections/TestAllPackages.java</include>
       </includes>
     </unitTest>
   </build>
