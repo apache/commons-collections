@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayListIterator.java,v 1.7 2003/10/05 23:21:07 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayListIterator.java,v 1.8 2003/10/09 20:44:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,14 +58,14 @@
 package org.apache.commons.collections.iterators;
 
 import java.lang.reflect.Array;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
- * Implements a {@link java.util.ListIterator ListIterator} over an array. 
+ * Implements a {@link ListIterator} over an array. 
  * <p>
  * The array can be either an array of object or of primitives. If you know 
- * that you have an object array, the 
- * {@link org.apache.commons.collections.iterators.ObjectArrayListIterator ObjectArrayListIterator}
+ * that you have an object array, the {@link ObjectArrayListIterator}
  * class is a better choice, as it will perform better.
  * 
  * <p>
@@ -77,13 +77,14 @@ import java.util.NoSuchElementException;
  * @see java.util.ListIterator
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/10/05 23:21:07 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/09 20:44:32 $
  *
  * @author Neil O'Toole
  * @author Stephen Colebourne
  * @author Phil Steitz
  */
-public class ArrayListIterator extends ArrayIterator implements ResetableListIterator {
+public class ArrayListIterator extends ArrayIterator
+		implements ListIterator, ResetableListIterator {
 
     /**
      * Holds the index of the last item returned by a call to <code>next()</code>

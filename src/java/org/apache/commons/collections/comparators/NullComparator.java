@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/NullComparator.java,v 1.8 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/NullComparator.java,v 1.9 2003/10/09 20:44:32 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -60,14 +60,14 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- *  A Comparator that will compare nulls to be either lower or higher than
- *  other objects.
+ * A Comparator that will compare nulls to be either lower or higher than
+ * other objects.
  *
- *  @since Commons Collections 2.0
- *  @version $Revision: 1.8 $ $Date: 2003/08/31 17:25:49 $ 
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.9 $ $Date: 2003/10/09 20:44:32 $ 
  *
- *  @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- **/
+ * @author Michael A. Smith
+ */
 public class NullComparator implements Comparator, Serializable {
 
     /**
@@ -191,7 +191,7 @@ public class NullComparator implements Comparator, Serializable {
      *  Determines whether the specified object represents a comparator that is
      *  equal to this comparator.
      *
-     *  @param o the object to compare this comparator with.
+     *  @param obj  the object to compare this comparator with.
      *
      *  @return <code>true</code> if the specified object is a NullComparator
      *  with equivalent <code>null</code> comparison behavior

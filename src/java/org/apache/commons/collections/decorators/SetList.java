@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SetList.java,v 1.2 2003/10/04 00:50:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SetList.java,v 1.3 2003/10/09 20:44:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,13 +75,12 @@ import java.util.Set;
  * result of rejecting duplicates.
  * Each violation is explained in the method, but it should not affect you.
  * <p>
- * The {@link org.apache.commons.collections.decorators.OrderedSet OrderedSet}
- * class provides an alternative approach, by wrapping an existing Set and
- * retaining insertion order in the iterator. This class offers the <code>List</code>
- * interface implementation as well.
+ * The {@link OrderedSet} class provides an alternative approach, by wrapping
+ * an existing Set and retaining insertion order in the iterator.
+ * This class offers the <code>List</code> interface implementation as well.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/10/04 00:50:35 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/09 20:44:32 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -193,8 +192,7 @@ public class SetList extends AbstractListDecorator {
      * The <code>List</code> interface makes the assumption that the element is
      * always inserted. This may not happen with this implementation.
      * 
-     * @param index  the index to insert at
-     * @param object  the object to add
+     * @param coll  the collection to add
      */
     public boolean addAll(Collection coll) {
         return addAll(size(), coll);
