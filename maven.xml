@@ -91,21 +91,19 @@
       <j:set var="maven.javadoc.destdir" value="${pom.getPluginContext('maven-javadoc-plugin').getVariable('maven.javadoc.destdir')}" />
       <j:set var="maven.javadoc.stylesheet" value="${pom.getPluginContext('maven-javadoc-plugin').getVariable('maven.javadoc.stylesheet')}" />
       
-      <ant:property name="collections.javadoc.tag.destdir" value="${maven.javadoc.destdir}-${collections.javadoc.tag}"/>
-      <ant:property name="collections.javadoc.tag.stylesheet" value="${maven.javadoc.stylesheet}"/>
+      <j:set var="collections.javadoc.tag.destdir" value="${maven.javadoc.destdir}-${collections.javadoc.tag}"/>
+      <j:set var="collections.javadoc.tag.stylesheet" value="${maven.javadoc.stylesheet}"/>
       
-      <ant:property name="taggedBaseDir" value="${maven.build.dir}/javadoc/${collections.javadoc.tag}" />
+      <j:set var="taggedBaseDir" value="${maven.build.dir}/javadoc/${collections.javadoc.tag}" />
       <ant:mkdir dir="${taggedBaseDir}" />
       <maven:makeRelativePath var="relativeSrcDir" basedir="${basedir}" path="${pom.build.sourceDirectory}" />
       <util:replace var="relativeSrcDir" oldChar="\" newChar="/" value="${relativeSrcDir}" />
-      <ant:property name="taggedSourceDir" 
-          value="${taggedBaseDir}/${pom.repository.cvsModule}/${relativeSrcDir}"/>
+      <j:set var="taggedSourceDir" value="${taggedBaseDir}/${pom.repository.cvsModule}/${relativeSrcDir}"/>
       <ant:cvs
           cvsRoot="${pom.repository.cvsRoot}"
           package="${pom.repository.cvsModule}/${relativeSrcDir}"
           dest="${taggedBaseDir}"
-          tag="${collections.javadoc.tag}"
-      />    
+          tag="${collections.javadoc.tag}" />    
           
       <ant:mkdir dir="${collections.javadoc.tag.destdir}" />
       <ant:tstamp>
@@ -121,8 +119,7 @@
           </j:otherwise>
         </j:choose>
       </ant:tstamp>
-      <ant:property name="copyright"
-        value="Copyright &amp;copy; ${year} ${pom.organization.name}. All Rights Reserved." />
+      <j:set var="copyright" value="Copyright &amp;copy; ${year} ${pom.organization.name}. All Rights Reserved." />
         
       <ant:javadoc
         packagenames="${pom.package}.*"
@@ -141,6 +138,23 @@
     </j:if>
   </postGoal>
 
+  <postGoal name="site:run-reports"><!-- OLD MAVEN -->
+    <j:set var="collections.javadoc.tag" value="COLLECTIONS_2_1" />
+    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 2.1 release API" />
+    <attainGoal name="javadoc:generate" />
+    <j:set var="collections.javadoc.tag" value="COLLECTIONS_3_0" />
+    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 3.0 release API" />
+    <attainGoal name="javadoc:generate" />
+  </postGoal>
+  <postGoal name="site:generate"><!-- NEW MAVEN -->
+    <j:set var="collections.javadoc.tag" value="COLLECTIONS_2_1" />
+    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 2.1 release API" />
+    <attainGoal name="javadoc:generate" />
+    <j:set var="collections.javadoc.tag" value="COLLECTIONS_3_0" />
+    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 3.0 release API" />
+    <attainGoal name="javadoc:generate" />
+  </postGoal>
+  
   <!-- ============== DIST ================== -->
   <postGoal name="dist:prepare-bin-filesystem">
     <j:set var="maven.dist.bin.assembly.dir" value="${pom.getPluginContext('maven-dist-plugin').getVariable('maven.dist.bin.assembly.dir')}" />
