@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.8 2003/11/23 17:48:20 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.9 2003/11/23 23:25:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,15 +57,23 @@
  */
 package org.apache.commons.collections;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.collections.functors.ChainedTransformer;
+import org.apache.commons.collections.functors.CloneTransformer;
+import org.apache.commons.collections.functors.ClosureTransformer;
+import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.functors.ExceptionTransformer;
-import org.apache.commons.collections.functors.FunctorException;
+import org.apache.commons.collections.functors.FactoryTransformer;
+import org.apache.commons.collections.functors.InstantiateTransformer;
+import org.apache.commons.collections.functors.InvokerTransformer;
+import org.apache.commons.collections.functors.MapTransformer;
+import org.apache.commons.collections.functors.NOPTransformer;
+import org.apache.commons.collections.functors.PredicateTransformer;
+import org.apache.commons.collections.functors.StringValueTransformer;
+import org.apache.commons.collections.functors.SwitchTransformer;
 
 /**
  * <code>TransformerUtils</code> provides reference implementations and 
@@ -90,36 +98,13 @@ import org.apache.commons.collections.functors.FunctorException;
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/11/23 17:48:20 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/23 23:25:33 $
  * 
  * @author Stephen Colebourne
  * @author James Carman
  */
 public class TransformerUtils {
 
-    /**
-     * A transformer that always returns null
-     */
-    private static final Transformer NULL_TRANSFORMER = new ConstantTransformer(null);
-    /**
-     * A transformer that returns the input object
-     */
-    private static final Transformer NOP_TRANSFORMER = new NOPTransformer();
-    /**
-     * A transformer that clones the input object
-     */
-    private static final Transformer CLONE_TRANSFORMER = new CloneTransformer();
-    /**
-     * A transformer that creates an object from a Class
-     */
-    private static final Transformer INSTANTIATE_TRANSFORMER = new InstantiateTransformer(null, null);
-
-    /**
-     * A transformer that returns a <code>java.lang.String</code> representation
-     * of the input object.
-     */
-    private static final Transformer STRING_VALUE_TRANSFORMER = new StringValueTransformer();
-    
     /**
      * This class is not normally instantiated.
      */
@@ -143,7 +128,7 @@ public class TransformerUtils {
      * @return the transformer
      */
     public static Transformer nullTransformer() {
-        return NULL_TRANSFORMER;
+        return ConstantTransformer.NULL_INSTANCE;
     }
 
     /**
@@ -154,7 +139,7 @@ public class TransformerUtils {
      * @return the transformer
      */
     public static Transformer nopTransformer() {
-        return NOP_TRANSFORMER;
+        return NOPTransformer.INSTANCE;
     }
 
     /**
@@ -170,7 +155,7 @@ public class TransformerUtils {
      * @return the transformer
      */
     public static Transformer cloneTransformer() {
-        return CLONE_TRANSFORMER;
+        return CloneTransformer.INSTANCE;
     }
 
     /**
@@ -181,49 +166,43 @@ public class TransformerUtils {
      * @return the transformer.
      */
     public static Transformer constantTransformer(Object constantToReturn) {
-        return new ConstantTransformer(constantToReturn);
+        return ConstantTransformer.getInstance(constantToReturn);
     }
 
     /**
      * Creates a Transformer that calls a Closure each time the transformer is used.
      * The transformer returns the input object.
      *
-     * @param closure  the closure to run each time in the transformer
-     * @return the transformer.
+     * @param closure  the closure to run each time in the transformer, not null
+     * @return the transformer
+     * @throws IllegalArgumentException if the closure is null
      */
     public static Transformer asTransformer(Closure closure) {
-        if (closure == null) {
-            throw new IllegalArgumentException("The closure must not be null");
-        }
-        return new ClosureTransformer(closure);
+        return ClosureTransformer.getInstance(closure);
     }
 
     /**
      * Creates a Transformer that calls a Predicate each time the transformer is used.
      * The transformer will return either Boolean.TRUE or Boolean.FALSE.
      *
-     * @param predicate  the predicate to run each time in the transformer
-     * @return the transformer.
+     * @param predicate  the predicate to run each time in the transformer, not null
+     * @return the transformer
+     * @throws IllegalArgumentException if the predicate is null
      */
     public static Transformer asTransformer(Predicate predicate) {
-        if (predicate == null) {
-            throw new IllegalArgumentException("The predicate must not be null");
-        }
-        return new PredicateTransformer(predicate);
+        return PredicateTransformer.getInstance(predicate);
     }
 
     /**
      * Creates a Transformer that calls a Factory each time the transformer is used.
      * The transformer will return the value returned by the factory.
      *
-     * @param factory  the factory to run each time in the transformer
-     * @return the transformer.
+     * @param factory  the factory to run each time in the transformer, not null
+     * @return the transformer
+     * @throws IllegalArgumentException if the factory is null
      */
     public static Transformer asTransformer(Factory factory) {
-        if (factory == null) {
-            throw new IllegalArgumentException("The factory must not be null");
-        }
-        return new FactoryTransformer(factory);
+        return FactoryTransformer.getInstance(factory);
     }
 
     /**
@@ -236,9 +215,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if either transformer is null
      */
     public static Transformer chainedTransformer(Transformer transformer1, Transformer transformer2) {
-        Transformer[] trs = new Transformer[] {transformer1, transformer2};
-        validate(trs);
-        return new ChainedTransformer(trs);
+        return ChainedTransformer.getInstance(transformer1, transformer2);
     }
 
     /**
@@ -248,13 +225,10 @@ public class TransformerUtils {
      * @param transformers  an array of transformers to chain
      * @return the transformer
      * @throws IllegalArgumentException if the transformers array is null
-     * @throws IllegalArgumentException if the transformers array has 0 elements
      * @throws IllegalArgumentException if any transformer in the array is null
      */
     public static Transformer chainedTransformer(Transformer[] transformers) {
-        Transformer[] trs = copy(transformers);
-        validate(trs);
-        return new ChainedTransformer(trs);
+        return ChainedTransformer.getInstance(transformers);
     }
 
     /**
@@ -265,22 +239,10 @@ public class TransformerUtils {
      * @param transformers  a collection of transformers to chain
      * @return the transformer
      * @throws IllegalArgumentException if the transformers collection is null
-     * @throws IllegalArgumentException if the transformers collection is empty
      * @throws IllegalArgumentException if any transformer in the collection is null
      */
     public static Transformer chainedTransformer(Collection transformers) {
-        Transformer[] trs = null;
-        if (transformers == null) {
-            throw new IllegalArgumentException("The transformer collection must not be null");
-        }
-        // convert to array like this to guarantee iterator() ordering
-        trs = new Transformer[transformers.size()];
-        int i = 0;
-        for (Iterator it = transformers.iterator(); it.hasNext();) {
-            trs[i++] = (Transformer) it.next();
-        }
-        validate(trs);
-        return new ChainedTransformer(trs);
+        return ChainedTransformer.getInstance(transformers);
     }
 
     /**
@@ -295,7 +257,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if either transformer is null
      */
     public static Transformer switchTransformer(Predicate predicate, Transformer trueTransformer, Transformer falseTransformer) {
-        return switchTransformerInternal(new Predicate[] { predicate }, new Transformer[] { trueTransformer }, falseTransformer);
+        return SwitchTransformer.getInstance(new Predicate[] { predicate }, new Transformer[] { trueTransformer }, falseTransformer);
     }
 
     /**
@@ -313,7 +275,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the arrays are different sizes
      */
     public static Transformer switchTransformer(Predicate[] predicates, Transformer[] transformers) {
-        return switchTransformerInternal(copy(predicates), copy(transformers), null);
+        return SwitchTransformer.getInstance(predicates, transformers, null);
     }
 
     /**
@@ -321,11 +283,11 @@ public class TransformerUtils {
      * on the predicates. The transformer at array location 0 is called if the
      * predicate at array location 0 returned true. Each predicate is evaluated
      * until one returns true. If no predicates evaluate to true, the default
-     * transformer is called.
+     * transformer is called. If the default transformer is null, null is returned.
      * 
      * @param predicates  an array of predicates to check
      * @param transformers  an array of transformers to call
-     * @param defaultTransformer  the default to call if no predicate matches
+     * @param defaultTransformer  the default to call if no predicate matches, null means return null
      * @return the transformer
      * @throws IllegalArgumentException if the either array is null
      * @throws IllegalArgumentException if the either array has 0 elements
@@ -333,7 +295,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the arrays are different sizes
      */
     public static Transformer switchTransformer(Predicate[] predicates, Transformer[] transformers, Transformer defaultTransformer) {
-        return switchTransformerInternal(copy(predicates), copy(transformers), defaultTransformer);
+        return SwitchTransformer.getInstance(predicates, transformers, defaultTransformer);
     }
 
     /**
@@ -356,41 +318,9 @@ public class TransformerUtils {
      * @throws ClassCastException  if the map elements are of the wrong type
      */
     public static Transformer switchTransformer(Map predicatesAndTransformers) {
-        Transformer[] trs = null;
-        Predicate[] preds = null;
-        if (predicatesAndTransformers == null) {
-            throw new IllegalArgumentException("The predicate and transformer map must not be null");
-        }
-        // convert to array like this to guarantee iterator() ordering
-        Transformer def = (Transformer) predicatesAndTransformers.remove(null);
-        int size = predicatesAndTransformers.size();
-        trs = new Transformer[size];
-        preds = new Predicate[size];
-        int i = 0;
-        for (Iterator it = predicatesAndTransformers.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            preds[i] = (Predicate) entry.getKey();
-            trs[i] = (Transformer) entry.getValue();
-            i++;
-        }
-        return switchTransformerInternal(preds, trs, def);
+        return SwitchTransformer.getInstance(predicatesAndTransformers);
     }
 
-    /**
-     * Validate input and create transformer
-     */
-    private static Transformer switchTransformerInternal(Predicate[] predicates, Transformer[] transformers, Transformer defaultTransformer) {
-        validate(predicates);
-        validate(transformers);
-        if (predicates.length != transformers.length) {
-            throw new IllegalArgumentException("The predicate and transformer arrays must be the same size");
-        }
-        if (defaultTransformer == null) {
-            defaultTransformer = nullTransformer();
-        }
-        return new SwitchTransformer(predicates, transformers, defaultTransformer);
-    }
-    
     /**
      * Create a new Transformer that uses the input object as a key to find the
      * transformer to call. 
@@ -432,7 +362,7 @@ public class TransformerUtils {
      * @return the transformer
      */
     public static Transformer instantiateTransformer() {
-        return INSTANTIATE_TRANSFORMER;
+        return InstantiateTransformer.NO_ARG_INSTANCE;
     }
 
     /** 
@@ -446,7 +376,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
     public static Transformer instantiateTransformer(Class[] paramTypes, Object[] args) {
-        return new InstantiateTransformer(paramTypes, args);
+        return InstantiateTransformer.getInstance(paramTypes, args);
     }
 
     /** 
@@ -458,10 +388,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the map is null
      */
     public static Transformer mapTransformer(Map map) {
-        if (map == null) {
-            throw new IllegalArgumentException("The map must not be null");
-        }
-        return new MapTransformer(map);
+        return MapTransformer.getInstance(map);
     }
 
     /**
@@ -478,7 +405,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the methodName is null.
      */
     public static Transformer invokerTransformer(String methodName){
-        return new InvokerTransformer(methodName, null, null);
+        return InvokerTransformer.getInstance(methodName, null, null);
     }
 
     /**
@@ -494,7 +421,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
     public static Transformer invokerTransformer(String methodName, Class[] paramTypes, Object[] args){
-        return new InvokerTransformer(methodName, paramTypes, args);
+        return InvokerTransformer.getInstance(methodName, paramTypes, args);
     }
 
     /**
@@ -505,447 +432,7 @@ public class TransformerUtils {
      * @return the transformer
      */
     public static Transformer stringValueTransformer() {
-        return STRING_VALUE_TRANSFORMER;
+        return StringValueTransformer.INSTANCE;
     }
     
-    /**
-     * Copy method
-     * 
-     * @param predicates  the predicates to copy
-     */
-    private static Predicate[] copy(Predicate[] predicates) {
-        if (predicates == null) {
-            return null;
-        }
-        return (Predicate[]) predicates.clone();
-    }
-    
-    /**
-     * Validate method
-     * 
-     * @param predicates  the predicates to validate
-     */
-    private static void validate(Predicate[] predicates) {
-        if (predicates == null) {
-            throw new IllegalArgumentException("The predicate array must not be null");
-        }
-        if (predicates.length < 1) {
-            throw new IllegalArgumentException(
-                "At least 1 predicate must be specified in the predicate array, size was " + predicates.length);
-        }
-        for (int i = 0; i < predicates.length; i++) {
-            if (predicates[i] == null) {
-                throw new IllegalArgumentException(
-                    "The predicate array must not contain a null predicate, index " + i + " was null");
-            }
-        }
-    }
-
-    /**
-     * Copy method
-     * 
-     * @param transformers  the transformers to copy
-     */
-    private static Transformer[] copy(Transformer[] transformers) {
-        if (transformers == null) {
-            return null;
-        }
-        return (Transformer[]) transformers.clone();
-    }
-    
-    /**
-     * Validate method
-     * 
-     * @param transformers  the transformers to validate
-     */
-    private static void validate(Transformer[] transformers) {
-        if (transformers == null) {
-            throw new IllegalArgumentException("The transformer array must not be null");
-        }
-        if (transformers.length < 1) {
-            throw new IllegalArgumentException(
-                "At least 1 transformer must be specified in the transformer array, size was " + transformers.length);
-        }
-        for (int i = 0; i < transformers.length; i++) {
-            if (transformers[i] == null) {
-                throw new IllegalArgumentException(
-                    "The transformer array must not contain a null transformer, index " + i + " was null");
-            }
-        }
-    }
-
-    // NOPTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * NOPTransformer returns the input object.
-     */
-    private static class NOPTransformer implements Transformer, Serializable {
-
-        /**
-         * Constructor
-         */
-        private NOPTransformer() {
-            super();
-        }
-
-        /**
-         * Return the input object
-         */
-        public Object transform(Object input) {
-            return input;
-        }
-    }
-
-    // CloneTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * CloneTransformer returns a clone of the input object.
-     */
-    private static class CloneTransformer implements Transformer, Serializable {
-
-        /**
-         * Constructor
-         */
-        private CloneTransformer() {
-            super();
-        }
-
-        /**
-         * Returns a clone of the input object
-         */
-        public Object transform(Object input) {
-            if (input == null) {
-                return null;
-            }
-            return FactoryUtils.prototypeFactory(input).create();
-        }
-    }
-
-    // ConstantTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ConstantTransformer returns the same instance each time.
-     */
-    private static class ConstantTransformer implements Transformer, Serializable {
-        /** The constant to return each time */
-        private final Object iConstant;
-
-        /**
-         * Constructor to store constant.
-         */
-        private ConstantTransformer(Object constant) {
-            super();
-            iConstant = constant;
-        }
-
-        /**
-         * Always return constant.
-         */
-        public Object transform(Object input) {
-            return iConstant;
-        }
-    }
-
-    // ClosureTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ClosureTransformer executes a Closure object.
-     */
-    private static class ClosureTransformer implements Transformer, Serializable {
-        /** The closure to call each time */
-        private final Closure iClosure;
-
-        /**
-         * Constructor to store closure.
-         */
-        private ClosureTransformer(Closure closure) {
-            super();
-            iClosure = closure;
-        }
-
-        /**
-         * Exceute the closure and return the input.
-         */
-        public Object transform(Object input) {
-            iClosure.execute(input);
-            return input;
-        }
-    }
-
-    // PredicateTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * PredicateTransformer evaluates a Predicate object.
-     */
-    private static class PredicateTransformer implements Transformer, Serializable {
-        /** The predicate to call each time */
-        private final Predicate iPredicate;
-
-        /**
-         * Constructor to store predicate.
-         */
-        private PredicateTransformer(Predicate predicate) {
-            super();
-            iPredicate = predicate;
-        }
-
-        /**
-         * Evaluate the predicate and return the result as a Boolean.
-         */
-        public Object transform(Object input) {
-            return new Boolean(iPredicate.evaluate(input));
-        }
-    }
-
-    // FactoryTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * FactoryTransformer returns the result of calling a Factory.
-     */
-    private static class FactoryTransformer implements Transformer, Serializable {
-        /** The factory to call each time */
-        private final Factory iFactory;
-
-        /**
-         * Constructor to store factory.
-         */
-        private FactoryTransformer(Factory factory) {
-            super();
-            iFactory = factory;
-        }
-
-        /**
-         * Return the result of calling the factory.
-         */
-        public Object transform(Object input) {
-            return iFactory.create();
-        }
-    }
-
-    // ChainedTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ChainedTransformer returns the result of calling a list of transformers.
-     */
-    private static class ChainedTransformer implements Transformer, Serializable {
-        /** The array of transformers to call */
-        private final Transformer[] iTransformers;
-
-        /**
-         * Constructor to store params.
-         */
-        private ChainedTransformer(Transformer[] transformers) {
-            super();
-            iTransformers = transformers;
-        }
-
-        /**
-         * Returns the result of calling a list of transformers.
-         */
-        public Object transform(Object object) {
-            for (int i = 0; i < iTransformers.length; i++) {
-                object = iTransformers[i].transform(object);
-            }
-            return object;
-        }
-    }
-
-    // SwitchTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * SwitchTransformer returns the result of the transformer whose predicate returns true.
-     */
-    private static class SwitchTransformer implements Transformer, Serializable {
-        /** The array of predicates to switch on */
-        private final Predicate[] iPredicates;
-        /** The array of transformers to call */
-        private final Transformer[] iTransformers;
-        /** The default transformer called if no predicate matches */
-        private final Transformer iDefault;
-
-        /**
-         * Constructor to store params.
-         */
-        private SwitchTransformer(Predicate[] predicates, Transformer[] transformers, Transformer defaultTransformer) {
-            super();
-            iPredicates = predicates;
-            iTransformers = transformers;
-            iDefault = defaultTransformer;
-        }
-
-        /**
-         * Returns the result of the transformer whose predicate returns true.
-         */
-        public Object transform(Object input) {
-            for (int i = 0; i < iPredicates.length; i++) {
-                if (iPredicates[i].evaluate(input) == true) {
-                    return iTransformers[i].transform(input);
-                }
-            }
-            return iDefault.transform(input);
-        }
-    }
-
-    // InstantiateTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * InstantiateTransformer returns the result of instantiating the input Class object.
-     */
-    private static class InstantiateTransformer implements Transformer, Serializable {
-        /** The array of reflection parameter types */
-        private final Class[] iParamTypes;
-        /** The array of reflection arguments */
-        private final Object[] iArgs;
-
-        /**
-         * Constructor to store params.
-         */
-        private InstantiateTransformer(Class[] paramTypes, Object[] args) {
-            super();
-            if (((paramTypes == null) && (args != null))
-                || ((paramTypes != null) && (args == null))
-                || ((paramTypes != null) && (args != null) && (paramTypes.length != args.length))) {
-                throw new IllegalArgumentException("InstantiateTransformer: The parameter types must match the arguments");
-            }
-            if ((paramTypes == null) && (args == null)) {
-                iParamTypes = null;
-                iArgs = null;
-            } else {
-                iParamTypes = (Class[]) paramTypes.clone();
-                iArgs = (Object[]) args.clone();
-            }
-        }
-
-        /**
-         * Return the result of instantiating the input Class object.
-         */
-        public Object transform(Object input) {
-            try {
-                if (input instanceof Class == false) {
-                    throw new FunctorException(
-                        "InstantiateTransformer: Input object was not an instanceof Class, it was a "
-                            + (input == null ? "null object" : input.getClass().getName()));
-                }
-                return FactoryUtils.instantiateFactory((Class) input, iParamTypes, iArgs).create();
-
-            } catch (IllegalArgumentException ex) {
-                throw new FunctorException("InstantiateTransformer", ex);
-            }
-        }
-    }
-
-    // MapTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * MapTransformer returns the result by looking up in the map.
-     */
-    private static class MapTransformer implements Transformer, Serializable {
-        /** The map of data to lookup in */
-        private final Map iMap;
-
-        /**
-         * Constructor to store map.
-         */
-        private MapTransformer(Map map) {
-            super();
-            iMap = map;
-        }
-
-        /**
-         * Returns the result by looking up in the map.
-         */
-        public Object transform(Object input) {
-            return iMap.get(input);
-        }
-    }
-
-    // InvokerTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * InvokerTransformer returns the result of invoking the specified method on 
-     * the input object.
-     */
-    private static class InvokerTransformer implements Transformer, Serializable {
-        /** The method name to call */
-        private final String iMethodName;
-        /** The array of reflection parameter types */
-        private final Class[] iParamTypes;
-        /** The array of reflection arguments */
-        private final Object[] iArgs;
-
-        /**
-         * Constructor.
-         */
-        public InvokerTransformer(String methodName, Class[] paramTypes, Object[] args) {
-            super();
-            if (methodName == null) {
-                throw new IllegalArgumentException("InvokerTransformer: The method to invoke must not be null");
-            }
-            if (((paramTypes == null) && (args != null))
-                || ((paramTypes != null) && (args == null))
-                || ((paramTypes != null) && (args != null) && (paramTypes.length != args.length))) {
-                throw new IllegalArgumentException("InvokerTransformer: The parameter types must match the arguments");
-            }
-
-            iMethodName = methodName;
-            if ((paramTypes == null) && (args == null)) {
-                iParamTypes = null;
-                iArgs = null;
-            } else {
-                iParamTypes = (Class[]) paramTypes.clone();
-                iArgs = (Object[]) args.clone();
-            }
-        }
-
-        /**
-         * Invoke the specified method on the input object.
-         */
-        public Object transform(Object input) {
-            if (input == null) {
-                return null;
-            }
-            try {
-                Class cls = input.getClass();
-                Method method = cls.getMethod(iMethodName, iParamTypes);
-                return method.invoke(input, iArgs);
-                
-            } catch (NoSuchMethodException ex) {
-                throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" + input.getClass() + "' does not exist");
-            } catch (IllegalAccessException ex) {
-                throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" + input.getClass() + "' cannot be accessed");
-            } catch (InvocationTargetException ex) {
-                throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" + input.getClass() + "' threw an exception", ex);
-            }
-        }
-    }
-    
-    // StringValueTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * StringValueTransformer returns a <code>java.lang.String</code> representation
-     * of the input object using the <code>String.valueOf()</code> method.
-     */
-    private static class StringValueTransformer implements Transformer, Serializable {
-        
-        /**
-         * returns a <code>java.lang.String</code> representation of the input object 
-         * using the <code>String.valueOf()</code> method.
-         */
-        public Object transform(Object input) {
-            return String.valueOf(input);
-        }
-    }
-
-}                                                                                                                                                                                                                                                                                                
+}

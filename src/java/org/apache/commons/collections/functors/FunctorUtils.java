@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/FunctorUtils.java,v 1.2 2003/11/23 22:05:24 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/FunctorUtils.java,v 1.3 2003/11/23 23:25:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,12 +62,13 @@ import java.util.Iterator;
 
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Transformer;
 
 /**
  * Internal utilities for functors.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/23 22:05:24 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/23 23:25:33 $
  *
  * @author Stephen Colebourne
  */
@@ -177,6 +178,35 @@ class FunctorUtils {
         for (int i = 0; i < closures.length; i++) {
             if (closures[i] == null) {
                 throw new IllegalArgumentException("The closure array must not contain a null closure, index " + i + " was null");
+            }
+        }
+    }
+
+    /**
+     * Copy method
+     * 
+     * @param transformers  the transformers to copy
+     */
+    static Transformer[] copy(Transformer[] transformers) {
+        if (transformers == null) {
+            return null;
+        }
+        return (Transformer[]) transformers.clone();
+    }
+    
+    /**
+     * Validate method
+     * 
+     * @param transformers  the transformers to validate
+     */
+    static void validate(Transformer[] transformers) {
+        if (transformers == null) {
+            throw new IllegalArgumentException("The transformer array must not be null");
+        }
+        for (int i = 0; i < transformers.length; i++) {
+            if (transformers[i] == null) {
+                throw new IllegalArgumentException(
+                    "The transformer array must not contain a null transformer, index " + i + " was null");
             }
         }
     }
