@@ -117,7 +117,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.12 $ $Date: 2004/04/09 15:04:29 $
+ * @version $Revision: 1.13 $ $Date: 2004/04/12 11:38:33 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -852,6 +852,46 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         }
     }
 
+    /**
+     * Tests Map.put(null, value)
+     */
+    public void testMapPutNullKey() {
+        resetEmpty();
+        Object[] values = getSampleValues();
+    
+        if (isPutAddSupported()) {
+            if (isAllowNullKey()) {
+                map.put(null, values[0]);
+            } else {
+                try {
+                    map.put(null, values[0]);
+                    fail("put(null, value) should throw NPE/IAE");
+                } catch (NullPointerException ex) {
+                } catch (IllegalArgumentException ex) {}
+            }
+        }
+    }
+    
+    /**
+     * Tests Map.put(null, value)
+     */
+    public void testMapPutNullValue() {
+        resetEmpty();
+        Object[] keys = getSampleKeys();
+        
+        if (isPutAddSupported()) {
+            if (isAllowNullValue()) {
+                map.put(keys[0], null);
+            } else {
+                try {
+                    map.put(keys[0], null);
+                    fail("put(key, null) should throw NPE/IAE");
+                } catch (NullPointerException ex) {
+                } catch (IllegalArgumentException ex) {}
+            }
+        }
+    }
+    
     /**
      * Tests Map.putAll(map)
      */
