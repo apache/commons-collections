@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.12 2003/05/11 14:15:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.13 2003/06/20 07:59:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,9 +84,10 @@ import java.util.NoSuchElementException;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.12 $ $Date: 2003/05/11 14:15:23 $
+ * @version $Revision: 1.13 $ $Date: 2003/06/20 07:59:59 $
  * 
  * @author Rodney Waldhoff
+ * @author Janek Bogucki
  */
 public class CursorableLinkedList implements List, Serializable {
     //  TODO: use weak references to cursors in case they aren't closed directly
@@ -942,7 +943,7 @@ public class CursorableLinkedList implements List, Serializable {
 
     //--- inner classes ----------------------------------------------
 
-    class Listable implements Serializable {
+    static class Listable implements Serializable {
         private Listable _prev = null;
         private Listable _next = null;
         private Object _val = null;
@@ -1092,7 +1093,7 @@ public class CursorableLinkedList implements List, Serializable {
         }
     }
 
-    public class Cursor extends ListIter implements ListIterator {
+    class Cursor extends ListIter implements ListIterator {
         boolean _valid = false;
 
         Cursor(int index) {

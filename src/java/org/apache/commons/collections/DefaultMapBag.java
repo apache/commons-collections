@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.8 2003/05/16 14:24:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.9 2003/06/20 07:59:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -78,11 +78,12 @@ import java.util.Set;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.8 $ $Date: 2003/05/16 14:24:55 $
+ * @version $Revision: 1.9 $ $Date: 2003/06/20 07:59:59 $
  * 
  * @author Chuck Burdick
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author Stephen Colebourne
+ * @author Janek Bogucki
  */
 public abstract class DefaultMapBag implements Bag {
     private Map _map = null;
@@ -240,7 +241,7 @@ public abstract class DefaultMapBag implements Bag {
         return new BagIterator(this, extractList().iterator());
     }
 
-    private class BagIterator implements Iterator {
+    static class BagIterator implements Iterator {
         private DefaultMapBag _parent = null;
         private Iterator _support = null;
         private Object _current = null;

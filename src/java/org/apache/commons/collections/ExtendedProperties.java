@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.11 2003/05/16 14:36:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.12 2003/06/20 07:59:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -158,7 +158,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.11 $ $Date: 2003/05/16 14:36:40 $
+ * @version $Revision: 1.12 $ $Date: 2003/06/20 07:59:59 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -169,6 +169,7 @@ import java.util.Vector;
  * @author <a href="mailto:kjohnson@transparent.com">Kent Johnson</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
+ * @author Janek Bogucki
  */
 public class ExtendedProperties extends Hashtable {
     
@@ -254,7 +255,7 @@ public class ExtendedProperties extends Hashtable {
      * backslash sign a the end of the line.  This is used to
      * concatenate multiple lines for readability.
      */
-    class PropertiesReader extends LineNumberReader
+    static class PropertiesReader extends LineNumberReader
     {
         /**
          * Constructor.
@@ -310,7 +311,7 @@ public class ExtendedProperties extends Hashtable {
      * separator is "," but commas into the property value are escaped
      * using the backslash in front.
      */
-    class PropertiesTokenizer extends StringTokenizer
+    static class PropertiesTokenizer extends StringTokenizer
     {
         /**
          * The property delimiter used while parsing (a comma).

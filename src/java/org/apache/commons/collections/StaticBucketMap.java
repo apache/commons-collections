@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.9 2003/05/16 14:58:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.10 2003/06/20 07:59:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -130,13 +130,14 @@ import java.util.Set;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.9 $ $Date: 2003/05/16 14:58:42 $
+ * @version $Revision: 1.10 $ $Date: 2003/06/20 07:59:59 $
  * 
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author Paul Jack
  * @author Leo Sutic
+ * @author Janek Bogucki
  */
 public final class StaticBucketMap implements Map {
 
@@ -489,7 +490,7 @@ public final class StaticBucketMap implements Map {
     /**
      * The Map.Entry for the StaticBucketMap.
      */
-    private final class Node implements Map.Entry
+    private static final class Node implements Map.Entry
     {
         protected Object key;
         protected Object value;
