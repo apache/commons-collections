@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.20 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.21 2003/12/11 00:46:45 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,8 +84,9 @@ import java.util.Iterator;
  * key is now equivalent to LRUMap.getFirst().
  * </p>
  * 
+ * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.20 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.21 $ $Date: 2003/12/11 00:46:45 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
