@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.5 2003/04/13 22:08:07 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIteratorFloatListIterator.java,v 1.1 2003/04/13 22:08:07 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,64 +57,85 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.ListIterator;
+
+import org.apache.commons.collections.primitives.FloatListIterator;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/04/13 22:08:07 $
- * @author Rodney Waldhoff
+ * Adapts a {@link Number}-valued {@link ListIterator ListIterator} 
+ * to the {@link FloatListIterator FloatListIterator} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link FloatListIterator FloatListIterator} 
+ * implementation in the "obvious" way.
+ *
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:08:07 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+public class ListIteratorFloatListIterator implements FloatListIterator {
         
-        suite.addTest(TestCollectionShortCollection.suite());
-        suite.addTest(TestShortCollectionCollection.suite());
-        suite.addTest(TestShortListList.suite());
-        suite.addTest(TestListShortList.suite());
-        suite.addTest(TestIteratorShortIterator.suite());
-        suite.addTest(TestListIteratorShortListIterator.suite());
-        suite.addTest(TestShortIteratorIterator.suite());
-        suite.addTest(TestShortListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionFloatCollection.suite());
-        suite.addTest(TestFloatCollectionCollection.suite());
-        suite.addTest(TestFloatListList.suite());
-        suite.addTest(TestListFloatList.suite());
-        suite.addTest(TestIteratorFloatIterator.suite());
-        suite.addTest(TestListIteratorFloatListIterator.suite());
-        suite.addTest(TestFloatIteratorIterator.suite());
-        suite.addTest(TestFloatListIteratorListIterator.suite());
-
-        return suite;
+    /**
+     * Create an {@link FloatListIterator FloatListIterator} wrapping
+     * the specified {@link ListIterator ListIterator}.  When
+     * the given <i>iterator</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param iterator the (possibly <code>null</code>) 
+     *        {@link ListIterator ListIterator} to wrap
+     * @return an {@link FloatListIterator FloatListIterator} wrapping the given 
+     *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+     *         <code>null</code>.
+     */
+    public static FloatListIterator wrap(ListIterator iterator) {
+        return null == iterator ? null : new ListIteratorFloatListIterator(iterator);
+    }    
+    
+    /**
+     * Creates an {@link FloatListIterator FloatListIterator} wrapping
+     * the specified {@link ListIterator ListIterator}.
+     * @see #wrap
+     */
+    public ListIteratorFloatListIterator(ListIterator iterator) {
+        _iterator = iterator;
     }
+    
+    public int nextIndex() {
+        return _iterator.nextIndex();
+    }
+
+    public int previousIndex() {
+        return _iterator.previousIndex();
+    }
+
+    public boolean hasNext() {
+        return _iterator.hasNext();
+    }
+
+    public boolean hasPrevious() {
+        return _iterator.hasPrevious();
+    }
+    
+    public float next() {
+        return ((Number)_iterator.next()).floatValue();
+    }
+
+    public float previous() {
+        return ((Number)_iterator.previous()).floatValue();
+    }
+
+    public void add(float element) {
+        _iterator.add(new Float(element));
+    }
+      
+    public void set(float element) {
+        _iterator.set(new Float(element));
+    }
+
+    public void remove() {
+        _iterator.remove();
+    }
+      
+    private ListIterator _iterator = null;
+
 }
-

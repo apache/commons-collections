@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.5 2003/04/13 22:08:07 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestFloatListIterator.java,v 1.1 2003/04/13 22:08:09 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -55,66 +55,37 @@
  *
  */
 
-package org.apache.commons.collections.primitives.adapters;
-
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+package org.apache.commons.collections.primitives;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/04/13 22:08:07 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:08:09 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public abstract class TestFloatListIterator extends TestFloatIterator {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestFloatListIterator(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    public FloatIterator makeEmptyFloatIterator() {
+        return makeEmptyFloatListIterator();
+    }
+    
+    public FloatIterator makeFullFloatIterator() {
+        return makeFullFloatListIterator();
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionShortCollection.suite());
-        suite.addTest(TestShortCollectionCollection.suite());
-        suite.addTest(TestShortListList.suite());
-        suite.addTest(TestListShortList.suite());
-        suite.addTest(TestIteratorShortIterator.suite());
-        suite.addTest(TestListIteratorShortListIterator.suite());
-        suite.addTest(TestShortIteratorIterator.suite());
-        suite.addTest(TestShortListIteratorListIterator.suite());
+    public abstract FloatListIterator makeEmptyFloatListIterator();
+    public abstract FloatListIterator makeFullFloatListIterator();
 
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
+    // tests
+    // ------------------------------------------------------------------------
 
-        suite.addTest(TestCollectionFloatCollection.suite());
-        suite.addTest(TestFloatCollectionCollection.suite());
-        suite.addTest(TestFloatListList.suite());
-        suite.addTest(TestListFloatList.suite());
-        suite.addTest(TestIteratorFloatIterator.suite());
-        suite.addTest(TestListIteratorFloatListIterator.suite());
-        suite.addTest(TestFloatIteratorIterator.suite());
-        suite.addTest(TestFloatListIteratorListIterator.suite());
 
-        return suite;
-    }
 }
-

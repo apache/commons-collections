@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.5 2003/04/13 22:08:07 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/CollectionFloatCollection.java,v 1.1 2003/04/13 22:08:06 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,64 +57,58 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.Serializable;
+import java.util.Collection;
+
+import org.apache.commons.collections.primitives.FloatCollection;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/04/13 22:08:07 $
- * @author Rodney Waldhoff
+ * Adapts a {@link java.lang.Number Number}-valued
+ * {@link java.util.Collection Collection} to the
+ * {@link FloatCollection FloatCollection} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link Collection Collection} 
+ * implementation in the "obvious" way.
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:08:06 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+final public class CollectionFloatCollection extends AbstractCollectionFloatCollection implements Serializable {
+    /**
+     * Create an {@link FloatCollection FloatCollection} wrapping
+     * the specified {@link Collection Collection}.  When
+     * the given <i>collection</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param collection the (possibly <code>null</code>) {@link Collection} to wrap
+     * @return an {@link FloatCollection FloatCollection} wrapping the given 
+     *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
+     *         <code>null</code>.
+     */
+    public static FloatCollection wrap(Collection collection) {
+        if(null == collection) {
+            return null;
+        } else if(collection instanceof Serializable) {
+            return new CollectionFloatCollection(collection);
+        } else {
+            return new NonSerializableCollectionFloatCollection(collection);
+        }
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Creates an {@link FloatCollection FloatCollection} wrapping
+     * the specified {@link Collection Collection}.
+     * @see #wrap
+     */
+    public CollectionFloatCollection(Collection collection) {
+        _collection = collection;
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionShortCollection.suite());
-        suite.addTest(TestShortCollectionCollection.suite());
-        suite.addTest(TestShortListList.suite());
-        suite.addTest(TestListShortList.suite());
-        suite.addTest(TestIteratorShortIterator.suite());
-        suite.addTest(TestListIteratorShortListIterator.suite());
-        suite.addTest(TestShortIteratorIterator.suite());
-        suite.addTest(TestShortListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionFloatCollection.suite());
-        suite.addTest(TestFloatCollectionCollection.suite());
-        suite.addTest(TestFloatListList.suite());
-        suite.addTest(TestListFloatList.suite());
-        suite.addTest(TestIteratorFloatIterator.suite());
-        suite.addTest(TestListIteratorFloatListIterator.suite());
-        suite.addTest(TestFloatIteratorIterator.suite());
-        suite.addTest(TestFloatListIteratorListIterator.suite());
-
-        return suite;
+    
+    protected Collection getCollection() {
+        return _collection;
     }
+ 
+    private Collection _collection = null;         
 }
-

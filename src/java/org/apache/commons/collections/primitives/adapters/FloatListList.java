@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.5 2003/04/13 22:08:07 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/FloatListList.java,v 1.1 2003/04/13 22:08:07 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,64 +57,59 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.Serializable;
+import java.util.List;
+
+import org.apache.commons.collections.primitives.FloatList;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/04/13 22:08:07 $
- * @author Rodney Waldhoff
+ * Adapts an {@link FloatList FloatList} to the
+ * {@link List List} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link FloatList FloatList} 
+ * implementation in the "obvious" way.
+ *
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:08:07 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+final public class FloatListList extends AbstractFloatListList implements Serializable {
+    
+    /**
+     * Create a {@link List List} wrapping
+     * the specified {@link FloatList FloatList}.  When
+     * the given <i>list</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param list the (possibly <code>null</code>) 
+     *        {@link FloatList FloatList} to wrap
+     * @return a {@link List List} wrapping the given 
+     *         <i>list</i>, or <code>null</code> when <i>list</i> is
+     *         <code>null</code>.
+     */
+    public static List wrap(FloatList list) {
+        if(null == list) {
+            return null;
+        } else if(list instanceof Serializable) {
+            return new FloatListList(list);
+        } else {
+            return new NonSerializableFloatListList(list);
+        }
     }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    
+    /**
+     * Creates a {@link List List} wrapping
+     * the specified {@link FloatList FloatList}.
+     * @see #wrap
+     */
+    public FloatListList(FloatList list) {
+        _list = list;
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionShortCollection.suite());
-        suite.addTest(TestShortCollectionCollection.suite());
-        suite.addTest(TestShortListList.suite());
-        suite.addTest(TestListShortList.suite());
-        suite.addTest(TestIteratorShortIterator.suite());
-        suite.addTest(TestListIteratorShortListIterator.suite());
-        suite.addTest(TestShortIteratorIterator.suite());
-        suite.addTest(TestShortListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionFloatCollection.suite());
-        suite.addTest(TestFloatCollectionCollection.suite());
-        suite.addTest(TestFloatListList.suite());
-        suite.addTest(TestListFloatList.suite());
-        suite.addTest(TestIteratorFloatIterator.suite());
-        suite.addTest(TestListIteratorFloatListIterator.suite());
-        suite.addTest(TestFloatIteratorIterator.suite());
-        suite.addTest(TestFloatListIteratorListIterator.suite());
-
-        return suite;
-    }
+    
+    protected FloatList getFloatList() {
+        return _list;
+    }    
+    
+    private FloatList _list = null;
 }
-

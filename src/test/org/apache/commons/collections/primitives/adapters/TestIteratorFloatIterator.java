@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.5 2003/04/13 22:08:07 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIteratorFloatIterator.java,v 1.1 2003/04/13 22:08:07 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,64 +57,62 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.FloatIterator;
+import org.apache.commons.collections.primitives.TestFloatIterator;
+
 /**
- * @version $Revision: 1.5 $ $Date: 2003/04/13 22:08:07 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:08:07 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestIteratorFloatIterator extends TestFloatIterator {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestIteratorFloatIterator(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionShortCollection.suite());
-        suite.addTest(TestShortCollectionCollection.suite());
-        suite.addTest(TestShortListList.suite());
-        suite.addTest(TestListShortList.suite());
-        suite.addTest(TestIteratorShortIterator.suite());
-        suite.addTest(TestListIteratorShortListIterator.suite());
-        suite.addTest(TestShortIteratorIterator.suite());
-        suite.addTest(TestShortListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        suite.addTest(TestCollectionFloatCollection.suite());
-        suite.addTest(TestFloatCollectionCollection.suite());
-        suite.addTest(TestFloatListList.suite());
-        suite.addTest(TestListFloatList.suite());
-        suite.addTest(TestIteratorFloatIterator.suite());
-        suite.addTest(TestListIteratorFloatListIterator.suite());
-        suite.addTest(TestFloatIteratorIterator.suite());
-        suite.addTest(TestFloatListIteratorListIterator.suite());
-
-        return suite;
+        return new TestSuite(TestIteratorFloatIterator.class);
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    public FloatIterator makeEmptyFloatIterator() {
+        return IteratorFloatIterator.wrap(makeEmptyList().iterator());
+    }
+    
+    public FloatIterator makeFullFloatIterator() {
+        return IteratorFloatIterator.wrap(makeFullList().iterator());
+    }
+
+    protected List makeEmptyList() {
+        return new ArrayList();
+    }
+    
+    protected List makeFullList() {
+        List list = makeEmptyList();
+        float[] elts = getFullElements();
+        for(int i=0;i<elts.length;i++) {
+            list.add(new Float(elts[i]));
+        }
+        return list;
+    }
+    
+    public float[] getFullElements() {
+        return new float[] { (float)0, (float)1, (float)2, (float)3, (float)4, (float)5, (float)6, (float)7, (float)8, (float)9 };
+    }
+    
+    // tests
+    // ------------------------------------------------------------------------
+
+
+}
