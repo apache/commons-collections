@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestEnumerationUtils.java,v 1.1 2003/10/28 18:48:10 ggregory Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestEnumerationUtils.java,v 1.2 2003/10/28 18:56:12 ggregory Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,15 +63,19 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import junit.framework.Test;
 
 /**
  * Tests EnumerationUtils.
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
- * @version $Id: TestEnumerationUtils.java,v 1.1 2003/10/28 18:48:10 ggregory Exp $
+ * @version $Id: TestEnumerationUtils.java,v 1.2 2003/10/28 18:56:12 ggregory Exp $
  */
-public class TestEnumerationUtils extends TestCase {
+public class TestEnumerationUtils extends BulkTest {
+
+    public TestEnumerationUtils(String name) {
+        super(name);
+    }
 
     public static final String TO_LIST_FIXTURE = "this is a test";
     
@@ -120,6 +124,10 @@ public class TestEnumerationUtils extends TestCase {
         expectedKeyList.add("two");
         expectedKeyList.add("three");
         Assert.assertTrue(actualKeyList.containsAll(expectedKeyList));
+    }
+
+    public static Test suite() {
+        return BulkTest.makeSuite(TestEnumerationUtils.class);
     }
 
 }

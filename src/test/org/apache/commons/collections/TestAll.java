@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.50 2003/10/06 23:47:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.51 2003/10/28 18:56:12 ggregory Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections package tests.
  * 
- * @version $Revision: 1.50 $ $Date: 2003/10/06 23:47:17 $
+ * @version $Revision: 1.51 $ $Date: 2003/10/28 18:56:12 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -115,6 +115,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestStaticBucketMap.suite());
         suite.addTest(TestTreeBag.suite());
         suite.addTest(TestUnboundedFifoBuffer.suite());
+        suite.addTest(TestEnumerationUtils.suite());
         return suite;
     }
         
