@@ -64,6 +64,7 @@
         <exclude>**/TestComparableComparator.java</exclude>
         <exclude>**/TestComparatorChain.java</exclude>
         <exclude>**/TestComparator.java</exclude>
+        <exclude>**/TestCursorableLinkedList.java</exclude>
         <exclude>**/TestNullComparator.java</exclude>
         <exclude>**/TestReverseComparator.java</exclude>
         <exclude>**/LocalTestNode.java</exclude>
