@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/Attic/TestBinaryBuffer.java,v 1.1 2004/01/01 19:01:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/Attic/TestBinaryBuffer.java,v 1.2 2004/01/01 23:56:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Random;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -75,7 +76,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * Tests the BinaryHeap.
  * 
- * @version $Revision: 1.1 $ $Date: 2004/01/01 19:01:34 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/01 23:56:51 $
  * 
  * @author Michael A. Smith
  */
@@ -286,24 +287,96 @@ public class TestBinaryBuffer extends AbstractTestCollection {
         } catch (BufferUnderflowException ex) {}
     }
 
-//    public void testAddRemove() {
-//        resetEmpty();
-//        BinaryBuffer heap = (BinaryBuffer) collection;
-//        heap.add(new Integer(0));
-//        heap.add(new Integer(2));
-//        heap.add(new Integer(4));
-//        heap.add(new Integer(3));
-//        heap.add(new Integer(8));
-//        heap.add(new Integer(10));
-//        heap.add(new Integer(12));
-//        heap.add(new Integer(3));
-//        confirmed.addAll(heap);
-//        System.out.println(heap);
-//        Object obj = new Integer(10);
-//        heap.remove(obj);
-//        confirmed.remove(obj);
-//        System.out.println(heap);
-//        verify();
-//    }
+    /**
+     * Illustrates bad internal heap state reported in Bugzilla PR #235818. 
+     */  
+    public void testAddRemove() {
+        resetEmpty();
+        BinaryBuffer heap = (BinaryBuffer) collection;
+        heap.add(new Integer(0));
+        heap.add(new Integer(2));
+        heap.add(new Integer(4));
+        heap.add(new Integer(3));
+        heap.add(new Integer(8));
+        heap.add(new Integer(10));
+        heap.add(new Integer(12));
+        heap.add(new Integer(3));
+        confirmed.addAll(heap);
+        // System.out.println(heap);
+        Object obj = new Integer(10);
+        heap.remove(obj);
+        confirmed.remove(obj);
+        // System.out.println(heap);
+        verify();
+    }
+    
+    /**
+     * Generate heaps staring with Integers from 0 - heapSize - 1.
+     * Then perform random add / remove operations, checking
+     * heap order after modifications. Alternates minHeaps, maxHeaps.
+     *
+     * Based on code provided by Steve Phelps in PR #25818
+     *
+     */
+    public void testRandom() {
+        int iterations = 500;
+        int heapSize = 100;
+        int operations = 20;
+        Random randGenerator = new Random();
+        BinaryBuffer h = null;
+        for(int i=0; i < iterations; i++) {
+            if (i < iterations / 2) {          
+                h = new BinaryBuffer(true);
+            } else {
+                h = new BinaryBuffer(false);
+            }
+            for(int r = 0; r < heapSize; r++) {
+                h.add( new Integer( randGenerator.nextInt(heapSize)) );
+            }
+            for( int r = 0; r < operations; r++ ) {
+                h.remove(new Integer(r));
+                h.add(new Integer(randGenerator.nextInt(heapSize)));
+            }
+            checkOrder(h);
+        }
+    }
+     
+    /**
+     * Pops all elements from the heap and verifies that the elements come off
+     * in the correct order.  NOTE: this method empties the heap.
+     */
+    protected void checkOrder(BinaryBuffer h) {
+        Integer lastNum = null;
+        Integer num = null;
+        boolean fail = false;
+        while (!h.isEmpty()) {
+            num = (Integer) h.remove();
+            if (h.ascendingOrder) {
+                assertTrue(lastNum == null || num.intValue() >= lastNum.intValue());
+            } else { // max heap
+                assertTrue(lastNum == null || num.intValue() <= lastNum.intValue());
+            }
+            lastNum = num;
+            num = null;
+        }
+    }
+    
+    /**
+     * Returns a string showing the contents of the heap formatted as a tree.
+     * Makes no attempt at padding levels or handling wrapping. 
+     */
+    protected String showTree(BinaryBuffer h) {
+        int count = 1;
+        StringBuffer buffer = new StringBuffer();
+        for (int offset = 1; count < h.size() + 1; offset *= 2) {
+            for (int i = offset; i < offset * 2; i++) {
+                if (i < h.elements.length && h.elements[i] != null) 
+                    buffer.append(h.elements[i] + " ");
+                count++;
+            }
+            buffer.append('\n');
+        }
+        return buffer.toString();
+    }
     
 }

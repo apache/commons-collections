@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryBuffer.java,v 1.1 2004/01/01 19:01:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryBuffer.java,v 1.2 2004/01/01 23:56:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -92,7 +92,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * </pre>
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
- * @version $Revision: 1.1 $ $Date: 2004/01/01 19:01:34 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/01 23:56:51 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
@@ -337,9 +337,11 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
         return elements.length == size + 1;
     }
 
+    
     /**
-     * Percolates element down heap from top.
-     * Assume it is a minimum heap.
+     * Percolates element down heap from the position given by the index.
+     * <p>
+     * Assumes it is a mimimum heap.
      *
      * @param index the index for the element
      */
@@ -369,8 +371,9 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
     }
 
     /**
-     * Percolates element down heap from top.
-     * Assume it is a maximum heap.
+     * Percolates element down heap from the position given by the index.
+     * <p>
+     * Assumes it is a maximum heap.
      *
      * @param index the index of the element
      */
@@ -400,17 +403,49 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
     }
 
     /**
-     * Percolates element up heap from bottom.
-     * Assume it is a minimum heap.
+     * Percolates element up heap from the position given by the index.
+     * <p>
+     * Assumes it is a minimum heap.
+     *
+     * @param index the index of the element to be percolated up
+     */
+    protected void percolateUpMinHeap(final int index) {
+        int hole = index;
+        Object element = elements[hole];
+        while (hole > 1 && compare(element, elements[hole / 2]) < 0) {
+            // save element that is being pushed down
+            // as the element "bubble" is percolated up
+            final int next = hole / 2;
+            elements[hole] = elements[next];
+            hole = next;
+        }
+        elements[hole] = element;
+    }
+
+    /**
+     * Percolates a new element up heap from the bottom.
+     * <p>
+     * Assumes it is a minimum heap.
      *
      * @param element the element
      */
     protected void percolateUpMinHeap(final Object element) {
-        int hole = ++size;
+        elements[++size] = element;
+        percolateUpMinHeap(size);
+    }
 
-        elements[hole] = element;
+    /**
+     * Percolates element up heap from from the position given by the index.
+     * <p>
+     * Assume it is a maximum heap.
+     *
+     * @param element the element
+     */
+    protected void percolateUpMaxHeap(final int index) {
+        int hole = index;
+        Object element = elements[hole];
 
-        while (hole > 1 && compare(element, elements[hole / 2]) < 0) {
+        while (hole > 1 && compare(element, elements[hole / 2]) > 0) {
             // save element that is being pushed down
             // as the element "bubble" is percolated up
             final int next = hole / 2;
@@ -422,23 +457,15 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
     }
 
     /**
-     * Percolates element up heap from bottom.
+     * Percolates a new element up heap from the bottom.
+     * <p>
      * Assume it is a maximum heap.
      *
      * @param element the element
      */
     protected void percolateUpMaxHeap(final Object element) {
-        int hole = ++size;
-
-        while (hole > 1 && compare(element, elements[hole / 2]) > 0) {
-            // save element that is being pushed down
-            // as the element "bubble" is percolated up
-            final int next = hole / 2;
-            elements[hole] = elements[next];
-            hole = next;
-        }
-
-        elements[hole] = element;
+        elements[++size] = element;
+        percolateUpMaxHeap(size);
     }
 
     /**
@@ -495,19 +522,31 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
                 if (lastReturnedIndex == -1) {
                     throw new IllegalStateException();
                 }
-                elements[lastReturnedIndex] = elements[size];
-                elements[size] = null;
-                size--;
-                if (size != 0) {
-                    //percolate top element to it's place in tree
-                    if (ascendingOrder) {
-                        percolateDownMinHeap(lastReturnedIndex);
-                    } else {
-                        percolateDownMaxHeap(lastReturnedIndex);
+                elements[ lastReturnedIndex ] = elements[ size ];
+                elements[ size ] = null;
+                size--;  
+                if( size != 0 && lastReturnedIndex <= size) {
+                    int compareToParent = 0;
+                    if (lastReturnedIndex > 1) {
+                        compareToParent = compare(elements[lastReturnedIndex], 
+                            elements[lastReturnedIndex / 2]);  
                     }
+                    if (ascendingOrder) {
+                        if (lastReturnedIndex > 1 && compareToParent < 0) {
+                            percolateUpMinHeap(lastReturnedIndex); 
+                        } else {
+                            percolateDownMinHeap(lastReturnedIndex);
+                        }
+                    } else {  // max heap
+                        if (lastReturnedIndex > 1 && compareToParent > 0) {
+                            percolateUpMaxHeap(lastReturnedIndex); 
+                        } else {
+                            percolateDownMaxHeap(lastReturnedIndex);
+                        }
+                    }          
                 }
                 index--;
-                lastReturnedIndex = -1;
+                lastReturnedIndex = -1; 
             }
 
         };

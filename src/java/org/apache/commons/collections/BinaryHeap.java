@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.16 2004/01/01 19:00:20 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.17 2004/01/01 23:56:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -92,7 +92,7 @@ import java.util.NoSuchElementException;
  * </pre>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.16 $ $Date: 2004/01/01 19:00:20 $
+ * @version $Revision: 1.17 $ $Date: 2004/01/01 23:56:51 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
@@ -319,8 +319,9 @@ public final class BinaryHeap extends AbstractCollection
     }
 
     /**
-     * Percolates element down heap from top.
-     * Assume it is a maximum heap.
+     * Percolates element down heap from the position given by the index.
+     * <p>
+     * Assumes it is a mimimum heap.
      *
      * @param index the index for the element
      */
@@ -350,8 +351,9 @@ public final class BinaryHeap extends AbstractCollection
     }
 
     /**
-     * Percolates element down heap from top.
-     * Assume it is a maximum heap.
+     * Percolates element down heap from the position given by the index.
+     * <p>
+     * Assumes it is a maximum heap.
      *
      * @param index the index of the element
      */
@@ -381,16 +383,15 @@ public final class BinaryHeap extends AbstractCollection
     }
 
     /**
-     * Percolates element up heap from bottom.
-     * Assume it is a maximum heap.
+     * Percolates element up heap from the position given by the index.
+     * <p>
+     * Assumes it is a minimum heap.
      *
-     * @param element the element
+     * @param index the index of the element to be percolated up
      */
-    protected void percolateUpMinHeap(final Object element) {
-        int hole = ++m_size;
-
-        m_elements[hole] = element;
-
+    protected void percolateUpMinHeap(final int index) {
+        int hole = index;
+        Object element = m_elements[hole];
         while (hole > 1 && compare(element, m_elements[hole / 2]) < 0) {
             // save element that is being pushed down
             // as the element "bubble" is percolated up
@@ -398,19 +399,32 @@ public final class BinaryHeap extends AbstractCollection
             m_elements[hole] = m_elements[next];
             hole = next;
         }
-
         m_elements[hole] = element;
     }
 
     /**
-     * Percolates element up heap from bottom.
+     * Percolates a new element up heap from the bottom.
+     * <p>
+     * Assumes it is a minimum heap.
+     *
+     * @param element the element
+     */
+    protected void percolateUpMinHeap(final Object element) {
+        m_elements[++m_size] = element;
+        percolateUpMinHeap(m_size);
+    }
+
+    /**
+     * Percolates element up heap from from the position given by the index.
+     * <p>
      * Assume it is a maximum heap.
      *
      * @param element the element
      */
-    protected void percolateUpMaxHeap(final Object element) {
-        int hole = ++m_size;
-
+    protected void percolateUpMaxHeap(final int index) {
+        int hole = index;
+        Object element = m_elements[hole];
+        
         while (hole > 1 && compare(element, m_elements[hole / 2]) > 0) {
             // save element that is being pushed down
             // as the element "bubble" is percolated up
@@ -420,6 +434,18 @@ public final class BinaryHeap extends AbstractCollection
         }
 
         m_elements[hole] = element;
+    }
+    
+    /**
+     * Percolates a new element up heap from the bottom.
+     * <p>
+     * Assume it is a maximum heap.
+     *
+     * @param element the element
+     */
+    protected void percolateUpMaxHeap(final Object element) {
+        m_elements[++m_size] = element;
+        percolateUpMaxHeap(m_size);
     }
     
     /**
@@ -494,18 +520,34 @@ public final class BinaryHeap extends AbstractCollection
             }
 
             public void remove() {
-                if (lastReturnedIndex == -1) throw new IllegalStateException();
+                if (lastReturnedIndex == -1) {
+                    throw new IllegalStateException();
+                }
                 m_elements[ lastReturnedIndex ] = m_elements[ m_size ];
                 m_elements[ m_size ] = null;
-                m_size--;
-                if( m_size != 0 )
-                {
-                    //percolate top element to it's place in tree
-                    if( m_isMinHeap ) percolateDownMinHeap( lastReturnedIndex );
-                    else percolateDownMaxHeap( lastReturnedIndex );
+                m_size--;  
+                if( m_size != 0 && lastReturnedIndex <= m_size) {
+                    int compareToParent = 0;
+                    if (lastReturnedIndex > 1) {
+                        compareToParent = compare(m_elements[lastReturnedIndex], 
+                            m_elements[lastReturnedIndex / 2]);  
+                    }
+                    if (m_isMinHeap) {
+                        if (lastReturnedIndex > 1 && compareToParent < 0) {
+                            percolateUpMinHeap(lastReturnedIndex); 
+                        } else {
+                            percolateDownMinHeap(lastReturnedIndex);
+                        }
+                    } else {  // max heap
+                        if (lastReturnedIndex > 1 && compareToParent > 0) {
+                            percolateUpMaxHeap(lastReturnedIndex); 
+                        } else {
+                            percolateDownMaxHeap(lastReturnedIndex);
+                        }
+                    }          
                 }
                 index--;
-                lastReturnedIndex = -1;        
+                lastReturnedIndex = -1; 
             }
 
         };
