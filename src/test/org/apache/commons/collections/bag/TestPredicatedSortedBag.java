@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestPredicatedSortedBag.java,v 1.4 2003/12/05 20:22:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestPredicatedSortedBag.java,v 1.5 2003/12/24 22:38:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,13 +72,12 @@ import org.apache.commons.collections.SortedBag;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/05 20:22:12 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/24 22:38:32 $
  * 
  * @author Phil Steitz
  */
 public class TestPredicatedSortedBag extends AbstractTestSortedBag {
     
-    private SortedBag emptyBag = new TreeBag();
     private SortedBag nullBag = null;
     
     public TestPredicatedSortedBag(String testName) {
@@ -111,20 +110,20 @@ public class TestPredicatedSortedBag extends AbstractTestSortedBag {
     }
     
     public Bag makeBag() {
-        return decorateBag(emptyBag, truePredicate);
+        return decorateBag(new TreeBag(), truePredicate);
     }
     
     protected Bag makeTestBag() {
-        return decorateBag(emptyBag, stringPredicate());
+        return decorateBag(new TreeBag(), stringPredicate());
     }
     
     //--------------------------------------------------------------------------
     
     public void testDecorate() {
-        SortedBag bag = decorateBag(emptyBag, stringPredicate());
+        SortedBag bag = decorateBag(new TreeBag(), stringPredicate());
         SortedBag bag2 = ((PredicatedSortedBag) bag).getSortedBag();
         try {
-            SortedBag bag3 = decorateBag(emptyBag, null);
+            SortedBag bag3 = decorateBag(new TreeBag(), null);
             fail("Expecting IllegalArgumentException for null predicate");
         } catch (IllegalArgumentException e) {}
         try {
@@ -134,7 +133,7 @@ public class TestPredicatedSortedBag extends AbstractTestSortedBag {
     }
     
     public void testSortOrder() {
-        SortedBag bag = decorateBag(emptyBag, stringPredicate());
+        SortedBag bag = decorateBag(new TreeBag(), stringPredicate());
         String one = "one";
         String two = "two";
         String three = "three";
@@ -144,7 +143,6 @@ public class TestPredicatedSortedBag extends AbstractTestSortedBag {
         assertEquals("first element", bag.first(), one);
         assertEquals("last element", bag.last(), two); 
         Comparator c = bag.comparator();
-        assertTrue("natural order, so comparator should be null", 
-            c == null);
+        assertTrue("natural order, so comparator should be null", c == null);
     }
 }
