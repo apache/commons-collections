@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.13 2002/10/13 13:55:35 scolebourne Exp $
- * $Revision: 1.13 $
- * $Date: 2002/10/13 13:55:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.14 2002/11/07 21:32:36 bayard Exp $
+ * $Revision: 1.14 $
+ * $Date: 2002/11/07 21:32:36 $
  *
  * ====================================================================
  *
@@ -89,7 +89,7 @@ import java.util.NoSuchElementException;
  *
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Id: TestList.java,v 1.13 2002/10/13 13:55:35 scolebourne Exp $
+ * @version $Id: TestList.java,v 1.14 2002/11/07 21:32:36 bayard Exp $
  */
 public abstract class TestList extends TestCollection {
 
@@ -767,7 +767,6 @@ public abstract class TestList extends TestCollection {
      */
     private void backwardTest(ListIterator iter, int i) {
         List list = getList();
-        int max = getFullElements().length;
 
         while (i > 0) {
             assertTrue("Iterator should have next", iter.hasPrevious());
