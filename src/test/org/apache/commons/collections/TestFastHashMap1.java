@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.3 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap1.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/21 12:22:30 $
  *
  * ====================================================================
@@ -64,41 +64,42 @@ package org.apache.commons.collections;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
+ * Test FastHashMap in <strong>fast</strong> mode.
+ *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestFastHashMap1.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
  */
-public class TestFastArrayList extends TestArrayList
+public class TestFastHashMap1 extends TestFastHashMap
 {
-    public TestFastArrayList(String testName)
+    public TestFastHashMap1(String testName)
     {
         super(testName);
     }
 
     public static Test suite()
     {
-        return new TestSuite(TestFastArrayList.class);
+        return new TestSuite(TestFastHashMap1.class);
     }
 
     public static void main(String args[])
     {
-        String[] testCaseName = { TestFastArrayList.class.getName() };
+        String[] testCaseName = { TestFastHashMap1.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
+    }
+
+    public Map makeMap() {
+        FastHashMap fhm = new FastHashMap();
+        fhm.setFast(true);
+        return (fhm);
     }
 
     public void setUp()
     {
-        list = (ArrayList) makeList();
-    }
-
-    public List makeList()
-    {
-        FastArrayList fal = new FastArrayList();
-        fal.setFast(false);
-        return (fal);
+        map = (HashMap) makeMap();
     }
 
 }

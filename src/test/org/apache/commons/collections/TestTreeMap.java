@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.3 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/21 12:22:30 $
  *
  * ====================================================================
@@ -64,41 +64,54 @@ package org.apache.commons.collections;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.TreeMap;
+import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestTreeMap.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
  */
-public class TestFastArrayList extends TestArrayList
+public class TestTreeMap extends TestMap
 {
-    public TestFastArrayList(String testName)
+    public TestTreeMap(String testName)
     {
         super(testName);
     }
 
     public static Test suite()
     {
-        return new TestSuite(TestFastArrayList.class);
+        return new TestSuite(TestTreeMap.class);
     }
 
     public static void main(String args[])
     {
-        String[] testCaseName = { TestFastArrayList.class.getName() };
+        String[] testCaseName = { TestTreeMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    public Map makeMap() {
+        TreeMap tm = new TreeMap();
+        return (tm);
+    }
+
+    protected TreeMap map = null;
+
     public void setUp()
     {
-        list = (ArrayList) makeList();
+        map = (TreeMap) makeMap();
     }
 
-    public List makeList()
+    public void testNewMap()
     {
-        FastArrayList fal = new FastArrayList();
-        fal.setFast(false);
-        return (fal);
+        assert("New map is empty", map.isEmpty());
+        assertEquals("New map has size zero", map.size(), 0);
     }
 
+    public void testSearch()
+    {
+        map.put("first", "First Item");
+        map.put("second", "Second Item");
+        assertEquals("Top item is 'Second Item'", map.get("first"), "First Item");
+        assertEquals("Next Item is 'First Item'", map.get("second"), "Second Item");
+    }
 }

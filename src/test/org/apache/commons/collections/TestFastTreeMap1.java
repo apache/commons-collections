@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.3 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/21 12:22:30 $
  *
  * ====================================================================
@@ -64,41 +64,42 @@ package org.apache.commons.collections;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
+ * Test FastTreeMap in <strong>fast</strong> mode.
+ *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestFastTreeMap1.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
  */
-public class TestFastArrayList extends TestArrayList
+public class TestFastTreeMap1 extends TestFastTreeMap
 {
-    public TestFastArrayList(String testName)
+    public TestFastTreeMap1(String testName)
     {
         super(testName);
     }
 
     public static Test suite()
     {
-        return new TestSuite(TestFastArrayList.class);
+        return new TestSuite(TestFastTreeMap1.class);
     }
 
     public static void main(String args[])
     {
-        String[] testCaseName = { TestFastArrayList.class.getName() };
+        String[] testCaseName = { TestFastTreeMap1.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
+    }
+
+    public Map makeMap() {
+        FastTreeMap ftm = new FastTreeMap();
+        ftm.setFast(true);
+        return (ftm);
     }
 
     public void setUp()
     {
-        list = (ArrayList) makeList();
-    }
-
-    public List makeList()
-    {
-        FastArrayList fal = new FastArrayList();
-        fal.setFast(false);
-        return (fal);
+        map = (TreeMap) makeMap();
     }
 
 }

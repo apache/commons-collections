@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.3 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/21 12:22:30 $
  *
  * ====================================================================
@@ -68,24 +68,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Test FastArrayList implementation in <strong>fast</strong> mode.
+ *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestFastArrayList1.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
  */
-public class TestFastArrayList extends TestArrayList
+public class TestFastArrayList1 extends TestFastArrayList
 {
-    public TestFastArrayList(String testName)
+    public TestFastArrayList1(String testName)
     {
         super(testName);
     }
 
     public static Test suite()
     {
-        return new TestSuite(TestFastArrayList.class);
+        return new TestSuite(TestFastArrayList1.class);
     }
 
     public static void main(String args[])
     {
-        String[] testCaseName = { TestFastArrayList.class.getName() };
+        String[] testCaseName = { TestFastArrayList1.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
 
@@ -97,7 +99,7 @@ public class TestFastArrayList extends TestArrayList
     public List makeList()
     {
         FastArrayList fal = new FastArrayList();
-        fal.setFast(false);
+        fal.setFast(true);
         return (fal);
     }
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.3 2001/04/20 16:54:08 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2001/04/20 16:54:08 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.4 2001/04/21 12:22:30 craigmcc Exp $
+ * $Revision: 1.4 $
+ * $Date: 2001/04/21 12:22:30 $
  *
  * ====================================================================
  *
@@ -66,10 +66,10 @@ import java.util.*;
 
 /**
  * @author Craig McClanahan
- * @version $Id: TestArrayStack.java,v 1.3 2001/04/20 16:54:08 rwaldhoff Exp $
+ * @version $Id: TestArrayStack.java,v 1.4 2001/04/21 12:22:30 craigmcc Exp $
  */
 
-public class TestArrayStack extends TestList {
+public class TestArrayStack extends TestArrayList {
 
     public TestArrayStack(String testName) {
         super(testName);
@@ -88,10 +88,11 @@ public class TestArrayStack extends TestList {
         return new ArrayStack();
     }
 
-    private ArrayStack stack = null;
+    protected ArrayStack stack = null;
 
     public void setUp() {
-        stack = new ArrayStack();
+        stack = (ArrayStack) makeList();
+        list = stack;
     }
 
     public void testNewStack() {

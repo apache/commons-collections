@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.3 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/21 12:22:30 $
  *
  * ====================================================================
@@ -69,25 +69,27 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestArrayList.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
  */
-public class TestFastArrayList extends TestArrayList
+public class TestArrayList extends TestList
 {
-    public TestFastArrayList(String testName)
+    public TestArrayList(String testName)
     {
         super(testName);
     }
 
     public static Test suite()
     {
-        return new TestSuite(TestFastArrayList.class);
+        return new TestSuite(TestArrayList.class);
     }
 
     public static void main(String args[])
     {
-        String[] testCaseName = { TestFastArrayList.class.getName() };
+        String[] testCaseName = { TestArrayList.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
+
+    protected ArrayList list = null;
 
     public void setUp()
     {
@@ -96,9 +98,32 @@ public class TestFastArrayList extends TestArrayList
 
     public List makeList()
     {
-        FastArrayList fal = new FastArrayList();
-        fal.setFast(false);
-        return (fal);
+        ArrayList al = new ArrayList();
+        return (al);
+    }
+
+    public void testNewArrayList()
+    {
+        assert("New list is empty", list.isEmpty());
+        assertEquals("New list has size zero", list.size(), 0);
+
+        try
+        {
+            list.get(1);
+            fail("get(int i) should have thrown IndexOutOfBoundsException");
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            ; // Expected result
+        }
+    }
+
+    public void testSearch()
+    {
+        list.add("First Item");
+        list.add("Last Item");
+        assertEquals("First item is 'First Item'", list.get(0), "First Item");
+        assertEquals("Last Item is 'Last Item'", list.get(1), "Last Item");
     }
 
 }

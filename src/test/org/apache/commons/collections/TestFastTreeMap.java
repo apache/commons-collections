@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.2 2001/04/20 16:54:04 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/20 16:54:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/04/21 12:22:30 $
  *
  * ====================================================================
  *
@@ -65,12 +65,13 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap.java,v 1.2 2001/04/20 16:54:04 rwaldhoff Exp $
+ * @version $Id: TestFastTreeMap.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
  */
-public class TestFastTreeMap extends TestMap
+public class TestFastTreeMap extends TestTreeMap
 {
     public TestFastTreeMap(String testName)
     {
@@ -89,27 +90,14 @@ public class TestFastTreeMap extends TestMap
     }
 
     public Map makeMap() {
-        return new FastTreeMap();
+        FastTreeMap ftm = new FastTreeMap();
+        ftm.setFast(false);
+        return (ftm);
     }
-
-    private FastTreeMap map = null;
 
     public void setUp()
     {
-        map = new FastTreeMap();
+        map = (TreeMap) makeMap();
     }
 
-    public void testNewMap()
-    {
-        assert("New map is empty", map.isEmpty());
-        assertEquals("New map has size zero", map.size(), 0);
-    }
-
-    public void testSearch()
-    {
-        map.put("first", "First Item");
-        map.put("second", "Second Item");
-        assertEquals("Top item is 'Second Item'", map.get("first"), "First Item");
-        assertEquals("Next Item is 'First Item'", map.get("second"), "Second Item");
-    }
 }

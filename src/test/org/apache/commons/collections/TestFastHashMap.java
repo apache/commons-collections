@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.2 2001/04/20 16:54:05 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/20 16:54:05 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/04/21 12:22:30 $
  *
  * ====================================================================
  *
@@ -64,13 +64,14 @@ package org.apache.commons.collections;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastHashMap.java,v 1.2 2001/04/20 16:54:05 rwaldhoff Exp $
+ * @version $Id: TestFastHashMap.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
  */
-public class TestFastHashMap extends TestMap
+public class TestFastHashMap extends TestHashMap
 {
     public TestFastHashMap(String testName)
     {
@@ -89,27 +90,14 @@ public class TestFastHashMap extends TestMap
     }
 
     public Map makeMap() {
-        return new FastHashMap();
+        FastHashMap fhm = new FastHashMap();
+        fhm.setFast(false);
+        return (fhm);
     }
-
-    private FastHashMap map = null;
 
     public void setUp()
     {
-        map = new FastHashMap();
+        map = (HashMap) makeMap();
     }
 
-    public void testNewMap()
-    {
-        assert("New map is empty", map.isEmpty());
-        assertEquals("New map has size zero", map.size(), 0);
-    }
-
-    public void testSearch()
-    {
-        map.put("first", "First Item");
-        map.put("second", "Second Item");
-        assertEquals("Top item is 'Second Item'", map.get("first"), "First Item");
-        assertEquals("Next Item is 'First Item'", map.get("second"), "Second Item");
-    }
 }
