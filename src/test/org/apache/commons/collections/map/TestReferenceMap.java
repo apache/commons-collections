@@ -25,7 +25,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Tests for ReferenceMap. 
  * 
- * @version $Revision: 1.4 $ $Date: 2004/04/01 00:07:48 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/09 22:18:17 $
  *
  * @author Paul Jack
  */
@@ -125,8 +125,52 @@ public class TestReferenceMap extends AbstractTestIterableMap {
         }
 
     }
-*/
 
+    public void testMapIteratorAfterGC() {
+        ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
+        Object[] hard = new Object[10];
+        for (int i = 0; i < 10; i++) {
+            hard[i] = new Integer(10 + i);
+            map.put(new Integer(i), new Integer(i));
+            map.put(hard[i], hard[i]);
+        }
+
+        System.gc();
+        MapIterator iterator = map.mapIterator();
+        while (iterator.hasNext()) {
+            Object key1 = iterator.next();
+            Integer key = (Integer) iterator.getKey();
+            Integer value = (Integer) iterator.getValue();
+            assertTrue("iterator keys should match", key == key1);
+            assertTrue("iterator should skip GC'd keys", key.intValue() >= 10);
+            assertTrue("iterator should skip GC'd values", value.intValue() >= 10);
+        }
+
+    }
+
+    public void testMapIteratorAfterGC2() {
+        ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
+        Object[] hard = new Object[10];
+        for (int i = 0; i < 10; i++) {
+            hard[i] = new Integer(10 + i);
+            map.put(new Integer(i), new Integer(i));
+            map.put(hard[i], hard[i]);
+        }
+
+        MapIterator iterator = map.mapIterator();
+        while (iterator.hasNext()) {
+            Object key1 = iterator.next();
+            System.gc();
+            Integer key = (Integer) iterator.getKey();
+            Integer value = (Integer) iterator.getValue();
+            assertTrue("iterator keys should match", key == key1);
+            assertTrue("iterator should skip GC'd keys", key.intValue() >= 10);
+            assertTrue("iterator should skip GC'd values", value.intValue() >= 10);
+        }
+
+    }
+
+*/
 
 /*
     // Uncomment to create test files in /data/test
