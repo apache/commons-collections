@@ -17,7 +17,7 @@
 <project>
   <pomVersion>3</pomVersion>
   <id>commons-collections</id>
-  <currentVersion>3.1</currentVersion>
+  <currentVersion>3.2-dev</currentVersion>
   <inceptionYear>2001</inceptionYear>
   <name>Collections</name>
   <shortDescription>Commons Collections</shortDescription>

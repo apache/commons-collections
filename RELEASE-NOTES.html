@@ -13,9 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
   -->
-<title>RELEASE NOTES: COLLECTIONS 3.1</title>
+<title>RELEASE NOTES: COLLECTIONS 3.2</title>
 
-<center><h2>RELEASE NOTES: COLLECTIONS 3.1</h2></center>
+<center><h2>RELEASE NOTES: COLLECTIONS 3.2</h2></center>
 
 <p>
 This release adds various new classes and fixes a number of bugs.
@@ -25,102 +25,29 @@ All feedback should be directed to commons-user at jakarta.apache.org.
 
 <center><h3>COMPATABILITY</h3></center>
 <p>
-This release is fully source and binary compatible with v3.0.
+This release is fully source and binary compatible with v3.1.
 (Checks performed using JDiff and Clirr, thanks).
 </p>
 <p>
-The only new deprecations are in AbstractDualBidiMap.
-These only impact non commons-collections subclasses, and existing code will still work.
-</p>
-<p>
-This release also enables a workaround of the binary compatability issue with IteratorUtils in v3.0.
-Collections v2.1.1 (with deprecations solved) and v3.1 are compatible with regards to iterators.
+The only new deprecations are ................
 </p>
 
 <center><h3>NEW CLASSES</h3></center>
 <ul>
-<li>TreeList - A list implementation that is faster than ArrayList for insertions and removals</li>
-<li>MultiKeyMap - A map that allows multiple keys to be used to map the value</li>
-<li>SingletonMap - fully featured singleton Map implementation</li>
-<li>ObjectGraphIterator - An iterator that can iterate over a graph of objects</li>
-<li>MapBackedSet - Set created by decorating a map</li>
-<li>ReferenceIdentityMap - Similar to ReferenceMap, but matching keys and values by identity [26503]</li>
-<li>AbstractReferenceMap - New base class for reference maps [26503]</li>
-<li>Empty*Iterator - Iterators over empty collections</li>
-<li>TransformedPredicate - A predicate where the input object is transformed [26946]</li>
-<li>PredicateDecorator - An interface to provide a uniform interface to the decorated predicates</li>
-<li>AbstractSerializable*Decorator - Abstract classes for decorators that are Serializable</li>
+<li>........</li>
 </ul>
 
 <center><h3>ENHANCEMENTS</h3></center>
 <ul>
-<li>ReferenceMap - Changed to extend AbstractReferenceMap, thus gaining a mapIterator() and subclassability [26503]</li>
-<li>Fast3Map - Add clone() method</li>
-<li>MultiKey - Add getKey(index) and size() methods and make constructor public</li>
-<li>MultiHashMap - Add five methods to improve the API</li>
-<li>AbstractHashedMap,AbstractLinkedMap - Add methods to access entry methods when protected scope blocks</li>
-<li>Functors - Add get methods to retrieve internal state [27515]</li>
-<li>Functors - Add additional getInstance() methods for consistency [27856,27857]</li>
-<li>CollectionUtils - get(Object,int) method now supports primitive arrays</li>
-<li>CollectionUtils - cardinality() now works faster for Set and Bag instances [28629]</li>
-<li>CollectionUtils - Add size(Object) method to find the size of various collection-like objects [27909]</li>
-<li>SingletonIterator - make remove() functionality optional</li>
-<li>AbstractLinkedList/NodeCachingLinkedList - added getValue() and setValue() to Node, and made everything use them</li>
-<li>LRUMap - The addMapping() method now uses isFull() to determine whether it is full</li>
-<li>LRUMap - Add boolean flag, scanUntilRemovable, giving the removeLRU() method more power [28887]</li>
-<li>InvokerTransformer - Add additional getInstance() method</li>
-<li>Reduced inter-class and inter-package dependencies, especially via *Utils classes</li>
-<li>ListOrderedSet - Add new factory method decorate(Set,List)</li>
-<li>ListOrderedSet - Add public constructor that uses a HashSet and ArrayList</li>
-<li>ListOrderedMap - Add public constructor that uses a HashMap and ArrayList</li>
-</ul>
-
-<h4>Made Serializable</h4>
-<ul>
-<li>Fast3Map [27946]</li>
-<li>ReferenceMap</li>
-<li>UnboundedFifoBuffer</li>
-<li>BoundedFifoBuffer</li>
-<li>CircularFifoBuffer</li>
-<li>TiedMapEntry</li>
-<li>FixedSize* [18815]</li>
-<li>Predicated* [18815]</li>
-<li>Synchronized* [18815]</li>
-<li>Transformed* [18815]</li>
-<li>Typed* [18815]</li>
-<li>Unmodifiable* [18815]</li>
-<li>Lazy* [18815]</li>
-<li>ListOrdered* [18815]</li>
-<li>SetUniqueList [18815]</li>
+<li>........</li>
 </ul>
 
 <center><h3>BUG FIXES</h3></center>
 <ul>
-<li>Map/BidiMap implementations only checked key and not value in entry set contains(Object) and remove(Object)</li>
-<li>AbstractHashedMap subclasses failed to clone() correctly [27159]</li>
-<li>ExtendedProperties - Close input stream in constructor [27737]</li>
-<li>ExtendedProperties - Handle comma separated data in multiple keys</li>
-<li>Flat3Map - Handle infinite loops in toString</li>
-<li>LRUMap - The removeLRU() method was passed the wrong LinkEntry [28433]</li>
-<li>EnumIterator/MapUtils - Changed enum references to enable JDK 1.5 compliance</li>
-<li>UnmodifiableSortedBag - Fix to ensure unmodifiable</li>
-<li>MultiHashMap - Fix copy constructor and clone to work properly [28972]</li>
-<li>ListOrderedSet - Fix to throw IllegalArgumentException instead of NPE on null factory decorate(List)</li>
-<li>*Dual*BidiMap - Fix poorly designed subclass method call from superclass constructor [29519]</li>
+<li>FastArrayList - Fix iterators and views to work better in multithreaded environments</li>
 </ul>
 
 <center><h3>JAVADOC</h3></center>
 <ul>
-<li>Bag - Indicate that no changes are likely to the interface despite its problems</li>
-<li>TreeBidiMap - Add javadoc about requiring Comparable entries [26470]</li>
-<li>MultiKey - Add extra explanatations, examples and warnings</li>
-<li>MultiMap,MultiHashMap - Add extra documentation to clarify the interface and implementation</li>
-<li>XxxUtils - Clarify the internal workings of the predicated decorator classes [28115]</li>
-<li>BidiMap - Clarify 1 to 1 nature of the map</li>
-<li>AbstractHashedMap - Fix isEqualValue() javadoc to refer to value not key</li>
-<li>LRUMap - Added extra javadoc about method implementations</li>
-<li>BoundedCollection/UnmodifiableBoundedCollection - reword to avoid misunderstandings</li>
-<li>Closure/Predicate/Transformer/Factory - Additional javadoc with links</li>
-<li>ClosureUtils/PredicateUtils/TransformerUtils/FactoryUtils - Additional links to implementations</li>
-<li>Predicated* - Additional usage explanation [29018]</li>
+<li>........</li>
 </ul>
