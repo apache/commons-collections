@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.3 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2002/10/12 22:15:18 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.4 2003/05/16 14:24:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,10 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
-
-
 
 import java.util.AbstractCollection;
 import java.util.AbstractMap;
@@ -73,105 +67,99 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-
 /**
-* Red-Black tree-based implementation of Map. This class guarantees
-* that the map will be in both ascending key order and ascending
-* value order, sorted according to the natural order for the key's
-* and value's classes.<p>
-*
-* This Map is intended for applications that need to be able to look
-* up a key-value pairing by either key or value, and need to do so
-* with equal efficiency.<p>
-*
-* While that goal could be accomplished by taking a pair of TreeMaps
-* and redirecting requests to the appropriate TreeMap (e.g.,
-* containsKey would be directed to the TreeMap that maps values to
-* keys, containsValue would be directed to the TreeMap that maps keys
-* to values), there are problems with that implementation,
-* particularly when trying to keep the two TreeMaps synchronized with
-* each other. And if the data contained in the TreeMaps is large, the
-* cost of redundant storage becomes significant.<p>
-*
-* This solution keeps the data properly synchronized and minimizes
-* the data storage. The red-black algorithm is based on TreeMap's,
-* but has been modified to simultaneously map a tree node by key and
-* by value. This doubles the cost of put operations (but so does
-* using two TreeMaps), and nearly doubles the cost of remove
-* operations (there is a savings in that the lookup of the node to be
-* removed only has to be performed once). And since only one node
-* contains the key and value, storage is significantly less than that
-* required by two TreeMaps.<p>
-*
-* There are some limitations placed on data kept in this Map. The
-* biggest one is this:<p>
-*
-* When performing a put operation, neither the key nor the value may
-* already exist in the Map. In the java.util Map implementations
-* (HashMap, TreeMap), you can perform a put with an already mapped
-* key, and neither cares about duplicate values at all ... but this
-* implementation's put method with throw an IllegalArgumentException
-* if either the key or the value is already in the Map.<p>
-*
-* Obviously, that same restriction (and consequence of failing to
-* heed that restriction) applies to the putAll method.<p>
-*
-* The Map.Entry instances returned by the appropriate methods will
-* not allow setValue() and will throw an
-* UnsupportedOperationException on attempts to call that method.<p>
-*
-* New methods are added to take advantage of the fact that values are
-* kept sorted independently of their keys:<p>
-*
-* Object getKeyForValue(Object value) is the opposite of get; it
-* takes a value and returns its key, if any.<p>
-*
-* Object removeValue(Object value) finds and removes the specified
-* value and returns the now un-used key.<p>
-*
-* Set entrySetByValue() returns the Map.Entry's in a Set whose
-* iterator will iterate over the Map.Entry's in ascending order by
-* their corresponding values.<p>
-*
-* Set keySetByValue() returns the keys in a Set whose iterator will
-* iterate over the keys in ascending order by their corresponding
-* values.<p>
-*
-* Collection valuesByValue() returns the values in a Collection whose
-* iterator will iterate over the values in ascending order.<p>
-*
-* @since 2.0
-* @author Marc Johnson (marcj at users dot sourceforge dot net)
-*/
-
-// final for performance
+ * Red-Black tree-based implementation of Map. This class guarantees
+ * that the map will be in both ascending key order and ascending
+ * value order, sorted according to the natural order for the key's
+ * and value's classes.<p>
+ *
+ * This Map is intended for applications that need to be able to look
+ * up a key-value pairing by either key or value, and need to do so
+ * with equal efficiency.<p>
+ *
+ * While that goal could be accomplished by taking a pair of TreeMaps
+ * and redirecting requests to the appropriate TreeMap (e.g.,
+ * containsKey would be directed to the TreeMap that maps values to
+ * keys, containsValue would be directed to the TreeMap that maps keys
+ * to values), there are problems with that implementation,
+ * particularly when trying to keep the two TreeMaps synchronized with
+ * each other. And if the data contained in the TreeMaps is large, the
+ * cost of redundant storage becomes significant.<p>
+ *
+ * This solution keeps the data properly synchronized and minimizes
+ * the data storage. The red-black algorithm is based on TreeMap's,
+ * but has been modified to simultaneously map a tree node by key and
+ * by value. This doubles the cost of put operations (but so does
+ * using two TreeMaps), and nearly doubles the cost of remove
+ * operations (there is a savings in that the lookup of the node to be
+ * removed only has to be performed once). And since only one node
+ * contains the key and value, storage is significantly less than that
+ * required by two TreeMaps.<p>
+ *
+ * There are some limitations placed on data kept in this Map. The
+ * biggest one is this:<p>
+ *
+ * When performing a put operation, neither the key nor the value may
+ * already exist in the Map. In the java.util Map implementations
+ * (HashMap, TreeMap), you can perform a put with an already mapped
+ * key, and neither cares about duplicate values at all ... but this
+ * implementation's put method with throw an IllegalArgumentException
+ * if either the key or the value is already in the Map.<p>
+ *
+ * Obviously, that same restriction (and consequence of failing to
+ * heed that restriction) applies to the putAll method.<p>
+ *
+ * The Map.Entry instances returned by the appropriate methods will
+ * not allow setValue() and will throw an
+ * UnsupportedOperationException on attempts to call that method.<p>
+ *
+ * New methods are added to take advantage of the fact that values are
+ * kept sorted independently of their keys:<p>
+ *
+ * Object getKeyForValue(Object value) is the opposite of get; it
+ * takes a value and returns its key, if any.<p>
+ *
+ * Object removeValue(Object value) finds and removes the specified
+ * value and returns the now un-used key.<p>
+ *
+ * Set entrySetByValue() returns the Map.Entry's in a Set whose
+ * iterator will iterate over the Map.Entry's in ascending order by
+ * their corresponding values.<p>
+ *
+ * Set keySetByValue() returns the keys in a Set whose iterator will
+ * iterate over the keys in ascending order by their corresponding
+ * values.<p>
+ *
+ * Collection valuesByValue() returns the values in a Collection whose
+ * iterator will iterate over the values in ascending order.<p>
+ *
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.4 $ $Date: 2003/05/16 14:24:54 $
+ * 
+ * @author Marc Johnson (marcj at users dot sourceforge dot net)
+ */
 public final class DoubleOrderedMap extends AbstractMap {
+//  final for performance
 
-    private Node[]                rootNode           = new Node[]{ null,
-                                                           null };
-    private int                   nodeCount          = 0;
-    private int                   modifications      = 0;
-    private Set[]                 setOfKeys          = new Set[]{ null,
-                                                           null };
-    private Set[]                 setOfEntries       = new Set[]{ null,
-                                                           null };
-    private Collection[]          collectionOfValues = new Collection[]{ 
-null,
-                                                                         
-null };
-    private static final int      KEY                = 0;
-    private static final int      VALUE              = 1;
-    private static final int      SUM_OF_INDICES     = KEY + VALUE;
-    private static final int      FIRST_INDEX        = 0;
-    private static final int      NUMBER_OF_INDICES  = 2;
-    private static final String[] dataName           = new String[]{ "key",
-                                                                     "value" 
-};
+    private static final int KEY = 0;
+    private static final int VALUE = 1;
+    private static final int SUM_OF_INDICES = KEY + VALUE;
+    private static final int FIRST_INDEX = 0;
+    private static final int NUMBER_OF_INDICES = 2;
+    private static final String[] dataName = new String[] { "key", "value" };
+    
+    private Node[] rootNode = new Node[] { null, null };
+    private int nodeCount = 0;
+    private int modifications = 0;
+    private Set[] setOfKeys = new Set[] { null, null };
+    private Set[] setOfEntries = new Set[] { null, null };
+    private Collection[] collectionOfValues = new Collection[] { null, null };
 
     /**
      * Construct a new DoubleOrderedMap
      */
-    public DoubleOrderedMap() {}
+    public DoubleOrderedMap() {
+    }
 
     /**
      * Constructs a new DoubleOrderedMap from an existing Map, with keys and
@@ -179,14 +167,14 @@ null };
      *
      * @param map the map whose mappings are to be placed in this map.
      *
-     * @exception ClassCastException if the keys in the map are not
+     * @throws ClassCastException if the keys in the map are not
      *                               Comparable, or are not mutually
      *                               comparable; also if the values in
      *                               the map are not Comparable, or
      *                               are not mutually Comparable
-     * @exception NullPointerException if any key or value in the map
+     * @throws NullPointerException if any key or value in the map
      *                                 is null
-     * @exception IllegalArgumentException if there are duplicate keys
+     * @throws IllegalArgumentException if there are duplicate keys
      *                                     or duplicate values in the
      *                                     map
      */
@@ -205,9 +193,9 @@ null };
      * @return the key to which this map maps the specified value, or
      *         null if the map contains no mapping for this value.
      *
-     * @exception ClassCastException if the value is of an
+     * @throws ClassCastException if the value is of an
      *                               inappropriate type for this map.
-     * @exception NullPointerException if the value is null
+     * @throws NullPointerException if the value is null
      */
     public Object getKeyForValue(final Object value)
             throws ClassCastException, NullPointerException {
@@ -847,8 +835,7 @@ null };
      * @param insertedNode the node to be inserted
      * @param index KEY or VALUE
      */
-    private void doRedBlackInsert(final Node insertedNode, final int index) 
-{
+    private void doRedBlackInsert(final Node insertedNode, final int index) {
 
         Node currentNode = insertedNode;
 
@@ -904,8 +891,7 @@ null };
                     makeRed(getGrandParent(currentNode, index), index);
 
                     if (getGrandParent(currentNode, index) != null) {
-                        rotateLeft(getGrandParent(currentNode, index), 
-index);
+                        rotateLeft(getGrandParent(currentNode, index), index);
                     }
                 }
             }
@@ -943,11 +929,9 @@ index);
                     rootNode[index] = replacement;
                 } else if (deletedNode
                            == deletedNode.getParent(index).getLeft(index)) {
-                    deletedNode.getParent(index).setLeft(replacement, 
-index);
+                    deletedNode.getParent(index).setLeft(replacement, index);
                 } else {
-                    deletedNode.getParent(index).setRight(replacement, 
-index);
+                    deletedNode.getParent(index).setRight(replacement, index);
                 }
 
                 deletedNode.setLeft(null, index);
@@ -975,8 +959,7 @@ index);
                         if (deletedNode
                                 == deletedNode.getParent(index)
                                     .getLeft(index)) {
-                            deletedNode.getParent(index).setLeft(null, 
-index);
+                            deletedNode.getParent(index).setLeft(null, index);
                         } else {
                             deletedNode.getParent(index).setRight(null,
                                                   index);
@@ -1016,9 +999,7 @@ index);
                     makeRed(getParent(currentNode, index), index);
                     rotateLeft(getParent(currentNode, index), index);
 
-                    siblingNode = getRightChild(getParent(currentNode, 
-index),
-                                                index);
+                    siblingNode = getRightChild(getParent(currentNode, index), index);
                 }
 
                 if (isBlack(getLeftChild(siblingNode, index), index)
@@ -1034,8 +1015,7 @@ index),
                         rotateRight(siblingNode, index);
 
                         siblingNode =
-                            getRightChild(getParent(currentNode, index),
-                                          index);
+                            getRightChild(getParent(currentNode, index), index);
                     }
 
                     copyColor(getParent(currentNode, index), siblingNode,
@@ -1047,23 +1027,18 @@ index),
                     currentNode = rootNode[index];
                 }
             } else {
-                Node siblingNode = getLeftChild(getParent(currentNode, 
-index),
-                                                index);
+                Node siblingNode = getLeftChild(getParent(currentNode, index), index);
 
                 if (isRed(siblingNode, index)) {
                     makeBlack(siblingNode, index);
                     makeRed(getParent(currentNode, index), index);
                     rotateRight(getParent(currentNode, index), index);
 
-                    siblingNode = getLeftChild(getParent(currentNode, 
-index),
-                                               index);
+                    siblingNode = getLeftChild(getParent(currentNode, index), index);
                 }
 
                 if (isBlack(getRightChild(siblingNode, index), index)
-                        && isBlack(getLeftChild(siblingNode, index), index)) 
-{
+                        && isBlack(getLeftChild(siblingNode, index), index)) {
                     makeRed(siblingNode, index);
 
                     currentNode = getParent(currentNode, index);
@@ -1074,8 +1049,7 @@ index),
                         rotateLeft(siblingNode, index);
 
                         siblingNode =
-                            getLeftChild(getParent(currentNode, index),
-                                         index);
+                            getLeftChild(getParent(currentNode, index), index);
                     }
 
                     copyColor(getParent(currentNode, index), siblingNode,
@@ -1203,8 +1177,8 @@ index),
      * @param index KEY or VALUE (used to put the right word in the
      *              exception message)
      *
-     * @exception NullPointerException if o is null
-     * @exception ClassCastException if o is not Comparable
+     * @throws NullPointerException if o is null
+     * @throws ClassCastException if o is not Comparable
      */
     private static void checkNonNullComparable(final Object o,
                                                final int index) {
@@ -1225,8 +1199,8 @@ index),
      *
      * @param key the key to be checked
      *
-     * @exception NullPointerException if key is null
-     * @exception ClassCastException if key is not Comparable
+     * @throws NullPointerException if key is null
+     * @throws ClassCastException if key is not Comparable
      */
     private static void checkKey(final Object key) {
         checkNonNullComparable(key, KEY);
@@ -1237,8 +1211,8 @@ index),
      *
      * @param value the value to be checked
      *
-     * @exception NullPointerException if value is null
-     * @exception ClassCastException if value is not Comparable
+     * @throws NullPointerException if value is null
+     * @throws ClassCastException if value is not Comparable
      */
     private static void checkValue(final Object value) {
         checkNonNullComparable(value, VALUE);
@@ -1251,8 +1225,8 @@ index),
      * @param key the key to be checked
      * @param value the value to be checked
      *
-     * @exception NullPointerException if key or value is null
-     * @exception ClassCastException if key or value is not Comparable
+     * @throws NullPointerException if key or value is null
+     * @throws ClassCastException if key or value is not Comparable
      */
     private static void checkKeyAndValue(final Object key,
                                          final Object value) {
@@ -1294,7 +1268,7 @@ index),
      *
      * @param newNode the node to be inserted
      *
-     * @exception IllegalArgumentException if the node already exists
+     * @throws IllegalArgumentException if the node already exists
      *                                     in the value mapping
      */
     private void insertValue(final Node newNode)
@@ -1355,9 +1329,9 @@ index),
      * @return true if this map contains a mapping for the specified
      *         key.
      *
-     * @exception ClassCastException if the key is of an inappropriate
+     * @throws ClassCastException if the key is of an inappropriate
      *                               type for this map.
-     * @exception NullPointerException if the key is null
+     * @throws NullPointerException if the key is null
      */
     public boolean containsKey(final Object key)
             throws ClassCastException, NullPointerException {
@@ -1392,9 +1366,9 @@ index),
      * @return the value to which this map maps the specified key, or
      *         null if the map contains no mapping for this key.
      *
-     * @exception ClassCastException if the key is of an inappropriate
+     * @throws ClassCastException if the key is of an inappropriate
      *                               type for this map.
-     * @exception NullPointerException if the key is null
+     * @throws NullPointerException if the key is null
      */
     public Object get(final Object key)
             throws ClassCastException, NullPointerException {
@@ -1411,12 +1385,12 @@ index),
      *
      * @return null
      *
-     * @exception ClassCastException if the class of the specified key
+     * @throws ClassCastException if the class of the specified key
      *                               or value prevents it from being
      *                               stored in this map.
-     * @exception NullPointerException if the specified key or value
+     * @throws NullPointerException if the specified key or value
      *                                 is null
-     * @exception IllegalArgumentException if the key duplicates an
+     * @throws IllegalArgumentException if the key duplicates an
      *                                     existing key, or if the
      *                                     value duplicates an
      *                                     existing value
@@ -1680,8 +1654,7 @@ index),
                     Node      node  = lookup((Comparable) entry.getKey(),
                                              KEY);
 
-                    if ((node != null) && node.getData(VALUE).equals(value)) 
-{
+                    if ((node != null) && node.getData(VALUE).equals(value)) {
                         doRedBlackDelete(node);
 
                         return true;
@@ -1743,9 +1716,9 @@ index),
         /**
          * @return the next element in the iteration.
          *
-         * @exception NoSuchElementException if iteration has no more
+         * @throws NoSuchElementException if iteration has no more
          *                                   elements.
-         * @exception ConcurrentModificationException if the
+         * @throws ConcurrentModificationException if the
          *                                            DoubleOrderedMap is
          *                                            modified behind
          *                                            the iterator's
@@ -1777,12 +1750,12 @@ index),
          * the iteration is in progress in any way other than by
          * calling this method.
          *
-         * @exception IllegalStateException if the next method has not
+         * @throws IllegalStateException if the next method has not
          *                                  yet been called, or the
          *                                  remove method has already
          *                                  been called after the last
          *                                  call to the next method.
-         * @exception ConcurrentModificationException if the
+         * @throws ConcurrentModificationException if the
          *                                            DoubleOrderedMap is
          *                                            modified behind
          *                                            the iterator's
@@ -2000,7 +1973,7 @@ index),
          *
          * @return does not return
          *
-         * @exception UnsupportedOperationException
+         * @throws UnsupportedOperationException
          */
         public Object setValue(Object ignored)
                 throws UnsupportedOperationException {
