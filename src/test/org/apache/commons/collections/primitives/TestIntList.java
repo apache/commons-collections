@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.6 2003/02/28 00:17:53 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.7 2003/03/01 00:47:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.adapters.IntListList;
 import org.apache.commons.collections.primitives.adapters.ListIntList;
 
 /**
- * @version $Revision: 1.6 $ $Date: 2003/02/28 00:17:53 $
+ * @version $Revision: 1.7 $ $Date: 2003/03/01 00:47:28 $
  * @author Rodney Waldhoff
  */
 public abstract class TestIntList extends TestList {
@@ -140,6 +140,43 @@ public abstract class TestIntList extends TestList {
     // tests
     // ------------------------------------------------------------------------
 
+    public void testToJustBigEnoughIntArray() {
+        IntList list = makeFullIntList();
+        int[] dest = new int[list.size()];
+        assertSame(dest,list.toArray(dest));
+        int i=0;
+        for(IntIterator iter = list.iterator(); iter.hasNext();i++) {
+            assertEquals(iter.next(),dest[i]);
+        }
+    }
+    
+    public void testToLargerThanNeededIntArray() {
+        IntList list = makeFullIntList();
+        int[] dest = new int[list.size()*2];
+        for(int i=0;i<dest.length;i++) {
+            dest[i] = Integer.MAX_VALUE;
+        }       
+        assertSame(dest,list.toArray(dest));
+        int i=0;
+        for(IntIterator iter = list.iterator(); iter.hasNext();i++) {
+            assertEquals(iter.next(),dest[i]);
+        }
+        for(;i<dest.length;i++) {
+            assertEquals(Integer.MAX_VALUE,dest[i]);
+        }
+    }
+    
+    public void testToSmallerThanNeededIntArray() {
+        IntList list = makeFullIntList();
+        int[] dest = new int[list.size()/2];
+        int[] dest2 = list.toArray(dest);
+        assertTrue(dest != dest2);
+        int i=0;
+        for(IntIterator iter = list.iterator(); iter.hasNext();i++) {
+            assertEquals(iter.next(),dest2[i]);
+        }
+    }
+    
     public void testHashCodeSpecification() {
         IntList list = makeFullIntList();
         int hash = 1;
@@ -308,6 +345,37 @@ public abstract class TestIntList extends TestList {
     public void testSubListsAreNotSerializable() throws Exception {
         IntList list = makeFullIntList().subList(2,3);
         assertTrue( ! (list instanceof Serializable) );
+    }
+
+    public void testSubListOutOfBounds() throws Exception {
+        try {
+            makeEmptyIntList().subList(2,3);
+            fail("Expected IndexOutOfBoundsException");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            makeFullIntList().subList(-1,3);
+            fail("Expected IndexOutOfBoundsException");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+
+        try {
+            makeFullIntList().subList(5,2);
+            fail("Expected IllegalArgumentException");
+        } catch(IllegalArgumentException e) {
+            // expected
+        }
+
+        try {
+            makeFullIntList().subList(2,makeFullIntList().size()+2);
+            fail("Expected IndexOutOfBoundsException");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
     }
 
 }

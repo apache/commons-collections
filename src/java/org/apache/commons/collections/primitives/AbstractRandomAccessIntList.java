@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.12 2003/02/28 00:17:52 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.13 2003/03/01 00:47:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -74,7 +74,7 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.12 $ $Date: 2003/02/28 00:17:52 $
+ * @version $Revision: 1.13 $ $Date: 2003/03/01 00:47:28 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -369,8 +369,10 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
 
     protected static class RandomAccessIntSubList extends AbstractRandomAccessIntList implements IntList {
         RandomAccessIntSubList(AbstractRandomAccessIntList list, int fromIndex, int toIndex) {
-            if(fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
+            if(fromIndex < 0 || toIndex > list.size()) {
                 throw new IndexOutOfBoundsException();
+            } else if(fromIndex > toIndex) {
+                throw new IllegalArgumentException();                
             } else {
                 _list = list;
                 _offset = fromIndex;

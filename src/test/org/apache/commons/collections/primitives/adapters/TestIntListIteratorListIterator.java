@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListList.java,v 1.2 2003/03/01 00:47:29 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListIteratorListIterator.java,v 1.1 2003/03/01 00:47:29 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,101 +57,124 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import java.io.Serializable;
-import java.util.List;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.TestList;
-import org.apache.commons.collections.primitives.AbstractRandomAccessIntList;
+import org.apache.commons.collections.iterators.TestIterator;
 import org.apache.commons.collections.primitives.ArrayIntList;
+import org.apache.commons.collections.primitives.IntList;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/03/01 00:47:29 $
+ * @todo should extend TestListIterator when there is one
+ * @version $Revision: 1.1 $ $Date: 2003/03/01 00:47:29 $
  * @author Rodney Waldhoff
  */
-public class TestIntListList extends TestList {
+public class TestIntListIteratorListIterator extends TestIterator {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestIntListList(String testName) {
+    public TestIntListIteratorListIterator(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestIntListList.class);
-        return suite;
+        return new TestSuite(TestIntIteratorIterator.class);
     }
 
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    protected List makeEmptyList() {
-        return new IntListList(new ArrayIntList());
+    public Object makeObject() {
+        return makeFullIterator();
     }
-        
-    protected Object[] getFullElements() {
-        Integer[] elts = new Integer[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Integer(i);
-        }
-        return elts;
+    
+    public Iterator makeEmptyIterator() {
+        return IntListIteratorListIterator.wrap(makeEmptyIntList().listIterator());
     }
-
-    protected Object[] getOtherElements() {
-        Integer[] elts = new Integer[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Integer(10 + i);
-        }
-        return elts;
+    
+    public Iterator makeFullIterator() {
+        return IntListIteratorListIterator.wrap(makeFullIntList().listIterator());
     }
 
+    protected IntList makeEmptyIntList() {
+        return new ArrayIntList();
+    }
+    
+    protected IntList makeFullIntList() {
+        IntList list = makeEmptyIntList();
+        int[] elts = getFullElements();
+        for(int i=0;i<elts.length;i++) {
+            list.add(elts[i]);
+        }
+        return list;
+    }
+    
+    public int[] getFullElements() {
+        return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    }
+    
     // tests
     // ------------------------------------------------------------------------
 
-    /** @todo need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    public void testWrapNull() {
-        assertNull(IntListList.wrap(null));
-    }
     
-    public void testWrapSerializable() {
-        List list = IntListList.wrap(new ArrayIntList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
+    public void testNextHasNextRemove() {
+        int[] elements = getFullElements();
+        Iterator iter = makeFullIterator();
+        for(int i=0;i<elements.length;i++) {
+            assertTrue(iter.hasNext());
+            assertEquals(new Integer(elements[i]),iter.next());
+            if(supportsRemove()) {
+                iter.remove();
+            }
+        }        
+        assertTrue(! iter.hasNext() );
     }
-    
-    public void testWrapNonSerializable() {
-        List list = IntListList.wrap(new AbstractRandomAccessIntList() { 
-            public int get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
+
+    public void testEmptyIterator() {
+        assertTrue( ! makeEmptyIterator().hasNext() );
+        try {
+            makeEmptyIterator().next();
+            fail("Expected NoSuchElementException");
+        } catch(NoSuchElementException e) {
+            // expected
+        }
+        if(supportsRemove()) {
+            try {
+                makeEmptyIterator().remove();
+                fail("Expected IllegalStateException");
+            } catch(IllegalStateException e) {
+                // expected
+            }
+        }        
     }
+
+    public void testRemoveBeforeNext() {
+        if(supportsRemove()) {
+            try {
+                makeFullIterator().remove();
+                fail("Expected IllegalStateException");
+            } catch(IllegalStateException e) {
+                // expected
+            }
+        }        
+    }
+
+    public void testRemoveAfterRemove() {
+        if(supportsRemove()) {
+            Iterator iter = makeFullIterator();
+            iter.next();
+            iter.remove();
+            try {
+                iter.remove();
+                fail("Expected IllegalStateException");
+            } catch(IllegalStateException e) {
+                // expected
+            }
+        }        
+    }
+
 }

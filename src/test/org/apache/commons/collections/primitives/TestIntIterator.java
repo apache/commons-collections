@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListList.java,v 1.2 2003/03/01 00:47:29 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntIterator.java,v 1.1 2003/03/01 00:47:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -55,103 +55,103 @@
  *
  */
 
-package org.apache.commons.collections.primitives.adapters;
+package org.apache.commons.collections.primitives;
 
-import java.io.Serializable;
-import java.util.List;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.TestList;
-import org.apache.commons.collections.primitives.AbstractRandomAccessIntList;
-import org.apache.commons.collections.primitives.ArrayIntList;
+import org.apache.commons.collections.iterators.TestIterator;
+import org.apache.commons.collections.primitives.adapters.IntIteratorIterator;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/03/01 00:47:29 $
+ * @version $Revision: 1.1 $ $Date: 2003/03/01 00:47:28 $
  * @author Rodney Waldhoff
  */
-public class TestIntListList extends TestList {
+public abstract class TestIntIterator extends TestIterator {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestIntListList(String testName) {
+    public TestIntIterator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestIntListList.class);
-        return suite;
     }
 
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    protected List makeEmptyList() {
-        return new IntListList(new ArrayIntList());
+    protected Object makeObject() {
+        return makeFullIterator();
     }
-        
-    protected Object[] getFullElements() {
-        Integer[] elts = new Integer[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Integer(i);
-        }
-        return elts;
+    
+    public Iterator makeEmptyIterator() {
+        return IntIteratorIterator.wrap(makeEmptyIntIterator());
     }
 
-    protected Object[] getOtherElements() {
-        Integer[] elts = new Integer[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Integer(10 + i);
-        }
-        return elts;
+    public Iterator makeFullIterator() {
+        return IntIteratorIterator.wrap(makeFullIntIterator());
     }
+
+
+    protected abstract IntIterator makeEmptyIntIterator();
+    protected abstract IntIterator makeFullIntIterator();
+    protected abstract int[] getFullElements();
 
     // tests
     // ------------------------------------------------------------------------
-
-    /** @todo need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    public void testWrapNull() {
-        assertNull(IntListList.wrap(null));
-    }
     
-    public void testWrapSerializable() {
-        List list = IntListList.wrap(new ArrayIntList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
+    public void testNextHasNextRemove() {
+        int[] elements = getFullElements();
+        IntIterator iter = makeFullIntIterator();
+        for(int i=0;i<elements.length;i++) {
+            assertTrue(iter.hasNext());
+            assertEquals(elements[i],iter.next());
+            if(supportsRemove()) {
+                iter.remove();
+            }
+        }        
+        assertTrue(! iter.hasNext() );
     }
-    
-    public void testWrapNonSerializable() {
-        List list = IntListList.wrap(new AbstractRandomAccessIntList() { 
-            public int get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
+
+    public void testEmptyIntIterator() {
+        assertTrue( ! makeEmptyIntIterator().hasNext() );
+        try {
+            makeEmptyIntIterator().next();
+            fail("Expected NoSuchElementException");
+        } catch(NoSuchElementException e) {
+            // expected
+        }
+        if(supportsRemove()) {
+            try {
+                makeEmptyIntIterator().remove();
+                fail("Expected IllegalStateException");
+            } catch(IllegalStateException e) {
+                // expected
+            }
+        }        
+    }
+
+    public void testRemoveBeforeNext() {
+        if(supportsRemove()) {
+            try {
+                makeFullIntIterator().remove();
+                fail("Expected IllegalStateException");
+            } catch(IllegalStateException e) {
+                // expected
+            }
+        }        
+    }
+
+    public void testRemoveAfterRemove() {
+        if(supportsRemove()) {
+            IntIterator iter = makeFullIntIterator();
+            iter.next();
+            iter.remove();
+            try {
+                iter.remove();
+                fail("Expected IllegalStateException");
+            } catch(IllegalStateException e) {
+                // expected
+            }
+        }        
     }
 }

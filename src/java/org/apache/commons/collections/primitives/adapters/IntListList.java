@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntListList.java,v 1.5 2003/02/28 21:21:51 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntListList.java,v 1.6 2003/03/01 00:47:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -71,7 +71,7 @@ import org.apache.commons.collections.primitives.IntList;
  * implementation in the "obvious" way.
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/02/28 21:21:51 $
+ * @version $Revision: 1.6 $ $Date: 2003/03/01 00:47:28 $
  * @author Rodney Waldhoff 
  */
 final public class IntListList extends AbstractIntListList implements Serializable {
@@ -96,12 +96,6 @@ final public class IntListList extends AbstractIntListList implements Serializab
         } else {
             return new NonSerializableIntListList(list);
         }
-    }
-
-    /**
-     * No-arg constructor, for serialization purposes.
-     */
-    protected IntListList() {
     }
     
     /**

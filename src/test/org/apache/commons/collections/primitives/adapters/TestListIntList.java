@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestListIntList.java,v 1.2 2003/02/28 00:17:56 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestListIntList.java,v 1.3 2003/03/01 00:47:29 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,6 +57,8 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.Serializable;
+import java.util.AbstractList;
 import java.util.ArrayList;
 
 import junit.framework.Test;
@@ -67,7 +69,7 @@ import org.apache.commons.collections.primitives.IntList;
 import org.apache.commons.collections.primitives.TestIntList;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/02/28 00:17:56 $
+ * @version $Revision: 1.3 $ $Date: 2003/03/01 00:47:29 $
  * @author Rodney Waldhoff
  */
 public class TestListIntList extends TestIntList {
@@ -133,6 +135,24 @@ public class TestListIntList extends TestIntList {
     public void testFullListCompatibility() {
         // XXX FIX ME XXX
         // need to add a serialized form to cvs
+    }
+    public void testWrapNull() {
+        assertNull(ListIntList.wrap(null));
+    }
+    
+    public void testWrapSerializable() {
+        IntList list = ListIntList.wrap(new ArrayList());
+        assertNotNull(list);
+        assertTrue(list instanceof Serializable);
+    }
+    
+    public void testWrapNonSerializable() {
+        IntList list = ListIntList.wrap(new AbstractList() { 
+            public Object get(int i) { throw new IndexOutOfBoundsException(); } 
+            public int size() { return 0; } 
+        });
+        assertNotNull(list);
+        assertTrue(!(list instanceof Serializable));
     }
 
 }

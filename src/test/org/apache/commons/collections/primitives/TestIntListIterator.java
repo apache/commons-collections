@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListList.java,v 1.2 2003/03/01 00:47:29 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntListIterator.java,v 1.1 2003/03/01 00:47:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -55,103 +55,37 @@
  *
  */
 
-package org.apache.commons.collections.primitives.adapters;
-
-import java.io.Serializable;
-import java.util.List;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.TestList;
-import org.apache.commons.collections.primitives.AbstractRandomAccessIntList;
-import org.apache.commons.collections.primitives.ArrayIntList;
+package org.apache.commons.collections.primitives;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/03/01 00:47:29 $
+ * @version $Revision: 1.1 $ $Date: 2003/03/01 00:47:28 $
  * @author Rodney Waldhoff
  */
-public class TestIntListList extends TestList {
+public abstract class TestIntListIterator extends TestIntIterator {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestIntListList(String testName) {
+    public TestIntListIterator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestIntListList.class);
-        return suite;
     }
 
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    protected List makeEmptyList() {
-        return new IntListList(new ArrayIntList());
+    public IntIterator makeEmptyIntIterator() {
+        return makeEmptyIntListIterator();
     }
-        
-    protected Object[] getFullElements() {
-        Integer[] elts = new Integer[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Integer(i);
-        }
-        return elts;
+    
+    public IntIterator makeFullIntIterator() {
+        return makeFullIntListIterator();
     }
 
-    protected Object[] getOtherElements() {
-        Integer[] elts = new Integer[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Integer(10 + i);
-        }
-        return elts;
-    }
+    public abstract IntListIterator makeEmptyIntListIterator();
+    public abstract IntListIterator makeFullIntListIterator();
 
     // tests
     // ------------------------------------------------------------------------
 
-    /** @todo need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
 
-    /** @todo need to add serialized form to cvs */
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    public void testWrapNull() {
-        assertNull(IntListList.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        List list = IntListList.wrap(new ArrayIntList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        List list = IntListList.wrap(new AbstractRandomAccessIntList() { 
-            public int get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
-    }
 }

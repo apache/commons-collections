@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListList.java,v 1.2 2003/03/01 00:47:29 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestCollectionIntCollection.java,v 1.1 2003/03/01 00:47:29 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,59 +58,47 @@
 package org.apache.commons.collections.primitives.adapters;
 
 import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.TestList;
-import org.apache.commons.collections.primitives.AbstractRandomAccessIntList;
-import org.apache.commons.collections.primitives.ArrayIntList;
+import org.apache.commons.collections.TestObject;
+import org.apache.commons.collections.primitives.IntCollection;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/03/01 00:47:29 $
+ * @version $Revision: 1.1 $ $Date: 2003/03/01 00:47:29 $
  * @author Rodney Waldhoff
  */
-public class TestIntListList extends TestList {
+public class TestCollectionIntCollection extends TestObject {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestIntListList(String testName) {
+    public TestCollectionIntCollection(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestIntListList.class);
-        return suite;
+        return new TestSuite(TestCollectionIntCollection.class);
     }
 
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    protected List makeEmptyList() {
-        return new IntListList(new ArrayIntList());
-    }
-        
-    protected Object[] getFullElements() {
-        Integer[] elts = new Integer[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Integer(i);
+    protected Object makeObject() {
+        List list = new ArrayList();
+        for(int i=0;i<10;i++) {
+            list.add(new Integer(i));
         }
-        return elts;
+        return new CollectionIntCollection(list);
     }
 
-    protected Object[] getOtherElements() {
-        Integer[] elts = new Integer[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Integer(10 + i);
-        }
-        return elts;
+    public void testSerializeDeserializeThenCompare() {
+        // Collection.equal contract doesn't work that way
     }
-
-    // tests
-    // ------------------------------------------------------------------------
 
     /** @todo need to add serialized form to cvs */
     public void testCanonicalEmptyCollectionExists() {
@@ -123,35 +111,27 @@ public class TestIntListList extends TestList {
         // XXX FIX ME XXX
         // need to add a serialized form to cvs
     }
-
-    /** @todo need to add serialized form to cvs */
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-
-    /** @todo need to add serialized form to cvs */
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+    
+    // tests
+    // ------------------------------------------------------------------------
 
     public void testWrapNull() {
-        assertNull(IntListList.wrap(null));
+        assertNull(CollectionIntCollection.wrap(null));
     }
     
     public void testWrapSerializable() {
-        List list = IntListList.wrap(new ArrayIntList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
+        IntCollection collection = CollectionIntCollection.wrap(new ArrayList());
+        assertNotNull(collection);
+        assertTrue(collection instanceof Serializable);
     }
     
     public void testWrapNonSerializable() {
-        List list = IntListList.wrap(new AbstractRandomAccessIntList() { 
-            public int get(int i) { throw new IndexOutOfBoundsException(); } 
+        IntCollection collection = CollectionIntCollection.wrap(new AbstractList() { 
+            public Object get(int i) { throw new IndexOutOfBoundsException(); } 
             public int size() { return 0; } 
         });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
+        assertNotNull(collection);
+        assertTrue(!(collection instanceof Serializable));
     }
+
 }
