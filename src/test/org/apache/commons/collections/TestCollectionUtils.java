@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.27 2003/10/09 10:48:19 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.28 2003/10/09 11:00:09 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -89,7 +89,7 @@ import org.apache.commons.collections.decorators.UnmodifiableCollection;
  * @author Stephen Colebourne
  * @author Phil Steitz
  * 
- * @version $Revision: 1.27 $ $Date: 2003/10/09 10:48:19 $
+ * @version $Revision: 1.28 $ $Date: 2003/10/09 11:00:09 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -592,8 +592,8 @@ public class TestCollectionUtils extends TestCase {
     }
     
     public void testGet() {     
-        // Unordered map, entries exist
         {
+            // Unordered map, entries exist
             Map expected = new HashMap();
             expected.put("zeroKey", "zero");
             expected.put("oneKey", "one");
@@ -619,108 +619,112 @@ public class TestCollectionUtils extends TestCase {
                 // expected
             }
         }
-        Object test;
-        // Sorted map, entries exist, should respect order
-        SortedMap map2 = new TreeMap();
-        map2.put("zeroKey", "zero");
-        map2.put("oneKey", "one");
-        test = CollectionUtils.get(map2, 1);
-        assertEquals("zeroKey",((Map.Entry) test).getKey());
-        assertEquals("zero",((Map.Entry) test).getValue());
-        test = CollectionUtils.get(map2, 0);
-        assertEquals("oneKey",((Map.Entry) test).getKey());
-        assertEquals("one",((Map.Entry) test).getValue());
+
+        {
+            // Sorted map, entries exist, should respect order
+            SortedMap map = new TreeMap();
+            map.put("zeroKey", "zero");
+            map.put("oneKey", "one");
+            Object test = CollectionUtils.get(map, 1);
+            assertEquals("zeroKey",((Map.Entry) test).getKey());
+            assertEquals("zero",((Map.Entry) test).getValue());
+            test = CollectionUtils.get(map, 0);
+            assertEquals("oneKey",((Map.Entry) test).getKey());
+            assertEquals("one",((Map.Entry) test).getValue());
+        }
                 
-        // List, entry exists
-        List list = new ArrayList();
-        list.add("zero");
-        list.add("one");
-        test = CollectionUtils.get(list, 0);
-        assertEquals("zero",test);
-        test = CollectionUtils.get(list, 1);
-        assertEquals("one",test);
+        {
+            // List, entry exists
+            List list = new ArrayList();
+            list.add("zero");
+            list.add("one");
+            assertEquals("zero",CollectionUtils.get(list, 0));
+            assertEquals("one",CollectionUtils.get(list, 1));
+            // list, non-existent entry -- IndexOutOfBoundsException
+            try {
+                CollectionUtils.get(list, 2);
+                fail("Expecting IndexOutOfBoundsException");
+            } catch (IndexOutOfBoundsException e) {
+                // expected
+            }
+
+            // Iterator, entry exists
+            Iterator iterator = list.iterator();
+            assertEquals("zero",CollectionUtils.get(iterator,0));
+            iterator = list.iterator();
+            assertEquals("one",CollectionUtils.get(iterator,1));
         
-        // list, non-existent entry -- IndexOutOfBoundsException
-        try {
-            test = CollectionUtils.get(list, 2);
-            fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
-            // expected
+            // Iterator, non-existent entry 
+            try {
+                CollectionUtils.get(iterator,3);
+                fail("Expecting IndexOutOfBoundsException.");
+            } catch (IndexOutOfBoundsException e) {
+                // expected
+            }
+            assertTrue(!iterator.hasNext());
         }
         
-        // Iterator, entry exists
-        Iterator iterator = list.iterator();
-        test = CollectionUtils.get(iterator,0);
-        assertEquals("zero",test);
-        iterator = list.iterator();
-        test = CollectionUtils.get(iterator,1);
-        assertEquals("one",test);
+        {
+            // Enumeration, entry exists
+            Vector vector = new Vector();
+            vector.addElement("zero");
+            vector.addElement("one");
+            Enumeration enum = vector.elements();
+            assertEquals("zero",CollectionUtils.get(enum,0));
+            enum = vector.elements();
+            assertEquals("one",CollectionUtils.get(enum,1));
         
-        // Iterator, non-existent entry 
-        try {
-            test = CollectionUtils.get(iterator,3);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException e) {
-            // expected
-        }
-        assertTrue(!iterator.hasNext());
-        
-        // Enumeration, entry exists
-        Vector vector = new Vector(list);
-        Enumeration enum = vector.elements();
-        test = CollectionUtils.get(enum,0);
-        assertEquals("zero",test);
-        enum = vector.elements();
-        test = CollectionUtils.get(enum,1);
-        assertEquals("one",test);
-        
-        // Enumerator, non-existent entry 
-        try {
-            test = CollectionUtils.get(enum,3);
-            fail("Expecting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException e) {
-            // expected
-        }
-        assertTrue(!enum.hasMoreElements());
-        
-        // Collection, entry exists
-        Bag bag = new HashBag();
-        bag.add("element", 1);
-        test = CollectionUtils.get(bag, 0);
-        assertEquals("element",test);
-        
-        // Collection, non-existent entry
-        try {
-            test = CollectionUtils.get(bag, 1);
-            fail("Expceting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException e) {
-            // expected
+            // Enumerator, non-existent entry 
+            try {
+                CollectionUtils.get(enum,3);
+                fail("Expecting IndexOutOfBoundsException.");
+            } catch (IndexOutOfBoundsException e) {
+                // expected
+            }
+            assertTrue(!enum.hasMoreElements());
         }
         
-        // Object array, entry exists
-        Object[] objArray = new Object[2];
-        objArray[0] = "zero";
-        objArray[1] = "one";
-        test = CollectionUtils.get(objArray,0);
-        assertEquals("zero",test);
-        test = CollectionUtils.get(objArray,1);
-        assertEquals("one",test);
+        {
+            // Collection, entry exists
+            Bag bag = new HashBag();
+            bag.add("element", 1);
+            assertEquals("element",CollectionUtils.get(bag, 0));
         
-        // Object array, non-existent entry -- ArrayIndexOutOfBoundsException
-        try {
-            test = CollectionUtils.get(objArray,2);
-            fail("Expecting ArrayIndexOutOfBoundsException.");
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            // expected
+            // Collection, non-existent entry
+            try {
+                CollectionUtils.get(bag, 1);
+                fail("Expceting IndexOutOfBoundsException.");
+            } catch (IndexOutOfBoundsException e) {
+                // expected
+            }
         }
         
-        // Invalid object
-        Object obj = new Object();
-        try {
-            test = CollectionUtils.get(obj, 0);
-            fail("Expecting IllegalArgumentException.");
-        } catch (IllegalArgumentException e) {
-            // expected
+        {
+            // Object array, entry exists
+            Object[] objArray = new Object[2];
+            objArray[0] = "zero";
+            objArray[1] = "one";
+            assertEquals("zero",CollectionUtils.get(objArray,0));
+            assertEquals("one",CollectionUtils.get(objArray,1));
+        
+            // Object array, non-existent entry -- ArrayIndexOutOfBoundsException
+            try {
+                CollectionUtils.get(objArray,2);
+                fail("Expecting IndexOutOfBoundsException.");
+            } catch (IndexOutOfBoundsException ex) {
+                // expected
+            }
+        }
+        
+        {
+            // Invalid object
+            Object obj = new Object();
+            try {
+                CollectionUtils.get(obj, 0);
+                fail("Expecting IllegalArgumentException.");
+            } catch (IllegalArgumentException e) {
+                // expected
+            }
         }
     }
 
