@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.6 2002/02/14 20:57:59 morgand Exp $
- * $Revision: 1.6 $
- * $Date: 2002/02/14 20:57:59 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.7 2002/02/14 22:42:45 morgand Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/02/14 22:42:45 $
  *
  * ====================================================================
  *
@@ -64,6 +64,11 @@ package org.apache.commons.collections;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -71,7 +76,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.6 2002/02/14 20:57:59 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.7 2002/02/14 22:42:45 morgand Exp $
  */
 public class TestLRUMap extends TestHashMap
 {
@@ -148,6 +153,26 @@ public class TestLRUMap extends TestHashMap
                    map2.size() == 3);
         assertTrue("map should contain the Integer(4) object",
                    map2.containsKey(new Integer(4)));
+    }
+
+    public void testExternalizable() throws IOException, ClassNotFoundException {
+        /*
+         * Test object created with this code
+         * Object created from CVS version 1.3 of this class
+         *
+        LRUMap map2 = new LRUMap(3);
+        map2.put(new Integer(1),"foo");
+        map2.put(new Integer(4),"bar");
+        map2.put(new Integer(6),"yeah");
+        map2.writeExternal(new ObjectOutputStream(new FileOutputStream("data/test/LRUMapVersion1.obj")));
+         */
+
+        // purposely start me out with a smaller capacity
+        LRUMap map2 = new LRUMap(1);
+        map2.readExternal(new ObjectInputStream(new FileInputStream("data/test/LRUMapVersion1.obj")));
+        assertTrue("Integer(1) equals foo",map2.get(new Integer(1)).equals("foo"));
+        assertTrue("Integer(4) equals bar",map2.get(new Integer(4)).equals("bar"));
+        assertTrue("Integer(6) equals yeah",map2.get(new Integer(6)).equals("yeah"));
     }
 
     /**
