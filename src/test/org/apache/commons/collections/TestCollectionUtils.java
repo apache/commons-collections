@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.1 2001/04/24 18:48:38 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/24 18:48:38 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.2 2001/07/14 23:33:27 craigmcc Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/07/14 23:33:27 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCollectionUtils.java,v 1.1 2001/04/24 18:48:38 rwaldhoff Exp $
+ * @version $Id: TestCollectionUtils.java,v 1.2 2001/07/14 23:33:27 craigmcc Exp $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -117,10 +117,10 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(new Integer(2),freq.get("b"));
         assertEquals(new Integer(3),freq.get("c"));
         assertEquals(new Integer(4),freq.get("d"));
-        assert(null == freq.get("e"));
+        assertTrue(null == freq.get("e"));
 
         freq = CollectionUtils.getCardinalityMap(_b);
-        assert(null == freq.get("a"));
+        assertTrue(null == freq.get("a"));
         assertEquals(new Integer(4),freq.get("b"));
         assertEquals(new Integer(3),freq.get("c"));
         assertEquals(new Integer(2),freq.get("d"));
@@ -162,19 +162,19 @@ public class TestCollectionUtils extends TestCase {
     public void testIntersection() {
         Collection col = CollectionUtils.intersection(_a,_b);
         Map freq = CollectionUtils.getCardinalityMap(col);
-        assert(null == freq.get("a"));
+        assertTrue(null == freq.get("a"));
         assertEquals(new Integer(2),freq.get("b"));
         assertEquals(new Integer(3),freq.get("c"));
         assertEquals(new Integer(2),freq.get("d"));
-        assert(null == freq.get("e"));
+        assertTrue(null == freq.get("e"));
 
         Collection col2 = CollectionUtils.intersection(_b,_a);
         Map freq2 = CollectionUtils.getCardinalityMap(col2);
-        assert(null == freq2.get("a"));
+        assertTrue(null == freq2.get("a"));
         assertEquals(new Integer(2),freq2.get("b"));
         assertEquals(new Integer(3),freq2.get("c"));
         assertEquals(new Integer(2),freq2.get("d"));
-        assert(null == freq2.get("e"));
+        assertTrue(null == freq2.get("e"));
     }
 
     public void testDisjunction() {
@@ -182,7 +182,7 @@ public class TestCollectionUtils extends TestCase {
         Map freq = CollectionUtils.getCardinalityMap(col);
         assertEquals(new Integer(1),freq.get("a"));
         assertEquals(new Integer(2),freq.get("b"));
-        assert(null == freq.get("c"));
+        assertTrue(null == freq.get("c"));
         assertEquals(new Integer(2),freq.get("d"));
         assertEquals(new Integer(1),freq.get("e"));
 
@@ -190,7 +190,7 @@ public class TestCollectionUtils extends TestCase {
         Map freq2 = CollectionUtils.getCardinalityMap(col2);
         assertEquals(new Integer(1),freq2.get("a"));
         assertEquals(new Integer(2),freq2.get("b"));
-        assert(null == freq2.get("c"));
+        assertTrue(null == freq2.get("c"));
         assertEquals(new Integer(2),freq2.get("d"));
         assertEquals(new Integer(1),freq2.get("e"));
     }
@@ -199,115 +199,115 @@ public class TestCollectionUtils extends TestCase {
         Collection dis = CollectionUtils.disjunction(_a,_b);
         Collection un = CollectionUtils.union(_a,_b);
         Collection inter = CollectionUtils.intersection(_a,_b);
-        assert(CollectionUtils.isEqualCollection(dis,CollectionUtils.subtract(un,inter)));
+        assertTrue(CollectionUtils.isEqualCollection(dis,CollectionUtils.subtract(un,inter)));
     }
 
     public void testDisjunctionAsSymmetricDifference() {
         Collection dis = CollectionUtils.disjunction(_a,_b);
         Collection amb = CollectionUtils.subtract(_a,_b);
         Collection bma = CollectionUtils.subtract(_b,_a);
-        assert(CollectionUtils.isEqualCollection(dis,CollectionUtils.union(amb,bma)));
+        assertTrue(CollectionUtils.isEqualCollection(dis,CollectionUtils.union(amb,bma)));
     }
 
     public void testSubtract() {
         Collection col = CollectionUtils.subtract(_a,_b);
         Map freq = CollectionUtils.getCardinalityMap(col);
         assertEquals(new Integer(1),freq.get("a"));
-        assert(null == freq.get("b"));
-        assert(null == freq.get("c"));
+        assertTrue(null == freq.get("b"));
+        assertTrue(null == freq.get("c"));
         assertEquals(new Integer(2),freq.get("d"));
-        assert(null == freq.get("e"));
+        assertTrue(null == freq.get("e"));
 
         Collection col2 = CollectionUtils.subtract(_b,_a);
         Map freq2 = CollectionUtils.getCardinalityMap(col2);
         assertEquals(new Integer(1),freq2.get("e"));
-        assert(null == freq2.get("d"));
-        assert(null == freq2.get("c"));
+        assertTrue(null == freq2.get("d"));
+        assertTrue(null == freq2.get("c"));
         assertEquals(new Integer(2),freq2.get("b"));
-        assert(null == freq2.get("a"));
+        assertTrue(null == freq2.get("a"));
     }
 
     public void testIsSubCollectionOfSelf() {
-        assert(CollectionUtils.isSubCollection(_a,_a));
-        assert(CollectionUtils.isSubCollection(_b,_b));
+        assertTrue(CollectionUtils.isSubCollection(_a,_a));
+        assertTrue(CollectionUtils.isSubCollection(_b,_b));
     }
 
     public void testIsSubCollection() {
-        assert(!CollectionUtils.isSubCollection(_a,_b));
-        assert(!CollectionUtils.isSubCollection(_b,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,_b));
+        assertTrue(!CollectionUtils.isSubCollection(_b,_a));
     }
 
     public void testIsSubCollection2() {
         Collection c = new ArrayList();
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("a");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("b");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("b");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("c");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("c");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("c");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("d");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("d");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("d");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(!CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(!CollectionUtils.isSubCollection(_a,c));
         c.add("d");
-        assert(CollectionUtils.isSubCollection(c,_a));
-        assert(CollectionUtils.isSubCollection(_a,c));
+        assertTrue(CollectionUtils.isSubCollection(c,_a));
+        assertTrue(CollectionUtils.isSubCollection(_a,c));
         c.add("e");
-        assert(!CollectionUtils.isSubCollection(c,_a));
-        assert(CollectionUtils.isSubCollection(_a,c));
+        assertTrue(!CollectionUtils.isSubCollection(c,_a));
+        assertTrue(CollectionUtils.isSubCollection(_a,c));
     }
 
     public void testIsEqualCollectionToSelf() {
-        assert(CollectionUtils.isEqualCollection(_a,_a));
-        assert(CollectionUtils.isEqualCollection(_b,_b));
+        assertTrue(CollectionUtils.isEqualCollection(_a,_a));
+        assertTrue(CollectionUtils.isEqualCollection(_b,_b));
     }
 
     public void testIsEqualCollection() {
-        assert(!CollectionUtils.isEqualCollection(_a,_b));
-        assert(!CollectionUtils.isEqualCollection(_b,_a));
+        assertTrue(!CollectionUtils.isEqualCollection(_a,_b));
+        assertTrue(!CollectionUtils.isEqualCollection(_b,_a));
     }
 
     public void testIsEqualCollection2() {
         Collection a = new ArrayList();
         Collection b = new ArrayList();
-        assert(CollectionUtils.isEqualCollection(a,b));
-        assert(CollectionUtils.isEqualCollection(b,a));
+        assertTrue(CollectionUtils.isEqualCollection(a,b));
+        assertTrue(CollectionUtils.isEqualCollection(b,a));
         a.add("1");
-        assert(!CollectionUtils.isEqualCollection(a,b));
-        assert(!CollectionUtils.isEqualCollection(b,a));
+        assertTrue(!CollectionUtils.isEqualCollection(a,b));
+        assertTrue(!CollectionUtils.isEqualCollection(b,a));
         b.add("1");
-        assert(CollectionUtils.isEqualCollection(a,b));
-        assert(CollectionUtils.isEqualCollection(b,a));
+        assertTrue(CollectionUtils.isEqualCollection(a,b));
+        assertTrue(CollectionUtils.isEqualCollection(b,a));
         a.add("2");
-        assert(!CollectionUtils.isEqualCollection(a,b));
-        assert(!CollectionUtils.isEqualCollection(b,a));
+        assertTrue(!CollectionUtils.isEqualCollection(a,b));
+        assertTrue(!CollectionUtils.isEqualCollection(b,a));
         b.add("2");
-        assert(CollectionUtils.isEqualCollection(a,b));
-        assert(CollectionUtils.isEqualCollection(b,a));
+        assertTrue(CollectionUtils.isEqualCollection(a,b));
+        assertTrue(CollectionUtils.isEqualCollection(b,a));
         a.add("1");
-        assert(!CollectionUtils.isEqualCollection(a,b));
-        assert(!CollectionUtils.isEqualCollection(b,a));
+        assertTrue(!CollectionUtils.isEqualCollection(a,b));
+        assertTrue(!CollectionUtils.isEqualCollection(b,a));
         b.add("1");
-        assert(CollectionUtils.isEqualCollection(a,b));
-        assert(CollectionUtils.isEqualCollection(b,a));
+        assertTrue(CollectionUtils.isEqualCollection(a,b));
+        assertTrue(CollectionUtils.isEqualCollection(b,a));
     }
 }

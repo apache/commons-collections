@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.4 2001/05/04 16:34:27 rwaldhoff Exp $
- * $Revision: 1.4 $
- * $Date: 2001/05/04 16:34:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.5 2001/07/14 23:33:27 craigmcc Exp $
+ * $Revision: 1.5 $
+ * $Date: 2001/07/14 23:33:27 $
  *
  * ====================================================================
  *
@@ -80,7 +80,7 @@ import java.util.ListIterator;
  * test case (method) your {@link List} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestList.java,v 1.4 2001/05/04 16:34:27 rwaldhoff Exp $
+ * @version $Id: TestList.java,v 1.5 2001/07/14 23:33:27 craigmcc Exp $
  */
 public abstract class TestList extends TestCollection {
     public TestList(String testName) {
@@ -189,11 +189,11 @@ public abstract class TestList extends TestCollection {
         if(tryToAdd(list,0,"element2")) {
             assertEquals(1,list.size());
             if(tryToAdd(list,0,"element0")) {
-                assert(Arrays.equals(new String[] { "element0", "element2" },list.toArray()));
+                assertTrue(Arrays.equals(new String[] { "element0", "element2" },list.toArray()));
                 if(tryToAdd(list,1,"element1")) {
-                    assert(Arrays.equals(new String[] { "element0", "element1", "element2" },list.toArray()));
+                    assertTrue(Arrays.equals(new String[] { "element0", "element1", "element2" },list.toArray()));
                     if(tryToAdd(list,4,"element3")) {
-                        assert(Arrays.equals(new String[] { "element0", "element1", "element2", "element3" },list.toArray()));
+                        assertTrue(Arrays.equals(new String[] { "element0", "element1", "element2", "element3" },list.toArray()));
                     }
                 }
             }
@@ -203,19 +203,19 @@ public abstract class TestList extends TestCollection {
     public void testListAdd() {
         List list = makeList();
         if(tryToAdd(list,"1")) {
-            assert(list.contains("1"));
+            assertTrue(list.contains("1"));
             if(tryToAdd(list,"2")) {
-                assert(list.contains("1"));
-                assert(list.contains("2"));
+                assertTrue(list.contains("1"));
+                assertTrue(list.contains("2"));
                 if(tryToAdd(list,"3")) {
-                    assert(list.contains("1"));
-                    assert(list.contains("2"));
-                    assert(list.contains("3"));
+                    assertTrue(list.contains("1"));
+                    assertTrue(list.contains("2"));
+                    assertTrue(list.contains("3"));
                     if(tryToAdd(list,"4")) {
-                        assert(list.contains("1"));
-                        assert(list.contains("2"));
-                        assert(list.contains("3"));
-                        assert(list.contains("4"));
+                        assertTrue(list.contains("1"));
+                        assertTrue(list.contains("2"));
+                        assertTrue(list.contains("3"));
+                        assertTrue(list.contains("4"));
                     }
                 }
             }
@@ -224,20 +224,20 @@ public abstract class TestList extends TestCollection {
 
     public void testListEqualsSelf() {
         List list = makeList();
-        assert(list.equals(list));
+        assertTrue(list.equals(list));
         tryToAdd(list,"elt");
-        assert(list.equals(list));
+        assertTrue(list.equals(list));
         tryToAdd(list,"elt2");
-        assert(list.equals(list));
+        assertTrue(list.equals(list));
     }
 
     public void testListEqualsArrayList() {
         List list1 = makeList();
         List list2 = new ArrayList();
-        assert(list1.equals(list2));
+        assertTrue(list1.equals(list2));
         assertEquals(list1.hashCode(),list2.hashCode());
         tryToAdd(list1,"a");
-        assert(!list1.equals(list2));
+        assertTrue(!list1.equals(list2));
         tryToAdd(list1,"b");
         tryToAdd(list1,"c");
         tryToAdd(list1,"d");
@@ -247,22 +247,22 @@ public abstract class TestList extends TestCollection {
         while(it.hasNext()) {
             list2.add(it.next());
         }
-        assert(list1.equals(list2));
+        assertTrue(list1.equals(list2));
         assertEquals(list1.hashCode(),list2.hashCode());
     }
 
     public void testListEquals() {
         List list1 = makeList();
         List list2 = makeList();
-        assert(list1.equals(list2));
+        assertTrue(list1.equals(list2));
         if(tryToAdd(list1,"a") && tryToAdd(list2,"a")) {
-            assert(list1.equals(list2));
+            assertTrue(list1.equals(list2));
             if(tryToAdd(list1,"b") && tryToAdd(list2,"b")) {
-                assert(list1.equals(list2));
+                assertTrue(list1.equals(list2));
                 if(tryToAdd(list1,"c") && tryToAdd(list2,"c")) {
-                    assert(list1.equals(list2));
+                    assertTrue(list1.equals(list2));
                     if(tryToAdd(list1,"b") && tryToAdd(list2,"b")) {
-                        assert(list1.equals(list2));
+                        assertTrue(list1.equals(list2));
                     }
                 }
             }
@@ -574,7 +574,7 @@ public abstract class TestList extends TestCollection {
                 Object obj = list.set(i,String.valueOf(i));
                 assertEquals(obj,values[i]);
                 values[i] = String.valueOf(i);
-                assert(Arrays.equals(values,list.toArray()));
+                assertTrue(Arrays.equals(values,list.toArray()));
             } catch(UnsupportedOperationException e) {
                 // expected
             } catch(ClassCastException e) {
@@ -626,10 +626,10 @@ public abstract class TestList extends TestCollection {
 
         for(int i=0;i<values.length;i++) {
             try {
-                assert(!list.remove("X"));
-                assert(list.contains(values[i]));
-                assert(list.remove(values[i]));
-                assert(!list.contains(values[i]));
+                assertTrue(!list.remove("X"));
+                assertTrue(list.contains(values[i]));
+                assertTrue(list.remove(values[i]));
+                assertTrue(!list.contains(values[i]));
             } catch(UnsupportedOperationException e) {
                 // expected
             }
@@ -646,20 +646,20 @@ public abstract class TestList extends TestCollection {
         Object[] values = list.toArray();
         ListIterator iter = list.listIterator();
         for(int i=0;i<values.length;i++) {
-            assert( iter.hasNext() );
-            assert((i!=0) == iter.hasPrevious());
+            assertTrue( iter.hasNext() );
+            assertTrue((i!=0) == iter.hasPrevious());
             assertEquals(values[i],iter.next());
         }
-        assert(!iter.hasNext());
+        assertTrue(!iter.hasNext());
         for(int i=values.length-1;i>=0;i--) {
-            assert( iter.hasPrevious() );
-            assert((i!=(values.length-1)) == iter.hasNext());
+            assertTrue( iter.hasPrevious() );
+            assertTrue((i!=(values.length-1)) == iter.hasNext());
             assertEquals(values[i],iter.previous());
         }
-        assert(!iter.hasPrevious());
+        assertTrue(!iter.hasPrevious());
         for(int i=0;i<values.length;i++) {
-            assert( iter.hasNext() );
-            assert((i!=0) == iter.hasPrevious());
+            assertTrue( iter.hasNext() );
+            assertTrue((i!=0) == iter.hasPrevious());
             assertEquals(values[i],iter.next());
             assertEquals(values[i],iter.previous());
             assertEquals(values[i],iter.next());
@@ -680,7 +680,7 @@ public abstract class TestList extends TestCollection {
             assertEquals("previousIndex should be " + (i-1),i-1,iter.previousIndex());
             assertEquals(values[i],iter.next());
         }
-        assert(!iter.hasNext());
+        assertTrue(!iter.hasNext());
         for(int i=values.length-1;i>=0;i--) {
             assertEquals("previousIndex should be " + i,i,iter.previousIndex());
             assertEquals("nextIndex should be " + (i+1),i+1,iter.nextIndex());
@@ -716,7 +716,7 @@ public abstract class TestList extends TestCollection {
             try {
                 iter.set(new Integer(i));
                 values[i] = new Integer(i);
-                assert(Arrays.equals(values,list.toArray()));
+                assertTrue(Arrays.equals(values,list.toArray()));
             } catch(UnsupportedOperationException e) {
                 // expected
             } catch(IllegalStateException e) {
@@ -727,13 +727,13 @@ public abstract class TestList extends TestCollection {
                 // expected
             }
         }
-        assert(!iter.hasNext());
+        assertTrue(!iter.hasNext());
         for(int i=values.length-1;i>=0;i--) {
             iter.previous();
             try {
                 iter.set(String.valueOf(i));
                 values[i] = String.valueOf(i);
-                assert(Arrays.equals(values,list.toArray()));
+                assertTrue(Arrays.equals(values,list.toArray()));
             } catch(UnsupportedOperationException e) {
                 // expected
             } catch(IllegalStateException e) {

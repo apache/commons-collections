@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/21 12:22:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.2 2001/07/14 23:33:26 craigmcc Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/07/14 23:33:26 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestArrayList.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestArrayList.java,v 1.2 2001/07/14 23:33:26 craigmcc Exp $
  */
 public class TestArrayList extends TestList
 {
@@ -104,7 +104,7 @@ public class TestArrayList extends TestList
 
     public void testNewArrayList()
     {
-        assert("New list is empty", list.isEmpty());
+        assertTrue("New list is empty", list.isEmpty());
         assertEquals("New list has size zero", list.size(), 0);
 
         try

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/21 12:22:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.2 2001/07/14 23:33:27 craigmcc Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/07/14 23:33:27 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestTreeMap.java,v 1.1 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestTreeMap.java,v 1.2 2001/07/14 23:33:27 craigmcc Exp $
  */
 public class TestTreeMap extends TestMap
 {
@@ -103,7 +103,7 @@ public class TestTreeMap extends TestMap
 
     public void testNewMap()
     {
-        assert("New map is empty", map.isEmpty());
+        assertTrue("New map is empty", map.isEmpty());
         assertEquals("New map has size zero", map.size(), 0);
     }
 

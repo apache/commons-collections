@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.2 2001/04/20 16:54:07 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/20 16:54:07 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.3 2001/07/14 23:33:27 craigmcc Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/07/14 23:33:27 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCursorableLinkedList.java,v 1.2 2001/04/20 16:54:07 rwaldhoff Exp $
+ * @version $Id: TestCursorableLinkedList.java,v 1.3 2001/07/14 23:33:27 craigmcc Exp $
  */
 public class TestCursorableLinkedList extends TestList {
     public TestCursorableLinkedList(String testName) {
@@ -94,15 +94,15 @@ public class TestCursorableLinkedList extends TestList {
 
     public void testAdd() {
         assertEquals("[]",list.toString());
-        assert(list.add(new Integer(1)));
+        assertTrue(list.add(new Integer(1)));
         assertEquals("[1]",list.toString());
-        assert(list.add(new Integer(2)));
+        assertTrue(list.add(new Integer(2)));
         assertEquals("[1, 2]",list.toString());
-        assert(list.add(new Integer(3)));
+        assertTrue(list.add(new Integer(3)));
         assertEquals("[1, 2, 3]",list.toString());
-        assert(list.addFirst(new Integer(0)));
+        assertTrue(list.addFirst(new Integer(0)));
         assertEquals("[0, 1, 2, 3]",list.toString());
-        assert(list.addLast(new Integer(4)));
+        assertTrue(list.addLast(new Integer(4)));
         assertEquals("[0, 1, 2, 3, 4]",list.toString());
         list.add(0,new Integer(-2));
         assertEquals("[-2, 0, 1, 2, 3, 4]",list.toString());
@@ -116,79 +116,79 @@ public class TestCursorableLinkedList extends TestList {
         list2.add("B");
         list2.add("C");
 
-        assert(list.addAll(list2));
+        assertTrue(list.addAll(list2));
         assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5, A, B, C]",list.toString());
-        assert(list.addAll(3,list2));
+        assertTrue(list.addAll(3,list2));
         assertEquals("[-2, -1, 0, A, B, C, 1, 2, 3, 4, 5, A, B, C]",list.toString());
     }
 
     public void testClear() {
         assertEquals(0,list.size());
-        assert(list.isEmpty());
+        assertTrue(list.isEmpty());
         list.clear();
         assertEquals(0,list.size());
-        assert(list.isEmpty());
+        assertTrue(list.isEmpty());
 
         list.add("element");
         assertEquals(1,list.size());
-        assert(!list.isEmpty());
+        assertTrue(!list.isEmpty());
 
         list.clear();
         assertEquals(0,list.size());
-        assert(list.isEmpty());
+        assertTrue(list.isEmpty());
 
         list.add("element1");
         list.add("element2");
         assertEquals(2,list.size());
-        assert(!list.isEmpty());
+        assertTrue(!list.isEmpty());
 
         list.clear();
         assertEquals(0,list.size());
-        assert(list.isEmpty());
+        assertTrue(list.isEmpty());
 
         for(int i=0;i<1000;i++) {
             list.add(new Integer(i));
         }
         assertEquals(1000,list.size());
-        assert(!list.isEmpty());
+        assertTrue(!list.isEmpty());
 
         list.clear();
         assertEquals(0,list.size());
-        assert(list.isEmpty());
+        assertTrue(list.isEmpty());
     }
 
     public void testContains() {
-        assert(!list.contains("A"));
-        assert(list.add("A"));
-        assert(list.contains("A"));
-        assert(list.add("B"));
-        assert(list.contains("A"));
-        assert(list.addFirst("a"));
-        assert(list.contains("A"));
-        assert(list.remove("a"));
-        assert(list.contains("A"));
-        assert(list.remove("A"));
-        assert(!list.contains("A"));
+        assertTrue(!list.contains("A"));
+        assertTrue(list.add("A"));
+        assertTrue(list.contains("A"));
+        assertTrue(list.add("B"));
+        assertTrue(list.contains("A"));
+        assertTrue(list.addFirst("a"));
+        assertTrue(list.contains("A"));
+        assertTrue(list.remove("a"));
+        assertTrue(list.contains("A"));
+        assertTrue(list.remove("A"));
+        assertTrue(!list.contains("A"));
     }
 
     public void testContainsAll() {
-        assert(list.containsAll(list));
+        assertTrue(list.containsAll(list));
         java.util.List list2 = new java.util.LinkedList();
-        assert(list.containsAll(list2));
+        assertTrue(list.containsAll(list2));
         list2.add("A");
-        assert(!list.containsAll(list2));
+        assertTrue(!list.containsAll(list2));
         list.add("B");
         list.add("A");
-        assert(list.containsAll(list2));
+        assertTrue(list.containsAll(list2));
         list2.add("B");
-        assert(list.containsAll(list2));
+        assertTrue(list.containsAll(list2));
         list2.add("C");
-        assert(!list.containsAll(list2));
+        assertTrue(!list.containsAll(list2));
         list.add("C");
-        assert(list.containsAll(list2));
+        assertTrue(list.containsAll(list2));
         list2.add("C");
-        assert(list.containsAll(list2));
-        assert(list.containsAll(list));
+        assertTrue(list.containsAll(list2));
+        assertTrue(list.containsAll(list));
     }
 
     public void testCursorNavigation() {
@@ -198,50 +198,50 @@ public class TestCursorableLinkedList extends TestList {
         list.add("4");
         list.add("5");
         CursorableLinkedList.Cursor it = list.cursor();
-        assert(it.hasNext());
-        assert(!it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(!it.hasPrevious());
         assertEquals("1",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("1",it.previous());
-        assert(it.hasNext());
-        assert(!it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(!it.hasPrevious());
         assertEquals("1",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("2",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("2",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("2",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("3",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("4",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("5",it.next());
-        assert(!it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(!it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("5",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("4",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("3",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("2",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals("1",it.previous());
-        assert(it.hasNext());
-        assert(!it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(!it.hasPrevious());
         it.close();
     }
 
@@ -292,7 +292,7 @@ public class TestCursorableLinkedList extends TestList {
         assertEquals("1",it.previous());
         it.remove();
         assertEquals("[3, 4, 5]",list.toString());
-        assert(!it.hasPrevious());
+        assertTrue(!it.hasPrevious());
         assertEquals("3",it.next());
         it.remove();
         assertEquals("[4, 5]",list.toString());
@@ -330,66 +330,66 @@ public class TestCursorableLinkedList extends TestList {
     }
 
     public void testEqualsAndHashCode() {
-        assert(list.equals(list));
+        assertTrue(list.equals(list));
         assertEquals(list.hashCode(),list.hashCode());
         list.add("A");
-        assert(list.equals(list));
+        assertTrue(list.equals(list));
         assertEquals(list.hashCode(),list.hashCode());
 
         CursorableLinkedList list2 = new CursorableLinkedList();
-        assert(!list.equals(list2));
-        assert(!list2.equals(list));
+        assertTrue(!list.equals(list2));
+        assertTrue(!list2.equals(list));
 
         java.util.List list3 = new java.util.LinkedList();
-        assert(!list.equals(list3));
-        assert(!list3.equals(list));
-        assert(list2.equals(list3));
-        assert(list3.equals(list2));
+        assertTrue(!list.equals(list3));
+        assertTrue(!list3.equals(list));
+        assertTrue(list2.equals(list3));
+        assertTrue(list3.equals(list2));
         assertEquals(list2.hashCode(),list3.hashCode());
 
         list2.add("A");
-        assert(list.equals(list2));
-        assert(list2.equals(list));
-        assert(!list2.equals(list3));
-        assert(!list3.equals(list2));
+        assertTrue(list.equals(list2));
+        assertTrue(list2.equals(list));
+        assertTrue(!list2.equals(list3));
+        assertTrue(!list3.equals(list2));
 
         list3.add("A");
-        assert(list2.equals(list3));
-        assert(list3.equals(list2));
+        assertTrue(list2.equals(list3));
+        assertTrue(list3.equals(list2));
         assertEquals(list2.hashCode(),list3.hashCode());
 
         list.add("B");
-        assert(list.equals(list));
-        assert(!list.equals(list2));
-        assert(!list2.equals(list));
-        assert(!list.equals(list3));
-        assert(!list3.equals(list));
+        assertTrue(list.equals(list));
+        assertTrue(!list.equals(list2));
+        assertTrue(!list2.equals(list));
+        assertTrue(!list.equals(list3));
+        assertTrue(!list3.equals(list));
 
         list2.add("B");
         list3.add("B");
-        assert(list.equals(list));
-        assert(list.equals(list2));
-        assert(list2.equals(list));
-        assert(list2.equals(list3));
-        assert(list3.equals(list2));
+        assertTrue(list.equals(list));
+        assertTrue(list.equals(list2));
+        assertTrue(list2.equals(list));
+        assertTrue(list2.equals(list3));
+        assertTrue(list3.equals(list2));
         assertEquals(list2.hashCode(),list3.hashCode());
 
         list.add("C");
         list2.add("C");
         list3.add("C");
-        assert(list.equals(list));
-        assert(list.equals(list2));
-        assert(list2.equals(list));
-        assert(list2.equals(list3));
-        assert(list3.equals(list2));
+        assertTrue(list.equals(list));
+        assertTrue(list.equals(list2));
+        assertTrue(list2.equals(list));
+        assertTrue(list2.equals(list3));
+        assertTrue(list3.equals(list2));
         assertEquals(list.hashCode(),list2.hashCode());
         assertEquals(list2.hashCode(),list3.hashCode());
 
         list.add("D");
         list2.addFirst("D");
-        assert(list.equals(list));
-        assert(!list.equals(list2));
-        assert(!list2.equals(list));
+        assertTrue(list.equals(list));
+        assertTrue(!list.equals(list2));
+        assertTrue(!list2.equals(list));
     }
 
     public void testGet() {
@@ -400,9 +400,9 @@ public class TestCursorableLinkedList extends TestList {
             // expected
         }
 
-        assert(list.add("A"));
+        assertTrue(list.add("A"));
         assertEquals("A",list.get(0));
-        assert(list.add("B"));
+        assertTrue(list.add("B"));
         assertEquals("A",list.get(0));
         assertEquals("B",list.get(1));
 
@@ -442,15 +442,15 @@ public class TestCursorableLinkedList extends TestList {
     }
 
     public void testIsEmpty() {
-        assert(list.isEmpty());
+        assertTrue(list.isEmpty());
         list.add("element");
-        assert(!list.isEmpty());
+        assertTrue(!list.isEmpty());
         list.remove("element");
-        assert(list.isEmpty());
+        assertTrue(list.isEmpty());
         list.add("element");
-        assert(!list.isEmpty());
+        assertTrue(!list.isEmpty());
         list.clear();
-        assert(list.isEmpty());
+        assertTrue(list.isEmpty());
     }
 
     public void testIterator() {
@@ -460,40 +460,40 @@ public class TestCursorableLinkedList extends TestList {
         list.add("4");
         list.add("5");
         Iterator it = list.iterator();
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("1",it.next());
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("2",it.next());
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("3",it.next());
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("4",it.next());
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("5",it.next());
-        assert(!it.hasNext());
+        assertTrue(!it.hasNext());
 
         it = list.iterator();
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("1",it.next());
         it.remove();
         assertEquals("[2, 3, 4, 5]",list.toString());
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("2",it.next());
         it.remove();
         assertEquals("[3, 4, 5]",list.toString());
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("3",it.next());
         it.remove();
         assertEquals("[4, 5]",list.toString());
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("4",it.next());
         it.remove();
         assertEquals("[5]",list.toString());
-        assert(it.hasNext());
+        assertTrue(it.hasNext());
         assertEquals("5",it.next());
         it.remove();
         assertEquals("[]",list.toString());
-        assert(!it.hasNext());
+        assertTrue(!it.hasNext());
     }
 
     public void testListIteratorNavigation() {
@@ -503,78 +503,78 @@ public class TestCursorableLinkedList extends TestList {
         list.add("4");
         list.add("5");
         ListIterator it = list.listIterator();
-        assert(it.hasNext());
-        assert(!it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(!it.hasPrevious());
         assertEquals(-1,it.previousIndex());
         assertEquals(0,it.nextIndex());
         assertEquals("1",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(0,it.previousIndex());
         assertEquals(1,it.nextIndex());
         assertEquals("1",it.previous());
-        assert(it.hasNext());
-        assert(!it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(!it.hasPrevious());
         assertEquals(-1,it.previousIndex());
         assertEquals(0,it.nextIndex());
         assertEquals("1",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(0,it.previousIndex());
         assertEquals(1,it.nextIndex());
         assertEquals("2",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(1,it.previousIndex());
         assertEquals(2,it.nextIndex());
         assertEquals("2",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(0,it.previousIndex());
         assertEquals(1,it.nextIndex());
         assertEquals("2",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(1,it.previousIndex());
         assertEquals(2,it.nextIndex());
         assertEquals("3",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(2,it.previousIndex());
         assertEquals(3,it.nextIndex());
         assertEquals("4",it.next());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(3,it.previousIndex());
         assertEquals(4,it.nextIndex());
         assertEquals("5",it.next());
-        assert(!it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(!it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(4,it.previousIndex());
         assertEquals(5,it.nextIndex());
         assertEquals("5",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(3,it.previousIndex());
         assertEquals(4,it.nextIndex());
         assertEquals("4",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(2,it.previousIndex());
         assertEquals(3,it.nextIndex());
         assertEquals("3",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(1,it.previousIndex());
         assertEquals(2,it.nextIndex());
         assertEquals("2",it.previous());
-        assert(it.hasNext());
-        assert(it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(it.hasPrevious());
         assertEquals(0,it.previousIndex());
         assertEquals(1,it.nextIndex());
         assertEquals("1",it.previous());
-        assert(it.hasNext());
-        assert(!it.hasPrevious());
+        assertTrue(it.hasNext());
+        assertTrue(!it.hasPrevious());
         assertEquals(-1,it.previousIndex());
         assertEquals(0,it.nextIndex());
     }
@@ -625,7 +625,7 @@ public class TestCursorableLinkedList extends TestList {
         assertEquals("1",it.previous());
         it.remove();
         assertEquals("[3, 4, 5]",list.toString());
-        assert(!it.hasPrevious());
+        assertTrue(!it.hasPrevious());
         assertEquals("3",it.next());
         it.remove();
         assertEquals("[4, 5]",list.toString());
@@ -674,9 +674,9 @@ public class TestCursorableLinkedList extends TestList {
         set.add("4");
         set.add("D");
 
-        assert(list.removeAll(set));
+        assertTrue(list.removeAll(set));
         assertEquals("[1, 3, 5]",list.toString());
-        assert(!list.removeAll(set));
+        assertTrue(!list.removeAll(set));
     }
 
     public void testRemoveByIndex() {
@@ -710,27 +710,27 @@ public class TestCursorableLinkedList extends TestList {
         list.add("4");
         list.add("5");
         assertEquals("[1, 1, 2, 3, 4, 5, 2, 3, 4, 5]",list.toString());
-        assert(!list.remove("6"));
-        assert(list.remove("5"));
+        assertTrue(!list.remove("6"));
+        assertTrue(list.remove("5"));
         assertEquals("[1, 1, 2, 3, 4, 2, 3, 4, 5]",list.toString());
-        assert(list.remove("5"));
+        assertTrue(list.remove("5"));
         assertEquals("[1, 1, 2, 3, 4, 2, 3, 4]",list.toString());
-        assert(!list.remove("5"));
-        assert(list.remove("1"));
+        assertTrue(!list.remove("5"));
+        assertTrue(list.remove("1"));
         assertEquals("[1, 2, 3, 4, 2, 3, 4]",list.toString());
-        assert(list.remove("1"));
+        assertTrue(list.remove("1"));
         assertEquals("[2, 3, 4, 2, 3, 4]",list.toString());
-        assert(list.remove("2"));
+        assertTrue(list.remove("2"));
         assertEquals("[3, 4, 2, 3, 4]",list.toString());
-        assert(list.remove("2"));
+        assertTrue(list.remove("2"));
         assertEquals("[3, 4, 3, 4]",list.toString());
-        assert(list.remove("3"));
+        assertTrue(list.remove("3"));
         assertEquals("[4, 3, 4]",list.toString());
-        assert(list.remove("3"));
+        assertTrue(list.remove("3"));
         assertEquals("[4, 4]",list.toString());
-        assert(list.remove("4"));
+        assertTrue(list.remove("4"));
         assertEquals("[4]",list.toString());
-        assert(list.remove("4"));
+        assertTrue(list.remove("4"));
         assertEquals("[]",list.toString());
     }
 
@@ -753,9 +753,9 @@ public class TestCursorableLinkedList extends TestList {
         set.add("4");
         set.add("D");
 
-        assert(list.retainAll(set));
+        assertTrue(list.retainAll(set));
         assertEquals("[2, 2, 4, 4]",list.toString());
-        assert(!list.retainAll(set));
+        assertTrue(!list.retainAll(set));
     }
 
     public void testSet() {
@@ -896,7 +896,7 @@ public class TestCursorableLinkedList extends TestList {
 
         String[] elts4 = new String[3];
         String[] elts4b = (String[])(list.toArray(elts4));
-        assert(elts4 != elts4b);
+        assertTrue(elts4 != elts4b);
         assertEquals("1",elts4b[0]);
         assertEquals("2",elts4b[1]);
         assertEquals("3",elts4b[2]);
@@ -922,9 +922,9 @@ public class TestCursorableLinkedList extends TestList {
         java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufin);
         Object list2 = in.readObject();
 
-        assert(list != list2);
-        assert(list2.equals(list));
-        assert(list.equals(list2));
+        assertTrue(list != list2);
+        assertTrue(list2.equals(list));
+        assertTrue(list.equals(list2));
     }
 
     public void testLongSerialization() throws Exception {
@@ -944,9 +944,9 @@ public class TestCursorableLinkedList extends TestList {
         java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufin);
         Object list2 = in.readObject();
 
-        assert(list != list2);
-        assert(list2.equals(list));
-        assert(list.equals(list2));
+        assertTrue(list != list2);
+        assertTrue(list2.equals(list));
+        assertTrue(list.equals(list2));
     }
 
 }

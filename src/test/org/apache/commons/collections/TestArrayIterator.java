@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.2 2001/06/05 07:20:10 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2001/06/05 07:20:10 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.3 2001/07/14 23:33:26 craigmcc Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/07/14 23:33:26 $
  *
  * ====================================================================
  *
@@ -72,7 +72,7 @@ import java.util.NoSuchElementException;
  *
  * @author James Strachan
  * @author Mauricio S. Moura
- * @version $Id: TestArrayIterator.java,v 1.2 2001/06/05 07:20:10 jstrachan Exp $
+ * @version $Id: TestArrayIterator.java,v 1.3 2001/07/14 23:33:26 craigmcc Exp $
  */
 public class TestArrayIterator extends TestObject {
     
@@ -104,12 +104,12 @@ public class TestArrayIterator extends TestObject {
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
         
-        assert("Iterator should now be empty", ! iter.hasNext() );
+        assertTrue("Iterator should now be empty", ! iter.hasNext() );
 
 	try {
 	    Object testValue = iter.next();
 	} catch (Exception e) {
-	  assert("NoSuchElementException must be thrown", 
+	  assertTrue("NoSuchElementException must be thrown", 
 		 e.getClass().equals((new NoSuchElementException()).getClass()));
 	}
     }

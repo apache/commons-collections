@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.4 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.4 $
- * $Date: 2001/04/21 12:22:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.5 2001/07/14 23:33:26 craigmcc Exp $
+ * $Revision: 1.5 $
+ * $Date: 2001/07/14 23:33:26 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Craig McClanahan
- * @version $Id: TestArrayStack.java,v 1.4 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestArrayStack.java,v 1.5 2001/07/14 23:33:26 craigmcc Exp $
  */
 
 public class TestArrayStack extends TestArrayList {
@@ -97,7 +97,7 @@ public class TestArrayStack extends TestArrayList {
 
     public void testNewStack() {
 
-        assert("New stack is empty", stack.empty());
+        assertTrue("New stack is empty", stack.empty());
         assertEquals("New stack has size zero", stack.size(), 0);
 
         try {
@@ -120,7 +120,7 @@ public class TestArrayStack extends TestArrayList {
     public void testPushPeekPop() {
 
         stack.push("First Item");
-        assert("Stack is not empty", !stack.empty());
+        assertTrue("Stack is not empty", !stack.empty());
         assertEquals("Stack size is one", stack.size(), 1);
         assertEquals("Top item is 'First Item'",
                      (String) stack.peek(), "First Item");

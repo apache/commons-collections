@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.2 2001/05/10 00:40:09 geirm Exp $
- * $Revision: 1.2 $
- * $Date: 2001/05/10 00:40:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.3 2001/07/14 23:33:27 craigmcc Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/07/14 23:33:27 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import junit.framework.TestSuite;
  *   class
  * 
  *   @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
- *   @version $Id: TestExtendedProperties.java,v 1.2 2001/05/10 00:40:09 geirm Exp $
+ *   @version $Id: TestExtendedProperties.java,v 1.3 2001/07/14 23:33:27 craigmcc Exp $
  */
 public class TestExtendedProperties extends TestCase
 {
@@ -111,26 +111,26 @@ public class TestExtendedProperties extends TestCase
          * now add another and get a Vector
          */
         eprop.addProperty("number", "2");
-        assert("This returns array", ( eprop.getVector("number") instanceof java.util.Vector ) );
+        assertTrue("This returns array", ( eprop.getVector("number") instanceof java.util.Vector ) );
         
         /*
          *  now test dan's new fix where we get the first scalar 
          *  when we access a vector valued
          *  property
          */
-        assert("This returns scalar", ( eprop.getString("number") instanceof String ) );
+        assertTrue("This returns scalar", ( eprop.getString("number") instanceof String ) );
 
         /*
          * test comma separated string properties
          */
         String prop = "hey, that's a test";
         eprop.setProperty("prop.string", prop);
-        assert("This returns vector", ( eprop.getVector("prop.string") instanceof java.util.Vector ) );
+        assertTrue("This returns vector", ( eprop.getVector("prop.string") instanceof java.util.Vector ) );
         
         String prop2 = "hey\\, that's a test";
         eprop.remove("prop.string");
         eprop.setProperty("prop.string", prop2);
-        assert("This returns array", ( eprop.getString("prop.string") instanceof java.lang.String) );
+        assertTrue("This returns array", ( eprop.getString("prop.string") instanceof java.lang.String) );
         
         /*
          * test subset : we want to make sure that the EP doesn't reprocess the data 
@@ -139,9 +139,9 @@ public class TestExtendedProperties extends TestCase
 
         ExtendedProperties subEprop = eprop.subset("prop");
 
-        assert("Returns the full string",  subEprop.getString("string").equals( prop ) );
-        assert("This returns string for subset", ( subEprop.getString("string") instanceof java.lang.String) );
-        assert("This returns array for subset", ( subEprop.getVector("string") instanceof java.util.Vector) );
+        assertTrue("Returns the full string",  subEprop.getString("string").equals( prop ) );
+        assertTrue("This returns string for subset", ( subEprop.getString("string") instanceof java.lang.String) );
+        assertTrue("This returns array for subset", ( subEprop.getVector("string") instanceof java.util.Vector) );
         
     }
 }

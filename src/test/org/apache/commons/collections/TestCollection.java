@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.4 2001/04/24 23:48:04 rwaldhoff Exp $
- * $Revision: 1.4 $
- * $Date: 2001/04/24 23:48:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.5 2001/07/14 23:33:27 craigmcc Exp $
+ * $Revision: 1.5 $
+ * $Date: 2001/07/14 23:33:27 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Collection} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestCollection.java,v 1.4 2001/04/24 23:48:04 rwaldhoff Exp $
+ * @version $Id: TestCollection.java,v 1.5 2001/07/14 23:33:27 craigmcc Exp $
  */
 public abstract class TestCollection extends TestObject {
     public TestCollection(String testName) {
@@ -138,13 +138,13 @@ public abstract class TestCollection extends TestObject {
         }
 
         if(cleared) {
-            assert("After Collection.clear(), Collection.isEmpty() should be true.",c.isEmpty());
+            assertTrue("After Collection.clear(), Collection.isEmpty() should be true.",c.isEmpty());
         }
 
         boolean added = tryToAdd(c,"element1");
 
         if(added) {
-            assert("After element is added, Collection.isEmpty() should be false.",!c.isEmpty());
+            assertTrue("After element is added, Collection.isEmpty() should be false.",!c.isEmpty());
             boolean cleared2 = false;
             try {
                 c.clear();
@@ -156,41 +156,41 @@ public abstract class TestCollection extends TestObject {
                 fail("Collection.clear should only throw UnsupportedOperationException. Found " + t.toString());
             }
             if(cleared2) {
-                assert("After Collection.clear(), Collection.isEmpty() should be true.",c.isEmpty());
+                assertTrue("After Collection.clear(), Collection.isEmpty() should be true.",c.isEmpty());
             }
         }
     }
 
     public void testCollectionContains() {
         Collection c = makeCollection();
-        assert("Empty Collection shouldn't contain element.",!c.contains("element1"));
+        assertTrue("Empty Collection shouldn't contain element.",!c.contains("element1"));
         boolean added1 = tryToAdd(c,"element1");
-        assert("[1] If an element was added, it should be contained, if it wasn't, it shouldn't.",added1 == c.contains("element1"));
+        assertTrue("[1] If an element was added, it should be contained, if it wasn't, it shouldn't.",added1 == c.contains("element1"));
 
-        assert("Shouldn't be contained.",!c.contains("element2"));
+        assertTrue("Shouldn't be contained.",!c.contains("element2"));
         boolean added2 = tryToAdd(c,"element2");
-        assert("[2] If an element was added, it should be contained, if it wasn't, it shouldn't.",added1 == c.contains("element1"));
-        assert("[3] If an element was added, it should be contained, if it wasn't, it shouldn't.",added2 == c.contains("element2"));
+        assertTrue("[2] If an element was added, it should be contained, if it wasn't, it shouldn't.",added1 == c.contains("element1"));
+        assertTrue("[3] If an element was added, it should be contained, if it wasn't, it shouldn't.",added2 == c.contains("element2"));
     }
 
     public void testCollectionContainsAll() {
         Collection c = makeCollection();
         Collection col = new ArrayList();
-        assert("Every Collection should contain all elements of an empty Collection.",c.containsAll(col));
+        assertTrue("Every Collection should contain all elements of an empty Collection.",c.containsAll(col));
         col.add("element1");
-        assert("Empty Collection shouldn't contain all elements of a non-empty Collection.",!c.containsAll(col));
+        assertTrue("Empty Collection shouldn't contain all elements of a non-empty Collection.",!c.containsAll(col));
 
         boolean added1 = tryToAdd(c,"element1");
         if(added1) {
-            assert("[1] Should contain all.",c.containsAll(col));
+            assertTrue("[1] Should contain all.",c.containsAll(col));
         }
 
         col.add("element2");
-        assert("Shouldn't contain all.",!c.containsAll(col));
+        assertTrue("Shouldn't contain all.",!c.containsAll(col));
 
         boolean added2 = tryToAdd(c,"element2");
         if(added1 && added2) {
-            assert("[2] Should contain all.",c.containsAll(col));
+            assertTrue("[2] Should contain all.",c.containsAll(col));
         }
     }
 
@@ -211,8 +211,8 @@ public abstract class TestCollection extends TestObject {
 
         boolean added1_1 = tryToAdd(c1,"element1");
         if(added1_1) {
-            assert("Empty Collection not equal to non-empty Collection.",!c2.equals(c1));
-            assert("Non-empty Collection not equal to empty Collection.",!c1.equals(c2));
+            assertTrue("Empty Collection not equal to non-empty Collection.",!c2.equals(c1));
+            assertTrue("Non-empty Collection not equal to empty Collection.",!c1.equals(c2));
         }
 
         boolean added1_2 = tryToAdd(c2,"element1");
@@ -221,7 +221,7 @@ public abstract class TestCollection extends TestObject {
         boolean added2_1 = tryToAdd(c1,"element2");
         boolean added3_2 = tryToAdd(c2,"element3");
         if(added2_1 || added3_2) {
-            assert("Should not be equal.",!c1.equals(c2));
+            assertTrue("Should not be equal.",!c1.equals(c2));
         }
     }
 
@@ -250,17 +250,17 @@ public abstract class TestCollection extends TestObject {
 
     public void testCollectionIsEmpty() {
         Collection c = makeCollection();
-        assert("New Collection should be empty.",c.isEmpty());
+        assertTrue("New Collection should be empty.",c.isEmpty());
         boolean added = tryToAdd(c,"element1");
         if(added) {
-            assert("If an element was added, the Collection.isEmpty() should return false.",!c.isEmpty());
+            assertTrue("If an element was added, the Collection.isEmpty() should return false.",!c.isEmpty());
         }
     }
 
     public void testCollectionIterator() {
         Collection c = makeCollection();
         Iterator it1 = c.iterator();
-        assert("Iterator for empty Collection shouldn't have next.",!it1.hasNext());
+        assertTrue("Iterator for empty Collection shouldn't have next.",!it1.hasNext());
         try {
             it1.next();
             fail("Iterator at end of Collection should throw NoSuchElementException when next is called.");
@@ -274,9 +274,9 @@ public abstract class TestCollection extends TestObject {
         boolean added = tryToAdd(c,"element1");
         if(added) {
             Iterator it2 = c.iterator();
-            assert("Iterator for non-empty Collection should have next.",it2.hasNext());
+            assertTrue("Iterator for non-empty Collection should have next.",it2.hasNext());
             assertEquals("element1",it2.next());
-            assert("Iterator at end of Collection shouldn't have next.",!it2.hasNext());
+            assertTrue("Iterator at end of Collection shouldn't have next.",!it2.hasNext());
             try {
                 it2.next();
                 fail("Iterator at end of Collection should throw NoSuchElementException when next is called.");
@@ -295,7 +295,7 @@ public abstract class TestCollection extends TestObject {
         boolean added = tryToAdd(c,"element1");
 
         try {
-            assert("Shouldn't be able to remove an element that wasn't added.",!c.remove("element2"));
+            assertTrue("Shouldn't be able to remove an element that wasn't added.",!c.remove("element2"));
         } catch(UnsupportedOperationException e) {
         } catch(Throwable t) {
             t.printStackTrace();
@@ -303,8 +303,8 @@ public abstract class TestCollection extends TestObject {
         }
 
         try {
-            assert("If added, should be removed by call to remove.",added == c.remove("element1"));
-            assert("If removed, shouldn't be contained.",!c.contains("element1"));
+            assertTrue("If added, should be removed by call to remove.",added == c.remove("element1"));
+            assertTrue("If removed, shouldn't be contained.",!c.contains("element1"));
         } catch(UnsupportedOperationException e) {
         } catch(Throwable t) {
             t.printStackTrace();
@@ -315,7 +315,7 @@ public abstract class TestCollection extends TestObject {
     // optional operation
     public void testCollectionRemoveAll() {
         Collection c = makeCollection();
-        assert("Initial Collection is empty.",c.isEmpty());
+        assertTrue("Initial Collection is empty.",c.isEmpty());
         try {
             c.removeAll(c);
         } catch(UnsupportedOperationException e) {
@@ -324,14 +324,14 @@ public abstract class TestCollection extends TestObject {
             t.printStackTrace();
             fail("Collection.removeAll should only throw UnsupportedOperationException. Found " + t.toString());
         }
-        assert("Collection is still empty.",c.isEmpty());
+        assertTrue("Collection is still empty.",c.isEmpty());
 
         boolean added = tryToAdd(c,"element1");
         if(added) {
-            assert("Collection is not empty.",!c.isEmpty());
+            assertTrue("Collection is not empty.",!c.isEmpty());
             try {
                 c.removeAll(c);
-                assert("Collection is empty.",c.isEmpty());
+                assertTrue("Collection is empty.",c.isEmpty());
             } catch(UnsupportedOperationException e) {
                 // expected
             } catch(Throwable t) {
@@ -366,15 +366,15 @@ public abstract class TestCollection extends TestObject {
         }
         col.add("element4");
         if(added) {
-            assert("Collection is not empty.",!c.isEmpty());
+            assertTrue("Collection is not empty.",!c.isEmpty());
             try {
-                assert("Should be changed",c.removeAll(col));
-                assert("Collection is not empty.",!c.isEmpty());
-                assert("Collection should contain element",c.contains("element0"));
-                assert("Collection shouldn't contain removed element",!c.contains("element1"));
-                assert("Collection shouldn't contain removed element",!c.contains("element2"));
-                assert("Collection shouldn't contain removed element",!c.contains("element3"));
-                assert("Collection shouldn't contain removed element",!c.contains("element4"));
+                assertTrue("Should be changed",c.removeAll(col));
+                assertTrue("Collection is not empty.",!c.isEmpty());
+                assertTrue("Collection should contain element",c.contains("element0"));
+                assertTrue("Collection shouldn't contain removed element",!c.contains("element1"));
+                assertTrue("Collection shouldn't contain removed element",!c.contains("element2"));
+                assertTrue("Collection shouldn't contain removed element",!c.contains("element3"));
+                assertTrue("Collection shouldn't contain removed element",!c.contains("element4"));
             } catch(UnsupportedOperationException e) {
                 // expected
             } catch(Throwable t) {
@@ -389,8 +389,8 @@ public abstract class TestCollection extends TestObject {
         Collection a = makeCollection();
         Collection b = makeCollection();
         try {
-            assert(!a.retainAll(b));
-            assert(!a.retainAll(a));
+            assertTrue(!a.retainAll(b));
+            assertTrue(!a.retainAll(a));
         } catch(UnsupportedOperationException e) {
             // expected
         } catch(Throwable t) {
@@ -400,9 +400,9 @@ public abstract class TestCollection extends TestObject {
 
         boolean added_b = b.add("element1");
         try {
-            assert(!a.retainAll(b));
-            assert(added_b == b.retainAll(a));
-            assert(b.isEmpty());
+            assertTrue(!a.retainAll(b));
+            assertTrue(added_b == b.retainAll(a));
+            assertTrue(b.isEmpty());
         } catch(UnsupportedOperationException e) {
             // expected
         } catch(Throwable t) {
@@ -415,15 +415,15 @@ public abstract class TestCollection extends TestObject {
         boolean added_a1 = a.add("element1");
         if(added_b1 && added_b2 && added_a1) {
             try {
-                assert(!b.retainAll(b));
-                assert(b.contains("element1"));
-                assert(b.contains("element2"));
+                assertTrue(!b.retainAll(b));
+                assertTrue(b.contains("element1"));
+                assertTrue(b.contains("element2"));
 
-                assert(!a.retainAll(b));
+                assertTrue(!a.retainAll(b));
 
-                assert(b.retainAll(a));
-                assert(b.contains("element1"));
-                assert(!b.contains("element2"));
+                assertTrue(b.retainAll(a));
+                assertTrue(b.contains("element1"));
+                assertTrue(!b.contains("element2"));
             } catch(UnsupportedOperationException e) {
                 // expected
             } catch(Throwable t) {
@@ -471,7 +471,7 @@ public abstract class TestCollection extends TestObject {
             String[] fits = new String[1];
             String[] small = new String[0];
             assertSame(fits,c.toArray(fits));
-            assert(small != c.toArray(small));
+            assertTrue(small != c.toArray(small));
         }
     }
 
