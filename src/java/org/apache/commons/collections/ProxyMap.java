@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.6 2003/04/26 11:15:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.7 2003/05/10 17:07:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,8 +81,10 @@ import java.util.Set;
  * returned by <code>Collections.synchronizedMap(map)</code>
  * hides part of <code>map</code>'s public interface.</p>
  *
+ * @deprecated this class has been moved to the deprecated subpackage as
+ *  AbstractMapDecorator
  * @since Commons Collections 2.0
- * @version $Revision: 1.6 $ $Date: 2003/04/26 11:15:34 $
+ * @version $Revision: 1.7 $ $Date: 2003/05/10 17:07:28 $
  * 
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @author Stephen Colebourne
