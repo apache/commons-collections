@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.1 2003/01/04 15:00:57 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/04 15:00:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.2 2003/01/04 23:16:29 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/04 23:16:29 $
  *
  * ====================================================================
  *
@@ -64,7 +64,7 @@ package org.apache.commons.collections.primitives;
 /**
  * An ordered collection (a {@link java.util.List}) of int values.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/04 15:00:57 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/04 23:16:29 $
  * @author Rodney Waldhoff 
  */
 public interface IntList {
@@ -78,7 +78,7 @@ public interface IntList {
      * Returns the element at the specified position within 
      * me. 
      */
-    Object get(int index);
+    int get(int index);
     
     /** 
      * Returns the index of the first occurrence 
