@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.25 2003/01/11 01:07:13 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.26 2003/01/20 01:29:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -33,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -77,14 +77,14 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.25 $ $Date: 2003/01/11 01:07:13 $
+ * @version $Revision: 1.26 $ $Date: 2003/01/20 01:29:30 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Steve Downey
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
- * @author BluePhelix@web.de (Peter)
+ * @author Peter KoBek
  */
 public class CollectionUtils {
 
@@ -443,7 +443,16 @@ public class CollectionUtils {
      * @throws NullPointerException if the input collection is null
      */
     public static int countMatches(Collection inputCollection, Predicate predicate) {
-        return select(inputCollection, predicate).size();
+        int count = 0;
+        if (inputCollection != null && predicate != null) {
+            for (Iterator it = inputCollection.iterator(); it.hasNext();) {
+                Object item = it.next();
+                if (predicate.evaluate(item)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     /** 
