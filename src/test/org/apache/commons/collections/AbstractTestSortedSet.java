@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedSet.java,v 1.1 2003/10/02 22:48:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedSet.java,v 1.2 2003/10/05 23:10:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,10 +69,10 @@ import java.util.TreeSet;
  * To use, subclass and override the {@link #makeEmptySet()}
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
- * elements may be added; see {@link TestCollection} for more details.
+ * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/02 22:48:41 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/05 23:10:31 $
  * 
  * @author Stephen Colebourne
  * @author Dieter Wimberger
@@ -125,7 +125,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
 
     //-----------------------------------------------------------------------
     /**
-     * Return the {@link TestCollection#confirmed} fixture, but cast as a
+     * Return the {@link AbstractTestCollection#confirmed} fixture, but cast as a
      * SortedSet.
      */
     protected SortedSet getConfirmedSortedSet() {
@@ -163,7 +163,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link TestSet} instance for testing a subset.
+     * @return a {@link AbstractTestSet} instance for testing a subset.
      */
     public BulkTest bulkTestSortedSetSubSet() {
         int length = getFullElements().length;
@@ -180,7 +180,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link TestSet} instance for testing a headset.
+     * @return a {@link AbstractTestSet} instance for testing a headset.
      */
     public BulkTest bulkTestSortedSetHeadSet() {
         int length = getFullElements().length;
@@ -197,7 +197,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link TestSet} instance for testing a tailset.
+     * @return a {@link AbstractTestSet} instance for testing a tailset.
      */
     public BulkTest bulkTestSortedSetTailSet() {
         int length = getFullElements().length;

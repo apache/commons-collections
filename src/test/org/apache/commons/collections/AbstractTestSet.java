@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSet.java,v 1.1 2003/10/02 22:48:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSet.java,v 1.2 2003/10/05 23:10:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,10 +75,10 @@ import java.util.Set;
  * To use, subclass and override the {@link #makeEmptySet()}
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
- * elements may be added; see {@link TestCollection} for more details.
+ * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/02 22:48:41 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/05 23:10:31 $
  * 
  * @author Paul Jack
  */
@@ -173,14 +173,14 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
 
     //-----------------------------------------------------------------------
     /**
-     * Return the {@link TestCollection#collection} fixture, but cast as a Set.  
+     * Return the {@link AbstractTestCollection#collection} fixture, but cast as a Set.  
      */
     protected Set getSet() {
         return (Set)collection;
     }
 
     /**
-     * Return the {@link TestCollection#confirmed} fixture, but cast as a Set.
+     * Return the {@link AbstractTestCollection#confirmed} fixture, but cast as a Set.
      */
     protected Set getConfirmedSet() {
         return (Set)confirmed;

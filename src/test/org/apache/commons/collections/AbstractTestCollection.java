@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.2 2003/10/04 00:49:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.3 2003/10/05 23:10:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
- * Abstract test class for the  {@link java.util.Collection} methods and contracts.
+ * Abstract test class for {@link java.util.Collection} methods and contracts.
  * <p>
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to 
@@ -146,7 +146,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.2 $ $Date: 2003/10/04 00:49:27 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/05 23:10:31 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -161,7 +161,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
     //
     // Collection doesn't define any semantics for equals, and recommends you
     // use reference-based default behavior of Object.equals.  (And a test for
-    // that already exists in TestObject).  Tests for equality of lists, sets
+    // that already exists in AbstractTestObject).  Tests for equality of lists, sets
     // and bags will have to be written in test subclasses.  Thus, there is no
     // tests on Collection.equals nor any for Collection.hashCode.
     //
