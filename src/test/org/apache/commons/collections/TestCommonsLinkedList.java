@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCommonsLinkedList.java,v 1.6 2003/10/05 23:21:07 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCommonsLinkedList.java,v 1.7 2003/10/06 21:02:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.Test;
 /**
  * Test case for {@link CommonsLinkedList}.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/10/05 23:21:07 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/06 21:02:50 $
  * 
  * @author Rich Dougherty
  * @author David Hay
@@ -88,7 +88,7 @@ public class TestCommonsLinkedList extends TestLinkedList {
     }
     
     public String getCompatibilityVersion() {
-        return "3.0";
+        return "3";
     }
     
     public void setUp() {
