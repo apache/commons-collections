@@ -26,7 +26,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * <p>
  * If either <code>get</code> or <code>remove</code> is called on an empty
  * <code>Buffer</code>, the calling thread waits for notification that
- * an {@link #add} or {@link #addAll} operation has completed.
+ * an <code>add</code> or <code>addAll</code> operation has completed.
  * <p>
  * When one or more entries are added to an empty <code>Buffer</code>,
  * all threads blocked in <code>get</code> or <code>remove</code> are notified.
@@ -35,7 +35,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * order that they arrive.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/15 12:33:23 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 10:45:52 $
  * 
  * @author Stephen Colebourne
  * @author Janek Bogucki
