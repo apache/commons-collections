@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongList.java,v 1.7 2003/08/31 17:21:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongList.java,v 1.8 2003/10/09 09:52:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -81,8 +81,9 @@ import java.util.AbstractList;
  * {@link #removeLongAt(int)} and {@link #clear()} methods.  You may want 
  * to override the other methods to increase performance.<P>
  *
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:21:14 $
- * @author Rodney Waldhoff 
+ * @version $Revision: 1.8 $ $Date: 2003/10/09 09:52:56 $
+ * @author Rodney Waldhoff
+ * @deprecated This should have been removed all with several other types that extended the Object-based ones
  */
 public abstract class AbstractLongList extends AbstractList {
 
