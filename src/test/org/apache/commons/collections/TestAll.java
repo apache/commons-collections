@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.46 2003/09/20 02:51:50 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.47 2003/09/20 16:58:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections package tests.
  * 
- * @version $Revision: 1.46 $ $Date: 2003/09/20 02:51:50 $
+ * @version $Revision: 1.47 $ $Date: 2003/09/20 16:58:19 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -76,23 +76,27 @@ public class TestAll extends TestCase {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
+        suite.addTest(TestBagUtils.suite());
+        suite.addTest(TestClosureUtils.suite());
+        suite.addTest(TestCollectionUtils.suite());
+        suite.addTest(TestBufferUtils.suite());
+        suite.addTest(TestFactoryUtils.suite());
+        suite.addTest(TestListUtils.suite());
+        suite.addTest(TestMapUtils.suite());
+        suite.addTest(TestPredicateUtils.suite());
+        suite.addTest(TestSetUtils.suite());
+        suite.addTest(TestTransformerUtils.suite());
+        
         suite.addTest(TestArrayStack.suite());
         suite.addTest(TestBeanMap.suite());
         suite.addTest(TestBinaryHeap.suite());
         suite.addTest(TestBoundedFifoBuffer.suite());
         suite.addTest(TestBoundedFifoBuffer2.suite());
         suite.addTest(TestCircularFifoBuffer.suite());
-        suite.addTest(TestClosureUtils.suite());
-        suite.addTest(TestCollectionUtils.suite());
         suite.addTest(TestCommonsLinkedList.suite());
-        suite.addTest(TestBufferUtils.suite());
-        suite.addTest(TestSetUtils.suite());
-        suite.addTest(TestListUtils.suite());
-        suite.addTest(TestMapUtils.suite());
         suite.addTest(TestCursorableLinkedList.suite());
         suite.addTest(TestDoubleOrderedMap.suite());
         suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFactoryUtils.suite());
         suite.addTest(TestFastArrayList.suite());
         suite.addTest(TestFastArrayList1.suite());
         suite.addTest(TestFastHashMap.suite());
@@ -100,19 +104,16 @@ public class TestAll extends TestCase {
         suite.addTest(TestFastTreeMap.suite());
         suite.addTest(TestFastTreeMap1.suite());
         suite.addTest(TestHashBag.suite());
+        suite.addTest(TestIteratorUtils.suite());
         suite.addTest(TestLRUMap.suite());
         suite.addTest(TestMultiHashMap.suite());
         suite.addTest(TestMultiKey.suite());
         suite.addTest(TestNodeCachingLinkedList.suite());
-        suite.addTest(TestPredicateUtils.suite());
+        suite.addTest(TestReferenceMap.suite());
         suite.addTest(TestSequencedHashMap.suite());
         suite.addTest(TestStaticBucketMap.suite());
-        suite.addTest(TestTransformerUtils.suite());
         suite.addTest(TestTreeBag.suite());
         suite.addTest(TestUnboundedFifoBuffer.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(TestIteratorUtils.suite());
-        suite.addTest(TestBagUtils.suite());
         return suite;
     }
         
