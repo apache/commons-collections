@@ -28,11 +28,12 @@ No interface changes, or deprecations have occurred.
 <li>SingletonMap - fully featured singleton Map implementation</li>
 <li>TransformedPredicate - A predicate where the input object is transformed [26946]</li>
 <li>ObjectGraphIterator - An iterator that can iterate over a graph of objects</li>
+<li>AbstractReferenceMap - New base class for reference maps [26503]</li>
 </ul>
 
 <center><h3>ENHANCEMENTS</h3></center>
 <ul>
-<li>ReferenceMap - Changed to extend AbstractHashedMap, thus gaining a mapIterator() and subclassability</li>
+<li>ReferenceMap - Changed to extend AbstractReferenceMap, thus gaining a mapIterator() and subclassability [26503]</li>
 <li>Fast3Map - Add clone() method</li>
 <li>MultiKey - Add getKey(index) and size() methods and make constructor public</li>
 <li>MultiHashMap - Add five methods to improve the API</li>
