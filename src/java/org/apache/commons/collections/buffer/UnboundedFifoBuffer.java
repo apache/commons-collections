@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/UnboundedFifoBuffer.java,v 1.4 2004/01/04 18:56:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/UnboundedFifoBuffer.java,v 1.5 2004/01/05 21:33:22 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This buffer prevents null objects from being added.
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.4 $ $Date: 2004/01/04 18:56:37 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/05 21:33:22 $
  *
  * @author Avalon
  * @author Federico Barbieri
@@ -160,7 +160,6 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
      * @param obj  the element to add
      * @return true, always
      * @throws NullPointerException  if the given element is null
-     * @throws BufferOverflowException  if this buffer is full
      */
     public boolean add(final Object obj) {
         if (obj == null) {
