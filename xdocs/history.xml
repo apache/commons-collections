@@ -84,12 +84,14 @@ Of course, backwards compatibility has been retained during all transitions usin
 
 <p>
 <b>Collections 2.1.1</b> is a patch release to v2.1.
-Unfortunately, v3.0 created a binary incompatibility in the IteratorUtils class.
+Unfortunately, v3.0 created a <a href="compatibility.html">binary incompatibility</a> in the IteratorUtils class.
 This patch was created as a work around, enabling v2.1.1 to be compatible with v3.1.
 </p>
 
 <p>
-<b>Collections 3.1</b> (due soon) fixes some bugs in v3.0 and adds a few new enhancements.
+<b>Collections 3.1</b> fixes some bugs in v3.0 and adds a few new enhancements.
+The most notable change is a new list implementation, TreeList, that is well balanced for insertions and removals at any index.
+Other changes include more classes implementing Serializable and a ReferenceIdentityMap.
 </p>
 
 </section>

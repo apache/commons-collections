@@ -53,7 +53,7 @@ There are many features, including:
 </ul>
 </p>
 <p>
-Preview version 3.1-RC1 and patch version 2.1.1 have just been released.
+Version 3.1 and patch version 2.1.1 have just been released.
 These provides a work around to a <a href="compatibility.html">version compatibility</a> issue between v2.1 and v3.0.
 </p>
 </section>
@@ -67,7 +67,7 @@ A getting started<span> </span><a href="userguide.html">User's Guide</a> is avai
 The JavaDoc API documents are available online:
 </p>
 <ul>
-<li>The <a href="apidocs-COLLECTIONS_3_0/index.html">current release 3.0</a></li>
+<li>The <a href="apidocs-COLLECTIONS_3_1/index.html">current release 3.1</a></li>
 <li>The <a href="apidocs-COLLECTIONS_2_1_1/index.html">previous version 2.1.1</a></li>
 <li>The <a href="apidocs/index.html">latest CVS</a></li>
 </ul>
@@ -79,13 +79,9 @@ The <a href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/">CVS rep
 
 <section name="Releases">
 <p>
-Version 3.0/2.1.1 - 
+Version 3.1/2.1.1 - 
  <a href="http://jakarta.apache.org/site/binindex.cgi#commons-collections">Binary</a> - 
  <a href="http://jakarta.apache.org/site/sourceindex.cgi#commons-collections">Source</a>
-</p>
-<p>
-Version 3.1-RC1 (preview for testing - not for production use) - 
- <a href="http://www.apache.org/~scolebourne/coll31/">Source and binary</a>
 </p>
 <p>
  For previous releases, see the <a href="http://archive.apache.org/dist/jakarta/commons/collections/">Apache Archive</a>

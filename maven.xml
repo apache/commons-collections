@@ -165,6 +165,10 @@
     <j:set var="collections.javadoc.tag.windowtitle" value="Collections 3.0 release API" />
     <j:set var="collections.javadoc.tag.overview" value="src/java/org/apache/commons/collections/overview.html" />
     <attainGoal name="javadoc:generate" />
+    <j:set var="collections.javadoc.tag" value="COLLECTIONS_3_1" />
+    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 3.1 release API" />
+    <j:set var="collections.javadoc.tag.overview" value="src/java/org/apache/commons/collections/overview.html" />
+    <attainGoal name="javadoc:generate" />
   </postGoal>
   <postGoal name="site:generate"><!-- NEW MAVEN -->
     <j:set var="collections.javadoc.tag" value="COLLECTIONS_2_1_1" />
@@ -172,6 +176,9 @@
     <attainGoal name="javadoc:generate" />
     <j:set var="collections.javadoc.tag" value="COLLECTIONS_3_0" />
     <j:set var="collections.javadoc.tag.windowtitle" value="Collections 3.0 release API" />
+    <j:set var="collections.javadoc.tag.overview" value="src/java/org/apache/commons/collections/overview.html" />
+    <j:set var="collections.javadoc.tag" value="COLLECTIONS_3_1" />
+    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 3.1 release API" />
     <j:set var="collections.javadoc.tag.overview" value="src/java/org/apache/commons/collections/overview.html" />
     <attainGoal name="javadoc:generate" />
   </postGoal>
