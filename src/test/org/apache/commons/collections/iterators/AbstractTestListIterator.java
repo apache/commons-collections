@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.1 2003/10/01 21:54:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.2 2003/10/09 10:33:45 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import java.util.NoSuchElementException;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/01 21:54:54 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/09 10:33:45 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -268,8 +268,11 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
         // repeated set calls should be fine
         it.set(addSetValue());
 
-        // remove then set
-        if (supportsRemove()) {
+    }
+    
+    public void testRemoveThenSet() {
+        ListIterator it = makeFullListIterator();
+        if (supportsRemove() && supportsSet()) {
             it.next();
             it.remove();
             try {
@@ -278,9 +281,12 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
             } catch (IllegalStateException e) {
             }
         }
-        
+    }
+
+    public void testAddThenSet() {
+        ListIterator it = makeFullListIterator();        
         // add then set
-        if (supportsAdd()) {
+        if (supportsAdd() && supportsSet()) {
             it.next();
             it.add(addSetValue());
             try {
