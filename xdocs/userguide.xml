@@ -22,12 +22,12 @@ This document highlights some key features to get you started.
 
 <p>
 A Utility class is provided for each major collection interface.
-Thus, the <code>Set</code> and <code>SortedSet</code> interfaces are provided for by <code>SetUtils</code>.
+Thus, the <code>Set</code> and <code>SortedSet</code> interfaces are provided for by <code>SetUtils.</code>
 These classes provide useful methods for working with that collection type.
 </p>
 <p>
 The most methods are found on the two 'root' collection utility classes - 
-<code>CollectionUtils</code> and <code>MapUtils</code>.
+<code>CollectionUtils</code> and <code>MapUtils.</code>
 As all other collection interfaces extend <code>Collection</code> or <code>Map</code> these utilities can be used widely.
 They include intersection, counting, iteration, functor and typecasting operations amongst others.
 The utility classes also provide access to collection decorator classes in a way similar to the JDK <code>Collections</code> class.
@@ -58,7 +58,7 @@ while (it.hasNext()) {
 <section name="Ordered maps">
 
 <p>
-A new interface is provided for maps that have an order but are not sorted - <code>OrderedMap</code>.
+A new interface is provided for maps that have an order but are not sorted - <code>OrderedMap.</code>
 Two implementations are provided - <code>LinkedMap</code> and <code>ListOrderedMap</code> (a decorator).
 This interface supports the map iterator, and also allows iteration both forwards and backwards through the map.
 </p>
@@ -77,7 +77,7 @@ map.nextKey("SIX");  // returns "SEVEN"
 <section name="Bidirectional maps">
 
 <p>
-A new interface hierarchy has been added to support bidirectional maps - <code>BidiMap</code>.
+A new interface hierarchy has been added to support bidirectional maps - <code>BidiMap.</code>
 These represent maps where the the key can lookup the value and the value can lookup the key with equal ease.
 </p>
 <source>
@@ -98,7 +98,7 @@ Implementations are provided for each bidirectional map type.
 <section name="Queues and buffers">
 
 <p>
-A new interface hierarchy has been added to support queues and buffers - <code>Buffer</code>.
+A new interface hierarchy has been added to support queues and buffers - <code>Buffer.</code>
 These represent collections that have a well defined removal order.
 </p>
 <source>
@@ -118,7 +118,7 @@ Implementations are provided for FIFO (queue), LIFO (stack) and Priority (remova
 <section name="Bags">
 
 <p>
-A new interface hierarchy has been added to support bags - <code>Bag</code>.
+A new interface hierarchy has been added to support bags - <code>Bag.</code>
 These represent collections where a certain number of copies of each element is held.
 </p>
 <source>
