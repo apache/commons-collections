@@ -39,7 +39,7 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.25 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.26 $ $Date: 2004/04/01 20:12:00 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -176,10 +176,12 @@ public class SetUtils {
     }
 
     /**
-     * Returns a predicated set backed by the given set.  Only objects
-     * that pass the test in the given predicate can be added to the set.
-     * It is important not to use the original set after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated (validating) set backed by the given set.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to the set.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original set after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param set  the set to predicate, must not be null
      * @param predicate  the predicate for the set, must not be null
@@ -275,11 +277,12 @@ public class SetUtils {
     }
 
     /**
-     * Returns a predicated sorted set backed by the given sorted set.  
-     * Only objects that pass the test in the given predicate can be added
-     * to the sorted set.
-     * It is important not to use the original sorted set after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated (validating) sorted set backed by the given sorted set.  
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to the set.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original set after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param set  the sorted set to predicate, must not be null
      * @param predicate  the predicate for the sorted set, must not be null

@@ -67,7 +67,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.44 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.45 $ $Date: 2004/04/01 20:12:00 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -1138,10 +1138,13 @@ public class MapUtils {
     }
 
     /**
-     * Returns a predicated map backed by the given map.  Only keys and
-     * values that pass the given predicates can be added to the map.
-     * It is important not to use the original map after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated (validating) map backed by the given map.
+     * <p>
+     * Only objects that pass the tests in the given predicates can be added to the map.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * Keys must pass the key predicate, values must pass the value predicate.
+     * It is important not to use the original map after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param map  the map to predicate, must not be null
      * @param keyPred  the predicate for keys, null means no check
@@ -1328,10 +1331,13 @@ public class MapUtils {
     }
 
     /**
-     * Returns a predicated sorted map backed by the given map.  Only keys and
-     * values that pass the given predicates can be added to the map.
-     * It is important not to use the original map after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated (validating) sorted map backed by the given map.
+     * <p>
+     * Only objects that pass the tests in the given predicates can be added to the map.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * Keys must pass the key predicate, values must pass the value predicate.
+     * It is important not to use the original map after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param map  the map to predicate, must not be null
      * @param keyPred  the predicate for keys, null means no check

@@ -33,7 +33,7 @@ import org.apache.commons.collections.bag.UnmodifiableSortedBag;
  * {@link Bag} and {@link SortedBag} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.19 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.20 $ $Date: 2004/04/01 20:12:00 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -104,10 +104,12 @@ public class BagUtils {
     }
     
     /**
-     * Returns a predicated bag backed by the given bag.  Only objects
-     * that pass the test in the given predicate can be added to the bag.
-     * It is important not to use the original bag after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated (validating) bag backed by the given bag.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to the bag.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original bag after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param bag  the bag to predicate, must not be null
      * @param predicate  the predicate for the bag, must not be null
@@ -193,11 +195,12 @@ public class BagUtils {
     }
     
     /**
-     * Returns a predicated sorted bag backed by the given sorted bag.  
-     * Only objects that pass the test in the given predicate can be 
-     * added to the bag.
-     * It is important not to use the original bag after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated (validating) sorted bag backed by the given sorted bag.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to the bag.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original bag after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param bag  the sorted bag to predicate, must not be null
      * @param predicate  the predicate for the bag, must not be null

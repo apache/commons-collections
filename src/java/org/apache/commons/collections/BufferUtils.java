@@ -26,7 +26,7 @@ import org.apache.commons.collections.buffer.UnmodifiableBuffer;
  * Provides utility methods and decorators for {@link Buffer} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.19 $ $Date: 2004/02/18 01:15:43 $
+ * @version $Revision: 1.20 $ $Date: 2004/04/01 20:12:00 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -97,11 +97,12 @@ public class BufferUtils {
     }
 
     /**
-     * Returns a predicated buffer backed by the given buffer.  Elements are
-     * evaluated with the given predicate before being added to the buffer.
-     * If the predicate evaluation returns false, then an 
-     * IllegalArgumentException is raised and the element is not added to
-     * the buffer.
+     * Returns a predicated (validating) buffer backed by the given buffer.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to the buffer.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original buffer after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param buffer  the buffer to predicate, must not be null
      * @param predicate  the predicate used to evaluate new elements, must not be null

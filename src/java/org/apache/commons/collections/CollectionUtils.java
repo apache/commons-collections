@@ -37,7 +37,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.58 $ $Date: 2004/03/31 23:13:50 $
+ * @version $Revision: 1.59 $ $Date: 2004/04/01 20:12:00 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -1019,13 +1019,12 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a predicated collection backed by the given collection.
-     * Only objects that pass the test in the given predicate can be 
-     * added to the collection. Throws an IllegalArgumentException on adding
-     * an element if it is invalid.
+     * Returns a predicated (validating) collection backed by the given collection.
      * <p>
-     * It is important not to use the original collection after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
+     * Only objects that pass the test in the given predicate can be added to the collection.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original collection after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param collection  the collection to predicate, must not be null
      * @param predicate  the predicate for the collection, must not be null

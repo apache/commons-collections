@@ -33,7 +33,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.27 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.28 $ $Date: 2004/04/01 20:12:00 $
  * 
  * @author Federico Barbieri
  * @author Peter Donald
@@ -259,10 +259,12 @@ public class ListUtils {
     }
 
     /**
-     * Returns a predicated list backed by the given list.  Only objects
-     * that pass the test in the given predicate can be added to the list.
-     * It is important not to use the original list after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated (validating) list backed by the given list.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to the list.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original list after invoking this method,
+     * as it is a backdoor for adding invalid objects.
      *
      * @param list  the list to predicate, must not be null
      * @param predicate  the predicate for the list, must not be null
