@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.2 2003/12/25 01:09:01 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.3 2003/12/28 22:44:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/25 01:09:01 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/28 22:44:18 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -141,7 +141,7 @@ public class AbstractHashedMap implements IterableMap {
      * Constructor which performs no validation on the passed in parameters.
      * 
      * @param initialCapacity  the initial capacity, must be a power of two
-     * @param loadFactor  the load factor, must be > 0.0f and generally < 1.0f
+     * @param loadFactor  the load factor, must be &gt; 0.0f and generally &lt; 1.0f
      * @param threshhold  the threshold, must be sensible
      */
     protected AbstractHashedMap(int initialCapacity, float loadFactor, int threshhold) {
