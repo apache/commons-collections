@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.4 2003/12/28 16:36:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.5 2003/12/29 14:54:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -119,7 +119,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.4 $ $Date: 2003/12/28 16:36:48 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/29 14:54:58 $
  * 
  * @author Paul Jack
  */
@@ -706,7 +706,7 @@ public class ReferenceMap extends AbstractMap {
         if (keySet != null) return keySet;
         keySet = new AbstractSet() {
             public int size() {
-                return size;
+                return ReferenceMap.this.size();
             }
 
             public Iterator iterator() {
@@ -727,6 +727,17 @@ public class ReferenceMap extends AbstractMap {
                 ReferenceMap.this.clear();
             }
 
+            public Object[] toArray() {
+                return toArray(new Object[0]);
+            }
+
+            public Object[] toArray(Object[] arr) {
+                Collection c = new ArrayList(size());
+                for (Iterator it = iterator(); it.hasNext(); ) {
+                    c.add(it.next());
+                }
+                return c.toArray(arr);
+            }
         };
         return keySet;
     }
@@ -741,7 +752,7 @@ public class ReferenceMap extends AbstractMap {
         if (values != null) return values;
         values = new AbstractCollection()  {
             public int size() {
-                return size;
+                return ReferenceMap.this.size();
             }
 
             public void clear() {
@@ -751,20 +762,35 @@ public class ReferenceMap extends AbstractMap {
             public Iterator iterator() {
                 return new ValueIterator();
             }
+
+            public Object[] toArray() {
+                return toArray(new Object[0]);
+            }
+
+            public Object[] toArray(Object[] arr) {
+                Collection c = new ArrayList(size());
+                for (Iterator it = iterator(); it.hasNext(); ) {
+                    c.add(it.next());
+                }
+                return c.toArray(arr);
+            }
         };
         return values;
     }
 
-
-    // If getKey() or getValue() returns null, it means
-    // the mapping is stale and should be removed.
+    //-----------------------------------------------------------------------
+    /**
+     * A MapEntry implementation for the map.
+     * <p>
+     * If getKey() or getValue() returns null, it means
+     * the mapping is stale and should be removed.
+     */
     private class Entry implements Map.Entry, KeyValue {
 
         Object key;
         Object value;
         int hash;
         Entry next;
-
 
         public Entry(Object key, int hash, Object value, Entry next) {
             this.key = key;
@@ -773,54 +799,56 @@ public class ReferenceMap extends AbstractMap {
             this.next = next;
         }
 
-
         public Object getKey() {
             return (keyType > HARD) ? ((Reference)key).get() : key;
         }
-
 
         public Object getValue() {
             return (valueType > HARD) ? ((Reference)value).get() : value;
         }
 
-
-        public Object setValue(Object object) {
+        public Object setValue(Object obj) {
             Object old = getValue();
-            if (valueType > HARD) ((Reference)value).clear();
-            value = toReference(valueType, object, hash);
+            if (valueType > HARD) {
+                ((Reference)value).clear();
+            }
+            value = toReference(valueType, obj, hash);
             return old;
         }
 
-
-        public boolean equals(Object o) {
-            if (o == null) return false;
-            if (o == this) return true;
-            if (!(o instanceof Map.Entry)) return false;
+        public boolean equals(Object obj) {
+            if (obj == this) {
+                return true;
+            }
+            if (obj instanceof Map.Entry == false) {
+                return false;
+            }
             
-            Map.Entry entry = (Map.Entry)o;
+            Map.Entry entry = (Map.Entry)obj;
             Object key = entry.getKey();
             Object value = entry.getValue();
-            if ((key == null) || (value == null)) return false;
+            if ((key == null) || (value == null)) {
+                return false;
+            }
             return key.equals(getKey()) && value.equals(getValue());
         }
-
 
         public int hashCode() {
             Object v = getValue();
             return hash ^ ((v == null) ? 0 : v.hashCode());
         }
 
-
         public String toString() {
             return getKey() + "=" + getValue();
         }
-
 
         boolean purge(Reference ref) {
             boolean r = (keyType > HARD) && (key == ref);
             r = r || ((valueType > HARD) && (value == ref));
             if (r) {
-                if (keyType > HARD) ((Reference)key).clear();
+                if (keyType > HARD) {
+                    ((Reference)key).clear();
+                }
                 if (valueType > HARD) {
                     ((Reference)value).clear();
                 } else if (purgeValues) {
@@ -831,7 +859,9 @@ public class ReferenceMap extends AbstractMap {
         }
     }
 
-
+    /**
+     * The EntrySet iterator.
+     */
     private class EntryIterator implements Iterator {
         // These fields keep track of where we are in the table.
         int index;
@@ -846,14 +876,12 @@ public class ReferenceMap extends AbstractMap {
 
         int expectedModCount;
 
-
         public EntryIterator() {
             index = (size() != 0 ? table.length : 0);
             // have to do this here!  size() invocation above
             // may have altered the modCount.
             expectedModCount = modCount;
         }
-
 
         public boolean hasNext() {
             checkMod();
@@ -873,11 +901,12 @@ public class ReferenceMap extends AbstractMap {
                 }
                 nextKey = e.getKey();
                 nextValue = e.getValue();
-                if (nextNull()) entry = entry.next;
+                if (nextNull()) {
+                    entry = entry.next;
+                }
             }
             return true;
         }
-
 
         private void checkMod() {
             if (modCount != expectedModCount) {
@@ -885,14 +914,15 @@ public class ReferenceMap extends AbstractMap {
             }
         }
 
-
         private boolean nextNull() {
             return (nextKey == null) || (nextValue == null);
         }
 
         protected Entry nextEntry() {    
             checkMod();
-            if (nextNull() && !hasNext()) throw new NoSuchElementException();
+            if (nextNull() && !hasNext()) {
+                throw new NoSuchElementException();
+            }
             previous = entry;
             entry = entry.next;
             currentKey = nextKey;
@@ -902,70 +932,72 @@ public class ReferenceMap extends AbstractMap {
             return previous;
         }
 
-
         public Object next() {
             return nextEntry();
         }
 
-
         public void remove() {
             checkMod();
-            if (previous == null) throw new IllegalStateException();
+            if (previous == null) {
+                throw new IllegalStateException();
+            }
             ReferenceMap.this.remove(currentKey);
             previous = null;
             currentKey = null;
             currentValue = null;
             expectedModCount = modCount;
         }
-
     }
 
-
+    /**
+     * The values iterator.
+     */
     private class ValueIterator extends EntryIterator {
         public Object next() {
             return nextEntry().getValue();
         }
     }
 
-
+    /**
+     * The keySet iterator.
+     */
     private class KeyIterator extends EntryIterator {
         public Object next() {
             return nextEntry().getKey();
         }
     }
 
-
-
+    //-----------------------------------------------------------------------
     // These two classes store the hashCode of the key of
     // of the mapping, so that after they're dequeued a quick
     // lookup of the bucket in the table can occur.
 
-
+    /**
+     * A soft reference holder.
+     */
     private static class SoftRef extends SoftReference {
         private int hash;
-
 
         public SoftRef(int hash, Object r, ReferenceQueue q) {
             super(r, q);
             this.hash = hash;
         }
 
-
         public int hashCode() {
             return hash;
         }
     }
 
-
+    /**
+     * A weak reference holder.
+     */
     private static class WeakRef extends WeakReference {
         private int hash;
-
 
         public WeakRef(int hash, Object r, ReferenceQueue q) {
             super(r, q);
             this.hash = hash;
         }
-
 
         public int hashCode() {
             return hash;
