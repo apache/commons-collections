@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.7 2003/01/04 15:00:57 rwaldhoff Exp $
- * $Revision: 1.7 $
- * $Date: 2003/01/04 15:00:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.8 2003/01/06 04:05:39 rwaldhoff Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/01/06 04:05:39 $
  *
  * ====================================================================
  *
@@ -67,18 +67,12 @@ package org.apache.commons.collections.primitives;
  * Abstract base class for lists of primitive <Code>int</Code> elements
  * backed by an array.<P>
  *
- * Extending this class is essentially the same as extending its superclass
- * ({@link AbstractIntList}.  However, this class assumes that the 
- * primitive values will be stored in an underlying primitive array, and
- * provides methods for manipulating the capacity of that array.<P>
- *
- * @version $Revision: 1.7 $ $Date: 2003/01/04 15:00:57 $
+ * @version $Revision: 1.8 $ $Date: 2003/01/06 04:05:39 $
  * @author Rodney Waldhoff 
  * 
- * @deprecated This class will soon change to implement 
- *             {@link IntList} and not {@link List}. Adapters
- *             between {@link List} and {@link IntList} will be
- *             provided.
+ * @deprecated An {@link IntList} implementation, such as {@link ArrayIntList} 
+ *             should be used instead.  Use {@link IntListList} for {@link List} 
+ *             compatibility.
  */
 public abstract class AbstractIntArrayList extends AbstractIntList {
 
