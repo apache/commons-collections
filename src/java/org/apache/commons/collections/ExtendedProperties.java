@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.8 2003/01/25 12:21:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.9 2003/02/19 20:14:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,9 +57,9 @@
  */
 package org.apache.commons.collections;
 
-import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
@@ -67,7 +67,6 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -159,7 +158,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since 1.0
- * @version $Revision: 1.8 $ $Date: 2003/01/25 12:21:19 $
+ * @version $Revision: 1.9 $ $Date: 2003/02/19 20:14:25 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -426,7 +425,7 @@ public class ExtendedProperties extends Hashtable
      */
     public String getInclude()
     {
-        return this.include;
+        return include;
     }
 
     /**
@@ -437,7 +436,7 @@ public class ExtendedProperties extends Hashtable
      */
     public void setInclude(String inc)
     {
-        this.include = inc;
+        include = inc;
     }
 
     /**

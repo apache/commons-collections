@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.10 2002/10/12 22:15:19 scolebourne Exp $
- * $Revision: 1.10 $
- * $Date: 2002/10/12 22:15:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.11 2003/02/19 20:14:25 scolebourne Exp $
+ * $Revision: 1.11 $
+ * $Date: 2003/02/19 20:14:25 $
  *
  * ====================================================================
  *
@@ -63,18 +63,18 @@
 
 package org.apache.commons.collections;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.ConcurrentModificationException;
-import java.util.NoSuchElementException;
-import java.io.Serializable;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.IOException;
+import java.io.Serializable;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
  * A doubly-linked list implementation of the {@link List} interface,
@@ -90,7 +90,7 @@ import java.lang.reflect.Array;
  *
  * @since 1.0
  * @author Rodney Waldhoff
- * @version $Id: CursorableLinkedList.java,v 1.10 2002/10/12 22:15:19 scolebourne Exp $
+ * @version $Id: CursorableLinkedList.java,v 1.11 2003/02/19 20:14:25 scolebourne Exp $
  * @see java.util.LinkedList
  */
 public class CursorableLinkedList implements List, Serializable {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.15 2002/12/15 13:05:03 scolebourne Exp $
- * $Revision: 1.15 $
- * $Date: 2002/12/15 13:05:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.16 2003/02/19 20:14:25 scolebourne Exp $
+ * $Revision: 1.16 $
+ * $Date: 2003/02/19 20:14:25 $
  *
  * ====================================================================
  *
@@ -60,10 +60,18 @@
  */
 package org.apache.commons.collections;
 
-import java.io.*;
-import java.text.*;
+import java.io.PrintStream;
 import java.text.NumberFormat;
-import java.util.*;
+import java.text.ParseException;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 /** 
  * A helper class for using {@link Map Map} instances.<P>
  *

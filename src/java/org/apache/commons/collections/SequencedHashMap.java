@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.15 2002/11/24 20:48:35 scolebourne Exp $
- * $Revision: 1.15 $
- * $Date: 2002/11/24 20:48:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.16 2003/02/19 20:14:25 scolebourne Exp $
+ * $Revision: 1.16 $
+ * $Date: 2003/02/19 20:14:25 $
  *
  * ====================================================================
  *
@@ -61,22 +61,21 @@
 package org.apache.commons.collections;
 
 import java.io.Externalizable;
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.IOException;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.ConcurrentModificationException;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.NoSuchElementException;
-import java.util.ConcurrentModificationException;
+import java.util.Set;
 /**
  *  A map of objects whose mapping entries are sequenced based on the order in
  *  which they were added.  This data structure has fast <I>O(1)</I> search

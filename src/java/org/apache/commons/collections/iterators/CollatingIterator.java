@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.5 2003/01/15 21:45:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.6 2003/02/19 20:14:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,14 +57,14 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.ArrayList;
-import java.util.BitSet;
 
 /**
  * Provides an ordered iteration over the elements contained in
@@ -74,7 +74,7 @@ import java.util.BitSet;
  * <code>A.next()</code> and <code>B.next()</code>.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.5 $ $Date: 2003/01/15 21:45:23 $
+ * @version $Revision: 1.6 $ $Date: 2003/02/19 20:14:27 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne

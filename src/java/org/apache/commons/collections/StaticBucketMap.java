@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.7 2003/02/19 19:54:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.8 2003/02/19 20:14:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,12 +59,12 @@ package org.apache.commons.collections;
 
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * A StaticBucketMap is an efficient, thread-safe implementation of
@@ -130,7 +130,7 @@ import java.util.NoSuchElementException;
  * operations will affect the map.<P>
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.7 $ $Date: 2003/02/19 19:54:12 $
+ * @version $Revision: 1.8 $ $Date: 2003/02/19 20:14:25 $
  * 
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>

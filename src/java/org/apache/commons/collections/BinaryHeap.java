@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.11 2002/10/13 12:59:04 scolebourne Exp $
- * $Revision: 1.11 $
- * $Date: 2002/10/13 12:59:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.12 2003/02/19 20:14:25 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2003/02/19 20:14:25 $
  *
  * ====================================================================
  *
@@ -61,9 +61,9 @@
 package org.apache.commons.collections;
 
 import java.util.AbstractCollection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Comparator;
 /**
  * Binary heap implementation of {@link PriorityQueue} and {@link Buffer}.
  * <p>
@@ -94,7 +94,7 @@ import java.util.Comparator;
  * @author Paul Jack
  * @author Stephen Colebourne
  * @since 1.0
- * @version $Id: BinaryHeap.java,v 1.11 2002/10/13 12:59:04 scolebourne Exp $
+ * @version $Id: BinaryHeap.java,v 1.12 2003/02/19 20:14:25 scolebourne Exp $
  */
 public final class BinaryHeap extends AbstractCollection
         implements PriorityQueue, Buffer {

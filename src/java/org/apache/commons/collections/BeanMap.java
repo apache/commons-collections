@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.15 2003/01/25 12:06:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.16 2003/02/19 20:14:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,8 +58,8 @@
 package org.apache.commons.collections;
 
 import java.beans.BeanInfo;
-import java.beans.Introspector;
 import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -82,7 +82,7 @@ import java.util.Set;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.15 $ $Date: 2003/01/25 12:06:55 $
+ * @version $Revision: 1.16 $ $Date: 2003/02/19 20:14:25 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Stephen Colebourne
