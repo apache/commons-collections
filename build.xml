@@ -581,4 +581,19 @@
     <checksum file="${build.src.zip.name}"/>
   </target>
 
+  <target name="clirr">
+    <property name="jar.baseline" value="commons-collections-2.1.1.jar" />
+    <property name="jar.current" value="commons-collections-3.1-dev.jar" />
+
+    <taskdef resource="clirrtask.properties">
+      <classpath path="/clirr/clirr-0.3.jar;/clirr/bcel-5.1.jar;" />
+    </taskdef>
+
+    <clirr>
+      <origfiles dir="." includes="${jar.baseline}"/>
+      <newfiles dir="." includes="${jar.current}" />
+      <formatter type="plain" outfile="clirr.txt" />
+    </clirr>
+
+  </target>
 </project>
