@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.11 2003/10/02 23:01:10 scolebourne Exp $
- * $Revision: 1.11 $
- * $Date: 2003/10/02 23:01:10 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.12 2003/10/05 21:23:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -67,9 +64,10 @@ import junit.framework.Test;
 
 /**
  * Tests for ReferenceMap. 
+ * 
+ * @version $Revision: 1.12 $ $Date: 2003/10/05 21:23:21 $
  *
  * @author Paul Jack
- * @version $Id: TestReferenceMap.java,v 1.11 2003/10/02 23:01:10 scolebourne Exp $
  */
 public class TestReferenceMap extends AbstractTestMap {
 

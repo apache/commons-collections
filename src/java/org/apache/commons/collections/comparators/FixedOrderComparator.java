@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/FixedOrderComparator.java,v 1.6 2003/09/17 08:38:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/FixedOrderComparator.java,v 1.7 2003/10/05 21:26:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -83,7 +83,7 @@ import java.util.Map;
  * multiple comparisons  after all the setup operations are complete.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/09/17 08:38:59 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/05 21:26:46 $
  *
  * @author David Leppik
  * @author Stephen Colebourne

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.8 2003/10/02 23:01:10 scolebourne Exp $
- * $Revision: 1.8 $
- * $Date: 2003/10/02 23:01:10 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.9 2003/10/05 21:23:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,47 +55,44 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.TreeMap;
 
 /**
- * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestTreeMap.java,v 1.8 2003/10/02 23:01:10 scolebourne Exp $
+ * Tests TreeMap.
+ * 
+ * @version $Revision: 1.9 $ $Date: 2003/10/05 21:23:21 $
+ * 
+ * @author Jason van Zyl
  */
-public abstract class TestTreeMap extends AbstractTestMap
-{
-    public TestTreeMap(String testName)
-    {
+public abstract class TestTreeMap extends AbstractTestMap {
+    
+    public TestTreeMap(String testName) {
         super(testName);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestTreeMap.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestTreeMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     public boolean useNullKey() {
-      return false;
+        return false;
     }
 
     protected TreeMap map = null;
 
-    public void setUp()
-    {
+    public void setUp() {
         map = (TreeMap) makeEmptyMap();
     }
 
-    public void testNewMap()
-    {
+    public void testNewMap() {
         assertTrue("New map is empty", map.isEmpty());
         assertEquals("New map has size zero", map.size(), 0);
     }
 
-    public void testSearch()
-    {
+    public void testSearch() {
         map.put("first", "First Item");
         map.put("second", "Second Item");
         assertEquals("Top item is 'Second Item'", map.get("first"), "First Item");

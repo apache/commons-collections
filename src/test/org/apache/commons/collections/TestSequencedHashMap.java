@@ -1,9 +1,10 @@
-package org.apache.commons.collections;
-
-/* ====================================================================
+/*
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSequencedHashMap.java,v 1.22 2003/10/05 21:23:21 scolebourne Exp $
+ * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -18,21 +19,21 @@ package org.apache.commons.collections;
  *    the documentation and/or other materials provided with the
  *    distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgement:
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowledgement may appear in the software itself,
  *    if and wherever such third-party acknowledgements normally appear.
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Turbine" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
+ *    Foundation" must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their names without prior written
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -52,7 +53,9 @@ package org.apache.commons.collections;
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
+package org.apache.commons.collections;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -68,10 +71,12 @@ import junit.framework.Test;
  * Be sure to use the "labRat" instance whenever possible,
  * so that subclasses will be tested correctly.
  * 
- * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
- * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @version $Revision: 1.22 $ $Date: 2003/10/05 21:23:21 $
+ * 
+ * @author Morgan Delagrange
+ * @author Daniel Rall
+ * @author Henning P. Schmiedehausen
+ * @author James Strachan
  */
 public class TestSequencedHashMap extends AbstractTestMap {
     /**

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.6 2003/10/01 21:54:54 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2003/10/01 21:54:54 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.7 2003/10/05 21:26:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections.iterators;
 
 import junit.framework.Test;
@@ -66,11 +62,14 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Entry point for all Collections tests.
+ * Entry point for all iterator tests.
+ * 
+ * @version $Revision: 1.7 $ $Date: 2003/10/05 21:26:46 $
+ * 
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.6 2003/10/01 21:54:54 scolebourne Exp $
  */
 public class TestAll extends TestCase {
+    
     public TestAll(String testName) {
         super(testName);
     }
