@@ -16,14 +16,17 @@
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import junit.framework.Test;
 
 /**
  * Test FastArrayList implementation in <strong>fast</strong> mode.
  * 
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.10 $ $Date: 2004/06/23 21:41:49 $
  *
  * @author Jason van Zyl
  */
@@ -51,13 +54,52 @@ public class TestFastArrayList1 extends TestFastArrayList {
         fal.setFast(true);
         return (fal);
     }
-    
-    public String[] ignoredTests() {
-        // subList impl result in...
-        return new String[] {
-            "TestFastArrayList1.bulkTestSubList.bulkTestListIterator.testAddThenSet",
-            "TestFastArrayList1.bulkTestSubList.bulkTestListIterator.testAddThenRemove",
-        };
+
+    public void testIterateModify1() {
+        List list = makeEmptyList();
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        assertEquals(3, list.size());
+        
+        Iterator it = list.iterator();
+        assertEquals("A", it.next());
+        assertEquals(3, list.size());
+        list.add(1, "Z");
+        assertEquals(4, list.size());
+        assertEquals("B", it.next());
+        assertEquals("C", it.next());
+        assertEquals(false, it.hasNext());
+    }
+
+    public void testIterateModify2() {
+        List list = makeEmptyList();
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        assertEquals(3, list.size());
+        
+        ListIterator it = list.listIterator();
+        assertEquals("A", it.next());
+        it.add("M");  // change via Iterator interface
+        assertEquals(4, list.size());
+        list.add(2, "Z");  // change via List interface
+        assertEquals(5, list.size());
+        assertEquals("B", it.next());
+        try {
+            it.set("N"); // fails as previously changed via List interface
+            fail();
+        } catch (ConcurrentModificationException ex) {}
+        try {
+            it.remove();
+            fail();
+        } catch (ConcurrentModificationException ex) {}
+        try {
+            it.add("N");
+            fail();
+        } catch (ConcurrentModificationException ex) {}
+        assertEquals("C", it.next());
+        assertEquals(false, it.hasNext());
     }
 
 }
