@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedSet.java,v 1.4 2003/09/03 00:11:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedSet.java,v 1.5 2003/09/03 22:29:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,23 +63,16 @@ import org.apache.commons.collections.event.ModificationHandler;
 import org.apache.commons.collections.event.ModificationHandlerFactory;
 
 /**
- * <code>ObservedSet</code> decorates a <code>Set</code>
- * implementation to observe changes.
+ * Decorates a <code>Set</code> implementation to observe modifications.
  * <p>
  * Each modifying method call made on this <code>Set</code> is forwarded to a
  * {@link ModificationHandler}.
  * The handler manages the event, notifying listeners and optionally vetoing changes.
  * The default handler is {@link StandardModificationHandler}.
  * See this class for details of configuration available.
- * <p>
- * For convenience, add, remove and get listener methods are made available on
- * this class. They accept a generic listener type, whereas handlers generally
- * require a specific type. Thus a ClassCastException may be thrown from these
- * methods. They may also throw UnsupportedOperationException if the handler
- * uses a technique other than listeners to communicate events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/03 00:11:28 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/03 22:29:50 $
  * 
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedCollection.java,v 1.5 2003/09/03 00:11:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedCollection.java,v 1.6 2003/09/03 22:29:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,8 +65,7 @@ import org.apache.commons.collections.event.ModificationHandlerFactory;
 import org.apache.commons.collections.event.StandardModificationHandler;
 
 /**
- * <code>ObservedCollection</code> decorates a <code>Collection</code>
- * implementation to observe changes in the collection.
+ * Decorates a <code>Collection</code> implementation to observe modifications.
  * <p>
  * Each modifying method call made on this <code>Collection</code> is forwarded to a
  * {@link ModificationHandler}.
@@ -75,7 +74,7 @@ import org.apache.commons.collections.event.StandardModificationHandler;
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/09/03 00:11:28 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/03 22:29:51 $
  * 
  * @author Stephen Colebourne
  */
