@@ -8,6 +8,10 @@ specific additional functionality.
 <p>
 The following implementations are provided in the package:
 <ul>
+<li>BinaryHeap - implements both Buffer and PriorityQueue
+<li>Bounded - implements a buffer with a fixed size that throws exceptions when full
+<li>Circular - implements a buffer with a fixed size that discards oldest when full
+<li>Unbounded - implements a buffer that grows in size if necessary
 <li>Synchronized - synchronizes method access for multi-threaded environments
 <li>Unmodifiable - ensures the collection cannot be altered
 <li>Predicated - ensures that only elements that are valid according to a predicate can be added
