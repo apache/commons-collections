@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.2 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.3 2003/12/02 00:37:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import org.apache.commons.collections.MapIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/02 00:37:11 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -586,9 +586,7 @@ public class HashedMap implements AMap, Serializable, Cloneable {
             if (current == null) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
-            Object old = current.getValue();
-            current.setValue(value);
-            return old;
+            return current.setValue(value);
         }
     }
     
@@ -834,7 +832,7 @@ public class HashedMap implements AMap, Serializable, Cloneable {
         protected Object key;
         protected Object value;
         
-        HashEntry(HashEntry next, int hashCode, Object key, Object value) {
+        protected HashEntry(HashEntry next, int hashCode, Object key, Object value) {
             super();
             this.next = next;
             this.hashCode = hashCode;
@@ -848,7 +846,7 @@ public class HashedMap implements AMap, Serializable, Cloneable {
             return value;
         }
         public Object setValue(Object value) {
-            Object old = value;
+            Object old = this.value;
             this.value = value;
             return old;
         }
@@ -883,7 +881,7 @@ public class HashedMap implements AMap, Serializable, Cloneable {
         private HashEntry next;
         private int expectedModCount;
         
-        HashIterator(HashedMap map) {
+        protected HashIterator(HashedMap map) {
             super();
             this.map = map;
             HashEntry[] data = map.data;
@@ -901,7 +899,7 @@ public class HashedMap implements AMap, Serializable, Cloneable {
             return (next != null);
         }
 
-        HashEntry nextEntry() { 
+        protected HashEntry nextEntry() { 
             if (map.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
@@ -921,7 +919,7 @@ public class HashedMap implements AMap, Serializable, Cloneable {
             return newCurrent;
         }
 
-        public HashEntry currentEntry() {
+        protected HashEntry currentEntry() {
             return current;
         }
         
