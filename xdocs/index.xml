@@ -3,13 +3,13 @@
 <document>
 
  <properties>
-  <title>Commons</title>
+  <title>Commons Collections</title>
   <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
  </properties>
 
  <body>
 
-<section name="The Collections Component">
+<section name="Commons Collections">
 
 <p>
 The <a href="http://java.sun.com/products/j2se/1.4/docs/guide/collections/">Java Collections Framework</a>
