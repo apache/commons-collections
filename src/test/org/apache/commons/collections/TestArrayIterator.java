@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.7 2002/03/19 01:33:12 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/03/19 01:33:12 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.8 2002/03/19 01:37:40 mas Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/03/19 01:37:40 $
  *
  * ====================================================================
  *
@@ -73,7 +73,7 @@ import java.util.NoSuchElementException;
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
- * @version $Id: TestArrayIterator.java,v 1.7 2002/03/19 01:33:12 mas Exp $
+ * @version $Id: TestArrayIterator.java,v 1.8 2002/03/19 01:37:40 mas Exp $
  */
 public class TestArrayIterator extends TestIterator {
     
@@ -123,12 +123,21 @@ public class TestArrayIterator extends TestIterator {
 	}
     }
 
-    public void testNullToConstructor() {
+    public void testNullArray() {
         try {
             Iterator iter = new ArrayIterator(null);
             
             fail("Constructor should throw a NullPointerException when " +
                  "constructed with a null array");
+        } catch (NullPointerException e) {
+            // expected
+        }
+
+        ArrayIterator iter = new ArrayIterator();
+        try {
+            iter.setArray(null);
+
+            fail("setArray(null) should throw a NullPointerException");
         } catch (NullPointerException e) {
             // expected
         }
