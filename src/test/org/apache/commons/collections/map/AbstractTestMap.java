@@ -27,7 +27,6 @@ import java.util.Set;
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.collection.AbstractTestCollection;
-import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections.set.AbstractTestSet;
 
 /**
@@ -117,7 +116,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.15 $ $Date: 2004/05/31 22:39:20 $
+ * @version $Revision: 1.16 $ $Date: 2004/06/07 23:14:40 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -1068,14 +1067,16 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         resetFull();
         Set entrySet = map.entrySet();
         Map.Entry entry = (Map.Entry) entrySet.iterator().next();
-        Map.Entry test = new DefaultMapEntry(entry);
+        Map.Entry test = cloneMapEntry(entry);
         assertEquals(true, entrySet.contains(test));
     }
     public void testEntrySetContains3() {
         resetFull();
         Set entrySet = map.entrySet();
         Map.Entry entry = (Map.Entry) entrySet.iterator().next();
-        Map.Entry test = new DefaultMapEntry(entry.getKey(), "A VERY DIFFERENT VALUE");
+        HashMap temp = new HashMap();
+        temp.put(entry.getKey(), "A VERY DIFFERENT VALUE");
+        Map.Entry test = (Map.Entry) temp.entrySet().iterator().next();
         assertEquals(false, entrySet.contains(test));
     }
     
@@ -1098,7 +1099,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         Set entrySet = map.entrySet();
         Map.Entry entry = (Map.Entry) entrySet.iterator().next();
         Object key = entry.getKey();
-        Map.Entry test = new DefaultMapEntry(entry);
+        Map.Entry test = cloneMapEntry(entry);
         
         assertEquals(true, entrySet.remove(test));
         assertEquals(false, map.containsKey(key));
@@ -1111,7 +1112,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         Set entrySet = map.entrySet();
         Map.Entry entry = (Map.Entry) entrySet.iterator().next();
         Object key = entry.getKey();
-        Map.Entry test = new DefaultMapEntry(entry.getKey(), "A VERY DIFFERENT VALUE");
+        HashMap temp = new HashMap();
+        temp.put(entry.getKey(), "A VERY DIFFERENT VALUE");
+        Map.Entry test = (Map.Entry) temp.entrySet().iterator().next();
         
         assertEquals(false, entrySet.remove(test));
         assertEquals(true, map.containsKey(key));
