@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.3 2003/10/06 23:47:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.4 2003/10/29 00:06:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,16 +70,32 @@ import java.util.Map;
  * <p>
  * Implementations should allow a value to be looked up from a key and
  * a key to be looked up from a value with equal performance.
- * It should be noted that the quickest way to implement the <code>values</code>
- * method is usually to return <code>inverseBidiMap().keySet()</code>.
  * 
  * @see org.apache.commons.collections.DualHashBidiMap
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/10/06 23:47:17 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/29 00:06:25 $
  *
  * @author Stephen Colebourne
  */
 public interface BidiMap extends Map {
+    
+    /**
+     * Obtains a <code>MapIterator</code> over the map.
+     * <p>
+     * A map iterator is an efficient way of iterating over maps.
+     * It does not require that the map is stored using Map Entry objects
+     * which can increase performance.
+     * <pre>
+     * BidiMap map = new DualHashBidiMap();
+     * MapIterator it = map.mapIterator();
+     * Object key = it.next();
+     * Object value = it.getValue();
+     * it.setValue("newValue");
+     * </pre>
+     * 
+     * @return a map iterator
+     */
+    MapIterator mapIterator();
     
     /**
      * Puts the key-value pair into the map, replacing any previous pair.

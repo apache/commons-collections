@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.1 2003/10/10 21:11:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.2 2003/10/29 00:06:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,11 +59,12 @@ package org.apache.commons.collections;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 /**
- * JUnit tests.
+ * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/10/10 21:11:39 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/29 00:06:25 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -375,4 +376,109 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     }
     
+    //-----------------------------------------------------------------------
+    public void testBidiMapIteratorEmpty() {
+        resetEmpty();
+        BidiMap bidi = (BidiMap) map;
+        MapIterator it = bidi.mapIterator();
+        assertEquals(false, it.hasNext());
+        try {
+            it.next();
+        } catch (NoSuchElementException ex) {}
+        try {
+            it.getKey();
+        } catch (IllegalStateException ex) {
+        }
+        try {
+            it.getValue();
+        } catch (IllegalStateException ex) {
+        }
+        try {
+            it.remove();
+        } catch (UnsupportedOperationException ex) {
+        } catch (IllegalStateException ex) {
+        }
+        try {
+            it.setValue(null);
+        } catch (UnsupportedOperationException ex) {
+        } catch (IllegalStateException ex) {
+        }
+        verify();
+    }
+
+    //-----------------------------------------------------------------------
+    public void testBidiMapIteratorFull() {
+        resetFull();
+        BidiMap bidi = (BidiMap) map;
+        MapIterator it = bidi.mapIterator();
+        
+        assertEquals(true, it.hasNext());
+        while (it.hasNext()) {
+            Object key = it.next();
+            assertSame(key, it.getKey());
+        
+            Object value = it.getValue();
+            assertSame(bidi.get(key), value);
+        }
+        verify();
+    }
+
+    //-----------------------------------------------------------------------
+    public void testBidiMapIteratorRemove() {
+        resetFull();
+        BidiMap bidi = (BidiMap) map;
+        MapIterator it = bidi.mapIterator();
+        assertEquals(true, it.hasNext());
+        Object key = it.next();
+        
+        if (isRemoveSupported() == false) {
+            try {
+                it.remove();
+            } catch (UnsupportedOperationException ex) {
+            }
+            return;
+        }
+        
+        it.remove();
+        confirmed.remove(key);
+        assertEquals(false, bidi.containsKey(key));
+        verify();
+        
+        try {
+            it.remove();  // second remove fails
+        } catch (IllegalStateException ex) {
+        }
+        verify();
+    }
+
+    //-----------------------------------------------------------------------
+    public void testBidiMapIteratorSet() {
+        resetFull();
+        BidiMap bidi = (BidiMap) map;
+        MapIterator it = bidi.mapIterator();
+        assertEquals(true, it.hasNext());
+        Object key = it.next();
+        
+        if (isPutChangeSupported() == false) {
+            try {
+                it.setValue(getOtherValues()[0]);
+            } catch (UnsupportedOperationException ex) {
+            }
+            return;
+        }
+        
+        it.setValue(getOtherValues()[0]);
+        confirmed.put(key, getOtherValues()[0]);
+        assertEquals(getOtherValues()[0], bidi.get(key));
+        verify();
+        
+        it.remove();
+        confirmed.remove(key);
+        try {
+            it.setValue(getOtherValues()[0]);
+        } catch (IllegalStateException ex) {
+        }
+        verify();
+    }
+
 }
