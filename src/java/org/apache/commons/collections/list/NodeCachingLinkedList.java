@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.10 2003/12/11 00:18:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/NodeCachingLinkedList.java,v 1.1 2003/12/11 00:18:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,54 +55,60 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.list;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
  * A linked list implementation that caches the nodes used internally to prevent
- * unnecessary object creates and deletion. This should result in a performance
- * improvement.
+ * unnecessary object creates and deletion. This results in a performance
+ * improvement for long-lived lists which both add and remove.
  * 
- * @deprecated TO BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2003/12/11 00:18:06 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/11 00:18:06 $
  * 
  * @author Jeff Varszegi
- * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
+ * @author Rich Dougherty
  * @author Phil Steitz
+ * @author Stephen Colebourne
  */
-public class NodeCachingLinkedList extends CommonsLinkedList {
+public class NodeCachingLinkedList extends AbstractLinkedList implements Serializable {
 
-    private static final long serialVersionUID = 1;
+    /** Serialization version */
+    static final long serialVersionUID = 6897789178562232073L;
 
     /**
      * The default value for {@link #maximumCacheSize}.
      */
-    private static final int DEFAULT_MAXIMUM_CACHE_SIZE = 20;
+    protected static final int DEFAULT_MAXIMUM_CACHE_SIZE = 20;
 
     /**
      * The first cached node, or <code>null</code> if no nodes are cached.
      * Cached nodes are stored in a singly-linked list with {@link Node#next}
      * pointing to the next element.
      */
-    private transient Node firstCachedNode;
+    protected transient Node firstCachedNode;
     
     /**
      * The size of the cache.
      */
-    private transient int cacheSize = 0;
+    protected transient int cacheSize;
 
     /**
      * The maximum size of the cache.
      */
-    private int maximumCacheSize = DEFAULT_MAXIMUM_CACHE_SIZE;
+    protected int maximumCacheSize;
 
+    //-----------------------------------------------------------------------
     /**
-     * Constructor.
+     * Constructor that creates.
      */
     public NodeCachingLinkedList() {
-        super();
+        this(DEFAULT_MAXIMUM_CACHE_SIZE);
     }
 
     /**
@@ -112,6 +118,7 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
      */
     public NodeCachingLinkedList(Collection coll) {
         super(coll);
+        this.maximumCacheSize = DEFAULT_MAXIMUM_CACHE_SIZE;
     }
     
     /**
@@ -122,21 +129,21 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
     public NodeCachingLinkedList(int maximumCacheSize) {
         super();
         this.maximumCacheSize = maximumCacheSize;
+        init();  // must call init() as use super();
     }
 
-    // Cache operations
-
+    //-----------------------------------------------------------------------
     /**
      * Gets the maximum size of the cache.
      */
-    public int getMaximumCacheSize() {
+    protected int getMaximumCacheSize() {
         return maximumCacheSize;
     }
 
     /**
      * Sets the maximum size of the cache.
      */
-    public void setMaximumCacheSize(int maximumCacheSize) {
+    protected void setMaximumCacheSize(int maximumCacheSize) {
         this.maximumCacheSize = maximumCacheSize;
         shrinkCacheToMaximumSize();
     }
@@ -144,7 +151,7 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
     /**
      * Reduce the size of the cache to the maximum, if necessary.
      */
-    private void shrinkCacheToMaximumSize() {
+    protected void shrinkCacheToMaximumSize() {
         // Rich Dougherty: This could be more efficient.
         while (cacheSize > maximumCacheSize) {
             getNodeFromCache();
@@ -158,7 +165,7 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
      *
      * @return A node, or <code>null</code> if there are no nodes in the cache.
      */
-    private Node getNodeFromCache() {
+    protected Node getNodeFromCache() {
         if (cacheSize == 0) {
             return null;
         }
@@ -170,7 +177,7 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
         return cachedNode;
     }
     
-    private boolean cacheFull() {
+    protected boolean isCacheFull() {
         return cacheSize >= maximumCacheSize;
     }
     
@@ -178,8 +185,8 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
      * Adds a node to the cache, if the cache isn't full. The node's contents
      * are cleared to so they can be garbage collected.
      */
-    private void addNodeToCache(Node node) {
-        if (cacheFull()) {
+    protected void addNodeToCache(Node node) {
+        if (isCacheFull()) {
             // Don't cache the node.
             return;
         }
@@ -187,20 +194,19 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
         Node nextCachedNode = firstCachedNode;
         node.previous = null;
         node.next = nextCachedNode;
-        node.element = null;
+        node.value = null;
         firstCachedNode = node;
         cacheSize++;
     }
-    
-    // Node operations
 
+    //-----------------------------------------------------------------------    
     /**
      * Create a node, getting it from the cache if possible.
      */
-    protected Node createNode() {
+    protected Node createHeaderNode() {
         Node cachedNode = getNodeFromCache();
         if (cachedNode == null) {
-            return super.createNode();
+            return super.createHeaderNode();
         } else {
             return cachedNode;
         }
@@ -212,16 +218,16 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
      * 
      * @param previous  node to precede the new node
      * @param next  node to follow the new node
-     * @param element  element of the new node
+     * @param value  value of the new node
      */
-    protected Node createNode(Node previous, Node next, Object element) {
+    protected Node createNode(Node previous, Node next, Object value) {
         Node cachedNode = getNodeFromCache();
         if (cachedNode == null) {
-            return super.createNode(previous, next, element);
+            return super.createNode(previous, next, value);
         } else {
             cachedNode.next = next;
             cachedNode.previous = previous;
-            cachedNode.element = element;
+            cachedNode.value = value;
             return cachedNode;
         }
     }
@@ -239,16 +245,33 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
     protected void removeAllNodes() {
         // Add the removed nodes to the cache, then remove the rest.
         // We can add them to the cache before removing them, since
-        // {@link CommonsLinkedList.removeAllNodes()} removes the
-        // nodes by removing references directly from {@link #marker}.
+        // {@link AbstractLinkedList.removeAllNodes()} removes the
+        // nodes by removing references directly from {@link #header}.
         int numberOfNodesToCache = Math.min(size, maximumCacheSize - cacheSize);
-        Node node = marker.next;
+        Node node = header.next;
         for (int currentIndex = 0; currentIndex < numberOfNodesToCache; currentIndex++) {
             Node oldNode = node;
             node = node.next;
             addNodeToCache(oldNode);
         }
         super.removeAllNodes();        
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Serializes the data held in this object to the stream specified.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
+    }
+
+    /**
+     * Deserializes the data held in this object to the stream specified.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
     }
 
 }

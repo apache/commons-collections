@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCommonsLinkedList.java,v 1.8 2003/12/11 00:18:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/TestAbstractLinkedList.java,v 1.1 2003/12/11 00:18:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,56 +55,35 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.list;
 
 import java.util.Arrays;
-import java.util.LinkedList;
-
-import junit.framework.Test;
 
 /**
- * Test case for {@link CommonsLinkedList}.
+ * Test case for {@link AbstractLinkedList}.
  * 
- * @version $Revision: 1.8 $ $Date: 2003/12/11 00:18:06 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/11 00:18:06 $
  * 
  * @author Rich Dougherty
  * @author David Hay
  * @author Phil Steitz
  */
-public class TestCommonsLinkedList extends TestLinkedList {
+public abstract class TestAbstractLinkedList extends AbstractTestList {
     
-    protected CommonsLinkedList list = null;
-    
-    public TestCommonsLinkedList(String testName) {
+    public TestAbstractLinkedList(String testName) {
         super(testName);
     }
-    
-    public LinkedList makeEmptyLinkedList() {
-        return new CommonsLinkedList();
-    }
-    
-    public static Test suite() {
-        return BulkTest.makeSuite(TestCommonsLinkedList.class);
-    }
-    
-    public String getCompatibilityVersion() {
-        return "3";
-    }
-    
-    protected boolean skipSerializedCanonicalTests() {
-        return true;
-    }
-    public void testCanonicalEmptyCollectionExists() {
-    }
-    public void testCanonicalFullCollectionExists() {
-    }
 
-    
-    public void setUp() {
-        list = (CommonsLinkedList)makeEmptyList();
-    }
-    
+    //-----------------------------------------------------------------------    
     public void testRemoveFirst() {
+        resetEmpty();
+        AbstractLinkedList list = (AbstractLinkedList) collection;
+        if (isRemoveSupported() == false) {
+            try {
+                list.removeFirst();
+            } catch (UnsupportedOperationException ex) {}
+        } 
+        
         list.addAll( Arrays.asList( new String[]{"value1", "value2"}));
         assertEquals( "value1", list.removeFirst() );
         checkNodes();
@@ -120,6 +99,14 @@ public class TestCommonsLinkedList extends TestLinkedList {
     }
     
     public void testRemoveLast() {
+        resetEmpty();
+        AbstractLinkedList list = (AbstractLinkedList) collection;
+        if (isRemoveSupported() == false) {
+            try {
+                list.removeLast();
+            } catch (UnsupportedOperationException ex) {}
+        } 
+        
         list.addAll( Arrays.asList( new String[]{"value1", "value2"}));
         assertEquals( "value2", list.removeLast() );
         list.addFirst( "value3");
@@ -132,6 +119,14 @@ public class TestCommonsLinkedList extends TestLinkedList {
     }
     
     public void testAddNodeAfter() {
+        resetEmpty();
+        AbstractLinkedList list = (AbstractLinkedList) collection;
+        if (isAddSupported() == false) {
+            try {
+                list.addFirst(null);
+            } catch (UnsupportedOperationException ex) {}
+        } 
+        
         list.addFirst("value1");
         list.addNodeAfter(list.getNode(0,false),"value2");
         assertEquals("value1", list.getFirst());
@@ -156,6 +151,10 @@ public class TestCommonsLinkedList extends TestLinkedList {
     }
     
     public void testRemoveNode() {
+        resetEmpty();
+        if (isAddSupported() == false || isRemoveSupported() == false) return;
+        AbstractLinkedList list = (AbstractLinkedList) collection;
+        
         list.addAll( Arrays.asList( new String[]{"value1", "value2"}));
         list.removeNode(list.getNode(0, false));
         checkNodes();
@@ -175,6 +174,8 @@ public class TestCommonsLinkedList extends TestLinkedList {
     }
     
     public void testGetNode() {
+        resetEmpty();
+        AbstractLinkedList list = (AbstractLinkedList) collection;
         // get marker
         assertEquals(list.getNode(0, true).previous, list.getNode(0, true).next);
         try {
@@ -210,6 +211,7 @@ public class TestCommonsLinkedList extends TestLinkedList {
     }
     
     protected void checkNodes() {
+        AbstractLinkedList list = (AbstractLinkedList) collection;
         for (int i = 0; i < list.size; i++) {
             assertEquals(list.getNode(i, false).next, list.getNode(i + 1, true));
             if (i < list.size - 1) {

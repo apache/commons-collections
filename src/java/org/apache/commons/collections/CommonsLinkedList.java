@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.9 2003/10/09 20:58:52 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.10 2003/12/11 00:18:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,7 +60,6 @@ package org.apache.commons.collections;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
@@ -75,14 +74,15 @@ import java.util.NoSuchElementException;
  * of {@link LinkedList}, but which provides a more open interface for
  * subclasses to extend.
  * 
+ * @deprecated TO BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2003/10/09 20:58:52 $
+ * @version $Revision: 1.10 $ $Date: 2003/12/11 00:18:06 $
  * 
  * @author Rich Dougherty
  * @author Phil Steitz
  */
 class CommonsLinkedList extends LinkedList
-        implements List, Serializable {
+        implements List {
 
     /*
      * Implementation notes:

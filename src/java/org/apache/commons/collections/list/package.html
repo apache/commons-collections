@@ -2,11 +2,12 @@
 <p>
 This package contains implementations of the List interface.
 <p>
-The implementations are in the form of direct implementations and decorators.
-A decorator wraps another implementation of the interface to add some
-specific additional functionality.
-<p>
 The following implementations are provided in the package:
+<ul>
+<li>NodeCachingLinkedList - a linked list that caches the storage nodes for a performance gain
+</ul>
+<p>
+The following decorators are provided in the package:
 <ul>
 <li>Synchronized - synchronizes method access for multi-threaded environments
 <li>Unmodifiable - ensures the collection cannot be altered
@@ -15,7 +16,7 @@ The following implementations are provided in the package:
 <li>Transformed - transforms each element added
 <li>FixedSize - ensures that the size of the list cannot change
 <li>Lazy - creates objects in the list on demand
-<li>Set - a list that avoids duplicate entries like a Set
+<li>SetUnique - a list that avoids duplicate entries like a Set
 </ul>
 </pre>
 </BODY>
