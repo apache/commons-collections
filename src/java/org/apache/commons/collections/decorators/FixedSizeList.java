@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/FixedSizeList.java,v 1.4 2003/05/07 12:18:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/FixedSizeList.java,v 1.5 2003/05/09 16:39:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,8 +58,11 @@
 package org.apache.commons.collections.decorators;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+
+import org.apache.commons.collections.IteratorUtils;
 
 /**
  * <code>FixedSizeList</code> decorates another <code>List</code>
@@ -69,12 +72,12 @@ import java.util.ListIterator;
  * The set method is allowed (as it doesn't change the list size).
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/05/07 12:18:55 $
+ * @version $Revision: 1.5 $ $Date: 2003/05/09 16:39:23 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeList extends UnmodifiableCollection implements List {
+public class FixedSizeList extends AbstractListDecorator {
 
     /**
      * Factory method to create a fixed size list.
@@ -96,22 +99,25 @@ public class FixedSizeList extends UnmodifiableCollection implements List {
         super(list);
     }
 
-    /**
-     * Gets the list being decorated.
-     * 
-     * @return the decorated list
-     */
-    protected List getList() {
-        return (List) getCollection();
+    //-----------------------------------------------------------------------
+    public boolean add(Object object) {
+        throw new UnsupportedOperationException("List is fixed size");
     }
 
-    //-----------------------------------------------------------------------
     public void add(int index, Object object) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("List is fixed size");
+    }
+
+    public boolean addAll(Collection coll) {
+        throw new UnsupportedOperationException("List is fixed size");
     }
 
     public boolean addAll(int index, Collection coll) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("List is fixed size");
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException("List is fixed size");
     }
 
     public Object get(int index) {
@@ -122,12 +128,16 @@ public class FixedSizeList extends UnmodifiableCollection implements List {
         return getList().indexOf(object);
     }
 
+    public Iterator iterator() {
+        return IteratorUtils.unmodifiableIterator(getCollection().iterator());
+    }
+
     public int lastIndexOf(Object object) {
         return getList().lastIndexOf(object);
     }
 
     public ListIterator listIterator() {
-        return listIterator(0);
+        return new FixedSizeListIterator(getList().listIterator(0));
     }
 
     public ListIterator listIterator(int index) {
@@ -135,7 +145,19 @@ public class FixedSizeList extends UnmodifiableCollection implements List {
     }
 
     public Object remove(int index) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("List is fixed size");
+    }
+
+    public boolean remove(Object object) {
+        throw new UnsupportedOperationException("List is fixed size");
+    }
+
+    public boolean removeAll(Collection coll) {
+        throw new UnsupportedOperationException("List is fixed size");
+    }
+
+    public boolean retainAll(Collection coll) {
+        throw new UnsupportedOperationException("List is fixed size");
     }
 
     public Object set(int index, Object object) {
@@ -150,18 +172,18 @@ public class FixedSizeList extends UnmodifiableCollection implements List {
     /**
      * List iterator that only permits changes via set()
      */
-    public static class FixedSizeListIterator extends AbstractListIteratorDecorator {
+    protected static class FixedSizeListIterator extends AbstractListIteratorDecorator {
         protected FixedSizeListIterator(ListIterator iterator) {
             super(iterator);
         }
         public void remove() {
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("List is fixed size");
         }
         public void add(Object object) {
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("List is fixed size");
         }
         public void remove(Object object) {
-            throw new UnsupportedOperationException();
+            throw new UnsupportedOperationException("List is fixed size");
         }
     }
 
