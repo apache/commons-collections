@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/AbstractMapEntry.java,v 1.1 2003/09/25 22:47:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/AbstractMapEntry.java,v 1.2 2003/09/27 10:33:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,14 +63,14 @@ import java.util.Map;
  * Abstract Pair class to assist with creating correct Map Entry implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/25 22:47:49 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/27 10:33:34 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public class AbstractMapEntry extends AbstractPair implements Map.Entry {
+public class AbstractMapEntry extends AbstractKeyValue implements Map.Entry {
     
     /**
      * Constructs a new entry with the given key and given value.

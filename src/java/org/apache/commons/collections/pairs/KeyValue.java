@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/Pair.java,v 1.1 2003/09/25 22:47:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/KeyValue.java,v 1.1 2003/09/27 10:33:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,14 +58,14 @@
 package org.apache.commons.collections.pairs;
 
 /**
- * Defines a simple key value Pair.
+ * Defines a simple key value pair.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/25 22:47:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/27 10:33:34 $
  * 
  * @author Stephen Colebourne
  */
-public interface Pair {
+public interface KeyValue {
     
     /**
      * Gets the key from the pair.

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/AbstractPair.java,v 1.1 2003/09/25 22:47:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/AbstractKeyValue.java,v 1.1 2003/09/27 10:33:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,17 +58,17 @@
 package org.apache.commons.collections.pairs;
 
 /**
- * Abstract Pair class to assist with creating Pair and Map Entry implementations.
+ * Abstract pair class to assist with creating KeyValue and MapEntry implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/25 22:47:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/27 10:33:34 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public abstract class AbstractPair {
+public abstract class AbstractKeyValue implements KeyValue {
     
     /** The key */
     protected Object key;
@@ -81,7 +81,7 @@ public abstract class AbstractPair {
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    protected AbstractPair(Object key, Object value) {
+    protected AbstractKeyValue(Object key, Object value) {
         super();
         this.key = key;
         this.value = value;

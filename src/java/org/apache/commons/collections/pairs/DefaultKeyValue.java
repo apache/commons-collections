@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/KeyValuePair.java,v 1.1 2003/09/25 22:47:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/DefaultKeyValue.java,v 1.1 2003/09/27 10:33:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,25 +60,25 @@ package org.apache.commons.collections.pairs;
 import java.util.Map;
 
 /**
- * A mutable key-value pair that does not implement Map Entry.
+ * A mutable KeyValue pair that does not implement MapEntry.
  * <p>
- * Note that a <code>KeyValuePair</code> instance may not contain
+ * Note that a <code>DefaultKeyValue</code> instance may not contain
  * itself as a key or value.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/25 22:47:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/27 10:33:34 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public class KeyValuePair extends AbstractPair {
+public class DefaultKeyValue extends AbstractKeyValue {
 
     /**
      * Constructs a new pair with a null key and null value.
      */
-    public KeyValuePair() {
+    public DefaultKeyValue() {
         super(null, null);
     }
 
@@ -88,27 +88,27 @@ public class KeyValuePair extends AbstractPair {
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    public KeyValuePair(final Object key, final Object value) {
+    public DefaultKeyValue(final Object key, final Object value) {
         super(key, value);
     }
 
     /**
-     * Constructs a new pair from the specified Pair.
+     * Constructs a new pair from the specified KeyValue.
      *
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public KeyValuePair(final Pair pair) {
+    public DefaultKeyValue(final KeyValue pair) {
         super(pair.getKey(), pair.getValue());
     }
 
     /**
-     * Constructs a new pair from the specified Map Entry.
+     * Constructs a new pair from the specified MapEntry.
      *
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public KeyValuePair(final Map.Entry entry) {
+    public DefaultKeyValue(final Map.Entry entry) {
         super(entry.getKey(), entry.getValue());
     }
 
@@ -122,7 +122,7 @@ public class KeyValuePair extends AbstractPair {
      */
     public Object setKey(final Object key) {
         if (key == this) {
-            throw new IllegalArgumentException("A KeyValuePair may not contain itself as a key.");
+            throw new IllegalArgumentException("DefaultKeyValue may not contain itself as a key.");
         }
 
         final Object old = this.key;
@@ -139,7 +139,7 @@ public class KeyValuePair extends AbstractPair {
      */
     public Object setValue(final Object value) {
         if (value == this) {
-            throw new IllegalArgumentException("A KeyValuePair may not contain itself as a value.");
+            throw new IllegalArgumentException("DefaultKeyValue may not contain itself as a value.");
         }
 
         final Object old = this.value;
@@ -149,17 +149,19 @@ public class KeyValuePair extends AbstractPair {
 
     //-----------------------------------------------------------------------
     /**
-     * Returns a new <code>Map.Entry</code> object with key and value from this <code>KeyValuePair</code>.
+     * Returns a new <code>Map.Entry</code> object with key and value from this pair.
+     * 
+     * @return a MapEntry instance
      */
     public Map.Entry toMapEntry() {
-        return new DefaultMapEntry(this.getKey(), this.getValue());
+        return new DefaultMapEntry(this);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Compares this Map Entry with another Map Entry.
      * <p>
-     * Returns true if the compared object is also a <code>KeyValuePair</code>,
+     * Returns true if the compared object is also a <code>DefaultKeyValue</code>,
      * and its key and value are equal to this object's key and value.
      * 
      * @param obj  the object to compare to
@@ -169,11 +171,11 @@ public class KeyValuePair extends AbstractPair {
         if (obj == this) {
             return true;
         }
-        if (obj instanceof KeyValuePair == false) {
+        if (obj instanceof DefaultKeyValue == false) {
             return false;
         }
 
-        KeyValuePair other = (KeyValuePair) obj;
+        DefaultKeyValue other = (DefaultKeyValue) obj;
         return 
             (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
             (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/DefaultMapEntry.java,v 1.1 2003/09/25 22:47:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/DefaultMapEntry.java,v 1.2 2003/09/27 10:33:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,10 +61,10 @@ import java.util.Map;
 
 /**
  * A restricted implementation of {@link java.util.Map.Entry} that prevents
- * the Map Entry contract from being broken.
+ * the MapEntry contract from being broken.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/25 22:47:49 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/27 10:33:34 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
@@ -84,17 +84,17 @@ public final class DefaultMapEntry extends AbstractMapEntry {
     }
 
     /**
-     * Constructs a new entry from the specified Pair.
+     * Constructs a new entry from the specified KeyValue.
      *
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultMapEntry(final Pair pair) {
+    public DefaultMapEntry(final KeyValue pair) {
         super(pair.getKey(), pair.getValue());
     }
 
     /**
-     * Constructs a new entry from the specified Map Entry.
+     * Constructs a new entry from the specified MapEntry.
      *
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
