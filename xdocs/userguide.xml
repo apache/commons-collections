@@ -83,7 +83,7 @@ These represent maps where the the key can lookup the value and the value can lo
 <source>
 BidiMap bidi = new TreeBidiMap();
 bidi.put("SIX", "6");
-bidi.get("SIX");  // returns "six"
+bidi.get("SIX");  // returns "6"
 bidi.getKey("6");  // returns "SIX"
 bidi.removeValue("6");  // removes the mapping
 BidiMap inverse = bidi.inverseBidiMap();  // returns a map with keys and values swapped
