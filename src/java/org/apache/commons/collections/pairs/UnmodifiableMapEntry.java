@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestAll.java,v 1.2 2003/11/02 17:06:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/UnmodifiableMapEntry.java,v 1.1 2003/11/02 17:06:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,36 +57,60 @@
  */
 package org.apache.commons.collections.pairs;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Map;
+
+import org.apache.commons.collections.Unmodifiable;
 
 /**
- * Entry point for key-value test cases.
- * 
+ * A {@link java.util.Map.Entry} that throws UnsupportedOperationException
+ * when <code>setValue</code> is called.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/02 17:06:59 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/02 17:06:58 $
  * 
- * @author Neil O'Toole
+ * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmodifiable {
     
-    public TestAll(String testName) {
-        super(testName);
+    /**
+     * Constructs a new entry with the specified key and given value.
+     *
+     * @param key  the key for the entry, may be null
+     * @param value  the value for the entry, may be null
+     */
+    public UnmodifiableMapEntry(final Object key, final Object value) {
+        super(key, value);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Constructs a new entry from the specified KeyValue.
+     *
+     * @param pair  the pair to copy, must not be null
+     * @throws NullPointerException if the entry is null
+     */
+    public UnmodifiableMapEntry(final KeyValue pair) {
+        super(pair.getKey(), pair.getValue());
+    }
+
+    /**
+     * Constructs a new entry from the specified MapEntry.
+     *
+     * @param entry  the entry to copy, must not be null
+     * @throws NullPointerException if the entry is null
+     */
+    public UnmodifiableMapEntry(final Map.Entry entry) {
+        super(entry.getKey(), entry.getValue());
     }
     
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestDefaultKeyValue.suite());
-        suite.addTest(TestDefaultMapEntry.suite());
-        suite.addTest(TestUnmodifiableMapEntry.suite());
-        return suite;
+    /**
+     * Throws UnsupportedOperationException.
+     * 
+     * @param value  the new value
+     * @return the previous value
+     * @throws UnsupportedOperationException always
+     */
+    public Object setValue(Object value) {
+        throw new UnsupportedOperationException("setValue() is not supported");
     }
-        
+
 }

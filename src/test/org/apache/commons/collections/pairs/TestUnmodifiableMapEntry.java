@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestAll.java,v 1.2 2003/11/02 17:06:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestUnmodifiableMapEntry.java,v 1.1 2003/11/02 17:06:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,36 +57,103 @@
  */
 package org.apache.commons.collections.pairs;
 
+import java.util.Map;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.Unmodifiable;
+
 /**
- * Entry point for key-value test cases.
+ * Test the UnmodifiableMapEntry class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/02 17:06:59 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/02 17:06:59 $
  * 
  * @author Neil O'Toole
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestUnmodifiableMapEntry extends AbstractTestMapEntry {
+
+    public TestUnmodifiableMapEntry(String testName) {
         super(testName);
+
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(TestUnmodifiableMapEntry.class);
     }
-    
+
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestDefaultKeyValue.suite());
-        suite.addTest(TestDefaultMapEntry.suite());
-        suite.addTest(TestUnmodifiableMapEntry.suite());
-        return suite;
+        return new TestSuite(TestUnmodifiableMapEntry.class);
     }
-        
+
+    //-----------------------------------------------------------------------
+    /**
+     * Make an instance of Map.Entry with the default (null) key and value.
+     * Subclasses should override this method to return a Map.Entry
+     * of the type being tested.
+     */
+    public Map.Entry makeMapEntry() {
+        return new UnmodifiableMapEntry(null, null);
+    }
+
+    /**
+     * Make an instance of Map.Entry with the specified key and value.
+     * Subclasses should override this method to return a Map.Entry
+     * of the type being tested.
+     */
+    public Map.Entry makeMapEntry(Object key, Object value) {
+        return new UnmodifiableMapEntry(key, value);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Subclasses should override this method.
+     *
+     */
+    public void testConstructors() {
+        // 1. test key-value constructor
+        Map.Entry entry = new UnmodifiableMapEntry(key, value);
+        assertSame(key, entry.getKey());
+        assertSame(value, entry.getValue());
+
+        // 2. test pair constructor
+        KeyValue pair = new DefaultKeyValue(key, value);
+        entry = new UnmodifiableMapEntry(pair);
+        assertSame(key, entry.getKey());
+        assertSame(value, entry.getValue());
+
+        // 3. test copy constructor
+        Map.Entry entry2 = new UnmodifiableMapEntry(entry);
+        assertSame(key, entry2.getKey());
+        assertSame(value, entry2.getValue());
+
+        assertTrue(entry instanceof Unmodifiable);
+    }
+
+    public void testAccessorsAndMutators() {
+        Map.Entry entry = makeMapEntry(key, value);
+
+        assertSame(key, entry.getKey());
+        assertSame(value, entry.getValue());
+
+        // check that null doesn't do anything funny
+        entry = makeMapEntry(null, null);
+        assertSame(null, entry.getKey());
+        assertSame(null, entry.getValue());
+    }
+
+    public void testSelfReferenceHandling() {
+        // block
+    }
+
+    public void testUnmodifiable() {
+        Map.Entry entry = makeMapEntry();
+        try {
+            entry.setValue(null);
+            fail();
+
+        } catch (UnsupportedOperationException ex) {}
+    }
+
 }
