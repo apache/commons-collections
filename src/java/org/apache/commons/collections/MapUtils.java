@@ -67,7 +67,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.48 $ $Date: 2004/09/22 23:03:50 $
+ * @version $Revision: 1.49 $ $Date: 2004/09/22 23:09:54 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -1145,6 +1145,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if sub-array or entry matching used and an
      *  entry is invalid
      * @throws ClassCaseException if the array contents is mixed
+     * @since Commons Collections 3.2
      */
     public static Map putAll(Map map, Object[] array) {
         map.size();  // force NPE
