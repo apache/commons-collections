@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.1 2001/04/14 15:39:24 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/14 15:39:24 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.2 2001/04/26 00:05:47 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/04/26 00:05:47 $
  *
  * ====================================================================
  *
@@ -89,7 +89,7 @@ import java.lang.reflect.Array;
  * <b>Note that this implementation is not synchronized.</b>
  *
  * @author Rodney Waldhoff
- * @version $Id: CursorableLinkedList.java,v 1.1 2001/04/14 15:39:24 rwaldhoff Exp $
+ * @version $Id: CursorableLinkedList.java,v 1.2 2001/04/26 00:05:47 rwaldhoff Exp $
  * @see java.util.LinkedList
  */
 public class CursorableLinkedList implements List, Serializable {
@@ -126,6 +126,9 @@ public class CursorableLinkedList implements List, Serializable {
         if(index == _size) {
             add(element);
         } else {
+            if(index < 0 || index > _size) {
+                throw new IndexOutOfBoundsException(String.valueOf(index) + " < 0 or " + String.valueOf(index) + " > " + _size);
+            }
             Listable succ = (isEmpty() ? null : getListableAt(index));
             Listable pred = (null == succ ? null : succ.prev());
             insertListable(pred,succ,element);
@@ -786,7 +789,7 @@ public class CursorableLinkedList implements List, Serializable {
      */
     protected Listable getListableAt(int index) {
         if(index < 0 || index >= _size) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException(String.valueOf(index) + " < 0 or " + String.valueOf(index) + " >= " + _size);
         }
         if(index <=_size/2) {
             Listable elt = _head.next();
