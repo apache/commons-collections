@@ -19,16 +19,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.collection.AbstractCollectionDecorator;
-import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
-import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
 
 /**
  * Decorates another <code>Map</code> to transform objects that are added.
@@ -41,12 +35,12 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/04/09 10:36:01 $
+ * @version $Revision: 1.9 $ $Date: 2004/05/03 21:48:49 $
  * 
  * @author Stephen Colebourne
  */
 public class TransformedMap
-        extends AbstractMapDecorator
+        extends AbstractInputCheckedMapDecorator
         implements Serializable {
 
     /** Serialization version */
@@ -117,6 +111,10 @@ public class TransformedMap
     }
 
     //-----------------------------------------------------------------------
+    // The transformKey/transformValue/transformMap methods exist for backwards
+    // compatability - in an ideal world, they wouldn't and the superclass
+    // methods checkPutKey/checkPutValue would be overridden instead
+
     /**
      * Transforms a key.
      * <p>
@@ -156,12 +154,31 @@ public class TransformedMap
      * @throws the transformed object
      */
     protected Map transformMap(Map map) {
-        Map result = new HashMap(map.size());
+        Map result = new LinkedMap(map.size());
         for (Iterator it = map.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry entry = (Map.Entry) it.next();
             result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
         }
         return result;
+    }
+
+    /**
+     * Override to transform the value when using <code>setValue</code>.
+     * 
+     * @param value  the value to transform
+     * @return the transformed value
+     */
+    protected Object checkSetValue(Object value) {
+        return valueTransformer.transform(value);
+    }
+
+    /**
+     * Override to only return true when there is a value transformer.
+     * 
+     * @return true if a value transformer is in use
+     */
+    protected boolean isSetValueChecking() {
+        return (valueTransformer != null);
     }
 
     //-----------------------------------------------------------------------
@@ -174,106 +191,6 @@ public class TransformedMap
     public void putAll(Map mapToCopy) {
         mapToCopy = transformMap(mapToCopy);
         getMap().putAll(mapToCopy);
-    }
-
-    public Set entrySet() {
-        if (valueTransformer == null) {
-            return map.entrySet();
-        }
-        return new TransformedMapEntrySet(map.entrySet(), valueTransformer);
-    }
-
-
-    //-----------------------------------------------------------------------
-    /**
-     * Implementation of an entry set that uses a transforming map entry.
-     */
-    static class TransformedMapEntrySet extends AbstractCollectionDecorator implements Set {
-        
-        /** The transformer to use */
-        private final Transformer valueTransformer;
-
-        protected TransformedMapEntrySet(Set set, Transformer valueTransformer) {
-            super(set);
-            this.valueTransformer = valueTransformer;
-        }
-
-        public Iterator iterator() {
-            return new TransformedMapEntrySetIterator(collection.iterator(), valueTransformer);
-        }
-        
-        public Object[] toArray() {
-            Object[] array = collection.toArray();
-            for (int i = 0; i < array.length; i++) {
-                array[i] = new TransformedMapEntry((Map.Entry) array[i], valueTransformer);
-            }
-            return array;
-        }
-        
-        public Object[] toArray(Object array[]) {
-            Object[] result = array;
-            if (array.length > 0) {
-                // we must create a new array to handle multi-threaded situations
-                // where another thread could access data before we decorate it
-                result = (Object[]) Array.newInstance(array.getClass().getComponentType(), 0);
-            }
-            result = collection.toArray(result);
-            for (int i = 0; i < result.length; i++) {
-                result[i] = new TransformedMapEntry((Map.Entry) result[i], valueTransformer);
-            }
-
-            // check to see if result should be returned straight
-            if (result.length > array.length) {
-                return result;
-            }
-
-            // copy back into input array to fulfil the method contract
-            System.arraycopy(result, 0, array, 0, result.length);
-            if (array.length > result.length) {
-                array[result.length] = null;
-            }
-            return array;
-        }
-    }
-
-    /**
-     * Implementation of an entry set iterator.
-     */
-    static class TransformedMapEntrySetIterator extends AbstractIteratorDecorator {
-        
-        /** The transformer to use */
-        private final Transformer valueTransformer;
-        
-        protected TransformedMapEntrySetIterator(Iterator iterator, Transformer valueTransformer) {
-            super(iterator);
-            this.valueTransformer = valueTransformer;
-        }
-        
-        public Object next() {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            return new TransformedMapEntry(entry, valueTransformer);
-        }
-    }
-
-    /**
-     * Implementation of a map entry that transforms additions.
-     */
-    static class TransformedMapEntry extends AbstractMapEntryDecorator {
-
-        /** The transformer to use */
-        private final Transformer valueTransformer;
-
-        protected TransformedMapEntry(Map.Entry entry, Transformer valueTransformer) {
-            super(entry);
-            this.valueTransformer = valueTransformer;
-        }
-
-        public Object setValue(Object object) {
-            if (valueTransformer != null) {
-                object = valueTransformer.transform(object);
-            }
-            return entry.setValue(object);
-        }
     }
 
 }

@@ -19,15 +19,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.collection.AbstractCollectionDecorator;
-import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
-import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
 
 /**
  * Decorates another <code>Map</code> to validate that additions
@@ -39,13 +34,13 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/04/09 10:36:01 $
+ * @version $Revision: 1.10 $ $Date: 2004/05/03 21:48:49 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class PredicatedMap
-        extends AbstractMapDecorator
+        extends AbstractInputCheckedMapDecorator
         implements Serializable {
 
     /** Serialization version */
@@ -94,6 +89,13 @@ public class PredicatedMap
         }
     }
 
+    /**
+     * Validates a key value pair.
+     * 
+     * @param key  the key to validate
+     * @param value  the value to validate
+     * @throws IllegalArgumentException if invalid
+     */
     protected void validate(Object key, Object value) {
         if (keyPredicate != null && keyPredicate.evaluate(key) == false) {
             throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
@@ -130,6 +132,33 @@ public class PredicatedMap
     }
 
     //-----------------------------------------------------------------------
+    // The validate method exists for backwards compatability - in an ideal
+    // world, it wouldn't and the superclass methods checkPutKey/checkPutValue
+    // would be overridden instead
+
+    /**
+     * Override to validate an object set into the map via <code>setValue</code>.
+     * 
+     * @param value  the value to validate
+     * @throws IllegalArgumentException if invalid
+     */
+    protected Object checkSetValue(Object value) {
+        if (valuePredicate.evaluate(value) == false) {
+            throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
+        }
+        return value;
+    }
+
+    /**
+     * Override to only return true when there is a value transformer.
+     * 
+     * @return true if a value predicate is in use
+     */
+    protected boolean isSetValueChecking() {
+        return (valuePredicate != null);
+    }
+
+    //-----------------------------------------------------------------------
     public Object put(Object key, Object value) {
         validate(key, value);
         return map.put(key, value);
@@ -144,106 +173,6 @@ public class PredicatedMap
             validate(key, value);
         }
         map.putAll(mapToCopy);
-    }
-
-    public Set entrySet() {
-        if (valuePredicate == null) {
-            return map.entrySet();
-        }
-        return new PredicatedMapEntrySet(map.entrySet(), valuePredicate);
-    }
-
-
-    //-----------------------------------------------------------------------
-    /**
-     * Implementation of an entry set that checks (predicates) additions.
-     */
-    static class PredicatedMapEntrySet extends AbstractCollectionDecorator implements Set {
-        
-        /** The predicate to use */
-        private final Predicate valuePredicate;
-
-        protected PredicatedMapEntrySet(Set set, Predicate valuePred) {
-            super(set);
-            this.valuePredicate = valuePred;
-        }
-
-        public Iterator iterator() {
-            return new PredicatedMapEntrySetIterator(collection.iterator(), valuePredicate);
-        }
-        
-        public Object[] toArray() {
-            Object[] array = collection.toArray();
-            for (int i = 0; i < array.length; i++) {
-                array[i] = new PredicatedMapEntry((Map.Entry) array[i], valuePredicate);
-            }
-            return array;
-        }
-        
-        public Object[] toArray(Object array[]) {
-            Object[] result = array;
-            if (array.length > 0) {
-                // we must create a new array to handle multi-threaded situations
-                // where another thread could access data before we decorate it
-                result = (Object[]) Array.newInstance(array.getClass().getComponentType(), 0);
-            }
-            result = collection.toArray(result);
-            for (int i = 0; i < result.length; i++) {
-                result[i] = new PredicatedMapEntry((Map.Entry) result[i], valuePredicate);
-            }
-
-            // check to see if result should be returned straight
-            if (result.length > array.length) {
-                return result;
-            }
-
-            // copy back into input array to fulfil the method contract
-            System.arraycopy(result, 0, array, 0, result.length);
-            if (array.length > result.length) {
-                array[result.length] = null;
-            }
-            return array;
-        }
-    }
-
-    /**
-     * Implementation of an entry set iterator.
-     */
-    static class PredicatedMapEntrySetIterator extends AbstractIteratorDecorator {
-        
-        /** The predicate to use */
-        private final Predicate valuePredicate;
-        
-        protected PredicatedMapEntrySetIterator(Iterator iterator, Predicate valuePredicate) {
-            super(iterator);
-            this.valuePredicate = valuePredicate;
-        }
-        
-        public Object next() {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            return new PredicatedMapEntry(entry, valuePredicate);
-        }
-    }
-
-    /**
-     * Implementation of a map entry that checks (predicates) additions.
-     */
-    static class PredicatedMapEntry extends AbstractMapEntryDecorator {
-
-        /** The predicate to use */
-        private final Predicate predicate;
-
-        protected PredicatedMapEntry(Map.Entry entry, Predicate valuePredicate) {
-            super(entry);
-            this.predicate = valuePredicate;
-        }
-
-        public Object setValue(Object obj) {
-            if (predicate != null && predicate.evaluate(obj) == false) {
-                throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
-            }
-            return entry.setValue(obj);
-        }
     }
 
 }
