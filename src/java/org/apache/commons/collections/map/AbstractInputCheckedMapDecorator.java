@@ -34,13 +34,16 @@ import org.apache.commons.collections.set.AbstractSetDecorator;
  * the map. By overriding these methods, the input can be validated or manipulated.
  * In addition to the main map methods, the entrySet is also affected, which is
  * the hardest part of writing map implementations.
+ * <p>
+ * This class is package-scoped, and may be withdrawn or replaced in future
+ * versions of Commons Collections.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/05/03 21:48:49 $
+ * @version $Revision: 1.2 $ $Date: 2004/05/21 22:01:04 $
  * 
  * @author Stephen Colebourne
  */
-public class AbstractInputCheckedMapDecorator
+abstract class AbstractInputCheckedMapDecorator
         extends AbstractMapDecorator {
 
     /**
@@ -62,45 +65,6 @@ public class AbstractInputCheckedMapDecorator
 
     //-----------------------------------------------------------------------
     /**
-     * Hook method called when a key is being added to the map using
-     * <code>put</code> or <code>putAll</code>.
-     * <p>
-     * An implementation may validate the key and throw an exception
-     * or it may transform the key into another object.
-     * The key may already exist in the map.
-     * <p>
-     * This implementation returns the input key.
-     * 
-     * @param key  the key to check
-     * @throws UnsupportedOperationException if the map may not be changed by put/putAll
-     * @throws IllegalArgumentException if the specified key is invalid
-     * @throws ClassCastException if the class of the specified key is invalid
-     * @throws NullPointerException if the specified key is null and nulls are invalid
-     */
-    protected Object checkPutKey(Object key) {
-        return key;
-    }
-
-    /**
-     * Hook method called when a new value is being added to the map using
-     * <code>put</code> or <code>putAll</code>.
-     * <p>
-     * An implementation may validate the value and throw an exception
-     * or it may transform the value into another object.
-     * <p>
-     * This implementation returns the input value.
-     * 
-     * @param value  the value to check
-     * @throws UnsupportedOperationException if the map may not be changed by put/putAll
-     * @throws IllegalArgumentException if the specified value is invalid
-     * @throws ClassCastException if the class of the specified value is invalid
-     * @throws NullPointerException if the specified value is null and nulls are invalid
-     */
-    protected Object checkPutValue(Object value) {
-        return value;
-    }
-
-    /**
      * Hook method called when a value is being set using <code>setValue</code>.
      * <p>
      * An implementation may validate the value and throw an exception
@@ -114,9 +78,7 @@ public class AbstractInputCheckedMapDecorator
      * @throws ClassCastException if the class of the specified value is invalid
      * @throws NullPointerException if the specified value is null and nulls are invalid
      */
-    protected Object checkSetValue(Object value) {
-        return value;
-    }
+    protected abstract Object checkSetValue(Object value);
 
     /**
      * Hook method called to determine if <code>checkSetValue</code> has any effect.
@@ -132,43 +94,7 @@ public class AbstractInputCheckedMapDecorator
         return true;
     }
 
-    /**
-     * Checks each element in the specified map, creating a new map.
-     * <p>
-     * This method is used by <code>putAll</code> to check all the elements
-     * before adding them to the map.
-     * <p>
-     * This implementation builds a <code>LinkedMap</code> to preserve the order
-     * of the input map.
-     * 
-     * @param map  the map to transform
-     * @throws the transformed object
-     */
-    protected Map checkMap(Map map) {
-        Map result = new LinkedMap(map.size());
-        for (Iterator it = map.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            result.put(checkPutKey(entry.getKey()), checkPutValue(entry.getValue()));
-        }
-        return result;
-    }
-
     //-----------------------------------------------------------------------
-    public Object put(Object key, Object value) {
-        key = checkPutKey(key);
-        value = checkPutValue(value);
-        return getMap().put(key, value);
-    }
-
-    public void putAll(Map mapToCopy) {
-        if (mapToCopy.size() == 0) {
-            return;
-        } else {
-            mapToCopy = checkMap(mapToCopy);
-            getMap().putAll(mapToCopy);
-        }
-    }
-
     public Set entrySet() {
         if (isSetValueChecking()) {
             return new EntrySet(map.entrySet(), this);

@@ -35,7 +35,7 @@ import org.apache.commons.collections.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/05/03 21:48:49 $
+ * @version $Revision: 1.10 $ $Date: 2004/05/21 22:01:04 $
  * 
  * @author Stephen Colebourne
  */
@@ -111,10 +111,6 @@ public class TransformedMap
     }
 
     //-----------------------------------------------------------------------
-    // The transformKey/transformValue/transformMap methods exist for backwards
-    // compatability - in an ideal world, they wouldn't and the superclass
-    // methods checkPutKey/checkPutValue would be overridden instead
-
     /**
      * Transforms a key.
      * <p>

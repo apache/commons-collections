@@ -38,7 +38,7 @@ import org.apache.commons.collections.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2004/05/21 21:38:49 $
+ * @version $Revision: 1.13 $ $Date: 2004/05/21 22:01:04 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -120,9 +120,6 @@ public class PredicatedMap
     }
 
     //-----------------------------------------------------------------------
-    // The validate method exists for backwards compatability - in an ideal
-    // world, it wouldn't and the superclass methods checkPutKey/checkPutValue
-    // would be overridden instead
     /**
      * Validates a key value pair.
      * 
