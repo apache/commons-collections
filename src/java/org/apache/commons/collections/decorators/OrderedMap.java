@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.4 2003/10/03 23:19:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.5 2003/11/04 23:36:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,8 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.AbstractCollection;
+import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -64,21 +66,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.pairs.DefaultMapEntry;
+import org.apache.commons.collections.iterators.DefaultMapIterator;
+import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.pairs.AbstractMapEntry;
 
 /**
- * Decorates a <code>Map</code> to ensure that the order of addition
- * is retained and used by the values and keySet iterators.
+ * Decorates a <code>Map</code> to ensure that the order of addition is retained.
+ * <p>
+ * The order will be used via the iterators and toArray methods on the views.
+ * The order is also returned by the <code>MapIterator</code>.
  * <p>
  * If an object is added to the Map for a second time, it will remain in the
  * original position in the iteration.
- * <p>
- * The order can be observed via the iterator or toArray methods.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/10/03 23:19:32 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/04 23:36:23 $
  * 
  * @author Henri Yandell
+ * @author Stephen Colebourne
  */
 public class OrderedMap extends AbstractMapDecorator implements Map {
 
@@ -87,6 +92,8 @@ public class OrderedMap extends AbstractMapDecorator implements Map {
 
     /**
      * Factory method to create an ordered map.
+     * <p>
+     * An <code>ArrayList</code> is used to retain order.
      * 
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
@@ -103,22 +110,10 @@ public class OrderedMap extends AbstractMapDecorator implements Map {
      */
     protected OrderedMap(Map map) {
         super(map);
-        insertOrder.addAll( getMap().keySet() );
+        insertOrder.addAll(getMap().keySet());
     }
 
     //-----------------------------------------------------------------------
-    public void clear() {
-        getMap().clear();
-        insertOrder.clear();
-    }
-
-    public void putAll(Map m) {
-        for (Iterator it = m.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
-            put(entry.getKey(), entry.getValue());
-        }
-    }
-
     public Object put(Object key, Object value) {
         if (getMap().containsKey(key)) {
             // re-adding doesn't change order
@@ -131,268 +126,151 @@ public class OrderedMap extends AbstractMapDecorator implements Map {
         }
     }
 
+    public void putAll(Map map) {
+        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            put(entry.getKey(), entry.getValue());
+        }
+    }
+
     public Object remove(Object key) {
         Object result = getMap().remove(key);
         insertOrder.remove(key);
         return result;
     }
 
+    public void clear() {
+        getMap().clear();
+        insertOrder.clear();
+    }
+
+    //-----------------------------------------------------------------------
+    public MapIterator mapIterator() {
+        return new DefaultMapIterator(this);
+    }
+    
     public Set keySet() {
-        return new KeyView( this, this.insertOrder );
+        return new KeySetView(this);
     }
 
     public Collection values() {
-        return new ValuesView( this, this.insertOrder );
+        return new ValuesView(this);
     }
 
-    // QUERY: Should a change of value change insertion order?
     public Set entrySet() {
-        return new EntrySetView( this, this.insertOrder );
+        return new EntrySetView(this, this.insertOrder);
     }
-
-    // TODO: Code a toString up. 
-    //       It needs to retain the right order, else it will 
-    //       look peculiar.
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Returns the Map as a string.
+     * 
+     * @return the Map as a String
+     */
     public String toString() {
-        return super.toString();
+        if (isEmpty()) {
+            return "{}";
+        }
+        StringBuffer buf = new StringBuffer();
+        buf.append('{');
+        boolean first = true;
+        Iterator it = entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Object key = entry.getKey();
+            Object value = entry.getValue();
+            buf.append(key == this ? "(this Map)" : key);
+            buf.append('=');
+            buf.append(value == this ? "(this Map)" : value);
+            if (first) {
+                first = false;
+            } else {
+                buf.append(", ");
+            }
+        }
+        buf.append('}');
+        return buf.toString();
     }
 
-    // class for handling the values() method's callback to this Map
-    // THESE NEED UNIT TESTING as their own collections
-    class ValuesView implements Collection {
-        private OrderedMap parent;
-        private List insertOrder;
+    //-----------------------------------------------------------------------
+    static class ValuesView extends AbstractCollection {
+        private final OrderedMap parent;
 
-        ValuesView(OrderedMap parent, List insertOrder) {
+        ValuesView(OrderedMap parent) {
+            super();
             this.parent = parent;
-            this.insertOrder = insertOrder;
-        }
-
-        // slow to call
-        Collection _values() {
-            Iterator keys = this.insertOrder.iterator();
-            ArrayList list = new ArrayList( insertOrder.size() );
-            while( keys.hasNext() ) {
-                list.add( this.parent.getMap().get( keys.next() ) );
-            }
-            return list;
         }
 
         public int size() {
             return this.parent.size();
-        }
-
-        public boolean isEmpty() {
-            return this.parent.isEmpty();
         }
 
         public boolean contains(Object value) {
             return this.parent.containsValue(value);
         }
 
-        public Iterator iterator() {
-            // TODO: Allow this to be backed
-            return _values().iterator();
-//            return new ValuesViewIterator( who? );
-        }
-
-        public Object[] toArray() {
-            return _values().toArray();
-        }
-
-        public Object[] toArray(Object[] array) {
-            return _values().toArray(array);
-        }
-
-        public boolean add(Object obj) {
-            throw new UnsupportedOperationException("Not allowed. ");
-        }
-
-        public boolean remove(Object obj) {
-            // who?? which value do I choose? first one?
-            for(Iterator itr = this.insertOrder.iterator(); itr.hasNext(); ) {
-                Object key = itr.next();
-                Object value = this.parent.get(key);
-
-                // also handles null
-                if(value == obj) {
-                    return (this.parent.remove(key) != null);
-                } 
-
-                if( (value != null) && value.equals(obj) ) {
-                    return (this.parent.remove(key) != null);
-                }
-            }
-
-            return false;
-        }
-
-        public boolean containsAll(Collection coll) {
-            // TODO: What does Collection spec say about null/empty?
-            for(Iterator itr = coll.iterator(); itr.hasNext(); ) {
-                if( !this.parent.containsValue( itr.next() ) ) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public boolean addAll(Collection coll) {
-            throw new UnsupportedOperationException("Not allowed. ");
-        }
-
-        public boolean removeAll(Collection coll) {
-            // not transactional. No idea if removeAll's boolean
-            // reply is meant to be
-            boolean ret = false;
-            for( Iterator itr = coll.iterator(); itr.hasNext(); ) {
-                ret = ret && remove(itr.next());
-            }
-            return ret;
-        }
-
-        public boolean retainAll(Collection coll) {
-            // transactional?
-            boolean ret = false;
-
-            for( Iterator itr = this.insertOrder.iterator(); itr.hasNext(); ) {
-                Object key = itr.next();
-                Object value = this.parent.get(key);
-                if( coll.contains(value) ) {
-                    // retain
-                } else {
-                    ret = ret && (parent.remove(key) != null);
-                }
-            }
-
-            return ret;
-        }
-
         public void clear() {
             this.parent.clear();
         }
 
-        public boolean equals(Object obj) {
-            // exactly what to do here?
-            return super.equals(obj);
-        }
-        public int hashCode() {
-            return _values().hashCode();
-        }
-
-        public String toString() {
-            return _values().toString();
+        public Iterator iterator() {
+            return new AbstractIteratorDecorator(parent.entrySet().iterator()) {
+                public Object next() {
+                    return ((Map.Entry) iterator.next()).getValue();
+                }
+            };
         }
     }
+    
+    //-----------------------------------------------------------------------
+    static class KeySetView extends AbstractSet {
+        private final OrderedMap parent;
 
-    class KeyView implements Set {
-
-        private OrderedMap parent;
-        private List insertOrder;
-
-        public KeyView(OrderedMap parent, List insertOrder) {
+        KeySetView(OrderedMap parent) {
+            super();
             this.parent = parent;
-            this.insertOrder = insertOrder;
         }
 
         public int size() {
             return this.parent.size();
         }
-        public boolean isEmpty() {
-            return this.parent.isEmpty();
-        }
-        public boolean contains(Object obj) {
-            return this.parent.containsKey(obj);
-        }
-        public Iterator iterator() {
-            // TODO: Needs to return a KeyViewIterator, which 
-            //       removes from this and from the Map
-            return this.insertOrder.iterator();
-        }
-        public Object toArray()[] {
-            return this.insertOrder.toArray();
-        }
-        public Object toArray(Object[] array)[] {
-            return this.insertOrder.toArray(array);
-        }
-        public boolean add(Object obj) {
-            throw new UnsupportedOperationException("Not allowed. ");
-        }
-        public boolean remove(Object obj) {
-            return (this.parent.remove(obj) != null);
-        }
-        public boolean containsAll(Collection coll) {
-            // TODO: What does Collection spec say about null/empty?
-            for(Iterator itr = coll.iterator(); itr.hasNext(); ) {
-                if( !this.parent.containsKey( itr.next() ) ) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        public boolean addAll(Collection coll) {
-            throw new UnsupportedOperationException("Not allowed. ");
-        }
-        public boolean removeAll(Collection coll) {
-            // not transactional. No idea if removeAll's boolean
-            // reply is meant to be
-            boolean ret = false;
-            for( Iterator itr = coll.iterator(); itr.hasNext(); ) {
-                ret = ret && remove(itr.next());
-            }
-            return ret;
-        }
-        public boolean retainAll(Collection coll) {
-            // transactional?
-            boolean ret = false;
 
-            for( Iterator itr = this.insertOrder.iterator(); itr.hasNext(); ) {
-                Object key = itr.next();
-                if( coll.contains(key) ) {
-                    // retain
-                } else {
-                    ret = ret && (parent.remove(key) != null);
-                }
-            }
-
-            return ret;
+        public boolean contains(Object value) {
+            return this.parent.containsKey(value);
         }
+
         public void clear() {
             this.parent.clear();
         }
-        public boolean equals(Object obj) {
-            // exactly what to do here?
-            return super.equals(obj);
-        }
-        public int hashCode() {
-            return this.parent.getMap().keySet().hashCode();
-        }
 
-        public String toString() {
-            return this.insertOrder.toString();
+        public Iterator iterator() {
+            return new AbstractIteratorDecorator(parent.entrySet().iterator()) {
+                public Object next() {
+                    return ((Map.Entry) super.next()).getKey();
+                }
+            };
         }
     }
 
-    class EntrySetView implements Set {
-
-        private OrderedMap parent;
-        private List insertOrder;
+    //-----------------------------------------------------------------------    
+    static class EntrySetView extends AbstractSet {
+        private final OrderedMap parent;
+        private final List insertOrder;
+        private Set entrySet;
 
         public EntrySetView(OrderedMap parent, List insertOrder) {
+            super();
             this.parent = parent;
             this.insertOrder = insertOrder;
         }
 
-        public Set _entries() {
-            Set set = new java.util.HashSet( this.insertOrder.size() );
-            set = OrderedSet.decorate( set );
-            for (Iterator it = insertOrder.iterator(); it.hasNext();) {
-                Object key = it.next();
-                set.add( new DefaultMapEntry( key, getMap().get( key ) ) );
+        private Set getEntrySet() {
+            if (entrySet == null) {
+                entrySet = parent.getMap().entrySet();
             }
-            return set;
+            return entrySet;
         }
-
+        
         public int size() {
             return this.parent.size();
         }
@@ -401,98 +279,83 @@ public class OrderedMap extends AbstractMapDecorator implements Map {
         }
 
         public boolean contains(Object obj) {
-            if(obj instanceof Map.Entry) {
-                Map.Entry entry = (Map.Entry) obj;
-                if( this.parent.containsKey(entry.getKey()) ) {
-                    Object value = this.parent.get(entry.getKey());
-                    if( obj == null && value == null ) {
-                        return true;
-                    } else {
-                        return obj.equals(value);
-                    }
-                } else {
-                    return false;
-                }
-            } else {
-                throw new IllegalArgumentException("Parameter must be a Map.Entry");
-            }
+            return getEntrySet().contains(obj);
         }
-        public Iterator iterator() {
-            // TODO: Needs to return a EntrySetViewIterator, which 
-            //       removes from this and from the Map
-            return _entries().iterator();
-        }
-        public Object toArray()[] {
-            return _entries().toArray();
-        }
-        public Object toArray(Object[] array)[] {
-            return _entries().toArray(array);
-        }
-        public boolean add(Object obj) {
-            throw new UnsupportedOperationException("Not allowed. ");
-        }
-        public boolean remove(Object obj) {
-            if(obj instanceof Map.Entry) {
-                Map.Entry entry = (Map.Entry) obj;
-                return (this.parent.remove(entry.getKey()) != null);
-            } else {
-                throw new IllegalArgumentException("Parameter must be a Map.Entry");
-            }
-        }
-        // need to decide on IllegalArgument or ClassCast in this class
-        // when not Map.Entry
+
         public boolean containsAll(Collection coll) {
-            // TODO: What does Collection spec say about null/empty?
-            for(Iterator itr = coll.iterator(); itr.hasNext(); ) {
-                Map.Entry entry = (Map.Entry) itr.next();
-                if( !this.parent.containsKey( entry.getKey() ) ) {
-                    return false;
-                }
+            return getEntrySet().containsAll(coll);
+        }
+
+        public boolean remove(Object obj) {
+            if (obj instanceof Map.Entry == false) {
+                return false;
             }
+            Object key = ((Map.Entry) obj).getKey();
+            if (parent.getMap().containsKey(key) == false) {
+                return false;
+            }
+            parent.remove(key);
             return true;
         }
-        public boolean addAll(Collection coll) {
-            throw new UnsupportedOperationException("Not allowed. ");
-        }
-        public boolean removeAll(Collection coll) {
-            // not transactional. No idea if removeAll's boolean
-            // reply is meant to be
-            boolean ret = false;
-            for( Iterator itr = coll.iterator(); itr.hasNext(); ) {
-                Map.Entry entry = (Map.Entry) itr.next();
-                ret = ret && remove( entry.getKey() );
-            }
-            return ret;
-        }
-        public boolean retainAll(Collection coll) {
-            // transactional?
-            boolean ret = false;
 
-            for( Iterator itr = this.insertOrder.iterator(); itr.hasNext(); ) {
-                Map.Entry entry = (Map.Entry) itr.next();
-                Object key = entry.getKey();
-                if( coll.contains(key) ) {
-                    // retain
-                } else {
-                    ret = ret && (parent.remove(key) != null);
-                }
-            }
-
-            return ret;
-        }
         public void clear() {
             this.parent.clear();
         }
+        
         public boolean equals(Object obj) {
-            // exactly what to do here?
-            return super.equals(obj);
+            if (obj == this) {
+                return true;
+            }
+            return getEntrySet().equals(obj);
         }
+        
         public int hashCode() {
-            return this.parent.getMap().entrySet().hashCode();
+            return getEntrySet().hashCode();
         }
 
         public String toString() {
-            return this._entries().toString();
+            return getEntrySet().toString();
+        }
+        
+        public Iterator iterator() {
+            return new OrderedIterator(parent, insertOrder);
+        }
+    }
+    
+    static class OrderedIterator extends AbstractIteratorDecorator {
+        private final OrderedMap parent;
+        private Object last = null;
+        
+        OrderedIterator(OrderedMap parent, List insertOrder) {
+            super(insertOrder.iterator());
+            this.parent = parent;
+        }
+        
+        public Object next() {
+            last = super.next();
+            return new OrderedMapEntry(parent, last);
+        }
+
+        public void remove() {
+            super.remove();
+            parent.getMap().remove(last);
+        }
+    }
+    
+    static class OrderedMapEntry extends AbstractMapEntry {
+        private final OrderedMap parent;
+        
+        OrderedMapEntry(OrderedMap parent, Object key) {
+            super(key, null);
+            this.parent = parent;
+        }
+        
+        public Object getValue() {
+            return parent.get(key);
+        }
+
+        public Object setValue(Object value) {
+            return parent.getMap().put(key, value);
         }
     }
 
