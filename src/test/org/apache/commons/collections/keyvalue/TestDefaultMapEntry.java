@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/KeyValue.java,v 1.1 2003/09/27 10:33:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/keyvalue/TestDefaultMapEntry.java,v 1.1 2003/12/05 20:23:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,30 +55,93 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
+package org.apache.commons.collections.keyvalue;
+
+import java.util.Map;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.apache.commons.collections.KeyValue;
 
 /**
- * Defines a simple key value pair.
- *
- * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/27 10:33:34 $
+ * Test the DefaultMapEntry class.
  * 
- * @author Stephen Colebourne
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:57 $
+ * 
+ * @author Neil O'Toole
  */
-public interface KeyValue {
-    
+public class TestDefaultMapEntry extends AbstractTestMapEntry {
+
+    public TestDefaultMapEntry(String testName) {
+        super(testName);
+
+    }
+
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(TestDefaultMapEntry.class);
+    }
+
+    public static Test suite() {
+        return new TestSuite(TestDefaultMapEntry.class);
+    }
+
+    //-----------------------------------------------------------------------
     /**
-     * Gets the key from the pair.
-     *
-     * @return the key 
+     * Make an instance of Map.Entry with the default (null) key and value.
+     * Subclasses should override this method to return a Map.Entry
+     * of the type being tested.
      */
-    Object getKey();
+    public Map.Entry makeMapEntry() {
+        return new DefaultMapEntry(null, null);
+    }
 
     /**
-     * Gets the value from the pair.
-     *
-     * @return the value
+     * Make an instance of Map.Entry with the specified key and value.
+     * Subclasses should override this method to return a Map.Entry
+     * of the type being tested.
      */
-    Object getValue();
+    public Map.Entry makeMapEntry(Object key, Object value) {
+        return new DefaultMapEntry(key, value);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Subclasses should override this method.
+     *
+     */
+    public void testConstructors() {
+        // 1. test key-value constructor
+        Map.Entry entry = new DefaultMapEntry(key, value);
+        assertSame(key, entry.getKey());
+        assertSame(value, entry.getValue());
+
+        // 2. test pair constructor
+        KeyValue pair = new DefaultKeyValue(key, value);
+        assertSame(key, pair.getKey());
+        assertSame(value, pair.getValue());
+
+        // 3. test copy constructor
+        Map.Entry entry2 = new DefaultMapEntry(entry);
+        assertSame(key, entry2.getKey());
+        assertSame(value, entry2.getValue());
+
+        // test that the objects are independent
+        entry.setValue(null);
+        assertSame(value, entry2.getValue());
+    }
+
+    public void testSelfReferenceHandling() {
+        Map.Entry entry = makeMapEntry();
+
+        try {
+            entry.setValue(entry);
+            assertSame(entry, entry.getValue());
+
+        } catch (Exception e) {
+            fail("This Map.Entry implementation supports value self-reference.");
+        }
+    }
 
 }

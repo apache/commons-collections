@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/AbstractMapEntryDecorator.java,v 1.1 2003/11/16 00:05:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/TiedMapEntry.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,72 +55,118 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
+package org.apache.commons.collections.keyvalue;
 
 import java.util.Map;
 
+import org.apache.commons.collections.KeyValue;
+
 /**
- * Provides a base decorator that allows additional functionality to be added
- * to a Map Entry.
+ * A Map Entry tied to a map underneath.
+ * <p>
+ * This can be used to enable a map entry to make changes on the underlying
+ * map, however this will probably mess up any iterators.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:48 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractMapEntryDecorator implements Map.Entry {
+public class TiedMapEntry implements Map.Entry, KeyValue {
+
+    /** The map underlying the entry/iterator */    
+    private final Map map;
+    /** The key */
+    private final Object key;
     
-    /** The <code>Map.Entry</code> to decorate */
-    protected final Map.Entry entry;
-
     /**
-     * Constructor that wraps (not copies).
+     * Constructs a new entry with the given Map and key.
      *
-     * @param entry  the <code>Map.Entry</code> to decorate, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @param map  the map
+     * @param key  the key
      */
-    public AbstractMapEntryDecorator(Map.Entry entry) {
-        if (entry == null) {
-            throw new IllegalArgumentException("Map entry must not be null");
-        }
-        this.entry = entry;
+    public TiedMapEntry(Map map, Object key) {
+        super();
+        this.map = map;
+        this.key = key;
+    }
+
+    // Map.Entry interface
+    //-------------------------------------------------------------------------
+    /**
+     * Gets the key of this entry
+     * 
+     * @return the key
+     */
+    public Object getKey() {
+        return key;
     }
 
     /**
-     * Gets the map being decorated.
+     * Gets the value of this entry direct from the map.
      * 
-     * @return the decorated map
+     * @return the value
      */
-    protected Map.Entry getMapEntry() {
-        return entry;
-    }
-
-    //-----------------------------------------------------------------------
-    public Object getKey() {
-        return entry.getKey();
-    }
-
     public Object getValue() {
-        return entry.getValue();
+        return map.get(key);
     }
 
-    public Object setValue(Object object) {
-        return entry.setValue(object);
+    /**
+     * Sets the value associated with the key direct onto the map.
+     * 
+     * @param value  the new value
+     * @return the old value
+     * @throws IllegalArgumentException if the value is set to this map entry
+     */
+    public Object setValue(Object value) {
+        if (value == this) {
+            throw new IllegalArgumentException("Cannot set value to this map entry");
+        }
+        return map.put(key, value);
     }
-   
-    public boolean equals(Object object) {
-        if (object == this) {
+
+    /**
+     * Compares this Map Entry with another Map Entry.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
+     * 
+     * @param obj  the object to compare to
+     * @return true if equal key and value
+     */
+    public boolean equals(Object obj) {
+        if (obj == this) {
             return true;
         }
-        return entry.equals(object);
+        if (obj instanceof Map.Entry == false) {
+            return false;
+        }
+        Map.Entry other = (Map.Entry) obj;
+        Object value = getValue();
+        return
+            (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
+            (value == null ? other.getValue() == null : value.equals(other.getValue()));
     }
-
+     
+    /**
+     * Gets a hashCode compatible with the equals method.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
+     * 
+     * @return a suitable hashcode
+     */
     public int hashCode() {
-        return entry.hashCode();
+        Object value = getValue();
+        return (getKey() == null ? 0 : getKey().hashCode()) ^
+               (value == null ? 0 : value.hashCode()); 
     }
-
+    
+    /**
+     * Gets a string version of the entry.
+     * 
+     * @return entry as a string
+     */
     public String toString() {
-        return entry.toString();
+        return getKey() + "=" + getValue();
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestUnmodifiableMapEntry.java,v 1.1 2003/11/02 17:06:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/keyvalue/TestTiedMapEntry.java,v 1.1 2003/12/05 20:23:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,105 +55,83 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
+package org.apache.commons.collections.keyvalue;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.Unmodifiable;
-
 /**
- * Test the UnmodifiableMapEntry class.
+ * Test the TiedMapEntry class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 17:06:59 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:57 $
  * 
- * @author Neil O'Toole
+ * @author Stephen Colebourne
  */
-public class TestUnmodifiableMapEntry extends AbstractTestMapEntry {
+public class TestTiedMapEntry extends AbstractTestMapEntry {
 
-    public TestUnmodifiableMapEntry(String testName) {
+    public TestTiedMapEntry(String testName) {
         super(testName);
 
     }
 
     public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestUnmodifiableMapEntry.class);
+        junit.textui.TestRunner.run(TestTiedMapEntry.class);
     }
 
     public static Test suite() {
-        return new TestSuite(TestUnmodifiableMapEntry.class);
+        return new TestSuite(TestTiedMapEntry.class);
     }
 
     //-----------------------------------------------------------------------
     /**
-     * Make an instance of Map.Entry with the default (null) key and value.
-     * Subclasses should override this method to return a Map.Entry
-     * of the type being tested.
-     */
-    public Map.Entry makeMapEntry() {
-        return new UnmodifiableMapEntry(null, null);
-    }
-
-    /**
-     * Make an instance of Map.Entry with the specified key and value.
-     * Subclasses should override this method to return a Map.Entry
-     * of the type being tested.
+     * Gets the instance to test
      */
     public Map.Entry makeMapEntry(Object key, Object value) {
-        return new UnmodifiableMapEntry(key, value);
+        Map map = new HashMap();
+        map.put(key, value);
+        return new TiedMapEntry(map, key);
     }
 
     //-----------------------------------------------------------------------
     /**
-     * Subclasses should override this method.
-     *
+     * Tests the constructors.
      */
     public void testConstructors() {
-        // 1. test key-value constructor
-        Map.Entry entry = new UnmodifiableMapEntry(key, value);
-        assertSame(key, entry.getKey());
-        assertSame(value, entry.getValue());
-
-        // 2. test pair constructor
-        KeyValue pair = new DefaultKeyValue(key, value);
-        entry = new UnmodifiableMapEntry(pair);
-        assertSame(key, entry.getKey());
-        assertSame(value, entry.getValue());
-
-        // 3. test copy constructor
-        Map.Entry entry2 = new UnmodifiableMapEntry(entry);
-        assertSame(key, entry2.getKey());
-        assertSame(value, entry2.getValue());
-
-        assertTrue(entry instanceof Unmodifiable);
+        // ignore
     }
 
-    public void testAccessorsAndMutators() {
-        Map.Entry entry = makeMapEntry(key, value);
-
-        assertSame(key, entry.getKey());
-        assertSame(value, entry.getValue());
-
-        // check that null doesn't do anything funny
-        entry = makeMapEntry(null, null);
-        assertSame(null, entry.getKey());
-        assertSame(null, entry.getValue());
-    }
-
-    public void testSelfReferenceHandling() {
-        // block
-    }
-
-    public void testUnmodifiable() {
-        Map.Entry entry = makeMapEntry();
-        try {
-            entry.setValue(null);
-            fail();
-
-        } catch (UnsupportedOperationException ex) {}
+    /**
+     * Tests the constructors.
+     */
+    public void testSetValue() {
+        Map map = new HashMap();
+        map.put("A", "a");
+        map.put("B", "b");
+        map.put("C", "c");
+        Map.Entry entry = new TiedMapEntry(map, "A");
+        assertSame("A", entry.getKey());
+        assertSame("a", entry.getValue());
+        assertSame("a", entry.setValue("x"));
+        assertSame("A", entry.getKey());
+        assertSame("x", entry.getValue());
+        
+        entry = new TiedMapEntry(map, "B");
+        assertSame("B", entry.getKey());
+        assertSame("b", entry.getValue());
+        assertSame("b", entry.setValue("y"));
+        assertSame("B", entry.getKey());
+        assertSame("y", entry.getValue());
+        
+        entry = new TiedMapEntry(map, "C");
+        assertSame("C", entry.getKey());
+        assertSame("c", entry.getValue());
+        assertSame("c", entry.setValue("z"));
+        assertSame("C", entry.getKey());
+        assertSame("z", entry.getValue());
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestAll.java,v 1.3 2003/11/02 19:45:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/AbstractMapEntryDecorator.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,39 +55,72 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
+package org.apache.commons.collections.keyvalue;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Map;
 
 /**
- * Entry point for key-value test cases.
- * 
+ * Provides a base decorator that allows additional functionality to be added
+ * to a Map Entry.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/02 19:45:48 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
  * 
- * @author Neil O'Toole
+ * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
+public abstract class AbstractMapEntryDecorator implements Map.Entry {
     
-    public TestAll(String testName) {
-        super(testName);
+    /** The <code>Map.Entry</code> to decorate */
+    protected final Map.Entry entry;
+
+    /**
+     * Constructor that wraps (not copies).
+     *
+     * @param entry  the <code>Map.Entry</code> to decorate, must not be null
+     * @throws IllegalArgumentException if the collection is null
+     */
+    public AbstractMapEntryDecorator(Map.Entry entry) {
+        if (entry == null) {
+            throw new IllegalArgumentException("Map entry must not be null");
+        }
+        this.entry = entry;
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Gets the map being decorated.
+     * 
+     * @return the decorated map
+     */
+    protected Map.Entry getMapEntry() {
+        return entry;
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestDefaultKeyValue.suite());
-        suite.addTest(TestDefaultMapEntry.suite());
-        suite.addTest(TestTiedMapEntry.suite());
-        suite.addTest(TestUnmodifiableMapEntry.suite());
-        return suite;
+
+    //-----------------------------------------------------------------------
+    public Object getKey() {
+        return entry.getKey();
     }
-        
+
+    public Object getValue() {
+        return entry.getValue();
+    }
+
+    public Object setValue(Object object) {
+        return entry.setValue(object);
+    }
+   
+    public boolean equals(Object object) {
+        if (object == this) {
+            return true;
+        }
+        return entry.equals(object);
+    }
+
+    public int hashCode() {
+        return entry.hashCode();
+    }
+
+    public String toString() {
+        return entry.toString();
+    }
+
 }

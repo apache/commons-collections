@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.5 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.6 2003/12/05 20:23:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.ResettableIterator;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
-import org.apache.commons.collections.pairs.AbstractMapEntry;
+import org.apache.commons.collections.keyvalue.AbstractMapEntry;
 
 /**
  * Decorates a <code>Map</code> to ensure that the order of addition is retained.
@@ -87,7 +87,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/05 20:23:57 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne

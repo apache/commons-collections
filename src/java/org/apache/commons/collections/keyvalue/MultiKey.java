@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/MultiKey.java,v 1.5 2003/12/05 20:23:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/MultiKey.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.keyvalue;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -68,15 +68,15 @@ import java.util.Arrays;
  * key and locale. The typical solution might be nested maps. This class
  * can be used instead by creating an instance passing in the key and locale.
  * 
- * @deprecated WILL BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/05 20:23:57 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
  * 
  * @author Howard Lewis Ship
  * @author Stephen Colebourne
  */
 public class MultiKey implements Serializable {
 
+    /** Serialisation version */
     private static final long serialVersionUID = 4465448607415788805L;
 
     /** The individual keys */

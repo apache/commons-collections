@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/DefaultMapEntry.java,v 1.2 2003/09/27 10:33:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/AbstractMapEntry.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,52 +55,80 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
+package org.apache.commons.collections.keyvalue;
 
 import java.util.Map;
 
 /**
- * A restricted implementation of {@link java.util.Map.Entry} that prevents
- * the MapEntry contract from being broken.
+ * Abstract Pair class to assist with creating correct Map Entry implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/27 10:33:34 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public final class DefaultMapEntry extends AbstractMapEntry {
+public abstract class AbstractMapEntry extends AbstractKeyValue implements Map.Entry {
     
     /**
-     * Constructs a new entry with the specified key and given value.
+     * Constructs a new entry with the given key and given value.
      *
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    public DefaultMapEntry(final Object key, final Object value) {
+    protected AbstractMapEntry(Object key, Object value) {
         super(key, value);
     }
 
-    /**
-     * Constructs a new entry from the specified KeyValue.
+    // Map.Entry interface
+    //-------------------------------------------------------------------------
+    /** 
+     * Sets the value stored in this Map Entry.
+     * <p>
+     * This Map Entry is not connected to a Map, so only the local data is changed.
      *
-     * @param pair  the pair to copy, must not be null
-     * @throws NullPointerException if the entry is null
+     * @param value  the new value
+     * @return the previous value
      */
-    public DefaultMapEntry(final KeyValue pair) {
-        super(pair.getKey(), pair.getValue());
+    public Object setValue(Object value) {
+        Object answer = this.value;
+        this.value = value;
+        return answer;
     }
 
     /**
-     * Constructs a new entry from the specified MapEntry.
-     *
-     * @param entry  the entry to copy, must not be null
-     * @throws NullPointerException if the entry is null
+     * Compares this Map Entry with another Map Entry.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
+     * 
+     * @param obj  the object to compare to
+     * @return true if equal key and value
      */
-    public DefaultMapEntry(final Map.Entry entry) {
-        super(entry.getKey(), entry.getValue());
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof Map.Entry == false) {
+            return false;
+        }
+        Map.Entry other = (Map.Entry) obj;
+        return
+            (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
+            (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
+    }
+     
+    /**
+     * Gets a hashCode compatible with the equals method.
+     * <p>
+     * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
+     * 
+     * @return a suitable hashcode
+     */
+    public int hashCode() {
+        return (getKey() == null ? 0 : getKey().hashCode()) ^
+               (getValue() == null ? 0 : getValue().hashCode()); 
     }
 
 }

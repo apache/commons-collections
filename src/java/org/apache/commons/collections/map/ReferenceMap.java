@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.1 2003/12/03 15:50:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.2 2003/12/05 20:23:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.apache.commons.collections.pairs.DefaultMapEntry;
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 
 /**
  *  Hash-based {@link Map} implementation that allows
@@ -118,7 +118,7 @@ import org.apache.commons.collections.pairs.DefaultMapEntry;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/03 15:50:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/05 20:23:57 $
  * 
  * @author Paul Jack
  */

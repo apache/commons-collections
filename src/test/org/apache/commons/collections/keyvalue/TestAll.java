@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestDefaultMapEntry.java,v 1.1 2003/10/01 22:36:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/keyvalue/TestAll.java,v 1.1 2003/12/05 20:23:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,91 +55,41 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
-
-import java.util.Map;
+package org.apache.commons.collections.keyvalue;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Test the DefaultMapEntry class.
+ * Entry point for key-value test cases.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/01 22:36:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:57 $
  * 
  * @author Neil O'Toole
+ * @author Stephen Colebourne
  */
-public class TestDefaultMapEntry extends AbstractTestMapEntry {
-
-    public TestDefaultMapEntry(String testName) {
+public class TestAll extends TestCase {
+    
+    public TestAll(String testName) {
         super(testName);
-
     }
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestDefaultMapEntry.class);
+    public static void main(String args[]) {
+        String[] testCaseName = { TestAll.class.getName() };
+        junit.textui.TestRunner.main(testCaseName);
     }
-
+    
     public static Test suite() {
-        return new TestSuite(TestDefaultMapEntry.class);
+        TestSuite suite = new TestSuite();
+        
+        suite.addTest(TestDefaultKeyValue.suite());
+        suite.addTest(TestDefaultMapEntry.suite());
+        suite.addTest(TestMultiKey.suite());
+        suite.addTest(TestTiedMapEntry.suite());
+        suite.addTest(TestUnmodifiableMapEntry.suite());
+        return suite;
     }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Make an instance of Map.Entry with the default (null) key and value.
-     * Subclasses should override this method to return a Map.Entry
-     * of the type being tested.
-     */
-    public Map.Entry makeMapEntry() {
-        return new DefaultMapEntry(null, null);
-    }
-
-    /**
-     * Make an instance of Map.Entry with the specified key and value.
-     * Subclasses should override this method to return a Map.Entry
-     * of the type being tested.
-     */
-    public Map.Entry makeMapEntry(Object key, Object value) {
-        return new DefaultMapEntry(key, value);
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Subclasses should override this method.
-     *
-     */
-    public void testConstructors() {
-        // 1. test key-value constructor
-        Map.Entry entry = new DefaultMapEntry(key, value);
-        assertSame(key, entry.getKey());
-        assertSame(value, entry.getValue());
-
-        // 2. test pair constructor
-        KeyValue pair = new DefaultKeyValue(key, value);
-        assertSame(key, pair.getKey());
-        assertSame(value, pair.getValue());
-
-        // 3. test copy constructor
-        Map.Entry entry2 = new DefaultMapEntry(entry);
-        assertSame(key, entry2.getKey());
-        assertSame(value, entry2.getValue());
-
-        // test that the objects are independent
-        entry.setValue(null);
-        assertSame(value, entry2.getValue());
-    }
-
-    public void testSelfReferenceHandling() {
-        Map.Entry entry = makeMapEntry();
-
-        try {
-            entry.setValue(entry);
-            assertSame(entry, entry.getValue());
-
-        } catch (Exception e) {
-            fail("This Map.Entry implementation supports value self-reference.");
-        }
-    }
-
+        
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.8 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.9 2003/12/05 20:23:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.iterators.EntrySetMapIterator;
-import org.apache.commons.collections.pairs.AbstractMapEntry;
+import org.apache.commons.collections.keyvalue.AbstractMapEntry;
 
 /**
  * Decorates a <code>Map</code> to ensure that the order of addition is retained.
@@ -80,7 +80,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/05 20:23:57 $
  * @deprecated TO BE REMOVED BEFORE v3.0
  * 
  * @author Henri Yandell

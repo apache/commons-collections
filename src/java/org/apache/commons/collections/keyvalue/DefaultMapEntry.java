@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestTiedMapEntry.java,v 1.1 2003/11/02 19:45:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/DefaultMapEntry.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,83 +55,54 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
+package org.apache.commons.collections.keyvalue;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.apache.commons.collections.KeyValue;
 
 /**
- * Test the TiedMapEntry class.
- * 
+ * A restricted implementation of {@link java.util.Map.Entry} that prevents
+ * the MapEntry contract from being broken.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 19:45:48 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
  * 
+ * @author James Strachan
+ * @author Michael A. Smith
+ * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public class TestTiedMapEntry extends AbstractTestMapEntry {
-
-    public TestTiedMapEntry(String testName) {
-        super(testName);
-
-    }
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestTiedMapEntry.class);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestTiedMapEntry.class);
-    }
-
-    //-----------------------------------------------------------------------
+public final class DefaultMapEntry extends AbstractMapEntry {
+    
     /**
-     * Gets the instance to test
+     * Constructs a new entry with the specified key and given value.
+     *
+     * @param key  the key for the entry, may be null
+     * @param value  the value for the entry, may be null
      */
-    public Map.Entry makeMapEntry(Object key, Object value) {
-        Map map = new HashMap();
-        map.put(key, value);
-        return new TiedMapEntry(map, key);
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Tests the constructors.
-     */
-    public void testConstructors() {
-        // ignore
+    public DefaultMapEntry(final Object key, final Object value) {
+        super(key, value);
     }
 
     /**
-     * Tests the constructors.
+     * Constructs a new entry from the specified KeyValue.
+     *
+     * @param pair  the pair to copy, must not be null
+     * @throws NullPointerException if the entry is null
      */
-    public void testSetValue() {
-        Map map = new HashMap();
-        map.put("A", "a");
-        map.put("B", "b");
-        map.put("C", "c");
-        Map.Entry entry = new TiedMapEntry(map, "A");
-        assertSame("A", entry.getKey());
-        assertSame("a", entry.getValue());
-        assertSame("a", entry.setValue("x"));
-        assertSame("A", entry.getKey());
-        assertSame("x", entry.getValue());
-        
-        entry = new TiedMapEntry(map, "B");
-        assertSame("B", entry.getKey());
-        assertSame("b", entry.getValue());
-        assertSame("b", entry.setValue("y"));
-        assertSame("B", entry.getKey());
-        assertSame("y", entry.getValue());
-        
-        entry = new TiedMapEntry(map, "C");
-        assertSame("C", entry.getKey());
-        assertSame("c", entry.getValue());
-        assertSame("c", entry.setValue("z"));
-        assertSame("C", entry.getKey());
-        assertSame("z", entry.getValue());
+    public DefaultMapEntry(final KeyValue pair) {
+        super(pair.getKey(), pair.getValue());
+    }
+
+    /**
+     * Constructs a new entry from the specified MapEntry.
+     *
+     * @param entry  the entry to copy, must not be null
+     * @throws NullPointerException if the entry is null
+     */
+    public DefaultMapEntry(final Map.Entry entry) {
+        super(entry.getKey(), entry.getValue());
     }
 
 }

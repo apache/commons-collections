@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/TransformedMap.java,v 1.1 2003/11/16 00:05:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/TransformedMap.java,v 1.2 2003/12/05 20:23:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import java.util.Set;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.AbstractCollectionDecorator;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
-import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
+import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
 
 /**
  * Decorates another <code>Map</code> to transform objects that are added.
@@ -77,7 +77,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:45 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/05 20:23:57 $
  * 
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/UnmodifiableMapEntry.java,v 1.1 2003/11/02 17:06:58 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/AbstractKeyValue.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,62 +55,69 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
+package org.apache.commons.collections.keyvalue;
 
-import java.util.Map;
-
-import org.apache.commons.collections.Unmodifiable;
+import org.apache.commons.collections.KeyValue;
 
 /**
- * A {@link java.util.Map.Entry} that throws UnsupportedOperationException
- * when <code>setValue</code> is called.
+ * Abstract pair class to assist with creating KeyValue and MapEntry implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 17:06:58 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
  * 
+ * @author James Strachan
+ * @author Michael A. Smith
+ * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmodifiable {
+public abstract class AbstractKeyValue implements KeyValue {
+    
+    /** The key */
+    protected Object key;
+    /** The value */
+    protected Object value;
     
     /**
-     * Constructs a new entry with the specified key and given value.
+     * Constructs a new pair with the specified key and given value.
      *
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    public UnmodifiableMapEntry(final Object key, final Object value) {
-        super(key, value);
+    protected AbstractKeyValue(Object key, Object value) {
+        super();
+        this.key = key;
+        this.value = value;
     }
 
     /**
-     * Constructs a new entry from the specified KeyValue.
+     * Gets the key from the pair.
      *
-     * @param pair  the pair to copy, must not be null
-     * @throws NullPointerException if the entry is null
+     * @return the key 
      */
-    public UnmodifiableMapEntry(final KeyValue pair) {
-        super(pair.getKey(), pair.getValue());
+    public Object getKey() {
+        return key;
     }
 
     /**
-     * Constructs a new entry from the specified MapEntry.
+     * Gets the value from the pair.
      *
-     * @param entry  the entry to copy, must not be null
-     * @throws NullPointerException if the entry is null
+     * @return the value
      */
-    public UnmodifiableMapEntry(final Map.Entry entry) {
-        super(entry.getKey(), entry.getValue());
+    public Object getValue() {
+        return value;
     }
-    
+
     /**
-     * Throws UnsupportedOperationException.
+     * Gets a debugging String view of the pair.
      * 
-     * @param value  the new value
-     * @return the previous value
-     * @throws UnsupportedOperationException always
+     * @return a String view of the entry
      */
-    public Object setValue(Object value) {
-        throw new UnsupportedOperationException("setValue() is not supported");
+    public String toString() {
+        return new StringBuffer()
+            .append(getKey())
+            .append('=')
+            .append(getValue())
+            .toString();
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/pairs/Attic/DefaultKeyValue.java,v 1.1 2003/09/27 10:33:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/DefaultKeyValue.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,9 +55,11 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.pairs;
+package org.apache.commons.collections.keyvalue;
 
 import java.util.Map;
+
+import org.apache.commons.collections.KeyValue;
 
 /**
  * A mutable KeyValue pair that does not implement MapEntry.
@@ -66,7 +68,7 @@ import java.util.Map;
  * itself as a key or value.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/27 10:33:34 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
