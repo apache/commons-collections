@@ -26,9 +26,14 @@ package org.apache.commons.collections;
  * <p>
  * Implementations should allow a value to be looked up from a key and
  * a key to be looked up from a value with equal performance.
+ * <p>
+ * This map enforces the restriction that there is a 1:1 relation between
+ * keys and values, meaning that multiple keys cannot map to the same value. 
+ * This is required so that "inverting" the map results in a map without 
+ * duplicate keys. See the {@link #put} method description for more information.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.14 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.15 $ $Date: 2004/04/14 20:15:42 $
  *
  * @author Stephen Colebourne
  */

@@ -22,16 +22,17 @@ import org.apache.commons.collections.BoundedCollection;
 import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
- * <code>UnmodifiableBoundedCollection</code> decorates another <code>BoundedCollection</code>
- * to ensure it can't be altered.
+ * <code>UnmodifiableBoundedCollection</code> decorates another 
+ * <code>BoundedCollection</code> to ensure it can't be altered.
  * <p>
  * If a BoundedCollection is first wrapped in some other collection decorator,
- * such as synchronized or predicated, the BoundedCollection nature is lost.
+ * such as synchronized or predicated, the BoundedCollection methods are no 
+ * longer accessible.
  * The factory on this class will attempt to retrieve the bounded nature by
  * examining the package scope variables.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 00:58:53 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/14 20:11:45 $
  * 
  * @author Stephen Colebourne
  */

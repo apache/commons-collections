@@ -24,8 +24,11 @@ import java.util.Collection;
  * maximum number of elements. This interface allows the querying of details
  * associated with the maximum number of elements.
  *
+ * @see CollectionUtils#isFull
+ * @see CollectionUtils#maxSize
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.11 $ $Date: 2004/04/14 20:13:11 $
  * 
  * @author Herve Quiroz
  * @author Stephen Colebourne
