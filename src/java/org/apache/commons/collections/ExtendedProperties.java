@@ -123,7 +123,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.23 $ $Date: 2004/06/21 23:39:25 $
+ * @version $Revision: 1.24 $ $Date: 2004/09/22 23:35:03 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -361,25 +361,21 @@ public class ExtendedProperties extends Hashtable {
          */
         public String readProperty() throws IOException {
             StringBuffer buffer = new StringBuffer();
-
-            try {
-                while (true) {
-                    String line = readLine().trim();
-                    if ((line.length() != 0) && (line.charAt(0) != '#')) {
-                        if (endsWithSlash(line)) {
-                            line = line.substring(0, line.length() - 1);
-                            buffer.append(line);
-                        } else {
-                            buffer.append(line);
-                            break;
-                        }
+            String line = readLine();
+            while (line != null) {
+                line = line.trim();
+                if ((line.length() != 0) && (line.charAt(0) != '#')) {
+                    if (endsWithSlash(line)) {
+                        line = line.substring(0, line.length() - 1);
+                        buffer.append(line);
+                    } else {
+                        buffer.append(line);
+                        return buffer.toString();  // normal method end
                     }
                 }
-            } catch (NullPointerException ex) {
-                return null;
+                line = readLine();
             }
-
-            return buffer.toString();
+            return null;  // EOF reached
         }
     }
 
@@ -553,6 +549,9 @@ public class ExtendedProperties extends Hashtable {
         try {
             while (true) {
                 String line = reader.readProperty();
+                if (line == null) {
+                    return;  // EOF
+                }
                 int equalSign = line.indexOf('=');
 
                 if (equalSign > 0) {
@@ -591,9 +590,6 @@ public class ExtendedProperties extends Hashtable {
                     }
                 }
             }
-        } catch (NullPointerException ex) {
-            // Should happen only when EOF is reached.
-            return;
         } finally {
             // Loading is initializing
             isInitialized = true;
