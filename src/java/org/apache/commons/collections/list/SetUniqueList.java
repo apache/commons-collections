@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/SetUniqueList.java,v 1.3 2003/12/25 00:46:02 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/SetUniqueList.java,v 1.4 2003/12/29 00:57:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -78,12 +78,12 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * result of rejecting duplicates.
  * Each violation is explained in the method, but it should not affect you.
  * <p>
- * The {@link ListOrderedSet} class provides an alternative approach, by wrapping
- * an existing Set and retaining insertion order in the iterator.
- * This class offers the <code>List</code> interface implementation as well.
+ * The {@link org.apache.commons.collections.set.ListOrderedSet ListOrderedSet}
+ * class provides an alternative approach, by wrapping an existing Set and
+ * retaining insertion order in the iterator.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/25 00:46:02 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/29 00:57:34 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
