@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.4 2003/12/03 11:19:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.5 2003/12/07 01:15:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/03 11:19:10 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/07 01:15:36 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -212,58 +212,7 @@ public abstract class AbstractMapBag implements Bag {
      */
     public Iterator iterator() {
         return new BagIterator(this);
-//        List result = new ArrayList();
-//        Iterator i = map.keySet().iterator();
-//        while (i.hasNext()) {
-//            Object current = i.next();
-//            for (int index = getCount(current); index > 0; index--) {
-//                result.add(current);
-//            }
-//        }
-//        return new BagIterator(this, result.iterator());
     }
-
-//    static class BagIterator implements Iterator {
-//        private AbstractMapBag parent;
-//        private Iterator support;
-//        private Object current;
-//        private int mods;
-//        private boolean canRemove;
-//
-//        public BagIterator(AbstractMapBag parent, Iterator support) {
-//            this.parent = parent;
-//            this.support = support;
-//            this.current = null;
-//            this.mods = parent.modCount;
-//            this.canRemove = false;
-//        }
-//
-//        public boolean hasNext() {
-//            return support.hasNext();
-//        }
-//
-//        public Object next() {
-//            if (parent.modCount != mods) {
-//                throw new ConcurrentModificationException();
-//            }
-//            current = support.next();
-//            canRemove = true;
-//            return current;
-//        }
-//
-//        public void remove() {
-//            if (parent.modCount != mods) {
-//                throw new ConcurrentModificationException();
-//            }
-//            if (canRemove == false) {
-//                throw new IllegalStateException();
-//            }
-//            support.remove();
-//            parent.remove(current, 1);
-//            canRemove = false;
-//            mods++;
-//        }
-//    }
 
     static class BagIterator implements Iterator {
         private AbstractMapBag parent;
