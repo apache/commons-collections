@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * Entry point for tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:40 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/11 23:29:07 $
  * 
  * @author Stephen Colebourne
  */
@@ -43,6 +43,7 @@ public class TestAll extends TestCase {
         
         suite.addTest(TestDualHashBidiMap.suite());
         suite.addTest(TestDualTreeBidiMap.suite());
+        suite.addTest(TestDualTreeBidiMap2.suite());
         suite.addTest(TestTreeBidiMap.suite());
         
         suite.addTest(TestAbstractOrderedBidiMapDecorator.suite());
