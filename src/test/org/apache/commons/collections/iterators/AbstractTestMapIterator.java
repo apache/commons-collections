@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.1 2003/11/02 18:29:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.2 2003/11/02 19:47:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import java.util.Map.Entry;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 18:29:59 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/02 19:47:10 $
  * 
  * @author Stephen Colebourne
  */
@@ -166,6 +166,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
         }
 
         MapIterator it = makeEmptyMapIterator();
+        Map map = getMap();
         assertEquals(false, it.hasNext());
         
         // next() should throw a NoSuchElementException
@@ -253,6 +254,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             lastEntry = entry;
             lastKey = key;
             lastValue = value;
+            verify();
         }
     }
     
@@ -290,6 +292,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             assertTrue("Value must be in map",  map.containsValue(newValue));
             assertSame("Value must be mapped to key", map.get(key), newValue);
         }
+        verify();
         
         it.setValue(newValue);  // same value - should be OK
         assertSame("Key must not change after setValue", key, it.getKey());
@@ -302,6 +305,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             assertTrue("Value must be in map",  map.containsValue(newValue));
             assertSame("Value must be mapped to key", map.get(key), newValue);
         }
+        verify();
     }
 
     //-----------------------------------------------------------------------
@@ -338,6 +342,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             assertTrue("Value must be in map",  map.containsValue(newValue));
             assertSame("Value must be mapped to key", map.get(key), newValue);
         }
+        verify();
         
         entry.setValue(newValue);  // same value - should be OK
         assertSame("Key must not change after setValue", key, it.getKey());
@@ -350,6 +355,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             assertTrue("Value must be in map",  map.containsValue(newValue));
             assertSame("Value must be mapped to key", map.get(key), newValue);
         }
+        verify();
     }
 
     //-----------------------------------------------------------------------
@@ -360,16 +366,19 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
         Object newValue = addSetValue();
         
         MapIterator it = makeFullMapIterator();
+        Map map = getMap();
         assertEquals(true, it.hasNext());
         Object key = it.next();
         
         it.setValue(newValue);
         it.remove();
+        verify();
         
         try {
             it.setValue(newValue);
             fail();
         } catch (IllegalStateException ex) {}
+        verify();
     }
 
 }

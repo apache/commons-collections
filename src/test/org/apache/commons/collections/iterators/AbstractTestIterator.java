@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.2 2003/10/02 22:14:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.3 2003/11/02 19:47:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/10/02 22:14:34 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/02 19:47:10 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -141,6 +141,13 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
         return true;
     }
 
+    /**
+     * Allows subclasses to add complex cross verification
+     */
+    protected void verify() {
+        // do nothing
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Test the empty iterator.
@@ -161,6 +168,7 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
         } catch (NoSuchElementException e) {
         }
+        verify();
     }
 
     /**
@@ -186,6 +194,7 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
         // iterate through
         while (it.hasNext()) {
             it.next();
+            verify();
         }
 
         // next() must throw NoSuchElementException now
@@ -215,16 +224,19 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
             it.remove();
             fail();
         } catch (IllegalStateException ex) {}
+        verify();
         
         // remove after next should be fine
         it.next();
         it.remove();
+        verify();
         
         // should throw IllegalStateException for second remove()
         try {
             it.remove();
             fail();
         } catch (IllegalStateException ex) {}
+        verify();
     }
     
 }
