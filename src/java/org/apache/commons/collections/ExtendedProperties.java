@@ -168,7 +168,7 @@ import java.util.Vector;
  * @author <a href="mailto:kjohnson@transparent.com">Kent Johnson</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
- * @version $Id: ExtendedProperties.java,v 1.4 2001/05/13 21:46:22 geirm Exp $
+ * @version $Id: ExtendedProperties.java,v 1.5 2001/09/21 03:14:40 jvanzyl Exp $
  */
 public class ExtendedProperties extends Hashtable
 {
@@ -214,6 +214,39 @@ public class ExtendedProperties extends Hashtable
      * information in a particular order.
      */
     protected ArrayList keysAsListed = new ArrayList();
+
+    protected final static String START_TOKEN="${";
+    protected final static String END_TOKEN="}";
+
+    protected String interpolate(String base)
+    {
+        if (base == null)
+        {
+            return null;
+        }                        
+        
+        int begin = -1;
+        int end = -1;
+        int prec = 0 - END_TOKEN.length();
+        String variable = null;
+        StringBuffer result = new StringBuffer();
+        
+        // FIXME: we should probably allow the escaping of the start token
+        while ( ((begin=base.indexOf(START_TOKEN,prec+END_TOKEN.length()))>-1)
+                && ((end=base.indexOf(END_TOKEN,begin))>-1) ) 
+        {
+            result.append(base.substring(prec+END_TOKEN.length(),begin));
+            variable = base.substring(begin+START_TOKEN.length(),end);
+            if (get(variable)!=null) 
+            {
+                result.append(get(variable));
+            }
+            prec=end;
+        }
+        result.append(base.substring(prec+END_TOKEN.length(),base.length()));
+        
+        return result.toString();
+    }
 
     /**
      * This class is used to read properties lines.  These lines do
@@ -986,22 +1019,22 @@ public class ExtendedProperties extends Hashtable
 
         if (value instanceof String)
         {
-            return (String) value;
+            return (String) interpolate((String)value);
         }
         else if (value == null)
         {
             if (defaults != null)
             {
-                return defaults.getString(key, defaultValue);
+                return interpolate(defaults.getString(key, defaultValue));
             }
             else
             {
-                return defaultValue;
+                return interpolate(defaultValue);
             }
         }
         else if (value instanceof Vector)
         {
-            return (String) ((Vector) value).get(0);
+            return interpolate((String) ((Vector) value).get(0));
         }
         else
         {
