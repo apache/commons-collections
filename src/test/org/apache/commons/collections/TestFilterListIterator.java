@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestFilterListIterator.java,v 1.1 2002/02/25 23:53:20 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/02/25 23:53:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestFilterListIterator.java,v 1.2 2002/02/26 17:28:55 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/02/26 17:28:55 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import java.util.ListIterator;
 import java.util.Random;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/02/25 23:53:20 $
+ * @version $Revision: 1.2 $ $Date: 2002/02/26 17:28:55 $
  * @author Rodney Waldhoff
  */
 public class TestFilterListIterator extends TestCase {
@@ -112,6 +112,7 @@ public class TestFilterListIterator extends TestCase {
             list.add(new Integer(i));
             if(i%2 == 0) { evens.add(new Integer(i)); }
             if(i%2 == 1) { odds.add(new Integer(i)); }
+            if(i%3 == 0) { threes.add(new Integer(i)); }
             if(i%4 == 0) { fours.add(new Integer(i)); }
             if(i%6 == 0) { sixes.add(new Integer(i)); }
         }
@@ -238,7 +239,7 @@ public class TestFilterListIterator extends TestCase {
         FilterListIterator filtered = new FilterListIterator(list.listIterator(),truePred);
         walkLists(list,filtered);
     }
-
+    
     public void testFalsePredicate() {
         FilterListIterator filtered = new FilterListIterator(list.listIterator(),falsePred);
         walkLists(new ArrayList(),filtered);
@@ -280,26 +281,98 @@ public class TestFilterListIterator extends TestCase {
         walkLists(sixes,filtered);
     }
 
+    public void testNestedSixes3() {        
+        FilterListIterator filtered = new FilterListIterator(
+                                        new FilterListIterator(list.listIterator(),threePred),
+                                        evenPred
+                                      );
+        walkLists(sixes,new FilterListIterator(filtered,truePred));
+    }
+
+    public void testNextChangesPrevious() {
+        {
+            FilterListIterator filtered = new FilterListIterator(list.listIterator(),threePred);
+            nextNextPrevious(threes.listIterator(),filtered);
+        }
+    
+        {
+            FilterListIterator filtered = new FilterListIterator(list.listIterator(),truePred);
+            nextNextPrevious(list.listIterator(),filtered);
+        }
+    }
+
+    public void testPreviousChangesNext() {
+        {
+            FilterListIterator filtered = new FilterListIterator(list.listIterator(),threePred);
+            ListIterator expected = threes.listIterator();
+            walkForward(expected,filtered);
+            previousPreviousNext(expected,filtered);
+        }
+        {
+            FilterListIterator filtered = new FilterListIterator(list.listIterator(),truePred);
+            ListIterator expected = list.listIterator();
+            walkForward(expected,filtered);
+            previousPreviousNext(expected,filtered);
+        }
+    }
+
     // Utilities
+
+    private void walkForward(ListIterator expected, ListIterator testing) {
+        while(expected.hasNext()) {
+            assertEquals(expected.nextIndex(),testing.nextIndex());
+            assertEquals(expected.previousIndex(),testing.previousIndex());
+            assertTrue(testing.hasNext());
+            assertEquals(expected.next(),testing.next());
+        }
+    }
+
+    private void walkBackward(ListIterator expected, ListIterator testing) {
+        while(expected.hasPrevious()) {
+            assertEquals(expected.nextIndex(),testing.nextIndex());
+            assertEquals(expected.previousIndex(),testing.previousIndex());
+            assertTrue(testing.hasPrevious());
+            assertEquals(expected.previous(),testing.previous());
+        }
+    }
+
+    private void nextNextPrevious(ListIterator expected, ListIterator testing) {
+        // calls to next() should change the value returned by previous()
+        // even after previous() has been set by a call to hasPrevious()
+        assertEquals(expected.next(),testing.next());
+        assertEquals(expected.hasPrevious(),testing.hasPrevious());
+        Object expecteda = expected.next();
+        Object testinga = testing.next();
+        assertEquals(expecteda,testinga);
+        Object expectedb = expected.previous();
+        Object testingb = testing.previous();
+        assertEquals(expecteda,expectedb);
+        assertEquals(testinga,testingb);
+    }
+
+    private void previousPreviousNext(ListIterator expected, ListIterator testing) {
+        // calls to previous() should change the value returned by next()
+        // even after next() has been set by a call to hasNext()
+        assertEquals(expected.previous(),testing.previous());
+        assertEquals(expected.hasNext(),testing.hasNext());
+        Object expecteda = expected.previous();
+        Object testinga = testing.previous();
+        assertEquals(expecteda,testinga);
+        Object expectedb = expected.next();
+        Object testingb = testing.next();
+        assertEquals(expecteda,testingb);
+        assertEquals(expecteda,expectedb);
+        assertEquals(testinga,testingb);
+    }
 
     private void walkLists(List list, ListIterator testing) {
         ListIterator expected = list.listIterator();
 
         // walk all the way forward
-        while(expected.hasNext()) {
-            assertEquals(expected.nextIndex(),testing.nextIndex());
-            assertEquals(expected.previousIndex(),testing.previousIndex());
-            assertTrue("a",testing.hasNext());
-            assertEquals("b",expected.next(),testing.next());
-        }
-        
+        walkForward(expected,testing);
+
         // walk all the way back
-        while(expected.hasPrevious()) {
-            assertEquals(expected.nextIndex(),testing.nextIndex());
-            assertEquals(expected.previousIndex(),testing.previousIndex());
-            assertTrue("c",testing.hasPrevious());
-            assertEquals("d",expected.previous(),testing.previous());
-        }
+        walkBackward(expected,testing);
 
         // forward,back,foward
         while(expected.hasNext()) {
@@ -313,13 +386,9 @@ public class TestFilterListIterator extends TestCase {
             assertEquals(expected.next(),testing.next());
         }
 
+
         // walk all the way back
-        while(expected.hasPrevious()) {
-            assertEquals(expected.nextIndex(),testing.nextIndex());
-            assertEquals(expected.previousIndex(),testing.previousIndex());
-            assertTrue(testing.hasPrevious());
-            assertEquals(expected.previous(),testing.previous());
-        }
+        walkBackward(expected,testing);
 
         for(int i=0;i<list.size();i++) {
             // walk forward i
