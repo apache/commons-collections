@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.9 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2002/10/12 22:15:18 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.10 2003/05/16 14:36:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,10 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-
-
 package org.apache.commons.collections;
-
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,7 +63,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 
 /**
  * <p>A customized implementation of <code>java.util.ArrayList</code> designed
@@ -93,8 +86,8 @@ import java.util.ListIterator;
  * <code>java.util.ArrayList</code> directly (with no synchronization), for
  * maximum performance.</p>
  *
- * <P><strong>NOTE</strong>: <I>This class is not cross-platform.
- * Using it may cause unexpected failures on some architectures.</I>
+ * <p><strong>NOTE</strong>: <i>This class is not cross-platform.
+ * Using it may cause unexpected failures on some architectures.</i>
  * It suffers from the same problems as the double-checked locking idiom.  
  * In particular, the instruction that clones the internal collection and the 
  * instruction that sets the internal reference to the clone can be executed 
@@ -102,14 +95,14 @@ import java.util.ListIterator;
  * unexpectedly, as it may be reading the state of the internal collection
  * before the internal collection is fully formed.
  * For more information on the double-checked locking idiom, see the
- * <A Href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">
- * Double-Checked Locking Idiom Is Broken Declartion</A>.</P>
+ * <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">
+ * Double-Checked Locking Idiom Is Broken Declartion</a>.</p>
  *
- * @since 1.0
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.10 $ $Date: 2003/05/16 14:36:40 $
+ * 
  * @author Craig R. McClanahan
- * @version $Revision: 1.9 $ $Date: 2002/10/12 22:15:18 $
  */
-
 public class FastArrayList extends ArrayList {
 
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.10 2003/05/11 14:00:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.11 2003/05/16 14:40:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -89,7 +89,7 @@ import java.util.Set;
  * <code>coll</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.10 $ $Date: 2003/05/11 14:00:09 $
+ * @version $Revision: 1.11 $ $Date: 2003/05/16 14:40:56 $
  * 
  * @author Christopher Berry
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>

@@ -1,9 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/HashBag.java,v 1.7 2003/01/13 23:54:38 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/HashBag.java,v 1.8 2003/05/16 14:36:40 scolebourne Exp $
  * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.Collection;
@@ -64,27 +64,28 @@ import java.util.HashMap;
  * A {@link Bag} that is backed by a {@link HashMap}.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.7 $ $Date: 2003/01/13 23:54:38 $
+ * @version $Revision: 1.8 $ $Date: 2003/05/16 14:36:40 $
+ * 
  * @author Chuck Burdick
- **/
+ */
 public class HashBag extends DefaultMapBag implements Bag {
 
-   /**
-    * Constructs an empty <Code>HashBag</Code>.
-    */
-   public HashBag() {
-      super(new HashMap());
-   }
+    /**
+     * Constructs an empty <Code>HashBag</Code>.
+     */
+    public HashBag() {
+        super(new HashMap());
+    }
 
-   /**
-    * Constructs a {@link Bag} containing all the members of the given
-    * collection.
-    * @see #addAll
-    */
-   public HashBag(Collection c) {
-      this();
-      addAll(c);
-   }
+    /**
+     * Constructs a {@link Bag} containing all the members of the given
+     * collection.
+     * 
+     * @param coll  a collection to copy into this bag
+     */
+    public HashBag(Collection coll) {
+        this();
+        addAll(coll);
+    }
+
 }
-
-

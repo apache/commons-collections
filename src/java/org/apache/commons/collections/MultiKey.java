@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/MultiKey.java,v 1.1 2003/03/09 00:06:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/MultiKey.java,v 1.2 2003/05/16 14:40:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.util.Arrays;
  * can be used instead by creating an instance passing in the key and locale.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/03/09 00:06:44 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/16 14:40:56 $
  * 
  * @author Howard Lewis Ship
  * @author Stephen Colebourne

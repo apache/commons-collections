@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.10 2003/04/18 23:17:09 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.11 2003/05/16 14:36:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -157,8 +157,8 @@ import java.util.Vector;
  * much time to improve it), I wrote it this way.  If you don't like
  * it, go ahead and tune it up!
  *
- * @since 1.0
- * @version $Revision: 1.10 $ $Date: 2003/04/18 23:17:09 $
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.11 $ $Date: 2003/05/16 14:36:40 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -170,8 +170,8 @@ import java.util.Vector;
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
  */
-public class ExtendedProperties extends Hashtable
-{
+public class ExtendedProperties extends Hashtable {
+    
     /**
      * Default configurations repository.
      */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.4 2003/01/10 20:21:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.5 2003/05/16 14:40:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,9 +65,10 @@ import java.util.Collection;
  * improvement.
  * 
  * @since Commons Collections 2.2
+ * @version $Revision: 1.5 $ $Date: 2003/05/16 14:40:56 $
+ * 
  * @author Jeff Varszegi
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
- * @version $Revision: 1.4 $ $Date: 2003/01/10 20:21:23 $
  */
 public class NodeCachingLinkedList extends CommonsLinkedList {
 

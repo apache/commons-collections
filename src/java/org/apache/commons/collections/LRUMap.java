@@ -1,9 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.18 2003/01/13 23:54:38 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.19 2003/05/16 14:36:40 scolebourne Exp $
  * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -84,7 +85,8 @@ import java.util.Iterator;
  * </p>
  * 
  * @since Commons Collections 1.0
- * @version $Revision: 1.18 $ $Date: 2003/01/13 23:54:38 $
+ * @version $Revision: 1.19 $ $Date: 2003/05/16 14:36:40 $
+ * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
  */

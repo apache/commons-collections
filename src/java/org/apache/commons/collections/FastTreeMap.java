@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.11 2003/01/18 14:03:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.12 2003/05/16 14:36:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -88,8 +88,8 @@ import java.util.TreeMap;
  * <code>java.util.TreeMap</code> directly (with no synchronization), for
  * maximum performance.</p>
  *
- * <P><strong>NOTE</strong>: <I>This class is not cross-platform.  
- * Using it may cause unexpected failures on some architectures.</I>
+ * <p><strong>NOTE</strong>: <i>This class is not cross-platform.  
+ * Using it may cause unexpected failures on some architectures.</i>
  * It suffers from the same problems as the double-checked locking idiom.  
  * In particular, the instruction that clones the internal collection and the 
  * instruction that sets the internal reference to the clone can be executed 
@@ -97,11 +97,11 @@ import java.util.TreeMap;
  * unexpectedly, as it may be reading the state of the internal collection
  * before the internal collection is fully formed.
  * For more information on the double-checked locking idiom, see the
- * <A Href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">
- * Double-Checked Locking Idiom Is Broken Declartion</A>.</P>
+ * <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">
+ * Double-Checked Locking Idiom Is Broken Declartion</a>.</p>
  *
- * @since 1.0
- * @version $Revision: 1.11 $ $Date: 2003/01/18 14:03:28 $
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.12 $ $Date: 2003/05/16 14:36:40 $
  * 
  * @author Craig R. McClanahan
  * @author Stephen Colebourne
