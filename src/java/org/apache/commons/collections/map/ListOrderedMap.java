@@ -23,6 +23,7 @@ import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -54,7 +55,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.15 $ $Date: 2004/04/09 10:36:01 $
+ * @version $Revision: 1.16 $ $Date: 2004/06/07 21:51:39 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -82,6 +83,16 @@ public class ListOrderedMap
     }
 
     //-----------------------------------------------------------------------
+    /**
+     * Constructs a new empty <code>ListOrderedMap</code> that decorates
+     * a <code>HashMap</code>.
+     * 
+     * @since Commons Collections 3.1
+     */
+    public ListOrderedMap() {
+        this(new HashMap());
+    }
+
     /**
      * Constructor that wraps (not copies).
      * 
