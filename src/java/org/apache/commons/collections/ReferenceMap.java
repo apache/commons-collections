@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.7 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2002/10/12 22:15:18 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.8 2003/01/25 12:33:02 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,7 +57,6 @@
  */
 package org.apache.commons.collections;
 
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -79,7 +75,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
 
 /**
  *  Hashtable-based {@link Map} implementation that allows
@@ -118,10 +113,12 @@ import java.util.Set;
  *  can use {@link java.util.Collections#synchronizedMap} to 
  *  provide synchronized access to a <Code>ReferenceMap</Code>.
  *
- *  @author Paul Jack 
- *  @version $Id: ReferenceMap.java,v 1.7 2002/10/12 22:15:18 scolebourne Exp $
- *  @since 2.1
- *  @see java.lang.ref.Reference
+ * @see java.lang.ref.Reference
+ * 
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.8 $ $Date: 2003/01/25 12:33:02 $
+ * 
+ * @author Paul Jack
  */
 public class ReferenceMap extends AbstractMap {
 
@@ -429,17 +426,16 @@ public class ReferenceMap extends AbstractMap {
 
 
     /**
-     *  Purges stale mappings from this map.<P>
-     *
-     *  Ordinarily, stale mappings are only removed during
-     *  a write operation; typically a write operation will    
-     *  occur often enough that you'll never need to manually
-     *  invoke this method.<P>
-     *
-     *  Note that this method is not synchronized!  Special
-     *  care must be taken if, for instance, you want stale
-     *  mappings to be removed on a periodic basis by some
-     *  background thread.
+     * Purges stale mappings from this map.
+     * <p>
+     * Ordinarily, stale mappings are only removed during
+     * a write operation, although this method is called for both
+     * read and write operations to maintain a consistent state.
+     * <p>
+     * Note that this method is not synchronized!  Special
+     * care must be taken if, for instance, you want stale
+     * mappings to be removed on a periodic basis by some
+     * background thread.
      */
     private void purge() {
         Reference ref = queue.poll();
