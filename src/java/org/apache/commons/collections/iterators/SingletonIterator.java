@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonIterator.java,v 1.2 2002/08/17 11:29:38 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/17 11:29:38 $
  *
  * ====================================================================
  *
@@ -62,46 +62,52 @@ package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-/** <p><code>SingletonIterator</code> is an {@link Iterator} over a single 
-  * object instance.</p>
-  *
-  * @since 2.0
-  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @version $Revision: 1.1 $
-  */
+/** 
+ * <p><code>SingletonIterator</code> is an {@link Iterator} over a single 
+ * object instance.</p>
+ *
+ * @since 2.0
+ * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
+ * @version $Revision: 1.2 $
+ */
 public class SingletonIterator implements Iterator {
 
     private boolean first = true;
     private Object object;
-    
+
     /**
-     *  Constructs a new <Code>SingletonIterator</Code>.
+     * Constructs a new <Code>SingletonIterator</Code>.
      *
-     *  @param object  the single object to return from the iterator
+     * @param object  the single object to return from the iterator
      */
     public SingletonIterator(Object object) {
+        super();
         this.object = object;
     }
 
     /**
-     *  Returns true if the single object hasn't been returned yet.
+     * Is another object available from the iterator.
+     * <p>
+     * This returns true if the single object hasn't been returned yet.
      * 
-     *  @return true if the single object hasn't been returned yet
+     * @return true if the single object hasn't been returned yet
      */
     public boolean hasNext() {
         return first;
     }
 
     /**
-     *  Returns the single object if it hasn't been returned yet.
+     * Get the next object from the iterator.
+     * <p>
+     * This returns the single object if it hasn't been returned yet.
      *
-     *  @return the single object
-     *  @throws NoSuchElementException if the single object has already been
-     *    returned
+     * @return the single object
+     * @throws NoSuchElementException if the single object has already 
+     *    been returned
      */
     public Object next() {
-        if (! first ) {
+        if (!first) {
             throw new NoSuchElementException();
         }
         Object answer = object;
@@ -111,11 +117,12 @@ public class SingletonIterator implements Iterator {
     }
 
     /**
-     *  Throws {@link UnsupportedOperationException}.
+     * Remove always throws {@link UnsupportedOperationException}.
      *
-     *  @throws UnsupportedOperationException always
+     * @throws UnsupportedOperationException always
      */
     public void remove() {
-        throw new UnsupportedOperationException( "remove() is not supported by this iterator" );
+        throw new UnsupportedOperationException("remove() is not supported by this iterator");
     }
+    
 }
