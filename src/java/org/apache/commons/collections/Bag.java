@@ -38,7 +38,7 @@ import java.util.Set;
  * it has been decided to maintain backwards compatibility instead.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.17 $ $Date: 2004/04/27 20:43:05 $
+ * @version $Revision: 1.18 $ $Date: 2004/05/03 15:12:20 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -66,8 +66,7 @@ public interface Bag extends Collection {
      * Since this method always increases the size of the bag,
      * according to the {@link Collection#add(Object)} contract, it 
      * should always return <code>true</code>.  Since it sometimes returns
-     * <code>false</code>, this method violates the contract.  A future
-     * version of this method will comply by always returning <code>true</code>.
+     * <code>false</code>, this method violates the contract.
      *
      * @param object  the object to add
      * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
@@ -95,9 +94,7 @@ public interface Bag extends Collection {
      * <p>
      * According to the {@link Collection#remove(Object)} method,
      * this method should only remove the <i>first</i> occurrence of the
-     * given object, not <i>all</i> occurrences.  A future version of this
-     * method will comply with the contract by only removing one occurrence
-     * of the given object.
+     * given object, not <i>all</i> occurrences.
      *
      * @return <code>true</code> if this call changed the collection
      */
@@ -142,8 +139,7 @@ public interface Bag extends Collection {
      * The {@link Collection#containsAll(Collection)} method specifies
      * that cardinality should <i>not</i> be respected; this method should
      * return true if the bag contains at least one of every object contained
-     * in the given collection.  A future version of this method will comply
-     * with that contract.
+     * in the given collection.
      * 
      * @param coll  the collection to check against
      * @return <code>true</code> if the Bag contains all the collection
@@ -161,8 +157,7 @@ public interface Bag extends Collection {
      * <P>The {@link Collection#removeAll(Collection)} method specifies
      * that cardinality should <i>not</i> be respected; this method should
      * remove <i>all</i> occurrences of every object contained in the 
-     * given collection.  A future version of this method will comply
-     * with that contract.
+     * given collection.
      *
      * @param coll  the collection to remove
      * @return <code>true</code> if this call changed the collection
@@ -183,8 +178,7 @@ public interface Bag extends Collection {
      * <P>The {@link Collection#retainAll(Collection)} method specifies
      * that cardinality should <i>not</i> be respected; this method should
      * keep <i>all</i> occurrences of every object contained in the 
-     * given collection.  A future version of this method will comply
-     * with that contract.
+     * given collection.
      *
      * @param coll  the collection to retain
      * @return <code>true</code> if this call changed the collection
