@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.2 2002/08/17 11:24:58 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/17 11:24:58 $
  *
  * ====================================================================
  *
@@ -60,12 +60,14 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.BitSet;
-
 /**
  * Provides an ordered iteration over the elements contained in
  * a collection of ordered {@link Iterator}s.  In other words,
@@ -73,29 +75,46 @@ import java.util.BitSet;
  * my {@link #next} method will return the lesser of 
  * <code>A.next()</code> and <code>B.next()</code>.
  *
- * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:51 $
- * @author Rodney Waldhoff
  * @since 2.1
+ * @author Rodney Waldhoff
+ * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
+ * @version $Id: CollatingIterator.java,v 1.2 2002/08/17 11:24:58 scolebourne Exp $
  */
 public class CollatingIterator implements Iterator {
 
-    //------------------------------------------------------------ Constructors
+    /** My {@link Comparator}. */
+    private Comparator comparator = null;
+
+    /** My list of {@link Iterator}s. */
+    private ArrayList iterators = null;
+   
+    /** {@link Iterator#next Next} objects peeked from each iterator. */
+    private ArrayList values = null;
+    
+    /** Whether or not each {@link #values} element has been set. */
+    private BitSet valueSet = null;
+
+    /** Index of the {@link #iterators iterator} from whom the last returned value was obtained. */
+    private int lastReturned = -1;
+
+    // Constructors
+    // -------------------------------------------------------------------
     
     /**
-     *  Constructs a new <Code>CollatingIterator</Code>.  Natural sort order
-     *  will be used, and child iterators will have to be manually added 
-     *  using the {@link #addIterator(Iterator)} method.
+     * Constructs a new <Code>CollatingIterator</Code>.  Natural sort order
+     * will be used, and child iterators will have to be manually added 
+     * using the {@link #addIterator(Iterator)} method.
      */
     public CollatingIterator() {
         this(null,2);
     }
     
     /**
-     *  Constructs a new <Code>CollatingIterator</Code> that will used the
-     *  specified comparator for ordering.  Child iterators will have to be 
-     *  manually added using the {@link #addIterator(Iterator)} method.
+     * Constructs a new <Code>CollatingIterator</Code> that will used the
+     * specified comparator for ordering.  Child iterators will have to be 
+     * manually added using the {@link #addIterator(Iterator)} method.
      *
-     *  @param comp  the comparator to use for ordering, or <Code>null</Code>
+     * @param comp  the comparator to use for ordering, or <Code>null</Code>
      *    to use natural sort order
      */
     public CollatingIterator(Comparator comp) {
@@ -103,14 +122,14 @@ public class CollatingIterator implements Iterator {
     }
     
     /**
-     *  Constructs a new <Code>CollatingIterator</Code> that will used the
-     *  specified comparator for ordering and have the specified initial
-     *  capacity.  Child iterators will have to be 
-     *  manually added using the {@link #addIterator(Iterator)} method.
+     * Constructs a new <Code>CollatingIterator</Code> that will used the
+     * specified comparator for ordering and have the specified initial
+     * capacity.  Child iterators will have to be 
+     * manually added using the {@link #addIterator(Iterator)} method.
      *
-     *  @param comp  the comparator to use for ordering, or <Code>null</Code>
+     * @param comp  the comparator to use for ordering, or <Code>null</Code>
      *    to use natural sort order
-     *  @param initIterCapacity  the initial capacity for the internal list
+     * @param initIterCapacity  the initial capacity for the internal list
      *    of child iterators
      */
     public CollatingIterator(Comparator comp, int initIterCapacity) {
@@ -119,14 +138,15 @@ public class CollatingIterator implements Iterator {
     }
 
     /**
-     *  Constructs a new <Code>CollatingIterator</Code> that will use the
-     *  specified comparator to provide ordered iteration over the two
-     *  given iterators.
+     * Constructs a new <Code>CollatingIterator</Code> that will use the
+     * specified comparator to provide ordered iteration over the two
+     * given iterators.
      *
-     *  @param comp  the comparator to use to sort, or null to use natural
+     * @param comp  the comparator to use to sort, or null to use natural
      *    sort order
-     *  @param a  the first child ordered iterator
-     *  @param b  the second child ordered iterator
+     * @param a  the first child ordered iterator
+     * @param b  the second child ordered iterator
+     * @throws NullPointerException if either iterator is null
      */
     public CollatingIterator(Comparator comp, Iterator a, Iterator b) {
         this(comp,2);
@@ -134,22 +154,89 @@ public class CollatingIterator implements Iterator {
         addIterator(b);
     }
 
-    //--------------------------------------------------------- Public Methods
+    /**
+     * Constructs a new <Code>CollatingIterator</Code> that will use the
+     * specified comparator to provide ordered iteration over the array
+     * of iterators.
+     *
+     * @param comp  the comparator to use to sort, or null to use natural
+     *    sort order
+     * @param iterators  the array of iterators
+     * @throws NullPointerException if iterators array is or contains null
+     */
+    public CollatingIterator(Comparator comp, Iterator[] iterators) {
+        this(comp, iterators.length);
+        for (int i = 0; i < iterators.length; i++) {
+            addIterator(iterators[i]);
+        }
+    }
+
+    /**
+     * Constructs a new <Code>CollatingIterator</Code> that will use the
+     * specified comparator to provide ordered iteration over the collection
+     * of iterators.
+     *
+     * @param comp  the comparator to use to sort, or null to use natural
+     *    sort order
+     * @param iterators  the collection of iterators
+     * @throws NullPointerException if iterators collection is or contains null
+     * @throws ClassCastException if iterators collection doesn't contain an iterator
+     */
+    public CollatingIterator(Comparator comp, Collection iterators) {
+        this(comp, iterators.size());
+        for (Iterator it = iterators.iterator(); it.hasNext();) {
+            Iterator item = (Iterator) it.next();
+            addIterator(item);
+        }
+    }
+
+    // Public Methods
+    // -------------------------------------------------------------------
 
     /**
      * Add the given {@link Iterator} to my collection to collate.
      * @throws IllegalStateException if I've already started iterating
+     * @throws NullPointerException if the iterator is null
      */
-    public void addIterator(Iterator iter) throws IllegalStateException {
+    public void addIterator(Iterator iterator) {
         checkNotStarted();
-        iterators.add(iter);
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        iterators.add(iterator);
+    }
+
+    /**
+     * Set the Iterator at the given index     
+     * 
+     * @param index      index of the Iterator to replace
+     * @param iterator   Iterator to place at the given index
+     * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt; size()
+     * @throws IllegalStateException if I've already started iterating
+     * @throws NullPointerException if the iterator is null
+     */
+    public void setIterator(int index, Iterator iterator) throws IndexOutOfBoundsException {
+        checkNotStarted();
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        iterators.set(index, iterator);
+    }
+
+    /**
+     * Get the list of Iterators (unmodifiable)
+     * 
+     * @return the unmodifiable list of iterators added
+     */
+    public List getIterators() {
+        return Collections.unmodifiableList(iterators);
     }
 
     /**
      * Set the {@link Comparator} by which I collate.
      * @throws IllegalStateException if I've already started iterating
      */
-    public void setComparator(Comparator comp) throws IllegalStateException {
+    public void setComparator(Comparator comp) {
         checkNotStarted();
         comparator = comp;
     }
@@ -161,7 +248,8 @@ public class CollatingIterator implements Iterator {
         return comparator;
     }
 
-    //------------------------------------------------------- Iterator Methods
+    // Iterator Methods
+    // -------------------------------------------------------------------
 
     /**
      *  Returns <Code>true</Code> if any child iterator has remaining elements.
@@ -212,7 +300,8 @@ public class CollatingIterator implements Iterator {
         }
     }
 
-    //--------------------------------------------------------- Private Methods
+    // Private Methods
+    // -------------------------------------------------------------------
 
     /** Initialize my collating state if it hasn't been already. */
     private void start() {
@@ -262,7 +351,7 @@ public class CollatingIterator implements Iterator {
      * @throws IllegalStateException iff I've been {@link #start started}
      */
     private void checkNotStarted() throws IllegalStateException {
-        if(null != values) {
+        if (null != values) {
             throw new IllegalStateException("Can't do that after next or hasNext has been called.");
         }
     }
@@ -320,22 +409,5 @@ public class CollatingIterator implements Iterator {
         }
         return false;
     }
-
-    //--------------------------------------------------------- Private Members
-
-    /** My {@link Comparator}. */
-    private Comparator comparator = null;
-
-    /** My list of {@link Iterator}s. */
-    private ArrayList iterators = null;
-   
-    /** {@link Iterator#next Next} objects peeked from each iterator. */
-    private ArrayList values = null;
-    
-    /** Whether or not each {@link #values} element has been set. */
-    private BitSet valueSet = null;
-
-    /** Index of the {@link #iterators iterator} from whom the last returned value was obtained. */
-    private int lastReturned = -1;
 
 }
