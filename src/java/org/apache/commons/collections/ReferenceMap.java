@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.5 2002/08/13 01:04:19 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/13 01:04:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.6 2002/08/19 19:44:59 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/19 19:44:59 $
  *
  * ====================================================================
  *
@@ -121,11 +121,11 @@ import java.util.Set;
  *  provide synchronized access to a <Code>ReferenceMap</Code>.
  *
  *  @author Paul Jack 
- *  @version $Id: ReferenceMap.java,v 1.5 2002/08/13 01:04:19 pjack Exp $
+ *  @version $Id: ReferenceMap.java,v 1.6 2002/08/19 19:44:59 pjack Exp $
  *  @since 2.1
  *  @see java.lang.ref.Reference
  */
-public class ReferenceMap extends AbstractMap implements Serializable {
+public class ReferenceMap extends AbstractMap {
 
     /**
      *  For serialization.
