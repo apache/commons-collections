@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.32 2003/08/31 17:52:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.33 2003/09/09 21:05:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.32 $ $Date: 2003/08/31 17:52:13 $
+ * @version $Revision: 1.33 $ $Date: 2003/09/09 21:05:51 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -640,7 +640,6 @@ public class MapUtils {
      * 
      * @param map  the map to convert to a Properties object, may not be null
      * @return the properties object
-     * @throws NullPointerException if the map is null
      */
     public static Properties toProperties(Map map) {
         Properties answer = new Properties();
@@ -940,7 +939,7 @@ public class MapUtils {
      * Map. It is important not to use the original map after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
      *
-     * @param map  the map to predicate, must not be null
+     * @param map  the map to transform, must not be null
      * @param keyTransformer  the transformer for the map keys, null means no transformation
      * @param valueTransformer  the transformer for the map values, null means no transformation
      * @return a transformed map backed by the given map
@@ -1113,11 +1112,11 @@ public class MapUtils {
      * Map. It is important not to use the original map after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
      *
-     * @param map  the map to predicate, must not be null
+     * @param map  the map to transform, must not be null
      * @param keyTransformer  the transformer for the map keys, null means no transformation
      * @param valueTransformer  the transformer for the map values, null means no transformation
      * @return a transformed map backed by the given map
-     * @throws IllegalArgumentException  if the Map is null
+     * @throws IllegalArgumentException  if the SortedMap is null
      */
     public static SortedMap transformedSortedMap(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
         return TransformedSortedMap.decorate(map, keyTransformer, valueTransformer);
@@ -1186,8 +1185,8 @@ public class MapUtils {
      *         return new File(mapKey);
      *     }
      * }
-     * Map lazyMap = MapUtils.lazyMap(new HashMap(), factory);
-     * Object obj = lazyMap.get("C:/dev");
+     * SortedMap lazy = MapUtils.lazySortedMap(new TreeMap(), factory);
+     * Object obj = lazy.get("C:/dev");
      * </pre>
      *
      * After the above code is executed, <code>obj</code> will contain
