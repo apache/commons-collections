@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/MapIterator.java,v 1.1 2003/11/02 15:27:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/MapIterator.java,v 1.2 2003/11/08 18:43:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,7 +58,6 @@
 package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Defines an iterator that operates over a <code>Map</code>.
@@ -83,7 +82,7 @@ import java.util.Map;
  * </pre>
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 15:27:54 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/08 18:43:13 $
  *
  * @author Stephen Colebourne
  */
@@ -123,21 +122,6 @@ public interface MapIterator extends Iterator {
      */
     Object getValue();
 
-    //-----------------------------------------------------------------------
-    /**
-     * Gets the last returned key-value pair from the underlying <code>Map</code>
-     * as a Map Entry instance.
-     * <p>
-     * The returned entry must not change when <code>next</code> is called.
-     * Changes made to the entry via <code>setValue</code> must change the map.
-     * 
-     * @return the last return key-value pair as an independent Map Entry
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
-     * @throws IllegalStateException if <code>remove()</code> has been called since the
-     *  last call to <code>next()</code>
-     */
-    Map.Entry asMapEntry();
-    
     //-----------------------------------------------------------------------
     /**
      * Removes the last returned key from the underlying <code>Map</code> (optional operation).

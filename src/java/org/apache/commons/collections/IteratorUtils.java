@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.14 2003/11/02 15:27:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.15 2003/11/08 18:43:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Map.Entry;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.ArrayListIterator;
@@ -87,6 +86,7 @@ import org.apache.commons.collections.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections.iterators.ResetableIterator;
 import org.apache.commons.collections.iterators.ResetableListIterator;
 import org.apache.commons.collections.iterators.ResetableMapIterator;
+import org.apache.commons.collections.iterators.ResetableOrderedMapIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -97,7 +97,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.14 $ $Date: 2003/11/02 15:27:53 $
+ * @version $Revision: 1.15 $ $Date: 2003/11/08 18:43:12 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -118,6 +118,10 @@ public class IteratorUtils {
      * A map iterator over no elements
      */    
     public static final ResetableMapIterator EMPTY_MAP_ITERATOR = new EmptyMapIterator();
+    /**
+     * A map iterator over no elements
+     */    
+    public static final ResetableOrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = new EmptyOrderedMapIterator();
 
     /**
      * Prevents instantiation.
@@ -162,6 +166,18 @@ public class IteratorUtils {
      */
     public static ResetableMapIterator emptyMapIterator() {
         return EMPTY_MAP_ITERATOR;
+    }
+
+    /**
+     * Gets an empty ordered map iterator.
+     * <p>
+     * This iterator is a valid map iterator object that will iterate 
+     * over nothing.
+     *
+     * @return  a list iterator over nothing
+     */
+    public static ResetableOrderedMapIterator emptyOrderedMapIterator() {
+        return EMPTY_ORDERED_MAP_ITERATOR;
     }
 
     /**
@@ -850,7 +866,7 @@ public class IteratorUtils {
         EmptyMapIterator() {
             super();
         }
-
+        
         public Object getKey() {
             throw new IllegalStateException("Iterator contains no elements");
         }
@@ -862,9 +878,24 @@ public class IteratorUtils {
         public Object setValue(Object value) {
             throw new IllegalStateException("Iterator contains no elements");
         }
+    }
+
+    //-----------------------------------------------------------------------    
+    /**
+     * EmptyOrderedMapIterator class
+     */
+    static class EmptyOrderedMapIterator extends EmptyMapIterator implements ResetableOrderedMapIterator {
         
-        public Entry asMapEntry() {
-            throw new IllegalStateException("Iterator contains no elements");
+        EmptyOrderedMapIterator() {
+            super();
+        }
+        
+        public boolean hasPrevious() {
+            return false;
+        }
+        
+        public Object previous() {
+            throw new NoSuchElementException("Iterator contains no elements");
         }
     }
 

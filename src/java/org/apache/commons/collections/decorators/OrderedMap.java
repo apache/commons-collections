@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.5 2003/11/04 23:36:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedMap.java,v 1.6 2003/11/08 18:43:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.iterators.DefaultMapIterator;
+import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.pairs.AbstractMapEntry;
 
@@ -80,7 +80,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/11/04 23:36:23 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/08 18:43:12 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -146,7 +146,7 @@ public class OrderedMap extends AbstractMapDecorator implements Map {
 
     //-----------------------------------------------------------------------
     public MapIterator mapIterator() {
-        return new DefaultMapIterator(this);
+        return new EntrySetMapIterator(this);
     }
     
     public Set keySet() {

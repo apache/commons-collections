@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/AbstractMapIteratorDecorator.java,v 1.1 2003/11/02 16:29:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/AbstractMapIteratorDecorator.java,v 1.2 2003/11/08 18:43:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,15 +57,13 @@
  */
 package org.apache.commons.collections.iterators;
 
-import java.util.Map;
-
 /**
  * Provides basic behaviour for decorating a map iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated map iterator.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 16:29:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/08 18:43:12 $
  * 
  * @author Stephen Colebourne
  */
@@ -121,10 +119,6 @@ public class AbstractMapIteratorDecorator implements MapIterator {
 
     public Object setValue(Object obj) {
         return iterator.setValue(obj);
-    }
-
-    public Map.Entry asMapEntry() {
-        return iterator.asMapEntry();
     }
 
 }

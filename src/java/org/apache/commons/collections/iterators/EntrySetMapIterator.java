@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/DefaultMapIterator.java,v 1.1 2003/11/02 23:40:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EntrySetMapIterator.java,v 1.1 2003/11/08 18:43:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,10 +60,9 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.collections.pairs.TiedMapEntry;
-
 /**
  * Implements a <code>MapIterator</code> using a Map entrySet.
+ * Reverse iteration is not supported.
  * <pre>
  * MapIterator it = map.mapIterator();
  * while (it.hasNext()) {
@@ -74,11 +73,11 @@ import org.apache.commons.collections.pairs.TiedMapEntry;
  * </pre>
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/02 23:40:53 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/08 18:43:13 $
  *
  * @author Stephen Colebourne
  */
-public class DefaultMapIterator implements ResetableMapIterator {
+public class EntrySetMapIterator implements MapIterator, ResetableMapIterator {
     
     private final Map map;
     private Iterator iterator;
@@ -90,7 +89,7 @@ public class DefaultMapIterator implements ResetableMapIterator {
      * 
      * @param map  the map to iterate over
      */
-    public DefaultMapIterator(Map map) {
+    public EntrySetMapIterator(Map map) {
         super();
         this.map = map;
         this.iterator = map.entrySet().iterator();
@@ -118,6 +117,7 @@ public class DefaultMapIterator implements ResetableMapIterator {
         return last.getKey();
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Removes the last returned key from the underlying <code>Map</code>.
      * <p>
@@ -184,24 +184,6 @@ public class DefaultMapIterator implements ResetableMapIterator {
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Gets the last returned key-value pair from the underlying <code>Map</code>
-     * as a Map Entry instance.
-     * <p>
-     * The returned entry will not change when <code>next</code> is called.
-     * Changes made to the entry via <code>setValue</code> will change the map.
-     * If you call setValue after next on the iterator, a ConcurrentModificationException
-     * may occur.
-     * 
-     * @return the last return key-value pair as an independent Map Entry
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
-     * @throws IllegalStateException if <code>remove()</code> has been called since the
-     *  last call to <code>next()</code>
-     */
-    public Map.Entry asMapEntry() {
-        return new TiedMapEntry(map, getKey());
-    }        
-    
     /**
      * Resets the state of the iterator.
      */

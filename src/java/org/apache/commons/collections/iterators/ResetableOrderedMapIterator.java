@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableMapIterator.java,v 1.2 2003/11/08 18:43:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/ResetableOrderedMapIterator.java,v 1.1 2003/11/08 18:43:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,72 +57,21 @@
  */
 package org.apache.commons.collections.iterators;
 
-import org.apache.commons.collections.Unmodifiable;
-
 /** 
- * Decorates a map iterator such that it cannot be modified.
+ * Interface implemented by those map iterators that can be reset back 
+ * to an initial state.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/08 18:43:13 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/08 18:43:13 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableMapIterator implements MapIterator, Unmodifiable {
+public interface ResetableOrderedMapIterator extends OrderedMapIterator, ResetableMapIterator {
 
-    /** The iterator being decorated */
-    private MapIterator iterator;
-
-    //-----------------------------------------------------------------------
     /**
-     * Decorates the specified iterator such that it cannot be modified.
-     *
-     * @param iterator  the iterator to decoarate
-     * @throws IllegalArgumentException if the iterator is null
+     * Resets the iterator back to the position at which the iterator
+     * was created.
      */
-    public static MapIterator decorate(MapIterator iterator) {
-        if (iterator == null) {
-            throw new IllegalArgumentException("MapIterator must not be null");
-        }
-        if (iterator instanceof Unmodifiable) {
-            return iterator;
-        }
-        return new UnmodifiableMapIterator(iterator);
-    }
-    
-    //-----------------------------------------------------------------------
-    /**
-     * Constructor.
-     *
-     * @param iterator  the iterator to decoarate
-     */
-    protected UnmodifiableMapIterator(MapIterator iterator) {
-        super();
-        this.iterator = iterator;
-    }
-
-    //-----------------------------------------------------------------------
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
-
-    public Object next() {
-        return iterator.next();
-    }
-
-    public Object getKey() {
-        return iterator.getKey();
-    }
-
-    public Object getValue() {
-        return iterator.getValue();
-    }
-
-    public Object setValue(Object value) {
-        throw new UnsupportedOperationException("setValue() is not supported");
-    }
-
-    public void remove() {
-        throw new UnsupportedOperationException("remove() is not supported");
-    }
+    public void reset();
 
 }

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UnmodifiableMapIterator.java,v 1.2 2003/11/08 18:43:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/OrderedMapIterator.java,v 1.1 2003/11/08 18:43:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,72 +57,31 @@
  */
 package org.apache.commons.collections.iterators;
 
-import org.apache.commons.collections.Unmodifiable;
-
-/** 
- * Decorates a map iterator such that it cannot be modified.
- *
+/**
+ * Defines an iterator that operates over an ordered <code>Map</code>.
+ * <p>
+ * This iterator allows both forward and reverse iteration through the map.
+ *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/08 18:43:13 $
- * 
+ * @version $Revision: 1.1 $ $Date: 2003/11/08 18:43:12 $
+ *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableMapIterator implements MapIterator, Unmodifiable {
-
-    /** The iterator being decorated */
-    private MapIterator iterator;
-
-    //-----------------------------------------------------------------------
-    /**
-     * Decorates the specified iterator such that it cannot be modified.
-     *
-     * @param iterator  the iterator to decoarate
-     * @throws IllegalArgumentException if the iterator is null
-     */
-    public static MapIterator decorate(MapIterator iterator) {
-        if (iterator == null) {
-            throw new IllegalArgumentException("MapIterator must not be null");
-        }
-        if (iterator instanceof Unmodifiable) {
-            return iterator;
-        }
-        return new UnmodifiableMapIterator(iterator);
-    }
+public interface OrderedMapIterator extends MapIterator {
     
-    //-----------------------------------------------------------------------
     /**
-     * Constructor.
+     * Checks to see if there is a previous entry that can be iterated to.
      *
-     * @param iterator  the iterator to decoarate
+     * @return <code>true</code> if the iterator has a previous element
      */
-    protected UnmodifiableMapIterator(MapIterator iterator) {
-        super();
-        this.iterator = iterator;
-    }
+    boolean hasPrevious();
 
-    //-----------------------------------------------------------------------
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
-
-    public Object next() {
-        return iterator.next();
-    }
-
-    public Object getKey() {
-        return iterator.getKey();
-    }
-
-    public Object getValue() {
-        return iterator.getValue();
-    }
-
-    public Object setValue(Object value) {
-        throw new UnsupportedOperationException("setValue() is not supported");
-    }
-
-    public void remove() {
-        throw new UnsupportedOperationException("remove() is not supported");
-    }
+    /**
+     * Gets the previous <em>key</em> from the <code>Map</code>.
+     *
+     * @return the previous key in the iteration
+     * @throws NoSuchElementException if the iteration is finished
+     */
+    Object previous();
 
 }
