@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * as the one stored in this predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
  *
  * @author Stephen Colebourne
  */
@@ -68,5 +68,14 @@ public final class IdentityPredicate implements Predicate, Serializable {
     public boolean evaluate(Object object) {
         return (iValue == object);
     }
-    
+
+    /**
+     * Gets the value.
+     * @return the value
+     * @since Commons Collections 3.1
+     */
+    public Object getValue() {
+        return iValue;
+    }
+
 }

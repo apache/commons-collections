@@ -27,14 +27,14 @@ import org.apache.commons.collections.Transformer;
  * like a switch statement.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
  *
  * @author Stephen Colebourne
  */
 public class SwitchTransformer implements Transformer, Serializable {
 
     /** Serial version UID */
-
+    static final long serialVersionUID = -6404460890903469332L;
 
     /** The tests to consider */
     private final Predicate[] iPredicates;
@@ -137,5 +137,32 @@ public class SwitchTransformer implements Transformer, Serializable {
         }
         return iDefault.transform(input);
     }
-    
+
+    /**
+     * Gets the predicates, do not modify the array.
+     * @return the predicates
+     * @since Commons Collections 3.1
+     */
+    public Predicate[] getPredicates() {
+        return iPredicates;
+    }
+
+    /**
+     * Gets the transformers, do not modify the array.
+     * @return the transformers
+     * @since Commons Collections 3.1
+     */
+    public Transformer[] getTransformers() {
+        return iTransformers;
+    }
+
+    /**
+     * Gets the default transformer.
+     * @return the default transformer
+     * @since Commons Collections 3.1
+     */
+    public Transformer getDefaultTransformer() {
+        return iDefault;
+    }
+
 }

@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that chains the specified closures together.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.6 $ $Date: 2004/03/13 17:17:03 $
  *
  * @author Stephen Colebourne
  */
@@ -119,5 +119,14 @@ public class ChainedTransformer implements Transformer, Serializable {
         }
         return object;
     }
-    
+
+    /**
+     * Gets the transformers, do not modify the array.
+     * @return the transformers
+     * @since Commons Collections 3.1
+     */
+    public Transformer[] getTransformers() {
+        return iTransformers;
+    }
+
 }

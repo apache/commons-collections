@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * using the input parameter as a key.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.6 $ $Date: 2004/03/13 17:17:03 $
  *
  * @author Stephen Colebourne
  */
@@ -69,5 +69,14 @@ public final class MapTransformer implements Transformer, Serializable {
     public Object transform(Object input) {
         return iMap.get(input);
     }
-    
+
+    /**
+     * Gets the map to lookup in.
+     * @return the map
+     * @since Commons Collections 3.1
+     */
+    public Map getMap() {
+        return iMap;
+    }
+
 }

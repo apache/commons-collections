@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Predicate implementation that returns the result of a transformer.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.5 $ $Date: 2004/03/13 17:17:03 $
  *
  * @author Stephen Colebourne
  */
@@ -71,5 +71,14 @@ public final class TransformerPredicate implements Predicate, Serializable {
         }
         return ((Boolean) result).booleanValue();
     }
-    
+
+    /**
+     * Gets the transformer.
+     * @return the transformer
+     * @since Commons Collections 3.1
+     */
+    public Transformer getTransformer() {
+        return iTransformer;
+    }
+
 }
