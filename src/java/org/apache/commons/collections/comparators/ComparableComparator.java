@@ -69,9 +69,24 @@ import java.util.Comparator;
  * of SortedSet and SortedMap.
  *
  * @author bayard@generationjava.com
- * @version $Id: ComparableComparator.java,v 1.3 2002/03/01 19:18:49 morgand Exp $
+ * @version $Id: ComparableComparator.java,v 1.4 2002/03/19 05:09:05 mas Exp $
  */
 public class ComparableComparator implements Comparator,Serializable {
+
+    private static final ComparableComparator instance = 
+        new ComparableComparator();
+
+    /**
+     *  Return a shared instance of a ComparableComparator.  Developers are
+     *  encouraged to use the comparator returned from this method instead of
+     *  constructing a new instance to reduce allocation and GC overhead when
+     *  multiple comparable comparators may be used in the same VM.
+     **/
+    public static ComparableComparator getInstance() {
+        return instance;
+    }
+
+    private static final long serialVersionUID=-291439688585137865L;
 
     public ComparableComparator() {
     }
