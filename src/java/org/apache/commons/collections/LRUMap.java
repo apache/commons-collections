@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.5 2002/02/13 23:07:31 morgand Exp $
- * $Revision: 1.5 $
- * $Date: 2002/02/13 23:07:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.6 2002/02/14 20:21:49 morgand Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/02/14 20:21:49 $
  *
  * ====================================================================
  *
@@ -60,8 +60,18 @@
  */
 package org.apache.commons.collections;
 
-import java.io.*;
-import java.util.*;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /** <p>
   * An implementation of a Map which has a maximum size and uses a Least Recently Used
@@ -124,6 +134,7 @@ import java.util.*;
   * <p>These issues hopefully will be corrected at a later date.</p>
   * 
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
   */
 public class LRUMap extends HashMap implements Externalizable {
     
