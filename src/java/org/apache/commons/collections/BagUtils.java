@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.7 2002/10/13 00:38:36 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2002/10/13 00:38:36 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.8 2003/02/20 23:14:03 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -62,24 +59,30 @@ package org.apache.commons.collections;
 
 import java.util.Comparator;
 import java.util.Set;
+
 /**
  * Provides utility methods and decorators for {@link Bag} 
- * and {@link SortedBag} instances.<P>
+ * and {@link SortedBag} instances.
  *
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.8 $ $Date: 2003/02/20 23:14:03 $
+ * 
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Id: BagUtils.java,v 1.7 2002/10/13 00:38:36 scolebourne Exp $
- * @since 2.1
+ * @author Andrew Freeman
  */
 public class BagUtils {
 
     /**
-     *  Prevents instantiation.
+     * Instantiation of BagUtils is not intended or required.
+     * However, some tools require an instance to operate.
      */
-    private BagUtils() {
+    public BagUtils() {
     }
 
-
+    /**
+     * Implementation of a Bag that validates elements before they are added.
+     */
     static class PredicatedBag 
             extends CollectionUtils.PredicatedCollection 
             implements Bag {
@@ -106,41 +109,14 @@ public class BagUtils {
         }
 
         private Bag getBag() {
-            return (Bag)collection;
+            return (Bag) collection;
         }
     }
 
 
-    static class UnmodifiableBag 
-            extends CollectionUtils.UnmodifiableCollection
-            implements Bag {
-
-        public UnmodifiableBag(Bag bag) {
-            super(bag);
-        }
-
-        private Bag getBag() {
-            return (Bag)collection;
-        }
-
-        public boolean add(Object o, int count) {
-            throw new UnsupportedOperationException();
-        }
-
-        public boolean remove(Object o, int count) {
-            throw new UnsupportedOperationException();
-        }
-
-        public Set uniqueSet() {
-            return ((Bag)collection).uniqueSet();
-        }
-
-        public int getCount(Object o) {
-            return ((Bag)collection).getCount(o);
-        }
-    }
-
-
+    /**
+     * Implementation of a Bag that is synchronized.
+     */
     static class SynchronizedBag
             extends CollectionUtils.SynchronizedCollection
             implements Bag {
@@ -166,12 +142,47 @@ public class BagUtils {
         }
 
         private Bag getBag() {
-            return (Bag)collection;
+            return (Bag) collection;
         }
-
     }
 
 
+    /**
+     * Implementation of a Bag that is unmodifiable.
+     */
+    static class UnmodifiableBag 
+            extends CollectionUtils.UnmodifiableCollection
+            implements Bag {
+
+        public UnmodifiableBag(Bag bag) {
+            super(bag);
+        }
+
+        public boolean add(Object o, int count) {
+            throw new UnsupportedOperationException();
+        }
+
+        public boolean remove(Object o, int count) {
+            throw new UnsupportedOperationException();
+        }
+
+        public Set uniqueSet() {
+            return getBag().uniqueSet();
+        }
+
+        public int getCount(Object o) {
+            return getBag().getCount(o);
+        }
+        
+        private Bag getBag() {
+            return (Bag) collection;
+        }
+    }
+
+
+    /**
+     * Implementation of a SortedBag that validates elements before they are added.
+     */
     static class PredicatedSortedBag 
             extends PredicatedBag 
             implements SortedBag {
@@ -193,11 +204,14 @@ public class BagUtils {
         }
 
         private SortedBag getSortedBag() {
-            return (SortedBag)collection;
+            return (SortedBag) collection;
         }
     }
 
 
+    /**
+     * Implementation of a SortedBag that is synchronized.
+     */
     static class SynchronizedSortedBag 
             extends SynchronizedBag
             implements SortedBag {
@@ -219,13 +233,15 @@ public class BagUtils {
         }
 
         private SortedBag getSortedBag() {
-            return (SortedBag)collection;
+            return (SortedBag) collection;
         }
-
     }
 
 
-    static class UnmodifiableSortedBag 
+    /**
+     * Implementation of a SortedBag that is unmodifiable.
+     */
+    static class UnmodifiableSortedBag
             extends UnmodifiableBag
             implements SortedBag {
 
@@ -246,9 +262,8 @@ public class BagUtils {
         }
 
         private SortedBag getSortedBag() {
-            return (SortedBag)collection;
+            return (SortedBag) collection;
         }
-
     }
 
 
