@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.2 2001/04/16 22:39:21 geirm Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/16 22:39:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.3 2001/05/04 16:33:18 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/05/04 16:33:18 $
  *
  * ====================================================================
  *
@@ -65,7 +65,7 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-
+import java.util.Stack; // only used in javadoc comments, javadoc won't find it otherwise
 
 /**
  * An implementation of the {@link java.util.Stack} API that is based on an
@@ -75,7 +75,7 @@ import java.util.EmptyStackException;
  * worry about multiple thread contention.
  *
  * @author Craig R. McClanahan
- * @version $Revision: 1.2 $ $Date: 2001/04/16 22:39:21 $
+ * @version $Revision: 1.3 $ $Date: 2001/05/04 16:33:18 $
  * @see java.util.Stack
  */
 
@@ -120,15 +120,15 @@ public class ArrayStack extends ArrayList {
      *  stack to satisfy this request
      */
     public Object peek(int n) throws EmptyStackException {
-        
+
         int m = (size() - n) - 1;
         if (m < 0)
             throw new EmptyStackException();
         else
             return (get(m));
-        
+
     }
-    
+
 
     /**
      * Pop the top item off of this stack and return it.
