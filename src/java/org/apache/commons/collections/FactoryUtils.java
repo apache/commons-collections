@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.10 2003/11/23 17:01:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.11 2003/11/23 17:48:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,18 +57,10 @@
  */
 package org.apache.commons.collections;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
+import org.apache.commons.collections.functors.ConstantFactory;
+import org.apache.commons.collections.functors.InstantiateFactory;
 import org.apache.commons.collections.functors.ExceptionFactory;
-import org.apache.commons.collections.functors.FunctorException;
+import org.apache.commons.collections.functors.PrototypeFactory;
 
 /**
  * <code>FactoryUtils</code> provides reference implementations and utilities
@@ -83,16 +75,11 @@ import org.apache.commons.collections.functors.FunctorException;
  * All the supplied factories are Serializable.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2003/11/23 17:01:36 $
+ * @version $Revision: 1.11 $ $Date: 2003/11/23 17:48:20 $
  *
  * @author Stephen Colebourne
  */
 public class FactoryUtils {
-
-    /**
-     * A factory that always returns null
-     */
-    private static final Factory NULL_FACTORY = new ConstantFactory(null);
 
     /**
      * This class is not normally instantiated.
@@ -118,7 +105,7 @@ public class FactoryUtils {
      * @return the factory
      */
     public static Factory nullFactory() {
-        return NULL_FACTORY;
+        return ConstantFactory.NULL_INSTANCE;
     }
 
     /**
@@ -131,7 +118,7 @@ public class FactoryUtils {
      * @return the <code>constant</code> factory.
      */
     public static Factory constantFactory(Object constantToReturn) {
-        return new ConstantFactory(constantToReturn);
+        return ConstantFactory.getInstance(constantToReturn);
     }
 
     /**
@@ -150,25 +137,7 @@ public class FactoryUtils {
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
     public static Factory prototypeFactory(Object prototype) {
-        if (prototype == null) {
-            throw new IllegalArgumentException("The prototype must not be null");
-        }
-        try {
-            prototype.getClass().getMethod("clone", null);
-            return new PrototypeCloneFactory(prototype);
-
-        } catch (NoSuchMethodException ex) {
-            try {
-                prototype.getClass().getConstructor(new Class[] { prototype.getClass()});
-                return new ReflectionFactory(prototype.getClass(), new Class[] { prototype.getClass()}, new Object[] { prototype });
-
-            } catch (NoSuchMethodException ex2) {
-                if (prototype instanceof Serializable) {
-                    return new PrototypeSerializationFactory((Serializable) prototype);
-                }
-            }
-        }
-        throw new IllegalArgumentException("The prototype must be cloneable via a public clone method");
+        return PrototypeFactory.getInstance(prototype);
     }
 
     /**
@@ -179,8 +148,8 @@ public class FactoryUtils {
      * @return the <code>reflection</code> factory
      * @throws IllegalArgumentException if the classToInstantiate is null
      */
-    public static Factory reflectionFactory(Class classToInstantiate) {
-        return new ReflectionFactory(classToInstantiate);
+    public static Factory instantiateFactory(Class classToInstantiate) {
+        return InstantiateFactory.getInstance(classToInstantiate, null, null);
     }
 
     /**
@@ -195,228 +164,8 @@ public class FactoryUtils {
      * @throws IllegalArgumentException if the paramTypes and args don't match
      * @throws IllegalArgumentException if the constructor doesn't exist
      */
-    public static Factory reflectionFactory(Class classToInstantiate, Class[] paramTypes, Object[] args) {
-        return new ReflectionFactory(classToInstantiate, paramTypes, args);
-    }
-
-    // ConstantFactory
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ConstantFactory returns the same instance each time.
-     */
-    private static class ConstantFactory implements Factory, Serializable {
-        /** The constant to return each time */
-        private final Object iConstant;
-
-        /**
-         * Constructor to store constant
-         */
-        private ConstantFactory(Object constant) {
-            super();
-            iConstant = constant;
-        }
-
-        /**
-         * Always return constant
-         */
-        public Object create() {
-            return iConstant;
-        }
-    }
-
-    // PrototypeCloneFactory
-    //----------------------------------------------------------------------------------
-
-    /**
-     * PrototypeCloneFactory creates objects by copying a prototype using the clone method.
-     */
-    private static class PrototypeCloneFactory implements Factory, Serializable {
-        /** The object to clone each time */
-        private final Object iPrototype;
-        /** The method used to clone */
-        private transient Method iCloneMethod;
-
-        /**
-         * Constructor to store prototype
-         */
-        private PrototypeCloneFactory(Object prototype) {
-            super();
-            if (prototype == null) {
-                throw new IllegalArgumentException("PrototypeCloneFactory: The prototype must not be null");
-            }
-            iPrototype = prototype;
-
-            findCloneMethod();
-        }
-
-        /**
-         * Find the Clone method for the class specified.
-         */
-        private void findCloneMethod() {
-            try {
-                iCloneMethod = iPrototype.getClass().getMethod("clone", null);
-
-            } catch (NoSuchMethodException ex) {
-                throw new IllegalArgumentException("PrototypeCloneFactory: The clone method must exist and be public ");
-            }
-        }
-
-        /**
-         * Return clone of prototype
-         */
-        public Object create() {
-            // needed for post-serialization
-            if (iCloneMethod == null) {
-                findCloneMethod();
-            }
-
-            try {
-                return iCloneMethod.invoke(iPrototype, null);
-
-            } catch (IllegalAccessException ex) {
-                throw new FunctorException("PrototypeCloneFactory: Clone method must be public", ex);
-            } catch (InvocationTargetException ex) {
-                throw new FunctorException("PrototypeCloneFactory: Clone method threw an exception", ex);
-            }
-        }
-    }
-
-    // PrototypeSerializationFactory
-    //----------------------------------------------------------------------------------
-
-    /**
-     * PrototypeSerializationFactory creates objects by cloning a prototype using serialization.
-     */
-    private static class PrototypeSerializationFactory implements Factory, Serializable {
-        /** The object to clone via serialization each time */
-        private final Serializable iPrototype;
-
-        /**
-         * Constructor to store prototype
-         */
-        private PrototypeSerializationFactory(Serializable prototype) {
-            super();
-            if (prototype == null) {
-                throw new IllegalArgumentException("PrototypeSerializationFactory: The prototype must not be null");
-            }
-            iPrototype = prototype;
-        }
-
-        /**
-         * Return clone of prototype by serialization
-         */
-        public Object create() {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream(512);
-            ByteArrayInputStream bais = null;
-            try {
-                ObjectOutputStream out = new ObjectOutputStream(baos);
-                out.writeObject(iPrototype);
-                
-                bais = new ByteArrayInputStream(baos.toByteArray());
-                ObjectInputStream in = new ObjectInputStream(bais);
-                return in.readObject();
-        
-            } catch (ClassNotFoundException ex) {
-                throw new FunctorException(ex);
-            } catch (IOException ex) {
-                throw new FunctorException(ex);
-            } finally {
-                try {
-                    if (bais != null) {
-                        bais.close();
-                    }
-                } catch (IOException ignored) {}
-                try {
-                    if (baos != null) {
-                        baos.close();
-                    }
-                } catch (IOException ignored) {}
-            }
-        }
-    }
-
-    // ReflectionFactory
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ReflectionFactory creates objects using reflection.
-     */
-    private static class ReflectionFactory implements Factory, Serializable {
-        /** The class to create */
-        private final Class iClassToInstantiate;
-        /** The constructor parameter types */
-        private final Class[] iParamTypes;
-        /** The constructor arguments */
-        private final Object[] iArgs;
-        /** The constructor */
-        private transient Constructor iConstructor = null;
-
-        /**
-         * Constructor
-         */
-        public ReflectionFactory(Class classToInstantiate) {
-            this(classToInstantiate, null, null);
-        }
-
-        /* builds the object factory taking all the options needed to provide
-         * arguments to a constructor.
-         */
-        public ReflectionFactory(Class classToInstantiate, Class[] paramTypes, Object[] args) {
-            super();
-            if (classToInstantiate == null) {
-                throw new IllegalArgumentException("ReflectionFactory: The class to instantiate must not be null");
-            }
-            if (((paramTypes == null) && (args != null))
-                || ((paramTypes != null) && (args == null))
-                || ((paramTypes != null) && (args != null) && (paramTypes.length != args.length))) {
-                throw new IllegalArgumentException("ReflectionFactory: The parameter types must match the arguments");
-            }
-
-            iClassToInstantiate = classToInstantiate;
-            if ((paramTypes == null) && (args == null)) {
-                iParamTypes = null;
-                iArgs = null;
-            } else {
-                iParamTypes = (Class[]) paramTypes.clone();
-                iArgs = (Object[]) args.clone();
-            }
-
-            findConstructor();
-        }
-
-        /**
-         * Find the Constructor for the class specified.
-         */
-        private void findConstructor() {
-            try {
-                iConstructor = iClassToInstantiate.getConstructor(iParamTypes);
-
-            } catch (NoSuchMethodException ex) {
-                throw new IllegalArgumentException("ReflectionFactory: The constructor must exist and be public ");
-            }
-        }
-
-        /**
-         * Create the object using a constructor
-         */
-        public Object create() {
-            // needed for post-serialization
-            if (iConstructor == null) {
-                findConstructor();
-            }
-
-            try {
-                return iConstructor.newInstance(iArgs);
-
-            } catch (InstantiationException ex) {
-                throw new FunctorException("ReflectionFactory: InstantiationException", ex);
-            } catch (IllegalAccessException ex) {
-                throw new FunctorException("ReflectionFactory: Constructor must be public", ex);
-            } catch (InvocationTargetException ex) {
-                throw new FunctorException("ReflectionFactory: Constructor threw an exception", ex);
-            }
-        }
+    public static Factory instantiateFactory(Class classToInstantiate, Class[] paramTypes, Object[] args) {
+        return InstantiateFactory.getInstance(classToInstantiate, paramTypes, args);
     }
 
 }

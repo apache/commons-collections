@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.7 2003/11/23 17:01:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.8 2003/11/23 17:48:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -90,7 +90,7 @@ import org.apache.commons.collections.functors.FunctorException;
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/11/23 17:01:36 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/23 17:48:20 $
  * 
  * @author Stephen Colebourne
  * @author James Carman
@@ -835,7 +835,7 @@ public class TransformerUtils {
                         "InstantiateTransformer: Input object was not an instanceof Class, it was a "
                             + (input == null ? "null object" : input.getClass().getName()));
                 }
-                return FactoryUtils.reflectionFactory((Class) input, iParamTypes, iArgs).create();
+                return FactoryUtils.instantiateFactory((Class) input, iParamTypes, iArgs).create();
 
             } catch (IllegalArgumentException ex) {
                 throw new FunctorException("InstantiateTransformer", ex);

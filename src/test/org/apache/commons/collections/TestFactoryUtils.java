@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.6 2003/11/23 14:41:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.7 2003/11/23 17:48:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.FactoryUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/11/23 14:41:27 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/23 17:48:19 $
  *
  * @author Stephen Colebourne
  */
@@ -267,12 +267,12 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         }
     }
     
-    // reflectionFactory
+    // instantiateFactory
     //------------------------------------------------------------------
     
     public void testReflectionFactoryNull() {
         try {
-            Factory factory = FactoryUtils.reflectionFactory(null);
+            Factory factory = FactoryUtils.instantiateFactory(null);
             
         } catch (IllegalArgumentException ex) {
             return;
@@ -281,7 +281,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
     }
 
     public void testReflectionFactorySimple() {
-        Factory factory = FactoryUtils.reflectionFactory(Mock3.class);
+        Factory factory = FactoryUtils.instantiateFactory(Mock3.class);
         assertNotNull(factory);
         Object created = factory.create();
         assertEquals(0, ((Mock3) created).getValue());
@@ -291,7 +291,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
 
     public void testReflectionFactoryMismatch() {
         try {
-            Factory factory = FactoryUtils.reflectionFactory(Date.class, null, new Object[] {null});
+            Factory factory = FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null});
             
         } catch (IllegalArgumentException ex) {
             return;
@@ -301,7 +301,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
 
     public void testReflectionFactoryNoConstructor() {
         try {
-            Factory factory = FactoryUtils.reflectionFactory(Date.class, new Class[] {Long.class}, new Object[] {null});
+            Factory factory = FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null});
             
         } catch (IllegalArgumentException ex) {
             return;
@@ -312,7 +312,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
     public void testReflectionFactoryComplex() {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         // 2nd Jan 1970
-        Factory factory = FactoryUtils.reflectionFactory(Date.class,
+        Factory factory = FactoryUtils.instantiateFactory(Date.class,
             new Class[] {Integer.TYPE, Integer.TYPE, Integer.TYPE},
             new Object[] {new Integer(70), new Integer(0), new Integer(2)});
         assertNotNull(factory);
