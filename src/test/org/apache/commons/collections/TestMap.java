@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.4 2002/02/20 22:38:46 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/20 22:38:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.5 2002/02/21 19:57:33 morgand Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/02/21 19:57:33 $
  *
  * ====================================================================
  *
@@ -62,8 +62,9 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
-import java.util.Map;
 import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Tests base {@link java.util.Map} methods and contracts.
@@ -76,7 +77,7 @@ import java.util.Collection;
  * test case (method) your {@link Map} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.4 2002/02/20 22:38:46 morgand Exp $
+ * @version $Id: TestMap.java,v 1.5 2002/02/21 19:57:33 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
     public TestMap(String testName) {
@@ -203,6 +204,30 @@ public abstract class TestMap extends TestObject {
         assertTrue("size of Map should be 3, but was " + map.size(), map.size() == 3);
     }
 
+    public void testEntrySetRemove() {
+
+        if ((this instanceof TestMap.EntrySetSupportsRemove) == false) {
+            return;
+        }
+
+        Map map = makeMap();
+        map.put("1","1");
+        map.put("2","2");
+        map.put("3","3");
+
+        Object o = map.entrySet().iterator().next();
+        // remove one of the key/value pairs
+        Set set = map.entrySet();
+        set.remove(o);
+        assertTrue(set.size() == 2);
+        // try to remove it again, to make sure 
+        // the Set is not confused by missing entries
+        set.remove(o);
+
+        assertTrue("size of Map should be 2, but was " + map.size(), map.size() == 2);
+
+    }
+
     /*
         // optional operation
 public void testMapClear() {
@@ -239,6 +264,10 @@ public void testMapClear() {
      * can test put(Object,Object) operations.
      */
     public interface SupportsPut {
+
+    }
+
+    public interface EntrySetSupportsRemove {
 
     }
 
