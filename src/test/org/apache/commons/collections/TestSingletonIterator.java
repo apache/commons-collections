@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSingletonIterator.java,v 1.1 2001/08/22 07:43:53 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2001/08/22 07:43:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSingletonIterator.java,v 1.2 2002/02/25 23:37:48 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/02/25 23:37:48 $
  *
  * ====================================================================
  *
@@ -70,9 +70,9 @@ import java.util.NoSuchElementException;
  * perform the iteration rather than the hasNext() method.
  *
  * @author James Strachan
- * @version $Id: TestSingletonIterator.java,v 1.1 2001/08/22 07:43:53 jstrachan Exp $
+ * @version $Id: TestSingletonIterator.java,v 1.2 2002/02/25 23:37:48 morgand Exp $
  */
-public class TestSingletonIterator extends TestObject {
+public class TestSingletonIterator extends TestIterator {
 
     private static final Object testValue = "foo";
     
@@ -85,12 +85,36 @@ public class TestSingletonIterator extends TestObject {
     }
     
     /**
+     * Returns null. SingletonIterators can never be empty;
+     * they always have exactly one element.
+     * 
+     * @return null
+     */
+    public Iterator makeEmptyIterator() {
+        return null;
+    }
+
+    public Iterator makeFullIterator() {
+        return new SingletonIterator( testValue );
+    }
+
+    /**
      * Return a new, empty {@link Object} to used for testing.
      */
     public Object makeObject() {
-        return new SingletonIterator( testValue );
+        return makeFullIterator();
     }
     
+    /**
+     * Whether or not we are testing an iterator that can be
+     * empty.  SingletonIterators are never empty;
+     * 
+     * @return false
+     */
+    public boolean supportsEmptyIterator() {
+        return false;
+    }
+
     public void testIterator() {
         Iterator iter = (Iterator) makeObject();
         assertTrue( "Iterator has a first item", iter.hasNext() );
