@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.42 2003/04/26 15:13:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.43 2003/05/16 13:42:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -20,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -33,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -64,7 +64,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections tests.
  * 
- * @version $Revision: 1.42 $ $Date: 2003/04/26 15:13:54 $
+ * @version $Revision: 1.43 $ $Date: 2003/05/16 13:42:57 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -82,6 +82,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestBoundedFifoBuffer.suite());
         suite.addTest(TestBoundedFifoBuffer2.suite());
         suite.addTest(TestCircularFifoBuffer.suite());
+        suite.addTest(TestClosureUtils.suite());
         suite.addTest(TestCollectionUtils.suite());
         suite.addTest(TestCommonsLinkedList.suite());
         suite.addTest(TestBufferUtils.suite());
@@ -91,6 +92,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestCursorableLinkedList.suite());
         suite.addTest(TestDoubleOrderedMap.suite());
         suite.addTest(TestExtendedProperties.suite());
+        suite.addTest(TestFactoryUtils.suite());
         suite.addTest(TestFastArrayList.suite());
         suite.addTest(TestFastArrayList1.suite());
         suite.addTest(TestFastHashMap.suite());
@@ -102,13 +104,16 @@ public class TestAll extends TestCase {
         suite.addTest(TestMultiHashMap.suite());
         suite.addTest(TestMultiKey.suite());
         suite.addTest(TestNodeCachingLinkedList.suite());
+        suite.addTest(TestPredicateUtils.suite());
         suite.addTest(TestSequencedHashMap.suite());
         suite.addTest(TestStaticBucketMap.suite());
+        suite.addTest(TestTransformerUtils.suite());
         suite.addTest(TestTreeBag.suite());
         suite.addTest(TestUnboundedFifoBuffer.suite());
         suite.addTest(TestReferenceMap.suite());
         suite.addTest(TestIteratorUtils.suite());
         suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.decorators.TestAll.suite());
         suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
         suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
         return suite;
