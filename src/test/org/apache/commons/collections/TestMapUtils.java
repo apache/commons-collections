@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.3 2003/04/04 22:22:28 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2003/04/04 22:22:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.4 2003/04/06 20:07:55 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/04/06 20:07:55 $
  *
  * ====================================================================
  *
@@ -213,5 +213,41 @@ public class TestMapUtils extends BulkTest {
         };
     }
 
+    public void testLazyMapFactory() {
+        Map map = MapUtils.lazyMap(new HashMap(), new Factory() {
+            public Object create() {
+                return new Integer(5);
+            }
+        });
+
+        assertEquals(0, map.size());
+        Integer i1 = (Integer) map.get("Five");
+        assertEquals(new Integer(5), i1);
+        assertEquals(1, map.size());
+        Integer i2 = (Integer) map.get(new String(new char[] {'F','i','v','e'}));
+        assertEquals(new Integer(5), i2);
+        assertEquals(1, map.size());
+        assertSame(i1, i2);
+    }
+
+    public void testLazyMapTransformer() {
+        Map map = MapUtils.lazyMap(new HashMap(), new Transformer() {
+            public Object transform(Object mapKey) {
+                if (mapKey instanceof String) {
+                    return new Integer((String) mapKey);
+                }
+                return null;
+            }
+        });
+
+        assertEquals(0, map.size());
+        Integer i1 = (Integer) map.get("5");
+        assertEquals(new Integer(5), i1);
+        assertEquals(1, map.size());
+        Integer i2 = (Integer) map.get(new String(new char[] {'5'}));
+        assertEquals(new Integer(5), i2);
+        assertEquals(1, map.size());
+        assertSame(i1, i2);
+    }
 
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.18 2003/04/06 19:32:18 scolebourne Exp $
- * $Revision: 1.18 $
- * $Date: 2003/04/06 19:32:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.19 2003/04/06 20:07:55 scolebourne Exp $
+ * $Revision: 1.19 $
+ * $Date: 2003/04/06 20:07:55 $
  *
  * ====================================================================
  *
@@ -964,6 +964,37 @@ public class MapUtils {
     }
 
     /**
+     * Implementation of a map that creates objects on demand.
+     */
+    static class LazyTransformerMap 
+            extends ProxyMap {
+
+        protected final Transformer transformer;
+
+        public LazyTransformerMap(Map map, Transformer transformer) {
+            super(map);
+            if (map == null) {
+                throw new IllegalArgumentException("Map must not be null");
+            }
+            if (transformer == null) {
+                throw new IllegalArgumentException("Transformer must not be null");
+            }
+            this.transformer = transformer;
+        }
+
+
+        public Object get(Object key) {
+            if (!map.containsKey(key)) {
+                Object value = transformer.transform(key);
+                map.put(key, value);
+                return value;
+            }
+            return map.get(key);
+        }
+
+    }
+
+    /**
      * Implementation of a sorted map that checks additions.
      */
     static class PredicatedSortedMap 
@@ -978,16 +1009,13 @@ public class MapUtils {
             return getSortedMap().firstKey();
         }
 
-
         public Object lastKey() {
             return getSortedMap().lastKey();
         }
 
-
         public Comparator comparator() {
             return getSortedMap().comparator();
         }
-
 
         public SortedMap subMap(Object o1, Object o2) {
             SortedMap sub = getSortedMap().subMap(o1, o2);
@@ -1025,16 +1053,13 @@ public class MapUtils {
             return getSortedMap().firstKey();
         }
 
-
         public Object lastKey() {
             return getSortedMap().lastKey();
         }
 
-
         public Comparator comparator() {
             return getSortedMap().comparator();
         }
-
 
         public SortedMap subMap(Object o1, Object o2) {
             return new FixedSizeSortedMap(getSortedMap().subMap(o1, o2));
@@ -1069,16 +1094,13 @@ public class MapUtils {
             return getSortedMap().firstKey();
         }
 
-
         public Object lastKey() {
             return getSortedMap().lastKey();
         }
 
-
         public Comparator comparator() {
             return getSortedMap().comparator();
         }
-
 
         public SortedMap subMap(Object o1, Object o2) {
             return new LazySortedMap(getSortedMap().subMap(o1, o2), factory);
@@ -1090,6 +1112,47 @@ public class MapUtils {
 
         public SortedMap tailMap(Object o1) {
             return new LazySortedMap(getSortedMap().tailMap(o1), factory);
+        }
+
+        private SortedMap getSortedMap() {
+            return (SortedMap)map;
+        }
+
+    }
+
+    /**
+     * Implementation of a sorted map that creates objects on demand.
+     */
+    static class LazyTransformerSortedMap 
+            extends LazyTransformerMap 
+            implements SortedMap {
+
+        public LazyTransformerSortedMap(SortedMap m, Transformer transformer) {
+            super(m, transformer);
+        }
+
+        public Object firstKey() {
+            return getSortedMap().firstKey();
+        }
+
+        public Object lastKey() {
+            return getSortedMap().lastKey();
+        }
+
+        public Comparator comparator() {
+            return getSortedMap().comparator();
+        }
+
+        public SortedMap subMap(Object o1, Object o2) {
+            return new LazyTransformerSortedMap(getSortedMap().subMap(o1, o2), transformer);
+        }
+
+        public SortedMap headMap(Object o1) {
+            return new LazyTransformerSortedMap(getSortedMap().headMap(o1), transformer);
+        }
+
+        public SortedMap tailMap(Object o1) {
+            return new LazyTransformerSortedMap(getSortedMap().tailMap(o1), transformer);
         }
 
         private SortedMap getSortedMap() {
@@ -1187,7 +1250,7 @@ public class MapUtils {
     }
 
     /**
-     * Returns a "lazy" map whose values will be created on demand.<P>
+     * Returns a "lazy" map whose values will be created on demand.
      * <p>
      * When the key passed to the returned map's {@link Map#get(Object)}
      * method is not present in the map, then the factory will be used
@@ -1195,20 +1258,19 @@ public class MapUtils {
      * associated with that key.
      * <p>
      * For instance:
-     *
      * <pre>
      * Factory factory = new Factory() {
      *     public Object create() {
      *         return new Date();
      *     }
      * }
-     * Map lazy = MapUtils.lazyMap(new HashMap(), factory);
-     * Object obj = lazy.get("test");
+     * Map lazyMap = MapUtils.lazyMap(new HashMap(), factory);
+     * Object obj = lazyMap.get("test");
      * </pre>
      *
      * After the above code is executed, <code>obj</code> will contain
      * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
-     * instance is the value for the <code>test</code> key.
+     * instance is the value for the <code>"test"</code> key in the map.
      *
      * @param map  the map to make lazy, must not be null
      * @param factory  the factory for creating new objects, must not be null
@@ -1217,6 +1279,45 @@ public class MapUtils {
      */
     public static Map lazyMap(Map map, Factory factory) {
         return new LazyMap(map, factory);
+    }
+
+    /**
+     * Returns a "lazy" map whose values will be created on demand.
+     * <p>
+     * When the key passed to the returned map's {@link Map#get(Object)}
+     * method is not present in the map, then the factory will be used
+     * to create a new object and that object will become the value
+     * associated with that key. The factory is a {@link Transformer}
+     * that will be passed the key which it must transform into the value.
+     * <p>
+     * For instance:
+     * <pre>
+     * Transformer factory = new Transformer() {
+     *     public Object transform(Object mapKey) {
+     *         return new File(mapKey);
+     *     }
+     * }
+     * Map lazyMap = MapUtils.lazyMap(new HashMap(), factory);
+     * Object obj = lazyMap.get("C:/dev");
+     * </pre>
+     *
+     * After the above code is executed, <code>obj</code> will contain
+     * a new <code>File</code> instance for the C drive dev directory.
+     * Furthermore, that <code>File</code> instance is the value for the
+     * <code>"C:/dev"</code> key in the map.
+     * <p>
+     * If a lazy map is wrapped by a synchronized map, the result is a simple
+     * synchronized cache. When an object is not is the cache, the cache itself
+     * calls back to the factory Transformer to populate itself, all within the
+     * same synchronized block.
+     *
+     * @param map  the map to make lazy, must not be null
+     * @param transformerFactory  the factory for creating new objects, must not be null
+     * @return a lazy map backed by the given map
+     * @throws IllegalArgumentException  if the Map or Transformer is null
+     */
+    public static Map lazyMap(Map map, Transformer transformerFactory) {
+        return new LazyTransformerMap(map, transformerFactory);
     }
 
     //-----------------------------------------------------------------------
@@ -1329,7 +1430,7 @@ public class MapUtils {
      *
      * After the above code is executed, <code>obj</code> will contain
      * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
-     * instance is the value for the <code>test</code> key.
+     * instance is the value for the <code>"test"</code> key.
      *
      * @param map  the map to make lazy, must not be null
      * @param factory  the factory for creating new objects, must not be null
@@ -1340,4 +1441,43 @@ public class MapUtils {
         return new LazySortedMap(map, factory);
     }
     
+    /**
+     * Returns a "lazy" sorted map whose values will be created on demand.
+     * <p>
+     * When the key passed to the returned map's {@link Map#get(Object)}
+     * method is not present in the map, then the factory will be used
+     * to create a new object and that object will become the value
+     * associated with that key. The factory is a {@link Transformer}
+     * that will be passed the key which it must transform into the value.
+     * <p>
+     * For instance:
+     * <pre>
+     * Transformer factory = new Transformer() {
+     *     public Object transform(Object mapKey) {
+     *         return new File(mapKey);
+     *     }
+     * }
+     * Map lazyMap = MapUtils.lazyMap(new HashMap(), factory);
+     * Object obj = lazyMap.get("C:/dev");
+     * </pre>
+     *
+     * After the above code is executed, <code>obj</code> will contain
+     * a new <code>File</code> instance for the C drive dev directory.
+     * Furthermore, that <code>File</code> instance is the value for the
+     * <code>"C:/dev"</code> key in the map.
+     * <p>
+     * If a lazy map is wrapped by a synchronized map, the result is a simple
+     * synchronized cache. When an object is not is the cache, the cache itself
+     * calls back to the factory Transformer to populate itself, all within the
+     * same synchronized block.
+     *
+     * @param map  the map to make lazy, must not be null
+     * @param transformerFactory  the factory for creating new objects, must not be null
+     * @return a lazy map backed by the given map
+     * @throws IllegalArgumentException  if the Map or Transformer is null
+     */
+    public static SortedMap lazySortedMap(SortedMap map, Transformer transformerFactory) {
+        return new LazyTransformerSortedMap(map, transformerFactory);
+    }
+
 }
