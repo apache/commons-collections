@@ -7,7 +7,7 @@
 
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
-$Id: STATUS.html,v 1.11 2002/02/26 21:34:03 morgand Exp $<br>
+$Id: STATUS.html,v 1.12 2002/03/07 18:17:47 morgand Exp $<br>
 <a href="#Introduction">[Introduction]</a>
 <a href="#Dependencies">[Dependencies]</a>
 <a href="#Release Info">[Release Info]</a>
@@ -40,6 +40,20 @@ The following classes are included:</p>
     keys of the map and the property values are the values of the map.</li>
 <li><strong>CollectionUtils</strong> - a variety of helper methods
     for working with collections.</li>
+<li><strong>ComparableComparator</strong> - A Comparator that compares Comparable objects.
+    This Comparator is useful, for example,
+    for enforcing the natural order in custom implementations
+    of SortedSet and SortedMap.</li>
+<li><strong>ComparatorChain</strong> -  ComparatorChain is a Comparator that wraps one or
+    more Comparators in sequence.  The ComparatorChain
+    calls each Comparator in sequence until either 1)
+    any single Comparator returns a non-zero result
+   (and that result is then returned),
+   or 2) the ComparatorChain is exhausted (and zero is
+   returned).  This type of sorting is very similar
+   to multi-column sorting in SQL, and this class
+   allows Java classes to emulate that kind of behaviour
+   when sorting a List.</li>
 <li><strong>CursorableLinkedList</strong> - an implementation of the java.util.List
     interface supporting a java.util.ListIterator that allows concurrent
     modifications to the underlying list.</li>
@@ -84,6 +98,7 @@ The following classes are included:</p>
 <li><strong>PriorityQueue</strong> - a PriorityQueue interface, with
     <strong>BinaryHeap</strong> and <strong>SynchronizedPriorityQueue</strong>
     implementations.</li>
+<li><strong>ReverseComparator</strong> - Reverses the order of another comparator.</li>
 <li><strong>SequencedHashMap</strong> -  A map of objects whose mapping entries are 
     sequenced based on the order in
     which they were added.</li>
