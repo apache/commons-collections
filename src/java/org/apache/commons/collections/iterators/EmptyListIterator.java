@@ -22,10 +22,10 @@ import java.util.ListIterator;
  * <p>
  * This class provides an implementation of an empty list iterator.
  * This class provides for binary compatability between Commons Collections
- * 2.1.1 and 3.0.1 due to issues with <code>IteratorUtils</code>.
+ * 2.1.1 and 3.1 due to issues with <code>IteratorUtils</code>.
  *
- * @since Commons Collections 2.1.1 and 3.0.1
- * @version $Revision: 1.1.2.1 $ $Date: 2004/05/22 11:15:22 $
+ * @since Commons Collections 2.1.1 and 3.1
+ * @version $Revision: 1.1.2.2 $ $Date: 2004/05/22 11:54:53 $
  * 
  * @author Stephen Colebourne
  */
@@ -33,7 +33,7 @@ public final class EmptyListIterator extends AbstractEmptyIterator implements Li
 
     /**
      * Singleton instance of the iterator.
-     * @since Commons Collections 2.1.1 and 3.0.1
+     * @since Commons Collections 2.1.1 and 3.1
      */
     public static final ListIterator INSTANCE = new EmptyListIterator();
 

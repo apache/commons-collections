@@ -20,8 +20,8 @@ import java.util.NoSuchElementException;
 /** 
  * Provides an implementation of an empty iterator.
  *
- * @since Commons Collections 2.1.1 and 3.0.1
- * @version $Revision: 1.1.2.1 $ $Date: 2004/05/22 11:15:22 $
+ * @since Commons Collections 2.1.1 and 3.1
+ * @version $Revision: 1.1.2.2 $ $Date: 2004/05/22 11:54:53 $
  * 
  * @author Stephen Colebourne
  */
