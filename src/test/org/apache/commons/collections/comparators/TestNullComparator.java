@@ -65,8 +65,8 @@ import junit.framework.TestSuite;
 /**
  *  Test the NullComparator 
  *
- *  @author <a href="mas@apache.org">Michael A. Smith</a>
- *  @version $Id: TestNullComparator.java,v 1.1 2002/06/09 19:23:53 mas Exp $
+ *  @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ *  @version $Id: TestNullComparator.java,v 1.2 2002/06/11 02:41:47 mas Exp $
  **/
 public abstract class TestNullComparator extends TestComparator {
 

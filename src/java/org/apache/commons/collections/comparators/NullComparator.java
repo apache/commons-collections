@@ -62,8 +62,8 @@ import java.util.Comparator;
  *  A Comparator that will compare nulls to be either lower or higher than
  *  other objects.
  *
- *  @author <a href="mas@apache.org">Michael A. Smith</a>
- *  @version $Id: NullComparator.java,v 1.2 2002/06/10 05:33:53 mas Exp $ 
+ *  @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ *  @version $Id: NullComparator.java,v 1.3 2002/06/11 02:41:47 mas Exp $ 
  **/
 public class NullComparator implements Comparator, Serializable {
 

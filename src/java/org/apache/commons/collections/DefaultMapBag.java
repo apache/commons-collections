@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.1 2002/03/25 05:50:57 mas Exp $
- * $Revision: 1.1 $
- * $Date: 2002/03/25 05:50:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.2 2002/06/11 02:41:47 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/11 02:41:47 $
  *
  * ====================================================================
  *
@@ -79,7 +79,7 @@ import java.util.Set;
  * the bag. 
  *
  * @author Chuck Burdick
- * @author <a href="mas@apache.org">Michael A. Smith</a>
+ * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  **/
 public abstract class DefaultMapBag implements Bag {
    private Map _map = null;
