@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * Entry point for tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.16 $ $Date: 2004/04/10 21:24:21 $
+ * @version $Revision: 1.17 $ $Date: 2004/04/12 12:05:29 $
  * 
  * @author Stephen Colebourne
  */
@@ -48,6 +48,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestIdentityMap.suite());
         suite.addTest(TestLinkedMap.suite());
         suite.addTest(TestLRUMap.suite());
+        suite.addTest(TestMultiKeyMap.suite());
         suite.addTest(TestReferenceMap.suite());
         suite.addTest(TestStaticBucketMap.suite());
         suite.addTest(TestSingletonMap.suite());
