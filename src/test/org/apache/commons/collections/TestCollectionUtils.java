@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.19 2003/09/12 03:59:00 psteitz Exp $
- * $Revision: 1.19 $
- * $Date: 2003/09/12 03:59:00 $
+ * $Id: TestCollectionUtils.java,v 1.20 2003/09/21 20:56:51 psteitz Exp $
+ * $Revision: 1.20 $
+ * $Date: 2003/09/21 20:56:51 $
  *
  * ====================================================================
  *
@@ -63,18 +63,22 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.decorators.PredicatedCollection;
+import org.apache.commons.collections.decorators.TransformedCollection;
 
 /**
  * Tests for CollectionUtils.
@@ -82,8 +86,9 @@ import org.apache.commons.collections.decorators.PredicatedCollection;
  * @author Rodney Waldhoff
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
+ * @author Phil Steitz
  * 
- * @version $Revision: 1.19 $ $Date: 2003/09/12 03:59:00 $
+ * @version $Revision: 1.20 $ $Date: 2003/09/21 20:56:51 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -259,7 +264,7 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(new Integer(4),freq2.get("b"));
         assertEquals(new Integer(3),freq2.get("c"));
         assertEquals(new Integer(4),freq2.get("d"));
-        assertEquals(new Integer(1),freq2.get("e"));
+        assertEquals(new Integer(1),freq2.get("e"));        
     }
 
     public void testIntersection() {
@@ -277,7 +282,7 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(new Integer(2),freq2.get("b"));
         assertEquals(new Integer(3),freq2.get("c"));
         assertEquals(new Integer(2),freq2.get("d"));
-        assertNull(freq2.get("e"));
+        assertNull(freq2.get("e"));      
     }
 
     public void testDisjunction() {
@@ -437,23 +442,136 @@ public class TestCollectionUtils extends TestCase {
         assertTrue(!CollectionUtils.isProperSubCollection(
             a, CollectionUtils.subtract(a, b)));
     }
+    
+    public void testFind() {
+        Predicate testPredicate = PredicateUtils.equalPredicate("d");
+        Object test = CollectionUtils.find(_a, testPredicate);
+        assertTrue(test.equals("d"));
+        testPredicate = PredicateUtils.equalPredicate("de");
+        test = CollectionUtils.find(_a, testPredicate);
+        assertTrue(test == null);
+        assertEquals(CollectionUtils.find(null,testPredicate), null);
+        assertEquals(CollectionUtils.find(_a, null), null);
+    }
+    
+    public void testForAllDo() {
+        Closure testClosure = ClosureUtils.invokerClosure("clear");
+        Collection col = new ArrayList();
+        col.add(_a);
+        col.add(_b);
+        CollectionUtils.forAllDo(col, testClosure);
+        assertTrue(_a.isEmpty() && _b.isEmpty());
+        CollectionUtils.forAllDo(col, null);
+        assertTrue(_a.isEmpty() && _b.isEmpty());
+        CollectionUtils.forAllDo(null, testClosure);
+        col.add(null);
+        // null should be OK
+        CollectionUtils.forAllDo(col, testClosure);
+        col.add("x");
+        // This will lead to FunctorException
+        try {
+            CollectionUtils.forAllDo(col, testClosure);
+            fail("Expecting FunctorException");
+        } catch (FunctorException ex) {
+            // expected from invoker -- method not found
+        }
+    }
 
-
-    public void testIndex() {
+    public void testIndex() {     
+        // normal map behavior when index is an Integer and a key
         Map map = new HashMap();
-        map.put(new Integer(0), "element");
+        map.put(new Integer(0), "zero");
+        map.put(new Integer(-1), "minusOne");
         Object test = CollectionUtils.index(map, 0);
-        assertTrue(test.equals("element"));
+        assertTrue(test.equals("zero"));
+        test = CollectionUtils.index(map, new Integer(-1));
+        assertTrue(test.equals("minusOne"));
+        
+        // map, non-integer key that does not exist -- map returned
+        test = CollectionUtils.index(map, "missing");
+        assertTrue(test.equals(map));
+        
+        // map, integer not a key, valid index -- "some" element of keyset returned
+        test = CollectionUtils.index(map, new Integer(1));   
+        assertTrue(map.keySet().contains(test)); 
+        
+        // map, integer not a key, not valid index -- "dead" keyset iterator returned
+        test = CollectionUtils.index(map, new Integer(4));         
+        assertTrue((test instanceof Iterator) && !((Iterator) test).hasNext());  
 
+        // list, entry exists
         List list = new ArrayList();
-        list.add("element");
+        list.add("zero");
+        list.add("one");
         test = CollectionUtils.index(list, 0);
-        assertTrue(test.equals("element"));
-
+        assertTrue(test.equals("zero"));
+        test = CollectionUtils.index(list, 1);
+        assertTrue(test.equals("one"));
+        
+        // list, non-existent entry -- IndexOutOfBoundsException
+        try {
+            test = CollectionUtils.index(list, 2);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException e) {
+            // expected
+        }
+        
+        // iterator, entry exists
+        Iterator iterator = list.iterator();
+        test = CollectionUtils.index(iterator,0);
+        assertTrue(test.equals("zero"));
+        iterator = list.iterator();
+        test = CollectionUtils.index(iterator,1);
+        assertTrue(test.equals("one"));
+        
+        // iterator, non-existent entry -- "dead" iterator returned
+        test = CollectionUtils.index(iterator,3);
+        assertTrue(test.equals(iterator) && !iterator.hasNext());
+        
+        // Enumeration, entry exists
+        Vector vector = new Vector(list);
+        Enumeration enum = vector.elements();
+        test = CollectionUtils.index(enum,0);
+        assertTrue(test.equals("zero"));
+        enum = vector.elements();
+        test = CollectionUtils.index(enum,1);
+        assertTrue(test.equals("one"));
+        
+        // Enumeration, non-existent entry -- "dead" enumerator returned
+        test = CollectionUtils.index(enum,3);
+        assertTrue(test.equals(enum) && !enum.hasMoreElements());
+        
+        // Collection, entry exists
         Bag bag = new HashBag();
         bag.add("element", 1);
         test = CollectionUtils.index(bag, 0);
         assertTrue(test.equals("element"));
+        
+        // Collection, non-existent entry -- "dead" iterator returned
+        test = CollectionUtils.index(bag, 2);
+        assertTrue((test instanceof Iterator) && !((Iterator) test).hasNext()); 
+        
+        // Object array, entry exists
+        Object[] objArray = new Object[2];
+        objArray[0] = "zero";
+        objArray[1] = "one";
+        test = CollectionUtils.index(objArray,0);
+        assertTrue(test.equals("zero"));
+        test = CollectionUtils.index(objArray,1);
+        assertTrue(test.equals("one"));
+        
+        // Object array, non-existent entry -- ArrayIndexOutOfBoundsException
+        try {
+            test = CollectionUtils.index(objArray,2);
+            fail("Expecting ArrayIndexOutOfBoundsException.");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        // Non-collection object -- returned unchanged
+        Object obj = new Object();
+        test = CollectionUtils.index(obj, obj);
+        assertTrue(test.equals(obj));
     }
 
 
@@ -739,5 +857,27 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(eltc,elta);
         assertEquals(eltb,eltc);
         assertEquals(eltc,eltb);
+    }
+    
+     public void testTransformedCollection() {
+        Transformer transformer = TransformerUtils.nopTransformer();
+        Collection collection = 
+            CollectionUtils.transformedCollection(new ArrayList(), transformer);
+        assertTrue("returned object should be a TransformedCollection",
+            collection instanceof TransformedCollection);
+        try { 
+           collection = 
+                CollectionUtils.transformedCollection(new ArrayList(), null); 
+           fail("Expecting IllegalArgumentException for null transformer.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+        try { 
+           collection = 
+                CollectionUtils.transformedCollection(null, transformer); 
+           fail("Expecting IllegalArgumentException for null collection.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }             
     }
 }
