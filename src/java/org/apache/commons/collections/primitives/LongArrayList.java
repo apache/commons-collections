@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/LongArrayList.java,v 1.8 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/LongArrayList.java,v 1.9 2003/04/09 06:24:07 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -69,8 +69,10 @@ import java.io.Serializable;
  * {@link java.util.ArrayList} of {@link Long} values and allows for
  * better compile-time type checking.<P>
  *
- * @version $Revision: 1.8 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.9 $ $Date: 2003/04/09 06:24:07 $
  * @author Rodney Waldhoff 
+ * @deprecated {@link ArrayLongList} should be used instead.  
+ *             Use {@link LongListList} for {@link List} compatibility.
  */
 public class LongArrayList extends AbstractLongArrayList implements Serializable {
 

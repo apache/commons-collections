@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongArrayList.java,v 1.7 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractLongArrayList.java,v 1.8 2003/04/09 06:24:07 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,8 +68,12 @@ package org.apache.commons.collections.primitives;
  * primitive values will be stored in an underlying primitive array, and
  * provides methods for manipulating the capacity of that array.<P>
  *
- * @version $Revision: 1.7 $ $Date: 2003/01/11 21:28:02 $
- * @author Rodney Waldhoff 
+ * @version $Revision: 1.8 $ $Date: 2003/04/09 06:24:07 $
+ * @author Rodney Waldhoff
+ *  
+ * @deprecated A {@link LongList} implementation, such as {@link ArrayLongList} 
+ *             should be used instead.  Use {@link LongListList} for {@link List} 
+ *             compatibility.
  */
 public abstract class AbstractLongArrayList extends AbstractLongList {
 
