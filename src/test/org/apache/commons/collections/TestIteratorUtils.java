@@ -27,12 +27,13 @@ import junit.framework.Test;
 import org.apache.commons.collections.iterators.EmptyIterator;
 import org.apache.commons.collections.iterators.EmptyListIterator;
 import org.apache.commons.collections.iterators.EmptyMapIterator;
+import org.apache.commons.collections.iterators.EmptyOrderedIterator;
 import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 
 /**
  * Tests for IteratorUtils.
  * 
- * @version $Revision: 1.15 $ $Date: 2004/05/22 09:46:39 $
+ * @version $Revision: 1.16 $ $Date: 2004/05/26 21:56:45 $
  * 
  * @author Unknown
  */
@@ -493,10 +494,11 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty map iterator
      */
     public void testEmptyOrderedIterator() {
-        assertSame(EmptyListIterator.ORDERED_INSTANCE, IteratorUtils.EMPTY_ORDERED_ITERATOR);
+        assertSame(EmptyOrderedIterator.INSTANCE, IteratorUtils.EMPTY_ORDERED_ITERATOR);
         assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof Iterator);
         assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof OrderedIterator);
         assertEquals(true, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ResettableIterator);
+        assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof ListIterator);
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR instanceof MapIterator);
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR.hasNext());
         assertEquals(false, IteratorUtils.EMPTY_ORDERED_ITERATOR.hasPrevious());
