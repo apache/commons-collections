@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.3 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.4 2002/08/12 22:51:13 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/12 22:51:13 $
  *
  * ====================================================================
  *
@@ -113,8 +113,8 @@ public abstract class ProxyMap implements Map {
         return map.entrySet();
     }
 
-    public boolean equals(Object map) {
-        return map.equals(map);
+    public boolean equals(Object m) {
+        return map.equals(m);
     }
 
     public Object get(Object key) {
