@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.17 2003/04/15 01:55:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/CollectionByteCollection.java,v 1.1 2003/04/15 01:55:22 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,66 +55,60 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.Serializable;
+import java.util.Collection;
+
+import org.apache.commons.collections.primitives.ByteCollection;
 
 /**
- * @version $Revision: 1.17 $ $Date: 2003/04/15 01:55:22 $
- * @author Rodney Waldhoff
+ * Adapts a {@link java.lang.Number Number}-valued
+ * {@link java.util.Collection Collection} to the
+ * {@link ByteCollection ByteCollection} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link Collection Collection} 
+ * implementation in the "obvious" way.
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/15 01:55:22 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+final public class CollectionByteCollection extends AbstractCollectionByteCollection implements Serializable {
+    /**
+     * Create an {@link ByteCollection ByteCollection} wrapping
+     * the specified {@link Collection Collection}.  When
+     * the given <i>collection</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param collection the (possibly <code>null</code>) {@link Collection} to wrap
+     * @return an {@link ByteCollection ByteCollection} wrapping the given 
+     *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
+     *         <code>null</code>.
+     */
+    public static ByteCollection wrap(Collection collection) {
+        if(null == collection) {
+            return null;
+        } else if(collection instanceof Serializable) {
+            return new CollectionByteCollection(collection);
+        } else {
+            return new NonSerializableCollectionByteCollection(collection);
+        }
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Creates an {@link ByteCollection ByteCollection} wrapping
+     * the specified {@link Collection Collection}.
+     * @see #wrap
+     */
+    public CollectionByteCollection(Collection collection) {
+        _collection = collection;
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestAbstractByteCollection.suite());
-        suite.addTest(TestRandomAccessByteList.suite());
-        suite.addTest(TestArrayByteList.suite());
-
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        suite.addTest(TestArrayUnsignedByteList.suite());
-
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(TestAbstractFloatCollection.suite());
-        suite.addTest(TestRandomAccessFloatList.suite());
-        suite.addTest(TestArrayFloatList.suite());
-
-        suite.addTest(TestAbstractDoubleCollection.suite());
-        suite.addTest(TestRandomAccessDoubleList.suite());
-        suite.addTest(TestArrayDoubleList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
-        
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+    
+    protected Collection getCollection() {
+        return _collection;
     }
+ 
+    private Collection _collection = null;         
 }
-

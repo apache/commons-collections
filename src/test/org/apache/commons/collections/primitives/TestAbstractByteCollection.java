@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.17 2003/04/15 01:55:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractByteCollection.java,v 1.1 2003/04/15 01:55:22 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,64 +57,57 @@
 
 package org.apache.commons.collections.primitives;
 
+import java.util.Collections;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.adapters.IteratorByteIterator;
+
 /**
- * @version $Revision: 1.17 $ $Date: 2003/04/15 01:55:22 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/15 01:55:22 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestAbstractByteCollection extends TestCase {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestAbstractByteCollection(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static Test suite() {
+        return new TestSuite(TestAbstractByteCollection.class);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+    // tests
+    // ------------------------------------------------------------------------
+    
+    public void testAddIsUnsupportedByDefault() {
+        ByteCollection col = new ByteCollectionImpl();
+        try {
+            col.add((byte)1);
+            fail("Expected UnsupportedOperationException");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }        
+    }
+    // inner classes
+    // ------------------------------------------------------------------------
 
-        suite.addTest(TestAbstractByteCollection.suite());
-        suite.addTest(TestRandomAccessByteList.suite());
-        suite.addTest(TestArrayByteList.suite());
 
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        suite.addTest(TestArrayUnsignedByteList.suite());
-
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(TestAbstractFloatCollection.suite());
-        suite.addTest(TestRandomAccessFloatList.suite());
-        suite.addTest(TestArrayFloatList.suite());
-
-        suite.addTest(TestAbstractDoubleCollection.suite());
-        suite.addTest(TestRandomAccessDoubleList.suite());
-        suite.addTest(TestArrayDoubleList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
+    static class ByteCollectionImpl extends AbstractByteCollection {
+        public ByteCollectionImpl() {
+        }
         
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+        public ByteIterator iterator() {
+            return new IteratorByteIterator(Collections.EMPTY_LIST.iterator());
+        }
+
+        public int size() {
+            return 0;
+        }
     }
 }
-
