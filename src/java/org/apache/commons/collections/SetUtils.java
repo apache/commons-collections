@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.15 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.16 2003/09/09 22:28:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,6 +64,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.commons.collections.decorators.OrderedSet;
 import org.apache.commons.collections.decorators.PredicatedSet;
 import org.apache.commons.collections.decorators.PredicatedSortedSet;
 import org.apache.commons.collections.decorators.TransformedSet;
@@ -76,7 +77,7 @@ import org.apache.commons.collections.decorators.TypedSortedSet;
  * and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.15 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.16 $ $Date: 2003/09/09 22:28:36 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -87,7 +88,7 @@ public class SetUtils {
 
     /**
      * An empty unmodifiable set.
-     * This uses the {@link Collections Collections} implementation 
+     * This uses the {@link Collections} implementation 
      * and is provided for completeness.
      */
     public static final Set EMPTY_SET = Collections.EMPTY_SET;
@@ -247,13 +248,29 @@ public class SetUtils {
      * Set. It is important not to use the original set after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
      *
-     * @param set  the set to predicate, must not be null
+     * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
      * @return a transformed set backed by the given set
      * @throws IllegalArgumentException  if the Set or Transformer is null
      */
     public static Set transformedSet(Set set, Transformer transformer) {
         return TransformedSet.decorate(set, transformer);
+    }
+    
+    
+    /**
+     * Returns a set that maintains the order of elements that are added
+     * backed by the given set.
+     * <p>
+     * If an element is added twice, the order is determined by the first add.
+     * The order is observed through the iterator or toArray.
+     *
+     * @param set  the set to order, must not be null
+     * @return an ordered set backed by the given set
+     * @throws IllegalArgumentException  if the Set is null
+     */
+    public static Set orderedSet(Set set) {
+        return OrderedSet.decorate(set);
     }
     
     //-----------------------------------------------------------------------
@@ -332,7 +349,7 @@ public class SetUtils {
      * Set. It is important not to use the original set after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
      *
-     * @param set  the set to predicate, must not be null
+     * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
      * @return a transformed set backed by the given set
      * @throws IllegalArgumentException  if the Set or Transformer is null

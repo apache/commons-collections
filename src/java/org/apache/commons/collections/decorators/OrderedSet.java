@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SequencedSet.java,v 1.2 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedSet.java,v 1.1 2003/09/09 22:28:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,8 +64,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * <code>SequencedSet</code> decorates another <code>Set</code>
- * to ensure that the order of addition is retained and used by the iterator.
+ * Decorates a <code>Set</code> to ensure that the order of addition
+ * is retained and used by the iterator.
  * <p>
  * If an object is added to the Set for a second time, it will remain in the
  * original position in the iteration.
@@ -73,24 +73,24 @@ import java.util.Set;
  * The order can be observed via the iterator or toArray methods.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/09 22:28:35 $
  * 
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen
  */
-public class SequencedSet extends AbstractSetDecorator implements Set {
+public class OrderedSet extends AbstractSetDecorator implements Set {
 
     /** Internal list to hold the sequence of objects */
     protected final List setOrder = new ArrayList();
 
     /**
-     * Factory method to create an unmodifiable set.
+     * Factory method to create an ordered set.
      * 
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
     public static Set decorate(Set set) {
-        return new SequencedSet(set);
+        return new OrderedSet(set);
     }
 
     /**
@@ -99,7 +99,7 @@ public class SequencedSet extends AbstractSetDecorator implements Set {
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SequencedSet(Set set) {
+    protected OrderedSet(Set set) {
         super(set);
         setOrder.addAll(set);
     }
@@ -111,7 +111,7 @@ public class SequencedSet extends AbstractSetDecorator implements Set {
     }
 
     public Iterator iterator() {
-        return new SequencedSetIterator(setOrder.iterator(), collection);
+        return new OrderedSetIterator(setOrder.iterator(), collection);
     }
 
     public boolean add(Object object) {
@@ -178,14 +178,14 @@ public class SequencedSet extends AbstractSetDecorator implements Set {
     /**
      * Internal iterator handle remove.
      */
-    protected static class SequencedSetIterator extends AbstractIteratorDecorator {
+    protected static class OrderedSetIterator extends AbstractIteratorDecorator {
         
         /** Object we iterate on */
         protected final Collection set;
         /** Last object retrieved */
         protected Object last;
 
-        private SequencedSetIterator(Iterator iterator, Collection set) {
+        private OrderedSetIterator(Iterator iterator, Collection set) {
             super(iterator);
             this.set = set;
         }

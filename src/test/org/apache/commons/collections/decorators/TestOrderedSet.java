@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestSequencedSet.java,v 1.3 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestOrderedSet.java,v 1.1 2003/09/09 22:28:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,32 +67,32 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.TestSet;
 
 /**
- * Extension of {@link TestSet} for exercising the {@link SequencedSet}
+ * Extension of {@link TestSet} for exercising the {@link OrderedSet}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/09 22:28:36 $
  * 
  * @author Henning P. Schmiedehausen
  * @author Stephen Colebourne
  */
-public class TestSequencedSet extends TestSet {
+public class TestOrderedSet extends TestSet {
 
-    public TestSequencedSet(String testName) {
+    public TestOrderedSet(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestSequencedSet.class);
+        return new TestSuite(TestOrderedSet.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestSequencedSet.class.getName()};
+        String[] testCaseName = { TestOrderedSet.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     public Set makeEmptySet() {
-        return SequencedSet.decorate(new HashSet());
+        return OrderedSet.decorate(new HashSet());
     }
 
     public Set setupSet() {
