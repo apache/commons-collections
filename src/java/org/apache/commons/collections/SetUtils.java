@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.19 2003/11/16 00:05:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.20 2003/11/27 22:55:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.19 $ $Date: 2003/11/16 00:05:44 $
+ * @version $Revision: 1.20 $ $Date: 2003/11/27 22:55:16 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -271,6 +271,7 @@ public class SetUtils {
      * If more than one listener or other complex setup is required then the
      * ObservableSet class should be accessed directly.
      *
+     * @deprecated TO BE REMOVED BEFORE v3.0
      * @param set  the set to decorate, must not be null
      * @param listener  set listener, must not be null
      * @return the observed set
@@ -391,6 +392,7 @@ public class SetUtils {
      * If more than one listener or other complex setup is required then the
      * ObservableSortedSet class should be accessed directly.
      *
+     * @deprecated TO BE REMOVED BEFORE v3.0
      * @param set  the set to decorate, must not be null
      * @param listener  set listener, must not be null
      * @return the observed set

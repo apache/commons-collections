@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandlerFactory.java,v 1.2 2003/09/21 16:00:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandlerFactory.java,v 1.3 2003/11/27 22:55:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,8 +70,9 @@ import java.util.Collection;
  * <li>One of the <code>registerFactory</code> methods must be called on ObservableCollection
  * </ol>
  *
+ * @deprecated TO BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:28 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/27 22:55:15 $
  * 
  * @author Stephen Colebourne
  */

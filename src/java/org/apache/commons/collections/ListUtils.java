@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.22 2003/11/16 00:05:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.23 2003/11/27 22:55:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import org.apache.commons.collections.observed.ObservableList;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.22 $ $Date: 2003/11/16 00:05:44 $
+ * @version $Revision: 1.23 $ $Date: 2003/11/27 22:55:16 $
  * 
  * @author Federico Barbieri
  * @author Peter Donald
@@ -353,6 +353,7 @@ public class ListUtils {
      * If more than one listener or other complex setup is required then the
      * ObservableList class should be accessed directly.
      *
+     * @deprecated TO BE REMOVED BEFORE v3.0
      * @param list  the list to decorate, must not be null
      * @param listener  list listener, must not be null
      * @return the observed list

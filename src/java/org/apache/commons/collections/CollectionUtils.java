@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.47 2003/11/18 22:50:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.48 2003/11/27 22:55:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -85,7 +85,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.47 $ $Date: 2003/11/18 22:50:44 $
+ * @version $Revision: 1.48 $ $Date: 2003/11/27 22:55:16 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -1112,6 +1112,7 @@ public class CollectionUtils {
      * If more than one listener or other complex setup is required then the
      * ObservableCollection class should be accessed directly.
      *
+     * @deprecated TO BE REMOVED BEFORE v3.0
      * @param collection  the collection to decorate, must not be null
      * @param listener  collection listener, must not be null
      * @return the observed collection

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationVetoedException.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationVetoedException.java,v 1.2 2003/11/27 22:55:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,8 +61,9 @@ package org.apache.commons.collections.observed;
  * Exception thrown when a modification to a collection is vetoed.
  * It extends IllegalArgumentException for compatibility with the collections API.
  *
+ * @deprecated TO BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/27 22:55:15 $
  * 
  * @author Stephen Colebourne
  */

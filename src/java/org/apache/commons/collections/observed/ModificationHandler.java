@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.8 2003/10/09 20:50:04 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.9 2003/11/27 22:55:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,8 +75,9 @@ import java.util.Collection;
  * that if you subclass this class, you must check it when you upgrade to a
  * later collections release.
  *
+ * @deprecated TO BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/10/09 20:50:04 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/27 22:55:15 $
  * 
  * @author Stephen Colebourne
  */

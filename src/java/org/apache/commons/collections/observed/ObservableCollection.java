@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableCollection.java,v 1.3 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableCollection.java,v 1.4 2003/11/27 22:55:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,8 +73,9 @@ import org.apache.commons.collections.observed.standard.StandardModificationHand
  * The default handler is {@link StandardModificationHandler}.
  * See this class for details of configuration available.
  *
+ * @deprecated TO BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/27 22:55:15 $
  * 
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.7 2003/09/21 20:00:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.8 2003/11/27 22:55:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,8 +79,9 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * In addition, the <code>size</code> method is used on the collection.
  * All objects used are the real objects from the method calls, not clones.
  *
+ * @deprecated TO BE REMOVED BEFORE v3.0
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/09/21 20:00:29 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/27 22:55:16 $
  * 
  * @author Stephen Colebourne
  */
