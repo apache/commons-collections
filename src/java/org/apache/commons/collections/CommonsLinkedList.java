@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.4 2003/02/19 20:14:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.5 2003/05/11 14:15:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,8 +76,9 @@ import java.util.NoSuchElementException;
  * subclasses to extend.
  * 
  * @since Commons Collections 2.2
+ * @version $Revision: 1.5 $ $Date: 2003/05/11 14:15:23 $
+ * 
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
- * @version $Revision: 1.4 $ $Date: 2003/02/19 20:14:25 $
  */
 class CommonsLinkedList extends LinkedList
         implements List, Serializable {

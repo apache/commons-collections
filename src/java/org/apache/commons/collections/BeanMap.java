@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.18 2003/04/18 23:29:24 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.19 2003/05/11 14:15:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,7 +73,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
 
-
 /** 
  * An implementation of Map for JavaBeans which uses introspection to
  * get and put properties in the bean.
@@ -82,7 +81,7 @@ import java.util.Set;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.18 $ $Date: 2003/04/18 23:29:24 $
+ * @version $Revision: 1.19 $ $Date: 2003/05/11 14:15:23 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Stephen Colebourne

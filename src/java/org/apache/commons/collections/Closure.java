@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Closure.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Closure.java,v 1.5 2003/05/11 14:15:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,16 +57,21 @@
  */
 package org.apache.commons.collections;
 
-/** An interface to represent some Closure, a block of code which is executed 
-  * from inside some block, function or iteration which operates on an input 
-  * object.
-  *
-  * @since 1.0
-  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  */
+/** 
+ * An interface to represent some Closure, a block of code which is executed 
+ * from inside some block, function or iteration which operates on an input 
+ * object.
+ *
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.5 $ $Date: 2003/05/11 14:15:23 $
+ * 
+ * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ */
 public interface Closure {
 
-    /** Performs some operation on the input object
-      */
-    public void execute(Object input);
+    /** 
+     * Performs some operation on the input object.
+     */
+    void execute(Object input);
+    
 }

@@ -1,7 +1,10 @@
-/* ====================================================================
+/*
+ * $Header: /home/cvs/jakarta-commons/collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.12 2003/05/11 13:29:16 scolebourne Exp $
+ * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -16,21 +19,21 @@
  *    the documentation and/or other materials provided with the
  *    distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowledgment may appear in the software itself,
  *    if and wherever such third-party acknowledgments normally appear.
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Commons" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
+ *    Foundation" must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their names without prior written
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -50,6 +53,7 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
 package org.apache.commons.collections;
 
@@ -62,6 +66,7 @@ import org.apache.commons.collections.comparators.ComparatorChain;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 import org.apache.commons.collections.comparators.TransformingComparator;
+
 /**
  * Provides convenient static utility methods for <Code>Comparator</Code>
  * objects.
@@ -75,17 +80,18 @@ import org.apache.commons.collections.comparators.TransformingComparator;
  * <code>null</code> instead of a comparator, in which case 
  * {@link #NATURAL_COMPARATOR} will be used.
  *
- * @since 2.1
+ * @since Commons Collections 2.1
+ * @version $Revision: $ $Date: $
+ * 
  * @author Paul Jack
- * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: $
+ * @author Stephen Colebourne
  */
 public class ComparatorUtils {
 
     /**
-     * Restrictive constructor
+     * ComparatorUtils should not normally be constructed.
      */
-    private ComparatorUtils() {
+    public ComparatorUtils() {
     }
 
     /**
@@ -276,4 +282,5 @@ public class ComparatorUtils {
         int c = comparator.compare(o1, o2);
         return (c > 0) ? o1 : o2;
     }
+    
 }
