@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.6 2003/08/20 21:03:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.7 2003/08/24 09:47:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,13 +66,14 @@ import java.util.ListResourceBundle;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TreeMap;
 
 import junit.framework.Test;
 
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/08/20 21:03:16 $
+ * @version $Revision: 1.7 $ $Date: 2003/08/24 09:47:19 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -331,5 +332,168 @@ public class TestMapUtils extends BulkTest {
         } catch (final ClassCastException e) {
             fail("No Casting should be occurring!");
         }
+    }
+
+    public void testDebugAndVerbosePrintNullMap() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String LABEL = "Print Map";
+        outPrint.println(LABEL + " = " + String.valueOf((Object) null));
+        final String EXPECTED_OUT = out.toString();
+
+        out.reset();            
+
+        MapUtils.debugPrint(outPrint, LABEL, null);
+        assertEquals(EXPECTED_OUT, out.toString());
+        
+        out.reset();
+        
+        MapUtils.verbosePrint(outPrint, LABEL, null);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    public void testVerbosePrintNullLabel() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map map = new TreeMap();  // treeMap guarantees order across JDKs for test
+        map.put( new Integer(2) , "B" );
+        map.put( new Integer(3) , "C" );
+        
+        outPrint.println("{");
+        outPrint.println(INDENT + "2 = B");
+        outPrint.println(INDENT + "3 = C");
+        outPrint.println("}");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
+        MapUtils.verbosePrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+            
+    public void testDebugPrintNullLabel() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map map = new TreeMap();  // treeMap guarantees order across JDKs for test
+        map.put( new Integer(2) , "B" );
+        map.put( new Integer(3) , "C" );
+    
+        outPrint.println("{");
+        outPrint.println(INDENT + "2 = B " + String.class.getName());
+        outPrint.println(INDENT + "3 = C " + String.class.getName());
+        outPrint.println("} " + TreeMap.class.getName());
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+        
+        MapUtils.debugPrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    public void testVerbosePrintNullLabelAndMap() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        MapUtils.verbosePrint(outPrint, null, null);
+        assertEquals("", out.toString());
+    }
+
+    public void testDebugPrintNullLabelAndMap() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        MapUtils.debugPrint(outPrint, null, null);
+        assertEquals("", out.toString());
+    }
+
+    public void testVerbosePrintNullStream() {
+        try {
+            MapUtils.verbosePrint(null, "Map", new HashMap());
+            fail();
+        } catch (NullPointerException ex) {
+        }
+    }
+    
+    public void testDebugPrintNullStream() {
+        try {
+            MapUtils.debugPrint(null, "Map", new HashMap());
+            fail();
+        } catch (NullPointerException ex) {
+        }
+    }
+    
+    public void testVerbosePrint() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+        
+        final String LABEL = "Print Map";
+        final String INDENT = "    ";
+        
+        outPrint.println(LABEL + " = ");
+        outPrint.println("{");
+        outPrint.println(INDENT + "0 = A");
+        outPrint.println(INDENT + "1 = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B");
+        outPrint.println(INDENT + INDENT + "3 = C");
+        outPrint.println(INDENT + "}");
+        outPrint.println(INDENT + "7 = this Map");
+        outPrint.println("}");
+        
+        final String EXPECTED_OUT = out.toString();
+
+        out.reset();            
+
+        final Map inner = new TreeMap();  // treeMap guarantees order across JDKs for test
+        inner.put( new Integer(2) , "B" );
+        inner.put( new Integer(3) , "C" );
+
+        final Map outer = new TreeMap();
+        outer.put( new Integer(1) , inner );
+        outer.put( new Integer(0) , "A");
+        outer.put( new Integer(7) , outer);
+
+        MapUtils.verbosePrint(outPrint, "Print Map", outer);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    public void testDebugPrint() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+        
+        final String LABEL = "Print Map";
+        final String INDENT = "    ";
+        
+        outPrint.println(LABEL + " = ");
+        outPrint.println("{");
+        outPrint.println(INDENT + "0 = A " + String.class.getName());
+        outPrint.println(INDENT + "1 = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
+        outPrint.println(INDENT + INDENT + "3 = C " + String.class.getName());
+        outPrint.println(INDENT + "} " + TreeMap.class.getName());
+        outPrint.println(INDENT + "7 = this Map");
+        outPrint.println("} " + TreeMap.class.getName());
+        
+        final String EXPECTED_OUT = out.toString();
+
+        out.reset();            
+
+        final Map inner = new TreeMap();  // treeMap guarantees order across JDKs for test
+        inner.put( new Integer(2) , "B" );
+        inner.put( new Integer(3) , "C" );
+
+        final Map outer = new TreeMap();
+        outer.put( new Integer(1) , inner );
+        outer.put( new Integer(0) , "A");
+        outer.put( new Integer(7) , outer);
+
+        MapUtils.debugPrint(outPrint, "Print Map", outer);
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 }

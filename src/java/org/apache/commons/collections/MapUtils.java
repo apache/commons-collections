@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.26 2003/08/20 21:03:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.27 2003/08/24 09:47:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.26 $ $Date: 2003/08/20 21:03:16 $
+ * @version $Revision: 1.27 $ $Date: 2003/08/24 09:47:19 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -116,6 +116,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  * @author Arun Mammen Thomas
  * @author Janek Bogucki
  * @author Max Rydahl Andersen
+ * @author Arun Mammen Thomas
  */
 public class MapUtils {
     
@@ -130,7 +131,9 @@ public class MapUtils {
      */
     public static final SortedMap EMPTY_SORTED_MAP = Collections.unmodifiableSortedMap(new TreeMap());
 
-    private static int debugIndent = 0;
+    private static int indentDepth = 0;  // must be synchronized
+
+    private static final String INDENT_STRING = "    ";
 
     /**
      * <code>MapUtils</code> should not normally be instantiated.
@@ -677,36 +680,48 @@ public class MapUtils {
     //-------------------------------------------------------------------------
 
     /**
-     *  Prints the given map with nice line breaks.
+     * Prints the given map with nice line breaks.
+     * <p>
+     * This method prints a nicely formatted String decribing the Map.
+     * Each map entry will be printed with key and value.
+     * When the value is a Map, recursive behaviour occurs.
      *
-     *  @param out  the stream to print to
-     *  @param label  the label to be applied to the output generated.  This 
-     *                 may well be the key associated with this map within a 
-     *                 surrounding map in which this is nested.   
-     *  @param map  the map to print
+     * @param out  the stream to print to, must not be null
+     * @param label  the label to be applied to the output generated.  This 
+     *              may well be the key associated with this map within a 
+     *              surrounding map in which this is nested.   
+     * @param map  the map to print, may be null
+     * @throws NullPointerException if the stream is null
      */
     public static synchronized void verbosePrint(
         final PrintStream out,
         final Object label,
         final Map map) {
 
+        indentDepth = 0;
         verbosePrintInternal(out, label, map, false);
     }
 
     /**
-     *  Prints the given map with nice line breaks.
+     * Prints the given map with nice line breaks.
+     * <p>
+     * This method prints a nicely formatted String decribing the Map.
+     * Each map entry will be printed with key, value and value classname.
+     * When the value is a Map, recursive behaviour occurs.
      *
-     *  @param out  the stream to print to
-     *  @param label  the label to be applied to the output generated.  This 
-     *                 may well be the key associated with this map within a 
-     *                 surrounding map in which this is nested.   
-     *  @param map  the map to print
+     * @param out  the stream to print to, must not be null
+     * @param label  the label to be applied to the output generated.  This 
+     *              may well be the key associated with this map within a 
+     *              surrounding map in which this is nested.   
+     * @param map  the map to print, may be null
+     * @throws NullPointerException if the stream is null
      */
     public static synchronized void debugPrint(
         final PrintStream out,
         final Object label,
         final Map map) {
 
+        indentDepth = 0;
         verbosePrintInternal(out, label, map, true);
     }
 
@@ -718,9 +733,9 @@ public class MapUtils {
      *
      * @param out  the stream to indent
      */
-    protected static void debugPrintIndent(PrintStream out) {
-        for (int i = 0; i < debugIndent; i++) {
-            out.print("    ");
+    protected static void printIndent(PrintStream out) {
+        for (int i = 0; i < indentDepth; i++) {
+            out.print(INDENT_STRING);
         }
     }
     
@@ -737,53 +752,70 @@ public class MapUtils {
      * Implementation providing functionality for {@link #debugPrint} and for 
      * {@link #verbosePrint}.  This prints the given map with nice line breaks.
      * If the debug flag is true, it additionally prints the type of the object 
-     * value.  .
+     * value.
      *
      * @param out  the stream to print to
      * @param label  the label to be applied to the output generated.  This 
-     *                may well be the key associated with this map within a 
-     *                surrounding map in which this is nested.   
-     * @param map  the map to print
+     *              may well be the key associated with this map within a 
+     *              surrounding map in which this is nested.   
+     * @param map  the map to print, may be null
      * @param debug flag indicating whether type names should be output.
      */
-    private static void verbosePrintInternal(
+    private static void verbosePrintInternal(  // externally synchronized
         final PrintStream out,
         final Object label,
         final Map map,
         final boolean debug) {
 
-        debugPrintIndent(out);
-        out.println(label + " = ");
+        printIndent(out);
 
-        debugPrintIndent(out);
+        if (label != null) {
+            if (map == null) {
+                // Guard against null map.
+                out.println(label + " = null");
+                return;
+            } else {
+                out.println(label + " = ");
+            }            
+        }
+        if (map == null) {
+            return;
+        }
+
+        printIndent(out);
         out.println("{");
-        ++debugIndent;
+        indentDepth++;
 
-        for (Iterator iter = map.entrySet().iterator(); iter.hasNext();) {
-            Map.Entry entry = (Map.Entry) iter.next();
+        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
             Object childKey = entry.getKey();
             Object childValue = entry.getValue();
             if (childValue instanceof Map) {
-                verbosePrintInternal(out, childKey, (Map) childValue, false);
+                if (childValue == map) {
+                    printIndent(out);
+                    out.println(childKey + " = this Map");  // should have stack really...
+                } else {
+                    verbosePrintInternal(out, childKey, (Map) childValue, debug);
+                }
             } else {
-                debugPrintIndent(out);
+                printIndent(out);
 
-                if (debug) {
-                    String typeName =
-                        (childValue != null)
-                            ? childValue.getClass().getName()
-                            : null;
-
+                if (debug && childValue != null) {
                     out.println(
-                        childKey + " = " + childValue + " class: " + typeName);
+                        childKey 
+                        + " = " 
+                        + childValue 
+                        + " " 
+                        + childValue.getClass().getName()
+                    );
                 } else {
                     out.println(childKey + " = " + childValue);
                 }
             }
         }
-        --debugIndent;
-        debugPrintIndent(out);
-        out.println("}");
+        indentDepth--;
+        printIndent(out);
+        out.println(debug ? "} " + map.getClass().getName() : "}");
     }
 
     // Misc
