@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.32 2003/05/11 14:12:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.33 2003/07/19 00:30:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.32 $ $Date: 2003/05/11 14:12:46 $
+ * @version $Revision: 1.33 $ $Date: 2003/07/19 00:30:08 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -909,7 +909,9 @@ public class CollectionUtils {
     /**
      * Returns a predicated collection backed by the given collection.
      * Only objects that pass the test in the given predicate can be 
-     * added to the collection.
+     * added to the collection. Throws an IllegalArgumentException on adding
+     * an element if it is invalid.
+     * <p>
      * It is important not to use the original collection after invoking this 
      * method, as it is a backdoor for adding unvalidated objects.
      *
