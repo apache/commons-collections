@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.9 2002/08/15 20:09:37 pjack Exp $
- * $Revision: 1.9 $
- * $Date: 2002/08/15 20:09:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.10 2002/08/17 21:10:46 pjack Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/08/17 21:10:46 $
  *
  * ====================================================================
  *
@@ -736,6 +736,15 @@ public class MapUtils {
 
         public PredicatedMap(Map map, Predicate keyPred, Predicate valuePred) {
             super(map);
+            if (map == null) {
+                throw new IllegalArgumentException("map may not be null.");
+            }
+            if (keyPred == null) {
+                throw new IllegalArgumentException("keyPred may not be null.");
+            }
+            if (valuePred == null) {
+                throw new IllegalArgumentException("valuePred may not be null.");
+            }
             this.keyPredicate = keyPred;
             this.valuePredicate = valuePred;
             Iterator iter = map.entrySet().iterator();
@@ -856,6 +865,12 @@ public class MapUtils {
 
         public BoundedMap(Map map, int maxSize) {
             super(map);
+            if (map == null) {
+                throw new IllegalArgumentException("map may not be null.");
+            }
+            if (maxSize < 0) {
+                throw new IllegalArgumentException("maxSize must be nonnegative.");
+            }
             this.maxSize = maxSize;
         }
 
@@ -886,6 +901,9 @@ public class MapUtils {
 
         public FixedSizeMap(Map map) {
             super(map);
+            if (map == null) {
+                throw new IllegalArgumentException("map may not be null.");
+            }
         }
 
 
@@ -916,6 +934,12 @@ public class MapUtils {
 
         public LazyMap(Map map, Factory factory) {
             super(map);
+            if (map == null) {
+                throw new IllegalArgumentException("map may not be null.");
+            }
+            if (factory == null) {
+                throw new IllegalArgumentException("factory may not be null.");
+            }
             this.factory = factory;
         }
 

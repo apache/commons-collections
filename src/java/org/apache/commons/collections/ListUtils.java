@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.8 2002/08/15 20:09:37 pjack Exp $
- * $Revision: 1.8 $
- * $Date: 2002/08/15 20:09:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.9 2002/08/17 21:10:46 pjack Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/08/17 21:10:46 $
  *
  * ====================================================================
  *
@@ -364,6 +364,9 @@ public class ListUtils
 
         public BoundedList(List list, int maxSize) {
             super(list);
+            if (maxSize < 0) {
+                throw new IllegalArgumentException("maxSize must be nonnegative.");
+            }
             this.maxSize = maxSize;
         }
 
@@ -444,6 +447,9 @@ public class ListUtils
 
         public LazyList(List list, Factory factory) {
             super(list);
+            if (factory == null) {
+                throw new IllegalArgumentException("factory may not be null");
+            }
             this.factory = factory;
         }
 

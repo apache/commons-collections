@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.12 2002/08/17 11:38:35 scolebourne Exp $
- * $Revision: 1.12 $
- * $Date: 2002/08/17 11:38:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.13 2002/08/17 21:10:46 pjack Exp $
+ * $Revision: 1.13 $
+ * $Date: 2002/08/17 21:10:46 $
  *
  * ====================================================================
  *
@@ -81,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Rodney Waldhoff
  *
  * @since 1.0
- * @version $Id: CollectionUtils.java,v 1.12 2002/08/17 11:38:35 scolebourne Exp $
+ * @version $Id: CollectionUtils.java,v 1.13 2002/08/17 21:10:46 pjack Exp $
  */
 public class CollectionUtils {
 
@@ -753,6 +753,9 @@ public class CollectionUtils {
 
         public BoundedCollection(Collection c, int maxSize) {
             super(c);
+            if (maxSize < 0) {
+                throw new IllegalArgumentException("maxSize must be nonnegative.");
+            }
             this.maxSize = maxSize;
         }
 

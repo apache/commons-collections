@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.3 2002/08/13 00:49:59 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/13 00:49:59 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.4 2002/08/17 21:10:46 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/17 21:10:46 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.Set;
  *  and {@link SortedBag} instances.<P>
  *
  *  @author Paul Jack
- *  @version $Id: BagUtils.java,v 1.3 2002/08/13 00:49:59 pjack Exp $
+ *  @version $Id: BagUtils.java,v 1.4 2002/08/17 21:10:46 pjack Exp $
  *  @since 2.1
  */
 public class BagUtils {
@@ -182,6 +182,9 @@ public class BagUtils {
 
         public BoundedBag(Bag bag, int maxSize) {
             super(bag);
+            if (maxSize < 0) {
+                throw new IllegalArgumentException("maxSize must be nonnegative.");
+            }
             this.maxSize = maxSize;
         }
 
