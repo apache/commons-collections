@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ListIteratorWrapper.java,v 1.4 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ListIteratorWrapper.java,v 1.5 2003/09/29 22:02:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.util.NoSuchElementException;
  * operations of ListIterator.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/29 22:02:33 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -92,7 +92,7 @@ public class ListIteratorWrapper implements ListIterator {
     //-------------------------------------------------------------------------
 
     /**
-     * Constructs a new <Code>ListIteratorWrapper</Code> that will wrap
+     * Constructs a new <code>ListIteratorWrapper</code> that will wrap
      * the given iterator.
      *
      * @param iterator  the iterator to wrap

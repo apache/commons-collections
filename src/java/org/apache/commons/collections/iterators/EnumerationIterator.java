@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EnumerationIterator.java,v 1.3 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EnumerationIterator.java,v 1.4 2003/09/29 22:02:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import java.util.Iterator;
  * to be {@link Iterator Iterator} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/29 22:02:33 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
@@ -80,7 +80,7 @@ public class EnumerationIterator implements Iterator {
     private Object last;
     
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that will not
+     *  Constructs a new <code>EnumerationIterator</code> that will not
      *  function until {@link #setEnumeration(Enumeration)} is called.
      */
     public EnumerationIterator() {
@@ -88,7 +88,7 @@ public class EnumerationIterator implements Iterator {
     }
 
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that provides
+     *  Constructs a new <code>EnumerationIterator</code> that provides
      *  an iterator view of the given enumeration.
      *
      *  @param enumeration  the enumeration to use
@@ -98,7 +98,7 @@ public class EnumerationIterator implements Iterator {
     }
 
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that will remove
+     *  Constructs a new <code>EnumerationIterator</code> that will remove
      *  elements from the specified collection.
      *
      *  @param enum  the enumeration to use

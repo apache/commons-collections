@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.7 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.8 2003/09/29 22:02:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import java.util.NoSuchElementException;
  * <code>A.next()</code> and <code>B.next()</code>.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.8 $ $Date: 2003/09/29 22:02:33 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -100,7 +100,7 @@ public class CollatingIterator implements Iterator {
     // -------------------------------------------------------------------
     
     /**
-     * Constructs a new <Code>CollatingIterator</Code>.  Natural sort order
+     * Constructs a new <code>CollatingIterator</code>.  Natural sort order
      * will be used, and child iterators will have to be manually added 
      * using the {@link #addIterator(Iterator)} method.
      */
@@ -109,11 +109,11 @@ public class CollatingIterator implements Iterator {
     }
     
     /**
-     * Constructs a new <Code>CollatingIterator</Code> that will used the
+     * Constructs a new <code>CollatingIterator</code> that will used the
      * specified comparator for ordering.  Child iterators will have to be 
      * manually added using the {@link #addIterator(Iterator)} method.
      *
-     * @param comp  the comparator to use for ordering, or <Code>null</Code>
+     * @param comp  the comparator to use for ordering, or <code>null</code>
      *    to use natural sort order
      */
     public CollatingIterator(Comparator comp) {
@@ -121,12 +121,12 @@ public class CollatingIterator implements Iterator {
     }
     
     /**
-     * Constructs a new <Code>CollatingIterator</Code> that will used the
+     * Constructs a new <code>CollatingIterator</code> that will used the
      * specified comparator for ordering and have the specified initial
      * capacity.  Child iterators will have to be 
      * manually added using the {@link #addIterator(Iterator)} method.
      *
-     * @param comp  the comparator to use for ordering, or <Code>null</Code>
+     * @param comp  the comparator to use for ordering, or <code>null</code>
      *    to use natural sort order
      * @param initIterCapacity  the initial capacity for the internal list
      *    of child iterators
@@ -137,7 +137,7 @@ public class CollatingIterator implements Iterator {
     }
 
     /**
-     * Constructs a new <Code>CollatingIterator</Code> that will use the
+     * Constructs a new <code>CollatingIterator</code> that will use the
      * specified comparator to provide ordered iteration over the two
      * given iterators.
      *
@@ -154,7 +154,7 @@ public class CollatingIterator implements Iterator {
     }
 
     /**
-     * Constructs a new <Code>CollatingIterator</Code> that will use the
+     * Constructs a new <code>CollatingIterator</code> that will use the
      * specified comparator to provide ordered iteration over the array
      * of iterators.
      *
@@ -171,7 +171,7 @@ public class CollatingIterator implements Iterator {
     }
 
     /**
-     * Constructs a new <Code>CollatingIterator</Code> that will use the
+     * Constructs a new <code>CollatingIterator</code> that will use the
      * specified comparator to provide ordered iteration over the collection
      * of iterators.
      *
@@ -252,7 +252,7 @@ public class CollatingIterator implements Iterator {
     // -------------------------------------------------------------------
 
     /**
-     *  Returns <Code>true</Code> if any child iterator has remaining elements.
+     *  Returns <code>true</code> if any child iterator has remaining elements.
      *
      *  @return true if this iterator has remaining elements
      */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterIterator.java,v 1.4 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterIterator.java,v 1.5 2003/09/29 22:02:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import org.apache.commons.collections.Predicate;
  * returned.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/29 22:02:33 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Jan Sorensen
@@ -87,7 +87,7 @@ public class FilterIterator extends ProxyIterator {
     //-------------------------------------------------------------------------
 
     /**
-     * Constructs a new <Code>FilterIterator</Code> that will not function
+     * Constructs a new <code>FilterIterator</code> that will not function
      * until {@link #setIterator(Iterator) setIterator} is invoked.
      */
     public FilterIterator() {
@@ -95,7 +95,7 @@ public class FilterIterator extends ProxyIterator {
     }
     
     /**
-     * Constructs a new <Code>FilterIterator</Code> that will not function
+     * Constructs a new <code>FilterIterator</code> that will not function
      * until {@link #setPredicate(Predicate) setPredicate} is invoked.
      *
      * @param iterator  the iterator to use
@@ -105,7 +105,7 @@ public class FilterIterator extends ProxyIterator {
     }
 
     /**
-     * Constructs a new <Code>FilterIterator</Code> that will use the
+     * Constructs a new <code>FilterIterator</code> that will use the
      * given iterator and predicate.
      *
      * @param iterator  the iterator to use

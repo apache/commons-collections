@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.5 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.6 2003/09/29 22:02:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,7 +83,7 @@ import java.util.NoSuchElementException;
  * to not alter the underlying List of Iterators.</p>
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/29 22:02:33 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -127,7 +127,7 @@ public class IteratorChain implements Iterator {
     }
 
     /**
-     * Constructs a new <Code>IteratorChain</Code> over the two
+     * Constructs a new <code>IteratorChain</code> over the two
      * given iterators.
      *
      * @param a  the first child iterator
@@ -141,7 +141,7 @@ public class IteratorChain implements Iterator {
     }
 
     /**
-     * Constructs a new <Code>IteratorChain</Code> over the array
+     * Constructs a new <code>IteratorChain</code> over the array
      * of iterators.
      *
      * @param iterators  the array of iterators
@@ -155,7 +155,7 @@ public class IteratorChain implements Iterator {
     }
 
     /**
-     * Constructs a new <Code>IteratorChain</Code> over the collection
+     * Constructs a new <code>IteratorChain</code> over the collection
      * of iterators.
      *
      * @param iterators  the collection of iterators

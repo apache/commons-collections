@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorEnumeration.java,v 1.3 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorEnumeration.java,v 1.4 2003/09/29 22:02:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import java.util.Iterator;
  * Adapter to make an {@link Iterator Iterator} instance appear to be an {@link Enumeration Enumeration} instances
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/29 22:02:33 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */
@@ -73,7 +73,7 @@ public class IteratorEnumeration implements Enumeration {
     private Iterator iterator;
     
     /**
-     * Constructs a new <Code>IteratorEnumeration</Code> that will not 
+     * Constructs a new <code>IteratorEnumeration</code> that will not 
      * function until {@link #setIterator(Iterator) setIterator} is  
      * invoked.
      */
@@ -82,7 +82,7 @@ public class IteratorEnumeration implements Enumeration {
     }
 
     /**
-     * Constructs a new <Code>IteratorEnumeration</Code> that will use
+     * Constructs a new <code>IteratorEnumeration</code> that will use
      * the given iterator. 
      * 
      * @param iterator  the iterator to use
