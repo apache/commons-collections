@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.3.2.2 2002/02/26 06:17:51 morgand Exp $
- * $Revision: 1.3.2.2 $
- * $Date: 2002/02/26 06:17:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.3.2.3 2002/02/26 06:28:41 morgand Exp $
+ * $Revision: 1.3.2.3 $
+ * $Date: 2002/02/26 06:28:41 $
  *
  * ====================================================================
  *
@@ -87,7 +87,7 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.3.2.2 2002/02/26 06:17:51 morgand Exp $
+ * @version $Id: TestMap.java,v 1.3.2.3 2002/02/26 06:28:41 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
 
@@ -959,10 +959,14 @@ public abstract class TestMap extends TestObject {
      * against the canonical version in CVS.
      */
     public void testEmptyMapCompatibility() throws IOException, ClassNotFoundException {
-        Map map = makeEmptyMap();
+        Map map = null;
+        /**
+         * Create canonical objects with this code
+        map = makeEmptyMap();
         if (!(map instanceof Serializable)) return;
         
         writeExternalFormToDisk((Serializable) map, getCanonicalEmptyMapName(map));
+        */
 
         // test to make sure the canonical form has been preserved
         if (!(makeEmptyMap() instanceof Serializable)) return;
@@ -975,10 +979,15 @@ public abstract class TestMap extends TestObject {
      * against the canonical version in CVS.
      */
     public void testFullMapCompatibility() throws IOException, ClassNotFoundException {
-        Map map = makeFullMap();
+        
+        Map map = null;
+        /**
+         * Create canonical objects with this code
+        map = makeFullMap();
         if (!(map instanceof Serializable)) return;
         
         writeExternalFormToDisk((Serializable) map, getCanonicalFullMapName(map));
+        */
 
         // test to make sure the canonical form has been preserved
         if (!(makeFullMap() instanceof Serializable)) return;
