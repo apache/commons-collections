@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.3 2003/01/11 21:28:03 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.4 2003/01/13 21:52:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -59,19 +59,45 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.List;
 
-import org.apache.commons.collections.primitives.*;
 import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntList;
+import org.apache.commons.collections.primitives.IntListIterator;
 
 /**
- * Adapts a {@link Number}-valued {@link java.util.List List} 
- * to the {@link IntList} interface.
+ * Adapts a {@link Number}-valued {@link List List} 
+ * to the {@link IntList IntList} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link List List} 
+ * implementation in the "obvious" way.
  *
- * @version $Revision: 1.3 $ $Date: 2003/01/11 21:28:03 $
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.4 $ $Date: 2003/01/13 21:52:28 $
  * @author Rodney Waldhoff 
  */
 public class ListIntList extends CollectionIntCollection implements IntList {
     
+    /**
+     * Create an {@link IntList IntList} wrapping
+     * the specified {@link List List}.  When
+     * the given <i>list</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param list the (possibly <code>null</code>) 
+     *        {@link List List} to wrap
+     * @return a {@link IntList IntList} wrapping the given 
+     *         <i>list</i>, or <code>null</code> when <i>list</i> is
+     *         <code>null</code>.
+     */
+    public static IntList wrap(List list) {
+        return null == list ? null : new ListIntList(list);
+    }
+
+    /**
+     * Creates an {@link IntList IntList} wrapping
+     * the specified {@link List List}.
+     * @see #wrap
+     */
     public ListIntList(List list) {
         super(list);        
         _list = list;
@@ -97,10 +123,24 @@ public class ListIntList extends CollectionIntCollection implements IntList {
         return _list.lastIndexOf(new Integer(element));
     }
 
+    /**
+     * {@link ListIteratorIntListIterator#wrap wraps} the 
+     * {@link IntList IntList} 
+     * returned by my underlying 
+     * {@link IntListIterator IntListIterator},
+     * if any.
+     */
     public IntListIterator listIterator() {
         return ListIteratorIntListIterator.wrap(_list.listIterator());
     }
 
+    /**
+     * {@link ListIteratorIntListIterator#wrap wraps} the 
+     * {@link IntList IntList} 
+     * returned by my underlying 
+     * {@link IntListIterator IntListIterator},
+     * if any.
+     */
     public IntListIterator listIterator(int index) {
         return ListIteratorIntListIterator.wrap(_list.listIterator(index));
     }
@@ -117,6 +157,13 @@ public class ListIntList extends CollectionIntCollection implements IntList {
         return ListIntList.wrap(_list.subList(fromIndex,toIndex));
     }
 
+    /**
+     * If <i>that</i> is an {@link IntList IntList}, 
+     * it is {@link IntListList#wrap wrapped} and
+     * compared to my underlying 
+     * {@link List List},
+     * otherwise this method simply delegates to my parent implementation.
+     */
     public boolean equals(Object that) {
         if(that instanceof IntList) {
             return _list.equals(IntListList.wrap((IntList)that));
@@ -125,10 +172,6 @@ public class ListIntList extends CollectionIntCollection implements IntList {
         }
     }
         
-    public static IntList wrap(List list) {
-        return null == list ? null : new ListIntList(list);
-    }
-
     private List _list = null;
 
 }

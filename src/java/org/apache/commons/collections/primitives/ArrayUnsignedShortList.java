@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedShortList.java,v 1.3 2003/01/13 12:59:45 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedShortList.java,v 1.4 2003/01/13 21:52:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -76,7 +76,7 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.3 $ $Date: 2003/01/13 12:59:45 $
+ * @version $Revision: 1.4 $ $Date: 2003/01/13 21:52:28 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -146,8 +146,7 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
      * Removes the element at the specified position in 
      * (optional operation).  Any subsequent elements 
      * are shifted to the left, subtracting one from their 
-     * indices.  Returns the element that was removed from
-     * the list.
+     * indices.  Returns the element that was removed.
      * By construction, the returned value will be 
      * between {@link #MIN_VALUE} and {@link #MAX_VALUE}, inclusive.
      * 
@@ -242,7 +241,7 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
 
     /** 
      * Reduce my capacity, if necessary, to match my
-     * current {@link #size}.
+     * current {@link #size size}.
      */
     public void trimToSize() {
         incrModCount();

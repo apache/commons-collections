@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/CollectionIntCollection.java,v 1.2 2003/01/11 21:28:03 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/CollectionIntCollection.java,v 1.3 2003/01/13 21:52:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,14 +63,39 @@ import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntIterator;
 
 /**
- * Adapts a {@link java.lang.Number Number} valued
+ * Adapts a {@link java.lang.Number Number}-valued
  * {@link java.util.Collection Collection} to the
- * {@link IntCollection} interface.
- *
- * @version $Revision: 1.2 $ $Date: 2003/01/11 21:28:03 $
+ * {@link IntCollection IntCollection} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link Collection Collection} 
+ * implementation in the "obvious" way.
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.3 $ $Date: 2003/01/13 21:52:28 $
  * @author Rodney Waldhoff 
  */
 public class CollectionIntCollection implements IntCollection {
+    /**
+     * Create an {@link IntCollection IntCollection} wrapping
+     * the specified {@link Collection Collection}.  When
+     * the given <i>collection</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param collection the (possibly <code>null</code>) {@link Collection} to wrap
+     * @return an {@link IntCollection IntCollection} wrapping the given 
+     *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
+     *         <code>null</code>.
+     */
+    public static IntCollection wrap(Collection collection) {
+        return null == collection ? null : new CollectionIntCollection(collection);
+    }
+    
+    /**
+     * Creates an {@link IntCollection IntCollection} wrapping
+     * the specified {@link Collection Collection}.
+     * @see #wrap
+     */
     public CollectionIntCollection(Collection collection) {
         _collection = collection;
     }
@@ -95,6 +120,13 @@ public class CollectionIntCollection implements IntCollection {
         return _collection.containsAll(IntCollectionCollection.wrap(c));
     }        
     
+    /**
+     * If <i>that</i> is an {@link IntCollection IntCollection}, 
+     * it is {@link IntCollectionCollection#wrap wrapped} and
+     * compared to my underlying {@link Collection Collection}, otherwise
+     * this method simply delegates to my underlying 
+     * {@link Collection Collection}.
+     */
     public boolean equals(Object that) {
         if(that instanceof IntCollection) {
             return _collection.equals(IntCollectionCollection.wrap((IntCollection)that));
@@ -115,6 +147,13 @@ public class CollectionIntCollection implements IntCollection {
         return _collection.isEmpty();
     }
     
+    /**
+     * {@link IteratorIntIterator#wrap wraps} the 
+     * {@link java.util.Iterator Iterator}
+     * returned by my underlying 
+     * {@link Collection Collection}, 
+     * if any.
+     */
     public IntIterator iterator() {
         return IteratorIntIterator.wrap(_collection.iterator());
     }
@@ -153,10 +192,6 @@ public class CollectionIntCollection implements IntCollection {
             dest[i] = ((Number)(src[i])).intValue();
         }
         return dest;
-    }
-    
-    public static IntCollection wrap(Collection collection) {
-        return null == collection ? null : new CollectionIntCollection(collection);
     }
     
     private Collection _collection = null;

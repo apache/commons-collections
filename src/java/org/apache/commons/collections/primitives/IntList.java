@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.12 2003/01/13 12:59:45 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.13 2003/01/13 21:52:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,7 +64,7 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.ListIntList
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.12 $ $Date: 2003/01/13 12:59:45 $
+ * @version $Revision: 1.13 $ $Date: 2003/01/13 21:52:28 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -72,7 +72,7 @@ public interface IntList extends IntCollection {
     /** 
      * Appends the specified element to the end of me
      * (optional operation).  Returns <code>true</code>
-     * if I changed as a result of this call.
+     * iff I changed as a result of this call.
      * <p/>
      * If a collection refuses to add the specified
      * element for any reason other than that it already contains
@@ -118,7 +118,7 @@ public interface IntList extends IntCollection {
      * 
      * @param index the index at which to insert the first element from 
      *        the specified collection
-     * @param collection the {@link IntCollection} of elements to add 
+     * @param collection the {@link IntCollection IntCollection} of elements to add 
      * @return <code>true</code> iff I changed as a result of this call
      * 
      * @throws UnsupportedOperationException when this operation is not 
@@ -131,8 +131,8 @@ public interface IntList extends IntCollection {
      * Returns <code>true</code> iff <i>that</i> is an <code>IntList</code>
      * that contains the same elements in the same order as me.
      * In other words, returns <code>true</code> iff <i>that</i> is
-     * an <code>IntList</code> that has the same {@link #size} as me,
-     * and for which the elements returned that its 
+     * an <code>IntList</code> that has the same {@link #size size} as me,
+     * and for which the elements returned by its 
      * {@link IntList#iterator iterator} are equal (<code>==</code>) to
      * the corresponding elements within me.
      * (This contract ensures that this method works properly across 
@@ -145,8 +145,8 @@ public interface IntList extends IntCollection {
     boolean equals(Object that);
     
     /** 
-     * Returns the element at the specified position within 
-     * me. 
+     * Returns the value of the element at the specified position 
+     * within me. 
      * 
      * @param index the index of the element to return
      * @return the value of the element at the specified position
@@ -159,13 +159,14 @@ public interface IntList extends IntCollection {
      * <p />
      * The hash code of an <code>IntList</code> is defined to be the
      * result of the following calculation:
-     * <pre>int hash = 1;
+     * <pre> int hash = 1;
      * for(IntIterator iter = iterator(); iter.hasNext(); ) {
      *   hash = 31*hash + iter.next();
      * }</pre>
      * <p />
      * This contract ensures that this method is consistent with 
-     * {@link #equals} and with the {@link java.util.List#hashCode hashCode}
+     * {@link #equals equals} and with the 
+     * {@link java.util.List#hashCode hashCode}
      * method of a {@link java.util.List List} of {@link Integer}s. 
      * 
      * @return my hash code
@@ -184,6 +185,13 @@ public interface IntList extends IntCollection {
      */
     int indexOf(int element);
      
+    /** 
+     * Returns an {@link IntIterator iterator} over all my elements,
+     * in the appropriate sequence.
+     * @return an {@link IntIterator iterator} over all my elements.
+     */
+    IntIterator iterator();
+
     /** 
      * Returns the index of the last occurrence 
      * of the specified element within me, 
@@ -205,7 +213,7 @@ public interface IntList extends IntCollection {
     /** 
      * Returns a 
      * {@link IntListIterator bidirectional iterator}
-     * over my elements, in the appropriate sequence, 
+     * over all my elements, in the appropriate sequence, 
      * starting at the specified position. The 
      * specified <i>index</i> indicates the first 
      * element that would be returned by an initial 
@@ -224,8 +232,7 @@ public interface IntList extends IntCollection {
      * Removes the element at the specified position in 
      * (optional operation).  Any subsequent elements 
      * are shifted to the left, subtracting one from their 
-     * indices.  Returns the element that was removed from
-     * the list.
+     * indices.  Returns the element that was removed.
      * 
      * @param index the index of the element to remove
      * @return the value of the element that was removed
@@ -254,14 +261,14 @@ public interface IntList extends IntCollection {
     /** 
      * Returns a view of the elements within me 
      * between the specified <i>fromIndex</i>, inclusive, and 
-     * <i>toIndex</i>, exclusive.  The returned {@link IntList}
+     * <i>toIndex</i>, exclusive.  The returned <code>IntList</code>
      * is backed by me, so that any changes in 
      * the returned list are reflected in me, and vice-versa.
      * The returned list supports all of the optional operations
      * that I support.
      * <p/>
      * Note that when <code><i>fromIndex</i> == <i>toIndex</i></code>,
-     * the returned list is empty, and when 
+     * the returned list is initially empty, and when 
      * <code><i>fromIndex</i> == 0 && <i>toIndex</i> == {@link #size() size()}</code>
      * the returned list is my "improper" sublist, containing all my elements.
      * <p/>

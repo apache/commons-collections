@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.5 2003/01/12 15:23:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.6 2003/01/13 21:52:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/01/12 15:23:20 $
+ * @version $Revision: 1.6 $ $Date: 2003/01/13 21:52:28 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedShortList extends TestIntList {
@@ -113,4 +113,23 @@ public class TestArrayUnsignedShortList extends TestIntList {
     public void testZeroInitialCapacityIsValid() {
         ArrayUnsignedShortList list = new ArrayUnsignedShortList(0);
     }
+    
+    public void testIllegalArgumentExceptionWhenElementOutOfRange() {
+        ArrayUnsignedShortList list = new ArrayUnsignedShortList();
+        list.add(ArrayUnsignedShortList.MIN_VALUE);
+        list.add(ArrayUnsignedShortList.MAX_VALUE);
+        try {
+            list.add(-1);
+            fail("Expected IllegalArgumentException");
+        } catch(IllegalArgumentException e) {
+            // expected
+        }
+        try {
+            list.add(ArrayUnsignedShortList.MAX_VALUE+1);
+            fail("Expected IllegalArgumentException");
+        } catch(IllegalArgumentException e) {
+            // expected
+        }
+    }
+
 }

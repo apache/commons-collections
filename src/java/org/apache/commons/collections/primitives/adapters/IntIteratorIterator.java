@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntIteratorIterator.java,v 1.2 2003/01/11 21:28:03 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntIteratorIterator.java,v 1.3 2003/01/13 21:52:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,14 +62,40 @@ import java.util.Iterator;
 import org.apache.commons.collections.primitives.IntIterator;
 
 /**
- * Adapts an {@link IntIterator} to the
+ * Adapts an {@link IntIterator IntIterator} to the
  * {@link java.util.Iterator Iterator} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link IntIterator IntIterator} 
+ * implementation in the "obvious" way.
  *
- * @version $Revision: 1.2 $ $Date: 2003/01/11 21:28:03 $
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.3 $ $Date: 2003/01/13 21:52:28 $
  * @author Rodney Waldhoff 
  */
 public class IntIteratorIterator implements Iterator {
     
+    /**
+     * Create an {@link Iterator Iterator} wrapping
+     * the specified {@link IntIterator IntIterator}.  When
+     * the given <i>iterator</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param iterator the (possibly <code>null</code>) 
+     *        {@link IntIterator IntIterator} to wrap
+     * @return an {@link Iterator Iterator} wrapping the given 
+     *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+     *         <code>null</code>.
+     */
+    public static Iterator wrap(IntIterator iterator) {
+        return null == iterator ? null : new IntIteratorIterator(iterator);
+    }
+    
+    /**
+     * Creates an {@link Iterator Iterator} wrapping
+     * the specified {@link IntIterator IntIterator}.
+     * @see #wrap
+     */
     public IntIteratorIterator(IntIterator iterator) {
         _iterator = iterator;
     }
@@ -84,10 +110,6 @@ public class IntIteratorIterator implements Iterator {
     
     public void remove() {
         _iterator.remove();
-    }
-    
-    public static Iterator wrap(IntIterator iterator) {
-        return null == iterator ? null : new IntIteratorIterator(iterator);
     }
     
     private IntIterator _iterator = null;

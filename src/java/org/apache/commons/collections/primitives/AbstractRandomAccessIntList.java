@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.8 2003/01/13 12:59:45 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.9 2003/01/13 21:52:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -74,7 +74,7 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.8 $ $Date: 2003/01/13 12:59:45 $
+ * @version $Revision: 1.9 $ $Date: 2003/01/13 21:52:28 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -83,7 +83,7 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
     // constructors
     //-------------------------------------------------------------------------
 
-    /** Constructs any empty list. */
+    /** Constructs an empty list. */
     protected AbstractRandomAccessIntList() { 
     }    
 
@@ -95,7 +95,7 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
      * @param that the non-<code>null</code> collection of <code>int</code>s 
      *        to add
      * @throws NullPointerException if <i>that</i> is <code>null</code>
-     * @throws UnsupportedOperationException if {@link #addAll} does
+     * @throws UnsupportedOperationException if {@link #addAll addAll} does
      */
     protected AbstractRandomAccessIntList(IntCollection that) { 
         addAll(that);

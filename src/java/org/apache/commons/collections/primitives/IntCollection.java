@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollection.java,v 1.4 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollection.java,v 1.5 2003/01/13 21:52:28 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,7 +64,7 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.CollectionIntCollection
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.4 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.5 $ $Date: 2003/01/13 21:52:28 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -72,7 +72,7 @@ public interface IntCollection {
     /** 
      * Ensures that I contain the specified element 
      * (optional operation).  Returns <code>true</code>
-     * if I changed as a result of this call.
+     * iff I changed as a result of this call.
      * <p/>
      * If a collection refuses to add the specified
      * element for any reason other than that it already contains
@@ -108,7 +108,7 @@ public interface IntCollection {
     
     /** 
      * Removes all my elements (optional operation). 
-     * This collection will be {@link #isEmpty empty} after this
+     * I will be {@link #isEmpty empty} after this
      * method successfully returns.
      * 
      * @throws UnsupportedOperationException when this operation is not 
@@ -148,6 +148,25 @@ public interface IntCollection {
      * @return an {@link IntIterator iterator} over all my elements.
      */
     IntIterator iterator();
+    
+    /** 
+     * Removes all of my elements that are contained in the 
+     * specified collection (optional operation). 
+     * The behavior of this method is unspecified if 
+     * the given collection is modified while this method
+     * is executing.  Note that this includes the case
+     * in which the given collection is this collection, 
+     * and it is not empty.
+     * 
+     * @param c the collection of elements to remove
+     * @return <code>true</code> iff I contained the at least one of the
+     *         specified elements, in other words, returns <code>true</code>
+     *         iff I changed as a result of this call
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     */
+    boolean removeAll(IntCollection c);
      
     /** 
      * Removes a single occurrence of the specified element 
@@ -163,24 +182,13 @@ public interface IntCollection {
     boolean removeElement(int element);
     
     /** 
-     * Removes all of my elements that are contained in the 
-     * specified collection (optional operation). 
-     * 
-     * @param c the collection of elements to remove
-     * @return <code>true</code> iff I contained the at least one of the
-     *         specified elements,  in other words, iff I changed as a result 
-     *         of this call
-     * 
-     * @throws UnsupportedOperationException when this operation is not 
-     *         supported
-     */
-    boolean removeAll(IntCollection c);
-    
-    /** 
      * Removes all of my elements that are <i>not</i> contained in the 
      * specified collection (optional operation). 
-     * (In other words, retains only my elements that are 
-     * contained in the specified collection. 
+     * (In other words, retains <i>only</i> my elements that are 
+     * contained in the specified collection.)
+     * The behavior of this method is unspecified if 
+     * the given collection is modified while this method
+     * is executing.
      * 
      * @param c the collection of elements to retain
      * @return <code>true</code> iff I changed as a result 
@@ -199,15 +207,15 @@ public interface IntCollection {
     
     /** 
      * Returns an array containing all of my elements.
-     * The length of the returned array should be equal
-     * to the my {@link #size size}.
+     * The length of the returned array will be equal
+     * to my {@link #size size}.
      * <p/>
-     * The returned array will be independent of this
-     * collection, so that callers may modify that 
+     * The returned array will be independent of me, 
+     * so that callers may modify that 
      * returned array without modifying this collection.
      * <p/>
-     * When this collection guarantees the order in which 
-     * elements are returned by an {@link #iterator},
+     * When I guarantee the order in which 
+     * elements are returned by an {@link #iterator iterator},
      * the returned array will contain elements in the
      * same order.
      * 
@@ -222,12 +230,12 @@ public interface IntCollection {
      * larger than the number of elements I contain, 
      * values outside of my range will be unchanged.
      * <p/>
-     * The returned array will be independent of this
-     * collection, so that callers may modify that 
+     * The returned array will be independent of me, 
+     * so that callers may modify that 
      * returned array without modifying this collection.
      * <p/>
-     * When this collection guarantees the order in which 
-     * elements are returned by an {@link #iterator},
+     * When I guarantee the order in which 
+     * elements are returned by an {@link #iterator iterator},
      * the returned array will contain elements in the
      * same order.
      * 
