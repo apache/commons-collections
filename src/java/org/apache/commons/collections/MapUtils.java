@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.13 2002/10/13 00:38:36 scolebourne Exp $
- * $Revision: 1.13 $
- * $Date: 2002/10/13 00:38:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.14 2002/10/13 22:31:35 scolebourne Exp $
+ * $Revision: 1.14 $
+ * $Date: 2002/10/13 22:31:35 $
  *
  * ====================================================================
  *
@@ -593,12 +593,16 @@ public class MapUtils {
     //-------------------------------------------------------------------------
 
     /**
-     *  Synonym for <Code>new Properties(input)</COde>.
+     * Gets a new Properties object initialised with the values from a Map.
+     * A null input will return an empty properties object.
+     * 
+     * @param map  the map to convert to a Properties object
+     * @return the properties object
      */
-    public static Properties toProperties(Map input) {
+    public static Properties toProperties(Map map) {
         Properties answer = new Properties();
-        if ( input != null ) {
-            for ( Iterator iter = input.entrySet().iterator(); iter.hasNext(); ) {
+        if (map != null) {
+            for (Iterator iter = map.entrySet().iterator(); iter.hasNext();) {
                 Map.Entry entry = (Map.Entry) iter.next();
                 Object key = entry.getKey();
                 Object value = entry.getValue();
