@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.16 2002/05/28 06:51:03 mas Exp $
- * $Revision: 1.16 $
- * $Date: 2002/05/28 06:51:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.17 2002/06/18 03:17:34 mas Exp $
+ * $Revision: 1.17 $
+ * $Date: 2002/06/18 03:17:34 $
  *
  * ====================================================================
  *
@@ -80,30 +80,122 @@ import java.util.NoSuchElementException;
 /**
  * Tests base {@link java.util.Map} methods and contracts.
  * <p>
+ * The forces at work here are similar to those in {@link TestCollection}.
  * If your class implements the full Map interface, including optional
  * operations, simply extend this class, and implement the {@link
  * #makeEmptyMap()} method.
  * <p>
+ * On the other hand, if your map implemenation is wierd, you may have to
+ * override one or more of the other protected methods.  They're described
+ * below.<P>
+ *
+ * <B>Entry Population Methods</B><P>
+ *
+ * Override these methods if your map requires special entries:
+ *
+ * <UL>
+ * <LI>{@link #getSampleKeys}
+ * <LI>{@link #getSampleValues}
+ * <LI>{@link #getNewSampleValues}
+ * <LI>{@link #getOtherKeys}
+ * <LI>{@link #getOtherValues}
+ * </UL>
+ *
+ * <B>Supported Operation Methods</B><P>
+ *
+ * Override these methods if your map doesn't support certain operations:
+ *
+ * <UL>
+ * <LI> {@link #useDuplicateValues}
+ * <LI> {@link #useNullKey}
+ * <LI> {@link #useNullValue}
+ * <LI> {@link #isAddRemoveModifiable}
+ * <LI> {@link #isChangeable}
+ * </UL>
+ *
+ * <B>Fixture Methods</B><P>
+ *
+ * For tests on modification operations (puts and removes), fixtures are used
+ * to verify that that operation results in correct state for the map and its
+ * collection views.  Basically, the modification is performed against your
+ * map implementation, and an identical modification is performed against
+ * a <I>confirmed</I> map implementation.  A confirmed map implementation is
+ * something like <Code>java.util.HashMap</Code>, which is known to conform
+ * exactly to the {@link Map} contract.  After the modification takes place
+ * on both your map implementation and the confirmed map implementation, the
+ * two maps are compared to see if their state is identical.  The comparison
+ * also compares the collection views to make sure they're still the same.<P>
+ *
+ * The upshot of all that is that <I>any</I> test that modifies the map in
+ * <I>any</I> way will verify that <I>all</I> of the map's state is still
+ * correct, including the state of its collection views.  So for instance
+ * if a key is removed by the map's key set's iterator, then the entry set 
+ * is checked to make sure the key/value pair no longer appears.<P>
+ *
+ * The {@link #map} field holds an instance of your collection implementation.
+ * The {@link #entrySet}, {@link #keySet} and {@link #values} fields hold
+ * that map's collection views.  And the {@link #confirmed} field holds
+ * an instance of the confirmed collection implementation.  The 
+ * {@link #resetEmpty} and {@link #resetFull} methods set these fields to 
+ * empty or full maps, so that tests can proceed from a known state.<P>
+ *
+ * After a modification operation to both {@link #map} and 
+ * {@link #confirmed}, the {@link #verify} method is invoked to compare the
+ * results.  You may want to override {@link #verify} to perform additional
+ * verifications.  For instance, {@link TestDoubleOrderedMap} would want 
+ * override its {@link #verify} method to verify that the values are unique
+ * and in ascending order.<P>
+ *  
+ * <B>Other Notes</B><P>
+ *
  * If your {@link Map} fails one of these tests by design, you may still use
  * this base set of cases.  Simply override the test case (method) your {@link
  * Map} fails and/or the methods that define the assumptions used by the test
  * cases.  For example, if your map does not allow duplicate values, override
- * {@link useDuplicateValues()} and have it return <code>false</code>
+ * {@link #useDuplicateValues()} and have it return <code>false</code>
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.16 2002/05/28 06:51:03 mas Exp $
+ * @author Paul Jack
+ * @version $Id: TestMap.java,v 1.17 2002/06/18 03:17:34 mas Exp $
  */
 public abstract class TestMap extends TestObject {
+
+    // These instance variables are initialized with the reset method.
+    // Tests for map methods that alter the map (put, putAll, remove) 
+    // first call reset() to create the map and its views; then perform
+    // the modification on the map; perform the same modification on the
+    // confirmed; and then call verify() to ensure that the map is equal
+    // to the confirmed, that the already-constructed collection views
+    // are still equal to the confirmed's collection views.
+
+
+    /** Map created by reset(). */
+    protected Map map;
+
+    /** Entry set of map created by reset(). */
+    protected Set entrySet;
+
+    /** Key set of map created by reset(). */
+    protected Set keySet;
+
+    /** Values collection of map created by reset(). */
+    protected Collection values;
+
+    /** HashMap created by reset(). */
+    protected HashMap confirmed;
+
 
     public TestMap(String testName) {
         super(testName);
     }
+
+
     /**
      *  Override if your map does not allow a <code>null</code> key.  The
      *  default implementation returns <code>true</code>
      **/
-    public boolean useNullKey() {
+    protected boolean useNullKey() {
         return true;
     }
 
@@ -111,7 +203,7 @@ public abstract class TestMap extends TestObject {
      *  Override if your map does not allow <code>null</code> values.  The
      *  default implementation returns <code>true</code>.
      **/
-    public boolean useNullValue() {
+    protected boolean useNullValue() {
         return true;
     }
 
@@ -119,7 +211,7 @@ public abstract class TestMap extends TestObject {
      *  Override if your map does not allow duplicate values.  The default
      *  implementation returns <code>true</code>.
      **/
-    public boolean useDuplicateValues() {
+    protected boolean useDuplicateValues() {
         return true;
     }
 
@@ -127,7 +219,7 @@ public abstract class TestMap extends TestObject {
      *  Override if your map allows its mappings to be changed to new values.
      *  The default implementation returns <code>true</code>.
      **/
-    public boolean isChangeable() {
+    protected boolean isChangeable() {
         return true;
     }
 
@@ -135,7 +227,7 @@ public abstract class TestMap extends TestObject {
      *  Override if your map does not allow add/remove modifications.  The
      *  default implementation returns <code>true</code>.
      **/
-    public boolean isAddRemoveModifiable() {
+    protected boolean isAddRemoveModifiable() {
         return true;
     }
 
@@ -146,7 +238,7 @@ public abstract class TestMap extends TestObject {
      *  default implementation constructs a set of String keys, and includes a
      *  single null key if {@link #useNullKey()} returns <code>true</code>.
      **/
-    public Object[] getSampleKeys() {
+    protected Object[] getSampleKeys() {
         Object[] result = new Object[] {
             "blah", "foo", "bar", "baz", "tmp", "gosh", "golly", "gee", 
             "hello", "goodbye", "we'll", "see", "you", "all", "again",
@@ -155,6 +247,15 @@ public abstract class TestMap extends TestObject {
             (useNullKey()) ? null : "nonnullkey"
         };
         return result;
+    }
+
+
+    protected Object[] getOtherKeys() {
+        return TestCollection.getOtherNonNullStringElements();
+    }
+
+    protected Object[] getOtherValues() {
+        return TestCollection.getOtherNonNullStringElements();
     }
 
     /**
@@ -166,7 +267,7 @@ public abstract class TestMap extends TestObject {
      *  that are the same if {@link #useDuplicateValues()} returns
      *  <code>true</code>.
      **/
-    public Object[] getSampleValues() {
+    protected Object[] getSampleValues() {
         Object[] result = new Object[] {
             "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev",
             "hellov", "goodbyev", "we'llv", "seev", "youv", "allv", "againv",
@@ -188,7 +289,7 @@ public abstract class TestMap extends TestObject {
      *  that are the same if {@link #useDuplicateValues()} returns
      *  <code>true</code>.  
      **/
-    public Object[] getNewSampleValues() {
+    protected Object[] getNewSampleValues() {
         Object[] result = new Object[] {
             (useNullValue()) ? null : "newnonnullvalue",
             "newvalue",
@@ -204,7 +305,7 @@ public abstract class TestMap extends TestObject {
      *  Helper method to add all the mappings described by {@link
      *  #getSampleKeys()} and {@link #getSampleValues()}.
      **/
-    public void addSampleMappings(Map m) {
+    protected void addSampleMappings(Map m) {
 
         Object[] keys = getSampleKeys();
         Object[] values = getSampleValues();
@@ -235,7 +336,7 @@ public abstract class TestMap extends TestObject {
     /**
      * Return a new, empty {@link Map} to be used for testing. 
      */
-    public abstract Map makeEmptyMap();
+    protected abstract Map makeEmptyMap();
 
     /**
      *  Return a new, populated map.  The mappings in the map should match the
@@ -244,7 +345,7 @@ public abstract class TestMap extends TestObject {
      *  and calls {@link #addSampleMappings()} to add all the mappings to the
      *  map.
      **/
-    public Map makeFullMap() {
+    protected Map makeFullMap() {
         Map m = makeEmptyMap();
         addSampleMappings(m);
         return m;
@@ -341,7 +442,7 @@ public abstract class TestMap extends TestObject {
     /**
      *  Tests Map.isEmpty()
      **/
-    public void testIsEmpty() {
+    public void testMapIsEmpty() {
         Map em = makeEmptyMap();
         assertEquals("Map.isEmpty() should return true with an empty map", 
                      true, em.isEmpty());
@@ -354,7 +455,7 @@ public abstract class TestMap extends TestObject {
     /**
      *  Tests Map.size()
      **/
-    public void testSize() {
+    public void testMapSize() {
         Map em = makeEmptyMap();
         assertEquals("Map.size() should be 0 with an empty map",
                      0, em.size());
@@ -373,87 +474,27 @@ public abstract class TestMap extends TestObject {
      *  UnsupportedOperationException.  This method checks that the both maps
      *  returned by makeEmptyMap and makeFullMap have correct behavior.
      **/
-    public void testClear() {
-        Map em = makeEmptyMap();
-        try {
-            em.clear();
-            assertTrue("Map must throw UnsupportedOperationException if the " +
-                       "map does not support removing elements", 
-                       isAddRemoveModifiable());
-            assertEquals("size() must return zero after clear.", 
-                         0, em.size());
-            assertEquals("isEmpty() must return true after clear.", 
-                         true, em.isEmpty());
-        } catch (UnsupportedOperationException exception) {
-            assertTrue("Map must not throw UnsupportedOperationException if the " +
-                       "map supports removing elements", !isAddRemoveModifiable());
-        }
+    public void testMapClear() {
+        if (!isAddRemoveModifiable()) return;
 
-        Map fm = makeFullMap();
-        try {
-            fm.clear();
-            assertTrue("Map must throw UnsupportedOperationException if the " +
-                       "map does not support removing elements", 
-                       isAddRemoveModifiable());
-            assertEquals("size() must return zero after clear.", 
-                         0, fm.size());
-            assertEquals("isEmpty() must return true after clear.", 
-                         true, fm.isEmpty());
-        } catch (UnsupportedOperationException exception) {
-            assertTrue("Map must not throw UnsupportedOperationException if the " +
-                       "map supports removing elements", !isAddRemoveModifiable());
-        }
-    }
-
-    public void testFailFastIterator() {
-        Map fm = makeFullMap();
-
-        Iterator iterator = fm.keySet().iterator();
-        try {
-            fm.remove(getSampleKeys()[0]);
-        } catch (UnsupportedOperationException e) {
-            return;
-        }
-
-        try {
-            iterator.next();
-            fail("Iterators typically throw ConcurrentModificationExceptions when underlying collection is modified.");
-        } catch (ConcurrentModificationException e) {
-
-        }
-    }
-
-    /**
-     *  Tests:
-     *  <ul>
-     *  <li> Map.entrySet().isEmpty()
-     *  <li> Map.entrySet().size()
-     *  </ul>
-     **/
-    public void testEntrySetIsEmpty() {
-        Map em = makeEmptyMap();
-        Set es = em.entrySet();
+        resetEmpty();
+        map.clear();
+        confirmed.clear();
+        verify();
         
-        assertEquals("entrySet() must return an empty set when map is empty.", 
-                     em.isEmpty(), es.isEmpty());
-        assertEquals("entrySet() must return a set with the same size as " +
-                     "the map.", em.size(), es.size());
-
-        Map fm = makeEmptyMap();
-        Set fs = fm.entrySet();
-        
-        assertEquals("entrySet() must return a non-empty set when map is not empty.", 
-                     fm.isEmpty(), fs.isEmpty());
-        assertEquals("entrySet() must return a set with the same size as " +
-                     "the map.", fm.size(), fs.size());
+        resetFull();
+        map.clear();
+        confirmed.clear();
+        verify();
     }
+
 
     /**
      *  Tests Map.containsKey(Object) by verifying it returns false for all
      *  sample keys on a map created using makeEmptyMap() and returns true for
      *  all sample keys returned on a map created using makeFullMap()
      **/
-    public void testContainsKey() {
+    public void testMapContainsKey() {
         Object[] keys = getSampleKeys();
 
         Map em = makeEmptyMap();
@@ -476,7 +517,7 @@ public abstract class TestMap extends TestObject {
      *  sample alues on a map created using makeEmptyMap() and returns true for
      *  all sample values returned on a map created using makeFullMap.
      **/
-    public void testContainsValue() {
+    public void testMapContainsValue() {
         Object[] values = getSampleValues();
 
         Map em = makeEmptyMap();
@@ -494,578 +535,6 @@ public abstract class TestMap extends TestObject {
         }
     }
 
-    /**
-     *  Test to ensure that Map.entrySet() returns a non-null set.
-     **/
-    public void testEntrySet() {
-        Map em = makeEmptyMap();
-        Set es = em.entrySet();
-        
-        assertTrue("entrySet() must return a non-null set.", es != null);
-
-        Map fm = makeEmptyMap();
-        Set fs = fm.entrySet();
-        
-        assertTrue("entrySet() must return a non-null set.", fs != null);
-    }
-    
-    /**
-     *  Tests:
-     *  <ul>
-     *  <li> Map.entrySet().contains(Object)
-     *  <li> Map.entrySet().containsAll(Collection)
-     *  </ul>
-     *
-     *  Note:  This test relies on a working commons.collections.DefaultMapEntry class.
-     **/
-    public void testEntrySetContainsProperMappings() {
-        Object[] keys = getSampleKeys();
-        Object[] values = getSampleValues();
-        Map.Entry[] entries = new Map.Entry[keys.length];
-        HashSet mappings = new HashSet();
-
-        for(int i = 0; i < keys.length; i++) {
-            entries[i] = new DefaultMapEntry(keys[i], values[i]);
-            mappings.add(entries[i]);
-        }
-
-        // test an empty map
-        Map em = makeEmptyMap();
-        Set es = em.entrySet();
-
-        for(int i = 0; i < keys.length; i++) {
-            assertEquals("entrySet().contains(Object) must return false when map " +
-                         "is empty", false, es.contains(entries[i]));
-        }
-
-        assertEquals("entrySet().containsAll(Collection) must return false when the " +
-                     "map is empty", false, es.containsAll(mappings));
-
-
-        Map fm = makeFullMap();
-        Set fs = fm.entrySet();
-
-        for(int i = 0; i < keys.length; i++) {
-            assertEquals("entrySet().contains(Object) must return true when map " +
-                         "contains the mapping", true, fs.contains(entries[i]));
-        }
-        assertEquals("entrySet().containsAll(Collection) must return true when the " +
-                     "map contains the mapping", true, fs.containsAll(mappings));
-
-        try {
-            es.containsAll((Collection)null);
-            fail("entrySet().containsAll(null) should " +
-                 "throw a NullPointerException");
-        } catch (NullPointerException exception) {
-            // expected
-        }
-        try {
-            fs.containsAll((Collection)null);
-            fail("entrySet().containsAll(null) should " +
-                 "throw a NullPointerException");
-        } catch (NullPointerException exception) {
-            // expected
-        }
-    }
-
-    /**
-     *  Tests Map.entrySet().clear() using Map.isEmpty() and
-     *  Map.entrySet().isEmpty().  
-     **/
-    public void testEntrySetClear() {
-        if (!isAddRemoveModifiable()) return;
-        Map m = makeFullMap();
-        Set set = m.entrySet();
-        set.clear();
-        assertTrue("entrySet should be empty after clear", set.isEmpty());
-        assertTrue("map should be empty after entrySet.clear()", m.isEmpty());
-    }
-
-
-    /**
-     *  Tests Map.entrySet().add(Object);
-     **/
-    public void testEntrySetAdd() {
-        Map m = makeFullMap();
-        Set set = m.entrySet();
-        try {
-            set.add(new Object());
-            fail("entrySet().add should raise UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
-            // expected
-        }
-    }
-
-
-    /**
-     *  Tests Map.entrySet().addAll(Collection);
-     **/
-    public void testEntrySetAddAll() {
-        Map m = makeFullMap();
-        Set set = m.entrySet();
-        try {
-            set.addAll(java.util.Collections.singleton(new Object()));
-            fail("entrySet().addAll(Collection) should raise " +
-		 "UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
-            // expected
-        }
-    }
-
-    /**
-     *  Tests Map.entrySetContainsAll(Collection)
-     **/
-    public void testEntrySetContainsAll() {
-        Map m = makeFullMap();
-        Set set = m.entrySet();
-
-        java.util.ArrayList list = new java.util.ArrayList();
-        Iterator iterator = set.iterator();
-        while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry)iterator.next();
-            list.add(new DefaultMapEntry(entry.getKey(), entry.getValue()));
-
-	    assertTrue("entrySet().containsAll failed", set.containsAll(list));
-        }
-
-        list.add(new Object());
-        assertTrue("entrySet().containsAll failed", !set.containsAll(list));
-    }
-
-
-    /**
-     *  Tests entrySet().equals(Object)
-     **/
-    public void testEntrySetEquals() {
-        Map m = makeFullMap();
-        Map m2 = new HashMap(m);
-        assertTrue("Equal maps should have equal entrySets", 
-		   m.entrySet().equals(m2.entrySet()));
-
-        assertTrue("entrySet.equals(null) returned true", 
-		   !m.entrySet().equals(null));
-        assertTrue("Unequal maps should have unequal entrySets", 
-		   !m.entrySet().equals(Collections.EMPTY_SET));
-    }
-
-
-    /**
-     *  Test entrySet().hashCde()
-     **/
-    public void testEntrySetHashCode() {
-        Map m = makeFullMap();
-        Map m2 = new HashMap(m);
-        Set set = m.entrySet();
-        Set set2 = m2.entrySet();
-        assertTrue("hashCode of equal entrySets should be same", 
-		   set.hashCode() == set2.hashCode());
-    }
-
-
-    /**
-     *  Test entrySet().toArray() and entrySet().toArray(Object[])
-     **/
-    public void testEntrySetToArray() {
-        Map m = makeFullMap();
-        Set set = m.entrySet();
-        Object[] a = set.toArray();
-        assertTrue("entrySet.toArray() should be same size as map", 
-		   a.length == m.size());
-
-        a = set.toArray(new Object[0]);
-        assertTrue("entrySet.toArray(new Object[0]) should be same size " +
-		   "as map", a.length == m.size());
-
-        a = new Object[m.size() * 2];
-        a[m.size()] = new Object();
-        a = set.toArray(a);
-        assertTrue("entrySet.toArray(new Object[m.size * 2]) should set " +
-		   "last element to null", a[m.size()] == null);
-
-        a = set.toArray(new Map.Entry[0]);
-        assertTrue("entrySet.toArray(new Map.Entry[0]) should return " +
-		   "instanceof Map.Entry[]", a instanceof Map.Entry[]);
-
-        try {
-            a = set.toArray(new String[0]);
-            fail("entrySet.toArray(new String[]) should raise " +
-		 "ArrayStoreException.");
-        } catch (ArrayStoreException e) {
-            // expected
-        }
-        
-    }
-
-    /**
-     *  Tests entrySet().remove(Object)
-     **/
-    public void testEntrySetRemove2() {
-        if (!isAddRemoveModifiable()) return;
-
-        Map m = makeFullMap();
-        Set set = m.entrySet();
-
-        boolean r = set.remove(null);
-        assertTrue("entrySet.remove(null) should return false", !r);
-
-        r = set.remove("Not a Map.Entry");
-        assertTrue("entrySet.remove should return false for non-Map.Entry", 
-		   !r);
-
-	m = makeEmptyMap();
-	set = m.entrySet();
-
-	Object[] keys = getSampleKeys();
-	Object[] values = getSampleValues();
-
-	for(int i = 0; i < keys.length; i++) {
-	    // remove on all elements should return false because the map is
-	    // empty.
-	    r = set.remove(new DefaultMapEntry(keys[i], values[i]));
-	    assertTrue("entrySet.remove for nonexistent entry should " +
-		       "return false", !r);
-	}
-
-	// reset to full map to check actual removes
-	m = makeFullMap();
-	set = m.entrySet();
-
-        int size = m.size();
-        Map.Entry entry = (Map.Entry)set.iterator().next();
-        r = set.remove(entry);
-        assertTrue("entrySet.remove for internal entry should return true", r);
-        assertTrue("entrySet.size should shrink after successful remove", 
-		   set.size() == size - 1);
-        assertTrue("map size should shrink after succuessful entrySet.remove", 
-		   m.size() == size - 1);
-        entrySetEqualsMap(set, m);
-
-        size--;
-        entry = (Map.Entry)set.iterator().next();
-        entry = new DefaultMapEntry(entry.getKey(), entry.getValue());
-        r = set.remove(entry);
-        assertTrue("entrySet.remove for external entry should return true", r);
-        assertTrue("entrySet.size should shrink after successful remove", 
-		   set.size() == size - 1);
-        assertTrue("map size should shrink after succuessful entrySet.remove",
-		   m.size() == size - 1);
-        assertTrue("After remove, entrySet should not contain element", 
-		   !set.contains(entry));
-        entrySetEqualsMap(set, m);
-        r = set.remove(entry);
-        assertTrue("second entrySet.remove should return false", !r);
-    }
-
-
-    /**
-     *  Tests entrySet().removeAll() and entrySet().retainAll()
-     **/
-    public void testEntrySetBulkRemoveOperations() {
-	if (!isAddRemoveModifiable()) return;
-
-        Map m = makeFullMap();
-        Set set = m.entrySet();
-        Map m2 = new HashMap(m);
-        Set set2 = m2.entrySet();
-
-        Object[] entries = set2.toArray();
-        Collection c = Arrays.asList(entries).subList(2, 5);
-        boolean r = set.removeAll(c);
-        set2.removeAll(c);
-        assertTrue("entrySet().removeAll() returned false", r);
-        assertTrue("entrySet().removeAll() failed", m2.equals(m));
-        assertTrue("entrySet().removeAll() returned true", !set.removeAll(c));
-
-        m = makeFullMap();
-        set = m.entrySet();
-        m2 = new HashMap(m);
-        set2 = m2.entrySet();
-        entries = set2.toArray();
-        c = Arrays.asList(entries).subList(2, 5);
-        r = set.retainAll(c);
-        set2.retainAll(c);
-        assertTrue("entrySet().retainAll returned false", r);
-        assertTrue("entrySet().retainAll() failed", m2.equals(m));
-        assertTrue("entrySet().retainAll returned true", !set.retainAll(c));
-    }
-
-
-    /**
-     *  Tests:
-     *  <ul>
-     *  <li> Map.entrySet().iterator()
-     *  <li> Map.entrySet().iterator().hasNext()
-     *  <li> Map.entrySet().iterator().next()
-     *  </ul>
-     **/
-    public void testEntrySetIterator() {
-        Map em = makeEmptyMap();
-        Set es = em.entrySet();
-        Iterator eiter = es.iterator();
-
-        assertEquals("entrySet().iterator().hasNext() must return false " +
-                     "when then the map is empty.", 
-                     false, eiter.hasNext());
-
-        // note: we make a new map to test for this because some impls in the
-        // past have required a call to hasMoreElements before a call to next
-        // for it to work properly.  By using a new map, we make sure this test
-        // will catch those broken impls.
-        em = makeEmptyMap();
-        es = em.entrySet();
-        eiter = es.iterator();
-        
-        try {
-            eiter.next();
-            fail("entrySet().iterator().next() must throw a NoSuchElementException " +
-                 "when the map is empty");
-        } catch (NoSuchElementException exception) {
-            // expected
-        }
-
-
-        Map fm = makeFullMap();
-
-        Set fs = fm.entrySet();
-
-        Object[] keys = getSampleKeys();
-        Object[] values = getSampleValues();
-        boolean[] found = new boolean[keys.length];
-
-        Iterator iter = fs.iterator();
-
-        assertTrue("entrySet().iterator() must return a non-null " +
-                   "iterator.", iter != null);
-
-        while(iter.hasNext()) {
-            Object obj = iter.next();
-            assertTrue("Null is not allowed to be returned from the " +
-                       "entrySet().iterator()'s next().", obj != null);
-            assertTrue("Objects returned from entrySet().iterator() must be " +
-                       "instances of Map.Entry.", obj instanceof Map.Entry);
-                
-            Map.Entry entry = (Map.Entry)obj;
-            Object key = entry.getKey();
-            Object value = entry.getValue();
-
-            assertTrue("the key for an entry returned from the entry " +
-                       "set's iterator can only be null if useNullKey " +
-                       "is true.",
-                       key != null || (key == null && useNullKey()));
-            
-            assertTrue("the value for an entry returned from the entry " +
-                       "set's iterator can only be null if useNullValue " +
-                       "is true.",
-                       value != null || (value == null && useNullValue()));
-
-            for(int i = 0; i < keys.length; i++) {
-                if((key == null && keys[i] == null) ||
-                   (key != null && key.equals(keys[i]))) {
-                    assertTrue("entrySet().iterator() must not return " +
-                               "multiple entries with the same key.", 
-                               !found[i]);
-                        
-                    found[i] = true;
-
-                    assertTrue
-                        ("value of entry returned from iterator " +
-                         "must be the value for the added mapping.",
-                         (value == null && values[i] == null) ||
-                         (value != null && value.equals(values[i])));
-                }
-            }
-        }
-        for(int i = 0; i < found.length; i++) {
-            assertTrue("must find all added elements through entrySet's " +
-                       "iterator().", found[i]);
-        }
-    }
-  
-    /**
-     *  Tests Map.entrySet().iterator().remove()
-     **/
-    public void testEntrySetIteratorRemove() {
-        Map m = makeFullMap();
-        Set s = m.entrySet();
-        Iterator iter = s.iterator();
-
-        try {
-            iter.remove();
-            fail("Entry set iterator must not allow a call to remove " +
-                 "before any calls to next");
-        } catch (IllegalStateException exception) {
-            // expected exception provided add/remove modifiable
-            assertTrue("iterator should throw UnsupportedOperationException " +
-                       "if remove is not allowed from the entrySet().iterator()",
-                       isAddRemoveModifiable());
-        } catch (UnsupportedOperationException exception) {
-            assertTrue("iterator should not throw UnsupportedOperationException " +
-                       "if the map supports adding and removing elements",
-                       !isAddRemoveModifiable());
-        }
-
-        while(iter.hasNext()) {
-            Map.Entry entry = (Map.Entry)iter.next();
-
-            assertTrue("Entry key from entry set iterator must exist in map: " +
-		       entry, m.containsKey(entry.getKey()));
-            try {
-                iter.remove();
-                // note: we do not check that the mapping was actually removed
-                // from the map because some classes do not have their
-                // entrySet().iterator() backed by the map.  That test occurs
-                // below in testEntrySetIteratorRemoveCausesMapModification
-            } catch (UnsupportedOperationException exception) {
-                assertTrue("iterator should not throw UnsupportedOperationException " +
-                           "if the map supports adding and removing elements",
-                           !isAddRemoveModifiable());
-            }
-
-            try {
-                iter.remove();
-                fail("Entry set iterator must not allow two calls to " +
-                     "remove without a call to next.");
-            } catch (IllegalStateException exception) {
-                // expected exception provided add/remove modifiable
-                assertTrue("iterator should throw UnsupportedOperationException " +
-                           "if remove is not allowed from the entrySet().iterator()",
-                           isAddRemoveModifiable());
-            } catch (UnsupportedOperationException exception) {
-                assertTrue("iterator should not throw UnsupportedOperationException " +
-                           "if the map supports adding and removing elements",
-                           !isAddRemoveModifiable());
-            }
-        }
-    }
-
-    /**
-     *  utility method to ensure that a set of Map.Entry objects matches those
-     *  found in the specified map.
-     **/
-    protected void entrySetEqualsMap(Set set, Map m) {
-        Iterator iterator = set.iterator();
-        while (iterator.hasNext()) {
-            Map.Entry entry = (Map.Entry)iterator.next();
-            Object key = entry.getKey();
-            Object value = entry.getValue();
-            assertTrue("map should contain key found in entrySet", 
-		       m.containsKey(key));
-            Object v2 = m.get(key);
-            assertTrue("map should contain entry found in entrySet", 
-		       (value == null) ? v2 == null : value.equals(v2));
-        }
-    }
-
-
-    /**
-     *  Tests whether the map's entrySet() is backed by the map by making sure
-     *  a put in the map is reflected in the entrySet.  This test does nothing
-     *  if add/remove modifications are not supported.
-     **/
-    public void testEntrySetChangesWithMapPut() {
-        if(!isAddRemoveModifiable()) return;
-
-        Map m = makeEmptyMap();
-
-        // test insert reflected in entry set
-        Set s = m.entrySet();
-        addSampleMappings(m);
-        assertEquals("entrySet() must only be empty if map is empty.",
-                     m.isEmpty(), s.isEmpty());
-        assertEquals("entrySet() must adjust size when map changes.",
-                     m.size(), s.size());
-
-        entrySetEqualsMap(s, m);
-    }
-
-    /**
-     *  Tests whether the map's entrySet() is backed by the map by making sure
-     *  a remove from the map is reflected in the entrySet.  This test does
-     *  nothing if add/remove modifications are not supported.
-     **/
-    public void testEntrySetChangesWithMapRemove() {
-        if(!isAddRemoveModifiable()) return;
-
-        Map m = makeFullMap();
-        Set s = m.entrySet();
-
-        Object[] keys = getSampleKeys();
-        Object[] values = getSampleValues();
-
-        for(int i = 0; i < keys.length; i++) {
-            m.remove(keys[i]);
-            assertEquals("entrySet() must only be empty if map is empty.",
-                         m.isEmpty(), s.isEmpty());
-            assertEquals("entrySet() must adjust size when map changes.",
-                         m.size(), s.size());
-            entrySetEqualsMap(s, m);
-        }
-    }
-
-
-    /**
-     *  Tests whether the map's entrySet() is backed by the map by making sure
-     *  a clear on the map is reflected in the entrySet.  This test does
-     *  nothing if add/remove modifications are not supported.
-     **/
-    public void testEntrySetChangesWithMapClear() {
-        if (!isAddRemoveModifiable()) return;
-
-        Map m = makeFullMap();
-        Set s = m.entrySet();
-        m.clear();
-        assertTrue("entrySet() must be empty after map.clear()", s.isEmpty());
-    }
-
-
-    /**
-     *  Tests whether the map's entrySet() is backed by the map by making sure
-     *  a putAll on the map is reflected in the entrySet.  This test does
-     *  nothing if add/remove modifications are not supported.
-     **/
-    public void testEntrySetChangesWithMapPutAll() {
-        if (!isAddRemoveModifiable()) return;
-
-        Map m = makeFullMap();
-        Set s = m.entrySet();
-
-        Map m2 = new HashMap();
-        m2.put("1", "One");
-        m2.put("2", "Two");
-        m2.put("3", "Three");
-
-        m.putAll(m2);
-        entrySetEqualsMap(s, m);
-    }
-
-
-    /**
-     *  Tests whether the map's entrySet() is backed by the map by making sure
-     *  a remove from the entrySet's iterator is reflected in the map. This
-     *  test does nothing if add/remove modifications are not supported.
-     **/
-    public void testEntrySetIteratorRemoveCausesMapModification() {
-        if(!isAddRemoveModifiable()) return;
-        
-        Map m = makeFullMap();
-        Set s = m.entrySet();
-        Iterator iter = s.iterator();
-        
-        while(iter.hasNext()) {
-            Map.Entry entry = (Map.Entry)iter.next();
-            
-            try {
-                iter.remove();
-                assertTrue("Entry key from entry set iterator must " +
-                           "no longer exist in map",
-                           !m.containsKey(entry.getKey()));
-            } catch (UnsupportedOperationException exception) {
-                // isAddRemoveModifiable is true -- we've checked that above
-                fail("iterator should not throw UnsupportedOperationException " +
-                     "if the map supports adding and removing elements");
-            }
-        }
-    }
 
     /**
      *  Tests Map.equals(Object)
@@ -1090,6 +559,7 @@ public abstract class TestMap extends TestObject {
         assertTrue("equals(new Object()) returned true.", 
 		   !m.equals(new Object()));
     }
+
 
     /**
      *  Tests Map.get(Object)
@@ -1142,17 +612,6 @@ public abstract class TestMap extends TestObject {
         assertTrue("Empty map toString() should not return null", s != null);
     }
 
-    /**
-     *  Tests Map.keySet()
-     **/
-    public void testMapKeySet() {
-        Map m = makeFullMap();
-        Map m2 = new HashMap(m);
-        assertTrue("Equal maps have unequal keySets.", 
-		   m.keySet().equals(m2.keySet()));
-    }
-    
-    //-------TEST AGAINST OPTIONAL OPERATIONS, ENABLE IN TEST SUBCLASSES
 
     public void testMapSupportsNullValues() {
 
@@ -1202,58 +661,6 @@ public abstract class TestMap extends TestObject {
         assertTrue("size of Map should be 3, but was " + map.size(), map.size() == 3);
     }
 
-    public void testEntrySetRemove() {
-
-        if ((this instanceof TestMap.EntrySetSupportsRemove) == false ||
-            (this instanceof TestMap.SupportsPut) == false) {
-            return;
-        }
-
-        Map map = makeEmptyMap();
-        map.put("1","1");
-        map.put("2","2");
-        map.put("3","3");
-
-        Object o = map.entrySet().iterator().next();
-        // remove one of the key/value pairs
-        Set set = map.entrySet();
-        set.remove(o);
-        assertTrue(set.size() == 2);
-        // try to remove it again, to make sure 
-        // the Set is not confused by missing entries
-        set.remove(o);
-
-        assertTrue("size of Map should be 2, but was " + map.size(), map.size() == 2);
-
-    }
-
-    public void testEntrySetContains() {
-
-        if ((this instanceof TestMap.SupportsPut) == false) {
-            return;
-        }
-
-        Map map = makeEmptyMap();
-        map.put("1","1");
-        map.put("2","2");
-        map.put("3","3");
-
-        Set set = map.entrySet();
-        Object o = set.iterator().next();
-        assertTrue("entry set should contain valid element",set.contains(o));
-
-        // create a fresh entry mapped to existing values
-        DefaultMapEntry goodEntry  = new DefaultMapEntry("2","2");
-        assertTrue("entry set should recognize externally constructed MapEntry objects",
-                   set.contains(goodEntry));
-
-        // make a bogus entry
-        DefaultMapEntry badEntry = new DefaultMapEntry("4","4");
-        assertTrue("entry set should not contain a bogus element",
-                   set.contains(badEntry) == false);
-        
-
-    }
 
     public void testEmptyMapSerialization() 
     throws IOException, ClassNotFoundException {
@@ -1323,35 +730,39 @@ public abstract class TestMap extends TestObject {
     public void testMapPut() {
         if (!isAddRemoveModifiable()) return;
 
-        Map m = makeEmptyMap();
+        resetEmpty();
 
 	Object[] keys = getSampleKeys();
 	Object[] values = getSampleValues();
 	Object[] newValues = getNewSampleValues();
 
-	for(int i = 0; i < keys.length; i++) {
-	    Object o = m.put(keys[i], values[i]);
+        for(int i = 0; i < keys.length; i++) {
+            Object o = map.put(keys[i], values[i]);
+            confirmed.put(keys[i], values[i]);
+            verify();
 	    assertTrue("First map.put should return null", o == null);
 	    assertTrue("Map should contain key after put", 
-		       m.containsKey(keys[i]));
+		       map.containsKey(keys[i]));
 	    assertTrue("Map should contain value after put", 
-		       m.containsValue(values[i]));
+		       map.containsValue(values[i]));
 	}
 	
 	for(int i = 0; i < keys.length; i++) {
-	    Object o = m.put(keys[i], newValues[i]);
+	    Object o = map.put(keys[i], newValues[i]);
+            confirmed.put(keys[i], newValues[i]);
+            verify();
 	    assertEquals("Second map.put should return previous value",
 			 values[i], o);
 	    assertTrue("Map should still contain key after put",
-		       m.containsKey(keys[i]));
+		       map.containsKey(keys[i]));
 	    assertTrue("Map should contain new value after put",
-		       m.containsValue(newValues[i]));
+		       map.containsValue(newValues[i]));
 
 	    // if duplicates are allowed, we're not guarunteed that the value
 	    // no longer exists, so don't try checking that.
 	    if(!useDuplicateValues()) {
 		assertTrue("Map should not contain old value after second put",
-			   !m.containsValue(values[i]));
+			   !map.containsValue(values[i]));
 	    }
 	}
     }
@@ -1362,14 +773,15 @@ public abstract class TestMap extends TestObject {
     public void testMapPutAll() {
         if (!isAddRemoveModifiable()) return;
 
-        Map m = makeEmptyMap();
-	Map m2 = makeFullMap();
+        resetEmpty();
 
-	m.putAll(m2);
+        Map m2 = makeFullMap();
 
-        assertTrue("Maps should be equal after putAll", m.equals(m2));
+        map.putAll(m2);
+        confirmed.putAll(m2);
+        verify();
 
-	// repeat test with a different map implementation
+        resetEmpty();
 
 	m2 = new HashMap();
 	Object[] keys = getSampleKeys();
@@ -1377,11 +789,10 @@ public abstract class TestMap extends TestObject {
 	for(int i = 0; i < keys.length; i++) {
 	    m2.put(keys[i], values[i]);
 	}
-	
-	m = makeEmptyMap();
-	m.putAll(m2);
-	
-	assertTrue("Maps should be equal after putAll", m.equals(m2));
+
+	map.putAll(m2);
+        confirmed.putAll(m2);
+        verify();
     }
 
     /**
@@ -1392,76 +803,35 @@ public abstract class TestMap extends TestObject {
 
         Map m = makeEmptyMap();
 	Object[] keys = getSampleKeys();
+	Object[] values = getSampleValues();
 	for(int i = 0; i < keys.length; i++) {
 	    Object o = m.remove(keys[i]);
 	    assertTrue("First map.remove should return null", o == null);
 	}
 
-	m = makeFullMap();
-	int startSize = m.size();
-
-	Object[] values = getSampleValues();
+        resetFull();
 
 	for(int i = 0; i < keys.length; i++) {
-	    Object o = m.remove(keys[i]);
+	    Object o = map.remove(keys[i]);
+            confirmed.remove(keys[i]);
+            verify();
 
 	    assertEquals("map.remove with valid key should return value",
 			 values[i], o);
-	    assertEquals("map.remove should reduce size by one",
-			 (startSize - i) - 1, m.size());
 	}
+
+        Object[] other = getOtherKeys();
+        m = makeFullMap();
+        int size = m.size();
+        for (int i = 0; i < other.length; i++) {
+            Object o = m.remove(other[i]);
+            assertEquals("map.remove for nonexistent key should return null",
+                         o, null);
+            assertEquals("map.remove for nonexistent key should not " +
+                         "shrink map", size, m.size());
+        }
     }
 
-    /**
-     *  Tests Map.values()
-     **/
-    public void testMapValues() {
-        Map m = makeFullMap();
-
-        // since Collection.equals is reference-based, have to do
-        // this the long way...
-
-	Object[] values = getSampleValues();
-
-	Collection c = m.values();
-	
-	assertEquals("values() should have same size as map", 
-		     m.size(), c.size());
-
-	assertEquals("values() should have same number of sample values",
-		     values.length, c.size());
-
-	boolean[] matched = new boolean[values.length];
-
-	Iterator iter = c.iterator();
-	while(iter.hasNext()) {
-	    Object o = iter.next();
-	    boolean found = false;
-
-	    for(int i = 0; i < values.length; i++) {
-		// skip values already matched
-		if(matched[i]) continue;
-		
-		if((o == null && values[i] == null) ||
-		   (o != null && o.equals(values[i]))) {
-		    matched[i] = true;
-		    found = true;
-		    break;
-		}
-	    }
-
-	    if(!found) {
-		// no match for this element
-		fail("values() returned an unexpected value");
-	    }
-	}
-
-	for(int i = 0; i < matched.length; i++) {
-	    if(!matched[i]) {
-		fail("values() did not return all values from map");
-	    }
-	}
-    }
 
     /**
      * Marker interface, indicating that a TestMap subclass
@@ -1471,8 +841,330 @@ public abstract class TestMap extends TestObject {
 
     }
 
-    public interface EntrySetSupportsRemove {
 
+    /**
+     *  Utility methods to create an array of Map.Entry objects
+     *  out of the given key and value arrays.<P>
+     *
+     *  @param keys    the array of keys
+     *  @param values  the array of values
+     *  @return an array of Map.Entry of those keys to those values
+     */
+    private Map.Entry[] makeEntryArray(Object[] keys, Object[] values) {
+        Map.Entry[] result = new Map.Entry[keys.length];
+        for (int i = 0; i < keys.length; i++) {
+            result[i] = new DefaultMapEntry(keys[i], values[i]);
+        }
+        return result;
+    }
+
+
+    /**
+     *  Bulk test {@link Map#entrySet}.  This method runs through all of
+     *  the tests in {@link TestSet}.  
+     *  After modification operations, {@link #verify} is invoked to ensure
+     *  that the map and the other collection views are still valid.
+     *
+     *  @return a {@link TestSet} instance for testing the map's entry set
+     */
+    public BulkTest bulkTestMapEntrySet() {
+        return new TestMapEntrySet();
+    }
+
+    class TestMapEntrySet extends TestSet {
+        public TestMapEntrySet() {
+            super("");
+        }
+
+        // Have to implement manually; entrySet doesn't support addAll
+        protected Object[] getFullElements() {
+            Object[] k = getSampleKeys();
+            Object[] v = getSampleValues();
+            return makeEntryArray(k, v);
+        }
+        
+        // Have to implement manually; entrySet doesn't support addAll
+        protected Object[] getOtherElements() {
+            Object[] k = getOtherKeys();
+            Object[] v = getOtherValues();
+            return makeEntryArray(k, v);
+        }
+        
+        protected Set makeEmptySet() {
+            return makeEmptyMap().entrySet();
+        }
+        
+        protected Set makeFullSet() {
+            return makeFullMap().entrySet();
+        }
+        
+        protected boolean supportsAdd() {
+            // Collection views don't support add operations.
+            return false;
+        }
+        
+        protected boolean supportsRemove() {
+            // Entry set should only support remove if map does
+            return isAddRemoveModifiable();
+        }
+        
+        protected void resetFull() {
+            TestMap.this.resetFull();
+            collection = map.entrySet();
+            TestMapEntrySet.this.confirmed = 
+                TestMap.this.confirmed.entrySet();
+        }
+        
+        protected void resetEmpty() {
+            TestMap.this.resetEmpty();
+            collection = map.entrySet();
+            TestMapEntrySet.this.confirmed = 
+                TestMap.this.confirmed.entrySet();
+        }
+        
+        protected void verify() {
+            super.verify();
+            TestMap.this.verify();
+        }
+    }
+
+
+    /**
+     *  Bulk test {@link Map#keySet}.  This method runs through all of
+     *  the tests in {@link TestSet}.  
+     *  After modification operations, {@link #verify} is invoked to ensure
+     *  that the map and the other collection views are still valid.
+     *
+     *  @return a {@link TestSet} instance for testing the map's key set
+     */
+    public BulkTest bulkTestMapKeySet() {
+        return new TestMapKeySet();
+    }
+
+    class TestMapKeySet extends TestSet {
+        public TestMapKeySet() {
+            super("");
+        }
+        protected Object[] getFullElements() {
+            return getSampleKeys();
+        }
+        
+        protected Object[] getOtherElements() {
+            return getOtherKeys();
+        }
+        
+        protected Set makeEmptySet() {
+            return makeEmptyMap().keySet();
+        }
+        
+        protected Set makeFullSet() {
+            return makeFullMap().keySet();
+        }
+        
+        protected boolean supportsAdd() {
+            return false;
+        }
+        
+        protected boolean supportsRemove() {
+            return isAddRemoveModifiable();
+        }
+        
+        protected void resetEmpty() {
+            TestMap.this.resetEmpty();
+            collection = map.keySet();
+            TestMapKeySet.this.confirmed = TestMap.this.confirmed.keySet();
+        }
+        
+        protected void resetFull() {
+            TestMap.this.resetFull();
+            collection = map.keySet();
+            TestMapKeySet.this.confirmed = TestMap.this.confirmed.keySet();
+        }
+        
+        protected void verify() {
+            super.verify();
+            TestMap.this.verify();
+        }
+    }
+
+
+    /**
+     *  Bulk test {@link Map#values}.  This method runs through all of
+     *  the tests in {@link TestCollection}.  
+     *  After modification operations, {@link #verify} is invoked to ensure
+     *  that the map and the other collection views are still valid.
+     *
+     *  @return a {@link TestCollection} instance for testing the map's 
+     *    values collection
+     */
+    public BulkTest bulkTestMapValues() {
+        return new TestMapValues();
+    }
+
+    class TestMapValues extends TestCollection {
+        public TestMapValues() {
+            super("");
+        }
+
+        protected Object[] getFullElements() {
+            return getSampleValues();
+        }
+        
+        protected Object[] getOtherElements() {
+            return getOtherValues();
+        }
+        
+        protected Collection makeCollection() {
+            return makeEmptyMap().values();
+        }
+        
+        protected Collection makeFullCollection() {
+            return makeFullMap().values();
+        }
+        
+        protected boolean supportsAdd() {
+            return false;
+        }
+        
+        protected boolean supportsRemove() {
+            return isAddRemoveModifiable();
+        }
+        
+        protected Collection makeConfirmedCollection() {
+            // never gets called, reset methods are overridden
+            return null;
+        }
+        
+        protected Collection makeConfirmedFullCollection() {
+            // never gets called, reset methods are overridden
+            return null;
+        }
+        
+        protected void resetFull() {
+            TestMap.this.resetFull();
+            collection = map.values();
+            TestMapValues.this.confirmed = TestMap.this.confirmed.values();
+        }
+        
+        protected void resetEmpty() {
+            TestMap.this.resetEmpty();
+            collection = map.values();
+            TestMapValues.this.confirmed = TestMap.this.confirmed.values();
+        }
+        
+        protected void verify() {
+            super.verify();
+            TestMap.this.verify();
+        }
+    }
+
+
+    /**
+     *  Resets the {@link #map}, {@link #entrySet}, {@link #keySet},
+     *  {@link #values} and {@link #confirmed} fields to empty.
+     */
+    protected void resetEmpty() {
+        this.map = makeEmptyMap();
+        views();
+        this.confirmed = new HashMap();
+    }
+
+
+    /**
+     *  Resets the {@link #map}, {@link #entrySet}, {@link #keySet},
+     *  {@link #values} and {@link #confirmed} fields to full.
+     */
+    protected void resetFull() {
+        this.map = makeFullMap();
+        views();
+        this.confirmed = new HashMap();
+        Object[] k = getSampleKeys();
+        Object[] v = getSampleValues();
+        for (int i = 0; i < k.length; i++) {
+            confirmed.put(k[i], v[i]);
+        }
+    }
+
+
+    /**
+     *  Resets the collection view fields.
+     */
+    private void views() {
+        this.keySet = map.keySet();
+        this.values = map.values();
+        this.entrySet = map.entrySet();
+    }
+
+
+    /**
+     *  Verifies that {@link #map} is still equal to {@link #confirmed}.
+     *  This method checks that the map is equal to the HashMap, 
+     *  <I>and</I> that the map's collection views are still equal to
+     *  the HashMap's collection views.  An <Code>equals</Code> test
+     *  is done on the maps and their collection views; their size and
+     *  <Code>isEmpty</Code> results are compared; their hashCodes are
+     *  compared; and <Code>containsAll</Code> tests are run on the 
+     *  collection views.
+     */
+    protected void verify() {
+        Bag bag1 = new HashBag(confirmed.values());
+        Bag bag2 = new HashBag(values);
+
+        assertEquals("Map should still equal HashMap", confirmed, map);
+        assertEquals("Map's entry set should still equal HashMap's", 
+                     confirmed.entrySet(), entrySet);
+        assertEquals("Map's key set should still equal HashMap's",
+                     confirmed.keySet(), keySet);
+        assertEquals("Map's values should still equal HashMap's",
+                     bag1, bag2);
+        
+        int size = confirmed.size();
+        assertEquals("Map should be same size as HashMap", 
+                     size, map.size());
+        assertEquals("keySet should be same size as HashMap's",
+                     size, keySet.size());
+        assertEquals("entrySet should be same size as HashMap's",
+                     size, entrySet.size());
+        assertEquals("values should be same size as HashMap's",
+                     size, values.size());
+        
+        boolean empty = confirmed.isEmpty();
+        assertEquals("Map should be empty if HashMap is", 
+                     empty, map.isEmpty());
+        assertEquals("keySet should be empty if HashMap is", 
+                     empty, keySet.isEmpty());
+        assertEquals("entrySet should be empty if HashMap is", 
+                     empty, entrySet.isEmpty());
+        assertEquals("values should be empty if HashMap is", 
+                     empty, values.isEmpty());
+        
+        assertTrue("entrySet should contain all HashMap's elements",
+                   entrySet.containsAll(confirmed.entrySet()));
+        assertTrue("keySet should contain all HashMap's elements",
+                   keySet.containsAll(confirmed.keySet()));
+        assertTrue("values should contain all HashMap's elements",
+                   values.containsAll(confirmed.values()));
+        
+        assertEquals("hashCodes should be the same",
+                     confirmed.hashCode(), map.hashCode());
+        assertEquals("entrySet hashCodes should be the same", 
+                     confirmed.entrySet().hashCode(), entrySet.hashCode());
+        assertEquals("keySet hashCodes should be the same", 
+                     confirmed.keySet().hashCode(), keySet.hashCode());
+        assertEquals("values hashCodes should be the same", 
+                     bag1.hashCode(), bag2.hashCode());
+    }
+
+
+    /**
+     *  Erases any leftover instance variables by setting them to null.
+     */
+    protected void tearDown() {
+        map = null;
+        keySet = null;
+        entrySet = null;
+        values = null;
+        confirmed = null;
     }
 
 }

@@ -76,7 +76,7 @@ import junit.framework.TestSuite;
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */
 public class TestSequencedHashMap extends TestMap 
-implements TestMap.SupportsPut, TestMap.EntrySetSupportsRemove
+implements TestMap.SupportsPut
 {
     /**
      * The instance to experiment on.
