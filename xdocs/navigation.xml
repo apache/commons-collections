@@ -20,6 +20,7 @@
     <menu name="Commons Collections">
       <item name="Overview" href="/index.html"/>
       <item name="Users guide" href="/userguide.html"/>
+      <item name="History" href="/history.html"/>
       <item name="Javadoc (3.0 release)" href="apidocs-COLLECTIONS_3_0/index.html"/>
       <item name="Mailing lists" href="/mail-lists.html"/>
       <item name="Team" href="/team-list.html"/>
