@@ -15,8 +15,19 @@
  */
 package org.apache.commons.collections.map;
 
-import java.util.Comparator;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
+
+import org.apache.commons.collections.BoundedMap;
+import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>SortedMap</code> to fix the size blocking add/remove.
@@ -34,14 +45,17 @@ import java.util.SortedMap;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/04/09 10:36:01 $
+ * @version $Revision: 1.8 $ $Date: 2004/06/03 22:26:52 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class FixedSizeSortedMap
-        extends FixedSizeMap
-        implements SortedMap {
+        extends AbstractSortedMapDecorator
+        implements SortedMap, BoundedMap, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 3126019624511683653L;
 
     /**
      * Factory method to create a fixed size sorted map.
@@ -64,7 +78,6 @@ public class FixedSizeSortedMap
         super(map);
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Gets the map being decorated.
      * 
@@ -72,6 +85,63 @@ public class FixedSizeSortedMap
      */
     protected SortedMap getSortedMap() {
         return (SortedMap) map;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
+    }
+
+    //-----------------------------------------------------------------------
+    public Object put(Object key, Object value) {
+        if (map.containsKey(key) == false) {
+            throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
+        }
+        return map.put(key, value);
+    }
+
+    public void putAll(Map mapToCopy) {
+        for (Iterator it = mapToCopy.keySet().iterator(); it.hasNext(); ) {
+            if (mapToCopy.containsKey(it.next()) == false) {
+                throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
+            }
+        }
+        map.putAll(mapToCopy);
+    }
+
+    public void clear() {
+        throw new UnsupportedOperationException("Map is fixed size");
+    }
+
+    public Object remove(Object key) {
+        throw new UnsupportedOperationException("Map is fixed size");
+    }
+
+    public Set entrySet() {
+        Set set = map.entrySet();
+        return UnmodifiableSet.decorate(set);
+    }
+
+    public Set keySet() {
+        Set set = map.keySet();
+        return UnmodifiableSet.decorate(set);
+    }
+
+    public Collection values() {
+        Collection coll = map.values();
+        return UnmodifiableCollection.decorate(coll);
     }
 
     //-----------------------------------------------------------------------
@@ -90,16 +160,12 @@ public class FixedSizeSortedMap
         return new FixedSizeSortedMap(map);
     }
 
-    public Comparator comparator() {
-        return getSortedMap().comparator();
+    public boolean isFull() {
+        return true;
     }
 
-    public Object firstKey() {
-        return getSortedMap().firstKey();
-    }
-
-    public Object lastKey() {
-        return getSortedMap().lastKey();
+    public int maxSize() {
+        return size();
     }
 
 }
