@@ -38,7 +38,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.62 $ $Date: 2004/07/17 21:38:33 $
+ * @version $Revision: 1.63 $ $Date: 2004/12/11 06:30:38 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -51,6 +51,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Phil Steitz
  * @author Steven Melzer
  * @author Jon Schewe
+ * @author Neil O'Toole
  */
 public class CollectionUtils {
 
@@ -1048,6 +1049,22 @@ public class CollectionUtils {
         return UnmodifiableCollection.decorate(collection);
     }
 
+	/**
+	 * Returns an unmodifiable copy of the collection.
+	 * <p>
+     * This method uses the implementation in the decorators subpackage.
+     * 
+	 * @param collection the <code>Collection</code> to copy.
+	 * @return an unmodifiable <code>Collection</code>.
+	 * @throws IllegalArgumentException if collection is null
+	 */
+	public static Collection unmodifiableCollectionCopy(final Collection collection){
+		if (collection == null) throw new IllegalArgumentException("null not permitted.");
+		
+		final Collection copy = new ArrayList(collection.size());
+		copy.addAll(collection);
+		return UnmodifiableCollection.decorate(copy);
+	}
     /**
      * Returns a predicated (validating) collection backed by the given collection.
      * <p>
@@ -1093,5 +1110,43 @@ public class CollectionUtils {
     public static Collection transformedCollection(Collection collection, Transformer transformer) {
         return TransformedCollection.decorate(collection, transformer);
     }
-    
+   
+	/**
+	 * Returns a collection containing all the elements in <code>collection</code>
+	 * that are also in <code>retain</code>. The cardinality of an element <code>e</code>
+	 * in the returned collection is the same as the cardinality of <code>e</code>
+	 * in <code>collection</code> unless <code>retain</code> does not contain <code>e</code>, in which
+	 * case the cardinality is zero. This method is useful if you do not wish to modify
+	 * the collection <code>c</code> and thus cannot call <code>c.retainAll(retain);</code>.
+	 * 
+	 * @param collection the collection whose contents are the target of the #retailAll operation
+	 * @param retain the collection containing the elements to be retained in the returned collection
+	 * @return a <code>Collection</code> containing all the elements of <code>collection</code>
+	 * that occur at least once in <code>retain</code>.
+	 * @throws NullPointerException if either parameter is null
+	 */
+	public static Collection retainAll(final Collection collection, final Collection retain) {
+		return ListUtils.retainAll(collection, retain);
+	}
+
+	/**
+	 * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
+	 * method returns a collection containing all the elements in <code>c</code>
+	 * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
+	 * in the returned collection is the same as the cardinality of <code>e</code>
+	 * in <code>collection</code> unless <code>remove</code> contains <code>e</code>, in which
+	 * case the cardinality is zero. This method is useful if you do not wish to modify
+	 * the collection <code>c</code> and thus cannot call <code>collection.removeAll(remove);</code>.
+	 * 
+	 * @param collection the collection from which items are removed (in the returned collection)
+	 * @param remove the items to be removed from the returned <code>collection</code>
+	 * @return a <code>Collection</code> containing all the elements of <code>collection</code> except
+	 * any elements that also occur in <code>remove</code>.
+	 * @throws NullPointerException if either parameter is null
+	 */
+	public static Collection removeAll(final Collection collection, final Collection remove) {
+		return ListUtils.retainAll(collection, remove);
+	}
+	
+
 }

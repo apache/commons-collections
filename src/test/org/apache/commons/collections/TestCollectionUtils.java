@@ -17,6 +17,7 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -49,8 +50,9 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Stephen Colebourne
  * @author Phil Steitz
  * @author Steven Melzer
+ * @author Neil O'Toole
  * 
- * @version $Revision: 1.41 $ $Date: 2004/08/03 18:20:41 $
+ * @version $Revision: 1.42 $ $Date: 2004/12/11 06:30:38 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -1194,5 +1196,32 @@ public class TestCollectionUtils extends TestCase {
             // expected
         }  
     }
+    
+    public void testUnmodifiableCollectionCopy() {
+		Collection collection = new ArrayList();
+		collection.add("a");
+    	Collection copy = CollectionUtils.unmodifiableCollectionCopy(collection);
 
+		assertTrue(copy instanceof Unmodifiable);
+		assertTrue(CollectionUtils.isEqualCollection(collection, copy));
+		collection.clear();
+		assertTrue(copy.isEmpty() == false);
+
+		try
+		{
+			copy.clear();
+			fail("should be unmodifiable.");
+		}
+		catch (UnsupportedOperationException uoe)
+		{} // this is what we want
+		
+		try
+		{
+			copy = CollectionUtils.unmodifiableCollectionCopy(null);
+			fail("should throw IllegalArgumentException");
+		}
+		catch(IllegalArgumentException iae)
+		{}
+	}
+    
 }
