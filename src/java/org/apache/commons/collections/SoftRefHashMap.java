@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SoftRefHashMap.java,v 1.6 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2002/10/12 22:15:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SoftRefHashMap.java,v 1.7 2002/11/24 17:30:15 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/11/24 17:30:15 $
  *
  * ====================================================================
  *
@@ -119,7 +119,7 @@ public class SoftRefHashMap implements Map {
             Object key = (Object) i.next();
             Reference ref = (Reference) map.get( key );
             if ( ref.get() == null ) {
-                map.remove( key );
+                i.remove();
             }
         }
     }
