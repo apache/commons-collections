@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.9 2003/05/16 15:28:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.10 2003/07/04 03:32:03 dlr Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,15 +76,10 @@ import java.util.Set;
  * implementation it would provide a loophole around the validation. But,
  * you might want that loophole, so this class is kept simple.</p>
  *
- * <p>An example use case is where the wrapped <code>Map</code> needs
- * synchronization (to make it thread-safe), but the <code>Map</code>
- * returned by <code>Collections.synchronizedMap(map)</code>
- * hides part of <code>map</code>'s public interface.</p>
- *
  * @deprecated this class has been moved to the deprecated subpackage as
  *  AbstractMapDecorator. Due to be removed in v4.0.
  * @since Commons Collections 2.0
- * @version $Revision: 1.9 $ $Date: 2003/05/16 15:28:28 $
+ * @version $Revision: 1.10 $ $Date: 2003/07/04 03:32:03 $
  * 
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @author Stephen Colebourne
