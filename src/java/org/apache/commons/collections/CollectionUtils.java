@@ -1,7 +1,7 @@
 /*
- * $Id: CollectionUtils.java,v 1.21 2002/11/24 21:11:27 scolebourne Exp $
- * $Revision: 1.21 $
- * $Date: 2002/11/24 21:11:27 $
+ * $Id: CollectionUtils.java,v 1.22 2002/12/08 15:29:59 scolebourne Exp $
+ * $Revision: 1.22 $
+ * $Date: 2002/12/08 15:29:59 $
  *
  * ====================================================================
  *
@@ -84,7 +84,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Steve Downey
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
  * @author BluePhelix@web.de (Peter)
- * @version $Revision: 1.21 $ $Date: 2002/11/24 21:11:27 $
+ * @version $Revision: 1.22 $ $Date: 2002/12/08 15:29:59 $
  */
 public class CollectionUtils {
 
@@ -426,8 +426,24 @@ public class CollectionUtils {
     }
 
     /** 
+     * Counts the number of elements in the input collection that match the predicate.
+     * <p>
+     * A <code>null</code> predicate matches no elements.
+     * 
+     * @param inputCollection  the collection to get the input from, may not be null
+     * @param predicate  the predicate to use, may be null
+     * @return the number of matches for the predicate in the collection
+     * @throws NullPointerException if the input collection is null
+     */
+    public static int countMatches(Collection inputCollection, Predicate predicate) {
+        return select(inputCollection, predicate).size();
+    }
+
+    /** 
      * Selects all elements from input collection which match the given predicate
      * into an output collection.
+     * <p>
+     * A <code>null</code> predicate matches no elements.
      * 
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
@@ -467,6 +483,8 @@ public class CollectionUtils {
     /**
      * Selects all elements from inputCollection which don't match the given predicate
      * into an output collection
+     * <p>
+     * A <code>null</code> predicate matches no elements.
      * 
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
@@ -499,6 +517,7 @@ public class CollectionUtils {
             }
         }
     }
+    
     /** 
      * Transforms all elements from inputCollection with the given transformer 
      * and adds them to the outputCollection.
