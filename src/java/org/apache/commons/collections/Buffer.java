@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.5 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.6 2003/09/06 20:41:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,40 +64,40 @@ import java.util.Collection;
  * well-defined order.  The removal order can be based on insertion order
  * (eg, a FIFO queue or a LIFO stack), on access order (eg, an LRU cache), 
  * on some arbitrary comparator (eg, a priority queue) or on any other 
- * well-defined ordering.<P>
- *
+ * well-defined ordering.
+ * <p>
  * Note that the removal order is not necessarily the same as the iteration
- * order.  A <Code>Buffer</Code> implementation may have equivalent removal
- * and iteration orders, but this is not required.<P>
- *
+ * order.  A <code>Buffer</code> implementation may have equivalent removal
+ * and iteration orders, but this is not required.
+ * <p>
  * This interface does not specify any behavior for 
  * {@link Object#equals(Object)} and {@link Object#hashCode} methods.  It
- * is therefore possible for a <Code>Buffer</Code> implementation to also
+ * is therefore possible for a <code>Buffer</code> implementation to also
  * also implement {@link java.util.List}, {@link java.util.Set} or 
  * {@link Bag}.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/06 20:41:12 $
  * 
  * @author Avalon
- * @author <a href="bloritsch@apache.org">Berin Loritsch</a>
+ * @author Berin Loritsch
  * @author Paul Jack
  * @author Stephen Colebourne
  */
 public interface Buffer extends Collection {
 
     /**
-     * Removes the next object from the buffer.
+     * Gets and removes the next object from the buffer.
      *
-     * @return  the removed object
+     * @return the next object in the buffer, which is also removed
      * @throws BufferUnderflowException if the buffer is already empty
      */
     Object remove();
 
     /**
-     * Returns the next object in the buffer without removing it.
+     * Gets the next object from the buffer without removing it.
      *
-     * @return  the next object in the buffer
+     * @return the next object in the buffer, which is not removed
      * @throws BufferUnderflowException if the buffer is empty
      */
     Object get();
