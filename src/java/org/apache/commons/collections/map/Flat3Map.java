@@ -60,7 +60,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.14 $ $Date: 2004/03/31 23:18:56 $
+ * @version $Revision: 1.15 $ $Date: 2004/04/09 14:42:36 $
  *
  * @author Stephen Colebourne
  */
@@ -103,6 +103,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
      * Constructor copying elements from another map.
      *
      * @param map  the map to copy
+     * @throws NullPointerException if the map is null
      */
     public Flat3Map(Map map) {
         super();
@@ -325,7 +326,8 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     /**
      * Puts all the values from the specified map into this map.
      * 
-     * @param map
+     * @param map  the map to add
+     * @throws NullPointerException if the map is null
      */
     public void putAll(Map map) {
         int size = map.size();
@@ -1094,19 +1096,19 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
         buf.append('{');
         switch (size) {  // drop through
             case 3:
-                buf.append(key3);
+                buf.append((key3 == this ? "(this Map)" : key3));
                 buf.append('=');
-                buf.append(value3);
+                buf.append((value3 == this ? "(this Map)" : value3));
                 buf.append(',');
             case 2:
-                buf.append(key2);
+                buf.append((key2 == this ? "(this Map)" : key2));
                 buf.append('=');
-                buf.append(value2);
+                buf.append((value2 == this ? "(this Map)" : value2));
                 buf.append(',');
             case 1:
-                buf.append(key1);
+                buf.append((key1 == this ? "(this Map)" : key1));
                 buf.append('=');
-                buf.append(value1);
+                buf.append((value1 == this ? "(this Map)" : value1));
         }
         buf.append('}');
         return buf.toString();
