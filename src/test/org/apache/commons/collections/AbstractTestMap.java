@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.1 2003/10/02 23:01:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.2 2003/10/05 12:34:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,9 +59,11 @@ package org.apache.commons.collections;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -148,7 +150,8 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.1 $ $Date: 2003/10/02 23:01:09 $
+ * @author Stephen Colebourne
+ * @version $Revision: 1.2 $ $Date: 2003/10/05 12:34:46 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -868,7 +871,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     private Map.Entry[] makeEntryArray(Object[] keys, Object[] values) {
         Map.Entry[] result = new Map.Entry[keys.length];
         for (int i = 0; i < keys.length; i++) {
-            result[i] = new DefaultMapEntry(keys[i], values[i]);
+            Map map = new HashMap();
+            map.put(keys[i], values[i]);
+            result[i] = (Map.Entry) map.entrySet().iterator().next();
         }
         return result;
     }
@@ -1187,8 +1192,8 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     protected void verifyValues() {
-        Bag bag1 = new HashBag(confirmed.values());
-        Bag bag2 = new HashBag(values);
+        List known = new ArrayList(confirmed.values());
+        List test = new ArrayList(values);
 
         int size = confirmed.size();
         boolean empty = confirmed.isEmpty();
@@ -1198,8 +1203,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                      empty, values.isEmpty());
         assertTrue("values should contain all HashMap's elements",
                    values.containsAll(confirmed.values()));
-        assertEquals("Map's values should still equal HashMap's",
-                     bag1, bag2);
+        // originally coded to use a HashBag, but now separate jar so...
+        for (Iterator it = known.iterator(); it.hasNext();) {
+            boolean removed = test.remove(it.next());
+            assertTrue("Map's values should still equal HashMap's", removed);
+        }
+        assertTrue("Map's values should still equal HashMap's", test.isEmpty());
     }
 
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBag.java,v 1.1 2003/10/02 22:35:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBag.java,v 1.2 2003/10/05 12:34:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,8 +72,10 @@ import java.util.List;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Bag} fails.
  *
+ * @version $Revision: 1.2 $ $Date: 2003/10/05 12:34:46 $
+ * 
  * @author Chuck Burdick
- * @version $Id: AbstractTestBag.java,v 1.1 2003/10/02 22:35:31 scolebourne Exp $
+ * @author Stephen Colebourne
  */
 public abstract class AbstractTestBag extends AbstractTestObject {
 //  TODO: this class should really extend from TestCollection, but the bag
@@ -170,35 +172,83 @@ public abstract class AbstractTestBag extends AbstractTestObject {
     
     public void testContains() {
         Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        List compare = new ArrayList();
-        compare.add("A");
-        compare.add("B");
-        assertEquals("Other list has 1 'B'", 1, (new HashBag(compare)).getCount("B"));
-        assertTrue("Bag has at least 1 'B'", 1 <= bag.getCount("B"));
-        assertTrue("Bag contains items in the list", bag.containsAll(compare));
-        compare.add("A");
-        compare.add("B");
-        assertEquals("Other list has 2 'B'", 2, (new HashBag(compare)).getCount("B"));
-        assertTrue("Bag has at least 2 'B'", 2 <= bag.getCount("B"));
-        assertTrue("Bag contains items in the list", bag.containsAll(compare));
-        compare.add("A");
-        compare.add("B");
-        assertEquals("Other list has 3 'B'", 3, (new HashBag(compare)).getCount("B"));
-        assertTrue("Bag does not have 3 'B'", 3 > bag.getCount("B"));
-        assertTrue("Bag contains items in the list", !bag.containsAll(compare));
+        
+        assertEquals("Bag does not have at least 1 'A'", false, bag.contains("A"));
+        assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
+        
+        bag.add("A");  // bag 1A
+        assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
+        assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
+        
+        bag.add("A");  // bag 2A
+        assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
+        assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
+        
+        bag.add("B");  // bag 2A,1B
+        assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
+        assertEquals("Bag has at least 1 'B'", true, bag.contains("B"));
+    }
+
+    public void testContainsAll() {
+        Bag bag = makeBag();
+        List known = new ArrayList();
+        List known1A = new ArrayList();
+        known1A.add("A");
+        List known2A = new ArrayList();
+        known2A.add("A");
+        known2A.add("A");
+        List known1B = new ArrayList();
+        known1B.add("B");
+        List known1A1B = new ArrayList();
+        known1A1B.add("A");
+        known1A1B.add("B");
+        
+        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
+        assertEquals("Bag does not containsAll of 1 'A'", false, bag.containsAll(known1A));
+        assertEquals("Bag does not containsAll of 2 'A'", false, bag.containsAll(known2A));
+        assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
+        assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
+        
+        bag.add("A");  // bag 1A
+        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
+        assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
+        assertEquals("Bag does not containsAll of 2 'A'", false, bag.containsAll(known2A));
+        assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
+        assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
+        
+        bag.add("A");  // bag 2A
+        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
+        assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
+        assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
+        assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
+        assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
+        
+        bag.add("A");  // bag 3A
+        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
+        assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
+        assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
+        assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
+        assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
+        
+        bag.add("B");  // bag 3A1B
+        assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
+        assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
+        assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
+        assertEquals("Bag containsAll of 1 'B'", true, bag.containsAll(known1B));
+        assertEquals("Bag containsAll of 1 'A' 1 'B'", true, bag.containsAll(known1A1B));
     }
 
     public void testSize() {
         Bag bag = makeBag();
+        assertEquals("Should have 0 total items", 0, bag.size());
         bag.add("A");
+        assertEquals("Should have 1 total items", 1, bag.size());
         bag.add("A");
+        assertEquals("Should have 2 total items", 2, bag.size());
         bag.add("A");
+        assertEquals("Should have 3 total items", 3, bag.size());
         bag.add("B");
+        assertEquals("Should have 4 total items", 4, bag.size());
         bag.add("B");
         assertEquals("Should have 5 total items", 5, bag.size());
         bag.remove("A", 2);
