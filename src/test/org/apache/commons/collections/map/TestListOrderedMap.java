@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestListOrderedMap.java,v 1.3 2003/11/18 22:37:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestListOrderedMap.java,v 1.4 2003/11/20 00:03:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import java.util.Set;
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.iterators.AbstractTestMapIterator;
+import org.apache.commons.collections.iterators.AbstractTestOrderedMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
 
 /**
@@ -75,7 +75,7 @@ import org.apache.commons.collections.iterators.MapIterator;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:17 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/20 00:03:06 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -101,12 +101,13 @@ public class TestListOrderedMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public BulkTest bulkTestMapIterator() {
-        return new TestOrderedMapIterator();
+        return new TestListOrderedMapIterator();
     }
     
-    public class TestOrderedMapIterator extends AbstractTestMapIterator {
-        public TestOrderedMapIterator() {
-            super("TestOrderedMapIterator");
+    // TODO: Test mapIterator() and orderedMapIterator() separately
+    public class TestListOrderedMapIterator extends AbstractTestOrderedMapIterator {
+        public TestListOrderedMapIterator() {
+            super("TestListOrderedMapIterator");
         }
         
         public boolean supportsRemove() {
@@ -143,84 +144,6 @@ public class TestListOrderedMap extends AbstractTestMap {
         }
     }
     
-    //-----------------------------------------------------------------------
-    public void testMapIteratorRemove() {
-        resetFull();
-        ListOrderedMap testMap = (ListOrderedMap) map;
-        MapIterator it = testMap.mapIterator();
-        assertEquals(true, it.hasNext());
-        Object key = it.next();
-        
-        if (isRemoveSupported() == false) {
-            try {
-                it.remove();
-                fail();
-            } catch (UnsupportedOperationException ex) {
-            }
-            return;
-        }
-        
-        it.remove();
-        confirmed.remove(key);
-        assertEquals(false, testMap.containsKey(key));
-        verify();
-        
-        try {
-            it.remove();  // second remove fails
-        } catch (IllegalStateException ex) {
-        }
-        verify();
-    }
-
-    //-----------------------------------------------------------------------
-    public void testMapIteratorSet() {
-        Object newValue1 = getOtherValues()[0];
-        Object newValue2 = getOtherValues()[1];
-        
-        resetFull();
-        ListOrderedMap testMap = (ListOrderedMap) map;
-        MapIterator it = testMap.mapIterator();
-        assertEquals(true, it.hasNext());
-        Object key1 = it.next();
-        
-        if (isSetValueSupported() == false) {
-            try {
-                it.setValue(newValue1);
-                fail();
-            } catch (UnsupportedOperationException ex) {
-            }
-            return;
-        }
-        
-        it.setValue(newValue1);
-        confirmed.put(key1, newValue1);
-        assertSame(key1, it.getKey());
-        assertSame(newValue1, it.getValue());
-        assertEquals(true, testMap.containsKey(key1));
-        assertEquals(true, testMap.containsValue(newValue1));
-        assertEquals(newValue1, testMap.get(key1));
-        verify();
-        
-        it.setValue(newValue1);  // same value - should be OK
-        confirmed.put(key1, newValue1);
-        assertSame(key1, it.getKey());
-        assertSame(newValue1, it.getValue());
-        assertEquals(true, testMap.containsKey(key1));
-        assertEquals(true, testMap.containsValue(newValue1));
-        assertEquals(newValue1, testMap.get(key1));
-        verify();
-        
-        Object key2 = it.next();
-        it.setValue(newValue2);
-        confirmed.put(key2, newValue2);
-        assertSame(key2, it.getKey());
-        assertSame(newValue2, it.getValue());
-        assertEquals(true, testMap.containsKey(key2));
-        assertEquals(true, testMap.containsValue(newValue2));
-        assertEquals(newValue2, testMap.get(key2));
-        verify();
-    }
-
     //-----------------------------------------------------------------------
     // Creates a known series of Objects, puts them in 
     // an OrderedMap and ensures that all three Collection 

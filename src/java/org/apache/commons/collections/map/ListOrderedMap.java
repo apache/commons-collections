@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.1 2003/11/16 00:05:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.2 2003/11/20 00:03:05 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,12 +63,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
-import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.iterators.OrderedMapIterator;
+import org.apache.commons.collections.iterators.ResettableIterator;
 import org.apache.commons.collections.pairs.AbstractMapEntry;
 
 /**
@@ -76,17 +79,19 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * <p>
  * The order will be used via the iterators and toArray methods on the views.
  * The order is also returned by the <code>MapIterator</code>.
+ * The <code>orderedMapIterator()</code> method accesses an iterator that can
+ * iterate both forwards and backwards through the map.
  * <p>
  * If an object is added to the Map for a second time, it will remain in the
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:45 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/20 00:03:05 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
  */
-public class ListOrderedMap extends AbstractMapDecorator implements Map {
+public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
 
     /** Internal list to hold the sequence of objects */
     protected final List insertOrder = new ArrayList();
@@ -113,6 +118,72 @@ public class ListOrderedMap extends AbstractMapDecorator implements Map {
     protected ListOrderedMap(Map map) {
         super(map);
         insertOrder.addAll(getMap().keySet());
+    }
+
+    // Implement OrderedMap
+    //-----------------------------------------------------------------------
+    public MapIterator mapIterator() {
+        return orderedMapIterator();
+    }
+
+    public OrderedMapIterator orderedMapIterator() {
+        return new ListOrderedMapIterator(this);
+    }
+
+    /**
+     * Gets the first key in this map by insert order.
+     *
+     * @return the first key currently in this map
+     * @throws NoSuchElementException if this map is empty
+     */
+    public Object firstKey() {
+        if (size() == 0) {
+            throw new NoSuchElementException("Map is empty");
+        }
+        return insertOrder.get(0);
+    }
+
+    /**
+     * Gets the last key in this map by insert order.
+     *
+     * @return the last key currently in this map
+     * @throws NoSuchElementException if this map is empty
+     */
+    public Object lastKey() {
+        if (size() == 0) {
+            throw new NoSuchElementException("Map is empty");
+        }
+        return insertOrder.get(size() - 1);
+    }
+    
+    /**
+     * Gets the next key to the one specified using insert order.
+     * This method performs a list search to find the key and is O(n).
+     * 
+     * @param key  the key to find previous for
+     * @return the next key, null if no match or at start
+     */
+    public Object nextKey(Object key) {
+        int index = insertOrder.indexOf(key);
+        if (index >= 0 && index < size() - 1) {
+            return insertOrder.get(index + 1);
+        }
+        return null;
+    }
+
+    /**
+     * Gets the previous key to the one specified using insert order.
+     * This method performs a list search to find the key and is O(n).
+     * 
+     * @param key  the key to find previous for
+     * @return the previous key, null if no match or at start
+     */
+    public Object previousKey(Object key) {
+        int index = insertOrder.indexOf(key);
+        if (index > 0) {
+            return insertOrder.get(index - 1);
+        }
+        return null;
     }
 
     //-----------------------------------------------------------------------
@@ -147,10 +218,6 @@ public class ListOrderedMap extends AbstractMapDecorator implements Map {
     }
 
     //-----------------------------------------------------------------------
-    public MapIterator mapIterator() {
-        return new EntrySetMapIterator(this);
-    }
-    
     public Set keySet() {
         return new KeySetView(this);
     }
@@ -181,14 +248,14 @@ public class ListOrderedMap extends AbstractMapDecorator implements Map {
             Map.Entry entry = (Map.Entry) it.next();
             Object key = entry.getKey();
             Object value = entry.getValue();
-            buf.append(key == this ? "(this Map)" : key);
-            buf.append('=');
-            buf.append(value == this ? "(this Map)" : value);
             if (first) {
                 first = false;
             } else {
                 buf.append(", ");
             }
+            buf.append(key == this ? "(this Map)" : key);
+            buf.append('=');
+            buf.append(value == this ? "(this Map)" : value);
         }
         buf.append('}');
         return buf.toString();
@@ -320,22 +387,23 @@ public class ListOrderedMap extends AbstractMapDecorator implements Map {
         }
         
         public Iterator iterator() {
-            return new OrderedIterator(parent, insertOrder);
+            return new ListOrderedIterator(parent, insertOrder);
         }
     }
     
-    static class OrderedIterator extends AbstractIteratorDecorator {
+    //-----------------------------------------------------------------------
+    static class ListOrderedIterator extends AbstractIteratorDecorator {
         private final ListOrderedMap parent;
         private Object last = null;
         
-        OrderedIterator(ListOrderedMap parent, List insertOrder) {
+        ListOrderedIterator(ListOrderedMap parent, List insertOrder) {
             super(insertOrder.iterator());
             this.parent = parent;
         }
         
         public Object next() {
             last = super.next();
-            return new OrderedMapEntry(parent, last);
+            return new ListOrderedMapEntry(parent, last);
         }
 
         public void remove() {
@@ -344,10 +412,11 @@ public class ListOrderedMap extends AbstractMapDecorator implements Map {
         }
     }
     
-    static class OrderedMapEntry extends AbstractMapEntry {
+    //-----------------------------------------------------------------------
+    static class ListOrderedMapEntry extends AbstractMapEntry {
         private final ListOrderedMap parent;
         
-        OrderedMapEntry(ListOrderedMap parent, Object key) {
+        ListOrderedMapEntry(ListOrderedMap parent, Object key) {
             super(key, null);
             this.parent = parent;
         }
@@ -361,4 +430,82 @@ public class ListOrderedMap extends AbstractMapDecorator implements Map {
         }
     }
 
+    //-----------------------------------------------------------------------
+    static class ListOrderedMapIterator implements OrderedMapIterator, ResettableIterator {
+        private final ListOrderedMap parent;
+        private ListIterator iterator;
+        private Object last = null;
+        private boolean readable = false;
+        
+        ListOrderedMapIterator(ListOrderedMap parent) {
+            super();
+            this.parent = parent;
+            this.iterator = parent.insertOrder.listIterator();
+        }
+        
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+        
+        public Object next() {
+            last = iterator.next();
+            readable = true;
+            return last;
+        }
+        
+        public boolean hasPrevious() {
+            return iterator.hasPrevious();
+        }
+        
+        public Object previous() {
+            last = iterator.previous();
+            readable = true;
+            return last;
+        }
+        
+        public void remove() {
+            if (readable == false) {
+                throw new IllegalStateException("Iterator remove() can only be called after next() and before remove()");
+            }
+            iterator.remove();
+            parent.map.remove(last);
+            readable = false;
+        }
+        
+        public Object getKey() {
+            if (readable == false) {
+                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+            }
+            return last;
+        }
+
+        public Object getValue() {
+            if (readable == false) {
+                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+            }
+            return parent.get(last);
+        }
+        
+        public Object setValue(Object value) {
+            if (readable == false) {
+                throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
+            }
+            return parent.map.put(last, value);
+        }
+        
+        public void reset() {
+            iterator = parent.insertOrder.listIterator();
+            last = null;
+            readable = false;
+        }
+        
+        public String toString() {
+            if (readable == true) {
+                return "MapIterator[" + getKey() + "=" + getValue() + "]";
+            } else {
+                return "MapIterator[]";
+            }
+        }
+    }
+    
 }
