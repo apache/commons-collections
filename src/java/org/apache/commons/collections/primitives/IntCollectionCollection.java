@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollectionCollection.java,v 1.1 2003/01/05 03:03:42 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/05 03:03:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollectionCollection.java,v 1.2 2003/01/06 03:56:21 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/06 03:56:21 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Iterator;
  * Adapts an {@link IntCollection} to the
  * {@link java.util.Collection Collection} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/05 03:03:42 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/06 03:56:21 $
  * @author Rodney Waldhoff 
  */
 public class IntCollectionCollection implements Collection {
@@ -124,7 +124,7 @@ public class IntCollectionCollection implements Collection {
     }
     
     public boolean retainAll(Collection c) {
-        return _collection.removeAll(CollectionIntCollection.wrap(c));
+        return _collection.retainAll(CollectionIntCollection.wrap(c));
     }
     
     public int size() {
