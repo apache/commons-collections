@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.42 2003/09/21 16:26:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.43 2003/09/21 23:47:09 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.42 $ $Date: 2003/09/21 16:26:08 $
+ * @version $Revision: 1.43 $ $Date: 2003/09/21 23:47:09 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -94,6 +94,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * @author Peter KoBek
  * @author Matthew Hawthorne
  * @author Janek Bogucki
+ * @author Phil Steitz
  */
 public class CollectionUtils {
 
@@ -122,6 +123,9 @@ public class CollectionUtils {
      * will be equal to the maximum of the cardinality of that element
      * in the two given {@link Collection}s.
      *
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @return  the union of the two collections
      * @see Collection#addAll
      */
     public static Collection union(final Collection a, final Collection b) {
@@ -148,6 +152,9 @@ public class CollectionUtils {
      * will be equal to the minimum of the cardinality of that element
      * in the two given {@link Collection}s.
      *
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @return the intersection of the two collections
      * @see Collection#retainAll
      * @see #containsAny
      */
@@ -179,6 +186,10 @@ public class CollectionUtils {
      * <tt>{@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})</tt>
      * or
      * <tt>{@link #union union}({@link #subtract subtract(a,b)},{@link #subtract subtract(b,a)})</tt>.
+     *
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @return the symmetric difference of the two collections
      */
     public static Collection disjunction(final Collection a, final Collection b) {
         ArrayList list = new ArrayList();
@@ -252,7 +263,7 @@ public class CollectionUtils {
      * Only those elements present in the collection will appear as
      * keys in the map.
      * 
-     * @param coll  the collection to get the cardinality map for
+     * @param coll  the collection to get the cardinality map for, must not be null
      * @return the populated cardinality map
      */
     public static Map getCardinalityMap(final Collection coll) {
@@ -275,6 +286,9 @@ public class CollectionUtils {
      * than or equal to the cardinality of <i>e</i> in <i>b</i>,
      * for each element <i>e</i> in <i>a</i>.
      *
+     * @param a  the first (sub?) collection, must not be null
+     * @param b  the second (super?) collection, must not be null
+     * @return <code>true</code> iff <i>a</i> is a sub-collection of <i>b</i>
      * @see #isProperSubCollection
      * @see Collection#containsAll
      */
@@ -306,6 +320,9 @@ public class CollectionUtils {
      *    <li><code>a.size() < Integer.MAXVALUE</code></li>
      * </ul>
      *
+     * @param a  the first (sub?) collection, must not be null
+     * @param b  the second (super?) collection, must not be null
+     * @return <code>true</code> iff <i>a</i> is a <i>proper</i> sub-collection of <i>b</i>
      * @see #isSubCollection
      * @see Collection#containsAll
      */
@@ -315,11 +332,15 @@ public class CollectionUtils {
 
     /**
      * Returns <tt>true</tt> iff the given {@link Collection}s contain
-     * exactly the same elements with exactly the same cardinality.
+     * exactly the same elements with exactly the same cardinalities.
      * <p>
      * That is, iff the cardinality of <i>e</i> in <i>a</i> is
      * equal to the cardinality of <i>e</i> in <i>b</i>,
      * for each element <i>e</i> in <i>a</i> or <i>b</i>.
+     *
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @return <code>true</code> iff the collections contain the same elements with the same cardinalities.
      */
     public static boolean isEqualCollection(final Collection a, final Collection b) {
         if(a.size() != b.size()) {
@@ -345,6 +366,10 @@ public class CollectionUtils {
     /**
      * Returns the number of occurrences of <i>obj</i>
      * in <i>col</i>.
+     *
+     * @param obj  the object to find the cardinality of
+     * @param col  the collection to search
+     * @return the the number of occurrences of obj in col
      */
     public static int cardinality(Object obj, final Collection col) {
         int count = 0;
@@ -367,7 +392,8 @@ public class CollectionUtils {
     /** 
      * Finds the first element in the given collection which matches the given predicate.
      * <p>
-     * If the input collection or predicate is null, null is returned.
+     * If the input collection or predicate is null, or no element of the collection 
+     * matches the predicate, null is returned.
      *
      * @param collection  the collection to search, may be null
      * @param predicate  the predicate to use, may be null
@@ -425,8 +451,9 @@ public class CollectionUtils {
      * <p>
      * If the input collection or transformer is null, there is no change made.
      * <p>
-     * This routine is best for Lists and uses set(), however it adapts for all
-     * Collections that support clear() and addAll().
+     * This routine is best for Lists, for which set() is used to do the 
+     * transformations "in place."  For other Collections, clear() and addAll()
+     * are used to replace elements.  
      * <p>
      * If the input collection controls its input, such as a Set, and the
      * Transformer creates duplicates (or are otherwise invalid), the 
@@ -569,8 +596,8 @@ public class CollectionUtils {
     }
     
     /** 
-     * Transforms all elements from inputCollection with the given transformer 
-     * and adds them to the outputCollection.
+     * Returns a new Collection consisting of the elements of inputCollection transformed
+     * by the given transformer.
      * <p>
      * If the input transformer is null, the result is an empty list.
      * 
@@ -586,7 +613,7 @@ public class CollectionUtils {
     }
     
     /** 
-     * Transforms all elements from the inputIterator  with the given transformer 
+     * Transforms all elements from the inputIterator with the given transformer 
      * and adds them to the outputCollection.
      * <p>
      * If the input iterator or transformer is null, the result is an empty list.
@@ -674,8 +701,8 @@ public class CollectionUtils {
     /** 
      * Adds all elements in the array to the given collection.
      * 
-     * @param collection  the collection to add to
-     * @param elements  the array of elements to add, may be null
+     * @param collection  the collection to add to, may not be null
+     * @param elements  the array of elements to add, may not be null
      * @throws NullPointerException if the collection or array is null
      */
     public static void addAll(Collection collection, Object[] elements) {
@@ -685,33 +712,41 @@ public class CollectionUtils {
     }    
     
     /**
-     * Given an Object, and an index, it will get the nth value in the
+     * Given an Object, and an index, returns the nth value in the
      * object.
      * <ul>
-     * <li>If obj is a Map, get the nth value from the <b>key</b> iterator.
-     * <li>If obj is a List or an array, get the nth value.
-     * <li>If obj is an iterator, enumeration or Collection, get the nth value from the iterator.
-     * <li>Return the original obj.
+     * <li>If obj is a Map, returns the nth value from the <b>keySet</b> iterator, unless 
+     *     the Map contains an Integer key with integer value = idx, in which case the
+     *     corresponding map entry value is returned.  If idx exceeds the number of entries in
+     *     the map, an empty Iterator is returned.
+     * <li>If obj is a List or an array, returns the nth value, throwing IndexOutOfBoundsException,
+     *     ArrayIndexOutOfBoundsException, resp. if the nth value does not exist.
+     * <li>If obj is an iterator, enumeration or Collection, returns the nth value from the iterator,
+     *     returning an empty Iterator (resp. Enumeration) if the nth value does not exist.
+     * <li>Returns the original obj if it is null or not a Collection or Iterator.
      * </ul>
      * 
-     * @param obj  the object to get an index of
+     * @param obj  the object to get an index of, may be null
      * @param idx  the index to get
      * @throws IndexOutOfBoundsException
-     * @throws NoSuchElementException
+     * @throws ArrayIndexOutOfBoundsException
      */
     public static Object index(Object obj, int idx) {
         return index(obj, new Integer(idx));
     }
     
     /**
-     * Given an Object, and a key (index), it will get value associated with
+     * Given an Object, and a key (index), returns the value associated with
      * that key in the Object. The following checks are made:
      * <ul>
      * <li>If obj is a Map, use the index as a key to get a value. If no match continue.
      * <li>Check key is an Integer. If not, return the object passed in.
-     * <li>If obj is a Map, get the nth value from the <b>key</b> iterator.
-     * <li>If obj is a List or an array, get the nth value.
-     * <li>If obj is an iterator, enumeration or Collection, get the nth value from the iterator.
+     * <li>If obj is a Map, get the nth value from the <b>keySet</b> iterator.
+     *     If the Map has fewer than n entries, return an empty Iterator.
+     * <li>If obj is a List or an array, get the nth value, throwing IndexOutOfBoundsException,
+     *     ArrayIndexOutOfBoundsException, resp. if the nth value does not exist.
+     * <li>If obj is an iterator, enumeration or Collection, get the nth value from the iterator,
+     *     returning an empty Iterator (resp. Enumeration) if the nth value does not exist.
      * <li>Return the original obj.
      * </ul>
      * 
@@ -719,7 +754,7 @@ public class CollectionUtils {
      * @param index  the index to get
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException
-     * @throws NoSuchElementException
+     * @throws ArrayIndexOutOfBoundsException
      */
     public static Object index(Object obj, Object index) {
         if(obj instanceof Map) {
