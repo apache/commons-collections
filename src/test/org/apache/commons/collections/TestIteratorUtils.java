@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.11 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.12 2003/12/01 22:49:00 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,16 +66,11 @@ import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.iterators.OrderedIterator;
-import org.apache.commons.collections.iterators.OrderedMapIterator;
-import org.apache.commons.collections.iterators.ResettableIterator;
-import org.apache.commons.collections.iterators.ResettableListIterator;
 
 /**
  * Tests for IteratorUtils.
  * 
- * @version $Revision: 1.11 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.12 $ $Date: 2003/12/01 22:49:00 $
  * 
  * @author Unknown
  */

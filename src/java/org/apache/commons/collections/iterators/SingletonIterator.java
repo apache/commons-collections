@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonIterator.java,v 1.9 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonIterator.java,v 1.10 2003/12/01 22:49:00 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,12 +60,14 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.ResettableIterator;
+
 /** 
  * <code>SingletonIterator</code> is an {@link Iterator} over a single 
  * object instance.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.9 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.10 $ $Date: 2003/12/01 22:49:00 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne

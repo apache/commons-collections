@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedMap.java,v 1.1 2003/12/01 22:34:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedMap.java,v 1.2 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,14 +57,12 @@
  */
 package org.apache.commons.collections;
 
-import org.apache.commons.collections.iterators.OrderedMapIterator;
-
 /**
  * Defines a map that maintains order and allows both forward and backward
  * iteration through that order.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:55 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/01 22:48:59 $
  *
  * @author Stephen Colebourne
  */

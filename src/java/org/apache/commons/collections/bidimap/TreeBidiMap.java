@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.3 2003/12/01 22:34:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.4 2003/12/01 22:49:00 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,10 +67,10 @@ import java.util.Set;
 
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedBidiMap;
-import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.iterators.OrderedIterator;
-import org.apache.commons.collections.iterators.OrderedMapIterator;
+import org.apache.commons.collections.OrderedIterator;
+import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.pairs.UnmodifiableMapEntry;
 
 /**
@@ -107,7 +107,7 @@ import org.apache.commons.collections.pairs.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.3 $ $Date: 2003/12/01 22:34:54 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/01 22:49:00 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.6 2003/11/20 00:31:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.7 2003/12/01 22:48:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,6 +63,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.MapIterator;
+
 /**
  * Abstract class for testing the MapIterator interface.
  * <p>
@@ -72,7 +74,7 @@ import java.util.Set;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/11/20 00:31:42 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/01 22:48:58 $
  * 
  * @author Stephen Colebourne
  */

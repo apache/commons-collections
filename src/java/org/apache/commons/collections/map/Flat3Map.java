@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.3 2003/12/01 22:34:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.4 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,9 +68,9 @@ import java.util.Set;
 
 import org.apache.commons.collections.AMap;
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.MapIterator;
+import org.apache.commons.collections.ResettableIterator;
 import org.apache.commons.collections.iterators.EntrySetMapIterator;
-import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.iterators.ResettableIterator;
 
 /**
  * A <code>Map</code> implementation that stores data in simple fields until
@@ -100,7 +100,7 @@ import org.apache.commons.collections.iterators.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/01 22:34:53 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/01 22:48:59 $
  *
  * @author Stephen Colebourne
  */

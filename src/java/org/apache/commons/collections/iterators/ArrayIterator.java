@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.7 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.8 2003/12/01 22:49:00 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,6 +60,8 @@ package org.apache.commons.collections.iterators;
 import java.lang.reflect.Array;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.ResettableIterator;
+
 /** 
  * Implements an {@link java.util.Iterator Iterator} over any array.
  * <p>
@@ -72,7 +74,7 @@ import java.util.NoSuchElementException;
  * the iterator back to the start if required.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.7 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/01 22:49:00 $
  *
  * @author James Strachan
  * @author Mauricio S. Moura

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.8 2003/12/01 22:34:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.9 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,10 +57,6 @@
  */
 package org.apache.commons.collections;
 
-import java.util.Map;
-
-import org.apache.commons.collections.iterators.MapIterator;
-
 /**
  * Defines a map that allows bidirectional lookup between key and values.
  * <p>
@@ -74,11 +70,11 @@ import org.apache.commons.collections.iterators.MapIterator;
  * a key to be looked up from a value with equal performance.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/12/01 22:34:55 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/01 22:48:59 $
  *
  * @author Stephen Colebourne
  */
-public interface BidiMap extends Map {
+public interface BidiMap extends AMap {
     
     /**
      * Obtains a <code>MapIterator</code> over the map.

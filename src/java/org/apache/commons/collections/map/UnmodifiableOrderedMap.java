@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableOrderedMap.java,v 1.2 2003/12/01 22:34:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableOrderedMap.java,v 1.3 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,11 +61,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
+import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
-import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.iterators.OrderedMapIterator;
 import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
 import org.apache.commons.collections.iterators.UnmodifiableOrderedMapIterator;
 import org.apache.commons.collections.map.UnmodifiableMap.UnmodifiableEntrySet;
@@ -75,7 +75,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>OrderedMap</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/01 22:34:53 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/01 22:48:59 $
  * 
  * @author Stephen Colebourne
  */

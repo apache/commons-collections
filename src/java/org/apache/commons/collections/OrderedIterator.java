@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/OrderedIterator.java,v 1.1 2003/11/08 19:26:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedIterator.java,v 1.1 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.iterators;
+package org.apache.commons.collections;
 
 import java.util.Iterator;
 
@@ -65,7 +65,7 @@ import java.util.Iterator;
  * This iterator allows both forward and reverse iteration through the collection.
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/08 19:26:28 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/01 22:48:59 $
  *
  * @author Stephen Colebourne
  */

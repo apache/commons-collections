@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableMapIterator.java,v 1.5 2003/12/01 22:34:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableMapIterator.java,v 1.6 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,13 +64,14 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.bidimap.DualHashBidiMap;
 
 /**
  * Tests the UnmodifiableMapIterator.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/12/01 22:34:55 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/01 22:48:59 $
  * 
  * @author Stephen Colebourne
  */

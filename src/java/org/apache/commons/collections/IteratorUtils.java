@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.17 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.18 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,13 +80,8 @@ import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.LoopingIterator;
-import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.iterators.ObjectArrayListIterator;
-import org.apache.commons.collections.iterators.OrderedIterator;
-import org.apache.commons.collections.iterators.OrderedMapIterator;
-import org.apache.commons.collections.iterators.ResettableIterator;
-import org.apache.commons.collections.iterators.ResettableListIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -100,7 +95,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.17 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.18 $ $Date: 2003/12/01 22:48:59 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz

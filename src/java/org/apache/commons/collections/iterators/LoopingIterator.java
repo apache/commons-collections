@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/LoopingIterator.java,v 1.6 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/LoopingIterator.java,v 1.7 2003/12/01 22:49:00 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,6 +61,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.ResettableIterator;
+
 /**
  * An Iterator that restarts when it reaches the end.
  * <p>
@@ -72,7 +74,7 @@ import java.util.NoSuchElementException;
  * implementations will throw a ConcurrentModificationException. 
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/01 22:49:00 $
  *
  * @author <a href="mailto:joncrlsn@users.sf.net">Jonathan Carlson</a>
  * @author Stephen Colebourne

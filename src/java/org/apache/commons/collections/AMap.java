@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AMap.java,v 1.1 2003/12/01 22:34:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AMap.java,v 1.2 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,8 +59,6 @@ package org.apache.commons.collections;
 
 import java.util.Map;
 
-import org.apache.commons.collections.iterators.MapIterator;
-
 /**
  * Defines a map that can be iterated directly without needing to create an entry set.
  * <p>
@@ -77,7 +75,7 @@ import org.apache.commons.collections.iterators.MapIterator;
  * </pre>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:55 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/01 22:48:59 $
  *
  * @author Stephen Colebourne
  */

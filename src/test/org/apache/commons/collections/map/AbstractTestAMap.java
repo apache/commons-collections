@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/Attic/AbstractTestAMap.java,v 1.1 2003/12/01 22:34:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/Attic/AbstractTestAMap.java,v 1.2 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,13 +63,13 @@ import java.util.Map;
 
 import org.apache.commons.collections.AMap;
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.iterators.AbstractTestMapIterator;
-import org.apache.commons.collections.iterators.MapIterator;
 
 /**
  * Abstract test class for {@link AMap} methods and contracts.
  *
- * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:54 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/01 22:48:59 $
  * 
  * @author Stephen Colebourne
  */

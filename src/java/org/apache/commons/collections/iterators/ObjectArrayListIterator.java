@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.10 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.11 2003/12/01 22:49:00 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,6 +60,8 @@ package org.apache.commons.collections.iterators;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.ResettableListIterator;
+
 /**
  * Implements a {@link ListIterator} over an array of objects.
  * <p>
@@ -74,7 +76,7 @@ import java.util.NoSuchElementException;
  * @see java.util.ListIterator
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.11 $ $Date: 2003/12/01 22:49:00 $
  * 
  * @author Neil O'Toole
  * @author Stephen Colebourne

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/AbstractOrderedMapIteratorDecorator.java,v 1.1 2003/11/20 21:53:58 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/AbstractOrderedMapIteratorDecorator.java,v 1.2 2003/12/01 22:49:00 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,13 +57,15 @@
  */
 package org.apache.commons.collections.iterators;
 
+import org.apache.commons.collections.OrderedMapIterator;
+
 /**
  * Provides basic behaviour for decorating an ordered map iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated map iterator.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/20 21:53:58 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/01 22:49:00 $
  * 
  * @author Stephen Colebourne
  */

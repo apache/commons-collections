@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.8 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.9 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,10 +63,12 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.ResettableListIterator;
+
 /**
  * Tests the SingletonListIterator.
  *
- * @version $Revision: 1.8 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/01 22:48:59 $
  * 
  * @author Stephen Colebourne
  */

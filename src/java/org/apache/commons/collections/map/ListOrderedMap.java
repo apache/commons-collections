@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.4 2003/12/01 22:34:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.5 2003/12/01 22:48:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,11 +68,11 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
+import org.apache.commons.collections.OrderedMapIterator;
+import org.apache.commons.collections.ResettableIterator;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
-import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.iterators.OrderedMapIterator;
-import org.apache.commons.collections.iterators.ResettableIterator;
 import org.apache.commons.collections.pairs.AbstractMapEntry;
 
 /**
@@ -87,7 +87,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/01 22:34:53 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/01 22:48:59 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
