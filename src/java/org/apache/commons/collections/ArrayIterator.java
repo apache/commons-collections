@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.13 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.13 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.14 2002/06/20 02:51:18 bayard Exp $
+ * $Revision: 1.14 $
+ * $Date: 2002/06/20 02:51:18 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import java.util.NoSuchElementException;
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
   * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
-  * @version $Revision: 1.13 $
+  * @version $Revision: 1.14 $
   */
 public class ArrayIterator implements Iterator {
     
@@ -101,6 +101,67 @@ public class ArrayIterator implements Iterator {
      **/
     public ArrayIterator(Object array) {
         setArray( array );
+    }
+
+    /**
+     *  Construct an ArrayIterator that will iterate over the values in the
+     *  specified array.
+     *
+     *  @param array the array to iterate over.
+     *  @param start the index to start iterating at.
+     *
+     *  @exception IllegalArgumentException if <code>array</code> is not an
+     *  array.
+     *
+     *  @exception NullPointerException 
+     *  if <code>array</code> is <code>null</code>
+     **/
+    public ArrayIterator(Object array, int start) {
+        setArray( array );
+        checkBound(start, "start");
+        this.index = start;
+    }
+
+    /**
+     *  Construct an ArrayIterator that will iterate over the values in the
+     *  specified array.
+     *
+     *  @param array the array to iterate over.
+     *  @param start the index to start iterating at.
+     *  @param end the index to finish iterating at.
+     *
+     *  @exception IllegalArgumentException if <code>array</code> is not an
+     *  array.
+     *
+     *  @exception NullPointerException 
+     *  if <code>array</code> is <code>null</code>
+     **/
+    public ArrayIterator(Object array, int start, int end) {
+        setArray( array );
+        checkBound(start, "start");
+        checkBound(end, "end");
+        if(end <= start) {
+            throw new IllegalArgumentException(
+                "End index must be greater than start index. "
+            );
+        }
+        this.index = start;
+        this.length = end;
+    }
+
+    private void checkBound(int bound, String type ) {
+        if(bound > this.length) {
+            throw new ArrayIndexOutOfBoundsException(
+              "Attempt to make an ArrayIterator that "+type+
+              "s beyond the end of the array. "
+            );
+        }
+        if(bound < 0) {
+            throw new ArrayIndexOutOfBoundsException(
+              "Attempt to make an ArrayIterator that "+type+
+              "s before the start of the array. "
+            );
+        }
     }
 
     // Iterator interface

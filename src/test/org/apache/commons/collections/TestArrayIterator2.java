@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator2.java,v 1.3 2002/03/19 00:05:16 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/03/19 00:05:16 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator2.java,v 1.4 2002/06/20 02:51:18 bayard Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/06/20 02:51:18 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import java.util.NoSuchElementException;
  * 
  * @author Morgan Delagrange
  * @author James Strachan
- * @version $Id: TestArrayIterator2.java,v 1.3 2002/03/19 00:05:16 morgand Exp $
+ * @version $Id: TestArrayIterator2.java,v 1.4 2002/06/20 02:51:18 bayard Exp $
  */
 public class TestArrayIterator2 extends TestIterator {
     
@@ -143,6 +143,76 @@ public class TestArrayIterator2 extends TestIterator {
 
         assertEquals("the count should be right using setArray(Object)",
                      count2,testArray.length);
+    }
+
+    public void testIndexedArray() {
+        Iterator iter = new ArrayIterator(testArray,2);
+        int count = 0;
+        while (iter.hasNext()) {
+            ++count;
+            iter.next();
+        }
+
+        assertEquals("the count should be right using ArrayIterator(Object,2) ",
+                     count,testArray.length-2);
+
+        iter = new ArrayIterator(testArray,1,testArray.length-1);
+        count = 0;
+        while (iter.hasNext()) {
+            ++count;
+            iter.next();
+        }
+
+        assertEquals("the count should be right using ArrayIterator(Object,1,"+
+                     (testArray.length-1)+") ", count, testArray.length-2);
+
+        try {
+            iter = new ArrayIterator(testArray,-1);
+            fail("new ArrayIterator(Object,-1) should throw an "+
+                 "ArrayIndexOutOfBoundsException");
+        } catch(ArrayIndexOutOfBoundsException aioobe) {
+            // expected
+        }
+
+        try {
+            iter = new ArrayIterator(testArray,testArray.length+1);
+            fail("new ArrayIterator(Object,length+1) should throw an "+
+                 "ArrayIndexOutOfBoundsException");
+        } catch(ArrayIndexOutOfBoundsException aioobe) {
+            // expected
+        }
+
+        try {
+            iter = new ArrayIterator(testArray,0,-1);
+            fail("new ArrayIterator(Object,0,-1) should throw an "+
+                 "ArrayIndexOutOfBoundsException");
+        } catch(ArrayIndexOutOfBoundsException aioobe) {
+            // expected
+        }
+
+        try {
+            iter = new ArrayIterator(testArray,0,testArray.length+1);
+            fail("new ArrayIterator(Object,0,length+1) should throw an "+
+                 "ArrayIndexOutOfBoundsException");
+        } catch(ArrayIndexOutOfBoundsException aioobe) {
+            // expected
+        }
+
+        try {
+            iter = new ArrayIterator(testArray,1,1);
+            fail("new ArrayIterator(Object,1,1) should throw an "+
+                 "IllegalArgumentException");
+        } catch(IllegalArgumentException iae) {
+            // expected
+        }
+
+        try {
+            iter = new ArrayIterator(testArray,testArray.length-1,testArray.length-2);
+            fail("new ArrayIterator(Object,length-2,length-1) should throw an "+
+                 "IllegalArgumentException");
+        } catch(IllegalArgumentException iae) {
+            // expected
+        }
     }
 }
 
