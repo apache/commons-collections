@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestAll.java,v 1.2 2003/01/10 00:21:08 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestAll.java,v 1.3 2003/04/13 17:37:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,16 +55,17 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections.comparators;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 /**
  * Entry point for all Comparator Collections tests.
+ * 
  * @author Stephen Colebourne
- * @version $Revision: 1.2 $ $Date: 2003/01/10 00:21:08 $
+ * @version $Revision: 1.3 $ $Date: 2003/04/13 17:37:26 $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -76,6 +77,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestBooleanComparator.suite());
         suite.addTest(TestComparableComparator.suite());
         suite.addTest(TestComparatorChain.suite());
+        suite.addTest(TestFixedOrderComparator.suite());
         suite.addTest(TestNullComparator.suite());
         suite.addTest(TestReverseComparator.suite());
         return suite;
@@ -85,4 +87,5 @@ public class TestAll extends TestCase {
         String[] testCaseName = { TestAll.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
+    
 }
