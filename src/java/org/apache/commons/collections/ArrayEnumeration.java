@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayEnumeration.java,v 1.2 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayEnumeration.java,v 1.3 2002/03/18 23:49:20 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/03/18 23:49:20 $
  *
  * ====================================================================
  *
@@ -66,8 +66,13 @@ import java.util.NoSuchElementException;
 
 /**
  * Enumeration wrapper for array.
- *
+ * 
  * @author <a href="mailto:donaldp@apache.org">Peter Donald</a>
+ * @deprecated This class has significant overlap with ArrayIterator,
+ *             and Collections focuses mainly on Java2-style
+ *             collections.  If you need to enumerate an array,
+ *             create an {@link ArrayIterator} and wrap it with an
+ *             {@link IteratorEnumeration} instead.
  */
 public final class ArrayEnumeration
     implements Enumeration

@@ -79,6 +79,14 @@ useful Comparator classes.  Descriptions of the new collections and comparators 
 
 These classes have changed since <i>Collections 1.0</i>:
 
+<p><u>ArrayEnumeration</u></p>
+
+<p>ArrayEnumeration has been <b>deprecated</b>.  This class has significant overlap with 
+ArrayIterator, and Collections focuses mainly on Java2-style
+collections.  If you need to enumerate an array,
+create an ArrayIterator and wrap it with an
+IteratorEnumeration instead.</p>
+
 <p><u>ArrayIterator</u></p>
 
 <p><i>Bugs fixed:</i></p>
