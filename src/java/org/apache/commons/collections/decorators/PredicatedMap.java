@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedMap.java,v 1.5 2003/09/05 03:35:07 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedMap.java,v 1.6 2003/09/07 15:09:34 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,10 +69,10 @@ import org.apache.commons.collections.Predicate;
  * to validate that additions match a specified predicate.
  * <p>
  * If an object cannot be added to the map, an IllegalArgumentException
- * is thrown.</p>
+ * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/09/05 03:35:07 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/07 15:09:34 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -88,7 +88,7 @@ public class PredicatedMap extends AbstractMapDecorator {
      * Factory method to create a predicated (validating) map.
      * <p>
      * If there are any elements already in the list being decorated, they
-     * are validated.</p>
+     * are validated.
      * 
      * @param map  the map to decorate, must not be null
      * @param keyPredicate  the predicate to validate the keys, null means no check

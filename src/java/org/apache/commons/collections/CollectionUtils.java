@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.37 2003/09/07 08:45:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.38 2003/09/07 15:09:34 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.37 $ $Date: 2003/09/07 08:45:16 $
+ * @version $Revision: 1.38 $ $Date: 2003/09/07 15:09:34 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -289,7 +289,7 @@ public class CollectionUtils {
      *    <li><code>a.size()</code> and <code>b.size()</code> represent the 
      *    total cardinality of <i>a</i> and <i>b</i>, resp. </li>
      *    <li><code>a.size() < Integer.MAXVALUE</code></li>
-     * </ul></p>
+     * </ul>
      *
      * @see #isSubCollection
      * @see Collection#containsAll

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableBoundedCollection.java,v 1.3 2003/09/05 03:35:07 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableBoundedCollection.java,v 1.4 2003/09/07 15:09:34 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.BoundedCollection;
  * examining the package scope variables.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/05 03:35:07 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/07 15:09:34 $
  * 
  * @author Stephen Colebourne
  */
@@ -91,7 +91,7 @@ public class UnmodifiableBoundedCollection extends UnmodifiableCollection implem
      * Factory method to create an unmodifiable bounded collection.
      * <p>
      * This method is capable of drilling down through up to 1000 other decorators 
-     * to find a suitable BoundedCollection.</p>
+     * to find a suitable BoundedCollection.
      * 
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @throws IllegalArgumentException if bag is null

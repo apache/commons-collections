@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TransformedSortedMap.java,v 1.3 2003/09/05 03:35:07 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TransformedSortedMap.java,v 1.4 2003/09/07 15:09:34 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.Transformer;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/05 03:35:07 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/07 15:09:34 $
  * 
  * @author Stephen Colebourne
  */
@@ -82,7 +82,7 @@ public class TransformedSortedMap extends TransformedMap implements SortedMap {
      * Factory method to create a transforming sorted map.
      * <p>
      * If there are any elements already in the map being decorated, they
-     * are NOT transformed.</p>
+     * are NOT transformed.
      * 
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the predicate to validate the keys, null means no transformation
