@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.20 2003/09/09 22:28:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.21 2003/11/23 14:40:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,9 +88,9 @@ import java.util.Set;
  * required, use {@link Collections#synchronizedMap(Map)} as it is documented,
  * or use explicit synchronization controls.
  *
- * @see org.apache.commons.collections.decorators.OrderedSet
+ * @see org.apache.commons.collections.set.ListOrderedSet
  * @since Commons Collections 2.0
- * @version $Revision: 1.20 $ $Date: 2003/09/09 22:28:35 $
+ * @version $Revision: 1.21 $ $Date: 2003/11/23 14:40:41 $
  * 
  * @author Michael A. Smith
  * @author Daniel Rall
