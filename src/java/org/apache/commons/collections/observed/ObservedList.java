@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedList.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedList.java,v 1.3 2003/09/07 00:51:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,6 +58,7 @@
 package org.apache.commons.collections.observed;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -71,14 +72,17 @@ import org.apache.commons.collections.decorators.AbstractListIteratorDecorator;
  * The handler manages the event, notifying listeners and optionally vetoing changes.
  * The default handler is {@link StandardModificationHandler}.
  * See this class for details of configuration available.
+ * <p>
+ * All indices on events returned by <code>subList</code> are relative to the
+ * base <code>List</code>.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/07 00:51:31 $
  * 
  * @author Stephen Colebourne
  */
 public class ObservedList extends ObservedCollection implements List {
-    
+
     // Factories
     //-----------------------------------------------------------------------
     /**
@@ -155,6 +159,19 @@ public class ObservedList extends ObservedCollection implements List {
     }
     
     /**
+     * Constructor used by subclass views, such as subList.
+     * 
+     * @param handler  the handler to use, must not be null
+     * @param list  the subList to decorate, must not be null
+     * @throws IllegalArgumentException if the list is null
+     */
+    protected ObservedList(
+            final ModificationHandler handler,
+            final List list) {
+        super(handler, list);
+    }
+    
+    /**
      * Typecast the collection to a List.
      * 
      * @return the wrapped collection as a List
@@ -220,9 +237,19 @@ public class ObservedList extends ObservedCollection implements List {
         return new ObservedListIterator(getList().listIterator(index));
     }
 
+    /**
+     * Returns a subList view on the original base <code>List</code>.
+     * <p>
+     * Changes to the subList affect the underlying List. Change events will
+     * return change indices relative to the underlying List, not the subList.
+     * 
+     * @param fromIndex  inclusive start index of the range
+     * @param toIndex  exclusive end index of the range
+     * @return the subList view
+     */
     public List subList(int fromIndex, int toIndex) {
-        // TODO: This list needs to be a special impl, as the index is offset
-        throw new UnsupportedOperationException();
+        List subList = getList().subList(fromIndex, toIndex);
+        return new ObservedList(subList, getHandler().createSubListHandler(fromIndex, toIndex));
     }
 
     // ListIterator

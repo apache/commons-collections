@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.3 2003/09/07 00:51:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,6 +62,7 @@ import java.util.Collection;
 import org.apache.commons.collections.observed.ModificationEventType;
 import org.apache.commons.collections.observed.ModificationHandler;
 import org.apache.commons.collections.observed.ModificationHandlerFactory;
+import org.apache.commons.collections.observed.ObservedCollection;
 
 /**
  * The standard implementation of a <code>ModificationHandler</code> that
@@ -76,7 +77,7 @@ import org.apache.commons.collections.observed.ModificationHandlerFactory;
  * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/07 00:51:31 $
  * 
  * @author Stephen Colebourne
  */
@@ -428,11 +429,16 @@ public class StandardModificationHandler extends ModificationHandler {
      * @param object  the object that will be added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
      * @param previous  the previous value that will be removed/replaced, must exist in coll
+     * @param range  the range collection, null if no range
+     * @param rangeOffset  the offset of the range, -1 if unknown
      * @return true to call the decorated collection
      */
-    protected boolean preEvent(int type, int index, Object object, int repeat, Object previous) {
+    protected boolean preEvent(
+            int type, int index, Object object,
+            int repeat, Object previous, ObservedCollection range, int rangeOffset) {
+
         preSize = getCollection().size();
-        return firePreEvent(type, index, object, repeat, previous);
+        return firePreEvent(type, index, object, repeat, previous, range, rangeOffset);
     }
 
     /**
@@ -443,9 +449,14 @@ public class StandardModificationHandler extends ModificationHandler {
      * @param object  the object that will be added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
      * @param previous  the previous value that will be removed/replaced, must exist in coll
+     * @param range  the range collection, null if no range
+     * @param rangeOffset  the offset of the range, -1 if unknown
      * @return true to call the decorated collection
      */
-    protected boolean firePreEvent(int type, int index, Object object, int repeat, Object previous) {
+    protected boolean firePreEvent(
+            int type, int index, Object object, int repeat,
+            Object previous, ObservedCollection range, int rangeOffset) {
+
         if ((preMask & type) > 0) {
             StandardPreModificationEvent event = null;
             synchronized (this) {
@@ -454,7 +465,8 @@ public class StandardModificationHandler extends ModificationHandler {
                     if ((holder.mask & type) > 0) {
                         if (event == null) {
                             event = new StandardPreModificationEvent(
-                                getCollection(), this, type, preSize, index, object, repeat, previous);
+                                getCollection(), this, type, preSize, index, object,
+                                repeat, previous, range, rangeOffset);
                         }
                         holder.listener.modificationOccurring(event);
                     }
@@ -469,16 +481,21 @@ public class StandardModificationHandler extends ModificationHandler {
     /**
      * Handles the post event.
      * 
-     * @param success  true if the method succeeded in changing the collection
+     * @param modified  true if the method succeeded in changing the collection
      * @param type  the event type to send
      * @param index  the index where the change starts, the method param or derived
      * @param object  the object that will be added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
      * @param previous  the previous value that will be removed/replaced, must exist in coll
+     * @param range  the range collection, null if no range
+     * @param rangeOffset  the offset of the range, -1 if unknown
      */
-    protected void postEvent(boolean success, int type, int index, Object object, int repeat, Object previous) {
-        if (success) {
-            firePostEvent(type, index, object, repeat, previous);
+    protected void postEvent(
+            boolean modified, int type, int index, Object object,
+            int repeat, Object previous, ObservedCollection range, int rangeOffset) {
+
+        if (modified) {
+            firePostEvent(type, index, object, repeat, previous, range, rangeOffset);
         }
     }
     
@@ -490,8 +507,13 @@ public class StandardModificationHandler extends ModificationHandler {
      * @param object  the object that will be added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
      * @param previous  the previous value that will be removed/replaced, must exist in coll
+     * @param range  the range collection, null if no range
+     * @param rangeOffset  the offset of the range, -1 if unknown
      */
-    protected void firePostEvent(int type, int index, Object object, int repeat, Object previous) {
+    protected void firePostEvent(
+            int type, int index, Object object, int repeat,
+            Object previous, ObservedCollection range, int rangeOffset) {
+
         if ((postMask & type) > 0) {
             StandardPostModificationEvent event = null;
             synchronized (this) {
@@ -500,7 +522,8 @@ public class StandardModificationHandler extends ModificationHandler {
                     if ((holder.mask & type) > 0) {
                         if (event == null) {
                             event = new StandardPostModificationEvent(
-                                getCollection(), this, type, preSize, index, object, repeat, previous);
+                                getCollection(), this, type, preSize, index,
+                                object, repeat, previous, range, rangeOffset);
                         }
                         holder.listener.modificationOccurred(event);
                     }
@@ -516,8 +539,8 @@ public class StandardModificationHandler extends ModificationHandler {
      * <p>
      * Override to only send event if something actually cleared.
      */
-    public void postClear() {
-        postEvent(preSize > 0, ModificationEventType.CLEAR, -1, null, 1, null);
+    protected void postClear() {
+        postEvent(preSize > 0, ModificationEventType.CLEAR, -1, null, 1, null, null, -1);
     }
 
     // Factory

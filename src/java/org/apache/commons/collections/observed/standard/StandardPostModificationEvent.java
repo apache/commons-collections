@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationEvent.java,v 1.1 2003/09/06 18:59:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationEvent.java,v 1.2 2003/09/07 00:51:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,6 +60,7 @@ package org.apache.commons.collections.observed.standard;
 import java.util.Collection;
 
 import org.apache.commons.collections.observed.ModificationHandler;
+import org.apache.commons.collections.observed.ObservedCollection;
 
 /**
  * Event class that encapsulates all the event information for a
@@ -71,7 +72,7 @@ import org.apache.commons.collections.observed.ModificationHandler;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/06 18:59:09 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/07 00:51:31 $
  * 
  * @author Stephen Colebourne
  */
@@ -93,6 +94,8 @@ public class StandardPostModificationEvent extends StandardModificationEvent {
      * @param object  the value that changed
      * @param repeat  the number of repeats
      * @param previous  the previous value being removed/replaced
+     * @param range  the range collection, null if no range
+     * @param rangeOffset  the offset of the range, -1 if unknown
      */
     public StandardPostModificationEvent(
         final Collection collection,
@@ -102,9 +105,11 @@ public class StandardPostModificationEvent extends StandardModificationEvent {
         final int index,
         final Object object,
         final int repeat,
-        final Object previous) {
+        final Object previous,
+        final ObservedCollection range,
+        final int rangeOffset) {
 
-        super(collection, handler, type, preSize, index, object, repeat, previous);
+        super(collection, handler, type, preSize, index, object, repeat, previous, range, rangeOffset);
         postSize = collection.size();
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.3 2003/09/06 18:59:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.4 2003/09/07 00:51:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,6 +67,7 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.observed.ModificationEvent;
 import org.apache.commons.collections.observed.ModificationEventType;
 import org.apache.commons.collections.observed.ModificationHandler;
+import org.apache.commons.collections.observed.ObservedCollection;
 
 /**
  * Event class that encapsulates the event information for a
@@ -79,7 +80,7 @@ import org.apache.commons.collections.observed.ModificationHandler;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/06 18:59:09 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/07 00:51:31 $
  * 
  * @author Stephen Colebourne
  */
@@ -95,6 +96,10 @@ public class StandardModificationEvent extends ModificationEvent {
     protected final int repeat;
     /** The result of the method call */
     protected final Object previous;
+    /** The range that the event came from, null if none */
+    protected final ObservedCollection range;
+    /** The offset of the range that the event came from, -1 if none */
+    protected final int rangeOffset;
 
     // Constructor
     //-----------------------------------------------------------------------
@@ -109,6 +114,8 @@ public class StandardModificationEvent extends ModificationEvent {
      * @param object  the value that changed
      * @param repeat  the number of repeats
      * @param previous  the previous value being removed/replaced
+     * @param range  the range collection, null if no range
+     * @param rangeOffset  the offset of the range, -1 if unknown
      */
     public StandardModificationEvent(
         final Collection collection,
@@ -118,7 +125,9 @@ public class StandardModificationEvent extends ModificationEvent {
         final int index,
         final Object object,
         final int repeat,
-        final Object previous) {
+        final Object previous,
+        final ObservedCollection range,
+        final int rangeOffset) {
 
         super(collection, handler, type);
         this.preSize = preSize;
@@ -126,6 +135,8 @@ public class StandardModificationEvent extends ModificationEvent {
         this.object = object;
         this.repeat = repeat;
         this.previous = previous;
+        this.range = range;
+        this.rangeOffset = rangeOffset;
     }
 
     // Change info
@@ -210,6 +221,35 @@ public class StandardModificationEvent extends ModificationEvent {
      */
     public int getPreSize() {
         return preSize;
+    }
+
+    // Range info
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the range, <code>null</code> if none.
+     * 
+     * @return the range
+     */
+    public ObservedCollection getRange() {
+        return range;
+    }
+
+    /**
+     * Checks whether the event originated from a range.
+     * 
+     * @return the range
+     */
+    public boolean isRange() {
+        return (range != null);
+    }
+
+    /**
+     * Gets the range offset, <code>-1</code> if no range or unknown offset.
+     * 
+     * @return the range offset
+     */
+    public int getRangeOffset() {
+        return rangeOffset;
     }
 
     // Event type
