@@ -53,7 +53,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * instances. The implementations are provided in the iterators subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.24 $ $Date: 2004/04/09 22:53:27 $
+ * @version $Revision: 1.25 $ $Date: 2004/05/21 22:43:10 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -63,23 +63,27 @@ public class IteratorUtils {
     // public classes allow invalid states
 
     /**
-     * An iterator over no elements
+     * An iterator over no elements.
+     * <p>
+     * WARNING: This constant is binary incompatible with Commons Collections 2.1.
      */    
     public static final ResettableIterator EMPTY_ITERATOR = new EmptyIterator();
     /**
-     * A list iterator over no elements
+     * A list iterator over no elements.
+     * <p>
+     * WARNING: This constant is binary incompatible with Commons Collections 2.1.
      */    
     public static final ResettableListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
     /**
-     * An ordered iterator over no elements
+     * An ordered iterator over no elements.
      */    
     public static final OrderedIterator EMPTY_ORDERED_ITERATOR = new EmptyOrderedIterator();
     /**
-     * A map iterator over no elements
+     * A map iterator over no elements.
      */    
     public static final MapIterator EMPTY_MAP_ITERATOR = new EmptyMapIterator();
     /**
-     * An ordered map iterator over no elements
+     * An ordered map iterator over no elements.
      */    
     public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = new EmptyOrderedMapIterator();
 
@@ -96,6 +100,8 @@ public class IteratorUtils {
      * <p>
      * This iterator is a valid iterator object that will iterate over
      * nothing.
+     * <p>
+     * WARNING: This method is binary incompatible with Commons Collections 2.1.
      *
      * @return  an iterator over nothing
      */
@@ -108,6 +114,8 @@ public class IteratorUtils {
      * <p>
      * This iterator is a valid list iterator object that will iterate 
      * over nothing.
+     * <p>
+     * WARNING: This method is binary incompatible with Commons Collections 2.1.
      *
      * @return  a list iterator over nothing
      */
@@ -158,6 +166,9 @@ public class IteratorUtils {
      * <p>
      * This iterator is a valid iterator object that will iterate over
      * the specified object.
+     * <p>
+     * WARNING: This method is binary incompatible with Commons Collections 2.1.
+     * Use <code>new SingletonIterator(object)</code> for compatability.
      *
      * @param object  the single object over which to iterate
      * @return  a singleton iterator over the object
@@ -183,6 +194,9 @@ public class IteratorUtils {
     //-----------------------------------------------------------------------
     /**
      * Gets an iterator over an object array.
+     * <p>
+     * WARNING: This method is binary incompatible with Commons Collections 2.1.
+     * Use <code>new ArrayIterator(array)</code> for compatability.
      *
      * @param array  the array over which to iterate
      * @return  an iterator over the array
@@ -209,6 +223,9 @@ public class IteratorUtils {
 
     /**
      * Gets an iterator over the end part of an object array.
+     * <p>
+     * WARNING: This method is binary incompatible with Commons Collections 2.1.
+     * Use <code>new ArrayIterator(array,start)</code> for compatability.
      *
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
@@ -241,6 +258,9 @@ public class IteratorUtils {
 
     /**
      * Gets an iterator over part of an object array.
+     * <p>
+     * WARNING: This method is binary incompatible with Commons Collections 2.1.
+     * Use <code>new ArrayIterator(array,start,end)</code> for compatability.
      *
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
