@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestAll.java,v 1.1 2002/10/12 22:35:10 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2002/10/12 22:35:10 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestAll.java,v 1.2 2003/01/10 00:21:08 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,7 +64,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Comparator Collections tests.
  * @author Stephen Colebourne
- * @version $Id: TestAll.java,v 1.1 2002/10/12 22:35:10 scolebourne Exp $
+ * @version $Revision: 1.2 $ $Date: 2003/01/10 00:21:08 $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -76,6 +73,7 @@ public class TestAll extends TestCase {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
+        suite.addTest(TestBooleanComparator.suite());
         suite.addTest(TestComparableComparator.suite());
         suite.addTest(TestComparatorChain.suite());
         suite.addTest(TestNullComparator.suite());
