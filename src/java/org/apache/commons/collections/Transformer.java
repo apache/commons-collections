@@ -16,13 +16,20 @@
 package org.apache.commons.collections;
 
 /**
- * Defines a functor interface implemented by classes that
- * transform one object into another. The original object is left unchanged.
+ * Defines a functor interface implemented by classes that transform one
+ * object into another.
+ * <p>
+ * A <code>Transformer</code> converts the input object to the output object.
+ * The input object should be left unchanged.
  * Transformers are typically used for type conversions, or extracting data
  * from an object.
+ * <p>
+ * Standard implementations of common transformers are provided by
+ * {@link TransformerUtils}. These include method invokation, returning a constant,
+ * cloning and returning the string value.
  * 
  * @since Commons Collections 1.0
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.10 $ $Date: 2004/04/14 20:08:57 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
@@ -32,12 +39,12 @@ public interface Transformer {
     /**
      * Transforms the input object (leaving it unchanged) into some output object.
      *
-     * @param input  the object to be transformed
+     * @param input  the object to be transformed, should be left unchanged
      * @return a transformed object
      * @throws ClassCastException (runtime) if the input is the wrong class
      * @throws IllegalArgumentException (runtime) if the input is invalid
      * @throws FunctorException (runtime) if the transform cannot be completed
      */
     public Object transform(Object input);
-    
+
 }

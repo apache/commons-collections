@@ -18,18 +18,21 @@ package org.apache.commons.collections;
 /**
  * Defines a functor interface implemented by classes that do something.
  * <p>
- * A Closure represents a block of code which is executed from inside some
- * block, function or iteration. It operates an input object.
+ * A <code>Closure</code> represents a block of code which is executed from
+ * inside some block, function or iteration. It operates an input object.
+ * <p>
+ * Standard implementations of common closures are provided by
+ * {@link ClosureUtils}. These include method invokation and for/while loops.
  *  
  * @since Commons Collections 1.0
- * @version $Revision: 1.10 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.11 $ $Date: 2004/04/14 20:08:56 $
  *
  * @author James Strachan
  * @author Nicola Ken Barozzi
  * @author Stephen Colebourne
  */
 public interface Closure {
-    
+
     /**
      * Performs an action on the specified input object.
      *
@@ -39,5 +42,5 @@ public interface Closure {
      * @throws FunctorException (runtime) if any other error occurs
      */
     public void execute(Object input);
-    
+
 }

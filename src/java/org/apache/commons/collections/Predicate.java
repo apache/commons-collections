@@ -16,27 +16,34 @@
 package org.apache.commons.collections;
 
 /**
- * Defines a functor interface implemented by classes that
- * perform a predicate test on an object. Predicate instances can be used
- * to implement queries or to do filtering. 
+ * Defines a functor interface implemented by classes that perform a predicate
+ * test on an object.
+ * <p>
+ * A <code>Predicate</code> is the object equivalent of an <code>if</code> statement.
+ * It uses the input object to return a true or false value, and is often used in
+ * validation or filtering.
+ * <p>
+ * Standard implementations of common predicates are provided by
+ * {@link PredicateUtils}. These include true, false, instanceof, equals, and,
+ * or, not, method invokation and null testing.
  * 
  * @since Commons Collections 1.0
- * @version $Revision: 1.10 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.11 $ $Date: 2004/04/14 20:08:57 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
  */
 public interface Predicate {
-    
+
     /**
      * Use the specified parameter to perform a test that returns true or false.
      *
-     * @param object  the object to evaluate
+     * @param object  the object to evaluate, should not be changed
      * @return true or false
      * @throws ClassCastException (runtime) if the input is the wrong class
      * @throws IllegalArgumentException (runtime) if the input is invalid
      * @throws FunctorException (runtime) if the predicate encounters a problem
      */
     public boolean evaluate(Object object);
-    
+
 }
