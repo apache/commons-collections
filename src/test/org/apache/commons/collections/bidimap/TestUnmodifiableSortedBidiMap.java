@@ -28,7 +28,7 @@ import org.apache.commons.collections.SortedBidiMap;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.4 $ $Date: 2004/04/09 15:15:18 $
  * 
  * @author Stephen Colebourne
  */
@@ -46,6 +46,7 @@ public class TestUnmodifiableSortedBidiMap extends AbstractTestSortedBidiMap {
         super(testName);
     }
 
+    //-----------------------------------------------------------------------
     public BidiMap makeEmptyBidiMap() {
         return UnmodifiableSortedBidiMap.decorate(new DualTreeBidiMap());
     }
@@ -66,13 +67,16 @@ public class TestUnmodifiableSortedBidiMap extends AbstractTestSortedBidiMap {
         return new TreeMap();
     }
 
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
+    public boolean isSubMapViewsSerializable() {
+        // TreeMap sub map views have a bug in deserialization.
+        return false;
+    }
     public String[] ignoredTests() {
+        // Override to prevent infinite recursion of tests.
         return new String[] {"TestUnmodifiableSortedBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }
-    
+
+    //-----------------------------------------------------------------------
     public boolean isAllowNullKey() {
         return false;
     }

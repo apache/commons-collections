@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.7 $ $Date: 2004/04/09 15:04:29 $
+ * @version $Revision: 1.8 $ $Date: 2004/04/09 15:17:11 $
  * 
  * @author Stephen Colebourne
  */
@@ -160,6 +160,10 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
         }
         public boolean supportsFullCollections() {
             return false;
+        }
+        public void testSimpleSerialization() throws Exception {
+            if (main.isSubMapViewsSerializable() == false) return;
+            super.testSimpleSerialization();
         }
         public void testSerializeDeserializeThenCompare() throws Exception {
             if (main.isSubMapViewsSerializable() == false) return;

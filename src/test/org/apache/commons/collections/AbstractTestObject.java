@@ -37,7 +37,7 @@ import java.io.Serializable;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  *
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/09 15:17:11 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -144,7 +144,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    public void testSimpleSerialization() throws IOException, ClassNotFoundException {
+    public void testSimpleSerialization() throws Exception {
         Object o = makeObject();
         if (o instanceof Serializable) {
             byte[] objekt = writeExternalFormToBytes((Serializable) o);
