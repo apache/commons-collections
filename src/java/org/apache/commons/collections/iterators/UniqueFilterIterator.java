@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UniqueFilterIterator.java,v 1.3 2003/01/15 21:49:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UniqueFilterIterator.java,v 1.4 2003/05/16 14:20:01 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,9 +57,9 @@
  */
 package org.apache.commons.collections.iterators;
 
-import java.util.HashSet;
 import java.util.Iterator;
-import org.apache.commons.collections.Predicate;
+
+import org.apache.commons.collections.PredicateUtils;
 
 /** 
  * A FilterIterator which only returns "unique" Objects.  Internally,
@@ -67,7 +67,7 @@ import org.apache.commons.collections.Predicate;
  * and duplicate Objects are skipped.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.3 $ $Date: 2003/01/15 21:49:14 $
+ * @version $Revision: 1.4 $ $Date: 2003/05/16 14:20:01 $
  * 
  * @author Morgan Delagrange
  */
@@ -81,18 +81,7 @@ public class UniqueFilterIterator extends FilterIterator {
      *  @param iterator  the iterator to use
      */
     public UniqueFilterIterator( Iterator iterator ) {
-        super( iterator, new UniquePredicate() );
-    }
-
-    /**
-     * Private Predicate needed to implement the unique behaviour.
-     */
-    private static class UniquePredicate implements Predicate {
-        HashSet set = new HashSet();
-
-        public boolean evaluate(Object object) {
-            return set.add(object);       
-        }
+        super(iterator, PredicateUtils.uniquePredicate());
     }
 
 }

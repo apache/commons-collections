@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedCollection.java,v 1.3 2003/05/09 16:41:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedCollection.java,v 1.4 2003/05/16 14:19:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,6 +60,7 @@ package org.apache.commons.collections.decorators;
 import java.util.Collection;
 
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.PredicateUtils;
 
 /**
  * <code>TypedCollection</code> decorates another <code>Collection</code>
@@ -70,7 +71,7 @@ import org.apache.commons.collections.Predicate;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/05/09 16:41:57 $
+ * @version $Revision: 1.4 $ $Date: 2003/05/16 14:19:31 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -105,36 +106,7 @@ public class TypedCollection {
      * @throws IllegalArgumentException if type is null
      */
     protected static Predicate getPredicate(Class type) {
-        return new InstanceofPredicate(type);
-    }
-
-    /**
-     * <code>Predicate</code> implementation that checks the type of an object.
-     * This class may eventually be replaced by 
-     * <code>org.apache.commons.lang.functor.PredicateUtils.instanceofPredicate()</code>.
-     */
-    static class InstanceofPredicate implements Predicate {
-        /** The type to check for */
-        private final Class type;
-
-        /**
-         * Constructor
-         */
-        public InstanceofPredicate(Class type) {
-            if (type == null) {
-                throw new IllegalArgumentException("Type must not be null");
-            }
-            this.type = type;
-        }
-
-        /**
-         * Return true if the object is an instanceof the type of the predicate.
-         * @param object an <code>Object</code>
-         * @return <code>true</code> if the object is an instanceof the type of the predicate
-         */
-        public boolean evaluate(Object object) {
-            return type.isInstance(object);
-        }
+        return PredicateUtils.instanceofPredicate(type);
     }
 
 }
