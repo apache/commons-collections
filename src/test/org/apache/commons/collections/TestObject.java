@@ -1,7 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.1.2.1 2002/02/26 00:48:14 morgand Exp $
- * $Revision: 1.1.2.1 $
- * $Date: 2002/02/26 00:48:14 $
+<<<<<<< TestObject.java
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.1.2.2 2002/02/26 20:18:53 morgand Exp $
+ * $Revision: 1.1.2.2 $
+ * $Date: 2002/02/26 20:18:53 $
+=======
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.1.2.2 2002/02/26 20:18:53 morgand Exp $
+ * $Revision: 1.1.2.2 $
+ * $Date: 2002/02/26 20:18:53 $
+>>>>>>> 1.8
  *
  * ====================================================================
  *
@@ -90,7 +96,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.1.2.1 2002/02/26 00:48:14 morgand Exp $
+ * @version $Id: TestObject.java,v 1.1.2.2 2002/02/26 20:18:53 morgand Exp $
  */
 public abstract class TestObject extends TestCase {
     public TestObject(String testName) {
@@ -234,5 +240,29 @@ public abstract class TestObject extends TestCase {
             byte[] objekt = writeExternalFormToBytes((Serializable) o);
             Object p = readExternalFormFromBytes(objekt);
         }
+    }
+
+    public String getCanonicalEmptyCollectionName(Object object) {
+        StringBuffer retval = new StringBuffer();
+        retval.append("data/test/");
+        String colName = object.getClass().getName();
+        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
+        retval.append(colName);
+        retval.append(".emptyCollection.version");
+        retval.append(getCompatibilityVersion());
+        retval.append(".obj");
+        return retval.toString();
+    }
+
+    public String getCanonicalFullCollectionName(Object object) {
+        StringBuffer retval = new StringBuffer();
+        retval.append("data/test/");
+        String colName = object.getClass().getName();
+        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
+        retval.append(colName);
+        retval.append(".fullCollection.version");
+        retval.append(getCompatibilityVersion());
+        retval.append(".obj");
+        return retval.toString();
     }
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.5 2001/07/14 23:33:27 craigmcc Exp $
- * $Revision: 1.5 $
- * $Date: 2001/07/14 23:33:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.5.2.1 2002/02/26 20:23:10 morgand Exp $
+ * $Revision: 1.5.2.1 $
+ * $Date: 2002/02/26 20:23:10 $
  *
  * ====================================================================
  *
@@ -62,6 +62,8 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Collection;
 import java.util.Arrays;
@@ -80,7 +82,7 @@ import java.util.ListIterator;
  * test case (method) your {@link List} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestList.java,v 1.5 2001/07/14 23:33:27 craigmcc Exp $
+ * @version $Id: TestList.java,v 1.5.2.1 2002/02/26 20:23:10 morgand Exp $
  */
 public abstract class TestList extends TestCollection {
     public TestList(String testName) {
@@ -90,14 +92,30 @@ public abstract class TestList extends TestCollection {
     /**
      * Return a new, empty {@link List} to used for testing.
      */
-    public abstract List makeList();
+    public abstract List makeEmptyList();
+
+    public List makeFullList() {
+        // only works if list supports optional "add(Object)" 
+        // and "add(int,Object)" operations
+        List list = makeEmptyList();
+        list.add("1");
+        // must be able to add to the end this way
+        list.add(list.size(),"4");
+        // must support duplicates
+        list.add("1");
+        // must support insertions
+        list.add(1,"3");
+
+        // resultant list: 1, 3, 4, 1
+        return list;
+    }
 
     public Collection makeCollection() {
-        return makeList();
+        return makeEmptyList();
     }
 
     public void testListAddByIndexBoundsChecking() {
-        List list = makeList();
+        List list = makeEmptyList();
 
         try {
             list.add(Integer.MIN_VALUE,"element");
@@ -153,7 +171,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListAddByIndexBoundsChecking2() {
-        List list = makeList();
+        List list = makeEmptyList();
         boolean added = tryToAdd(list,"element");
 
         try {
@@ -184,7 +202,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListAddByIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         assertEquals(0,list.size());
         if(tryToAdd(list,0,"element2")) {
             assertEquals(1,list.size());
@@ -201,7 +219,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListAdd() {
-        List list = makeList();
+        List list = makeEmptyList();
         if(tryToAdd(list,"1")) {
             assertTrue(list.contains("1"));
             if(tryToAdd(list,"2")) {
@@ -223,7 +241,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListEqualsSelf() {
-        List list = makeList();
+        List list = makeEmptyList();
         assertTrue(list.equals(list));
         tryToAdd(list,"elt");
         assertTrue(list.equals(list));
@@ -232,7 +250,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListEqualsArrayList() {
-        List list1 = makeList();
+        List list1 = makeEmptyList();
         List list2 = new ArrayList();
         assertTrue(list1.equals(list2));
         assertEquals(list1.hashCode(),list2.hashCode());
@@ -252,8 +270,8 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListEquals() {
-        List list1 = makeList();
-        List list2 = makeList();
+        List list1 = makeEmptyList();
+        List list2 = makeEmptyList();
         assertTrue(list1.equals(list2));
         if(tryToAdd(list1,"a") && tryToAdd(list2,"a")) {
             assertTrue(list1.equals(list2));
@@ -270,7 +288,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListGetByIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"a");
         tryToAdd(list,"b");
         tryToAdd(list,"c");
@@ -284,7 +302,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListGetByIndexBoundsChecking() {
-        List list = makeList();
+        List list = makeEmptyList();
 
         try {
             list.get(Integer.MIN_VALUE);
@@ -323,7 +341,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListGetByIndexBoundsChecking2() {
-        List list = makeList();
+        List list = makeEmptyList();
         boolean added = tryToAdd(list,"a");
 
         try {
@@ -356,7 +374,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListIndexOf() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"a");
         tryToAdd(list,"b");
         tryToAdd(list,"c");
@@ -371,7 +389,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListLastIndexOf1() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"a");
         tryToAdd(list,"b");
         tryToAdd(list,"c");
@@ -386,7 +404,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListLastIndexOf2() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"a");
         tryToAdd(list,"b");
         tryToAdd(list,"c");
@@ -434,7 +452,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListSetByIndexBoundsChecking() {
-        List list = makeList();
+        List list = makeEmptyList();
 
         try {
             list.set(Integer.MIN_VALUE,"a");
@@ -503,7 +521,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListSetByIndexBoundsChecking2() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element");
         tryToAdd(list,"element2");
 
@@ -561,7 +579,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListSetByIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -586,7 +604,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListRemoveByIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -615,7 +633,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListRemoveByValue() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element1");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -637,7 +655,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListListIteratorNextPrev() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element1");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -667,7 +685,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListListIteratorNextIndexPrevIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element1");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -689,7 +707,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListListIteratorSet() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element1");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -780,6 +798,68 @@ public abstract class TestList extends TestCollection {
             fail("List.add should only throw UnsupportedOperationException, ClassCastException, IllegalArgumentException, or IndexOutOfBoundsException. Found " + t.toString());
             return false; // never get here, since fail throws exception
         }
+    }
+
+    public void testEmptyListSerialization() 
+    throws IOException, ClassNotFoundException {
+        List list = makeEmptyList();
+        if (!(list instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) list);
+        List list2 = (List) readExternalFormFromBytes(objekt);
+
+        assertTrue("Both lists are empty",list.size()  == 0);
+        assertTrue("Both lists are empty",list2.size() == 0);
+    }
+
+    public void testFullListSerialization() 
+    throws IOException, ClassNotFoundException {
+        List list = makeFullList();
+        if (!(list instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) list);
+        List list2 = (List) readExternalFormFromBytes(objekt);
+
+        assertEquals("Both lists are same size",list.size(), 4);
+        assertEquals("Both lists are same size",list2.size(),4);
+    }
+
+    /**
+     * Compare the current serialized form of the List
+     * against the canonical version in CVS.
+     */
+    public void testEmptyListCompatibility() throws IOException, ClassNotFoundException {
+        /**
+         * Create canonical objects with this code
+        List list = makeEmptyList();
+        if (!(list instanceof Serializable)) return;
+        
+        writeExternalFormToDisk((Serializable) list, getCanonicalEmptyCollectionName(list));
+        */
+
+        // test to make sure the canonical form has been preserved
+        if (!(makeEmptyList() instanceof Serializable)) return;
+        List list = (List) readExternalFormFromDisk(getCanonicalEmptyCollectionName(makeEmptyList()));
+        assertTrue("List is empty",list.size()  == 0);
+    }
+
+        /**
+     * Compare the current serialized form of the List
+     * against the canonical version in CVS.
+     */
+    public void testFullListCompatibility() throws IOException, ClassNotFoundException {
+        /**
+         * Create canonical objects with this code
+        List list = makeFullList();
+        if (!(list instanceof Serializable)) return;
+        
+        writeExternalFormToDisk((Serializable) list, getCanonicalFullCollectionName(list));
+        */
+
+        // test to make sure the canonical form has been preserved
+        if (!(makeFullList() instanceof Serializable)) return;
+        List list = (List) readExternalFormFromDisk(getCanonicalFullCollectionName(makeFullList()));
+        assertEquals("List is the right size",list.size(), 4);
     }
 
 }
