@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedSet.java,v 1.2 2003/09/20 16:57:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/OrderedSet.java,v 1.3 2003/10/02 03:10:37 bayard Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,7 +82,7 @@ import java.util.Set;
  * various interface methods (notably equals/hashCode) are incompatable with a set.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/20 16:57:47 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/02 03:10:37 $
  * 
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen
@@ -264,6 +264,16 @@ public class OrderedSet extends AbstractSetDecorator implements Set {
         return obj;
     }
 
+    /**
+     * Uses the underlying List's toString so that order is achieved. 
+     * This means that the decorated Set's toString is not used, so 
+     * any custom toStrings will be ignored. 
+     */
+    // Fortunately List.toString and Set.toString look the same
+    public String toString() {
+        return setOrder.toString();
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Internal iterator handle remove.
@@ -282,6 +292,7 @@ public class OrderedSet extends AbstractSetDecorator implements Set {
 
         public Object next() {
             last = iterator.next();
+            System.err.println("RETURNING: "+last);
             return last;
         }
 
