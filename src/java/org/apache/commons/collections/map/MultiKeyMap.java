@@ -67,7 +67,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * </pre>
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.2 $ $Date: 2004/04/30 23:51:36 $
+ * @version $Revision: 1.3 $ $Date: 2004/06/07 21:00:58 $
  *
  * @author Stephen Colebourne
  */
@@ -108,7 +108,8 @@ public class MultiKeyMap
     }
 
     /**
-     * Constructor that decorates the specified map.
+     * Constructor that decorates the specified map and is called from
+     * {@link #decorate(AbstractHashedMap)}.
      * The map must not be null and should be empty or only contain valid keys.
      * This constructor performs no validation.
      *
