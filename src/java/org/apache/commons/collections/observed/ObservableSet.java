@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedSet.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableSet.java,v 1.1 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,11 +70,11 @@ import java.util.Set;
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
-public class ObservedSet extends ObservedCollection implements Set {
+public class ObservableSet extends ObservableCollection implements Set {
     
     // Factories
     //-----------------------------------------------------------------------
@@ -88,8 +88,8 @@ public class ObservedSet extends ObservedCollection implements Set {
      * @return the observed Set
      * @throws IllegalArgumentException if the collection is null
      */
-    public static ObservedSet decorate(final Set set) {
-        return new ObservedSet(set, null);
+    public static ObservableSet decorate(final Set set) {
+        return new ObservableSet(set, null);
     }
 
     /**
@@ -100,7 +100,7 @@ public class ObservedSet extends ObservedCollection implements Set {
      * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
-     * Internally, an <code>ObservedSet</code> relies on a {@link ModificationHandler}.
+     * Internally, an <code>ObservableSet</code> relies on a {@link ModificationHandler}.
      * The handler receives all the events and processes them, typically by
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
@@ -123,14 +123,14 @@ public class ObservedSet extends ObservedCollection implements Set {
      * @throws IllegalArgumentException if the set is null
      * @throws IllegalArgumentException if there is no valid handler for the listener
      */
-    public static ObservedSet decorate(
+    public static ObservableSet decorate(
             final Set set,
             final Object listener) {
         
         if (set == null) {
             throw new IllegalArgumentException("Set must not be null");
         }
-        return new ObservedSet(set, listener);
+        return new ObservableSet(set, listener);
     }
 
     // Constructors
@@ -138,14 +138,15 @@ public class ObservedSet extends ObservedCollection implements Set {
     /**
      * Constructor that wraps (not copies) and takes a handler.
      * <p>
-     * If a <code>null</code> handler is specified, an 
-     * <code>ObservedHandler</code> is created. 
+     * The handler implementation is determined by the listener parameter via
+     * the registered factories. The listener may be a manually configured 
+     * <code>ModificationHandler</code> instance.
      * 
      * @param set  the set to decorate, must not be null
      * @param listener  the listener, may be null
      * @throws IllegalArgumentException if the set is null
      */
-    protected ObservedSet(
+    protected ObservableSet(
             final Set set,
             final Object listener) {
         super(set, listener);

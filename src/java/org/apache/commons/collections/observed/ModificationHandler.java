@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.5 2003/09/07 16:50:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.6 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import java.util.Collection;
  * later collections release.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/09/07 16:50:59 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -86,7 +86,7 @@ public class ModificationHandler {
     static final ModificationHandlerFactory FACTORY = new Factory();
     
     /** The collection being observed */
-    private ObservedCollection obsCollection = null;
+    private ObservableCollection obsCollection = null;
     /** The underlying base collection being decorated */
     private Collection baseCollection = null;
     /** The root handler */
@@ -129,7 +129,7 @@ public class ModificationHandler {
      * @throws IllegalArgumentException if the collection is null
      * @throws IllegalStateException if init has already been called
      */
-    void init(final ObservedCollection coll, Collection baseColl) {
+    void init(final ObservableCollection coll, Collection baseColl) {
         if (coll == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
@@ -150,7 +150,7 @@ public class ModificationHandler {
      * 
      * @return the observed collection
      */
-    public ObservedCollection getObservedCollection() {
+    public ObservableCollection getObservedCollection() {
         return obsCollection;
     }
     
@@ -296,7 +296,7 @@ public class ModificationHandler {
      */
     protected boolean preEvent(
             int type, int index, Object object, int repeat,
-            Object previous, ObservedCollection range, int rangeOffset) {
+            Object previous, ObservableCollection range, int rangeOffset) {
         return true;
     }
 
@@ -316,7 +316,7 @@ public class ModificationHandler {
      */
     protected void postEvent(
             boolean modified, int type, int index, Object object, int repeat,
-            Object previous, ObservedCollection range, int rangeOffset) {
+            Object previous, ObservableCollection range, int rangeOffset) {
     }
 
     // Event handling
@@ -773,7 +773,7 @@ public class ModificationHandler {
          */
         protected boolean preEvent(
                 int type, int index, Object object, int repeat,
-                Object previous, ObservedCollection ignoredRange, int ignoredOffset) {
+                Object previous, ObservableCollection ignoredRange, int ignoredOffset) {
 
             return getRootHandler().preEvent(
                 type, index, object, repeat,
@@ -787,7 +787,7 @@ public class ModificationHandler {
          */
         protected void postEvent(
                 boolean modified, int type, int index, Object object, int repeat,
-                Object previous, ObservedCollection ignoredRange, int ignoredOffset) {
+                Object previous, ObservableCollection ignoredRange, int ignoredOffset) {
 
             getRootHandler().postEvent(
                 modified, type, index, object, repeat,

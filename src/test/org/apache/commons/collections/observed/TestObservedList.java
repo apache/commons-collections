@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedList.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedList.java,v 1.2 2003/09/21 16:00:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.TestList;
  * {@link ObservedList} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:56 $
  * 
  * @author Stephen Colebourne
  */
@@ -92,13 +92,13 @@ public class TestObservedList extends TestList implements ObservedTestHelper.Obs
 
     //-----------------------------------------------------------------------
     public List makeEmptyList() {
-        return ObservedList.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
+        return ObservableList.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
     }
 
     protected List makeFullList() {
         List set = new ArrayList();
         set.addAll(Arrays.asList(getFullElements()));
-        return ObservedList.decorate(set, ObservedTestHelper.LISTENER);
+        return ObservableList.decorate(set, ObservedTestHelper.LISTENER);
     }
     
     //-----------------------------------------------------------------------
@@ -107,12 +107,12 @@ public class TestObservedList extends TestList implements ObservedTestHelper.Obs
     }
 
     //-----------------------------------------------------------------------
-    public ObservedCollection createObservedCollection() {
-        return ObservedList.decorate(new ArrayList());
+    public ObservableCollection createObservedCollection() {
+        return ObservableList.decorate(new ArrayList());
     }
 
-    public ObservedCollection createObservedCollection(Object listener) {
-        return ObservedList.decorate(new ArrayList(), listener);
+    public ObservableCollection createObservedCollection(Object listener) {
+        return ObservableList.decorate(new ArrayList(), listener);
     }
 
 }

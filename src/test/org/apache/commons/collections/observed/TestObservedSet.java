@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedSet.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedSet.java,v 1.2 2003/09/21 16:00:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.TestSet;
  * {@link ObservedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:56 $
  * 
  * @author Stephen Colebourne
  */
@@ -92,13 +92,13 @@ public class TestObservedSet extends TestSet implements ObservedTestHelper.Obser
 
     //-----------------------------------------------------------------------
     public Set makeEmptySet() {
-        return ObservedSet.decorate(new HashSet(), ObservedTestHelper.LISTENER);
+        return ObservableSet.decorate(new HashSet(), ObservedTestHelper.LISTENER);
     }
 
     protected Set makeFullSet() {
         Set set = new HashSet();
         set.addAll(Arrays.asList(getFullElements()));
-        return ObservedSet.decorate(set, ObservedTestHelper.LISTENER);
+        return ObservableSet.decorate(set, ObservedTestHelper.LISTENER);
     }
     
     //-----------------------------------------------------------------------
@@ -107,12 +107,12 @@ public class TestObservedSet extends TestSet implements ObservedTestHelper.Obser
     }
 
     //-----------------------------------------------------------------------
-    public ObservedCollection createObservedCollection() {
-        return ObservedSet.decorate(new HashSet());
+    public ObservableCollection createObservedCollection() {
+        return ObservableSet.decorate(new HashSet());
     }
 
-    public ObservedCollection createObservedCollection(Object listener) {
-        return ObservedSet.decorate(new HashSet(), listener);
+    public ObservableCollection createObservedCollection(Object listener) {
+        return ObservableSet.decorate(new HashSet(), listener);
     }
 
 }

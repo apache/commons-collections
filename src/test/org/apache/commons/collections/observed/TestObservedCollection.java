@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedCollection.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedCollection.java,v 1.2 2003/09/21 16:00:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.TestCollection;
  * {@link ObservedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:56 $
  * 
  * @author Stephen Colebourne
  */
@@ -103,13 +103,13 @@ public class TestObservedCollection extends TestCollection implements ObservedTe
     }
     
     public Collection makeCollection() {
-        return ObservedCollection.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
+        return ObservableCollection.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
     }
 
     protected Collection makeFullCollection() {
         List list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
-        return ObservedCollection.decorate(list, ObservedTestHelper.LISTENER);
+        return ObservableCollection.decorate(list, ObservedTestHelper.LISTENER);
     }
     
     //-----------------------------------------------------------------------
@@ -118,12 +118,12 @@ public class TestObservedCollection extends TestCollection implements ObservedTe
     }
 
     //-----------------------------------------------------------------------
-    public ObservedCollection createObservedCollection() {
-        return ObservedCollection.decorate(new ArrayList());
+    public ObservableCollection createObservedCollection() {
+        return ObservableCollection.decorate(new ArrayList());
     }
 
-    public ObservedCollection createObservedCollection(Object listener) {
-        return ObservedCollection.decorate(new ArrayList(), listener);
+    public ObservableCollection createObservedCollection(Object listener) {
+        return ObservableCollection.decorate(new ArrayList(), listener);
     }
 
 //  public void testFactoryWithMasks() {

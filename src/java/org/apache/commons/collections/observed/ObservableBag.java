@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedBag.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableBag.java,v 1.1 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,11 +74,11 @@ import org.apache.commons.collections.Bag;
  * NOT observed. This is because the set should be unmodifiable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
-public class ObservedBag extends ObservedCollection implements Bag {
+public class ObservableBag extends ObservableCollection implements Bag {
     
     // Factories
     //-----------------------------------------------------------------------
@@ -92,8 +92,8 @@ public class ObservedBag extends ObservedCollection implements Bag {
      * @return the observed Bag
      * @throws IllegalArgumentException if the bag is null
      */
-    public static ObservedBag decorate(final Bag bag) {
-        return new ObservedBag(bag, null);
+    public static ObservableBag decorate(final Bag bag) {
+        return new ObservableBag(bag, null);
     }
 
     /**
@@ -104,7 +104,7 @@ public class ObservedBag extends ObservedCollection implements Bag {
      * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
-     * Internally, an <code>ObservedBag</code> relies on a {@link ModificationHandler}.
+     * Internally, an <code>ObservableBag</code> relies on a {@link ModificationHandler}.
      * The handler receives all the events and processes them, typically by
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
@@ -127,26 +127,30 @@ public class ObservedBag extends ObservedCollection implements Bag {
      * @throws IllegalArgumentException if the bag is null
      * @throws IllegalArgumentException if there is no valid handler for the listener
      */
-    public static ObservedBag decorate(
+    public static ObservableBag decorate(
             final Bag bag,
             final Object listener) {
         
         if (bag == null) {
             throw new IllegalArgumentException("Bag must not be null");
         }
-        return new ObservedBag(bag, listener);
+        return new ObservableBag(bag, listener);
     }
 
     // Constructors
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
+     * <p>
+     * The handler implementation is determined by the listener parameter via
+     * the registered factories. The listener may be a manually configured 
+     * <code>ModificationHandler</code> instance.
      * 
      * @param bag  the bag to decorate, must not be null
      * @param listener  the listener, may be null
      * @throws IllegalArgumentException if the bag is null
      */
-    protected ObservedBag(
+    protected ObservableBag(
             final Bag bag,
             final Object listener) {
         super(bag, listener);

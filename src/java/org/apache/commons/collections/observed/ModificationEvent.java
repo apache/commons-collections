@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationEvent.java,v 1.2 2003/09/07 10:33:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationEvent.java,v 1.3 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,14 +66,14 @@ import java.util.EventObject;
  * This class can be used as is, but generally it is subclassed.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/07 10:33:32 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
 public class ModificationEvent extends EventObject {
 
     /** The source collection */
-    protected final ObservedCollection collection;
+    protected final ObservableCollection collection;
     /** The handler */
     protected final ModificationHandler handler;
     /** The event code */
@@ -89,7 +89,7 @@ public class ModificationEvent extends EventObject {
      * @param type  the event type
      */
     public ModificationEvent(
-        final ObservedCollection obsCollection,
+        final ObservableCollection obsCollection,
         final ModificationHandler handler,
         final int type) {
 
@@ -105,7 +105,7 @@ public class ModificationEvent extends EventObject {
      * Gets the collection the event is reporting on.
      * <p>
      * Using this collection will bypass any decorators that have been added
-     * to the <code>ObservedCollection</code>. For example, if a synchronized
+     * to the <code>ObservableCollection</code>. For example, if a synchronized
      * decorator was added it will not be called by changes to this collection.
      * <p>
      * For the synchronization case, you are normally OK however. If you
@@ -115,12 +115,12 @@ public class ModificationEvent extends EventObject {
      * 
      * @return the collection
      */
-    public ObservedCollection getObservedCollection() {
+    public ObservableCollection getObservedCollection() {
         return collection;
     }
 
     /**
-     * Gets the base collection underlying the observed collection.
+     * Gets the base collection underlying the observable collection.
      * <p>
      * Using this collection will bypass the event sending mechanism.
      * It will also bypass any other decorators, such as synchronization.
@@ -161,7 +161,7 @@ public class ModificationEvent extends EventObject {
      */
     public String toString() {
         StringBuffer buf = new StringBuffer(64);
-        buf.append("ObservedEvent[type=");
+        buf.append("ModificationEvent[type=");
         buf.append(ModificationEventType.toString(type));
         buf.append(']');
         return buf.toString();

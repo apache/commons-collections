@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedList.java,v 1.4 2003/09/07 10:33:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableList.java,v 1.1 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,11 +76,11 @@ import org.apache.commons.collections.decorators.AbstractListIteratorDecorator;
  * base <code>List</code>.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/07 10:33:32 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
-public class ObservedList extends ObservedCollection implements List {
+public class ObservableList extends ObservableCollection implements List {
 
     // Factories
     //-----------------------------------------------------------------------
@@ -94,8 +94,8 @@ public class ObservedList extends ObservedCollection implements List {
      * @return the observed List
      * @throws IllegalArgumentException if the list is null
      */
-    public static ObservedList decorate(final List list) {
-        return new ObservedList(list, null);
+    public static ObservableList decorate(final List list) {
+        return new ObservableList(list, null);
     }
 
     /**
@@ -106,7 +106,7 @@ public class ObservedList extends ObservedCollection implements List {
      * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
-     * Internally, an <code>ObservedList</code> relies on a {@link ModificationHandler}.
+     * Internally, an <code>ObservableList</code> relies on a {@link ModificationHandler}.
      * The handler receives all the events and processes them, typically by
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
@@ -129,14 +129,14 @@ public class ObservedList extends ObservedCollection implements List {
      * @throws IllegalArgumentException if the list is null
      * @throws IllegalArgumentException if there is no valid handler for the listener
      */
-    public static ObservedList decorate(
+    public static ObservableList decorate(
             final List list,
             final Object listener) {
         
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
-        return new ObservedList(list, listener);
+        return new ObservableList(list, listener);
     }
 
     // Constructors
@@ -144,14 +144,15 @@ public class ObservedList extends ObservedCollection implements List {
     /**
      * Constructor that wraps (not copies) and takes a handler.
      * <p>
-     * If a <code>null</code> handler is specified, an 
-     * <code>ObservedHandler</code> is created. 
+     * The handler implementation is determined by the listener parameter via
+     * the registered factories. The listener may be a manually configured 
+     * <code>ModificationHandler</code> instance.
      * 
      * @param list  the list to decorate, must not be null
      * @param listener  the listener, may be null
      * @throws IllegalArgumentException if the list is null
      */
-    protected ObservedList(
+    protected ObservableList(
             final List list,
             final Object listener) {
         super(list, listener);
@@ -164,7 +165,7 @@ public class ObservedList extends ObservedCollection implements List {
      * @param list  the subList to decorate, must not be null
      * @throws IllegalArgumentException if the list is null
      */
-    protected ObservedList(
+    protected ObservableList(
             final ModificationHandler handler,
             final List list) {
         super(handler, list);
@@ -229,11 +230,11 @@ public class ObservedList extends ObservedCollection implements List {
     }
 
     public ListIterator listIterator() {
-        return new ObservedListIterator(getList().listIterator());
+        return new ObservableListIterator(getList().listIterator());
     }
 
     public ListIterator listIterator(int index) {
-        return new ObservedListIterator(getList().listIterator(index));
+        return new ObservableListIterator(getList().listIterator(index));
     }
 
     /**
@@ -248,19 +249,19 @@ public class ObservedList extends ObservedCollection implements List {
      */
     public List subList(int fromIndex, int toIndex) {
         List subList = getList().subList(fromIndex, toIndex);
-        return new ObservedList(subList, getHandler().createSubListHandler(fromIndex, toIndex));
+        return new ObservableList(subList, getHandler().createSubListHandler(fromIndex, toIndex));
     }
 
     // ListIterator
     //-----------------------------------------------------------------------
     /**
-     * Inner class ListIterator for the ObservedList.
+     * Inner class ListIterator for the ObservableList.
      */
-    protected class ObservedListIterator extends AbstractListIteratorDecorator {
+    protected class ObservableListIterator extends AbstractListIteratorDecorator {
         
         protected Object last;
         
-        protected ObservedListIterator(ListIterator iterator) {
+        protected ObservableListIterator(ListIterator iterator) {
             super(iterator);
         }
         

@@ -5,10 +5,10 @@ to changes in the underlying collection. A standard listener based event system
 is supplied, but alternatives can be added, see ModificationHandler.
 <p>
 Each decorator can be constructed using a static <code>decorate()</code> method on
-the ObservedXxx class. They can also be constructed from the <code>XxxUtils</code>
+the ObservableXxx class. They can also be constructed from the <code>XxxUtils</code>
 class (where Xxx is the collection type).
 <p>
-<code>List observedList = ObservedList.decorate(new ArrayList(), listener);</code>
+<code>List observableList = ObservableList.decorate(new ArrayList(), listener);</code>
 <br />OR<br />
-<code>List observedList = ListUtils.observedList(new ArrayList(), listener);</code>
+<code>List observableList = ListUtils.observableList(new ArrayList(), listener);</code>
 </BODY>

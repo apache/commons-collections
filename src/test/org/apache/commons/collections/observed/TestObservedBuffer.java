@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedBuffer.java,v 1.1 2003/09/07 16:50:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedBuffer.java,v 1.2 2003/09/21 16:00:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,10 +69,10 @@ import org.apache.commons.collections.TestCollection;
 
 /**
  * Extension of {@link TestCollection} for exercising the
- * {@link ObservedBuffer} implementation.
+ * {@link ObservableBuffer} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/07 16:50:59 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:55 $
  * 
  * @author Stephen Colebourne
  */
@@ -103,13 +103,13 @@ public class TestObservedBuffer extends TestCollection implements ObservedTestHe
     }
     
     public Collection makeCollection() {
-        return ObservedBuffer.decorate(new ArrayStack(), ObservedTestHelper.LISTENER);
+        return ObservableBuffer.decorate(new ArrayStack(), ObservedTestHelper.LISTENER);
     }
 
     protected Collection makeFullCollection() {
         List stack = new ArrayStack();
         stack.addAll(Arrays.asList(getFullElements()));
-        return ObservedBuffer.decorate(stack, ObservedTestHelper.LISTENER);
+        return ObservableBuffer.decorate(stack, ObservedTestHelper.LISTENER);
     }
     
     //-----------------------------------------------------------------------
@@ -118,12 +118,12 @@ public class TestObservedBuffer extends TestCollection implements ObservedTestHe
     }
 
     //-----------------------------------------------------------------------
-    public ObservedCollection createObservedCollection() {
-        return ObservedBuffer.decorate(new ArrayStack());
+    public ObservableCollection createObservedCollection() {
+        return ObservableBuffer.decorate(new ArrayStack());
     }
 
-    public ObservedCollection createObservedCollection(Object listener) {
-        return ObservedBuffer.decorate(new ArrayStack(), listener);
+    public ObservableCollection createObservedCollection(Object listener) {
+        return ObservableBuffer.decorate(new ArrayStack(), listener);
     }
 
 }

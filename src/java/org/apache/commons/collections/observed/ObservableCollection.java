@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedCollection.java,v 1.4 2003/09/07 10:33:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableCollection.java,v 1.1 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,11 +74,11 @@ import org.apache.commons.collections.observed.standard.StandardModificationHand
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/07 10:33:32 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
-public class ObservedCollection extends AbstractCollectionDecorator {
+public class ObservableCollection extends AbstractCollectionDecorator {
     
     /** The list of registered factories, checked in reverse order */
     private static ModificationHandlerFactory[] factories = new ModificationHandlerFactory[] {
@@ -89,7 +89,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
     /** The handler to delegate event handling to */
     protected final ModificationHandler handler;
 
-    // ObservedCollection factories
+    // ObservableCollection factories
     //-----------------------------------------------------------------------
     /**
      * Factory method to create an observable collection.
@@ -101,8 +101,8 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * @return the observed collection
      * @throws IllegalArgumentException if the collection is null
      */
-    public static ObservedCollection decorate(final Collection coll) {
-        return new ObservedCollection(coll, null);
+    public static ObservableCollection decorate(final Collection coll) {
+        return new ObservableCollection(coll, null);
     }
 
     /**
@@ -113,7 +113,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
-     * Internally, an <code>ObservedCollection</code> relies on a {@link ModificationHandler}.
+     * Internally, an <code>ObservableCollection</code> relies on a {@link ModificationHandler}.
      * The handler receives all the events and processes them, typically by
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
@@ -136,14 +136,14 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * @throws IllegalArgumentException if the collection is null
      * @throws IllegalArgumentException if there is no valid handler for the listener
      */
-    public static ObservedCollection decorate(
+    public static ObservableCollection decorate(
             final Collection coll,
             final Object listener) {
         
         if (coll == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
-        return new ObservedCollection(coll, listener);
+        return new ObservableCollection(coll, listener);
     }
 
     // Register for ModificationHandlerFactory
@@ -181,14 +181,15 @@ public class ObservedCollection extends AbstractCollectionDecorator {
     /**
      * Constructor that wraps (not copies) and takes a handler.
      * <p>
-     * If a <code>null</code> handler is specified, an 
-     * <code>ObservedHandler</code> is created. 
+     * The handler implementation is determined by the listener parameter via
+     * the registered factories. The listener may be a manually configured 
+     * <code>ModificationHandler</code> instance.
      * 
      * @param coll  the collection to decorate, must not be null
      * @param handler  the observing handler, may be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected ObservedCollection(
+    protected ObservableCollection(
             final Collection coll,
             final Object listener) {
         super(coll);
@@ -203,7 +204,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected ObservedCollection(
+    protected ObservableCollection(
             final ModificationHandler handler,
             final Collection coll) {
         super(coll);
@@ -274,7 +275,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
     }
 
     public Iterator iterator() {
-        return new ObservedIterator(collection.iterator());
+        return new ObservableIterator(collection.iterator());
     }
 
     public boolean remove(Object object) {
@@ -307,14 +308,14 @@ public class ObservedCollection extends AbstractCollectionDecorator {
     // Iterator
     //-----------------------------------------------------------------------
     /**
-     * Inner class Iterator for the ObservedCollection.
+     * Inner class Iterator for the ObservableCollection.
      */
-    protected class ObservedIterator extends AbstractIteratorDecorator {
+    protected class ObservableIterator extends AbstractIteratorDecorator {
         
         protected int lastIndex = -1;
         protected Object last;
         
-        protected ObservedIterator(Iterator iterator) {
+        protected ObservableIterator(Iterator iterator) {
             super(iterator);
         }
         

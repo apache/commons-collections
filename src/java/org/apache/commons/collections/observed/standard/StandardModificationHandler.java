@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.4 2003/09/07 10:33:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.5 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,7 +62,7 @@ import java.util.Collection;
 import org.apache.commons.collections.observed.ModificationEventType;
 import org.apache.commons.collections.observed.ModificationHandler;
 import org.apache.commons.collections.observed.ModificationHandlerFactory;
-import org.apache.commons.collections.observed.ObservedCollection;
+import org.apache.commons.collections.observed.ObservableCollection;
 
 /**
  * The standard implementation of a <code>ModificationHandler</code> that
@@ -77,7 +77,7 @@ import org.apache.commons.collections.observed.ObservedCollection;
  * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/07 10:33:33 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -111,9 +111,9 @@ public class StandardModificationHandler extends ModificationHandler {
     /**
      * Constructor the creates the handler but leaves it invalid.
      * <p>
-     * The handler can only be used after {@link #init(ObservedCollection)} is
+     * The handler can only be used after {@link #init(ObservableCollection)} is
      * called. This is normally done automatically by
-     * {@link ObservedCollection#decorate(Collection, ModificationHandler)}.
+     * {@link ObservableCollection#decorate(Collection, ModificationHandler)}.
      */
     public StandardModificationHandler() {
         super();
@@ -122,9 +122,9 @@ public class StandardModificationHandler extends ModificationHandler {
     /**
      * Constructor the creates the handler but leaves it invalid.
      * <p>
-     * The handler can only be used after {@link #init(ObservedCollection)} is
+     * The handler can only be used after {@link #init(ObservableCollection)} is
      * called. This is normally done automatically by
-     * {@link ObservedCollection#decorate(Collection, ModificationHandler)}.
+     * {@link ObservableCollection#decorate(Collection, ModificationHandler)}.
      * 
      * @param pre  the pre listener
      * @param preMask  the mask for the pre listener
@@ -435,7 +435,7 @@ public class StandardModificationHandler extends ModificationHandler {
      */
     protected boolean preEvent(
             int type, int index, Object object,
-            int repeat, Object previous, ObservedCollection range, int rangeOffset) {
+            int repeat, Object previous, ObservableCollection range, int rangeOffset) {
 
         preSize = getObservedCollection().size();
         return firePreEvent(type, index, object, repeat, previous, range, rangeOffset);
@@ -455,7 +455,7 @@ public class StandardModificationHandler extends ModificationHandler {
      */
     protected boolean firePreEvent(
             int type, int index, Object object, int repeat,
-            Object previous, ObservedCollection range, int rangeOffset) {
+            Object previous, ObservableCollection range, int rangeOffset) {
 
         if ((preMask & type) > 0) {
             StandardPreModificationEvent event = null;
@@ -492,7 +492,7 @@ public class StandardModificationHandler extends ModificationHandler {
      */
     protected void postEvent(
             boolean modified, int type, int index, Object object,
-            int repeat, Object previous, ObservedCollection range, int rangeOffset) {
+            int repeat, Object previous, ObservableCollection range, int rangeOffset) {
 
         if (modified) {
             firePostEvent(type, index, object, repeat, previous, range, rangeOffset);
@@ -512,7 +512,7 @@ public class StandardModificationHandler extends ModificationHandler {
      */
     protected void firePostEvent(
             int type, int index, Object object, int repeat,
-            Object previous, ObservedCollection range, int rangeOffset) {
+            Object previous, ObservableCollection range, int rangeOffset) {
 
         if ((postMask & type) > 0) {
             StandardPostModificationEvent event = null;

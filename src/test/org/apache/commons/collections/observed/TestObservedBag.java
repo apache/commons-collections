@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedBag.java,v 1.1 2003/09/03 23:54:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservedBag.java,v 1.2 2003/09/21 16:00:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,10 +66,10 @@ import org.apache.commons.collections.TestBag;
 
 /**
  * Extension of {@link TestBag} for exercising the
- * {@link ObservedBag} implementation.
+ * {@link ObservableBag} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:25 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:55 $
  * 
  * @author Stephen Colebourne
  */
@@ -90,7 +90,7 @@ public class TestObservedBag extends TestBag implements ObservedTestHelper.Obser
 
     //-----------------------------------------------------------------------
     public Bag makeBag() {
-        return ObservedBag.decorate(new HashBag(), ObservedTestHelper.LISTENER);
+        return ObservableBag.decorate(new HashBag(), ObservedTestHelper.LISTENER);
     }
 
     //-----------------------------------------------------------------------
@@ -99,12 +99,12 @@ public class TestObservedBag extends TestBag implements ObservedTestHelper.Obser
     }
 
     //-----------------------------------------------------------------------
-    public ObservedCollection createObservedCollection() {
-        return ObservedBag.decorate(new HashBag());
+    public ObservableCollection createObservedCollection() {
+        return ObservableBag.decorate(new HashBag());
     }
 
-    public ObservedCollection createObservedCollection(Object listener) {
-        return ObservedBag.decorate(new HashBag(), listener);
+    public ObservableCollection createObservedCollection(Object listener) {
+        return ObservableBag.decorate(new HashBag(), listener);
     }
 
 }

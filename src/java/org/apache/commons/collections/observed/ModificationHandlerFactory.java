@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandlerFactory.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandlerFactory.java,v 1.2 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,7 +59,6 @@ package org.apache.commons.collections.observed;
 
 import java.util.Collection;
 
-
 /**
  * Defines a factory for creating ModificationHandler instances.
  * <p>
@@ -68,11 +67,11 @@ import java.util.Collection;
  * fully thread-safe. There are two steps:
  * <ol>
  * <li>A factory must be created that is an implementation of this class
- * <li>One of the <code>registerFactory</code> methods must be called on ObservedCollection
+ * <li>One of the <code>registerFactory</code> methods must be called on ObservableCollection
  * </ol>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */

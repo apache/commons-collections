@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.5 2003/09/07 10:33:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.6 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.observed.ModificationEvent;
 import org.apache.commons.collections.observed.ModificationEventType;
 import org.apache.commons.collections.observed.ModificationHandler;
-import org.apache.commons.collections.observed.ObservedCollection;
+import org.apache.commons.collections.observed.ObservableCollection;
 
 /**
  * Event class that encapsulates the event information for a
@@ -80,7 +80,7 @@ import org.apache.commons.collections.observed.ObservedCollection;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/09/07 10:33:33 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -97,7 +97,7 @@ public class StandardModificationEvent extends ModificationEvent {
     /** The result of the method call */
     protected final Object previous;
     /** The range that the event came from, null if none */
-    protected final ObservedCollection range;
+    protected final ObservableCollection range;
     /** The offset of the range that the event came from, -1 if none */
     protected final int rangeOffset;
 
@@ -118,7 +118,7 @@ public class StandardModificationEvent extends ModificationEvent {
      * @param rangeOffset  the offset of the range, -1 if unknown
      */
     public StandardModificationEvent(
-        final ObservedCollection obsCollection,
+        final ObservableCollection obsCollection,
         final ModificationHandler handler,
         final int type,
         final int preSize,
@@ -126,7 +126,7 @@ public class StandardModificationEvent extends ModificationEvent {
         final Object object,
         final int repeat,
         final Object previous,
-        final ObservedCollection range,
+        final ObservableCollection range,
         final int rangeOffset) {
 
         super(obsCollection, handler, type);
@@ -230,7 +230,7 @@ public class StandardModificationEvent extends ModificationEvent {
      * 
      * @return the range
      */
-    public ObservedCollection getRange() {
+    public ObservableCollection getRange() {
         return range;
     }
 
@@ -311,7 +311,7 @@ public class StandardModificationEvent extends ModificationEvent {
      */
     public String toString() {
         StringBuffer buf = new StringBuffer(64);
-        buf.append("ObservedEvent[type=");
+        buf.append("ModificationEvent[type=");
         buf.append(ModificationEventType.toString(type));
         if (index >= 0) {
             buf.append(",index=");

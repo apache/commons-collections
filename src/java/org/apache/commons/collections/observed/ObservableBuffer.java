@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedBuffer.java,v 1.1 2003/09/07 16:50:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableBuffer.java,v 1.1 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,11 +69,11 @@ import org.apache.commons.collections.Buffer;
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/07 16:50:59 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
-public class ObservedBuffer extends ObservedCollection implements Buffer {
+public class ObservableBuffer extends ObservableCollection implements Buffer {
     
     // Factories
     //-----------------------------------------------------------------------
@@ -87,8 +87,8 @@ public class ObservedBuffer extends ObservedCollection implements Buffer {
      * @return the observed Buffer
      * @throws IllegalArgumentException if the buffer is null
      */
-    public static ObservedBuffer decorate(final Buffer buffer) {
-        return new ObservedBuffer(buffer, null);
+    public static ObservableBuffer decorate(final Buffer buffer) {
+        return new ObservableBuffer(buffer, null);
     }
 
     /**
@@ -99,7 +99,7 @@ public class ObservedBuffer extends ObservedCollection implements Buffer {
      * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
-     * Internally, an <code>ObservedBuffer</code> relies on a {@link ModificationHandler}.
+     * Internally, an <code>ObservableBuffer</code> relies on a {@link ModificationHandler}.
      * The handler receives all the events and processes them, typically by
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
@@ -122,26 +122,30 @@ public class ObservedBuffer extends ObservedCollection implements Buffer {
      * @throws IllegalArgumentException if the buffer is null
      * @throws IllegalArgumentException if there is no valid handler for the listener
      */
-    public static ObservedBuffer decorate(
+    public static ObservableBuffer decorate(
             final Buffer buffer,
             final Object listener) {
         
         if (buffer == null) {
             throw new IllegalArgumentException("Buffer must not be null");
         }
-        return new ObservedBuffer(buffer, listener);
+        return new ObservableBuffer(buffer, listener);
     }
 
     // Constructors
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
+     * <p>
+     * The handler implementation is determined by the listener parameter via
+     * the registered factories. The listener may be a manually configured 
+     * <code>ModificationHandler</code> instance.
      * 
      * @param buffer  the buffer to decorate, must not be null
      * @param listener  the listener, may be null
      * @throws IllegalArgumentException if the buffer is null
      */
-    protected ObservedBuffer(
+    protected ObservableBuffer(
             final Buffer buffer,
             final Object listener) {
         super(buffer, listener);

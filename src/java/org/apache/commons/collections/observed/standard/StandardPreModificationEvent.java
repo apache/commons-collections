@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPreModificationEvent.java,v 1.3 2003/09/07 10:33:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPreModificationEvent.java,v 1.4 2003/09/21 16:00:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,7 +58,7 @@
 package org.apache.commons.collections.observed.standard;
 
 import org.apache.commons.collections.observed.ModificationHandler;
-import org.apache.commons.collections.observed.ObservedCollection;
+import org.apache.commons.collections.observed.ObservableCollection;
 
 /**
  * Event class that encapsulates all the event information for a
@@ -70,7 +70,7 @@ import org.apache.commons.collections.observed.ObservedCollection;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/07 10:33:33 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/21 16:00:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -91,7 +91,7 @@ public class StandardPreModificationEvent extends StandardModificationEvent {
      * @param previous  the previous value being removed/replaced
      */
     public StandardPreModificationEvent(
-        final ObservedCollection obsCollection,
+        final ObservableCollection obsCollection,
         final ModificationHandler handler,
         final int type,
         final int preSize,
@@ -99,7 +99,7 @@ public class StandardPreModificationEvent extends StandardModificationEvent {
         final Object object,
         final int repeat,
         final Object previous,
-        final ObservedCollection range,
+        final ObservableCollection range,
         final int rangeOffset) {
 
         super(obsCollection, handler, type, preSize, index,

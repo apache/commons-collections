@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/ObservedTestHelper.java,v 1.7 2003/09/20 12:13:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/ObservedTestHelper.java,v 1.8 2003/09/21 16:00:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.observed.standard.StandardPreModificationL
  * {@link ObservedCollection} implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/09/20 12:13:59 $
+ * @version $Revision: 1.8 $ $Date: 2003/09/21 16:00:55 $
  * 
  * @author Stephen Colebourne
  */
@@ -121,8 +121,8 @@ public class ObservedTestHelper {
     }
     
     public static interface ObservedFactory {
-        ObservedCollection createObservedCollection();
-        ObservedCollection createObservedCollection(Object listener);
+        ObservableCollection createObservedCollection();
+        ObservableCollection createObservedCollection(Object listener);
     }
     
     public static final Listener LISTENER = new Listener();
@@ -157,17 +157,17 @@ public class ObservedTestHelper {
     }
     
     public static void bulkTestObservedSet(ObservedFactory factory) {
-        Assert.assertTrue(factory.createObservedCollection() instanceof ObservedSet);
-        Assert.assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservedSet);
-        Assert.assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservedSet);
+        Assert.assertTrue(factory.createObservedCollection() instanceof ObservableSet);
+        Assert.assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservableSet);
+        Assert.assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservableSet);
         
         bulkTestObservedCollection(factory);
     }
     
     public static void bulkTestObservedList(ObservedFactory factory) {
-        Assert.assertTrue(factory.createObservedCollection() instanceof ObservedList);
-        Assert.assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservedList);
-        Assert.assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservedList);
+        Assert.assertTrue(factory.createObservedCollection() instanceof ObservableList);
+        Assert.assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservableList);
+        Assert.assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservableList);
         
         bulkTestObservedCollection(factory);
         doTestAddIndexed(factory);
@@ -181,9 +181,9 @@ public class ObservedTestHelper {
     }
     
     public static void bulkTestObservedBag(ObservedFactory factory) {
-        Assert.assertTrue(factory.createObservedCollection() instanceof ObservedBag);
-        Assert.assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservedBag);
-        Assert.assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservedBag);
+        Assert.assertTrue(factory.createObservedCollection() instanceof ObservableBag);
+        Assert.assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservableBag);
+        Assert.assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservableBag);
         
         bulkTestObservedCollection(factory);
         doTestAddNCopies(factory);
@@ -191,9 +191,9 @@ public class ObservedTestHelper {
     }
     
     public static void bulkTestObservedBuffer(ObservedFactory factory) {
-        Assert.assertTrue(factory.createObservedCollection() instanceof ObservedBuffer);
-        Assert.assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservedBuffer);
-        Assert.assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservedBuffer);
+        Assert.assertTrue(factory.createObservedCollection() instanceof ObservableBuffer);
+        Assert.assertTrue(factory.createObservedCollection(LISTENER) instanceof ObservableBuffer);
+        Assert.assertTrue(factory.createObservedCollection(new StandardModificationHandler()) instanceof ObservableBuffer);
         
         bulkTestObservedCollection(factory);
         doTestRemoveNext(factory);
@@ -201,7 +201,7 @@ public class ObservedTestHelper {
     
     //-----------------------------------------------------------------------
     public static void doTestFactoryPlain(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection();
+        ObservableCollection coll = factory.createObservedCollection();
         
         Assert.assertNotNull(coll.getHandler());
         Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
@@ -210,7 +210,7 @@ public class ObservedTestHelper {
     }
     
     public static void doTestFactoryWithPreListener(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(PRE_LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(PRE_LISTENER);
         
         Assert.assertNotNull(coll.getHandler());
         Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
@@ -224,7 +224,7 @@ public class ObservedTestHelper {
     }
     
     public static void doTestFactoryWithPostListener(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(POST_LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(POST_LISTENER);
         
         Assert.assertNotNull(coll.getHandler());
         Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
@@ -238,7 +238,7 @@ public class ObservedTestHelper {
     }
     
     public static void doTestFactoryWithListener(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(LISTENER);
         
         Assert.assertNotNull(coll.getHandler());
         Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
@@ -256,7 +256,7 @@ public class ObservedTestHelper {
     
     public static void doTestFactoryWithHandler(ObservedFactory factory) {
         StandardModificationHandler handler = new StandardModificationHandler();
-        ObservedCollection coll = factory.createObservedCollection(handler);
+        ObservableCollection coll = factory.createObservedCollection(handler);
         
         Assert.assertNotNull(coll.getHandler());
         Assert.assertSame(handler, coll.getHandler());
@@ -272,7 +272,7 @@ public class ObservedTestHelper {
     }
     
     public static void doTestFactoryWithNull(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(null);
+        ObservableCollection coll = factory.createObservedCollection(null);
         
         Assert.assertNotNull(coll.getHandler());
         Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
@@ -282,7 +282,7 @@ public class ObservedTestHelper {
     
     //-----------------------------------------------------------------------
     public static void doTestAddRemoveGetPreListeners(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection();
+        ObservableCollection coll = factory.createObservedCollection();
         
         Assert.assertEquals(0, coll.getHandler().getPreModificationListeners().length);
         coll.getHandler().addPreModificationListener(LISTENER);
@@ -313,7 +313,7 @@ public class ObservedTestHelper {
     }
     
     public static void doTestAddRemoveGetPostListeners(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection();
+        ObservableCollection coll = factory.createObservedCollection();
         
         Assert.assertEquals(0, coll.getHandler().getPostModificationListeners().length);
         coll.getHandler().addPostModificationListener(LISTENER);
@@ -345,7 +345,7 @@ public class ObservedTestHelper {
     
     //-----------------------------------------------------------------------
     public static void doTestAdd(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(LISTENER);
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
@@ -387,7 +387,7 @@ public class ObservedTestHelper {
         Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
         
         // this isn't a full test, but...
-        Assert.assertEquals(false, LISTENER.postEvent.getBaseCollection() instanceof ObservedCollection);
+        Assert.assertEquals(false, LISTENER.postEvent.getBaseCollection() instanceof ObservableCollection);
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
@@ -454,7 +454,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestAddIndexed(ObservedFactory factory) {
-        ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
+        ObservableList coll = (ObservableList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -499,7 +499,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestAddNCopies(ObservedFactory factory) {
-        ObservedBag coll = (ObservedBag) factory.createObservedCollection(LISTENER);
+        ObservableBag coll = (ObservableBag) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -544,7 +544,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestAddIterated(ObservedFactory factory) {
-        ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
+        ObservableList coll = (ObservableList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -591,7 +591,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestAddAll(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(LISTENER);
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
@@ -633,7 +633,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestAddAllIndexed(ObservedFactory factory) {
-        ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
+        ObservableList coll = (ObservableList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -676,7 +676,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestClear(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -727,7 +727,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestRemove(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -780,7 +780,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestRemoveIndexed(ObservedFactory factory) {
-        ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
+        ObservableList coll = (ObservableList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -823,7 +823,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestRemoveNCopies(ObservedFactory factory) {
-        ObservedBag coll = (ObservedBag) factory.createObservedCollection(LISTENER);
+        ObservableBag coll = (ObservableBag) factory.createObservedCollection(LISTENER);
         
         coll.add(SIX, 6);
         coll.add(SEVEN, 7);
@@ -869,7 +869,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestRemoveNext(ObservedFactory factory) {
-        ObservedBuffer coll = (ObservedBuffer) factory.createObservedCollection(LISTENER);
+        ObservableBuffer coll = (ObservableBuffer) factory.createObservedCollection(LISTENER);
         
         coll.add(SIX);
         coll.add(SEVEN);
@@ -914,7 +914,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestRemoveIterated(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -969,7 +969,7 @@ public class ObservedTestHelper {
     }
 
     public static void doTestRemoveListIterated(ObservedFactory factory) {
-        ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
+        ObservableList coll = (ObservableList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -1025,7 +1025,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestRemoveAll(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(LISTENER);
         
         coll.add(EIGHT);
         coll.addAll(SIX_SEVEN_LIST);
@@ -1077,7 +1077,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestRetainAll(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        ObservableCollection coll = factory.createObservedCollection(LISTENER);
         
         coll.add(EIGHT);
         coll.addAll(SIX_SEVEN_LIST);
@@ -1129,7 +1129,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestSetIndexed(ObservedFactory factory) {
-        ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
+        ObservableList coll = (ObservableList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -1174,7 +1174,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestSetIterated(ObservedFactory factory) {
-        ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
+        ObservableList coll = (ObservableList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         LISTENER.preEvent = null;
@@ -1222,7 +1222,7 @@ public class ObservedTestHelper {
 
     //-----------------------------------------------------------------------
     public static void doTestSubList(ObservedFactory factory) {
-        ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
+        ObservableList coll = (ObservableList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
         coll.add(EIGHT);
