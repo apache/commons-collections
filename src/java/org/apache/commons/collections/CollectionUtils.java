@@ -1,7 +1,7 @@
 /*
- * $Id: CollectionUtils.java,v 1.20 2002/11/24 16:23:21 scolebourne Exp $
- * $Revision: 1.20 $
- * $Date: 2002/11/24 16:23:21 $
+ * $Id: CollectionUtils.java,v 1.21 2002/11/24 21:11:27 scolebourne Exp $
+ * $Revision: 1.21 $
+ * $Date: 2002/11/24 21:11:27 $
  *
  * ====================================================================
  *
@@ -83,7 +83,8 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Stephen Colebourne
  * @author Steve Downey
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
- * @version $Revision: 1.20 $ $Date: 2002/11/24 16:23:21 $
+ * @author BluePhelix@web.de (Peter)
+ * @version $Revision: 1.21 $ $Date: 2002/11/24 21:11:27 $
  */
 public class CollectionUtils {
 
@@ -463,6 +464,41 @@ public class CollectionUtils {
         }
     }
     
+    /**
+     * Selects all elements from inputCollection which don't match the given predicate
+     * into an output collection
+     * 
+     * @param inputCollection  the collection to get the input from, may not be null
+     * @param predicate  the predicate to use, may be null
+     * @return the elements <b>not</b> matching the predicate (new list)
+     * @throws NullPointerException if the input collection is null
+     */
+    public static Collection selectRejected(Collection inputCollection, Predicate predicate) {
+        ArrayList answer = new ArrayList(inputCollection.size());
+        selectRejected(inputCollection, predicate, answer);
+        return answer;
+    }
+    
+    /** 
+     * Selects all elements from inputCollection which don't match the given predicate
+     * and adds them to outputCollection
+     * 
+     * @param inputCollection  the collection to get the input from, may be null
+     * @param predicate  the predicate to use, may be null
+     * @param outputCollection  the collection to output into, may not be null
+     * @return the outputCollection with the the elements <b>not</b> matching the predicate added
+     * @throws NullPointerException if the input collection is null
+     */
+    public static void selectRejected(Collection inputCollection, Predicate predicate, Collection outputCollection) {
+        if (inputCollection != null && predicate != null) {
+            for (Iterator iter = inputCollection.iterator(); iter.hasNext();) {
+                Object item = iter.next();
+                if (predicate.evaluate(item) == false) {
+                    outputCollection.add(item);
+                }
+            }
+        }
+    }
     /** 
      * Transforms all elements from inputCollection with the given transformer 
      * and adds them to the outputCollection.
