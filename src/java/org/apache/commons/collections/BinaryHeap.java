@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.7 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.8 2002/07/03 02:09:06 mas Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/07/03 02:09:06 $
  *
  * ====================================================================
  *
@@ -60,19 +60,43 @@
  */
 package org.apache.commons.collections;
 
+import java.util.AbstractCollection;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Comparator;
 
 /**
- * Binary heap implementation of {@link PriorityQueue}.
+ * Binary heap implementation of {@link PriorityQueue} and {@link Buffer}.
+ *
+ * The removal order of a binary heap is based on either the natural sort
+ * order of its elements or a specified {@link Comparator}.  The 
+ * {@link remove()} method always returns the first element as determined
+ * by the sort order.  (The <Code>isMinHeap</Code> flag in the constructors
+ * can be used to reverse the sort order, in which case {@link remove()}
+ * will always remove the last element.)  The removal order is 
+ * <I>not</I> the same as the order of iteration; elements are
+ * returned by the iterator in no particular order.<P>
+ *
+ * The {@link add(Object)} and {@link remove()} operations perform
+ * in logarithmic time.  The {@link get()} operation performs in constant
+ * time.  All other operations perform in linear time or worse.<P>
+ *
+ * Note that this implementation is not synchronized.  Use 
+ * {@link BufferUtils.synchronizedBuffer(Buffer)} to provide
+ * synchronized access to a <Code>BinaryHeap</Code>:
+ *
+ * <Pre>
+ * Buffer heap = BufferUtils.synchronizedBuffer(new BinaryHeap());
+ * </Pre>
  *
  * @since 1.0
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a>
  * @author  <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @author  Paul Jack
  */
-public final class BinaryHeap
-    implements PriorityQueue
+public final class BinaryHeap extends AbstractCollection
+    implements PriorityQueue, Buffer
 {
     protected final static int      DEFAULT_CAPACITY   = 13;
 
@@ -400,6 +424,104 @@ public final class BinaryHeap
         sb.append( " ]" );
 
         return sb.toString();
+    }
+
+
+    /**
+     *  Returns an iterator over this heap's elements.
+     *
+     *  @return an iterator over this heap's elements
+     */
+    public Iterator iterator() {
+        return new Iterator() {
+
+            private int index = 1;
+            private int lastReturnedIndex = -1;
+
+            public boolean hasNext() {
+                return index <= m_size;
+            }
+
+            public Object next() {
+                if (!hasNext()) throw new NoSuchElementException();
+                lastReturnedIndex = index;
+                index++;
+                return m_elements[lastReturnedIndex];
+            }
+
+            public void remove() {
+                if (lastReturnedIndex == -1) throw new IllegalStateException();
+                m_elements[ lastReturnedIndex ] = m_elements[ m_size ];
+                m_elements[ m_size ] = null;
+                m_size--;
+                if( m_size != 0 )
+                {
+                    //percolate top element to it's place in tree
+                    if( m_isMinHeap ) percolateDownMinHeap( lastReturnedIndex );
+                    else percolateDownMaxHeap( lastReturnedIndex );
+                }
+                index--;
+                lastReturnedIndex = -1;        
+            }
+
+        };
+    }
+
+
+    /**
+     *  Adds an object to this heap.  Same as {@link insert(Object)}.
+     *
+     *  @param o  the object to add
+     *  @return true, always
+     */
+    public boolean add(Object o) {
+        insert(o);
+        return true;
+    }
+
+
+    /**
+     *  Returns the priority element.  Same as {@link peek()}.
+     *
+     *  @return the priority element
+     *  @throws BufferUnderflowException if this heap is empty
+     */
+    public Object get() {
+        try {
+            return peek();
+        } catch (NoSuchElementException e) {
+            throw new BufferUnderflowException();
+        }
+    }
+
+
+    /**
+     *  Removes the priority element.  Same as {@link pop()}.
+     *
+     *  @return the removed priority element
+     *  @throws BufferUnderflowException if this heap is empty
+     */
+    public Object remove() {
+        try {
+            return pop();
+        } catch (NoSuchElementException e) {
+            throw new BufferUnderflowException();
+        }
+    }
+
+
+    /**
+     *  Returns the number of elements in this heap.
+     *
+     *  @return the number of elements in this heap
+     */
+    public int size() {
+        return m_size;
+    }
+
+
+    Comparator comparator() {
+        return m_comparator;
     }
 }
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.5 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.6 2002/07/03 02:09:06 mas Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/07/03 02:09:06 $
  *
  * ====================================================================
  *
@@ -74,14 +74,23 @@ import java.util.Stack; // only used in javadoc comments, javadoc won't find it 
  * is therefore operates faster in environments where you do not need to
  * worry about multiple thread contention.
  *
+ * The removal order of an <Code>ArrayStack</Code> is based on insertion 
+ * order: The most recently added element is removed first.  The iteration
+ * order is <I>not</I> the same as the removal order.  The iterator returns
+ * elements from the bottom up, whereas the {@link remove()} method removes
+ * them from the top down.
+ *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.5 $ $Date: 2002/06/12 03:59:15 $
+ * @version $Revision: 1.6 $ $Date: 2002/07/03 02:09:06 $
  * @see java.util.Stack
  */
 
-public class ArrayStack extends ArrayList {
+public class ArrayStack extends ArrayList implements Buffer {
 
+
+    final private static long serialVersionUID = 2130079159931574599L;
+//, local class serialVersionUID = -3491241305852305742
 
     // --------------------------------------------------------- Public Methods
 
@@ -187,5 +196,31 @@ public class ArrayStack extends ArrayList {
 
     }
 
+
+    /**
+     *  Returns the element on the top of the stack.
+     *
+     *  @return the element on the top of the stack
+     *  @throws BufferUnderflowException if the stack is empty
+     */
+    public Object get() {
+        int size = size();
+        if (size == 0) throw new BufferUnderflowException();
+        return get(size - 1);
+    }
+
+
+
+    /**
+     *  Removes the element on the top of the stack.
+     *
+     *  @return the removed element 
+     *  @throws BufferUnderflowException if the stack is empty
+     */
+    public Object remove() {
+        int size = size();
+        if (size == 0) throw new BufferUnderflowException();
+        return remove(size - 1);
+    }
 
 }

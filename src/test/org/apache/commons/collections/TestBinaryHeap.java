@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.3 2002/06/11 02:41:47 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/06/11 02:41:47 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.4 2002/07/03 02:09:06 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/07/03 02:09:06 $
  *
  * ====================================================================
  *
@@ -62,6 +62,10 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -72,9 +76,9 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * Tests the BinaryHeap.
  * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestBinaryHeap.java,v 1.3 2002/06/11 02:41:47 mas Exp $
+ * @version $Id: TestBinaryHeap.java,v 1.4 2002/07/03 02:09:06 mas Exp $
  */
-public class TestBinaryHeap extends TestObject {
+public class TestBinaryHeap extends TestCollection {
     
   public static Test suite() {
     return new TestSuite(TestBinaryHeap.class);
@@ -87,10 +91,32 @@ public class TestBinaryHeap extends TestObject {
   /**
    * Return a new, empty {@link Object} to used for testing.
    */
-  public Object makeObject() {
+  public Collection makeCollection() {
     return new BinaryHeap();
   }
   
+
+  public Collection makeConfirmedCollection() {
+    return new ArrayList();
+  }
+
+  public Collection makeConfirmedFullCollection() {
+    ArrayList list = new ArrayList();
+    list.addAll(Arrays.asList(getFullElements()));
+    return list;
+  }
+
+  public Object[] getFullElements() {
+      return getFullNonNullStringElements();
+  }
+
+  public Object[] getOtherElements() {
+      return getOtherNonNullStringElements();
+  }
+
+  public void testCollectionIteratorFailFast() {
+  }
+
   public void testBasicOps() {
     BinaryHeap heap = new BinaryHeap();
     
@@ -240,6 +266,29 @@ public class TestBinaryHeap extends TestObject {
     } catch (NoSuchElementException e) {
       // expected
     }     
+  }
+
+
+  public void verify() {
+      super.verify();
+      BinaryHeap heap = (BinaryHeap)collection;
+
+      Comparator c = heap.comparator();
+      if (c == null) c = ComparatorUtils.NATURAL;
+      if (!heap.m_isMinHeap) c = ComparatorUtils.reverse(c);
+
+      Object[] tree = heap.m_elements;
+      for (int i = 1; i <= heap.m_size; i++) {
+          Object parent = tree[i];
+          if (i * 2 <= heap.m_size) {
+              assertTrue("Parent is less than or equal to its left child", 
+                c.compare(parent, tree[i * 2]) <= 0);
+          }
+          if (i * 2 + 1 < heap.m_size) {
+              assertTrue("Parent is less than or equal to its right child", 
+                c.compare(parent, tree[i * 2 + 1]) <= 0);
+          }
+      }
   }
 }
 
