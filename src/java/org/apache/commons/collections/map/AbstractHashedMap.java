@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.1 2003/12/07 23:59:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.2 2003/12/25 01:09:01 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/07 23:59:13 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/25 01:09:01 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -710,9 +710,9 @@ public class AbstractHashedMap implements IterableMap {
     }
 
     /**
-     * MapIterator
+     * MapIterator implementation.
      */
-    static class HashMapIterator extends HashIterator implements MapIterator {
+    protected static class HashMapIterator extends HashIterator implements MapIterator {
         
         HashMapIterator(AbstractHashedMap map) {
             super(map);
@@ -778,9 +778,9 @@ public class AbstractHashedMap implements IterableMap {
     }
 
     /**
-     * EntrySet
+     * EntrySet implementation.
      */
-    static class EntrySet extends AbstractSet {
+    protected static class EntrySet extends AbstractSet {
         private final AbstractHashedMap map;
         
         EntrySet(AbstractHashedMap map) {
@@ -820,9 +820,9 @@ public class AbstractHashedMap implements IterableMap {
     }
 
     /**
-     * EntrySetIterator and MapEntry
+     * EntrySet iterator.
      */
-    static class EntrySetIterator extends HashIterator {
+    protected static class EntrySetIterator extends HashIterator {
         
         EntrySetIterator(AbstractHashedMap map) {
             super(map);
@@ -862,9 +862,9 @@ public class AbstractHashedMap implements IterableMap {
     }
 
     /**
-     * KeySet
+     * KeySet implementation.
      */
-    static class KeySet extends AbstractSet {
+    protected static class KeySet extends AbstractSet {
         private final AbstractHashedMap map;
         
         KeySet(AbstractHashedMap map) {
@@ -896,9 +896,9 @@ public class AbstractHashedMap implements IterableMap {
     }
 
     /**
-     * KeySetIterator
+     * KeySet iterator.
      */
-    static class KeySetIterator extends EntrySetIterator {
+    protected static class KeySetIterator extends EntrySetIterator {
         
         KeySetIterator(AbstractHashedMap map) {
             super(map);
@@ -938,9 +938,9 @@ public class AbstractHashedMap implements IterableMap {
     }
 
     /**
-     * Values
+     * Values implementation.
      */
-    static class Values extends AbstractCollection {
+    protected static class Values extends AbstractCollection {
         private final AbstractHashedMap map;
         
         Values(AbstractHashedMap map) {
@@ -966,9 +966,9 @@ public class AbstractHashedMap implements IterableMap {
     }
 
     /**
-     * ValuesIterator
+     * Values iterator.
      */
-    static class ValuesIterator extends HashIterator {
+    protected static class ValuesIterator extends HashIterator {
         
         ValuesIterator(AbstractHashedMap map) {
             super(map);
@@ -981,12 +981,16 @@ public class AbstractHashedMap implements IterableMap {
     
     //-----------------------------------------------------------------------
     /**
-     * HashEntry
+     * HashEntry used to store the data
      */
     protected static class HashEntry implements Map.Entry, KeyValue {
+        /** The next entry in the hash chain */
         protected HashEntry next;
+        /** The hash code of the key */
         protected int hashCode;
+        /** The key */
         protected Object key;
+        /** The value */
         protected Object value;
         
         protected HashEntry(HashEntry next, int hashCode, Object key, Object value) {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractLinkedMap.java,v 1.1 2003/12/07 23:59:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractLinkedMap.java,v 1.2 2003/12/25 01:09:01 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -98,7 +98,7 @@ import org.apache.commons.collections.ResettableIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/07 23:59:13 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/25 01:09:01 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -340,9 +340,9 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     }
 
     /**
-     * MapIterator
+     * MapIterator implementation.
      */
-    static class LinkMapIterator extends LinkIterator implements OrderedMapIterator {
+    protected static class LinkMapIterator extends LinkIterator implements OrderedMapIterator {
         
         LinkMapIterator(AbstractLinkedMap map) {
             super(map);
@@ -396,9 +396,9 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     }
 
     /**
-     * EntrySetIterator and MapEntry
+     * EntrySet iterator.
      */
-    static class EntrySetIterator extends LinkIterator {
+    protected static class EntrySetIterator extends LinkIterator {
         
         EntrySetIterator(AbstractLinkedMap map) {
             super(map);
@@ -428,9 +428,9 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     }
 
     /**
-     * KeySetIterator
+     * KeySet iterator.
      */
-    static class KeySetIterator extends EntrySetIterator {
+    protected static class KeySetIterator extends EntrySetIterator {
         
         KeySetIterator(AbstractLinkedMap map) {
             super(map);
@@ -460,9 +460,9 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     }
 
     /**
-     * ValuesIterator
+     * Values iterator.
      */
-    static class ValuesIterator extends LinkIterator {
+    protected static class ValuesIterator extends LinkIterator {
         
         ValuesIterator(AbstractLinkedMap map) {
             super(map);
