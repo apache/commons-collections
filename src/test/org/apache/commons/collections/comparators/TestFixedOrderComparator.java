@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestFixedOrderComparator.java,v 1.1 2003/04/13 17:37:26 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2003/04/13 17:37:26 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestFixedOrderComparator.java,v 1.2 2003/08/31 14:37:48 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/08/31 14:37:48 $
  *
  * ====================================================================
  *
@@ -207,11 +207,11 @@ public class TestFixedOrderComparator extends TestCase {
         } catch (IllegalArgumentException e) {
             // success-- ignore
         }
-        assertEquals(FixedOrderComparator.UNKNOWN_THROW_EXCEPTION, comparator.getUnkownObjectBehavior());
+        assertEquals(FixedOrderComparator.UNKNOWN_THROW_EXCEPTION, comparator.getUnknownObjectBehavior());
 
         comparator = new FixedOrderComparator(topCities);
         comparator.setUnknownObjectBehavior(FixedOrderComparator.UNKNOWN_BEFORE);
-        assertEquals(FixedOrderComparator.UNKNOWN_BEFORE, comparator.getUnkownObjectBehavior());
+        assertEquals(FixedOrderComparator.UNKNOWN_BEFORE, comparator.getUnknownObjectBehavior());
         LinkedList keys = new LinkedList(Arrays.asList(topCities));
         keys.addFirst("Minneapolis");
         assertComparatorYieldsOrder(keys.toArray(new String[0]), comparator);

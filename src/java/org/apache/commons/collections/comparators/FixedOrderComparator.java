@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/FixedOrderComparator.java,v 1.3 2003/08/31 12:54:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/FixedOrderComparator.java,v 1.4 2003/08/31 14:37:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,10 +83,11 @@ import java.util.Map;
  * multiple comparisons  after all the setup operations are complete.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 12:54:49 $
+ * @version $Revision: 1.4 $ $Date: 2003/08/31 14:37:48 $
  *
  * @author David Leppik
  * @author Stephen Colebourne
+ * @author Janek Bogucki
  */
 public class FixedOrderComparator implements Comparator {
 
@@ -192,7 +193,7 @@ public class FixedOrderComparator implements Comparator {
     /** 
      * Gets the behavior for comparing unknown objects.
      */
-    public int getUnkownObjectBehavior() {
+    public int getUnknownObjectBehavior() {
         return unknownObjectBehavior;
     }
 
