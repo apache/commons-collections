@@ -1,9 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TreeBag.java,v 1.7 2003/01/13 23:54:38 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TreeBag.java,v 1.8 2003/05/16 14:58:42 scolebourne Exp $
  * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -54,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.Collection;
@@ -68,51 +68,50 @@ import java.util.TreeMap;
  * members.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.7 $ $Date: 2003/01/13 23:54:38 $
+ * @version $Revision: 1.8 $ $Date: 2003/05/16 14:58:42 $
+ * 
  * @author Chuck Burdick
- **/
-public class TreeBag extends DefaultMapBag implements SortedBag, Bag {
+ */
+public class TreeBag extends DefaultMapBag implements SortedBag {
 
-   /**
-    * Constructs an empty <Code>TreeBag</Code>.
-    */
-   public TreeBag() {
-      super(new TreeMap());
-   }
+    /**
+     * Constructs an empty <code>TreeBag</code>.
+     */
+    public TreeBag() {
+        super(new TreeMap());
+    }
 
-   /**
-    * Constructs an empty {@link Bag} that maintains order on its unique
-    * representative members according to the given {@link Comparator}.
-    **/
-   public TreeBag(Comparator c) {
-      super(new TreeMap(c));
-   }
+    /**
+     * Constructs an empty {@link Bag} that maintains order on its unique
+     * representative members according to the given {@link Comparator}.
+     * 
+     * @param comparator  the comparator to use
+     */
+    public TreeBag(Comparator comparator) {
+        super(new TreeMap(comparator));
+    }
 
-   /**
-    * Constructs a {@link Bag} containing all the members of the given
-    * collection.
-    * @see #addAll
-    **/
-   public TreeBag(Collection c) {
-      this();
-      addAll(c);
-   }
+    /**
+     * Constructs a {@link Bag} containing all the members of the given
+     * collection.
+     * 
+     * @param coll  the collection to copy into the bag
+     */
+    public TreeBag(Collection coll) {
+        this();
+        addAll(coll);
+    }
 
-   public Object first() {
-      return ((SortedMap)getMap()).firstKey();
-   }
+    public Object first() {
+        return ((SortedMap) getMap()).firstKey();
+    }
 
-   public Object last() {
-      return ((SortedMap)getMap()).lastKey();
-   }
+    public Object last() {
+        return ((SortedMap) getMap()).lastKey();
+    }
 
-   public Comparator comparator() {
-      return ((SortedMap)getMap()).comparator();
-   }
+    public Comparator comparator() {
+        return ((SortedMap) getMap()).comparator();
+    }
+    
 }
-
-
-
-
-
-

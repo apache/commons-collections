@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.8 2003/02/19 20:14:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.9 2003/05/16 14:58:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,7 +77,7 @@ import java.util.Set;
  * number of entries exceeds the number of buckets or if the hashcodes of the
  * objects are not uniformly distributed, these operations have a worst case
  * scenario that is proportional to the number of elements in the map
- * (<I>O(n)</I>).<P>
+ * (<i>O(n)</i>).<p>
  *
  * Each bucket in the hash table has its own monitor, so two threads can 
  * safely operate on the map at the same time, often without incurring any 
@@ -87,38 +87,38 @@ import java.util.Set;
  * that this map implementation behaves in ways you may find disconcerting.  
  * Bulk operations, such as {@link #putAll(Map) putAll} or the
  * {@link Collection#retainAll(Collection) retainAll} operation in collection 
- * views, are <I>not</I> atomic.  If two threads are simultaneously 
+ * views, are <i>not</i> atomic.  If two threads are simultaneously 
  * executing 
  *
- * <Pre>
+ * <pre>
  *   staticBucketMapInstance.putAll(map);
- * </Pre>
+ * </pre>
  *
  * and
  *
- * <Pre>
+ * <pre>
  *   staticBucketMapInstance.entrySet().removeAll(map.entrySet());
- * </Pre>
+ * </pre>
  *
  * then the results are generally random.  Those two statement could cancel
- * each other out, leaving <Code>staticBucketMapInstance</Code> essentially 
- * unchanged, or they could leave some random subset of <Code>map</Code> in 
- * <Code>staticBucketMapInstance</Code>.<P>
+ * each other out, leaving <code>staticBucketMapInstance</code> essentially 
+ * unchanged, or they could leave some random subset of <code>map</code> in 
+ * <code>staticBucketMapInstance</code>.<p>
  *
  * Also, much like an encyclopedia, the results of {@link #size()} and 
- * {@link #isEmpty()} are out-of-date as soon as they are produced.<P>
+ * {@link #isEmpty()} are out-of-date as soon as they are produced.<p>
  *
- * The iterators returned by the collection views of this class are <I>not</I>
- * fail-fast.  They will <I>never</I> raise a 
+ * The iterators returned by the collection views of this class are <i>not</i>
+ * fail-fast.  They will <i>never</i> raise a 
  * {@link java.util.ConcurrentModificationException}.  Keys and values 
  * added to the map after the iterator is created do not necessarily appear
  * during iteration.  Similarly, the iterator does not necessarily fail to 
- * return keys and values that were removed after the iterator was created.<P>
+ * return keys and values that were removed after the iterator was created.<p>
  *
  * Finally, unlike {@link java.util.HashMap}-style implementations, this
- * class <I>never</I> rehashes the map.  The number of buckets is fixed 
+ * class <i>never</i> rehashes the map.  The number of buckets is fixed 
  * at construction time and never altered.  Performance may degrade if 
- * you do not allocate enough buckets upfront.<P>
+ * you do not allocate enough buckets upfront.<p>
  *
  * The {@link #atomic(Runnable)} method is provided to allow atomic iterations
  * and bulk operations; however, overuse of {@link #atomic(Runnable) atomic}
@@ -127,10 +127,10 @@ import java.util.Set;
  *
  * Use this class if you do not require reliable bulk operations and 
  * iterations, or if you can make your own guarantees about how bulk 
- * operations will affect the map.<P>
+ * operations will affect the map.<p>
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.8 $ $Date: 2003/02/19 20:14:25 $
+ * @version $Revision: 1.9 $ $Date: 2003/05/16 14:58:42 $
  * 
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
@@ -138,8 +138,8 @@ import java.util.Set;
  * @author Paul Jack
  * @author Leo Sutic
  */
-public final class StaticBucketMap implements Map
-{
+public final class StaticBucketMap implements Map {
+
     private static final int DEFAULT_BUCKETS = 255;
     private Node[] m_buckets;
     private Lock[] m_locks;
@@ -698,17 +698,17 @@ public final class StaticBucketMap implements Map
      *  given {@link Runnable} executes.  This method can be used, for
      *  instance, to execute a bulk operation atomicly: 
      *
-     *  <Pre>
+     *  <pre>
      *    staticBucketMapInstance.atomic(new Runnable() {
      *        public void run() {
      *            staticBucketMapInstance.putAll(map);
      *        }
      *    });
-     *  </Pre>
+     *  </pre>
      *
      *  It can also be used if you need a reliable iterator:
      *
-     *  <Pre>
+     *  <pre>
      *    staticBucketMapInstance.atomic(new Runnable() {
      *        public void run() {
      *            Iterator iterator = staticBucketMapInstance.iterator();
@@ -717,7 +717,7 @@ public final class StaticBucketMap implements Map
      *            }
      *        }
      *    });
-     *  </Pre>
+     *  </pre>
      *
      *  <B>Implementation note:</B> This method requires a lot of time
      *  and a ton of stack space.  Essentially a recursive algorithm is used

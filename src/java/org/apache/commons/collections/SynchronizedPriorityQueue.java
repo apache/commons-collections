@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/15 20:04:31 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.6 2003/05/16 14:58:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -67,34 +64,31 @@ import java.util.NoSuchElementException;
  * Provides synchronized wrapper methods for all the methods 
  * defined in the PriorityQueue interface.
  *
- * @since 1.0
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.6 $ $Date: 2003/05/16 14:58:42 $
+ * 
  * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a> 
  */
-public final class SynchronizedPriorityQueue 
-    implements PriorityQueue
-{
+public final class SynchronizedPriorityQueue implements PriorityQueue {
 
     /**
-     *  The underlying priority queue.
+     * The underlying priority queue.
      */
-    protected final PriorityQueue   m_priorityQueue;
-
+    protected final PriorityQueue m_priorityQueue;
 
     /**
-     *  Constructs a new synchronized priority queue.
+     * Constructs a new synchronized priority queue.
      *
-     *  @param priorityQueue the priority queue to synchronize
+     * @param priorityQueue  the priority queue to synchronize
      */
-    public SynchronizedPriorityQueue( final PriorityQueue priorityQueue )
-    {
+    public SynchronizedPriorityQueue(final PriorityQueue priorityQueue) {
         m_priorityQueue = priorityQueue;
     }
 
     /**
      * Clear all elements from queue.
      */
-    public synchronized void clear()
-    {
+    public synchronized void clear() {
         m_priorityQueue.clear();
     }
 
@@ -103,8 +97,7 @@ public final class SynchronizedPriorityQueue
      *
      * @return true if queue is empty else false.
      */
-    public synchronized boolean isEmpty()
-    {
+    public synchronized boolean isEmpty() {
         return m_priorityQueue.isEmpty();
     }
 
@@ -113,19 +106,17 @@ public final class SynchronizedPriorityQueue
      *
      * @param element the element to be inserted
      */
-    public synchronized void insert( final Object element )
-    {
-        m_priorityQueue.insert( element );
+    public synchronized void insert(final Object element) {
+        m_priorityQueue.insert(element);
     }
 
     /**
      * Return element on top of heap but don't remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if isEmpty() == true
+     * @throws NoSuchElementException if isEmpty() == true
      */
-    public synchronized Object peek() throws NoSuchElementException
-    {
+    public synchronized Object peek() throws NoSuchElementException {
         return m_priorityQueue.peek();
     }
 
@@ -133,20 +124,19 @@ public final class SynchronizedPriorityQueue
      * Return element on top of heap and remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if isEmpty() == true
+     * @throws NoSuchElementException if isEmpty() == true
      */
-    public synchronized Object pop() throws NoSuchElementException
-    {
+    public synchronized Object pop() throws NoSuchElementException {
         return m_priorityQueue.pop();
     }
 
     /**
-     *  Returns a string representation of the underlying queue.
+     * Returns a string representation of the underlying queue.
      *
-     *  @return a string representation of the underlying queue
+     * @return a string representation of the underlying queue
      */
-    public synchronized String toString()
-    {
+    public synchronized String toString() {
         return m_priorityQueue.toString();
     }
+    
 }

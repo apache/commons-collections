@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.11 2003/05/07 09:18:57 rdonkin Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.12 2003/05/16 14:58:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -78,45 +78,45 @@ import java.util.Set;
 
 /**
  *  Hashtable-based {@link Map} implementation that allows
- *  mappings to be removed by the garbage collector.<P>
+ *  mappings to be removed by the garbage collector.<p>
  *
- *  When you construct a <Code>ReferenceMap</Code>, you can 
+ *  When you construct a <code>ReferenceMap</code>, you can 
  *  specify what kind of references are used to store the
  *  map's keys and values.  If non-hard references are 
  *  used, then the garbage collector can remove mappings
  *  if a key or value becomes unreachable, or if the 
  *  JVM's memory is running low.  For information on how
  *  the different reference types behave, see
- *  {@link Reference}.<P>
+ *  {@link Reference}.<p>
  *
  *  Different types of references can be specified for keys
  *  and values.  The keys can be configured to be weak but
  *  the values hard, in which case this class will behave
- *  like a <A HREF="http://java.sun.com/j2se/1.4/docs/api/java/util/WeakHashMap.html">
- *  <Code>WeakHashMap</Code></A>.  However, you
+ *  like a <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/WeakHashMap.html">
+ *  <code>WeakHashMap</code></a>.  However, you
  *  can also specify hard keys and weak values, or any other
  *  combination.  The default constructor uses hard keys
- *  and soft values, providing a memory-sensitive cache.<P>
+ *  and soft values, providing a memory-sensitive cache.<p>
  *
  *  The algorithms used are basically the same as those
  *  in {@link java.util.HashMap}.  In particular, you 
  *  can specify a load factor and capacity to suit your
  *  needs.  All optional {@link Map} operations are 
- *  supported.<P>
+ *  supported.<p>
  *
  *  However, this {@link Map} implementation does <I>not</I>
  *  allow null elements.  Attempting to add a null key or
  *  or a null value to the map will raise a 
- *  <Code>NullPointerException</Code>.<P>
+ *  <code>NullPointerException</code>.<p>
  *
  *  As usual, this implementation is not synchronized.  You
  *  can use {@link java.util.Collections#synchronizedMap} to 
- *  provide synchronized access to a <Code>ReferenceMap</Code>.
+ *  provide synchronized access to a <code>ReferenceMap</code>.
  *
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.11 $ $Date: 2003/05/07 09:18:57 $
+ * @version $Revision: 1.12 $ $Date: 2003/05/16 14:58:42 $
  * 
  * @author Paul Jack
  */
@@ -235,7 +235,7 @@ public class ReferenceMap extends AbstractMap {
 
 
     /**
-     *  Constructs a new <Code>ReferenceMap</Code> that will
+     *  Constructs a new <code>ReferenceMap</code> that will
      *  use hard references to keys and soft references to values.
      */
     public ReferenceMap() {
@@ -243,7 +243,7 @@ public class ReferenceMap extends AbstractMap {
     }
 
     /**
-     *  Constructs a new <Code>ReferenceMap</Code> that will
+     *  Constructs a new <code>ReferenceMap</code> that will
      *  use the specified types of references.
      *
      *  @param keyType  the type of reference to use for keys;
@@ -259,7 +259,7 @@ public class ReferenceMap extends AbstractMap {
     }
 
     /**
-     *  Constructs a new <Code>ReferenceMap</Code> that will
+     *  Constructs a new <code>ReferenceMap</code> that will
      *  use the specified types of references.
      *
      *  @param keyType  the type of reference to use for keys;
@@ -272,7 +272,7 @@ public class ReferenceMap extends AbstractMap {
     }
 
     /**
-     *  Constructs a new <Code>ReferenceMap</Code> with the
+     *  Constructs a new <code>ReferenceMap</code> with the
      *  specified reference types, load factor and initial
      *  capacity.
      *
@@ -296,7 +296,7 @@ public class ReferenceMap extends AbstractMap {
     }
 
     /**
-     *  Constructs a new <Code>ReferenceMap</Code> with the
+     *  Constructs a new <code>ReferenceMap</code> with the
      *  specified reference types, load factor and initial
      *  capacity.
      *
@@ -523,9 +523,9 @@ public class ReferenceMap extends AbstractMap {
 
 
     /**
-     *  Returns <Code>true</Code> if this map is empty.
+     *  Returns <code>true</code> if this map is empty.
      *
-     *  @return <Code>true</Code> if this map is empty
+     *  @return <code>true</code> if this map is empty
      */
     public boolean isEmpty() {
         purge();
@@ -534,7 +534,7 @@ public class ReferenceMap extends AbstractMap {
 
 
     /**
-     *  Returns <Code>true</Code> if this map contains the given key.
+     *  Returns <code>true</code> if this map contains the given key.
      *
      *  @return true if the given key is in this map
      */
@@ -549,7 +549,7 @@ public class ReferenceMap extends AbstractMap {
     /**
      *  Returns the value associated with the given key, if any.
      *
-     *  @return the value associated with the given key, or <Code>null</Code>
+     *  @return the value associated with the given key, or <code>null</code>
      *   if the key maps to no value
      */
     public Object get(Object key) {
@@ -561,7 +561,7 @@ public class ReferenceMap extends AbstractMap {
 
 
     /**
-     *  Associates the given key with the given value.<P>
+     *  Associates the given key with the given value.<p>
      *  Neither the key nor the value may be null.
      *
      *  @param key  the key of the mapping

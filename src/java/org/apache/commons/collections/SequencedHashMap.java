@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.16 2003/02/19 20:14:25 scolebourne Exp $
- * $Revision: 1.16 $
- * $Date: 2003/02/19 20:14:25 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.17 2003/05/16 14:58:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -76,21 +73,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
+
 /**
  *  A map of objects whose mapping entries are sequenced based on the order in
- *  which they were added.  This data structure has fast <I>O(1)</I> search
+ *  which they were added.  This data structure has fast <i>O(1)</i> search
  *  time, deletion time, and insertion time.
  *
- *  <P>Although this map is sequenced, it cannot implement {@link
+ *  <p>Although this map is sequenced, it cannot implement {@link
  *  java.util.List} because of incompatible interface definitions.  The remove
  *  methods in List and Map have different return values (see: {@link
  *  java.util.List#remove(Object)} and {@link java.util.Map#remove(Object)}).
  *
- *  <P>This class is not thread safe.  When a thread safe implementation is
+ *  <p>This class is not thread safe.  When a thread safe implementation is
  *  required, use {@link Collections#synchronizedMap(Map)} as it is documented,
  *  or use explicit synchronization controls.
  *
- * @since 2.0
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.17 $ $Date: 2003/05/16 14:58:42 $
+ * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</A>
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
@@ -987,7 +987,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
      * value of a list.  This occurs because changing the key, changes when the
      * mapping is added to the map and thus where it appears in the list.
      *
-     * <P>An alternative to this method is to use {@link #keySet()}
+     * <p>An alternative to this method is to use {@link #keySet()}
      *
      * @see #keySet()
      * @return The ordered list of keys.  

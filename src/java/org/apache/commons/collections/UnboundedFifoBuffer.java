@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.5 2002/10/13 12:59:04 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/10/13 12:59:04 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.6 2003/05/16 14:58:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,10 +57,10 @@
  */
 package org.apache.commons.collections;
 
-
 import java.util.AbstractCollection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 /**
  * UnboundedFifoBuffer is a <strong>very</strong> efficient buffer implementation.
  * According to performance testing, it exhibits a constant access time, but it
@@ -84,16 +81,18 @@ import java.util.NoSuchElementException;
  * </pre>
  * <p>
  * This buffer prevents null objects from being added.
+ * 
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.6 $ $Date: 2003/05/16 14:58:42 $
  *
  * @author Avalon
  * @author  <a href="fede@apache.org">Federico Barbieri</a>
  * @author  <a href="bloritsch@apache.org">Berin Loritsch</a>
  * @author Paul Jack
  * @author Stephen Colebourne
- * @since 2.1
- * @version $Id: UnboundedFifoBuffer.java,v 1.5 2002/10/13 12:59:04 scolebourne Exp $
  */
 public final class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
+    
     protected Object[] m_buffer;
     protected int m_head;
     protected int m_tail;
@@ -314,4 +313,3 @@ public final class UnboundedFifoBuffer extends AbstractCollection implements Buf
     }
     
 }
-
