@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.3 2003/01/11 01:07:13 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.4 2003/01/13 22:34:57 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.util.Comparator;
  * 
  * @since Commons Collections 2.2
  * 
- * @version $Revision: 1.3 $ $Date: 2003/01/11 01:07:13 $
+ * @version $Revision: 1.4 $ $Date: 2003/01/13 22:34:57 $
  * 
  * @author Rodney Waldhoff
  */
@@ -157,7 +157,7 @@ public final class BooleanComparator implements Comparator, Serializable {
      * I sort <code>true</code> values before 
      * <code>false</code> values.  In other words,
      * returns <code>true</code> iff
-     * {@link #compare(Boolean,Boolean) compare(Boolean.TRUE,Boolean.FALSE)}
+     * {@link #compare(Boolean,Boolean) compare(Boolean.FALSE,Boolean.TRUE)}
      * returns a positive value.
      */
     public boolean sortsTrueFirst() {

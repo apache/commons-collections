@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ReverseComparator.java,v 1.11 2003/01/10 20:21:25 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ReverseComparator.java,v 1.12 2003/01/13 22:34:57 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -61,18 +61,18 @@ import java.util.Comparator;
 
 /**
  * Reverses the order of another comparator by 
- * reversing the arguments to its {@link #compare} 
+ * reversing the arguments to its {@link #compare compare} 
  * method.
  * 
  * @since Commons Collections 2.0
- * @version $Revision: 1.11 $ $Date: 2003/01/10 20:21:25 $
+ * @version $Revision: 1.12 $ $Date: 2003/01/13 22:34:57 $
  *
  * @author bayard@generationjava.com
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * 
+ * @see java.util.Collections#reverseOrder
  */
 public class ReverseComparator implements Comparator,Serializable {
-
-    private Comparator comparator;
 
     /**
      * Creates a comparator that compares objects based on the inverse of their
@@ -80,18 +80,18 @@ public class ReverseComparator implements Comparator,Serializable {
      * that is functionaly identical to the Comparator returned by
      * java.util.Collections.<b>reverseOrder()</b>.
      * 
-     * @see java.util.Collections#reverseOrder()
+     * @see java.util.Collections#reverseOrder
      */
     public ReverseComparator() {
         this(null);
     }
 
     /**
-     * Creates a reverse comparator that inverts the comparison
-     * of the passed in comparator.  If you pass in a null,
+     * Creates a comparator that inverts the comparison
+     * of the given comparator.  If you pass in <code>null</code>,
      * the ReverseComparator defaults to reversing the
      * natural order, as per 
-     * java.util.Collections.<b>reverseOrder()</b>.
+     * {@link java.util.Collections#reverseOrder}</b>.
      * 
      * @param comparator Comparator to reverse
      */
@@ -145,5 +145,7 @@ public class ReverseComparator implements Comparator,Serializable {
     }
 
     // use serialVersionUID from Collections 2.0 for interoperability
-    private static final long serialVersionUID = 2858887242028539265L;;
+    private static final long serialVersionUID = 2858887242028539265L;
+
+    private Comparator comparator;
 }
