@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.16 2002/09/07 19:49:49 rwaldhoff Exp $
- * $Revision: 1.16 $
- * $Date: 2002/09/07 19:49:49 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.17 2002/10/12 21:59:45 scolebourne Exp $
+ * $Revision: 1.17 $
+ * $Date: 2002/10/12 21:59:45 $
  *
  * ====================================================================
  *
@@ -82,8 +82,9 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @since 1.0
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Revision: 1.16 $ $Date: 2002/09/07 19:49:49 $
+ * @author Stephen Colebourne
+ * @author Steve Downey
+ * @version $Revision: 1.17 $ $Date: 2002/10/12 21:59:45 $
  */
 public class CollectionUtils {
 
@@ -255,13 +256,12 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isSubCollection(final Collection a, final Collection b) {
-        ArrayList list = new ArrayList();
         Map mapa = getCardinalityMap(a);
         Map mapb = getCardinalityMap(b);
         Iterator it = a.iterator();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Object obj = it.next();
-            if(getFreq(obj,mapa) > getFreq(obj,mapb)) {
+            if (getFreq(obj, mapa) > getFreq(obj, mapb)) {
                 return false;
             }
         }
