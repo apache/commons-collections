@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.1 2001/05/14 10:42:53 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2001/05/14 10:42:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.2 2001/06/05 07:20:10 jstrachan Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/06/05 07:20:10 $
  *
  * ====================================================================
  *
@@ -63,6 +63,7 @@ package org.apache.commons.collections;
 
 import junit.framework.*;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Tests the ArrayIterator to ensure that the next() method will actually
@@ -71,7 +72,7 @@ import java.util.Iterator;
  *
  * @author James Strachan
  * @author Mauricio S. Moura
- * @version $Id: TestArrayIterator.java,v 1.1 2001/05/14 10:42:53 jstrachan Exp $
+ * @version $Id: TestArrayIterator.java,v 1.2 2001/06/05 07:20:10 jstrachan Exp $
  */
 public class TestArrayIterator extends TestObject {
     
@@ -104,5 +105,13 @@ public class TestArrayIterator extends TestObject {
         }
         
         assert("Iterator should now be empty", ! iter.hasNext() );
+
+	try {
+	    Object testValue = iter.next();
+	} catch (Exception e) {
+	  assert("NoSuchElementException must be thrown", 
+		 e.getClass().equals((new NoSuchElementException()).getClass()));
+	}
     }
 }
+

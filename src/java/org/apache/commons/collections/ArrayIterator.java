@@ -8,12 +8,14 @@
 package org.apache.commons.collections;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /** Implements {@link Iterator} over an array of objects
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  * @author Mauricio S. Moura
   * @
-  * @version $Revision: 1.2 $
+  * @version $Revision: 1.3 $
   */
 public class ArrayIterator implements Iterator {
     
@@ -35,6 +37,9 @@ public class ArrayIterator implements Iterator {
     }
 
     public Object next() {
+        if(!hasNext()) {
+            throw new NoSuchElementException();
+        }
         return array[ index++ ];
     }
 
