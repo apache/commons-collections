@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestHashBag.java,v 1.5 2003/10/02 22:35:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestHashBag.java,v 1.6 2003/10/05 21:17:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,9 +63,10 @@ import junit.framework.TestSuite;
 /**
  * Extension of {@link TestBag} for exercising the {@link HashBag}
  * implementation.
+ * 
+ * @version $Revision: 1.6 $ $Date: 2003/10/05 21:17:40 $
  *
  * @author Chuck Burdick
- * @version $Id: TestHashBag.java,v 1.5 2003/10/02 22:35:31 scolebourne Exp $
  */
 public class TestHashBag extends AbstractTestBag {
     

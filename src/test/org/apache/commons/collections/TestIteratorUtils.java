@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.6 2003/09/29 03:56:12 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.7 2003/10/05 21:17:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -68,8 +68,13 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.iterators.ResetableIterator;
 import org.apache.commons.collections.iterators.ResetableListIterator;
+
 /**
- *  Tests for IteratorUtils.
+ * Tests for IteratorUtils.
+ * 
+ * @version $Revision: 1.7 $ $Date: 2003/10/05 21:17:40 $
+ * 
+ * @author Unknown
  */
 public class TestIteratorUtils extends BulkTest {
 
