@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestIterator.java,v 1.2 2002/12/13 12:03:46 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/12/13 12:03:46 $
  *
  * ====================================================================
  *
@@ -58,17 +58,16 @@
  * <http://www.apache.org/>.
  *
  */
-     
 package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.apache.commons.collections.TestObject;
-
 /**
  * Base class for tetsing Iterator interface
  * 
  * @author Morgan Delagrange
+ * @author Stephen Colebourne
  */
 public abstract class TestIterator extends TestObject {
 
@@ -101,6 +100,16 @@ public abstract class TestIterator extends TestObject {
     }
 
     /**
+     * Whether or not we are testing an iterator that supports
+     * remove().  Default is true.
+     * 
+     * @return true if Iterators can be empty
+     */
+    public boolean supportsRemove() {
+        return true;
+    }
+
+    /**
      * Should throw a NoSuchElementException.
      */
     public void testEmptyIterator() {
@@ -109,12 +118,12 @@ public abstract class TestIterator extends TestObject {
         }
 
         Iterator iter = makeEmptyIterator();
-        assertTrue("hasNext() should return false for empty iterators",iter.hasNext() == false);
+        assertTrue("hasNext() should return false for empty iterators", iter.hasNext() == false);
         try {
-	    iter.next();
+            iter.next();
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
-	} catch (NoSuchElementException e) {
-	}
+        } catch (NoSuchElementException e) {
+        }
     }
 
     /**
@@ -130,23 +139,50 @@ public abstract class TestIterator extends TestObject {
 
         Iterator iter = makeFullIterator();
 
-        assertTrue("hasNext() should return true for at least one element",iter.hasNext());
+        assertTrue("hasNext() should return true for at least one element", iter.hasNext());
 
         try {
-	    iter.next();
-	} catch (NoSuchElementException e) {
+            iter.next();
+        } catch (NoSuchElementException e) {
             fail("Full iterators must have at least one element");
-	}
+        }
 
         while (iter.hasNext()) {
             iter.next();
         }
 
         try {
-	    iter.next();
+            iter.next();
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
-	} catch (NoSuchElementException e) {
-	}
+        } catch (NoSuchElementException e) {
+        }
     }
 
+    /**
+     * Test remove
+     */
+    public void testRemove() {
+        Iterator it = makeFullIterator();
+        
+        if (supportsRemove() == false) {
+            try {
+                it.remove();
+            } catch (UnsupportedOperationException ex) {}
+            return;
+        }
+        
+        try {
+            it.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+        
+        it.next();
+        it.remove();
+        
+        try {
+            it.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+    
 }
