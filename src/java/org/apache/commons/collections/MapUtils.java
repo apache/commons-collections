@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.24 2003/05/17 15:03:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.25 2003/06/20 07:50:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -99,13 +99,13 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  <li>{@link #predicatedMap(Map,Predicate,Predicate)}
  *  <li>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
  *  <li>{@link #transformedMap(Map, Transformer, Transformer)}
- *  <li>{@link #transformedSortedMap(Map, Transformer, Transformer)}
+ *  <li>{@link #transformedSortedMap(SortedMap, Transformer, Transformer)}
  *  <li>{@link #typedMap(Map, Class, Class)}
- *  <li>{@link #typedSortedMap(Map, Class, Class)}
+ *  <li>{@link #typedSortedMap(SortedMap, Class, Class)}
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.24 $ $Date: 2003/05/17 15:03:25 $
+ * @version $Revision: 1.25 $ $Date: 2003/06/20 07:50:21 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -114,6 +114,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
  * @author Arun Mammen Thomas
+ * @author Janek Bogucki
  */
 public class MapUtils {
     
