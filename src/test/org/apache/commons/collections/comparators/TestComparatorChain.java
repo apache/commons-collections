@@ -1,5 +1,5 @@
 /* 
- * $Id: TestComparatorChain.java,v 1.4 2003/01/07 23:44:20 rwaldhoff Exp $
+ * $Id: TestComparatorChain.java,v 1.5 2003/01/13 22:52:34 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -125,6 +125,30 @@ public class TestComparatorChain extends TestComparator {
         } catch (UnsupportedOperationException e) {
 
         }
+    }
+
+
+    public void testComparatorChainOnMinvaluedCompatator() {
+        // -1 * Integer.MIN_VALUE is less than 0,
+        // test that ComparatorChain handles this edge case correctly
+        ComparatorChain chain = new ComparatorChain();
+        chain.addComparator(
+            new Comparator() {
+                public int compare(Object a, Object b) {
+                    int result = ((Comparable)a).compareTo(b);
+                    if(result < 0) {
+                        return Integer.MIN_VALUE;
+                    } else if(result > 0) {
+                        return Integer.MAX_VALUE;
+                    } else {
+                        return 0;
+                    }
+                }
+            }, true);
+
+        assertTrue(chain.compare(new Integer(4), new Integer(5)) > 0);            
+        assertTrue(chain.compare(new Integer(5), new Integer(4)) < 0);            
+        assertTrue(chain.compare(new Integer(4), new Integer(4)) == 0);            
     }
 
     public List getComparableObjectsOrdered() {

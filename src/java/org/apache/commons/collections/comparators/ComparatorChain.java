@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.9 2003/01/10 20:21:25 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.10 2003/01/13 22:52:34 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -93,12 +93,12 @@ import java.util.List;
  * 
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision: 1.9 $ $Date: 2003/01/10 20:21:25 $
+ * @version $Revision: 1.10 $ $Date: 2003/01/13 22:52:34 $
  */
 public class ComparatorChain implements Comparator,Serializable {
 
     protected List comparatorChain = null;
-    // 0 = ascend; 1 = descend
+    // false (clear) = ascend; true (set) = descend
     protected BitSet orderingBits = null;
 
     // ComparatorChain is "locked" after the first time
@@ -206,7 +206,7 @@ public class ComparatorChain implements Comparator,Serializable {
      * @param index      index of the Comparator to replace
      * @param comparator Comparator to place at the given index
      * @exception IndexOutOfBoundsException
-     *                   if index < 0 or index > size()
+     *                   if index &lt; 0 or index &gt; size()
      */
     public void setComparator(int index, Comparator comparator) 
     throws IndexOutOfBoundsException {
@@ -315,7 +315,11 @@ public class ComparatorChain implements Comparator,Serializable {
             if (retval != 0) {
                 // invert the order if it is a reverse sort
                 if (orderingBits.get(comparatorIndex) == true) {
-                    retval *= -1;
+                    if(Integer.MIN_VALUE == retval) {
+                        retval = Integer.MAX_VALUE;
+                    } else {                        
+                        retval *= -1;
+                    }
                 }
 
                 return retval;
