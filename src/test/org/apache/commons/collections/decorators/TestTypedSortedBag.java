@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.14 2003/09/20 02:51:50 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTypedSortedBag.java,v 1.1 2003/09/20 02:51:50 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,61 +58,84 @@
 package org.apache.commons.collections.decorators;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.Comparator;
+
+import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.SortedBag;
+import org.apache.commons.collections.TreeBag;
+import org.apache.commons.collections.TestBag;
 
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestBag} for exercising the {@link TypedSortedBag}
+ * implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.14 $ $Date: 2003/09/20 02:51:50 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/20 02:51:50 $
  * 
- * @author Stephen Colebourne
+ * @author Phil Steitz
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestTypedSortedBag extends TestBag {
+       
+    public TestTypedSortedBag(String testName) {
         super(testName);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestOrderedSet.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestPredicatedCollection.suite());
-        suite.addTest(TestPredicatedBuffer.suite());
-        suite.addTest(TestPredicatedList.suite());
-        suite.addTest(TestPredicatedSet.suite());
-        suite.addTest(TestPredicatedMap.suite());
-        suite.addTest(TestPredicatedSortedMap.suite());
-        suite.addTest(TestLazyMap.suite());
-        suite.addTest(TestLazySortedMap.suite());
-        suite.addTest(TestBlockingBuffer.suite());
-        suite.addTest(TestTypedBag.suite());
-        suite.addTest(TestTypedSortedBag.suite());
-        
-        return suite;
+        return new TestSuite(TestTypedSortedBag.class);
     }
-        
+    
+    public static void main(String args[]) {
+        String[] testCaseName = { TestTypedSortedBag.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    protected Class stringClass = this.getName().getClass();
+    private Object obj = new Object();
+    protected Class objectClass = obj.getClass();
+    protected SortedBag emptyBag = new TreeBag();
+    protected SortedBag nullBag = null;
+    
+    protected SortedBag decorateBag(SortedBag bag, Class claz) {
+        return TypedSortedBag.decorate(bag, claz);
+    }
+
+    public Bag makeBag() {
+        return decorateBag(emptyBag, objectClass);
+    }
+    
+    public Bag makeTestBag() {
+        return decorateBag(emptyBag, stringClass);
+    }
+    
+    //--------------------------------------------------------------------------
+    
+    public void testDecorate() {
+        SortedBag bag = decorateBag(emptyBag, stringClass);
+        try {
+            SortedBag bag3 = decorateBag(emptyBag, null);
+            fail("Expecting IllegalArgumentException for null predicate");
+        } catch (IllegalArgumentException e) {}
+        try {
+            SortedBag bag4 = decorateBag(nullBag, stringClass);
+            fail("Expecting IllegalArgumentException for null bag");
+        } catch (IllegalArgumentException e) {}
+    }
+    
+    public void testSortOrder() {
+        SortedBag bag = decorateBag(emptyBag, stringClass);
+        String one = "one";
+        String two = "two";
+        String three = "three";
+        bag.add(one);
+        bag.add(two);
+        bag.add(three);
+        assertEquals("first element", bag.first(), one);
+        assertEquals("last element", bag.last(), two); 
+        Comparator c = bag.comparator();
+        assertTrue("natural order, so comparator should be null", 
+            c == null);
+    }
 }
