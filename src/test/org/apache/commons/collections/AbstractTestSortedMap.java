@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedMap.java,v 1.1 2003/10/02 23:01:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedMap.java,v 1.2 2003/10/06 23:44:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,10 +57,13 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Iterator;
+import java.util.SortedMap;
+
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.1 $ $Date: 2003/10/02 23:01:09 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/06 23:44:56 $
  * 
  * @author Stephen Colebourne
  */
@@ -85,6 +88,26 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
         return false;
     }
 
-
     // TODO: Add the SortedMap tests!
+    
+    //-----------------------------------------------------------------------
+    public void testComparator() {
+        SortedMap sm = (SortedMap) makeFullMap();
+        // no tests I can think of
+    }
+    
+    public void testFirstKey() {
+        SortedMap sm = (SortedMap) makeFullMap();
+        assertSame(sm.keySet().iterator().next(), sm.firstKey());
+    }
+    
+    public void testLastKey() {
+        SortedMap sm = (SortedMap) makeFullMap();
+        Object obj = null;
+        for (Iterator it = sm.keySet().iterator(); it.hasNext();) {
+            obj = (Object) it.next();
+        }
+        assertSame(obj, sm.lastKey());
+    }
+    
 }
