@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.3 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.4 2002/03/19 04:34:18 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/03/19 04:34:18 $
  *
  * ====================================================================
  *
@@ -86,23 +86,27 @@ public interface PriorityQueue
      * Insert an element into queue.
      *
      * @param element the element to be inserted
+     *
+     * @exception ClassCastException if the specified <code>element</code>'s
+     * type prevents it from being compared to other items in the queue to
+     * determine its relative priority.  
      */
-    void insert( Comparable element );
+    void insert( Object element );
 
     /**
      * Return element on top of heap but don't remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if isEmpty() == true
+     * @exception NoSuchElementException if <code>isEmpty() == true</code>
      */
-    Comparable peek() throws NoSuchElementException;
+    Object peek() throws NoSuchElementException;
 
     /**
      * Return element on top of heap and remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if isEmpty() == true
+     * @exception NoSuchElementException if <code>isEmpty() == true</code>
      */
-    Comparable pop() throws NoSuchElementException;
+    Object pop() throws NoSuchElementException;
 }
 

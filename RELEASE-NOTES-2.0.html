@@ -169,3 +169,51 @@ method has been revamped to work better for subclasses. </p>
 
 </ul>
 
+
+<p><u>PriorityQueue</u></p>
+
+<p>Changed to allow priority queue implementations that support determining
+priorities using means other than the object's natural ordering (i.e. a
+priority queue that does not depend on the object implementing the Comparable
+interface).</p>
+
+<p><i>PriorityQueue 2.0 compatibility changes:</i></p>
+
+<ul>
+
+  <li>The pop() and peek() methods were changed to return a generic Object
+  rather than a comparable.</li>
+
+  <li>The insert(Comparable) method was changed to take an Object argument
+  rather than a comparable.</li>
+
+</ul>
+
+
+<p><u>BinaryHeap</u></p>
+
+<p>Changed to allow the specification of a Comparator that should be used to
+compare objects to determine "priority" of the objects.  If no comparator is
+specified, the object's natural ordering is used.</p>
+
+<p><i>BinaryHeap 2.0 compatibility changes:</i></p>
+
+<ul>
+
+  <li>The pop() and peek() methods were changed to return a generic Object
+  rather than a comparable.</li>
+
+  <li>The insert(Comparable) method was changed to take an Object argument
+  rather than a comparable.</li>
+
+</ul>
+
+<p><i>New features:</i></p>
+<ul>
+
+  <li>The BinaryHeap supports objects that do not implement Comparable.  To use
+  such objects in the binary heap, a suitable Comparator must be provided in
+  the constructor so that the binary heap is capable of ordering elements in
+  their relative priorities.</li>
+
+</ul>

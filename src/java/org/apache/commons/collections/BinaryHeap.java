@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.4 2002/02/22 04:16:19 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/22 04:16:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.5 2002/03/19 04:34:18 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/03/19 04:34:18 $
  *
  * ====================================================================
  *
@@ -61,6 +61,7 @@
 package org.apache.commons.collections;
 
 import java.util.NoSuchElementException;
+import java.util.Comparator;
 
 /**
  * Binary heap implementation of {@link PriorityQueue}.
@@ -74,8 +75,9 @@ public final class BinaryHeap
     protected final static int      DEFAULT_CAPACITY   = 13;
 
     protected int                   m_size;
-    protected Comparable[]          m_elements;
+    protected Object[]              m_elements;
     protected boolean               m_isMinHeap;
+    private Comparator              m_comparator;
 
     /**
      *  Create a new minimum binary heap.
@@ -83,6 +85,12 @@ public final class BinaryHeap
     public BinaryHeap()
     {
         this( DEFAULT_CAPACITY, true );
+    }
+
+    public BinaryHeap( Comparator comparator )
+    {
+        this();
+        m_comparator = comparator;
     }
 
     /**
@@ -99,6 +107,12 @@ public final class BinaryHeap
         this( capacity, true );
     }
 
+    public BinaryHeap( final int capacity, Comparator comparator )
+    {
+        this( capacity );
+        m_comparator = comparator;
+    }
+
     /**
      *  Create a new minimum or maximum binary heap
      *
@@ -108,6 +122,12 @@ public final class BinaryHeap
     public BinaryHeap( final boolean isMinHeap )
     {
         this( DEFAULT_CAPACITY, isMinHeap );
+    }
+
+    public BinaryHeap( final boolean isMinHeap, Comparator comparator )
+    {
+        this( isMinHeap );
+        m_comparator = comparator;
     }
 
     /**
@@ -131,7 +151,14 @@ public final class BinaryHeap
         m_isMinHeap = isMinHeap;
 
         //+1 as 0 is noop
-        m_elements = new Comparable[ capacity + 1 ];
+        m_elements = new Object[ capacity + 1 ];
+    }
+
+    public BinaryHeap( final int capacity, final boolean isMinHeap,
+                       Comparator comparator ) 
+    {
+        this( capacity, isMinHeap );
+        m_comparator = comparator;
     }
 
     /**
@@ -170,7 +197,7 @@ public final class BinaryHeap
      *
      * @param element the element to be inserted
      */
-    public void insert( final Comparable element )
+    public void insert( final Object element )
     {
         if( isFull() ) grow();
 
@@ -185,7 +212,7 @@ public final class BinaryHeap
      * @return the element at top of heap
      * @exception NoSuchElementException if <code>isEmpty() == true</code>
      */
-    public Comparable peek() throws NoSuchElementException
+    public Object peek() throws NoSuchElementException
     {
         if( isEmpty() ) throw new NoSuchElementException();
         else return m_elements[ 1 ];
@@ -197,9 +224,9 @@ public final class BinaryHeap
      * @return the element at top of heap
      * @exception NoSuchElementException if <code>isEmpty() == true</code>
      */
-    public Comparable pop() throws NoSuchElementException
+    public Object pop() throws NoSuchElementException
     {
-        final Comparable result = peek();
+        final Object result = peek();
         m_elements[ 1 ] = m_elements[ m_size-- ];
 
         //set the unused element to 'null' so that the garbage collector
@@ -224,7 +251,7 @@ public final class BinaryHeap
      */
     protected void percolateDownMinHeap( final int index )
     {
-        final Comparable element = m_elements[ index ];
+        final Object element = m_elements[ index ];
 
         int hole = index;
 
@@ -234,14 +261,14 @@ public final class BinaryHeap
 
             //if we have a right child and that child can not be percolated
             //up then move onto other child
-            if( child != m_size &&
-                m_elements[ child + 1 ].compareTo( m_elements[ child ] ) < 0 )
+            if( child != m_size && 
+                compare( m_elements[ child + 1 ], m_elements[ child ] ) < 0 )
             {
                 child++;
             }
 
             //if we found resting place of bubble then terminate search
-            if( m_elements[ child ].compareTo( element ) >= 0 )
+            if( compare( m_elements[ child ], element ) >= 0 )
             {
                 break;
             }
@@ -261,7 +288,7 @@ public final class BinaryHeap
      */
     protected void percolateDownMaxHeap( final int index )
     {
-        final Comparable element = m_elements[ index ];
+        final Object element = m_elements[ index ];
 
         int hole = index;
 
@@ -272,13 +299,13 @@ public final class BinaryHeap
             //if we have a right child and that child can not be percolated
             //up then move onto other child
             if( child != m_size &&
-                m_elements[ child + 1 ].compareTo( m_elements[ child ] ) > 0 )
+                compare( m_elements[ child + 1 ], m_elements[ child ] ) > 0 )
             {
                 child++;
             }
 
             //if we found resting place of bubble then terminate search
-            if( m_elements[ child ].compareTo( element ) <= 0 )
+            if( compare( m_elements[ child ], element ) <= 0 )
             {
                 break;
             }
@@ -296,14 +323,14 @@ public final class BinaryHeap
      *
      * @param element the element
      */
-    protected void percolateUpMinHeap( final Comparable element )
+    protected void percolateUpMinHeap( final Object element )
     {
         int hole = ++m_size;
 
         m_elements[ hole ] = element;
 
         while( hole > 1 &&
-               element.compareTo( m_elements[ hole / 2 ] ) < 0 )
+               compare( element,  m_elements[ hole / 2 ] ) < 0 )
         {
             //save element that is being pushed down
             //as the element "bubble" is percolated up
@@ -321,12 +348,12 @@ public final class BinaryHeap
      *
      * @param element the element
      */
-    protected void percolateUpMaxHeap( final Comparable element )
+    protected void percolateUpMaxHeap( final Object element )
     {
         int hole = ++m_size;
 
         while( hole > 1 &&
-               element.compareTo( m_elements[ hole / 2 ] ) > 0 )
+               compare( element, m_elements[ hole / 2 ] ) > 0 )
         {
             //save element that is being pushed down
             //as the element "bubble" is percolated up
@@ -338,13 +365,20 @@ public final class BinaryHeap
         m_elements[ hole ] = element;
     }
 
+    private int compare(Object a, Object b) {
+        if(m_comparator != null) {
+            return m_comparator.compare(a, b);
+        } else {
+            return ((Comparable)a).compareTo(b);
+        }
+    }
+
     /**
      *  Increase the size of the heap to support additional elements
      **/
     protected void grow()
     {
-        final Comparable[] elements =
-            new Comparable[ m_elements.length * 2 ];
+        final Object[] elements = new Object[ m_elements.length * 2 ];
         System.arraycopy( m_elements, 0, elements, 0, m_elements.length );
         m_elements = elements;
     }
