@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.21 2003/04/26 14:24:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.22 2003/04/26 14:28:31 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -92,7 +92,7 @@ import java.util.TreeMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.21 $ $Date: 2003/04/26 14:24:48 $
+ * @version $Revision: 1.22 $ $Date: 2003/04/26 14:28:31 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -621,8 +621,9 @@ public class MapUtils {
      * Gets a new Properties object initialised with the values from a Map.
      * A null input will return an empty properties object.
      * 
-     * @param map  the map to convert to a Properties object
+     * @param map  the map to convert to a Properties object, may not be null
      * @return the properties object
+     * @throws NullPointerException if the map is null
      */
     public static Properties toProperties(Map map) {
         Properties answer = new Properties();
@@ -640,8 +641,9 @@ public class MapUtils {
     /**
      * Creates a new HashMap using data copied from a ResourceBundle.
      * 
-     * @param resourceBundle  the resource bundle to convert
+     * @param resourceBundle  the resource bundle to convert, may not be null
      * @return the hashmap containing the data
+     * @throws NullPointerException if the bundle is null
      */
     public static Map toMap(ResourceBundle resourceBundle) {
         Enumeration enum = resourceBundle.getKeys();
@@ -763,8 +765,9 @@ public class MapUtils {
      * value, but the exact key which will be mapped is undefined.
      * 
      * @see DoubleOrderedMap
-     * @param map  the map to invert
+     * @param map  the map to invert, may not be null
      * @return a new HashMap containing the inverted data
+     * @throws NullPointerException if the map is null
      */
     public static Map invertMap(Map map) {
         Map out = new HashMap(map.size());
@@ -784,9 +787,10 @@ public class MapUtils {
      * We will still throw a NPE if the key is null cause that should
      * never happen.
      * 
-     * @param map  the map to add to
+     * @param map  the map to add to, may not be null
      * @param key  the key
      * @param value  the value
+     * @throws NullPointerException if the map is null
      */
     public static void safeAddToMap(Map map, Object key, Object value) throws NullPointerException {
         if (value == null) {
