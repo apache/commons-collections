@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.5 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.6 2003/09/29 03:56:12 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,6 +62,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 
@@ -110,6 +111,289 @@ public class TestIteratorUtils extends BulkTest {
         String[] result = (String[]) IteratorUtils.toArray(list.iterator(), String.class);
         assertEquals(list, Arrays.asList(result));
     }
+    
+    public void testArrayIterator() {
+        Object[] objArray = {"a", "b", "c"};
+        ResetableIterator iterator = IteratorUtils.arrayIterator(objArray);
+        assertTrue(iterator.next().equals("a"));
+        assertTrue(iterator.next().equals("b"));
+        iterator.reset();
+        assertTrue(iterator.next().equals("a"));
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(new Integer(0));
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {
+                // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(null);
+            fail("Expecting NullPointerException");
+        } catch (NullPointerException ex) {
+                // expected
+        }
+        
+        iterator = IteratorUtils.arrayIterator(objArray, 1);
+        assertTrue(iterator.next().equals("b"));
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(objArray, -1);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        iterator = IteratorUtils.arrayIterator(objArray, 3);
+        assertTrue(!iterator.hasNext());
+        iterator.reset();
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(objArray, 4);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        iterator = IteratorUtils.arrayIterator(objArray, 2, 3);
+        assertTrue(iterator.next().equals("c"));
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(objArray, 2, 4);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(objArray, -1, 1);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(objArray, 2, 1);
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+        
+        int[] intArray = {0, 1, 2};
+        iterator = IteratorUtils.arrayIterator(intArray);
+        assertTrue(iterator.next().equals(new Integer(0)));
+        assertTrue(iterator.next().equals(new Integer(1)));
+        iterator.reset();
+        assertTrue(iterator.next().equals(new Integer(0)));
+        
+        iterator = IteratorUtils.arrayIterator(intArray, 1);
+        assertTrue(iterator.next().equals(new Integer(1)));
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(intArray, -1);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        iterator = IteratorUtils.arrayIterator(intArray, 3);
+        assertTrue(!iterator.hasNext());
+        iterator.reset();
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(intArray, 4);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        iterator = IteratorUtils.arrayIterator(intArray, 2, 3);
+        assertTrue(iterator.next().equals(new Integer(2)));
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(intArray, 2, 4);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(intArray, -1, 1);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayIterator(intArray, 2, 1);
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }          
+    }
+    
+    public void testArrayListIterator() {
+        Object[] objArray = {"a", "b", "c", "d"};
+        ResetableListIterator iterator = IteratorUtils.arrayListIterator(objArray);
+        assertTrue(!iterator.hasPrevious());
+        assertTrue(iterator.previousIndex() == -1);
+        assertTrue(iterator.nextIndex() == 0);
+        assertTrue(iterator.next().equals("a"));
+        assertTrue(iterator.previous().equals("a"));
+        assertTrue(iterator.next().equals("a"));
+        assertTrue(iterator.previousIndex() == 0);
+        assertTrue(iterator.nextIndex() == 1);
+        assertTrue(iterator.next().equals("b"));
+        assertTrue(iterator.next().equals("c"));
+        assertTrue(iterator.next().equals("d"));
+        assertTrue(iterator.nextIndex() == 4); // size of list
+        assertTrue(iterator.previousIndex() == 3);
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(new Integer(0));
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {
+                // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(null);
+            fail("Expecting NullPointerException");
+        } catch (NullPointerException ex) {
+                // expected
+        }
+        
+        iterator = IteratorUtils.arrayListIterator(objArray, 1);
+        assertTrue(iterator.previousIndex() == -1); 
+        assertTrue(!iterator.hasPrevious());
+        assertTrue(iterator.nextIndex() == 0); 
+        assertTrue(iterator.next().equals("b"));
+        assertTrue(iterator.previousIndex() == 0);        
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(objArray, -1);
+            fail("Expecting IndexOutOfBoundsException.");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        iterator = IteratorUtils.arrayListIterator(objArray, 3);
+        assertTrue(iterator.hasNext());
+        try {
+            Object x = iterator.previous();
+            fail("Expecting NoSuchElementException.");
+        } catch (NoSuchElementException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(objArray, 5);
+            fail("Expecting IndexOutOfBoundsException.");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        iterator = IteratorUtils.arrayListIterator(objArray, 2, 3);
+        assertTrue(iterator.next().equals("c"));
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(objArray, 2, 5);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(objArray, -1, 1);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(objArray, 2, 1);
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+        
+        int[] intArray = {0, 1, 2};
+        iterator = IteratorUtils.arrayListIterator(intArray);
+        assertTrue(iterator.previousIndex() == -1); 
+        assertTrue(!iterator.hasPrevious());
+        assertTrue(iterator.nextIndex() == 0); 
+        assertTrue(iterator.next().equals(new Integer(0)));
+        assertTrue(iterator.previousIndex() == 0); 
+        assertTrue(iterator.nextIndex() == 1); 
+        assertTrue(iterator.next().equals(new Integer(1)));
+        assertTrue(iterator.previousIndex() == 1); 
+        assertTrue(iterator.nextIndex() == 2); 
+        assertTrue(iterator.previous().equals(new Integer(1)));
+        assertTrue(iterator.next().equals(new Integer(1)));
+        
+        iterator = IteratorUtils.arrayListIterator(intArray, 1);
+        assertTrue(iterator.previousIndex() == -1); 
+        assertTrue(!iterator.hasPrevious());
+        assertTrue(iterator.nextIndex() == 0); 
+        assertTrue(iterator.next().equals(new Integer(1)));
+        assertTrue(iterator.previous().equals(new Integer(1)));
+        assertTrue(iterator.next().equals(new Integer(1)));
+        assertTrue(iterator.previousIndex() == 0); 
+        assertTrue(iterator.nextIndex() == 1); 
+        assertTrue(iterator.next().equals(new Integer(2)));
+        assertTrue(iterator.previousIndex() == 1); 
+        assertTrue(iterator.nextIndex() == 2); 
+        assertTrue(iterator.previous().equals(new Integer(2)));
+        assertTrue(iterator.previousIndex() == 0); 
+        assertTrue(iterator.nextIndex() == 1); 
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(intArray, -1);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        iterator = IteratorUtils.arrayListIterator(intArray, 3);
+        assertTrue(!iterator.hasNext());
+     
+        try {
+            iterator = IteratorUtils.arrayListIterator(intArray, 4);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        iterator = IteratorUtils.arrayListIterator(intArray, 2, 3);
+        assertTrue(!iterator.hasPrevious());
+        assertTrue(iterator.previousIndex() == -1);
+        assertTrue(iterator.next().equals(new Integer(2)));
+        assertTrue(iterator.hasPrevious());
+        assertTrue(!iterator.hasNext());
+        
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(intArray, 2, 4);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(intArray, -1, 1);
+            fail("Expecting IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException ex) {
+            // expected
+        }
+        
+        try {
+            iterator = IteratorUtils.arrayListIterator(intArray, 2, 1);
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }          
+    }
+        
 
     /**
      * Gets an immutable Iterator operating on the elements ["a", "b", "c", "d"].

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.6 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.7 2003/09/29 03:56:12 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,7 +60,7 @@ package org.apache.commons.collections.iterators;
 import java.util.NoSuchElementException;
 
 /**
- * Implements a {@link ListIterator ListIterator} over an array of objects.
+ * Implements a {@link ListIterator} over an array of objects.
  * <p>
  * This iterator does not support {@link #add} or {@link #remove}, as the object array 
  * cannot be structurally modified. The {@link #set} method is supported however.
@@ -73,10 +73,11 @@ import java.util.NoSuchElementException;
  * @see java.util.ListIterator
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.7 $ $Date: 2003/09/29 03:56:12 $
  * 
  * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
  * @author Stephen Colebourne
+ * @author Phil Steitz
  */
 public class ObjectArrayListIterator extends ObjectArrayIterator implements ResetableListIterator {
 
@@ -183,7 +184,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator implements Rese
      * @return the index of the item to be retrieved next
      */
     public int nextIndex() {
-        return this.index;
+        return this.index - this.startIndex;
     }
 
     /**
@@ -192,7 +193,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator implements Rese
      * @return the index of the item to be retrieved next
      */
     public int previousIndex() {
-        return this.index - 1;
+        return this.index - this.startIndex - 1;
     }
 
     /**

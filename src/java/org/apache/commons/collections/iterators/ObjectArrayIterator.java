@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayIterator.java,v 1.6 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayIterator.java,v 1.7 2003/09/29 03:56:12 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,7 +60,7 @@ package org.apache.commons.collections.iterators;
 import java.util.NoSuchElementException;
 
 /** 
- * An {@link Iterator Iterator} over an array of objects.
+ * An {@link Iterator} over an array of objects.
  * <p>
  * This iterator does not support {@link #remove}, as the object array cannot be
  * structurally modified.
@@ -69,13 +69,14 @@ import java.util.NoSuchElementException;
  * back to the start if required.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.7 $ $Date: 2003/09/29 03:56:12 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Mauricio S. Moura
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
  * @author Stephen Colebourne
+ * @author Phil Steitz
  */
 public class ObjectArrayIterator implements ResetableIterator {
 
@@ -140,6 +141,9 @@ public class ObjectArrayIterator implements ResetableIterator {
         }
         if (end > array.length) {
             throw new ArrayIndexOutOfBoundsException("End index must not be greater than the array length");
+        }
+        if (start > array.length) {
+            throw new ArrayIndexOutOfBoundsException("Start index must not be greater than the array length");
         }
         if (end < start) {
             throw new IllegalArgumentException("End index must not be less than start index");
