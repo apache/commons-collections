@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.3 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.4 2003/09/17 20:28:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,13 +82,15 @@ import java.util.Map;
  * <li>Null - always returns null
  * <li>NOP - returns the input object, which should be immutable
  * <li>Exception - always throws an exception
+ * <li>StringValue - returns a <code>java.lang.String</code> representation of the input object
  * </ul>
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/17 20:28:30 $
  * 
  * @author Stephen Colebourne
+ * @author James Carman
  */
 public class TransformerUtils {
 
@@ -113,6 +115,12 @@ public class TransformerUtils {
      */
     private static final Transformer INSTANTIATE_TRANSFORMER = new InstantiateTransformer(null, null);
 
+    /**
+     * A transformer that returns a <code>java.lang.String</code> representation
+     * of the input object.
+     */
+    private static final Transformer STRING_VALUE_TRANSFORMER = new StringValueTransformer();
+    
     /**
      * This class is not normally instantiated.
      */
@@ -490,6 +498,17 @@ public class TransformerUtils {
         return new InvokerTransformer(methodName, paramTypes, args);
     }
 
+    /**
+     * Gets a transformer that returns a <code>java.lang.String</code>
+     * representation of the input object. This is achieved via the
+     * <code>toString</code> method, <code>null</code> returns 'null'.
+     * 
+     * @return the transformer
+     */
+    public static Transformer stringValueTransformer() {
+        return STRING_VALUE_TRANSFORMER;
+    }
+    
     /**
      * Copy method
      * 
@@ -934,5 +953,23 @@ public class TransformerUtils {
             }
         }
     }
+    
+    // StringValueTransformer
+    //----------------------------------------------------------------------------------
 
-}
+    /**
+     * StringValueTransformer returns a <code>java.lang.String</code> representation
+     * of the input object using the <code>String.valueOf()</code> method.
+     */
+    private static class StringValueTransformer implements Transformer, Serializable {
+        
+        /**
+         * returns a <code>java.lang.String</code> representation of the input object 
+         * using the <code>String.valueOf()</code> method.
+         */
+        public Object transform(Object input) {
+            return String.valueOf(input);
+        }
+    }
+
+}                                                                                                                                                                                                                                                                                                

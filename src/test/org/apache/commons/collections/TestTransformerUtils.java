@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTransformerUtils.java,v 1.2 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTransformerUtils.java,v 1.3 2003/09/17 20:28:30 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,9 +72,10 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.TransformerUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/17 20:28:30 $
  *
  * @author Stephen Colebourne
+ * @author James Carman
  */
 public class TestTransformerUtils extends junit.framework.TestCase {
 
@@ -533,6 +534,18 @@ public class TestTransformerUtils extends junit.framework.TestCase {
             return;
         }
         fail();
+    }
+    
+    // stringValueTransformer
+    //------------------------------------------------------------------
+    
+    public void testStringValueTransformer() {
+        assertNotNull( "StringValueTransformer should NEVER return a null value.",
+           TransformerUtils.stringValueTransformer().transform(null));
+        assertEquals( "StringValueTransformer should return \"null\" when given a null argument.", "null",
+            TransformerUtils.stringValueTransformer().transform(null));
+        assertEquals( "StringValueTransformer should return toString value", "6",
+            TransformerUtils.stringValueTransformer().transform(new Integer(6)));
     }
     
 }
