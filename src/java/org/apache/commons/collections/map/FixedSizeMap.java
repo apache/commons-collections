@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -38,13 +42,17 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * is not always unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/02 21:15:05 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class FixedSizeMap
-        extends AbstractMapDecorator implements Map, BoundedMap {
+        extends AbstractMapDecorator
+        implements Map, BoundedMap, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 7450927208116179316L;
 
     /**
      * Factory method to create a fixed size map.
@@ -66,7 +74,24 @@ public class FixedSizeMap
     protected FixedSizeMap(Map map) {
         super(map);
     }
-    
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
+    }
+
     //-----------------------------------------------------------------------
     public Object put(Object key, Object value) {
         if (map.containsKey(key) == false) {
