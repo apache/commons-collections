@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.7 2003/11/01 18:45:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.8 2003/11/29 18:05:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -136,11 +136,12 @@ import java.util.Set;
  * Collection valuesByValue() returns the values in a Collection whose
  * iterator will iterate over the values in ascending order.
  *
+ * @deprecated Use TreeBidiMap in bidimap subpackage. Due to be removed in v4.0.
  * @see BidiMap
  * @see DualTreeBidiMap
  * @see DualHashBidiMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.7 $ $Date: 2003/11/01 18:45:48 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/29 18:05:39 $
  * 
  * @author Marc Johnson
  */
