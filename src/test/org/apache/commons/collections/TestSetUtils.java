@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.8 2003/09/12 03:59:00 psteitz Exp $
- * $Revision: 1.8 $
- * $Date: 2003/09/12 03:59:00 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.9 2003/09/20 17:02:03 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2003/09/20 17:02:03 $
  *
  * ====================================================================
  *
@@ -65,10 +65,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.collections.decorators.PredicatedSet;
-
 import junit.framework.Test;
 
+import org.apache.commons.collections.decorators.PredicatedSet;
 
 /**
  * Tests for SetUtils.

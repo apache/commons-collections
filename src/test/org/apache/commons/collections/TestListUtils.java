@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.11 2003/09/12 03:59:00 psteitz Exp $
- * $Revision: 1.11 $
- * $Date: 2003/09/12 03:59:00 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.12 2003/09/20 17:02:03 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2003/09/20 17:02:03 $
  *
  * ====================================================================
  *
@@ -65,9 +65,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.collections.decorators.PredicatedList;
-
 import junit.framework.Test;
+
+import org.apache.commons.collections.decorators.PredicatedList;
 
 /**
  * Tests for ListUtils.

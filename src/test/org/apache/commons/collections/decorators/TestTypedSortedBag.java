@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTypedSortedBag.java,v 1.1 2003/09/20 02:51:50 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTypedSortedBag.java,v 1.2 2003/09/20 17:05:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,21 +57,22 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.Comparator;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import java.util.Comparator;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.SortedBag;
-import org.apache.commons.collections.TreeBag;
 import org.apache.commons.collections.TestBag;
+import org.apache.commons.collections.TreeBag;
 
 /**
  * Extension of {@link TestBag} for exercising the {@link TypedSortedBag}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/20 02:51:50 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/20 17:05:36 $
  * 
  * @author Phil Steitz
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBagUtils.java,v 1.1 2003/09/20 02:51:50 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBagUtils.java,v 1.2 2003/09/20 17:02:03 scolebourne Exp $
  *
  * ====================================================================
  *
@@ -58,27 +58,23 @@
  */
 package org.apache.commons.collections;
 
-import org.apache.commons.collections.decorators.SynchronizedBag;
-import org.apache.commons.collections.decorators.UnmodifiableBag;
-import org.apache.commons.collections.decorators.PredicatedBag;
-import org.apache.commons.collections.decorators.TypedBag;
-import org.apache.commons.collections.decorators.TransformedBag;
-import org.apache.commons.collections.decorators.SynchronizedSortedBag;
-import org.apache.commons.collections.decorators.UnmodifiableSortedBag;
-import org.apache.commons.collections.decorators.PredicatedSortedBag;
-import org.apache.commons.collections.decorators.TypedSortedBag;
-import org.apache.commons.collections.decorators.TransformedSortedBag;
-
-
 import junit.framework.Test;
 
+import org.apache.commons.collections.decorators.PredicatedBag;
+import org.apache.commons.collections.decorators.PredicatedSortedBag;
+import org.apache.commons.collections.decorators.SynchronizedBag;
+import org.apache.commons.collections.decorators.SynchronizedSortedBag;
+import org.apache.commons.collections.decorators.TransformedBag;
+import org.apache.commons.collections.decorators.TransformedSortedBag;
+import org.apache.commons.collections.decorators.UnmodifiableBag;
+import org.apache.commons.collections.decorators.UnmodifiableSortedBag;
 
 /**
  * Tests for BagUtils factory methods.
  *
  * @author Phil Steitz
  * 
- * @version $Revision: 1.1 $ $Date: 2003/09/20 02:51:50 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/20 17:02:03 $
  */
 public class TestBagUtils extends BulkTest {
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.5 2003/09/12 03:59:00 psteitz Exp $
- * $Revision: 1.5 $
- * $Date: 2003/09/12 03:59:00 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.6 2003/09/20 17:02:03 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/09/20 17:02:03 $
  *
  * ====================================================================
  *
@@ -62,10 +62,10 @@ package org.apache.commons.collections;
 
 import java.util.Arrays;
 import java.util.Collection;
-import org.apache.commons.collections.decorators.PredicatedBuffer;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.decorators.PredicatedBuffer;
 
 /**
  *  Tests for BufferUtils.

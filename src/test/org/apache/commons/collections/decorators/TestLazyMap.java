@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestLazyMap.java,v 1.1 2003/09/14 03:30:23 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestLazyMap.java,v 1.2 2003/09/20 17:05:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,20 +57,22 @@
  */
 package org.apache.commons.collections.decorators;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.TestMap;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.TestMap;
+
 /**
  * Extension of {@link TestMap} for exercising the 
  * {@link LazyMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/14 03:30:23 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/20 17:05:36 $
  * 
  * @author Phil Steitz
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedBuffer.java,v 1.1 2003/09/12 03:59:00 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedBuffer.java,v 1.2 2003/09/20 17:05:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,22 +57,22 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.Collection;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
-import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.BufferUnderflowException;
+import org.apache.commons.collections.Predicate;
 
 /**
  * Extension of {@link TestPredicatedCollection} for exercising the 
  * {@link PredicatedBuffer} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/12 03:59:00 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/20 17:05:36 $
  * 
  * @author Phil Steitz
  */

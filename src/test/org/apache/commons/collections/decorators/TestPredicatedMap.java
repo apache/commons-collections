@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedMap.java,v 1.1 2003/09/13 16:12:47 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedMap.java,v 1.2 2003/09/20 17:05:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,22 +57,23 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.Iterator;
 
-import org.apache.commons.collections.TestMap;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.TestMap;
+
 /**
  * Extension of {@link TestMap} for exercising the 
  * {@link PredicatedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/13 16:12:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/20 17:05:36 $
  * 
  * @author Phil Steitz
  */

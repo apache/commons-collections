@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.8 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.8 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.9 2003/09/20 17:02:03 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2003/09/20 17:02:03 $
  *
  * ====================================================================
  *
@@ -58,14 +58,15 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.io.*;
 
 /**
  * Tests some basic functions of the ExtendedProperties
@@ -74,7 +75,7 @@ import java.io.*;
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
  * @author Mohan Kishore
  * @author Stephen Colebourne
- * @version $Id: TestExtendedProperties.java,v 1.8 2003/08/31 17:28:43 scolebourne Exp $
+ * @version $Id: TestExtendedProperties.java,v 1.9 2003/09/20 17:02:03 scolebourne Exp $
  */
 public class TestExtendedProperties extends TestCase {
     protected ExtendedProperties eprop = new ExtendedProperties();

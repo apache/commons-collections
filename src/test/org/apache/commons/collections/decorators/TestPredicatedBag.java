@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedBag.java,v 1.2 2003/09/19 22:21:53 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedBag.java,v 1.3 2003/09/20 17:05:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,22 +57,23 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.Set;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import java.util.Set;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.HashBag;
-import org.apache.commons.collections.TestBag;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.TestBag;
 
 /**
  * Extension of {@link TestBag} for exercising the {@link PredicatedBag}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/19 22:21:53 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/20 17:05:36 $
  * 
  * @author Phil Steitz
  */

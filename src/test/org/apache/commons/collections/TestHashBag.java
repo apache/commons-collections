@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestHashBag.java,v 1.3 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestHashBag.java,v 1.4 2003/09/20 17:02:03 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/09/20 17:02:03 $
  *
  * ====================================================================
  *
@@ -58,17 +58,17 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import junit.framework.Test;import junit.framework.TestSuite;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * Extension of {@link TestBag} for exercising the {@link HashBag}
  * implementation.
  *
  * @author Chuck Burdick
- * @version $Id: TestHashBag.java,v 1.3 2003/08/31 17:28:43 scolebourne Exp $ */
+ * @version $Id: TestHashBag.java,v 1.4 2003/09/20 17:02:03 scolebourne Exp $ */
 public class TestHashBag extends TestBag {
    public TestHashBag(String testName) {
       super(testName);

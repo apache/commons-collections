@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.14 2003/09/20 11:26:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.15 2003/09/20 17:02:03 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,15 +68,15 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.apache.commons.collections.decorators.PredicatedMap;
-import org.apache.commons.collections.decorators.LazyMap;
-
 import junit.framework.Test;
+
+import org.apache.commons.collections.decorators.LazyMap;
+import org.apache.commons.collections.decorators.PredicatedMap;
 
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.14 $ $Date: 2003/09/20 11:26:57 $
+ * @version $Revision: 1.15 $ $Date: 2003/09/20 17:02:03 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas

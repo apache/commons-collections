@@ -54,22 +54,23 @@
 package org.apache.commons.collections.decorators;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Arrays;
-import org.apache.commons.collections.TestCollection;
-import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.PredicateUtils;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.TestCollection;
 
 /**
  * Extension of {@link TestCollection} for exercising the 
  * {@link PredicatedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/12 03:59:00 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/20 17:05:36 $
  * 
  * @author Phil Steitz
  */

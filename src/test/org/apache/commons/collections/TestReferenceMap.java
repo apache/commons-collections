@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.10 2003/09/20 17:02:03 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2003/09/20 17:02:03 $
  *
  * ====================================================================
  *
@@ -58,21 +58,18 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.lang.ref.WeakReference;
-
 import java.util.Map;
 
 import junit.framework.Test;
-
 
 /**
  * Tests for ReferenceMap. 
  *
  * @author Paul Jack
- * @version $Id: TestReferenceMap.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
+ * @version $Id: TestReferenceMap.java,v 1.10 2003/09/20 17:02:03 scolebourne Exp $
  */
 public class TestReferenceMap extends TestMap {
 
