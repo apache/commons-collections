@@ -15,6 +15,8 @@
  */
 package org.apache.commons.collections;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -27,7 +29,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Unit Tests for <code>MultiHashMap</code>.
  * 
- * @version $Revision: 1.17 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.18 $ $Date: 2004/03/14 17:05:24 $
  *
  * @author Unknown
  */
@@ -244,4 +246,103 @@ public class TestMultiHashMap extends AbstractTestMap {
         values = map.values();
         super.verifyValues();
     }
+    
+    //-----------------------------------------------------------------------
+    public void testGetCollection() {
+        MultiHashMap map = new MultiHashMap();
+        map.put("A", "AA");
+        assertSame(map.get("A"), map.getCollection("A"));
+    }
+    
+    public void testTotalSize() {
+        MultiHashMap map = new MultiHashMap();
+        assertEquals(0, map.totalSize());
+        map.put("A", "AA");
+        assertEquals(1, map.totalSize());
+        map.put("B", "BA");
+        assertEquals(2, map.totalSize());
+        map.put("B", "BB");
+        assertEquals(3, map.totalSize());
+        map.put("B", "BC");
+        assertEquals(4, map.totalSize());
+        map.remove("A");
+        assertEquals(3, map.totalSize());
+        map.remove("B", "BC");
+        assertEquals(2, map.totalSize());
+    }
+    
+    public void testSize_Key() {
+        MultiHashMap map = new MultiHashMap();
+        assertEquals(0, map.size("A"));
+        assertEquals(0, map.size("B"));
+        map.put("A", "AA");
+        assertEquals(1, map.size("A"));
+        assertEquals(0, map.size("B"));
+        map.put("B", "BA");
+        assertEquals(1, map.size("A"));
+        assertEquals(1, map.size("B"));
+        map.put("B", "BB");
+        assertEquals(1, map.size("A"));
+        assertEquals(2, map.size("B"));
+        map.put("B", "BC");
+        assertEquals(1, map.size("A"));
+        assertEquals(3, map.size("B"));
+        map.remove("A");
+        assertEquals(0, map.size("A"));
+        assertEquals(3, map.size("B"));
+        map.remove("B", "BC");
+        assertEquals(0, map.size("A"));
+        assertEquals(2, map.size("B"));
+    }
+    
+    public void testIterator_Key() {
+        MultiHashMap map = new MultiHashMap();
+        assertEquals(false, map.iterator("A").hasNext());
+        map.put("A", "AA");
+        Iterator it = map.iterator("A");
+        assertEquals(true, it.hasNext());
+        it.next();
+        assertEquals(false, it.hasNext());
+    }
+    
+    public void testContainsValue_Key() {
+        MultiHashMap map = new MultiHashMap();
+        assertEquals(false, map.containsValue("A", "AA"));
+        assertEquals(false, map.containsValue("B", "BB"));
+        map.put("A", "AA");
+        assertEquals(true, map.containsValue("A", "AA"));
+        assertEquals(false, map.containsValue("A", "AB"));
+    }
+    
+    public void testPutAll_KeyCollection() {
+        MultiHashMap map = new MultiHashMap();
+        Collection coll = Arrays.asList(new Object[] {"X", "Y", "Z"});
+        
+        assertEquals(true, map.putAll("A", coll));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        assertEquals(false, map.putAll("A", null));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        assertEquals(false, map.putAll("A", new ArrayList()));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        coll = Arrays.asList(new Object[] {"M"});
+        assertEquals(true, map.putAll("A", coll));
+        assertEquals(4, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        assertEquals(true, map.containsValue("A", "M"));
+    }
+    
 }

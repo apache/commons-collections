@@ -50,7 +50,7 @@ import java.util.Set;
  * <code>list</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.16 $ $Date: 2004/03/14 15:33:57 $
+ * @version $Revision: 1.17 $ $Date: 2004/03/14 17:05:24 $
  * 
  * @author Christopher Berry
  * @author James Strachan
@@ -131,6 +131,64 @@ public class MultiHashMap extends HashMap implements MultiMap {
 
     //-----------------------------------------------------------------------
     /**
+     * Gets the total size of the map by counting all the values.
+     * 
+     * @return the total size of the map counting all values
+     * @since Commons Collections 3.1
+     */
+    public int totalSize() {
+        int total = 0;
+        Collection values = super.values();
+        for (Iterator it = values.iterator(); it.hasNext();) {
+            Collection coll = (Collection) it.next();
+            total += coll.size();
+        }
+        return total;
+    }
+
+    /**
+     * Gets the collection mapped to the specified key.
+     * This method is a convenience method to typecast the result of <code>get(key)</code>.
+     * 
+     * @param key  the key to retrieve
+     * @return the collection mapped to the key, null if no mapping
+     * @since Commons Collections 3.1
+     */
+    public Collection getCollection(Object key) {
+        return (Collection) get(key);
+    }
+
+    /**
+     * Gets the size of the collection mapped to the specified key.
+     * 
+     * @param key  the key to get size for
+     * @return the size of the collection at the key, zero if key not in map
+     * @since Commons Collections 3.1
+     */
+    public int size(Object key) {
+        Collection coll = getCollection(key);
+        if (coll == null) {
+            return 0;
+        }
+        return coll.size();
+    }
+
+    /**
+     * Gets an iterator for the collection mapped to the specified key.
+     * 
+     * @param key  the key to get an iterator for
+     * @return the iterator of the collection at the key, empty iterator if key not in map
+     * @since Commons Collections 3.1
+     */
+    public Iterator iterator(Object key) {
+        Collection coll = getCollection(key);
+        if (coll == null) {
+            return IteratorUtils.EMPTY_ITERATOR;
+        }
+        return coll.iterator();
+    }
+
+    /**
      * Adds the value to the collection associated with the specified key.
      * <p>
      * Unlike a normal <code>Map</code> the previous value is not replaced.
@@ -143,14 +201,38 @@ public class MultiHashMap extends HashMap implements MultiMap {
     public Object put(Object key, Object value) {
         // NOTE:: put is called during deserialization in JDK < 1.4 !!!!!!
         //        so we must have a readObject()
-        Collection coll = (Collection) super.get(key);
+        Collection coll = getCollection(key);
         if (coll == null) {
             coll = createCollection(null);
             super.put(key, coll);
         }
         boolean results = coll.add(value);
-
         return (results ? value : null);
+    }
+
+    /**
+     * Adds a collection of values to the collection associated with the specified key.
+     *
+     * @param key  the key to store against
+     * @param values  the values to add to the collection at the key, null ignored
+     * @return true if this map changed
+     * @since Commons Collections 3.1
+     */    
+    public boolean putAll(Object key, Collection values) {
+        if (values == null || values.size() == 0) {
+            return false;
+        }
+        Collection coll = getCollection(key);
+        if (coll == null) {
+            coll = createCollection(values);
+            if (coll.size() == 0) {
+                return false;
+            }
+            super.put(key, coll);
+            return true;
+        } else {
+            return coll.addAll(values);
+        }
     }
 
     /**
@@ -179,6 +261,21 @@ public class MultiHashMap extends HashMap implements MultiMap {
     }
 
     /**
+     * Checks whether the collection at the specified key contains the value.
+     * 
+     * @param value  the value to search for
+     * @return true if the map contains the value
+     * @since Commons Collections 3.1
+     */
+    public boolean containsValue(Object key, Object value) {
+        Collection coll = getCollection(key);
+        if (coll == null) {
+            return false;
+        }
+        return coll.contains(value);
+    }
+
+    /**
      * Removes a specific value from map.
      * <p>
      * The item is removed from the collection mapped to the specified key.
@@ -192,7 +289,7 @@ public class MultiHashMap extends HashMap implements MultiMap {
      * @return the value removed (which was passed in), null if nothing removed
      */
     public Object remove(Object key, Object item) {
-        Collection valuesForKey = (Collection) super.get(key);
+        Collection valuesForKey = getCollection(key);
         if (valuesForKey == null) {
             return null;
         }
