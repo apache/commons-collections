@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.31 2003/05/11 13:29:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.32 2003/05/11 14:12:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.31 $ $Date: 2003/05/11 13:29:16 $
+ * @version $Revision: 1.32 $ $Date: 2003/05/11 14:12:46 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -100,11 +100,6 @@ public class CollectionUtils {
      * undesirable. This implementation only implements Collection.
      */
     public static final Collection EMPTY_COLLECTION = Collections.unmodifiableCollection(new ArrayList());
-    /**
-     * The empty iterator (immutable).
-     * @deprecated use IteratorUtils.EMPTY_ITERATOR
-     */
-    public static final Iterator EMPTY_ITERATOR = IteratorUtils.EMPTY_ITERATOR;
 
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.
