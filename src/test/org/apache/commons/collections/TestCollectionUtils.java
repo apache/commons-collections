@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.11 2003/01/25 11:31:12 scolebourne Exp $
- * $Revision: 1.11 $
- * $Date: 2003/01/25 11:31:12 $
+ * $Id: TestCollectionUtils.java,v 1.12 2003/01/25 11:40:26 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2003/01/25 11:40:26 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Revision: 1.11 $ $Date: 2003/01/25 11:31:12 $
+ * @version $Revision: 1.12 $ $Date: 2003/01/25 11:40:26 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -459,6 +459,21 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(0, CollectionUtils.countMatches(null, null));
     }
 
+    public void testExists() {
+        List list = new ArrayList();
+        assertEquals(false, CollectionUtils.exists(null, null));
+        assertEquals(false, CollectionUtils.exists(list, null));
+        assertEquals(false, CollectionUtils.exists(null, EQUALS_TWO));
+        assertEquals(false, CollectionUtils.exists(list, EQUALS_TWO));
+        list.add("One");
+        list.add("Three");
+        list.add("Four");
+        assertEquals(false, CollectionUtils.exists(list, EQUALS_TWO));
+
+        list.add("Two");
+        assertEquals(true, CollectionUtils.exists(list, EQUALS_TWO));
+    }
+    
     public void testSelect() {
         List list = new ArrayList();
         list.add("One");
