@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.10 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.11 2004/01/04 19:03:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -69,14 +69,14 @@ import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
  * Provides an ordered iteration over the elements contained in
- * a collection of ordered {@link Iterator}s.
+ * a collection of ordered Iterators.
  * <p>
- * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
+ * Given two ordered {@link Iterator} instances <code>A</code> and <code>B</code>,
  * the {@link #next} method on this iterator will return the lesser of 
  * <code>A.next()</code> and <code>B.next()</code>.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.10 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.11 $ $Date: 2004/01/04 19:03:53 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
