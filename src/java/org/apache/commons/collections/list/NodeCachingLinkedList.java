@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/NodeCachingLinkedList.java,v 1.3 2003/12/29 01:04:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/NodeCachingLinkedList.java,v 1.4 2004/01/02 01:36:52 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -78,7 +78,7 @@ import java.util.Collection;
  * <b>Note that this implementation is not synchronized.</b>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/29 01:04:44 $
+ * @version $Revision: 1.4 $ $Date: 2004/01/02 01:36:52 $
  * 
  * @author Jeff Varszegi
  * @author Rich Dougherty
@@ -252,7 +252,6 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
      * Removes all the nodes from the list, storing as many as required in the
      * cache for reuse.
      * 
-     * @param node  the node to remove
      */
     protected void removeAllNodes() {
         // Add the removed nodes to the cache, then remove the rest.

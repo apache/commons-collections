@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryBuffer.java,v 1.2 2004/01/01 23:56:51 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryBuffer.java,v 1.3 2004/01/02 01:36:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -92,7 +92,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * </pre>
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
- * @version $Revision: 1.2 $ $Date: 2004/01/01 23:56:51 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/02 01:36:51 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
@@ -439,7 +439,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      * <p>
      * Assume it is a maximum heap.
      *
-     * @param element the element
+     * @param index the index of the element to be percolated up
      */
     protected void percolateUpMaxHeap(final int index) {
         int hole = index;

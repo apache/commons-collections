@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.6 2003/12/06 13:03:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.7 2004/01/02 01:36:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -108,7 +108,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.6 $ $Date: 2003/12/06 13:03:15 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/02 01:36:51 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -333,7 +333,7 @@ public class TreeBidiMap implements OrderedBidiMap {
     /**
      * Gets the next key after the one specified.
      *
-     * @param the key to search for next from
+     * @param key the key to search for next from
      * @return the next key, null if no match or at end
      */
     public Object nextKey(Object key) {
@@ -345,7 +345,7 @@ public class TreeBidiMap implements OrderedBidiMap {
     /**
      * Gets the previous key before the one specified.
      *
-     * @param the key to search for previous from
+     * @param key the key to search for previous from
      * @return the previous key, null if no match or at start
      */
     public Object previousKey(Object key) {
@@ -473,7 +473,6 @@ public class TreeBidiMap implements OrderedBidiMap {
      * Compares for equals as per the API.
      *
      * @param obj  the object to compare to
-     * @param index  the KEY or VALUE int
      * @return true if equal
      */
     public boolean equals(Object obj) {

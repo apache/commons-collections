@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.4 2003/12/29 00:38:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.5 2004/01/02 01:36:52 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -88,7 +88,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/29 00:38:08 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/02 01:36:52 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -550,12 +550,9 @@ public class AbstractHashedMap implements IterableMap {
      * <p>
      * This implementation adds the entry to the data storage table.
      * Subclasses could override to handle changes to the map.
-     * 
+     *
+     * @param entry  the entry to add
      * @param hashIndex  the index into the data array to store at
-     * @param hashCode  the hash code of the key to add
-     * @param key  the key to add
-     * @param value  the value to add
-     * @return the value previously mapped to this key, null if none
      */
     protected void addEntry(HashEntry entry, int hashIndex) {
         data[hashIndex] = entry;

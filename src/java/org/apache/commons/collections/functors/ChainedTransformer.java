@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/ChainedTransformer.java,v 1.1 2003/11/23 23:25:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/ChainedTransformer.java,v 1.2 2004/01/02 01:36:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that chains the specifed closures together.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 23:25:33 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/02 01:36:51 $
  *
  * @author Stephen Colebourne
  */
@@ -153,7 +153,7 @@ public class ChainedTransformer implements Transformer, Serializable {
     /**
      * Execute a list of transformers.
      * 
-     * @param input  the input object passed to each transformer
+     * @param object  the input object passed to each transformer
      */
     public Object transform(Object object) {
         for (int i = 0; i < iTransformers.length; i++) {

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.9 2003/12/28 16:36:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.10 2004/01/02 01:36:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -79,7 +79,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
- * @version $Revision: 1.9 $ $Date: 2003/12/28 16:36:48 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/02 01:36:51 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -100,7 +100,6 @@ public abstract class AbstractMapBag implements Bag {
     /**
      * Constructor needed for subclass serialisation.
      * 
-     * @param map  the map to assign
      */
     protected AbstractMapBag() {
         super();
@@ -542,7 +541,7 @@ public abstract class AbstractMapBag implements Bag {
      * This Bag equals another Bag if it contains the same number of occurances of
      * the same elements.
      * 
-     * @param obj  the Bag to compare to
+     * @param object  the Bag to compare to
      * @return true if equal
      */
     public boolean equals(Object object) {

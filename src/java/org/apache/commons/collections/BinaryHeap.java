@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.17 2004/01/01 23:56:51 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.18 2004/01/02 01:36:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -92,7 +92,7 @@ import java.util.NoSuchElementException;
  * </pre>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.17 $ $Date: 2004/01/01 23:56:51 $
+ * @version $Revision: 1.18 $ $Date: 2004/01/02 01:36:51 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
@@ -419,7 +419,7 @@ public final class BinaryHeap extends AbstractCollection
      * <p>
      * Assume it is a maximum heap.
      *
-     * @param element the element
+     * @param index the index of the element to be percolated up
      */
     protected void percolateUpMaxHeap(final int index) {
         int hole = index;

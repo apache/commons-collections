@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.7 2003/12/29 00:38:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.8 2004/01/02 01:36:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -88,7 +88,7 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * not store each object twice, which can save on memory use.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.7 2003/12/29 00:38:08 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.8 2004/01/02 01:36:51 psteitz Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -123,7 +123,7 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
     /** 
      * Constructs a <code>DualTreeBidiMap</code> using the specified Comparator.
      *
-     * @param map  the map whose mappings are to be placed in this map
+     * @param comparator  the Comparator
      */
     public DualTreeBidiMap(Comparator comparator) {
         super();
@@ -156,7 +156,7 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
      * 
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
-     * @param inverseBidiMap  the inverse BidiMap
+     * @param inverseMap  the inverse BidiMap
      * @return new bidi map
      */
     protected BidiMap createBidiMap(Map normalMap, Map reverseMap, BidiMap inverseMap) {

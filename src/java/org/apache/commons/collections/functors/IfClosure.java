@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/IfClosure.java,v 1.1 2003/11/23 17:01:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/IfClosure.java,v 1.2 2004/01/02 01:36:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ import org.apache.commons.collections.Predicate;
  * based on a predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 17:01:35 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/02 01:36:51 $
  *
  * @author Stephen Colebourne
  */
@@ -86,12 +86,11 @@ public class IfClosure implements Closure, Serializable {
     /**
      * Factory method that performs validation.
      * 
-     * @param predicates  array of predicates, cloned, no nulls
-     * @param closures  matching array of closures, cloned, no nulls
-     * @param defaultClosure  the closure to use if no match, null means nop
-     * @return the <code>chained</code> closure
-     * @throws IllegalArgumentException if array is null
-     * @throws IllegalArgumentException if any element in the array is null
+     * @param predicate  predicate to switch on
+     * @param trueClosure  closure used if true
+     * @param falseClosure  closure used if false
+     * @return the <code>if</code> closure
+     * @throws IllegalArgumentException if any argument is null
      */
     public static Closure getInstance(Predicate predicate, Closure trueClosure, Closure falseClosure) {
         if (predicate == null) {

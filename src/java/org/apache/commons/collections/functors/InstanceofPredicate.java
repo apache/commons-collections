@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/InstanceofPredicate.java,v 1.1 2003/11/23 19:11:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/InstanceofPredicate.java,v 1.2 2004/01/02 01:36:51 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,7 +66,7 @@ import org.apache.commons.collections.Predicate;
  * the type stored in this predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 19:11:21 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/02 01:36:51 $
  *
  * @author Stephen Colebourne
  */
@@ -96,7 +96,7 @@ public final class InstanceofPredicate implements Predicate, Serializable {
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
      * 
-     * @param object  the object to compare to
+     * @param type  the type to check for
      */
     public InstanceofPredicate(Class type) {
         super();
