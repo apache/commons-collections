@@ -27,7 +27,7 @@ import org.apache.commons.collections.list.PredicatedList;
 /**
  * Tests for ListUtils.
  * 
- * @version $Revision: 1.19 $ $Date: 2004/06/02 22:12:14 $
+ * @version $Revision: 1.20 $ $Date: 2004/12/11 06:24:10 $
  * 
  * @author Stephen Colebourne
  * @author Neil O'Toole
@@ -35,7 +35,17 @@ import org.apache.commons.collections.list.PredicatedList;
  */
 public class TestListUtils extends BulkTest {
 
-    public TestListUtils(String name) {
+	private static final String a = "a";
+	private static final String b = "b";
+	private static final String c = "c";
+	private static final String d = "d";
+	private static final String e = "e";
+	private static final String x = "x";
+
+	private String[] fullArray;
+	private List fullList;
+	
+	public TestListUtils(String name) {
         super(name);
     }
 
@@ -43,6 +53,12 @@ public class TestListUtils extends BulkTest {
         return BulkTest.makeSuite(TestListUtils.class);
     }
 
+	public void setUp() {
+		fullArray = new String[]{a, b, c, d, e};
+		fullList = new ArrayList(Arrays.asList(fullArray));
+	}
+    
+    
     public void testNothing() {
     }
     
@@ -118,6 +134,79 @@ public class TestListUtils extends BulkTest {
         a.clear();
         assertEquals(false, ListUtils.hashCodeForList(a) == ListUtils.hashCodeForList(b));
         assertEquals(0, ListUtils.hashCodeForList(null));
-	}	
+	}
+	
+	public void testUnmodifiableListCopy() {
+		List list = new ArrayList();
+		list.add("a");
+		List copy = ListUtils.unmodifiableListCopy(list);
+
+		assertTrue(copy instanceof Unmodifiable);
+		assertTrue(list.equals(copy));
+		list.clear();
+		assertTrue(copy.isEmpty() == false);
+
+		try
+		{
+			copy.clear();
+			fail("should be unmodifiable.");
+		}
+		catch (UnsupportedOperationException uoe)
+		{
+			// this is what we want
+		}
+		
+		try
+		{
+			list = ListUtils.unmodifiableListCopy(null);
+			fail("expecting IllegalArgumentException");
+		}
+		catch (IllegalArgumentException iae)
+		{
+			// this is what we want
+		}
+	}
+	
+	public void testRetainAll() {
+		List sub = new ArrayList();
+		sub.add(a);
+		sub.add(b);
+		sub.add(x);
+
+		List retained = ListUtils.retainAll(fullList, sub);
+		assertTrue(retained.size() == 2);
+		sub.remove(x);
+		assertTrue(retained.equals(sub));
+		fullList.retainAll(sub);
+		assertTrue(retained.equals(fullList));
+		
+		try
+		{
+			List list = ListUtils.retainAll(null, null);
+			fail("expecting NullPointerException");
+		}
+		catch(NullPointerException npe)
+		{} // this is what we want
+	}
+
+	public void testRemoveAll() {
+		List sub = new ArrayList();
+		sub.add(a);
+		sub.add(b);
+		sub.add(x);
+
+		List remainder = ListUtils.removeAll(fullList, sub);
+		assertTrue(remainder.size() == 3);
+		fullList.removeAll(sub);
+		assertTrue(remainder.equals(fullList));
+		
+		try
+		{
+			List list = ListUtils.removeAll(null, null);
+			fail("expecting NullPointerException");
+		}
+		catch(NullPointerException npe)
+		{} // this is what we want
+	}
 	
 }
