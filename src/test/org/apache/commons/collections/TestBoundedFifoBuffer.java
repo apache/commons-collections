@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.2 2002/07/03 01:59:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:59:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.3 2002/10/13 13:00:23 scolebourne Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/10/13 13:00:23 $
  *
  * ====================================================================
  *
@@ -60,13 +60,10 @@
  */
 package org.apache.commons.collections;
 
-
 import junit.framework.Test;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-
 /**
  *  Test cases for BoundedFifoBuffer.
  */
@@ -168,4 +165,27 @@ public class TestBoundedFifoBuffer extends TestCollection {
         }
     }
 
+    /**
+     * Tests that the constructor correctly throws an exception.
+     */
+    public void testConstructorException1() {
+        try {
+            new BoundedFifoBuffer(0);
+        } catch (IllegalArgumentException ex) {
+            return;
+        }
+        fail();
+    }
+    
+    /**
+     * Tests that the constructor correctly throws an exception.
+     */
+    public void testConstructorException2() {
+        try {
+            new BoundedFifoBuffer(-20);
+        } catch (IllegalArgumentException ex) {
+            return;
+        }
+        fail();
+    }
 }
