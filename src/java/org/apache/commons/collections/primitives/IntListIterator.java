@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListIterator.java,v 1.7 2003/08/31 17:21:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListIterator.java,v 1.8 2003/11/07 17:24:13 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,8 +64,10 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.ListIteratorIntListIterator
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:21:15 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/07 17:24:13 $
  * 
+ * @deprecated This code has been moved to Jakarta Commons Primitives (http://jakarta.apache.org/commons/primitives/)
+ *
  * @author Rodney Waldhoff 
  */
 public interface IntListIterator extends IntIterator {

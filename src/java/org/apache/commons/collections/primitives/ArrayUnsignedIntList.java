@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedIntList.java,v 1.6 2003/10/09 20:51:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedIntList.java,v 1.7 2003/11/07 17:24:13 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -76,8 +76,10 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.6 $ $Date: 2003/10/09 20:51:15 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/07 17:24:13 $
  * 
+ * @deprecated This code has been moved to Jakarta Commons Primitives (http://jakarta.apache.org/commons/primitives/)
+ *
  * @author Rodney Waldhoff 
  */
 public class ArrayUnsignedIntList extends RandomAccessLongList implements LongList, Serializable {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollections.java,v 1.4 2003/10/09 20:51:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollections.java,v 1.5 2003/11/07 17:24:13 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,8 +68,10 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableIntListI
  * The methods of this class all throw a NullPointerException is the 
  * provided collections are null.
  * 
- * @version $Revision: 1.4 $ $Date: 2003/10/09 20:51:15 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/07 17:24:13 $
  * 
+ * @deprecated This code has been moved to Jakarta Commons Primitives (http://jakarta.apache.org/commons/primitives/)
+ *
  * @author Rodney Waldhoff 
  */
 public final class IntCollections {

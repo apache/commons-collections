@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayCharList.java,v 1.2 2003/08/31 17:21:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayCharList.java,v 1.3 2003/11/07 17:24:13 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -67,8 +67,10 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:21:14 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/07 17:24:13 $
  * 
+ * @deprecated This code has been moved to Jakarta Commons Primitives (http://jakarta.apache.org/commons/primitives/)
+ *
  * @author Rodney Waldhoff 
  */
 public class ArrayCharList extends RandomAccessCharList implements CharList, Serializable {
