@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * 
  * @author James Strachan
  * @author Stephen Colebourne
+ * @author Dimiter Dimitrov
  */
 public class BeanMap extends AbstractMap implements Cloneable {
 
@@ -611,7 +612,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
                         if ( readMethod != null ) {
                             readMethods.put( name, readMethod );
                         }
-                        if ( writeMethods != null ) {
+                        if ( writeMethod != null ) {
                             writeMethods.put( name, writeMethod );
                         }
                         types.put( name, aType );
