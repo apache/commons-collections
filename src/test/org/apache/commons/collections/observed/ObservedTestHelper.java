@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/ObservedTestHelper.java,v 1.2 2003/09/06 16:53:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/ObservedTestHelper.java,v 1.3 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,10 +64,11 @@ import java.util.ListIterator;
 
 import junit.framework.Assert;
 
-import org.apache.commons.collections.observed.standard.StandardModificationEvent;
 import org.apache.commons.collections.observed.standard.StandardModificationHandler;
 import org.apache.commons.collections.observed.standard.StandardModificationListener;
+import org.apache.commons.collections.observed.standard.StandardPostModificationEvent;
 import org.apache.commons.collections.observed.standard.StandardPostModificationListener;
+import org.apache.commons.collections.observed.standard.StandardPreModificationEvent;
 import org.apache.commons.collections.observed.standard.StandardPreModificationListener;
 
 /**
@@ -75,7 +76,7 @@ import org.apache.commons.collections.observed.standard.StandardPreModificationL
  * {@link ObservedCollection} implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/06 16:53:23 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -91,30 +92,30 @@ public class ObservedTestHelper {
     }
     
     public static class Listener implements StandardModificationListener {
-        public StandardModificationEvent preEvent = null;
-        public StandardModificationEvent postEvent = null;
+        public StandardPreModificationEvent preEvent = null;
+        public StandardPostModificationEvent postEvent = null;
         
-        public void modificationOccurring(StandardModificationEvent event) {
+        public void modificationOccurring(StandardPreModificationEvent event) {
             this.preEvent = event;
         }
 
-        public void modificationOccurred(StandardModificationEvent event) {
+        public void modificationOccurred(StandardPostModificationEvent event) {
             this.postEvent = event;
         }
     }
     
     public static class PreListener implements StandardPreModificationListener {
-        public StandardModificationEvent preEvent = null;
+        public StandardPreModificationEvent preEvent = null;
         
-        public void modificationOccurring(StandardModificationEvent event) {
+        public void modificationOccurring(StandardPreModificationEvent event) {
             this.preEvent = event;
         }
     }
     
     public static class PostListener implements StandardPostModificationListener {
-        public StandardModificationEvent postEvent = null;
+        public StandardPostModificationEvent postEvent = null;
         
-        public void modificationOccurred(StandardModificationEvent event) {
+        public void modificationOccurred(StandardPostModificationEvent event) {
             this.postEvent = event;
         }
     }
@@ -152,7 +153,7 @@ public class ObservedTestHelper {
         doTestRemove(factory);
         doTestRemoveAll(factory);
         doTestRetainAll(factory);
-        doTestIteratorRemove(factory);
+        doTestRemoveIterated(factory);
     }
     
     public static void bulkTestObservedSet(ObservedFactory factory) {
@@ -173,8 +174,8 @@ public class ObservedTestHelper {
         doTestAddAllIndexed(factory);
         doTestRemoveIndexed(factory);
         doTestSetIndexed(factory);
-        doTestIteratorAdd(factory);
-        doTestIteratorSet(factory);
+        doTestAddIterated(factory);
+        doTestSetIterated(factory);
     }
     
     public static void bulkTestObservedBag(ObservedFactory factory) {
@@ -343,11 +344,8 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertSame(SIX, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(0, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
@@ -357,11 +355,16 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(SIX, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(0, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(1, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(1, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+        
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
@@ -377,11 +380,8 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(1, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(1, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
@@ -391,7 +391,7 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(1, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(2, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(1, LISTENER.postEvent.getSizeChange());
@@ -411,11 +411,8 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
@@ -425,7 +422,7 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(3, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(1, LISTENER.postEvent.getSizeChange());
@@ -451,11 +448,8 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertSame(EIGHT, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
@@ -465,11 +459,16 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(3, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(1, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
     }
 
     //-----------------------------------------------------------------------
@@ -491,11 +490,8 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertSame(EIGHT, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(3, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
@@ -505,15 +501,20 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(3, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(5, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(3, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
     }
 
     //-----------------------------------------------------------------------
-    public static void doTestIteratorAdd(ObservedFactory factory) {
+    public static void doTestAddIterated(ObservedFactory factory) {
         ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
@@ -527,31 +528,33 @@ public class ObservedTestHelper {
         // pre
         Assert.assertSame(coll, LISTENER.preEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
-        Assert.assertEquals(ModificationEventType.ADD_INDEXED, LISTENER.preEvent.getType());
+        Assert.assertEquals(ModificationEventType.ADD_ITERATED, LISTENER.preEvent.getType());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeIndex());
         Assert.assertSame(EIGHT, LISTENER.preEvent.getChangeObject());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertSame(EIGHT, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
-        Assert.assertEquals(ModificationEventType.ADD_INDEXED, LISTENER.postEvent.getType());
+        Assert.assertEquals(ModificationEventType.ADD_ITERATED, LISTENER.postEvent.getType());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeIndex());
         Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeObject());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(3, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(1, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
     }
 
     //-----------------------------------------------------------------------
@@ -571,24 +574,26 @@ public class ObservedTestHelper {
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeObject());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeCollection());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(0, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
         Assert.assertEquals(ModificationEventType.ADD_ALL, LISTENER.postEvent.getType());
         Assert.assertEquals(-1, LISTENER.postEvent.getChangeIndex());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeObject());
-        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeCollection());
+        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeCollection());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(0, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(2, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(2, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeBulk());
     }
 
     //-----------------------------------------------------------------------
@@ -608,12 +613,9 @@ public class ObservedTestHelper {
         Assert.assertEquals(1, LISTENER.preEvent.getChangeIndex());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeObject());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeCollection());
-        Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
@@ -622,11 +624,16 @@ public class ObservedTestHelper {
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeObject());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeCollection());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(4, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(2, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeBulk());
     }
 
     //-----------------------------------------------------------------------
@@ -644,27 +651,29 @@ public class ObservedTestHelper {
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
         Assert.assertEquals(ModificationEventType.CLEAR, LISTENER.preEvent.getType());
         Assert.assertEquals(-1, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(null, LISTENER.postEvent.getChangeObject());
+        Assert.assertSame(null, LISTENER.preEvent.getChangeObject());
         Assert.assertEquals(0, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
         Assert.assertEquals(ModificationEventType.CLEAR, LISTENER.postEvent.getType());
         Assert.assertEquals(-1, LISTENER.postEvent.getChangeIndex());
         Assert.assertSame(null, LISTENER.postEvent.getChangeObject());
-        Assert.assertEquals(0, LISTENER.preEvent.getChangeCollection().size());
+        Assert.assertEquals(0, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(0, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(-2, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeBulk());
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
@@ -690,29 +699,31 @@ public class ObservedTestHelper {
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE, LISTENER.preEvent.getType());
         Assert.assertEquals(-1, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeObject());
+        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeObject());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE, LISTENER.postEvent.getType());
         Assert.assertEquals(-1, LISTENER.postEvent.getChangeIndex());
         Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeObject());
-        Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
-        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeCollection().iterator().next());
+        Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
+        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(SEVEN, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(1, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(-1, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
@@ -738,27 +749,29 @@ public class ObservedTestHelper {
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE_INDEXED, LISTENER.preEvent.getType());
         Assert.assertEquals(0, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(null, LISTENER.postEvent.getChangeObject());
+        Assert.assertSame(null, LISTENER.preEvent.getChangeObject());
         Assert.assertEquals(0, LISTENER.preEvent.getChangeCollection().size());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE_INDEXED, LISTENER.postEvent.getType());
         Assert.assertEquals(0, LISTENER.postEvent.getChangeIndex());
         Assert.assertSame(null, LISTENER.postEvent.getChangeObject());
-        Assert.assertEquals(0, LISTENER.preEvent.getChangeCollection().size());
+        Assert.assertEquals(0, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(SIX, LISTENER.postEvent.getResult());
+        Assert.assertSame(SIX, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(1, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(-1, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
     }
 
     //-----------------------------------------------------------------------
@@ -777,29 +790,84 @@ public class ObservedTestHelper {
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE_NCOPIES, LISTENER.preEvent.getType());
         Assert.assertEquals(-1, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeObject());
+        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeObject());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeCollection().iterator().next());
-        Assert.assertEquals(3, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeCollection().iterator().next());
+        Assert.assertEquals(3, LISTENER.preEvent.getChangeRepeat());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(13, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(13, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE_NCOPIES, LISTENER.postEvent.getType());
         Assert.assertEquals(-1, LISTENER.postEvent.getChangeIndex());
         Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeObject());
-        Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
+        Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(3, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(SEVEN, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(13, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(10, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(-3, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
+    }
+
+    //-----------------------------------------------------------------------
+    public static void doTestRemoveIterated(ObservedFactory factory) {
+        ObservedCollection coll = factory.createObservedCollection(LISTENER);
+        
+        coll.addAll(SIX_SEVEN_LIST);
+        LISTENER.preEvent = null;
+        LISTENER.postEvent = null;
+        Assert.assertEquals(2, coll.size());
+        Iterator it = coll.iterator();
+        it.next();
+        it.next();
+        it.remove();
+        Assert.assertEquals(1, coll.size());
+        // pre
+        Assert.assertSame(coll, LISTENER.preEvent.getSourceCollection());
+        Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
+        Assert.assertEquals(ModificationEventType.REMOVE_ITERATED, LISTENER.preEvent.getType());
+        Assert.assertEquals(1, LISTENER.preEvent.getChangeIndex());
+        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeObject());
+        Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
+        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeCollection().iterator().next());
+        Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
+        Assert.assertSame(SEVEN, LISTENER.preEvent.getPrevious());
+        Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
+        // post
+        Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
+        Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
+        Assert.assertEquals(ModificationEventType.REMOVE_ITERATED, LISTENER.postEvent.getType());
+        Assert.assertEquals(1, LISTENER.postEvent.getChangeIndex());
+        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeObject());
+        Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
+        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeCollection().iterator().next());
+        Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
+        Assert.assertSame(SEVEN, LISTENER.postEvent.getPrevious());
+        Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
+        Assert.assertEquals(1, LISTENER.postEvent.getPostSize());
+        Assert.assertEquals(-1, LISTENER.postEvent.getSizeChange());
+        Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
+        
+        LISTENER.preEvent = null;
+        LISTENER.postEvent = null;
+        Assert.assertEquals(1, coll.size());
+        coll.remove(SEVEN);  // already removed
+        Assert.assertEquals(1, coll.size());
+        Assert.assertTrue(LISTENER.preEvent != null);
+        Assert.assertTrue(LISTENER.postEvent == null);
     }
 
     //-----------------------------------------------------------------------
@@ -818,14 +886,11 @@ public class ObservedTestHelper {
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE_ALL, LISTENER.preEvent.getType());
         Assert.assertEquals(-1, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeObject());
-        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeCollection());
+        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeObject());
+        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeCollection());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(3, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(3, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
@@ -834,11 +899,16 @@ public class ObservedTestHelper {
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeObject());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeCollection());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(3, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(1, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(-2, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeBulk());
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
@@ -865,14 +935,11 @@ public class ObservedTestHelper {
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
         Assert.assertEquals(ModificationEventType.RETAIN_ALL, LISTENER.preEvent.getType());
         Assert.assertEquals(-1, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeObject());
-        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeCollection());
+        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeObject());
+        Assert.assertSame(SIX_SEVEN_LIST, LISTENER.preEvent.getChangeCollection());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(3, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(3, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
@@ -881,68 +948,22 @@ public class ObservedTestHelper {
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeObject());
         Assert.assertSame(SIX_SEVEN_LIST, LISTENER.postEvent.getChangeCollection());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
+        Assert.assertSame(null, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(3, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(2, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(-1, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeBulk());
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
         Assert.assertEquals(2, coll.size());
         coll.retainAll(SIX_SEVEN_LIST);  // already done this
         Assert.assertEquals(2, coll.size());
-        Assert.assertTrue(LISTENER.preEvent != null);
-        Assert.assertTrue(LISTENER.postEvent == null);
-    }
-
-    //-----------------------------------------------------------------------
-    public static void doTestIteratorRemove(ObservedFactory factory) {
-        ObservedCollection coll = factory.createObservedCollection(LISTENER);
-        
-        coll.addAll(SIX_SEVEN_LIST);
-        LISTENER.preEvent = null;
-        LISTENER.postEvent = null;
-        Assert.assertEquals(2, coll.size());
-        Iterator it = coll.iterator();
-        it.next();
-        it.next();
-        it.remove();
-        Assert.assertEquals(1, coll.size());
-        // pre
-        Assert.assertSame(coll, LISTENER.preEvent.getSourceCollection());
-        Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
-        Assert.assertEquals(ModificationEventType.REMOVE, LISTENER.preEvent.getType());
-        Assert.assertEquals(-1, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeObject());
-        Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
-        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeCollection().iterator().next());
-        Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
-        Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
-        // post
-        Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
-        Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
-        Assert.assertEquals(ModificationEventType.REMOVE, LISTENER.postEvent.getType());
-        Assert.assertEquals(-1, LISTENER.postEvent.getChangeIndex());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeObject());
-        Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
-        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeCollection().iterator().next());
-        Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(Boolean.TRUE, LISTENER.postEvent.getResult());
-        Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
-        Assert.assertEquals(1, LISTENER.postEvent.getPostSize());
-        Assert.assertEquals(-1, LISTENER.postEvent.getSizeChange());
-        Assert.assertEquals(true, LISTENER.postEvent.isSizeChanged());
-        
-        LISTENER.preEvent = null;
-        LISTENER.postEvent = null;
-        Assert.assertEquals(1, coll.size());
-        coll.remove(SEVEN);  // already removed
-        Assert.assertEquals(1, coll.size());
         Assert.assertTrue(LISTENER.preEvent != null);
         Assert.assertTrue(LISTENER.postEvent == null);
     }
@@ -962,33 +983,35 @@ public class ObservedTestHelper {
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
         Assert.assertEquals(ModificationEventType.SET_INDEXED, LISTENER.preEvent.getType());
         Assert.assertEquals(0, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeObject());
+        Assert.assertSame(EIGHT, LISTENER.preEvent.getChangeObject());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
-        Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeCollection().iterator().next());
+        Assert.assertSame(EIGHT, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(null, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
         Assert.assertEquals(ModificationEventType.SET_INDEXED, LISTENER.postEvent.getType());
         Assert.assertEquals(0, LISTENER.postEvent.getChangeIndex());
         Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeObject());
-        Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
+        Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(SIX, LISTENER.postEvent.getResult());
+        Assert.assertSame(SIX, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(2, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(0, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(false, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
     }
 
     //-----------------------------------------------------------------------
-    public static void doTestIteratorSet(ObservedFactory factory) {
+    public static void doTestSetIterated(ObservedFactory factory) {
         ObservedList coll = (ObservedList) factory.createObservedCollection(LISTENER);
         
         coll.addAll(SIX_SEVEN_LIST);
@@ -1003,31 +1026,33 @@ public class ObservedTestHelper {
         // pre
         Assert.assertSame(coll, LISTENER.preEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
-        Assert.assertEquals(ModificationEventType.SET_INDEXED, LISTENER.preEvent.getType());
+        Assert.assertEquals(ModificationEventType.SET_ITERATED, LISTENER.preEvent.getType());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeObject());
+        Assert.assertSame(EIGHT, LISTENER.preEvent.getChangeObject());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
-        Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeCollection().iterator().next());
+        Assert.assertSame(EIGHT, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(null, LISTENER.preEvent.getResult());
+        Assert.assertSame(SEVEN, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
-        Assert.assertEquals(2, LISTENER.preEvent.getPostSize());
-        Assert.assertEquals(0, LISTENER.preEvent.getSizeChange());
-        Assert.assertEquals(false, LISTENER.preEvent.isSizeChanged());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getSourceCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
-        Assert.assertEquals(ModificationEventType.SET_INDEXED, LISTENER.postEvent.getType());
+        Assert.assertEquals(ModificationEventType.SET_ITERATED, LISTENER.postEvent.getType());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeIndex());
         Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeObject());
-        Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
+        Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
         Assert.assertSame(EIGHT, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getResult());
+        Assert.assertSame(SEVEN, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(2, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(0, LISTENER.postEvent.getSizeChange());
         Assert.assertEquals(false, LISTENER.postEvent.isSizeChanged());
+
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeAdd());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeReduce());
+        Assert.assertEquals(true, LISTENER.postEvent.isTypeChange());
+        Assert.assertEquals(false, LISTENER.postEvent.isTypeBulk());
     }
 
 }

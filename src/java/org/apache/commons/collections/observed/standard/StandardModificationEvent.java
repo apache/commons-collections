@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.2 2003/09/06 16:53:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.3 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,8 +69,9 @@ import org.apache.commons.collections.observed.ModificationEventType;
 import org.apache.commons.collections.observed.ModificationHandler;
 
 /**
- * Event class that encapsulates all the event information for a
- * standard collection event.
+ * Event class that encapsulates the event information for a
+ * standard collection event. Two subclasses are provided, one for
+ * pre and one for post events.
  * <p>
  * The information stored in this event is all that is available as
  * parameters or return values.
@@ -78,7 +79,7 @@ import org.apache.commons.collections.observed.ModificationHandler;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/06 16:53:23 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -86,8 +87,6 @@ public class StandardModificationEvent extends ModificationEvent {
 
     /** The size before the event */
     protected final int preSize;
-    /** The size after the event */
-    protected final int postSize;
     /** The index of the change */
     protected final int index;
     /** The object of the change */
@@ -95,7 +94,7 @@ public class StandardModificationEvent extends ModificationEvent {
     /** The number of changes */
     protected final int repeat;
     /** The result of the method call */
-    protected final Object result;
+    protected final Object previous;
 
     // Constructor
     //-----------------------------------------------------------------------
@@ -109,7 +108,7 @@ public class StandardModificationEvent extends ModificationEvent {
      * @param index  the index that changed
      * @param object  the value that changed
      * @param repeat  the number of repeats
-     * @param result  the method result
+     * @param previous  the previous value being removed/replaced
      */
     public StandardModificationEvent(
         final Collection collection,
@@ -119,15 +118,14 @@ public class StandardModificationEvent extends ModificationEvent {
         final int index,
         final Object object,
         final int repeat,
-        final Object result) {
+        final Object previous) {
 
         super(collection, handler, type);
         this.preSize = preSize;
-        this.postSize = collection.size();
         this.index = index;
         this.object = object;
         this.repeat = repeat;
-        this.result = result;
+        this.previous = previous;
     }
 
     // Change info
@@ -167,8 +165,6 @@ public class StandardModificationEvent extends ModificationEvent {
     public Collection getChangeCollection() {
         if (object == null) {
             return Collections.EMPTY_LIST;
-        } else if (type == ModificationEventType.ADD_NCOPIES || type == ModificationEventType.REMOVE_NCOPIES) {
-            return Collections.singletonList(object);
         } else if (isType(ModificationEventType.GROUP_BULK)) {
             if (object instanceof Collection) {
                 return (Collection) object;
@@ -194,19 +190,15 @@ public class StandardModificationEvent extends ModificationEvent {
     }
 
     /**
-     * Gets the result of the method call.
+     * Gets the previous value that is being replaced or removed.
      * <p>
-     * For set(int) and remove(int) this will be the previous value
-     * being replaced.
-     * <p>
-     * If there is no result yet, <code>null</code> will be returned.
-     * If the result was a <code>boolean</code>, a <code>Boolean</code> is returned.
-     * If the result was void, <code>null</code> will be returned.
+     * This is only returned if the value definitely was previously in the
+     * collection. Bulk operatons will not return this.
      * 
-     * @return the repeat
+     * @return the previous value that was removed/replaced
      */
-    public Object getResult() {
-        return result;
+    public Object getPrevious() {
+        return previous;
     }
 
     // Size info
@@ -220,46 +212,48 @@ public class StandardModificationEvent extends ModificationEvent {
         return preSize;
     }
 
-    /**
-     * Gets the size after the change.
-     * <p>
-     * This method will return the same as <code>getPreSzie</code> if
-     * called when handling a pre event.
-     * 
-     * @return the size before the change
-     */
-    public int getPostSize() {
-        return postSize;
-    }
-
-    /**
-     * Gets the size change, negative for remove/clear.
-     * <p>
-     * This method will return <code>zero</code> if called when handling a pre event.
-     * 
-     * @return the size before the change
-     */
-    public int getSizeChange() {
-        return postSize - preSize;
-    }
-
-    /**
-     * Returns true if the size of the collection changed.
-     * <p>
-     * This method will return <code>false</code> if called when handling a pre event.
-     * 
-     * @return true is the size changed
-     */
-    public boolean isSizeChanged() {
-        return (preSize != postSize);
-    }
-
     // Event type
     //-----------------------------------------------------------------------
     /**
+     * Checks to see if the event is an add event (add/addAll).
+     * 
+     * @return true if of the specified type
+     */
+    public boolean isTypeAdd() {
+        return (type & ModificationEventType.GROUP_ADD) > 0;
+    }
+
+    /**
+     * Checks to see if the event is a remove event (remove/removeAll/retainAll/clear).
+     * 
+     * @return true if of the specified type
+     */
+    public boolean isTypeReduce() {
+        return (type & ModificationEventType.GROUP_REDUCE) > 0;
+    }
+
+    /**
+     * Checks to see if the event is a change event (set).
+     * 
+     * @return true if of the specified type
+     */
+    public boolean isTypeChange() {
+        return (type & ModificationEventType.GROUP_CHANGE) > 0;
+    }
+
+    /**
+     * Checks to see if the event is a bulk event (addAll/removeAll/retainAll/clear).
+     * 
+     * @return true if of the specified type
+     */
+    public boolean isTypeBulk() {
+        return (type & ModificationEventType.GROUP_BULK) > 0;
+    }
+
+    /**
      * Checks to see if the event is of the specified type.
      * <p>
-     * This is any combination of constants from {@link ObservedEventType}.
+     * This is any combination of constants from {@link ModificationEventType}.
      * 
      * @param eventType  an event type constant
      * @return true if of the specified type

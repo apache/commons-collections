@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationListener.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationListener.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import org.apache.commons.collections.observed.ModificationListener;
  * when a collection has been changed.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -79,6 +79,6 @@ public interface StandardPostModificationListener extends ModificationListener {
      * 
      * @param event  the event detail
      */
-    public void modificationOccurred(StandardModificationEvent event);
+    public void modificationOccurred(StandardPostModificationEvent event);
     
 }

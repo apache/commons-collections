@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPreModificationListener.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPreModificationEvent.java,v 1.1 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,30 +57,51 @@
  */
 package org.apache.commons.collections.observed.standard;
 
-import org.apache.commons.collections.observed.ModificationListener;
+import java.util.Collection;
+
+import org.apache.commons.collections.observed.ModificationHandler;
 
 /**
- * A listener for the <code>StandardModificationHandler</code> that is called
- * when a collection is about to be modified.
+ * Event class that encapsulates all the event information for a
+ * standard collection event.
+ * <p>
+ * The information stored in this event is all that is available as
+ * parameters or return values.
+ * In addition, the <code>size</code> method is used on the collection.
+ * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
-public interface StandardPreModificationListener extends ModificationListener {
+public class StandardPreModificationEvent extends StandardModificationEvent {
 
+    // Constructor
+    //-----------------------------------------------------------------------
     /**
-     * A collection modification is occurring.
-     * <p>
-     * To veto the change, throw <code>ModicationVetoedException</code>.
-     * <p>
-     * This method should be processed quickly, as with all event handling.
-     * It should also avoid modifying the event source (the collection).
+     * Constructor.
      * 
-     * @param event  the event detail
-     * @throws ModicationVetoedException to veto
+     * @param collection  the event source
+     * @param handler  the handler
+     * @param type  the event type
+     * @param preSize  the size before the change
+     * @param index  the index that changed
+     * @param object  the value that changed
+     * @param repeat  the number of repeats
+     * @param previous  the previous value being removed/replaced
      */
-    public void modificationOccurring(StandardPreModificationEvent event);
-    
+    public StandardPreModificationEvent(
+        final Collection collection,
+        final ModificationHandler handler,
+        final int type,
+        final int preSize,
+        final int index,
+        final Object object,
+        final int repeat,
+        final Object previous) {
+
+        super(collection, handler, type, preSize, index, object, repeat, previous);
+    }
+
 }

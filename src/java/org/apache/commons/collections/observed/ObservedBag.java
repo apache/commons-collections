@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedBag.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedBag.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.Bag;
  * NOT observed. This is because the set should be unmodifiable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -184,18 +184,18 @@ public class ObservedBag extends ObservedCollection implements Bag {
 
     public boolean add(Object object, int nCopies) {
         boolean result = false;
-        if (handler.preAdd(object, nCopies)) {
+        if (handler.preAddNCopies(object, nCopies)) {
             result = getBag().add(object, nCopies);
-            handler.postAdd(object, nCopies, result);
+            handler.postAddNCopies(object, nCopies, result);
         }
         return result;
     }
 
     public boolean remove(Object object, int nCopies) {
         boolean result = false;
-        if (handler.preRemove(object, nCopies)) {
+        if (handler.preRemoveNCopies(object, nCopies)) {
             result = getBag().remove(object, nCopies);
-            handler.postRemove(object, nCopies, result);
+            handler.postRemoveNCopies(object, nCopies, result);
         }
         return result;
     }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedCollection.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedCollection.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.observed.standard.StandardModificationHand
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -297,6 +297,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      */
     protected class ObservedIterator extends AbstractIteratorDecorator {
         
+        protected int lastIndex = -1;
         protected Object last;
         
         protected ObservedIterator(Iterator iterator) {
@@ -305,13 +306,15 @@ public class ObservedCollection extends AbstractCollectionDecorator {
         
         public Object next() {
             last = super.next();
+            lastIndex++;
             return last;
         }
 
         public void remove() {
-            if (handler.preRemove(last)) {
+            if (handler.preRemoveIterated(lastIndex, last)) {
                 iterator.remove();
-                handler.postRemove(last, true);
+                handler.postRemoveIterated(lastIndex, last);
+                lastIndex--;
             }
         }
     }

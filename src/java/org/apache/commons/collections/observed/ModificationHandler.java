@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import java.util.Collection;
  * later collections release.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -230,73 +230,65 @@ public abstract class ModificationHandler {
      * Handles the pre event.
      * 
      * @param type  the event type to send
-     * @param index  the index where the change starts
-     * @param object  the object that was added/removed
-     * @param repeat  the number of repeats of the add/remove
+     * @param index  the index where the change starts, the method param or derived
+     * @param object  the object that will be added/removed/set, the method param or derived
+     * @param repeat  the number of repeats of the add/remove, the method param or derived
+     * @param previous  the previous value that will be removed/replaced, must exist in coll
      */
-    protected abstract boolean preEvent(int type, int index, Object object, int repeat);
+    protected abstract boolean preEvent(int type, int index, Object object, int repeat, Object previous);
 
     /**
-     * Handles the post event where the collections method returns boolean for success.
+     * Handles the post event.
      * 
      * @param modified  true if the method succeeded in changing the collection
      * @param type  the event type to send
-     * @param index  the index where the change starts
-     * @param object  the object that was added/removed
-     * @param repeat  the number of repeats of the add/remove
+     * @param index  the index where the change starts, the method param or derived
+     * @param object  the object that was added/removed/set, the method param or derived
+     * @param repeat  the number of repeats of the add/remove, the method param or derived
+     * @param previous  the previous value that was removed/replace, must have existed in coll
      */
-    protected abstract void postEvent(boolean modified, int type, int index, Object object, int repeat);
-
-    /**
-     * Handles the post event where the collections method has a return value.
-     * 
-     * @param modified  true if the method succeeded in changing the collection
-     * @param type  the event type to send
-     * @param index  the index where the change starts
-     * @param object  the object that was added/removed
-     * @param repeat  the number of repeats of the add/remove
-     * @param result  the result of the method
-     */
-    protected abstract void postEvent(boolean modified, int type, int index, Object object, int repeat, Object result);
+    protected abstract void postEvent(boolean modified, int type, int index, Object object, int repeat, Object previous);
 
     // Event handling
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before add(obj) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
+     * It does not set the index for List implementations.
      * 
      * @param object  the object being added
      * @return true to process modification
      */
     protected boolean preAdd(Object object) {
-        return preEvent(ModificationEventType.ADD, -1, object, 1);
+        return preEvent(ModificationEventType.ADD, -1, object, 1, null);
     }
 
     /**
      * Send an event after add(obj) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int)}.
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
+     * It does not set the index for List implementations.
      * 
      * @param object  the object being added
      * @param result  the result from the add method
      */
     protected void postAdd(Object object, boolean result) {
-        postEvent(result, ModificationEventType.ADD, -1, object, 1);
+        postEvent(result, ModificationEventType.ADD, -1, object, 1, null);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before add(int,obj) is called on a List.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param index  the index to add at
      * @param object  the object being added
      * @return true to process modification
      */
-    protected boolean preAdd(int index, Object object) {
-        return preEvent(ModificationEventType.ADD_INDEXED, index, object, 1);
+    protected boolean preAddIndexed(int index, Object object) {
+        return preEvent(ModificationEventType.ADD_INDEXED, index, object, 1, null);
     }
 
     /**
@@ -307,7 +299,7 @@ public abstract class ModificationHandler {
      * @param index  the index to add at
      * @param object  the object being added
      */
-    protected void postAdd(int index, Object object) {
+    protected void postAddIndexed(int index, Object object) {
         postEvent(true, ModificationEventType.ADD_INDEXED, index, object, 1, null);
     }
 
@@ -315,78 +307,108 @@ public abstract class ModificationHandler {
     /**
      * Store data and send event before add(obj,int) is called on a Bag.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param object  the object being added
      * @param nCopies  the number of copies being added
      * @return true to process modification
      */
-    protected boolean preAdd(Object object, int nCopies) {
-        return preEvent(ModificationEventType.ADD_NCOPIES, -1, object, nCopies);
+    protected boolean preAddNCopies(Object object, int nCopies) {
+        return preEvent(ModificationEventType.ADD_NCOPIES, -1, object, nCopies, null);
     }
 
     /**
      * Send an event after add(obj,int) is called on a Bag.
      * <p>
      * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
+     * The method result is not used by this implementation (Bag violates the
+     * Collection contract)
      * 
      * @param object  the object being added
      * @param nCopies  the number of copies being added
+     * @param result  the method result
      */
-    protected void postAdd(Object object, int nCopies, boolean result) {
-        postEvent(true, ModificationEventType.ADD_NCOPIES, -1, object, nCopies, (result ? Boolean.TRUE : Boolean.FALSE));
+    protected void postAddNCopies(Object object, int nCopies, boolean result) {
+        postEvent(true, ModificationEventType.ADD_NCOPIES, -1, object, nCopies, null);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Store data and send event before add(obj) is called on a ListIterator.
+     * <p>
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
+     * 
+     * @param index  the index of the iterator
+     * @param object  the object being added
+     * @return true to process modification
+     */
+    protected boolean preAddIterated(int index, Object object) {
+        return preEvent(ModificationEventType.ADD_ITERATED, index, object, 1, null);
+    }
+
+    /**
+     * Send an event after add(obj) is called on a ListIterator.
+     * <p>
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
+     * 
+     * @param index  the index of the iterator
+     * @param object  the object being added
+     */
+    protected void postAddIterated(int index, Object object) {
+        // assume collection changed
+        postEvent(true, ModificationEventType.ADD_ITERATED, index, object, 1, null);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before addAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param coll  the collection being added
      * @return true to process modification
      */
     protected boolean preAddAll(Collection coll) {
-        return preEvent(ModificationEventType.ADD_ALL, -1, coll, 1);
+        return preEvent(ModificationEventType.ADD_ALL, -1, coll, 1, null);
     }
 
     /**
      * Send an event after addAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int)}.
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
      * 
      * @param coll  the collection being added
-     * @param result  the result from the addAll method
+     * @param collChanged  the result from the addAll method
      */
-    protected void postAddAll(Collection coll, boolean result) {
-        postEvent(result, ModificationEventType.ADD_ALL, -1, coll, 1);
+    protected void postAddAll(Collection coll, boolean collChanged) {
+        postEvent(collChanged, ModificationEventType.ADD_ALL, -1, coll, 1, null);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before addAll(int,coll) is called on a List.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param index  the index to addAll at
      * @param coll  the collection being added
      * @return true to process modification
      */
-    protected boolean preAddAll(int index, Collection coll) {
-        return preEvent(ModificationEventType.ADD_ALL_INDEXED, index, coll, 1);
+    protected boolean preAddAllIndexed(int index, Collection coll) {
+        return preEvent(ModificationEventType.ADD_ALL_INDEXED, index, coll, 1, null);
     }
 
     /**
      * Send an event after addAll(int,coll) is called on a List.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int)}.
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
      * 
      * @param index  the index to addAll at
      * @param coll  the collection being added
-     * @param result  the result from the addAll method
+     * @param collChanged  the result from the addAll method
      */
-    protected void postAddAll(int index, Collection coll, boolean result) {
-        postEvent(result, ModificationEventType.ADD_ALL_INDEXED, index, coll, 1);
+    protected void postAddAllIndexed(int index, Collection coll, boolean collChanged) {
+        postEvent(collChanged, ModificationEventType.ADD_ALL_INDEXED, index, coll, 1, null);
     }
 
     //-----------------------------------------------------------------------
@@ -398,7 +420,7 @@ public abstract class ModificationHandler {
      * @return true to process modification
      */
     protected boolean preClear() {
-        return preEvent(ModificationEventType.CLEAR, -1, null, 1);
+        return preEvent(ModificationEventType.CLEAR, -1, null, 1, null);
     }
 
     /**
@@ -415,38 +437,40 @@ public abstract class ModificationHandler {
     /**
      * Store data and send event before remove(obj) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param object  the object being removed
      * @return true to process modification
      */
     protected boolean preRemove(Object object) {
-        return preEvent(ModificationEventType.REMOVE, -1, object, 1);
+        return preEvent(ModificationEventType.REMOVE, -1, object, 1, null);
     }
 
     /**
      * Send an event after remove(obj) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int)}.
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
      * 
      * @param object  the object being removed
-     * @param result  the result from the remove method
+     * @param collChanged  the result from the remove method
      */
-    protected void postRemove(Object object, boolean result) {
-        postEvent(result, ModificationEventType.REMOVE, -1, object, 1);
+    protected void postRemove(Object object, boolean collChanged) {
+        postEvent(collChanged, ModificationEventType.REMOVE, -1, object, 1, (collChanged ? object : null));
     }
 
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before remove(int) is called on a List.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param index  the index to remove at
      * @return true to process modification
      */
-    protected boolean preRemove(int index) {
-        return preEvent(ModificationEventType.REMOVE_INDEXED, index, null, 1);
+    protected boolean preRemoveIndexed(int index) {
+        // could do a get(index) to determine previousValue
+        // we don't for performance, but subclass may override
+        return preEvent(ModificationEventType.REMOVE_INDEXED, index, null, 1, null);
     }
 
     /**
@@ -455,24 +479,24 @@ public abstract class ModificationHandler {
      * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
      * 
      * @param index  the index to remove at
-     * @param result  the result from the remove method
+     * @param previousValue  the result from the remove method
      */
-    protected void postRemove(int index, Object result) {
-        postEvent(true, ModificationEventType.REMOVE_INDEXED, index, null, 1, result);
+    protected void postRemoveIndexed(int index, Object previousValue) {
+        postEvent(true, ModificationEventType.REMOVE_INDEXED, index, null, 1, previousValue);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before remove(obj,int) is called on a Bag.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param object  the object being removed
      * @param nCopies  the number of copies being removed
      * @return true to process modification
      */
-    protected boolean preRemove(Object object, int nCopies) {
-        return preEvent(ModificationEventType.REMOVE_NCOPIES, -1, object, nCopies);
+    protected boolean preRemoveNCopies(Object object, int nCopies) {
+        return preEvent(ModificationEventType.REMOVE_NCOPIES, -1, object, nCopies, null);
     }
 
     /**
@@ -482,73 +506,103 @@ public abstract class ModificationHandler {
      * 
      * @param object  the object being removed
      * @param nCopies  the number of copies being removed
+     * @param collChanged  the result from the remove method
      */
-    protected void postRemove(Object object, int nCopies, boolean result) {
-        postEvent(result, ModificationEventType.REMOVE_NCOPIES, -1, object, nCopies);
+    protected void postRemoveNCopies(Object object, int nCopies, boolean collChanged) {
+        postEvent(collChanged, ModificationEventType.REMOVE_NCOPIES, -1, object, nCopies, (collChanged ? object : null));
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Store data and send event before remove(obj) is called on an Iterator.
+     * <p>
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
+     * 
+     * @param index  the index of the iterator
+     * @param removedValue  the object being removed
+     * @return true to process modification
+     */
+    protected boolean preRemoveIterated(int index, Object removedValue) {
+        return preEvent(ModificationEventType.REMOVE_ITERATED, index, removedValue, 1, removedValue);
+    }
+
+    /**
+     * Send an event after remove(obj) is called on an Iterator.
+     * <p>
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
+     * 
+     * @param index  the index of the iterator
+     * @param removedValue  the previous value at this index
+     */
+    protected void postRemoveIterated(int index, Object removedValue) {
+        // assume collection changed
+        postEvent(true, ModificationEventType.REMOVE_ITERATED, index, removedValue, 1, removedValue);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before removeAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param coll  the collection being removed
      * @return true to process modification
      */
     protected boolean preRemoveAll(Collection coll) {
-        return preEvent(ModificationEventType.REMOVE_ALL, -1, coll, 1);
+        return preEvent(ModificationEventType.REMOVE_ALL, -1, coll, 1, null);
     }
 
     /**
      * Send an event after removeAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int)}.
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
      * 
      * @param coll  the collection being removed
-     * @param result  the result from the removeAll method
+     * @param collChanged  the result from the removeAll method
      */
-    protected void postRemoveAll(Collection coll, boolean result) {
-        postEvent(result, ModificationEventType.REMOVE_ALL, -1, coll, 1);
+    protected void postRemoveAll(Collection coll, boolean collChanged) {
+        postEvent(collChanged, ModificationEventType.REMOVE_ALL, -1, coll, 1, null);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before retainAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param coll  the collection being retained
      * @return true to process modification
      */
     protected boolean preRetainAll(Collection coll) {
-        return preEvent(ModificationEventType.RETAIN_ALL, -1, coll, 1);
+        return preEvent(ModificationEventType.RETAIN_ALL, -1, coll, 1, null);
     }
 
     /**
      * Send an event after retainAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int)}.
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
      * 
      * @param coll  the collection being retained
-     * @param result  the result from the retainAll method
+     * @param collChanged  the result from the retainAll method
      */
-    protected void postRetainAll(Collection coll, boolean result) {
-        postEvent(result, ModificationEventType.RETAIN_ALL, -1, coll, 1);
+    protected void postRetainAll(Collection coll, boolean collChanged) {
+        postEvent(collChanged, ModificationEventType.RETAIN_ALL, -1, coll, 1, null);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Store data and send event before set(int,obj) is called on a List.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
      * 
      * @param index  the index to add at
      * @param object  the object being added
      * @return true to process modification
      */
-    protected boolean preSet(int index, Object object) {
-        return preEvent(ModificationEventType.SET_INDEXED, index, object, 1);
+    protected boolean preSetIndexed(int index, Object object) {
+        // could do a get(index) to determine previousValue
+        // we don't for performance, but subclass may override
+        return preEvent(ModificationEventType.SET_INDEXED, index, object, 1, null);
     }
 
     /**
@@ -558,11 +612,40 @@ public abstract class ModificationHandler {
      * 
      * @param index  the index to add at
      * @param object  the object being added
-     * @param result  the result from the set method
+     * @param previousValue  the result from the set method
      */
-    protected void postSet(int index, Object object, Object result) {
+    protected void postSetIndexed(int index, Object object, Object previousValue) {
         // reference check for modification, in case equals() has issues (eg. performance)
-        postEvent((object != result), ModificationEventType.SET_INDEXED, index, object, 1, result);
+        postEvent((object != previousValue), ModificationEventType.SET_INDEXED, index, object, 1, previousValue);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Store data and send event before set(obj) is called on a ListIterator.
+     * <p>
+     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object)}.
+     * 
+     * @param index  the index to set at
+     * @param object  the object being added
+     * @param previousValue  the previous value at this index
+     * @return true to process modification
+     */
+    protected boolean preSetIterated(int index, Object object, Object previousValue) {
+        return preEvent(ModificationEventType.SET_ITERATED, index, object, 1, previousValue);
+    }
+
+    /**
+     * Send an event after set(obj) is called on a ListIterator.
+     * <p>
+     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object)}.
+     * 
+     * @param index  the index to set at
+     * @param object  the object being added
+     * @param previousValue  the previous value at this index
+     */
+    protected void postSetIterated(int index, Object object, Object previousValue) {
+        // reference check for modification, in case equals() has issues (eg. performance)
+        postEvent((object != previousValue), ModificationEventType.SET_ITERATED, index, object, 1, previousValue);
     }
 
     // toString

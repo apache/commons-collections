@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedList.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedList.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.decorators.AbstractListIteratorDecorator;
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -179,35 +179,35 @@ public class ObservedList extends ObservedCollection implements List {
 
     //-----------------------------------------------------------------------
     public void add(int index, Object object) {
-        if (handler.preAdd(index, object)) {
+        if (handler.preAddIndexed(index, object)) {
             getList().add(index, object);
-            handler.postAdd(index, object);
+            handler.postAddIndexed(index, object);
         }
     }
 
     public boolean addAll(int index, Collection coll) {
         boolean result = false;
-        if (handler.preAddAll(index, coll)) {
+        if (handler.preAddAllIndexed(index, coll)) {
             result = getList().addAll(index, coll);
-            handler.postAddAll(index, coll, result);
+            handler.postAddAllIndexed(index, coll, result);
         }
         return result;
     }
 
     public Object remove(int index) {
         Object result = null;
-        if (handler.preRemove(index)) {
+        if (handler.preRemoveIndexed(index)) {
             result = getList().remove(index);
-            handler.postRemove(index, result);
+            handler.postRemoveIndexed(index, result);
         }
         return result;
     }
 
     public Object set(int index, Object object) {
         Object result = null;
-        if (handler.preSet(index, object)) {
+        if (handler.preSetIndexed(index, object)) {
             result = getList().set(index, object);
-            handler.postSet(index, object, result);
+            handler.postSetIndexed(index, object, result);
         }
         return result;
     }
@@ -250,25 +250,25 @@ public class ObservedList extends ObservedCollection implements List {
 
         public void remove() {
             int index = iterator.previousIndex();
-            if (handler.preRemove(index)) {
+            if (handler.preRemoveIterated(index, last)) {
                 iterator.remove();
-                handler.postRemove(index, last);
+                handler.postRemoveIterated(index, last);
             }
         }
         
         public void add(Object object) {
             int index = iterator.nextIndex();
-            if (handler.preAdd(index, object)) {
+            if (handler.preAddIterated(index, object)) {
                 iterator.add(object);
-                handler.postAdd(index, object);
+                handler.postAddIterated(index, object);
             }
         }
 
         public void set(Object object) {
             int index = iterator.previousIndex();
-            if (handler.preSet(index, object)) {
+            if (handler.preSetIterated(index, object, last)) {
                 iterator.set(object);
-                handler.postSet(index, object, last);
+                handler.postSetIterated(index, object, last);
             }
         }
     }

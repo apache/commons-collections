@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.2 2003/09/06 18:59:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.observed.ModificationHandlerFactory;
  * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/06 18:59:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -424,35 +424,37 @@ public class StandardModificationHandler extends ModificationHandler {
      * Handles the pre event.
      * 
      * @param type  the event type to send
-     * @param index  the index where the change starts
-     * @param object  the object that was added/removed
-     * @param repeat  the number of repeats of the add/remove
+     * @param index  the index where the change starts, the method param or derived
+     * @param object  the object that will be added/removed/set, the method param or derived
+     * @param repeat  the number of repeats of the add/remove, the method param or derived
+     * @param previous  the previous value that will be removed/replaced, must exist in coll
      * @return true to call the decorated collection
      */
-    protected boolean preEvent(int type, int index, Object object, int repeat) {
+    protected boolean preEvent(int type, int index, Object object, int repeat, Object previous) {
         preSize = getCollection().size();
-        return firePreEvent(type, index, object, repeat);
+        return firePreEvent(type, index, object, repeat, previous);
     }
 
     /**
      * Sends the pre event to the listeners.
      * 
      * @param type  the event type to send
-     * @param index  the index where the change starts
-     * @param object  the object that was added/removed
-     * @param repeat  the number of repeats of the add/remove
+     * @param index  the index where the change starts, the method param or derived
+     * @param object  the object that will be added/removed/set, the method param or derived
+     * @param repeat  the number of repeats of the add/remove, the method param or derived
+     * @param previous  the previous value that will be removed/replaced, must exist in coll
      * @return true to call the decorated collection
      */
-    protected boolean firePreEvent(int type, int index, Object object, int repeat) {
+    protected boolean firePreEvent(int type, int index, Object object, int repeat, Object previous) {
         if ((preMask & type) > 0) {
-            StandardModificationEvent event = null;
+            StandardPreModificationEvent event = null;
             synchronized (this) {
                 for (int i = 0; i < preHolder.length; i++) {
                     PreHolder holder = preHolder[i];
                     if ((holder.mask & type) > 0) {
                         if (event == null) {
-                            event = new StandardModificationEvent(
-                                getCollection(), this, type, preSize, index, object, repeat, null);
+                            event = new StandardPreModificationEvent(
+                                getCollection(), this, type, preSize, index, object, repeat, previous);
                         }
                         holder.listener.modificationOccurring(event);
                     }
@@ -469,29 +471,14 @@ public class StandardModificationHandler extends ModificationHandler {
      * 
      * @param success  true if the method succeeded in changing the collection
      * @param type  the event type to send
-     * @param index  the index where the change starts
-     * @param object  the object that was added/removed
-     * @param repeat  the number of repeats of the add/remove
+     * @param index  the index where the change starts, the method param or derived
+     * @param object  the object that will be added/removed/set, the method param or derived
+     * @param repeat  the number of repeats of the add/remove, the method param or derived
+     * @param previous  the previous value that will be removed/replaced, must exist in coll
      */
-    protected void postEvent(boolean success, int type, int index, Object object, int repeat) {
+    protected void postEvent(boolean success, int type, int index, Object object, int repeat, Object previous) {
         if (success) {
-            firePostEvent(type, index, object, repeat, (success ? Boolean.TRUE : Boolean.FALSE));
-        }
-    }
-    
-    /**
-     * Handles the post event.
-     * 
-     * @param success  true if the method succeeded in changing the collection
-     * @param type  the event type to send
-     * @param index  the index where the change starts
-     * @param object  the object that was added/removed
-     * @param repeat  the number of repeats of the add/remove
-     * @param result  the method result
-     */
-    protected void postEvent(boolean success, int type, int index, Object object, int repeat, Object result) {
-        if (success) {
-            firePostEvent(type, index, object, repeat, result);
+            firePostEvent(type, index, object, repeat, previous);
         }
     }
     
@@ -499,21 +486,21 @@ public class StandardModificationHandler extends ModificationHandler {
      * Sends the post event to the listeners.
      * 
      * @param type  the event type to send
-     * @param index  the index where the change starts
-     * @param object  the object that was added/removed
-     * @param repeat  the number of repeats of the add/remove
-     * @param result  the method result
+     * @param index  the index where the change starts, the method param or derived
+     * @param object  the object that will be added/removed/set, the method param or derived
+     * @param repeat  the number of repeats of the add/remove, the method param or derived
+     * @param previous  the previous value that will be removed/replaced, must exist in coll
      */
-    protected void firePostEvent(int type, int index, Object object, int repeat, Object result) {
+    protected void firePostEvent(int type, int index, Object object, int repeat, Object previous) {
         if ((postMask & type) > 0) {
-            StandardModificationEvent event = null;
+            StandardPostModificationEvent event = null;
             synchronized (this) {
                 for (int i = 0; i < postHolder.length; i++) {
                     PostHolder holder = postHolder[i];
                     if ((holder.mask & type) > 0) {
                         if (event == null) {
-                            event = new StandardModificationEvent(
-                                getCollection(), this, type, preSize, index, object, repeat, result);
+                            event = new StandardPostModificationEvent(
+                                getCollection(), this, type, preSize, index, object, repeat, previous);
                         }
                         holder.listener.modificationOccurred(event);
                     }
