@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.36 2003/01/06 13:00:54 rwaldhoff Exp $ -->
+<!-- $Id: build.xml,v 1.37 2003/01/07 00:08:38 rwaldhoff Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -24,7 +24,9 @@
    <!-- ######################################################### -->
 
    <target name="init">
-      <tstamp/>
+      <tstamp>
+        <format property="year" pattern="yyyy"/>
+      </tstamp>
 
       <!-- read properties from the build.properties, if any -->
       <property name="component-propfile" value="${basedir}/build.properties"/>
@@ -177,7 +179,7 @@
                destdir="${dest.doc.api}"
                windowtitle="${Name-Long}"
                doctitle="${Name-Long}"
-               bottom="&lt;small&gt;Copyright &amp;copy; 2001-2003 Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
+               bottom="&lt;small&gt;Copyright &amp;copy; 2001-${year} Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
                protected="true"
                version="true"
                author="true"
