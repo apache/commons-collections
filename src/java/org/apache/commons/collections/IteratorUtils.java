@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.1 2002/08/17 11:38:53 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/17 11:38:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.2 2002/08/17 22:14:22 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/17 22:14:22 $
  *
  * ====================================================================
  *
@@ -60,15 +60,19 @@
  */
 package org.apache.commons.collections;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.CollatingIterator;
@@ -87,12 +91,21 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * <code>org.apache.commons.collections.iterators</code> subpackage.
  *
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorUtils.java,v 1.1 2002/08/17 11:38:53 scolebourne Exp $
+ * @version $Id: IteratorUtils.java,v 1.2 2002/08/17 22:14:22 scolebourne Exp $
  * @since 2.1
  */
 public class IteratorUtils {
     // validation is done in this class in certain cases because the
     // public classes allow invalid states
+
+    /**
+     * An iterator over no elements
+     */    
+    public static final Iterator EMPTY_ITERATOR = new EmptyIterator();
+    /**
+     * A list iterator over no elements
+     */    
+    public static final ListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
 
     /**
      * Prevents instantiation.
@@ -109,7 +122,7 @@ public class IteratorUtils {
      * @return  an iterator over nothing
      */
     public static Iterator emptyIterator() {
-        return Collections.EMPTY_LIST.iterator();
+        return EMPTY_ITERATOR;
     }
 
     /**
@@ -121,7 +134,7 @@ public class IteratorUtils {
      * @return  a list iterator over nothing
      */
     public static ListIterator emptyListIterator() {
-        return Collections.EMPTY_LIST.listIterator();
+        return EMPTY_LIST_ITERATOR;
     }
 
     /**
@@ -384,24 +397,11 @@ public class IteratorUtils {
     }
     
     /**
-     * Gets a list iterator based on a simple iterator.
-     * <p>
-     * As the wrapped Iterator is traversed, a LinkedList of its values is
-     * cached, permitting all required operations of ListIterator.
-     *
-     * @param iterator  the iterator to use, not null
-     * @throws NullPointerException if iterator parameter is null
-     */
-    public static Iterator iteratorListIterator(Iterator iterator) {
-        return new ListIteratorWrapper(iterator);
-    }
-    
-    /**
      * Gets an iterator that provides an iterator view of the given enumeration.
      *
      * @param enumeration  the enumeration to use
      */
-    public static Iterator enumerationIterator(Enumeration enumeration) {
+    public static Iterator asIterator(Enumeration enumeration) {
         if (enumeration == null) {
             throw new NullPointerException("Enumeration must not be null");
         }
@@ -415,7 +415,7 @@ public class IteratorUtils {
      * @param enumeration  the enumeration to use
      * @param collection  the collection to remove elements form
      */
-    public static Iterator enumerationIterator(Enumeration enumeration, Collection removeCollection) {
+    public static Iterator asIterator(Enumeration enumeration, Collection removeCollection) {
         if (enumeration == null) {
             throw new NullPointerException("Enumeration must not be null");
         }
@@ -431,11 +431,105 @@ public class IteratorUtils {
      * @param iterator  the iterator to use, not null
      * @throws NullPointerException if iterator is null
      */
-    public static Enumeration iteratorEnumeration(Iterator iterator) {
+    public static Enumeration asEnumeration(Iterator iterator) {
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
         }
         return new IteratorEnumeration(iterator);
+    }
+    
+    /**
+     * Gets a list iterator based on a simple iterator.
+     * <p>
+     * As the wrapped Iterator is traversed, a LinkedList of its values is
+     * cached, permitting all required operations of ListIterator.
+     *
+     * @param iterator  the iterator to use, not null
+     * @throws NullPointerException if iterator parameter is null
+     */
+    public static ListIterator toListIterator(Iterator iterator) {
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        return new ListIteratorWrapper(iterator);
+    }
+    
+    /**
+     * Gets an array based on an iterator.
+     * <p>
+     * As the wrapped Iterator is traversed, an ArrayList of its values is
+     * created. At the end, this is converted to an array.
+     *
+     * @param iterator  the iterator to use, not null
+     * @throws NullPointerException if iterator parameter is null
+     */
+    public static Object[] toArray(Iterator iterator) {
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        List list = toList(iterator, 100);
+        return list.toArray();
+    }
+    
+    /**
+     * Gets an array based on an iterator.
+     * <p>
+     * As the wrapped Iterator is traversed, an ArrayList of its values is
+     * created. At the end, this is converted to an array.
+     *
+     * @param iterator  the iterator to use, not null
+     * @param arrayClass  the class of array to create
+     * @throws NullPointerException if iterator parameter is null
+     * @throws NullPointerException if arrayClass is null
+     * @throws ClassCastException if the arrayClass is invalid
+     */
+    public static Object[] toArray(Iterator iterator, Class arrayClass) {
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        if (arrayClass == null) {
+            throw new NullPointerException("Array class must not be null");
+        }
+        List list = toList(iterator, 100);
+        return list.toArray((Object[]) Array.newInstance(arrayClass, list.size()));
+    }
+    
+    /**
+     * Gets a list based on an iterator.
+     * <p>
+     * As the wrapped Iterator is traversed, an ArrayList of its values is
+     * created. At the end, the list is returned.
+     *
+     * @param iterator  the iterator to use, not null
+     * @throws NullPointerException if iterator parameter is null
+     */
+    public static List toList(Iterator iterator) {
+        return toList(iterator, 10);
+    }
+    
+    /**
+     * Gets a list based on an iterator.
+     * <p>
+     * As the wrapped Iterator is traversed, an ArrayList of its values is
+     * created. At the end, the list is returned.
+     *
+     * @param iterator  the iterator to use, not null
+     * @param estimatedSize  the initial size of the ArrayList
+     * @throws NullPointerException if iterator parameter is null
+     * @throws IllegalArgumentException if the size is less than 1
+     */
+    public static List toList(Iterator iterator, int estimatedSize) {
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        if (estimatedSize < 1) {
+            throw new IllegalArgumentException("Estimated size must be greater than 0");
+        }
+        List list = new ArrayList(estimatedSize);
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        return list;
     }
     
     /** 
@@ -497,5 +591,82 @@ public class IteratorUtils {
             return singletonIterator(obj);
         }
     }
+    
+    /**
+     * EmptyIterator class
+     */
+    static class EmptyIterator implements Iterator {
+        
+        /**
+         * @see java.util.Iterator#hasNext()
+         */
+        public boolean hasNext() {
+            return false;
+        }
 
+        /**
+         * @see java.util.Iterator#next()
+         */
+        public Object next() {
+            throw new NoSuchElementException();
+        }
+
+        /**
+         * @see java.util.Iterator#remove()
+         */
+        public void remove() {
+            throw new UnsupportedOperationException("remove() not supported for empty Iterator");
+        }
+
+    }
+    
+    /**
+     * EmptyListIterator class
+     */
+    static class EmptyListIterator extends EmptyIterator implements ListIterator {
+        
+        /**
+         * @see java.util.ListIterator#hasPrevious()
+         */
+        public boolean hasPrevious() {
+            return false;
+        }
+
+        /**
+         * @see java.util.ListIterator#previous()
+         */
+        public Object previous() {
+            throw new NoSuchElementException();
+        }
+
+        /**
+         * @see java.util.ListIterator#nextIndex()
+         */
+        public int nextIndex() {
+            return 0;
+        }
+
+        /**
+         * @see java.util.ListIterator#previousIndex()
+         */
+        public int previousIndex() {
+            return -1;
+        }
+
+        /**
+         * @see java.util.ListIterator#add(Object)
+         */
+        public void add(Object o) {
+            throw new UnsupportedOperationException("add() not supported for empty Iterator");
+        }
+
+        /**
+         * @see java.util.ListIterator#set(Object)
+         */
+        public void set(Object o) {
+            throw new UnsupportedOperationException("set() not supported for empty Iterator");
+        }
+
+    }
+    
 }
