@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.5 2002/02/25 22:43:04 morgand Exp $
- * $Revision: 1.5 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestIterator.java,v 1.1 2002/02/25 22:43:04 morgand Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/02/25 22:43:04 $
  *
  * ====================================================================
@@ -58,68 +58,58 @@
  * <http://www.apache.org/>.
  *
  */
-
+     
 package org.apache.commons.collections;
 
-import junit.framework.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/**
- * Tests the ArrayIterator to ensure that the next() method will actually
- * perform the iteration rather than the hasNext() method.
- * The code of this test was supplied by Mauricio S. Moura
- *
- * @author James Strachan
- * @author Mauricio S. Moura
- * @version $Id: TestArrayIterator.java,v 1.5 2002/02/25 22:43:04 morgand Exp $
- */
-public class TestArrayIterator extends TestIterator {
-    
-    protected String[] testArray = {
-        "One", "Two", "Three"
-    };
-    
-    public static Test suite() {
-        return new TestSuite(TestArrayIterator.class);
-    }
-    
-    public TestArrayIterator(String testName) {
+public abstract class TestIterator extends TestObject {
+
+    public TestIterator(String testName) {
         super(testName);
     }
 
-    public Iterator makeEmptyIterator() {
-        return new ArrayIterator(new Object[0]);
-    }
+    public abstract Iterator makeEmptyIterator();
 
-    public Iterator makeFullIterator() {
-        return new ArrayIterator(testArray);
-    }
-    
+    public abstract Iterator makeFullIterator();
+
+
     /**
-     * Return a new, empty {@link Object} to used for testing.
+     * Should throw a NoSuchElementException.
      */
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
-    public void testIterator() {
-        Iterator iter = (Iterator) makeFullIterator();
-        for ( int i = 0; i < testArray.length; i++ ) {
-            Object testValue = testArray[i];            
-            Object iterValue = iter.next();
-            
-            assertEquals( "Iteration value is correct", testValue, iterValue );
-        }
-        
-        assertTrue("Iterator should now be empty", ! iter.hasNext() );
-
-	try {
-	    Object testValue = iter.next();
-	} catch (Exception e) {
-	  assertTrue("NoSuchElementException must be thrown", 
-		 e.getClass().equals((new NoSuchElementException()).getClass()));
+    public void testEmptyIterator() {
+        Iterator iter = makeEmptyIterator();
+        try {
+	    iter.next();
+            fail("NoSuchElementException must be thrown when Iterator is exhausted");
+	} catch (NoSuchElementException e) {
 	}
     }
-}
 
+    /**
+     * NoSuchElementException (or any other exception)
+     * should not be thrown for the first element.  
+     * NoSuchElementException must be thrown when
+     * hasNext() returns false
+     */
+    public void testFullIterator() {
+        Iterator iter = makeFullIterator();
+        try {
+	    iter.next();
+	} catch (NoSuchElementException e) {
+            fail("Full iterators must have at least one element");
+	}
+
+        while (iter.hasNext()) {
+            iter.next();
+        }
+
+        try {
+	    iter.next();
+            fail("NoSuchElementException must be thrown when Iterator is exhausted");
+	} catch (NoSuchElementException e) {
+	}
+    }
+
+}
