@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.3 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.4 2002/02/22 04:16:19 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/22 04:16:19 $
  *
  * ====================================================================
  *
@@ -77,23 +77,57 @@ public final class BinaryHeap
     protected Comparable[]          m_elements;
     protected boolean               m_isMinHeap;
 
+    /**
+     *  Create a new minimum binary heap.
+     */
     public BinaryHeap()
     {
         this( DEFAULT_CAPACITY, true );
     }
 
+    /**
+     *  Create a new minimum binary heap with the specified initial capacity.
+     *  
+     *  @param capacity the initial capacity for the heap.  This value must
+     *  be greater than zero.
+     *
+     *  @exception IllegalArgumentException 
+     *   if <code>capacity</code> is &lt;= <code>0</code>
+     **/
     public BinaryHeap( final int capacity )
     {
         this( capacity, true );
     }
 
+    /**
+     *  Create a new minimum or maximum binary heap
+     *
+     *  @param isMinHeap if <code>true</code> the heap is created as a 
+     *  minimum heap; otherwise, the heap is created as a maximum heap.
+     **/
     public BinaryHeap( final boolean isMinHeap )
     {
         this( DEFAULT_CAPACITY, isMinHeap );
     }
 
+    /**
+     *  Create a new minimum or maximum binary heap with the specified 
+     *  initial capacity.
+     *
+     *  @param capacity the initial capacity for the heap.  This value must 
+     *  be greater than zero.
+     *
+     *  @param isMinHeap if <code>true</code> the heap is created as a 
+     *  minimum heap; otherwise, the heap is created as a maximum heap.
+     *
+     *  @exception IllegalArgumentException 
+     *   if <code>capacity</code> is <code>&lt;= 0</code>
+     **/
     public BinaryHeap( final int capacity, final boolean isMinHeap )
     {
+        if( capacity <= 0 ) {
+            throw new IllegalArgumentException( "invalid capacity" );
+        }
         m_isMinHeap = isMinHeap;
 
         //+1 as 0 is noop
@@ -111,7 +145,8 @@ public final class BinaryHeap
     /**
      * Test if queue is empty.
      *
-     * @return true if queue is empty else false.
+     * @return <code>true</code> if queue is empty; <code>false</code> 
+     * otherwise.
      */
     public boolean isEmpty()
     {
@@ -121,7 +156,8 @@ public final class BinaryHeap
     /**
      * Test if queue is full.
      *
-     * @return true if queue is full else false.
+     * @return <code>true</code> if queue is full; <code>false</code>
+     * otherwise.
      */
     public boolean isFull()
     {
@@ -147,7 +183,7 @@ public final class BinaryHeap
      * Return element on top of heap but don't remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if isEmpty() == true
+     * @exception NoSuchElementException if <code>isEmpty() == true</code>
      */
     public Comparable peek() throws NoSuchElementException
     {
@@ -159,7 +195,7 @@ public final class BinaryHeap
      * Return element on top of heap and remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if isEmpty() == true
+     * @exception NoSuchElementException if <code>isEmpty() == true</code>
      */
     public Comparable pop() throws NoSuchElementException
     {
@@ -184,7 +220,7 @@ public final class BinaryHeap
      * Percolate element down heap from top.
      * Assume it is a maximum heap.
      *
-     * @param element the element
+     * @param index the index for the element
      */
     protected void percolateDownMinHeap( final int index )
     {
@@ -221,7 +257,7 @@ public final class BinaryHeap
      * Percolate element down heap from top.
      * Assume it is a maximum heap.
      *
-     * @param element the element
+     * @param index the index of the element
      */
     protected void percolateDownMaxHeap( final int index )
     {
@@ -302,6 +338,9 @@ public final class BinaryHeap
         m_elements[ hole ] = element;
     }
 
+    /**
+     *  Increase the size of the heap to support additional elements
+     **/
     protected void grow()
     {
         final Comparable[] elements =
