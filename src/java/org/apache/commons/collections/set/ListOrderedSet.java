@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/06/07 21:42:12 $
+ * @version $Revision: 1.10 $ $Date: 2005/01/04 00:01:31 $
  * 
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen
@@ -59,6 +59,8 @@ public class ListOrderedSet extends AbstractSerializableSetDecorator implements 
 
     /**
      * Factory method to create an ordered set specifying the list and set to use.
+     * <p>
+     * The list and set must both be empty.
      * 
      * @param set  the set to decorate, must be empty and not null
      * @param list  the list to decorate, must be empty and not null
@@ -95,6 +97,9 @@ public class ListOrderedSet extends AbstractSerializableSetDecorator implements 
      * Factory method to create an ordered set using the supplied list to retain order.
      * <p>
      * A <code>HashSet</code> is used for the set behaviour.
+     * <p>
+     * NOTE: If the list contains duplicates, the duplicates are removed,
+     * altering the specified list.
      * 
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
