@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.2 2003/11/19 23:58:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -85,7 +85,7 @@ import org.apache.commons.collections.map.OrderedMap;
  * not store each object twice, which can save on memory use.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.2 2003/11/19 23:58:11 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -347,7 +347,7 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
         }
         
         public String toString() {
-            if (last == null) {
+            if (last != null) {
                 return "MapIterator[" + getKey() + "=" + getValue() + "]";
             } else {
                 return "MapIterator[]";

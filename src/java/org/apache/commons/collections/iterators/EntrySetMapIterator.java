@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EntrySetMapIterator.java,v 1.2 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EntrySetMapIterator.java,v 1.3 2003/11/19 23:58:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import java.util.Map;
  * </pre>
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/14 22:58:27 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/19 23:58:11 $
  *
  * @author Stephen Colebourne
  */
@@ -199,7 +199,7 @@ public class EntrySetMapIterator implements MapIterator, ResettableIterator {
      * @return a string version of the iterator
      */    
     public String toString() {
-        if (last == null) {
+        if (last != null) {
             return "MapIterator[" + getKey() + "=" + getValue() + "]";
         } else {
             return "MapIterator[]";
