@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/15 20:04:31 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.6 2003/04/26 11:15:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -71,130 +68,141 @@ import java.util.Set;
  * build to extensions for its wrapped <code>Map</code> object which
  * would be unavailable or inconvenient via sub-classing (but usable
  * via composition).</p>
+ * 
+ * <p>This implementation does not perform any special processing with
+ * {@link #entrySet()}, {@link #keySet()} or {@link #values()}. Instead
+ * it simply returns the set/collection from the wrapped map. This may be
+ * undesirable, for example if you are trying to write a validating
+ * implementation it would provide a loophole around the validation. But,
+ * you might want that loophole, so this class is kept simple.</p>
  *
  * <p>An example use case is where the wrapped <code>Map</code> needs
  * synchronization (to make it thread-safe), but the <code>Map</code>
  * returned by <code>Collections.synchronizedMap(map)</code>
  * hides part of <code>map</code>'s public interface.</p>
  *
- * @since 2.0
+ * @since Commons Collections 2.0
+ * @version $Revision: 1.6 $ $Date: 2003/04/26 11:15:34 $
+ * 
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
+ * @author Stephen Colebourne
  */
 public abstract class ProxyMap implements Map {
     
     /**
-     * The <code>Map</code> used for default implementations.
+     * The <code>Map</code> to delegate to.
      */
     protected Map map;
 
     /**
-     * Creates a new instance acting as a representative for the
-     * specified <code>Map</code>.
+     * Constructor that uses the specified map to delegate to.
+     * <p>
+     * Note that the map is used for delegation, and is not copied. This is
+     * different to the normal use of a <code>Map</code> parameter in
+     * collections constructors.
      *
-     * @param map The <code>Map</code> to whose operations to wrap.
+     * @param map  the <code>Map</code> to delegate to
      */
     public ProxyMap(Map map) {
         this.map = map;
     }
 
     /**
-     *  Invokes the underlying {@link Map#clear()} method.
+     * Invokes the underlying {@link Map#clear()} method.
      */
     public void clear() {
         map.clear();
     }
 
     /**
-     *  Invokes the underlying {@link Map#containsKey(Object)} method.
+     * Invokes the underlying {@link Map#containsKey(Object)} method.
      */
     public boolean containsKey(Object key) {
         return map.containsKey(key);
     }
 
     /**
-     *  Invokes the underlying {@link Map#containsValue(Object)} method.
+     * Invokes the underlying {@link Map#containsValue(Object)} method.
      */
     public boolean containsValue(Object value) {
         return map.containsValue(value);
     }
 
     /**
-     *  Invokes the underlying {@link Map#entrySet()} method.
+     * Invokes the underlying {@link Map#entrySet()} method.
      */
     public Set entrySet() {
         return map.entrySet();
     }
 
     /**
-     *  Invokes the underlying {@link Map#equals(Object)} method.
+     * Invokes the underlying {@link Map#equals(Object)} method.
      */
     public boolean equals(Object m) {
         return map.equals(m);
     }
 
     /**
-     *  Invokes the underlying {@link Map#get(Object)} method.
+     * Invokes the underlying {@link Map#get(Object)} method.
      */
     public Object get(Object key) {
         return map.get(key);
     }
 
     /**
-     *  Invokes the underlying {@link Map#hashCode()} method.
+     * Invokes the underlying {@link Map#hashCode()} method.
      */
     public int hashCode() {
         return map.hashCode();
     }
 
     /**
-     *  Invokes the underlying {@link Map#isEmpty()} method.
+     * Invokes the underlying {@link Map#isEmpty()} method.
      */
     public boolean isEmpty() {
         return map.isEmpty();
     }
 
     /**
-     *  Invokes the underlying {@link Map#keySet()} method.
+     * Invokes the underlying {@link Map#keySet()} method.
      */
     public Set keySet() {
         return map.keySet();
     }
 
     /**
-     *  Invokes the underlying {@link Map#put(Object,Object)} method.
+     * Invokes the underlying {@link Map#put(Object,Object)} method.
      */
     public Object put(Object key, Object value) {
         return map.put(key, value);
     }
 
     /**
-     *  Invokes the underlying {@link Map#putAll(Map)} method.
+     * Invokes the underlying {@link Map#putAll(Map)} method.
      */
     public void putAll(Map t) {
         map.putAll(t);
     }
 
     /**
-     *  Invokes the underlying {@link Map#remove(Object)} method.
+     * Invokes the underlying {@link Map#remove(Object)} method.
      */
     public Object remove(Object key) {
         return map.remove(key);
     }
 
     /**
-     *  Invokes the underlying {@link Map#size()} method.
+     * Invokes the underlying {@link Map#size()} method.
      */
     public int size() {
         return map.size();
     }
 
     /**
-     *  Invokes the underlying {@link Map#values()} method.
+     * Invokes the underlying {@link Map#values()} method.
      */
     public Collection values() {
         return map.values();
     }
    
 }
-
-
