@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.9 2003/12/06 13:03:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.10 2003/12/14 12:54:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -85,8 +85,8 @@ import java.util.Set;
  * particularly when trying to keep the two TreeMaps synchronized with
  * each other. And if the data contained in the TreeMaps is large, the
  * cost of redundant storage becomes significant. (See also the new
- * {@link org.apache.commons.collections.DualTreeBidiMap DualTreeBidiMap} and
- * {@link org.apache.commons.collections.DualHashBidiMap DualHashBidiMap}
+ * {@link org.apache.commons.collections.bidimap.DualTreeBidiMap DualTreeBidiMap} and
+ * {@link org.apache.commons.collections.bidimap.DualHashBidiMap DualHashBidiMap}
  * implementations.)
  * <p>
  * This solution keeps the data properly synchronized and minimizes
@@ -138,10 +138,10 @@ import java.util.Set;
  *
  * @deprecated Use TreeBidiMap in bidimap subpackage. Due to be removed in v4.0.
  * @see BidiMap
- * @see DualTreeBidiMap
- * @see DualHashBidiMap
+ * @see org.apache.commons.collections.bidimap.DualTreeBidiMap
+ * @see org.apache.commons.collections.bidimap.DualHashBidiMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.9 $ $Date: 2003/12/06 13:03:15 $
+ * @version $Revision: 1.10 $ $Date: 2003/12/14 12:54:42 $
  * 
  * @author Marc Johnson
  */
