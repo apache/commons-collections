@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestCaseInsensitiveMap.java,v 1.1 2004/01/05 05:26:56 psteitz Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.map;
 
@@ -69,7 +65,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
  * 
- * @version $Revision: 1.1 $ $Date: 2004/01/05 05:26:56 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/14 21:34:34 $
  * 
  * @author Commons-Collections team
  */

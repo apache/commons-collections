@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonIterator.java,v 1.9 2003/12/01 22:48:58 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.iterators;
 
@@ -69,7 +65,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  *
- * @version $Revision: 1.9 $ $Date: 2003/12/01 22:48:58 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/14 21:34:26 $
  * 
  * @author James Strachan
  */

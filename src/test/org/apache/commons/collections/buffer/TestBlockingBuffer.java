@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestBlockingBuffer.java,v 1.2 2003/11/18 22:37:16 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.buffer;
 
@@ -75,7 +71,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * 
  * @author Janek Bogucki
  * @author Phil Steitz

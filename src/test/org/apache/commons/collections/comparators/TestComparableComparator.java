@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestComparableComparator.java,v 1.4 2003/11/18 22:37:18 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.comparators;
 
@@ -67,7 +63,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for ComparableComparator.
  * 
- * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:18 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/14 21:34:27 $
  * 
  * @author Unknown
  */

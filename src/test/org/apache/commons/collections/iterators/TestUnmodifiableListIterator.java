@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableListIterator.java,v 1.1 2003/11/02 17:26:36 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.iterators;
 
@@ -71,7 +67,7 @@ import org.apache.commons.collections.Unmodifiable;
 /**
  * Tests the UnmodifiableListIterator.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/02 17:26:36 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/14 21:34:25 $
  * 
  * @author Stephen Colebourne
  */

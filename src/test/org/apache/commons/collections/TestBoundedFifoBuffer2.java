@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer2.java,v 1.8 2003/11/29 18:14:20 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -66,7 +62,7 @@ import junit.framework.Test;
  * Runs tests against a full BoundedFifoBuffer, since many of the algorithms
  * differ depending on whether the fifo is full or not.
  * 
- * @version $Revision: 1.8 $ $Date: 2003/11/29 18:14:20 $
+ * @version $Revision: 1.9 $ $Date: 2004/01/14 21:34:30 $
  * 
  * @author Unknown
  */

@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.14 2004/01/01 23:56:51 psteitz Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -74,7 +70,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * Tests the BinaryHeap.
  * 
- * @version $Revision: 1.14 $ $Date: 2004/01/01 23:56:51 $
+ * @version $Revision: 1.15 $ $Date: 2004/01/14 21:34:30 $
  * 
  * @author Michael A. Smith
  */

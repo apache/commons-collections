@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestLoopingIterator.java,v 1.3 2003/10/01 21:54:54 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.iterators;
 
@@ -69,7 +65,7 @@ import junit.framework.TestSuite;
 /**
  * Tests the LoopingIterator class.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/10/01 21:54:54 $
+ * @version $Revision: 1.4 $ $Date: 2004/01/14 21:34:25 $
  * 
  * @author Jonathan Carlson
  * @author Stephen Colebourne

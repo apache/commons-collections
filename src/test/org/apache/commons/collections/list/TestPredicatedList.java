@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/TestPredicatedList.java,v 1.4 2003/12/03 11:17:36 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.list;
 
@@ -71,7 +67,7 @@ import org.apache.commons.collections.PredicateUtils;
  * {@link PredicatedList} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/03 11:17:36 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/14 21:34:28 $
  * 
  * @author Phil Steitz
  */

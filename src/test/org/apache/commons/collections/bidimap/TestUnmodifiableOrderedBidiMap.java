@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestUnmodifiableOrderedBidiMap.java,v 1.1 2003/12/03 14:03:35 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.bidimap;
 
@@ -70,7 +66,7 @@ import org.apache.commons.collections.OrderedBidiMap;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/12/03 14:03:35 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/14 21:34:35 $
  * 
  * @author Stephen Colebourne
  */
