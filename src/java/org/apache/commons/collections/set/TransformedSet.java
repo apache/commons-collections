@@ -31,11 +31,14 @@ import org.apache.commons.collections.collection.TransformedCollection;
  * This class is Serializable from Commons Collections 3.1.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/06/02 22:02:34 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stephen Colebourne
  */
 public class TransformedSet extends TransformedCollection implements Set {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 306127383500410386L;
 
     /**
      * Factory method to create a transforming set.

@@ -30,11 +30,14 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/06/01 23:05:49 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stephen Colebourne
  */
 public class SynchronizedList extends SynchronizedCollection implements List {
+
+    /** Serialization version */
+     private static final long serialVersionUID = -1403835447328619437L;
 
     /**
      * Factory method to create a synchronized list.

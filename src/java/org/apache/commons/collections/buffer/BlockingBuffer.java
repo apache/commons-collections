@@ -37,14 +37,17 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/06/01 23:05:49 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stephen Colebourne
  * @author Janek Bogucki
  * @author Phil Steitz
  */
 public class BlockingBuffer extends SynchronizedBuffer {
-    
+
+    /** Serialization version */
+    private static final long serialVersionUID = 1719328905017860541L;
+
     /**
      * Factory method to create a blocking buffer.
      * 

@@ -40,12 +40,15 @@ import java.util.Collection;
  * This class is Serializable from Commons Collections 3.1.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/06/02 23:12:44 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stefano Fornari
  * @author Stephen Colebourne
  */
 public class CircularFifoBuffer extends BoundedFifoBuffer {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -8423413834657610406L;
 
     /**
      * Constructor that creates a buffer with the default size of 32.

@@ -30,12 +30,15 @@ import org.apache.commons.collections.SortedBag;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/06/01 23:05:48 $
+ * @version $Revision: 1.8 $ $Date: 2004/06/03 22:02:12 $
  * 
  * @author Stephen Colebourne
  */
 public class SynchronizedSortedBag
         extends SynchronizedBag implements SortedBag {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 722374056718497858L;
 
     /**
      * Factory method to create a synchronized sorted bag.

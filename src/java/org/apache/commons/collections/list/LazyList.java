@@ -49,14 +49,17 @@ import org.apache.commons.collections.Factory;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/06/02 21:59:49 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stephen Colebourne
  * @author Arron Bates
  * @author Paul Jack
  */
 public class LazyList extends AbstractSerializableListDecorator {
-    
+
+    /** Serialization version */
+    private static final long serialVersionUID = -1708388017160694542L;
+
     /** The factory to use to lazily instantiate the objects */
     protected final Factory factory;
 

@@ -28,13 +28,16 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/06/02 22:02:34 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stephen Colebourne
  */
 public final class UnmodifiableSet
         extends AbstractSerializableSetDecorator
         implements Unmodifiable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 6499119872185240161L;
 
     /**
      * Factory method to create an unmodifiable set.

@@ -34,14 +34,17 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/06/02 21:58:06 $
+ * @version $Revision: 1.10 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stephen Colebourne
  */
 public final class UnmodifiableBoundedCollection
         extends AbstractSerializableCollectionDecorator
         implements BoundedCollection {
-    
+
+    /** Serialization version */
+    private static final long serialVersionUID = -7112672385450340330L;
+
     /**
      * Factory method to create an unmodifiable bounded collection.
      * 

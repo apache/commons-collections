@@ -31,12 +31,15 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/06/01 23:05:48 $
+ * @version $Revision: 1.8 $ $Date: 2004/06/03 22:02:12 $
  * 
  * @author Stephen Colebourne
  */
 public class SynchronizedBag
         extends SynchronizedCollection implements Bag {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 8084674570753837109L;
 
     /**
      * Factory method to create a synchronized bag.

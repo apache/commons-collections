@@ -34,12 +34,15 @@ import org.apache.commons.collections.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/06/02 22:02:34 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class PredicatedSortedSet extends PredicatedSet implements SortedSet {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -9110948148132275052L;
 
     /**
      * Factory method to create a predicated (validating) sorted set.

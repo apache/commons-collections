@@ -38,12 +38,15 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/06/02 21:59:49 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/03 22:02:13 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class PredicatedList extends PredicatedCollection implements List {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -5722039223898659102L;
 
     /**
      * Factory method to create a predicated (validating) list.
