@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.4 2003/12/14 13:01:07 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.5 2003/12/29 19:46:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -159,7 +159,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.4 $ $Date: 2003/12/14 13:01:07 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/29 19:46:19 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -381,8 +381,8 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Helper method to add all the mappings described by {@link
-     *  #getSampleKeys()} and {@link #getSampleValues()}.
+     *  Helper method to add all the mappings described by
+     * {@link #getSampleKeys()} and {@link #getSampleValues()}.
      */
     public void addSampleMappings(Map m) {
 
@@ -398,11 +398,11 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                            keys[i] == null || values[i] == null);
                 
                 assertTrue("NullPointerException on null key, but " +
-                           "isNullKeySupported is not overridden to return false.", 
+                           "isAllowNullKey is not overridden to return false.", 
                            keys[i] == null || !isAllowNullKey());
                 
                 assertTrue("NullPointerException on null value, but " +
-                           "isNullValueSupported is not overridden to return false.",
+                           "isAllowNullValue is not overridden to return false.",
                            values[i] == null || !isAllowNullValue());
                 
                 assertTrue("Unknown reason for NullPointer.", false);
@@ -422,8 +422,8 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
     /**
      * Return a new, populated map.  The mappings in the map should match the
-     * keys and values returned from {@link #getSampleKeys()} and {@link
-     * #getSampleValues()}.  The default implementation uses makeEmptyMap()
+     * keys and values returned from {@link #getSampleKeys()} and
+     * {@link #getSampleValues()}.  The default implementation uses makeEmptyMap()
      * and calls {@link #addSampleMappings} to add all the mappings to the
      * map.
      * 
