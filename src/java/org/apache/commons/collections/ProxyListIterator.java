@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.18 2002/02/25 23:53:20 rwaldhoff Exp $
- * $Revision: 1.18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyListIterator.java,v 1.1 2002/02/25 23:53:20 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/02/25 23:53:20 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,53 +58,93 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
-import junit.framework.*;
+import java.util.ListIterator;
 
 /**
- * Entry point for all Collections tests.
+ * A proxy {@link ListIterator ListIterator} which delegates its
+ * methods to a proxy instance.
+ *
+ * @see ProxyIterator
+ * @version $Revision: 1.1 $ $Date: 2002/02/25 23:53:20 $
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.18 2002/02/25 23:53:20 rwaldhoff Exp $
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+public class ProxyListIterator implements ListIterator {
+
+    // Constructor
+    //-------------------------------------------------------------------------
+
+    public ProxyListIterator() {
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
-        suite.addTest(TestArrayList.suite());
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestFilterIterator.suite());
-        suite.addTest(TestFilterListIterator.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestHashMap.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestSingletonIterator.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTreeMap.suite());
-        return suite;
+    public ProxyListIterator(ListIterator iterator) {
+        this.iterator = iterator;
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    // ListIterator interface
+    //-------------------------------------------------------------------------
+
+    public void add(Object o) {
+        getListIterator().add(o);
     }
+
+    public boolean hasNext() {
+        return getListIterator().hasNext();
+    }
+
+    public boolean hasPrevious() {
+        return getListIterator().hasPrevious();
+    }
+
+    public Object next() {
+        return getListIterator().next();
+    }
+
+    public int nextIndex() {
+        return getListIterator().nextIndex();
+    }
+
+    public Object previous() {
+        return getListIterator().previous();
+    }
+
+    public int previousIndex() {
+        return getListIterator().previousIndex();
+    }
+
+    public void remove() {
+        getListIterator().remove();
+    }
+
+    public void set(Object o) {
+        getListIterator().set(o);
+    }
+
+    // Properties
+    //-------------------------------------------------------------------------
+
+    /** 
+     * Getter for property iterator.
+     * @return Value of property iterator.
+     */
+    public ListIterator getListIterator() {
+        return iterator;
+    }
+
+    /**
+     * Setter for property iterator.
+     * @param iterator New value of property iterator.
+     */
+    public void setListIterator(ListIterator iterator) {
+        this.iterator = iterator;
+    }
+
+    // Attributes
+    //-------------------------------------------------------------------------
+
+    /** Holds value of property "iterator". */
+    private ListIterator iterator;
+
 }
+

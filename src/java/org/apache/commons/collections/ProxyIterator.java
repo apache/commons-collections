@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyIterator.java,v 1.2 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyIterator.java,v 1.3 2002/02/25 23:53:20 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/25 23:53:20 $
  *
  * ====================================================================
  *
@@ -60,10 +60,12 @@
  */
 package org.apache.commons.collections;
 
-import java.util.Enumeration;
 import java.util.Iterator;
 
 /** A Proxy {@link Iterator Iterator} which delegates its methods to a proxy instance.
+  *
+  * @see ProxyListIterator
+  * @version $Revision: 1.3 $ $Date: 2002/02/25 23:53:20 $
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   */
