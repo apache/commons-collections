@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/MultiKey.java,v 1.2 2003/05/16 14:40:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/MultiKey.java,v 1.3 2003/05/16 15:08:45 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,8 +68,8 @@ import java.util.Arrays;
  * key and locale. The typical solution might be nested maps. This class
  * can be used instead by creating an instance passing in the key and locale.
  * 
- * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/05/16 14:40:56 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.3 $ $Date: 2003/05/16 15:08:45 $
  * 
  * @author Howard Lewis Ship
  * @author Stephen Colebourne

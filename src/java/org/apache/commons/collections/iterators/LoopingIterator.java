@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/LoopingIterator.java,v 1.3 2003/01/15 21:52:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/LoopingIterator.java,v 1.4 2003/05/16 15:08:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,8 +71,8 @@ import java.util.NoSuchElementException;
  * Concurrent modifications are not directly supported, and for most collection
  * implementations will throw a ConcurrentModificationException. 
  *
- * @since Commons Collections 2.2
- * @version $Revision: 1.3 $ $Date: 2003/01/15 21:52:39 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.4 $ $Date: 2003/05/16 15:08:44 $
  *
  * @author <a href="mailto:joncrlsn@users.sf.net">Jonathan Carlson</a>
  * @author Stephen Colebourne

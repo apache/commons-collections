@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CircularFifoBuffer.java,v 1.2 2003/05/11 14:15:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CircularFifoBuffer.java,v 1.3 2003/05/16 15:08:45 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,8 +81,8 @@ import org.apache.commons.collections.BoundedFifoBuffer;
  * <p>
  * This buffer prevents null objects from being added.
  * 
- * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/05/11 14:15:23 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.3 $ $Date: 2003/05/16 15:08:45 $
  * 
  * @author Stefano Fornari
  * @author Stephen Colebourne

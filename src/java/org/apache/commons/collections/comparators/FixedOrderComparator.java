@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/FixedOrderComparator.java,v 1.1 2003/04/13 17:37:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/FixedOrderComparator.java,v 1.2 2003/05/16 15:08:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,8 +82,8 @@ import java.util.Map;
  * thread-safe at construction time, but it is thread-safe to perform
  * multiple comparisons  after all the setup operations are complete.
  * 
- * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/04/13 17:37:26 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.2 $ $Date: 2003/05/16 15:08:44 $
  *
  * @author David Leppik
  * @author Stephen Colebourne

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.10 2003/01/13 22:52:34 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.11 2003/05/16 15:08:45 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -93,7 +93,7 @@ import java.util.List;
  * 
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision: 1.10 $ $Date: 2003/01/13 22:52:34 $
+ * @version $Revision: 1.11 $ $Date: 2003/05/16 15:08:45 $
  */
 public class ComparatorChain implements Comparator,Serializable {
 
@@ -335,7 +335,7 @@ public class ComparatorChain implements Comparator,Serializable {
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals}.
      * 
-     * @since Collections 2.2
+     * @since Commons Collections 3.0
      */
     public int hashCode() {
         int hash = 0;
@@ -360,7 +360,7 @@ public class ComparatorChain implements Comparator,Serializable {
      * to override this behavior to remain consistent with the 
      * {@link Comparator#equals} contract.
      * 
-     * @since Collections 2.2
+     * @since Commons Collections 3.0
      */
     public boolean equals(Object that) {
         if(this == that) {

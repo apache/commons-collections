@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.5 2003/05/11 14:15:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.6 2003/05/16 15:08:45 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,8 +75,8 @@ import java.util.NoSuchElementException;
  * of {@link LinkedList}, but which provides a more open interface for
  * subclasses to extend.
  * 
- * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/05/11 14:15:23 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.6 $ $Date: 2003/05/16 15:08:45 $
  * 
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
  */

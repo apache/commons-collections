@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ReverseComparator.java,v 1.12 2003/01/13 22:34:57 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ReverseComparator.java,v 1.13 2003/05/16 15:08:45 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -65,7 +65,7 @@ import java.util.Comparator;
  * method.
  * 
  * @since Commons Collections 2.0
- * @version $Revision: 1.12 $ $Date: 2003/01/13 22:34:57 $
+ * @version $Revision: 1.13 $ $Date: 2003/05/16 15:08:45 $
  *
  * @author bayard@generationjava.com
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
@@ -111,7 +111,7 @@ public class ReverseComparator implements Comparator,Serializable {
      * Implement a hash code for this comparator that is consistent with
      * {@link #equals}.
      * 
-     * @since Collections 2.2
+     * @since Commons Collections 3.0
      */
     public int hashCode() {
         return "ReverseComparator".hashCode() ^ comparator.hashCode();
@@ -129,7 +129,7 @@ public class ReverseComparator implements Comparator,Serializable {
      * this behavior to remain consistent with the 
      * {@link Comparator#equals} contract.
      * 
-     * @since Collections 2.2
+     * @since Commons Collections 3.0
      */
     public boolean equals(Object that) {
         if(this == that) {

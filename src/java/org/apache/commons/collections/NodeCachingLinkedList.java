@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.5 2003/05/16 14:40:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.6 2003/05/16 15:08:45 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,8 +64,8 @@ import java.util.Collection;
  * unnecessary object creates and deletion. This should result in a performance
  * improvement.
  * 
- * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/05/16 14:40:56 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.6 $ $Date: 2003/05/16 15:08:45 $
  * 
  * @author Jeff Varszegi
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>

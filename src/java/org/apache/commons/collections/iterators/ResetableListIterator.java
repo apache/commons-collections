@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/ResetableListIterator.java,v 1.1 2003/01/15 21:49:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/ResetableListIterator.java,v 1.2 2003/05/16 15:08:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,8 +63,8 @@ import java.util.ListIterator;
  * Interface implemented by those list iterators that can be reset back 
  * to an initial state.
  *
- * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/01/15 21:49:59 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.2 $ $Date: 2003/05/16 15:08:44 $
  * 
  * @author Stephen Colebourne
  */

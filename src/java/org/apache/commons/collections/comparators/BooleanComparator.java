@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.5 2003/01/15 20:36:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.6 2003/05/16 15:08:45 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,9 +67,9 @@ import java.util.Comparator;
  * @see #getFalseFirstComparator
  * @see #getBooleanComparator
  * 
- * @since Commons Collections 2.2
+ * @since Commons Collections 3.0
  * 
- * @version $Revision: 1.5 $ $Date: 2003/01/15 20:36:38 $
+ * @version $Revision: 1.6 $ $Date: 2003/05/16 15:08:45 $
  * 
  * @author Rodney Waldhoff
  */

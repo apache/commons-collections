@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayIterator.java,v 1.4 2003/02/19 20:14:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayIterator.java,v 1.5 2003/05/16 15:08:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,8 +68,8 @@ import java.util.NoSuchElementException;
  * The iterator implements a {@link #reset} method, allowing the reset of the iterator
  * back to the start if required.
  *
- * @since Commons Collections 2.2
- * @version $Revision: 1.4 $ $Date: 2003/02/19 20:14:27 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.5 $ $Date: 2003/05/16 15:08:44 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Mauricio S. Moura
