@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/LoopingIterator.java,v 1.1 2002/11/21 23:09:01 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2002/11/21 23:09:01 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/LoopingIterator.java,v 1.2 2003/01/10 20:21:25 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -63,21 +60,22 @@ package org.apache.commons.collections.iterators;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 /**
- * <code>LoopingIterator</code> provides an Iterator that restarts when it
- * reaches the end.
+ * An Iterator that restarts when it reaches the end.
  * <p>
  * The iterator will loop continuously around the provided elements, unless 
  * there are no elements in the collection to begin with, or all the elements
- * are removed using the {@link remove} method.
+ * have been {@link #remove removed}.
  * <p>
  * Concurrent modifications are not directly supported, and for most collection
  * implementations will throw a ConcurrentModificationException. 
  *
- * @since 2.2
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.2 $ $Date: 2003/01/10 20:21:25 $
+ *
  * @author <a href="mailto:joncrlsn@users.sf.net">Jonathan Carlson</a>
  * @author Stephen Colebourne
- * @version $Revision: 1.1 $
  */
 public class LoopingIterator implements Iterator {
     /** The collection to base the iterator on */
@@ -106,7 +104,7 @@ public class LoopingIterator implements Iterator {
      * Has the iterator any more elements.
      * <p>
      * Returns false only if the collection originally had zero elements, or
-     * all the elements have been removed using {@link #remove}.
+     * all the elements have been {@link #remove removed}.
      * 
      * @return <code>true</code> if there are more elements
      */
@@ -136,7 +134,8 @@ public class LoopingIterator implements Iterator {
      * Removes the previously retrieved item from the underlying collection.
      * <p>
      * This feature is only supported if the underlying collection's 
-     * {@link #iterator} method returns an implementation that supports it.
+     * {@link Collection#iterator iterator} method returns an implementation 
+     * that supports it.
      * <p>
      * This method can only be called after at least one {@link #next} method call.
      * After a removal, the remove method may not be called again until another

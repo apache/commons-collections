@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.7 2002/12/13 12:01:58 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2002/12/13 12:01:58 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.8 2003/01/10 20:21:23 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -92,11 +89,11 @@ import org.apache.commons.collections.iterators.TransformIterator;
 /**
  * Provides static utility methods and decorators for {@link Iterator} 
  * instances. The implementations are provided in the 
- * <code>org.apache.commons.collections.iterators</code> subpackage.
+ * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorUtils.java,v 1.7 2002/12/13 12:01:58 scolebourne Exp $
- * @since 2.1
+ * @version $Revision: 1.8 $ $Date: 2003/01/10 20:21:23 $
+ * @since Commons Collections 2.1
  */
 public class IteratorUtils {
     // validation is done in this class in certain cases because the
@@ -358,8 +355,8 @@ public class IteratorUtils {
     
     /**
      * Gets an immutable version of an {@link Iterator}. The returned object
-     * will always throw an {@link java.lang.UnsupportedOperationException} for
-     * the {@link Iterator#remove()} method.
+     * will always throw an {@link UnsupportedOperationException} for
+     * the {@link Iterator#remove} method.
      *
      * @param iterator The iterator to make immutable.
      * @return An immutable version of the iterator.
@@ -369,10 +366,10 @@ public class IteratorUtils {
     }
     
     /**
-     * Gets an immutable version of a {@link ListIterator}.The returned object
-     * will always throw an {@link java.lang.UnsupportedOperationException} for
-     * the {@link Iterator#remove()}, {@link ListIterator#add()} and
-     * {@link ListIterator#set(Object)} methods.
+     * Gets an immutable version of a {@link ListIterator}. The returned object
+     * will always throw an {@link UnsupportedOperationException} for
+     * the {@link Iterator#remove}, {@link ListIterator#add} and
+     * {@link ListIterator#set} methods.
      *
      * @param listIterator The iterator to make immutable.
      * @return An immutable version of the iterator.

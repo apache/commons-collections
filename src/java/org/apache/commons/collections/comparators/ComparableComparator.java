@@ -18,21 +18,21 @@ package org.apache.commons.collections.comparators;
  *    the documentation and/or other materials provided with the
  *    distribution.
  *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
  *    Alternately, this acknowledgment may appear in the software itself,
  *    if and wherever such third-party acknowledgments normally appear.
  *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Commons" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
+ *    Foundation" must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact apache@apache.org.
  *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
+ * 5. Products derived from this software may not be called "Apache"
+ *    nor may "Apache" appear in their names without prior written
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -52,6 +52,7 @@ package org.apache.commons.collections.comparators;
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
 
 import java.io.Serializable;
@@ -68,9 +69,9 @@ import java.util.Comparator;
  * for enforcing the natural order in custom implementations
  * of SortedSet and SortedMap.
  *
- * @since 2.0
+ * @since Commons Collections 2.0
  * @author bayard@generationjava.com
- * @version $Revision: 1.7 $ $Date: 2003/01/07 18:49:01 $
+ * @version $Revision: 1.8 $ $Date: 2003/01/10 20:21:23 $
  */
 public class ComparableComparator implements Comparator,Serializable {
 
@@ -160,7 +161,7 @@ public class ComparableComparator implements Comparator,Serializable {
      * This implementation returns <code>true</code>
      * iff <code><i>that</i>.{@link Object#getClass getClass()}</code>
      * equals <code>this.getClass()</code>.  Subclasses may want to override
-     * this behavior to remain consistent with the {@link Comparator.equals}
+     * this behavior to remain consistent with the {@link Comparator#equals}
      * contract.
      * @since Collections 2.2
      */

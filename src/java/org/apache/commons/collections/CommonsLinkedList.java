@@ -1,4 +1,7 @@
-/* ====================================================================
+/*
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.3 2003/01/10 20:21:22 rwaldhoff Exp $
+ * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003 The Apache Software Foundation.  All rights
@@ -17,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -50,6 +53,7 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
 package org.apache.commons.collections;
 
@@ -68,13 +72,13 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
- * An implementation of {@link java.util.List} which duplicates the behaviour
- * of {@link java.util.LinkedList}, but which provides a more open interface for
+ * An implementation of {@link List} which duplicates the behaviour
+ * of {@link LinkedList}, but which provides a more open interface for
  * subclasses to extend.
  * 
- * @since 2.2
+ * @since Commons Collections 2.2
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
- * @version $Revision: 1.2 $ $Date: 2003/01/07 23:40:55 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/10 20:21:22 $
  */
 class CommonsLinkedList extends LinkedList
         implements List, Serializable {
@@ -124,8 +128,8 @@ class CommonsLinkedList extends LinkedList
         /**
          * Checks if a value is equal to this node's element.
          *
-         * @return True if the elements are both null or both equal according
-         * to {@link Object#equals()}.
+         * @return <code>true</code> iff the elements are both <code>null</code>
+         *         or {@link Object#equals equal}.
          */
         public boolean elementEquals(Object otherElement) {
             if (element == null) {
@@ -309,7 +313,7 @@ class CommonsLinkedList extends LinkedList
 
     /**
      * The equivalent of a default constructor, broken out so it can be called
-     * by any constructor and by {@link #readObject(ObjectInputStream)}.
+     * by any constructor and by <code>readObject</code>.
      * Subclasses which override this method should make sure they call it so
      * the list is initialised properly.
      */

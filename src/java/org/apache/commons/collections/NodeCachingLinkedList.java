@@ -1,4 +1,7 @@
-/* ====================================================================
+/*
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.4 2003/01/10 20:21:23 rwaldhoff Exp $
+ * ====================================================================
+ *
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
@@ -17,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -50,6 +53,7 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
+ *
  */
 package org.apache.commons.collections;
 
@@ -60,10 +64,10 @@ import java.util.Collection;
  * unnecessary object creates and deletion. This should result in a performance
  * improvement.
  * 
- * @since 2.2
+ * @since Commons Collections 2.2
  * @author Jeff Varszegi
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
- * @version $Revision: 1.3 $ $Date: 2003/01/07 23:40:57 $
+ * @version $Revision: 1.4 $ $Date: 2003/01/10 20:21:23 $
  */
 public class NodeCachingLinkedList extends CommonsLinkedList {
 
@@ -216,9 +220,10 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
 
     /**
      * Calls the superclass' implementation then calls
-     * {@link #addNodeToCache(Node)} on the node which has been removed.
+     * <code>addNodeToCache</code> on the node which has 
+     * been removed.
      * 
-     * @see org.apache.commons.collections.CommonsLinkedList#removeNode(Node)
+     * @see CommonsLinkedList#removeNode
      */
     protected void removeNode(Node node) {
         super.removeNode(node);

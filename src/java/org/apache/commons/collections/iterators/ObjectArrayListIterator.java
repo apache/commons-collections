@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.1 2002/12/13 12:01:35 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2002/12/13 12:01:35 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.2 2003/01/10 20:21:25 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -62,23 +59,25 @@ package org.apache.commons.collections.iterators;
 
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+
 /**
- * Implements a {@link java.util.ListIterator ListIterator} over an array of objects.
+ * Implements a {@link ListIterator ListIterator} over an array of objects.
  * <p>
- * This iterator does not support {@link #add(Object)} or {@link #remove()}, as the object array 
- * cannot be changed in size. The {@link #set(Object)} method is supported however.
+ * This iterator does not support {@link #add} or {@link #remove}, as the object array 
+ * cannot be structurally modified. The {@link #set} method is supported however.
  * <p>
- * The iterator implements a {@link #reset()} method, allowing the reset of the iterator
+ * The iterator implements a {@link #reset} method, allowing the reset of the iterator
  * back to the start if required.
  *
  * @see org.apache.commons.collections.iterators.ObjectArrayIterator
  * @see java.util.Iterator
  * @see java.util.ListIterator
  *
- * @since 2.2
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.2 $ $Date: 2003/01/10 20:21:25 $
+ * 
  * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
  * @author Stephen Colebourne
- * @version $Revision: 1.1 $
  */
 public class ObjectArrayListIterator extends ObjectArrayIterator implements ListIterator {
 
@@ -94,7 +93,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator implements List
      * Constructor for use with <code>setArray</code>.
      * <p>
      * Using this constructor, the iterator is equivalent to an empty iterator
-     * until {@link #setArray(Object)} is  called to establish the array to iterate over.
+     * until {@link #setArray} is  called to establish the array to iterate over.
      */
     public ObjectArrayListIterator() {
         super();

@@ -1,8 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.8 2003/01/07 23:26:47 rwaldhoff Exp $
- * $Revision: 1.8 $
- * $Date: 2003/01/07 23:26:47 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.9 2003/01/10 20:21:25 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -94,9 +91,9 @@ import java.util.List;
  * it <i>is</i> thread-safe to perform multiple comparisons
  * after all the setup operations are complete.</p>
  * 
- * @since 2.0
+ * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision: 1.8 $ $Date: 2003/01/07 23:26:47 $
+ * @version $Revision: 1.9 $ $Date: 2003/01/10 20:21:25 $
  */
 public class ComparatorChain implements Comparator,Serializable {
 
@@ -357,7 +354,7 @@ public class ComparatorChain implements Comparator,Serializable {
      * equals <code>this.getClass()</code>, and the underlying 
      * comparators and order bits are equal.  Subclasses may want 
      * to override this behavior to remain consistent with the 
-     * {@link Comparator.equals} contract.
+     * {@link Comparator#equals} contract.
      * 
      * @since Collections 2.2
      */
