@@ -71,6 +71,11 @@
       <version>3.7</version>
     </dependency>
 
+    <!-- these two are required by maven -->
+    <dependency><id>xml-apis</id><version>2.0.2</version></dependency>
+    <dependency><id>xerces</id><version>2.0.2</version></dependency>
+    <!-- /these two are required by maven -->
+
   </dependencies>
 
   <build>
