@@ -60,7 +60,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.15 $ $Date: 2004/04/09 14:42:36 $
+ * @version $Revision: 1.16 $ $Date: 2004/04/09 22:52:48 $
  *
  * @author Stephen Colebourne
  */
@@ -374,6 +374,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
      * This can be overridden by subclasses.
      *
      * @return a new HashedMap or subclass
+     * @since Commons Collections 3.1
      */
     protected HashedMap createDelegateMap() {
         return new HashedMap();
@@ -997,6 +998,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
      * Clones the map without cloning the keys or values.
      *
      * @return a shallow clone
+     * @since Commons Collections 3.1
      */
     public Object clone() {
         try {

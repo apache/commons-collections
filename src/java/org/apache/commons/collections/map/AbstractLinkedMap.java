@@ -56,7 +56,7 @@ import org.apache.commons.collections.ResettableIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/03/13 15:54:34 $
+ * @version $Revision: 1.11 $ $Date: 2004/04/09 22:52:48 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -299,6 +299,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @param entry  the entry to query, must not be null
      * @return the <code>before</code> field of the entry
      * @throws NullPointerException if the entry is null
+     * @since Commons Collections 3.1
      */
     protected LinkEntry entryBefore(LinkEntry entry) {
         return entry.before;
@@ -311,6 +312,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @param entry  the entry to query, must not be null
      * @return the <code>after</code> field of the entry
      * @throws NullPointerException if the entry is null
+     * @since Commons Collections 3.1
      */
     protected LinkEntry entryAfter(LinkEntry entry) {
         return entry.after;

@@ -46,7 +46,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.15 $ $Date: 2004/04/09 22:14:09 $
+ * @version $Revision: 1.16 $ $Date: 2004/04/09 22:52:48 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -654,6 +654,7 @@ public class AbstractHashedMap implements IterableMap {
      * @param entry  the entry to query, must not be null
      * @return the <code>next</code> field of the entry
      * @throws NullPointerException if the entry is null
+     * @since Commons Collections 3.1
      */
     protected HashEntry entryNext(HashEntry entry) {
         return entry.next;
@@ -666,6 +667,7 @@ public class AbstractHashedMap implements IterableMap {
      * @param entry  the entry to query, must not be null
      * @return the <code>hashCode</code> field of the entry
      * @throws NullPointerException if the entry is null
+     * @since Commons Collections 3.1
      */
     protected int entryHashCode(HashEntry entry) {
         return entry.hashCode;
@@ -678,6 +680,7 @@ public class AbstractHashedMap implements IterableMap {
      * @param entry  the entry to query, must not be null
      * @return the <code>key</code> field of the entry
      * @throws NullPointerException if the entry is null
+     * @since Commons Collections 3.1
      */
     protected Object entryKey(HashEntry entry) {
         return entry.key;
@@ -690,6 +693,7 @@ public class AbstractHashedMap implements IterableMap {
      * @param entry  the entry to query, must not be null
      * @return the <code>value</code> field of the entry
      * @throws NullPointerException if the entry is null
+     * @since Commons Collections 3.1
      */
     protected Object entryValue(HashEntry entry) {
         return entry.value;

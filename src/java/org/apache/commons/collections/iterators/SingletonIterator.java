@@ -25,7 +25,7 @@ import org.apache.commons.collections.ResettableIterator;
  * object instance.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.13 $ $Date: 2004/04/09 14:38:47 $
+ * @version $Revision: 1.14 $ $Date: 2004/04/09 22:52:48 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
@@ -59,6 +59,7 @@ public class SingletonIterator
      *
      * @param object  the single object to return from the iterator
      * @param removeAllowed  true if remove is allowed
+     * @since Commons Collections 3.1
      */
     public SingletonIterator(Object object, boolean removeAllowed) {
         super();
