@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.2 2002/08/17 11:24:58 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/17 11:24:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.3 2002/09/07 00:28:53 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/09/07 00:28:53 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.BitSet;
  * @since 2.1
  * @author Rodney Waldhoff
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: CollatingIterator.java,v 1.2 2002/08/17 11:24:58 scolebourne Exp $
+ * @version $Revision: 1.3 $ $Date: 2002/09/07 00:28:53 $
  */
 public class CollatingIterator implements Iterator {
 
@@ -179,8 +179,9 @@ public class CollatingIterator implements Iterator {
      * @param comp  the comparator to use to sort, or null to use natural
      *    sort order
      * @param iterators  the collection of iterators
-     * @throws NullPointerException if iterators collection is or contains null
-     * @throws ClassCastException if iterators collection doesn't contain an iterator
+     * @throws NullPointerException if the iterators collection is or contains null
+     * @throws ClassCastException if the iterators collection contains an
+     *         element that's not an {@link Iterator}
      */
     public CollatingIterator(Comparator comp, Collection iterators) {
         this(comp, iterators.size());
