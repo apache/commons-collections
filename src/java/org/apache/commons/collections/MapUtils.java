@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.20 2003/04/07 16:57:33 rwaldhoff Exp $
- * $Revision: 1.20 $
- * $Date: 2003/04/07 16:57:33 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.21 2003/04/26 14:24:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,19 +62,22 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
 /** 
- * A helper class for using {@link Map Map} instances.<P>
- *
+ * A helper class for using {@link Map Map} instances.
+ * <p>
  * It contains various typesafe methods
- * as well as other useful features like deep copying.<P>
- *
+ * as well as other useful features like deep copying.
+ * <p>
  * It also provides the following decorators:
  *
  *  <ul>
@@ -91,13 +91,16 @@ import java.util.TreeMap;
  *  <li>{@link #typedSortedMap(Map, Class, Class)}
  *  </ul>
  *
- * @since 1.0
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.21 $ $Date: 2003/04/26 14:24:48 $
+ * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
  * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
+ * @author Arun Mammen Thomas
  */
 public class MapUtils {
     
@@ -634,6 +637,25 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     * Creates a new HashMap using data copied from a ResourceBundle.
+     * 
+     * @param resourceBundle  the resource bundle to convert
+     * @return the hashmap containing the data
+     */
+    public static Map toMap(ResourceBundle resourceBundle) {
+        Enumeration enum = resourceBundle.getKeys();
+        Map map = new HashMap();
+
+        while (enum.hasMoreElements()) {
+            String key = (String) enum.nextElement();
+            Object value = resourceBundle.getObject(key);
+            map.put(key, value);
+        }
+        
+        return map;
+    }
+ 
     // Printing methods
     //-------------------------------------------------------------------------
 
@@ -710,27 +732,49 @@ public class MapUtils {
     //-------------------------------------------------------------------------
 
     /**
-     *  Writes indentation to the given stream.
+     * Writes indentation to the given stream.
      *
-     *  @param out   the stream to indent
+     * @param out  the stream to indent
      */
-    protected static void debugPrintIndent( PrintStream out ) {
-        for ( int i = 0; i < debugIndent; i++ ) {
-            out.print( "    " );
+    protected static void debugPrintIndent(PrintStream out) {
+        for (int i = 0; i < debugIndent; i++) {
+            out.print("    ");
         }
     }
     
     /**
-     *  Logs the given exception to <Code>System.out</Code>.
+     * Logs the given exception to <code>System.out</code>.
      *
-     *  @param e  the exception to log
+     * @param ex  the exception to log
      */
-    protected static void logInfo(Exception e) {
-        // mapX: should probably use log4j here instead...
-        System.out.println( "INFO: Exception: " + e );
+    protected static void logInfo(Exception ex) {
+        System.out.println("INFO: Exception: " + ex);
     }
 
-
+    // Misc
+    //-----------------------------------------------------------------------
+    /**
+     * Inverts the supplied map returning a new HashMap such that the keys of
+     * the input are swapped with the values.
+     * <p>
+     * This operation assumes that the inverse mapping is well defined.
+     * If the input map had multiple entries with the same value mapped to
+     * different keys, the returned map will map one of those keys to the 
+     * value, but the exact key which will be mapped is undefined.
+     * 
+     * @see DoubleOrderedMap
+     * @param map  the map to invert
+     * @return a new HashMap containing the inverted data
+     */
+    public static Map invertMap(Map map) {
+        Map out = new HashMap(map.size());
+        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            out.put(entry.getValue(), entry.getKey());
+        }
+        return out;
+    }
+     
     /**
      * Nice method for adding data to a map in such a way
      * as to not get NPE's. The point being that if the
@@ -739,16 +783,15 @@ public class MapUtils {
      * essentially treat put("Not Null", null ) == put("Not Null", "")
      * We will still throw a NPE if the key is null cause that should
      * never happen.
+     * 
+     * @param map  the map to add to
+     * @param key  the key
+     * @param value  the value
      */
-    public static final void safeAddToMap(Map map, Object key, Object value)
-        throws NullPointerException
-    {
-        if (value == null)
-        {
+    public static void safeAddToMap(Map map, Object key, Object value) throws NullPointerException {
+        if (value == null) {
             map.put ( key, "" );
-        }
-        else
-        {
+        } else {
            map.put ( key, value );
         }
     }

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.4 2003/04/06 20:07:55 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/04/06 20:07:55 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.5 2003/04/26 14:27:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,14 +58,23 @@
 package org.apache.commons.collections;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.ListResourceBundle;
 import java.util.Map;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import junit.framework.Test;
 
 
 /**
- *  Tests for MapUtils.
+ * Tests for MapUtils.
+ * 
+ * @version $Revision: 1.5 $ $Date: 2003/04/26 14:27:46 $
+ * 
+ * @author Stephen Colebourne
+ * @author Arun Mammen Thomas
  */
 public class TestMapUtils extends BulkTest {
 
@@ -250,4 +256,58 @@ public class TestMapUtils extends BulkTest {
         assertSame(i1, i2);
     }
 
+    public void testInvertMap() {
+        final Map in = new HashMap( 5 , 1 );
+        in.put( "1" , "A" );
+        in.put( "2" , "B" );
+        in.put( "3" , "C" );
+        in.put( "4" , "D" );
+        in.put( "5" , "E" );
+    
+        final Set inKeySet = new HashSet( in.keySet() );
+        final Set inValSet = new HashSet( in.values() );
+        
+        final Map out =  MapUtils.invertMap(in);
+
+        final Set outKeySet = new HashSet( out.keySet() );
+        final Set outValSet = new HashSet( out.values() );
+        
+        assertTrue( inKeySet.equals( outValSet ));
+        assertTrue( inValSet.equals( outKeySet ));
+        
+        assertEquals( out.get("A"), "1" );
+        assertEquals( out.get("B"), "2" );
+        assertEquals( out.get("C"), "3" );
+        assertEquals( out.get("D"), "4" );
+        assertEquals( out.get("E"), "5" );
+    }
+                
+    public void testConvertResourceBundle() {
+        final Map in = new HashMap( 5 , 1 );
+        in.put( "1" , "A" );
+        in.put( "2" , "B" );
+        in.put( "3" , "C" );
+        in.put( "4" , "D" );
+        in.put( "5" , "E" );
+    
+        ResourceBundle b = new ListResourceBundle() {
+            public Object[][] getContents() {
+                final Object[][] contents = new Object[ in.size() ][2];
+                final Iterator i = in.keySet().iterator();
+                int n = 0;
+                while ( i.hasNext() ) {
+                    final Object key = i.next();
+                    final Object val = in.get( key );
+                    contents[ n ][ 0 ] = key;
+                    contents[ n ][ 1 ] = val;
+                    ++n;
+                }
+                return contents;
+            }
+        };
+        
+        final Map out = MapUtils.toMap(b); 
+
+        assertTrue( in.equals(out));
+    }
 }
