@@ -131,7 +131,7 @@ public class ComparatorUtils {
      * The second comparator is used if the first comparator returns
      * that equal and so on.
      *
-     * @param iterators  the comparators to use, not null or empty or contain nulls
+     * @param comparators  the comparators to use, not null or empty or contain nulls
      * @return a combination comparator over the comparators
      * @throws NullPointerException if comparators array is null or contains a null
      */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/AbstractMapEntryDecorator.java,v 1.2 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/AbstractMapEntryDecorator.java,v 1.3 2003/09/05 03:35:07 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,12 +63,12 @@ import java.util.Map;
  * <p>This <code>Map.Entry</code> wraps another <code>Map.Entry</code>
  * implementation, using the wrapped instance for its default
  * implementation.  This class is used as a framework on which to
- * build to extensions for its wrapped <code>Map</code> object which
+ * build extensions for its wrapped <code>Map</code> object which
  * would be unavailable or inconvenient via sub-classing (but usable
  * via composition).</p>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/05 03:35:07 $
  * 
  * @author Stephen Colebourne
  */
@@ -80,7 +80,7 @@ public abstract class AbstractMapEntryDecorator implements Map.Entry {
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map  the map to decorate, must not be null
+     * @param entry  the <code>Map.Entry</code> to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
     public AbstractMapEntryDecorator(Map.Entry entry) {

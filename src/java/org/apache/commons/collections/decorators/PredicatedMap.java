@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedMap.java,v 1.4 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedMap.java,v 1.5 2003/09/05 03:35:07 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,13 +66,13 @@ import org.apache.commons.collections.Predicate;
 
 /**
  * <code>PredicatedMap</code> decorates another <code>Map</code>
- * to validate additions match a specified predicate.
+ * to validate that additions match a specified predicate.
  * <p>
  * If an object cannot be added to the map, an IllegalArgumentException
- * is thrown.
+ * is thrown.</p>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/05 03:35:07 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -88,11 +88,11 @@ public class PredicatedMap extends AbstractMapDecorator {
      * Factory method to create a predicated (validating) map.
      * <p>
      * If there are any elements already in the list being decorated, they
-     * are validated.
+     * are validated.</p>
      * 
      * @param map  the map to decorate, must not be null
-     * @param keyPredicate, the predicate to validate the keys, null means no check
-     * @param valuePredicate, the predicate to validate to values, null means no check
+     * @param keyPredicate  the predicate to validate the keys, null means no check
+     * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
     public static Map decorate(Map map, Predicate keyPredicate, Predicate valuePredicate) {
@@ -103,8 +103,8 @@ public class PredicatedMap extends AbstractMapDecorator {
      * Constructor that wraps (not copies).
      * 
      * @param map  the map to decorate, must not be null
-     * @param keyPredicate, the predicate to validate the keys, null means no check
-     * @param valuePredicate, the predicate to validate to values, null means no check
+     * @param keyPredicate  the predicate to validate the keys, null means no check
+     * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
     protected PredicatedMap(Map map, Predicate keyPredicate, Predicate valuePredicate) {

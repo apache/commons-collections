@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableBoundedCollection.java,v 1.2 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableBoundedCollection.java,v 1.3 2003/09/05 03:35:07 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.BoundedCollection;
  * examining the package scope variables.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/05 03:35:07 $
  * 
  * @author Stephen Colebourne
  */
@@ -80,7 +80,7 @@ public class UnmodifiableBoundedCollection extends UnmodifiableCollection implem
     /**
      * Factory method to create an unmodifiable bounded collection.
      * 
-     * @param bag  the bag to decorate, must not be null
+     * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
     public static BoundedCollection decorate(BoundedCollection coll) {
@@ -90,10 +90,10 @@ public class UnmodifiableBoundedCollection extends UnmodifiableCollection implem
     /**
      * Factory method to create an unmodifiable bounded collection.
      * <p>
-     * This method is capable of drilling down through other decorators to find
-     * a suitable BoundedCollection
+     * This method is capable of drilling down through up to 1000 other decorators 
+     * to find a suitable BoundedCollection.</p>
      * 
-     * @param bag  the bag to decorate, must not be null
+     * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
     public static BoundedCollection decorateUsing(Collection coll) {
@@ -124,7 +124,7 @@ public class UnmodifiableBoundedCollection extends UnmodifiableCollection implem
      * Constructor that wraps (not copies).
      * 
      * @param coll  the collection to decorate, must not be null
-     * @throws IllegalArgumentException if bag is null
+     * @throws IllegalArgumentException if coll is null
      */
     protected UnmodifiableBoundedCollection(BoundedCollection coll) {
         super(coll);

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TransformedSortedMap.java,v 1.2 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TransformedSortedMap.java,v 1.3 2003/09/05 03:35:07 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.Transformer;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/05 03:35:07 $
  * 
  * @author Stephen Colebourne
  */
@@ -82,11 +82,11 @@ public class TransformedSortedMap extends TransformedMap implements SortedMap {
      * Factory method to create a transforming sorted map.
      * <p>
      * If there are any elements already in the map being decorated, they
-     * are NOT transformed.
+     * are NOT transformed.</p>
      * 
      * @param map  the map to decorate, must not be null
-     * @param keyTransformer, the predicate to validate the keys, null means no transformation
-     * @param valueTransformer, the predicate to validate to values, null means no transformation
+     * @param keyTransformer  the predicate to validate the keys, null means no transformation
+     * @param valueTransformer  the predicate to validate to values, null means no transformation
      * @throws IllegalArgumentException if the map is null
      */
     public static SortedMap decorate(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
@@ -97,11 +97,11 @@ public class TransformedSortedMap extends TransformedMap implements SortedMap {
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the collection being decorated, they
-     * are NOT transformed.
+     * are NOT transformed.</p>
      * 
      * @param map  the map to decorate, must not be null
-     * @param keyTransformer, the predicate to validate the keys, null means no transformation
-     * @param valueTransformer, the predicate to validate to values, null means no transformation
+     * @param keyTransformer  the predicate to validate the keys, null means no transformation
+     * @param valueTransformer  the predicate to validate to values, null means no transformation
      * @throws IllegalArgumentException if the map is null
      */
     protected TransformedSortedMap(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
