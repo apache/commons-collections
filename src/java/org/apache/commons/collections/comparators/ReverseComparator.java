@@ -61,20 +61,19 @@ import java.util.Comparator;
  * Reverses the order of another comparator.
  *
  * @author bayard@generationjava.com
- * @version $Id: ReverseComparator.java,v 1.5 2002/03/01 19:18:49 morgand Exp $
+ * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @version $Id: ReverseComparator.java,v 1.6 2002/03/20 00:25:37 mas Exp $
  */
 public class ReverseComparator implements Comparator,Serializable {
 
     private Comparator comparator;
 
     /**
-     * Creates a reverse comparator that will invert any List.
-     * It merely reverses the existing order; it does not
-     * reorder the List according to reverse "natural" order.
-     * In many cases, a faster alternative to this is
-     * the reverse(List) method of java.util.Collection.
+     * Creates a comparator that compares objects based on the inverse of their
+     * natural ordering.
      */
     public ReverseComparator() {
+        this(null);
     }
 
     /**
@@ -82,15 +81,15 @@ public class ReverseComparator implements Comparator,Serializable {
      * of the passed in comparator.
      */
     public ReverseComparator(Comparator comparator) {
-        this.comparator = comparator;
+        if(comparator != null) {
+            this.comparator = comparator;
+        } else {
+            this.comparator = ComparableComparator.getInstance();
+        }
     }
 
     public int compare(Object o1, Object o2) {
-        if(comparator == null) {
-            return -1;
-        } else {
-            return -1*comparator.compare(o1,o2);
-        }
+        return comparator.compare(o2, o1);
     }
 
 }
