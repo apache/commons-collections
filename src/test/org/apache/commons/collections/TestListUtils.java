@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.5 2002/10/12 22:36:22 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/10/12 22:36:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.6 2003/04/04 20:42:02 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/04/04 20:42:02 $
  *
  * ====================================================================
  *
@@ -61,12 +61,18 @@
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 import junit.framework.Test;
 
-
+/**
+ * Tests for ListUtils.
+ * 
+ * @author Stephen Colebourne
+ * @author Neil O'Toole
+ */
 public class TestListUtils extends BulkTest {
 
     public TestListUtils(String name) {
@@ -126,7 +132,34 @@ public class TestListUtils extends BulkTest {
         assertEquals(6, list.size());
     }
 
-
+	public void testEquals() {
+		Collection data = Arrays.asList( new String[] { "a", "b", "c" });
+		
+		List a = new ArrayList( data );
+		List b = new ArrayList( data );
+		
+        assertEquals(true, a.equals(b));
+        assertEquals(true, ListUtils.equals(a, b));
+        a.clear();
+        assertEquals(false, ListUtils.equals(a, b));
+        assertEquals(false, ListUtils.equals(a, null));
+        assertEquals(false, ListUtils.equals(null, b));
+        assertEquals(true, ListUtils.equals(null, null));
+	}
+	
+	public void testHashCode() {
+		Collection data = Arrays.asList( new String[] { "a", "b", "c" });
+			
+		List a = new ArrayList( data );
+		List b = new ArrayList( data );
+		
+        assertEquals(true, a.hashCode() == b.hashCode());
+        assertEquals(true, a.hashCode() == ListUtils.hashCode(a));
+        assertEquals(true, b.hashCode() == ListUtils.hashCode(b));
+        assertEquals(true, ListUtils.hashCode(a) == ListUtils.hashCode(b));
+        a.clear();
+        assertEquals(false, ListUtils.hashCode(a) == ListUtils.hashCode(b));
+        assertEquals(0, ListUtils.hashCode(null));
+	}	
+	
 }
-
-

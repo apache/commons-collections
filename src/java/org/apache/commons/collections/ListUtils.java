@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.13 2003/01/10 20:21:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.14 2003/04/04 20:40:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,12 +69,13 @@ import java.util.ListIterator;
  * instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.13 $ $Date: 2003/01/10 20:21:23 $
+ * @version $Revision: 1.14 $ $Date: 2003/04/04 20:40:28 $
  * 
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  * @author Paul Jack
  * @author Stephen Colebourne
+ * @author Neil O'Toole
  */
 public class ListUtils {
 
@@ -91,6 +92,7 @@ public class ListUtils {
     public ListUtils() {
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Returns a new list containing all elements that are contained in
      * both given lists.
@@ -169,7 +171,89 @@ public class ListUtils {
         return result;
     }
 
+    /**
+     * Tests two lists for value-equality as per the equality contract in
+     * {@link java.util.List#equals(java.lang.Object)}.
+     * <p>
+     * This method is useful for implementing <code>List</code> when you cannot
+     * extend AbstractList.
+     * <p>
+     * The relevant text (slightly paraphrased as this is a static method) is:
+     * <blockquote>
+     * Compares the two list objects for equality.  Returns
+     * <tt>true</tt> if and only if both
+     * lists have the same size, and all corresponding pairs of elements in
+     * the two lists are <i>equal</i>.  (Two elements <tt>e1</tt> and
+     * <tt>e2</tt> are <i>equal</i> if <tt>(e1==null ? e2==null :
+     * e1.equals(e2))</tt>.)  In other words, two lists are defined to be
+     * equal if they contain the same elements in the same order.  This
+     * definition ensures that the equals method works properly across
+     * different implementations of the <tt>List</tt> interface.
+     * </blockquote>
+     *
+     * <b>Note:</b> The behaviour of this method is undefined if the lists are
+     * modified during the equals comparison.
+     * 
+     * @see java.util.List
+     * @param list1  the first list, may be null
+     * @param list2  the second list, may be null
+     * @return whether the lists are equal by value comparison
+     */
+    public static boolean equals(final List list1, final List list2) {
+        if (list1 == list2) {
+            return true;
+        }
+        if (list1 == null || list2 == null || list1.size() != list2.size()) {
+            return false;
+        }
 
+        Iterator it1 = list1.iterator();
+        Iterator it2 = list2.iterator();
+        Object obj1 = null;
+        Object obj2 = null;
+
+        while (it1.hasNext() && it2.hasNext()) {
+            obj1 = it1.next();
+            obj2 = it2.next();
+
+            if (!(obj1 == null ? obj2 == null : obj1.equals(obj2))) {
+                return false;
+            }
+        }
+
+        return !(it1.hasNext() || it2.hasNext());
+    }
+    
+    /**
+     * Generates a hashcode using the algorithm specified in 
+     * {@link java.util.List#hashCode()}.
+     * <p>
+     * This method is useful for implementing <code>List</code> when you cannot
+     * extend AbstractList.
+     * 
+     * @see java.util.List#hashCode()
+     * @param list  the list to generate the hashCode for, may be null
+     * @return the hash code
+     */
+    public static int hashCode(final List list) {
+        if (list == null) {
+            return 0;
+        }
+        int hashCode = 1;
+        Iterator it = list.iterator();
+        Object obj = null;
+        
+        while (it.hasNext()) {
+            obj = it.next();
+            hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
+        }
+        return hashCode;
+    }   
+
+    //-----------------------------------------------------------------------
+    /**
+     * Implementation of a ListIterator that wraps an original.
+     */
     static class ListIteratorWrapper 
             implements ListIterator {
 
@@ -217,7 +301,9 @@ public class ListUtils {
 
     }
 
-
+    /**
+     * Implementation of a list that checks (predicates) each entry.
+     */
     static class PredicatedList 
             extends CollectionUtils.PredicatedCollection
             implements List {
@@ -288,7 +374,9 @@ public class ListUtils {
 
     }
 
-
+    /**
+     * Implementation of a list that has a fixed size.
+     */
     static class FixedSizeList 
             extends CollectionUtils.UnmodifiableCollection
             implements List {
@@ -356,7 +444,9 @@ public class ListUtils {
 
     }
 
-
+    /**
+     * Implementation of a list that creates objects on demand.
+     */
     static class LazyList 
             extends CollectionUtils.CollectionWrapper 
             implements List {
@@ -451,7 +541,7 @@ public class ListUtils {
 
     }
 
-
+    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized list backed by the given list.
      * <p>

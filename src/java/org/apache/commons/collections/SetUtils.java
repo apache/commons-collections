@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.9 2003/01/10 20:21:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.10 2003/04/04 20:40:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,8 +57,10 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Set;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -67,11 +69,12 @@ import java.util.TreeSet;
  * Provides static utility methods and decorators for {@link Set} 
  * and {@link SortedSet} instances.
  *
- * @version $Revision: 1.9 $ $Date: 2003/01/10 20:21:23 $
+ * @version $Revision: 1.10 $ $Date: 2003/04/04 20:40:28 $
  * @since Commons Collection 2.1
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
+ * @author Neil O'Toole
  */
 public class SetUtils {
 
@@ -93,7 +96,77 @@ public class SetUtils {
     public SetUtils() {
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Tests two sets for equality as per the <code>equals()</code> contract
+     * in {@link java.util.Set#equals(java.lang.Object)}.
+     * <p>
+     * This method is useful for implementing <code>Set</code> when you cannot
+     * extend AbstractSet.
+     * <p>
+     * The relevant text (slightly paraphrased as this is a static method) is:
+     * <blockquote>
+     * <p>Two sets are considered equal if they have
+     * the same size, and every member of the first set is contained in
+     * the second. This ensures that the <tt>equals</tt> method works
+     * properly across different implementations of the <tt>Set</tt>
+     * interface.</p>
+     * 
+     * <p>
+     * This implementation first checks if the two sets are the same object: 
+     * if so it returns <tt>true</tt>.  Then, it checks if the two sets are
+     * identical in size; if not, it returns false. If so, it returns
+     * <tt>a.containsAll((Collection) b)</tt>.</p>
+     * </blockquote>
+     * 
+     * @see java.util.Set
+     * @param set1  the first set, may be null
+     * @param set2  the second set, may be null
+     * @return whether the sets are equal by value comparison
+     */
+    public static boolean equals(final Set set1, final Set set2) {
+        if (set1 == set2) {
+            return true;
+        }
+        if (set1 == null || set2 == null || set1.size() != set2.size()) {
+            return false;
+        }
 
+        return set1.containsAll(set2);
+    }
+
+    /**
+     * Generates a hashcode using the algorithm specified in 
+     * {@link java.util.Set#hashCode()}.
+     * <p>
+     * This method is useful for implementing <code>Set</code> when you cannot
+     * extend AbstractSet.
+     * 
+     * @see java.util.Set#hashCode()
+     * @param set  the set to calculate the hashcode for, may be null
+     * @return the hash code
+     */
+    public static int hashCode(final Set set) {
+        if (set == null) {
+            return 0;
+        }
+        int hashCode = 0;
+        Iterator it = set.iterator();
+        Object obj = null;
+
+        while (it.hasNext()) {
+            obj = it.next();
+            if (obj != null) {
+                hashCode += obj.hashCode();
+            }
+        }
+        return hashCode;
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Implementation of a set that checks new entries.
+     */
     static class PredicatedSet 
             extends CollectionUtils.PredicatedCollection
             implements Set {
@@ -104,7 +177,9 @@ public class SetUtils {
 
     }
 
-
+    /**
+     * Implementation of a sorted set that checks new entries.
+     */
     static class PredicatedSortedSet 
             extends PredicatedSet 
             implements SortedSet {
@@ -146,6 +221,7 @@ public class SetUtils {
 
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized set backed by the given set.
      * <p>
