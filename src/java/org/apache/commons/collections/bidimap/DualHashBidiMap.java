@@ -26,9 +26,17 @@ import org.apache.commons.collections.BidiMap;
 
 /**
  * Implementation of <code>BidiMap</code> that uses two <code>HashMap</code> instances.
+ * <p>
+ * Two <code>HashMap</code> instances are used in this class.
+ * This provides fast lookups at the expense of storing two sets of map entries.
+ * Commons Collections would welcome the addition of a direct hash-based
+ * implementation of the <code>BidiMap</code> interface.
+ * <p>
+ * NOTE: From Commons Collections 3.1, all subclasses will use <code>HashMap</code>
+ * and the flawed <code>createMap</code> method is ignored.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualHashBidiMap.java,v 1.6 2004/02/18 00:57:39 scolebourne Exp $
+ * @version $Id: DualHashBidiMap.java,v 1.7 2004/06/11 23:27:37 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -40,10 +48,10 @@ public class DualHashBidiMap
     private static final long serialVersionUID = 721969328361808L;
 
     /**
-     * Creates an empty <code>HashBidiMap</code>
+     * Creates an empty <code>HashBidiMap</code>.
      */
     public DualHashBidiMap() {
-        super();
+        super(new HashMap(), new HashMap());
     }
 
     /** 
@@ -53,7 +61,7 @@ public class DualHashBidiMap
      * @param map  the map whose mappings are to be placed in this map
      */
     public DualHashBidiMap(Map map) {
-        super();
+        super(new HashMap(), new HashMap());
         putAll(map);
     }
     
@@ -66,15 +74,6 @@ public class DualHashBidiMap
      */
     protected DualHashBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
         super(normalMap, reverseMap, inverseBidiMap);
-    }
-
-    /**
-     * Creates a new instance of the map used by the subclass to store data.
-     * 
-     * @return the map to be used for internal storage
-     */
-    protected Map createMap() {
-        return new HashMap();
     }
 
     /**
@@ -98,6 +97,8 @@ public class DualHashBidiMap
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
+        maps[0] = new HashMap();
+        maps[1] = new HashMap();
         Map map = (Map) in.readObject();
         putAll(map);
     }

@@ -44,9 +44,12 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * When considering whether to use this class, the {@link TreeBidiMap} class should
  * also be considered. It implements the interface using a dedicated design, and does
  * not store each object twice, which can save on memory use.
+ * <p>
+ * NOTE: From Commons Collections 3.1, all subclasses will use <code>TreeMap</code>
+ * and the flawed <code>createMap</code> method is ignored.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.13 2004/05/15 12:13:03 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.14 2004/06/11 23:27:37 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -63,7 +66,7 @@ public class DualTreeBidiMap
      * Creates an empty <code>DualTreeBidiMap</code>
      */
     public DualTreeBidiMap() {
-        super();
+        super(new TreeMap(), new TreeMap());
         this.comparator = null;
     }
 
@@ -74,7 +77,7 @@ public class DualTreeBidiMap
      * @param map  the map whose mappings are to be placed in this map
      */
     public DualTreeBidiMap(Map map) {
-        super();
+        super(new TreeMap(), new TreeMap());
         putAll(map);
         this.comparator = null;
     }
@@ -85,12 +88,12 @@ public class DualTreeBidiMap
      * @param comparator  the Comparator
      */
     public DualTreeBidiMap(Comparator comparator) {
-        super();
+        super(new TreeMap(comparator), new TreeMap(comparator));
         this.comparator = comparator;
     }
 
     /** 
-     * Constructs a <code>HashBidiMap</code> that decorates the specified maps.
+     * Constructs a <code>DualTreeBidiMap</code> that decorates the specified maps.
      *
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
@@ -99,15 +102,6 @@ public class DualTreeBidiMap
     protected DualTreeBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
         super(normalMap, reverseMap, inverseBidiMap);
         this.comparator = ((SortedMap) normalMap).comparator();
-    }
-    
-    /**
-     * Creates a new instance of the map used by the subclass to store data.
-     * 
-     * @return the map to be used for internal storage
-     */
-    protected Map createMap() {
-        return new TreeMap(comparator);
     }
 
     /**
@@ -345,6 +339,8 @@ public class DualTreeBidiMap
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
+        maps[0] = new TreeMap(comparator);
+        maps[1] = new TreeMap(comparator);
         Map map = (Map) in.readObject();
         putAll(map);
     }

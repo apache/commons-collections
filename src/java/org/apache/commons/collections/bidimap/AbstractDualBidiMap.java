@@ -36,7 +36,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.12 2004/05/15 12:13:03 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.13 2004/06/11 23:27:37 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -68,12 +68,33 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     /**
      * Creates an empty map, initialised by <code>createMap</code>.
      * <p>
-     * The map array must be populated by the subclass.
+     * This constructor remains in place for deserialization.
+     * All other usage is deprecated in favour of
+     * {@link #AbstractDualBidiMap(Map, Map)}.
      */
     protected AbstractDualBidiMap() {
         super();
         maps[0] = createMap();
         maps[1] = createMap();
+    }
+
+    /**
+     * Creates an empty map using the two maps specified as storage.
+     * <p>
+     * The two maps must be a matching pair, normal and reverse.
+     * They will typically both be empty.
+     * <p>
+     * Neither map is validated, so nulls may be passed in.
+     * If you choose to do this then the subclass constructor must populate
+     * the <code>maps[]</code> instance variable itself.
+     * 
+     * @param normalMap  the normal direction map
+     * @param reverseMap  the reverse direction map
+     */
+    protected AbstractDualBidiMap(Map normalMap, Map reverseMap) {
+        super();
+        maps[0] = normalMap;
+        maps[1] = reverseMap;
     }
 
     /** 
@@ -94,11 +115,16 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     /**
      * Creates a new instance of the map used by the subclass to store data.
      * <p>
-     * Do not change any instance variables from this method.
+     * This design is deeply flawed and has been deprecated.
+     * It relied on subclass data being used during a superclass constructor.
      * 
      * @return the map to be used for internal storage
+     * @deprecated For constructors, use the new two map constructor.
+     * For deserialization, populate the maps array directly in readObject.
      */
-    protected abstract Map createMap();
+    protected Map createMap() {
+        return null;
+    }
 
     /**
      * Creates a new instance of the subclass.
