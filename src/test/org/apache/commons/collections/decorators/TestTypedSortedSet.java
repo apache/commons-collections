@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTypedSortedSet.java,v 1.1 2003/10/13 02:48:16 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTypedSortedSet.java,v 1.2 2003/11/02 16:20:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,7 +63,6 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestSortedSet;
 import org.apache.commons.collections.BulkTest;
@@ -74,7 +73,7 @@ import org.apache.commons.collections.BulkTest;
  * {@link TypedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/13 02:48:16 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/02 16:20:36 $
  * 
  * @author Phil Steitz
  */

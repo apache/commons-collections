@@ -61,16 +61,16 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.AbstractTestCollection;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
-import org.apache.commons.collections.AbstractTestCollection;
 
 /**
  * Extension of {@link TestCollection} for exercising the 
  * {@link PredicatedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/10/02 22:14:34 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/02 16:20:36 $
  * 
  * @author Phil Steitz
  */

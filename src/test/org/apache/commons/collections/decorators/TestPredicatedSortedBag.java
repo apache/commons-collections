@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedSortedBag.java,v 1.4 2003/10/02 22:35:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedSortedBag.java,v 1.5 2003/11/02 16:20:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,11 +62,11 @@ import java.util.Comparator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.AbstractTestSortedBag;
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
 import org.apache.commons.collections.SortedBag;
-import org.apache.commons.collections.AbstractTestSortedBag;
 import org.apache.commons.collections.TreeBag;
 
 /**
@@ -74,7 +74,7 @@ import org.apache.commons.collections.TreeBag;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/10/02 22:35:31 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/02 16:20:36 $
  * 
  * @author Phil Steitz
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestUnmodifiableSortedSet.java,v 1.1 2003/10/13 02:48:16 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestUnmodifiableSortedSet.java,v 1.2 2003/11/02 16:20:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,11 +57,10 @@
  */
 package org.apache.commons.collections.decorators;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import junit.framework.Test;
@@ -74,7 +73,7 @@ import org.apache.commons.collections.AbstractTestSortedSet;
  * {@link UnmodifiableSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/13 02:48:16 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/02 16:20:36 $
  * 
  * @author Phil Steitz
  */

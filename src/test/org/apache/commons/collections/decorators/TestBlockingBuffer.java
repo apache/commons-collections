@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestBlockingBuffer.java,v 1.4 2003/10/02 22:14:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestBlockingBuffer.java,v 1.5 2003/11/02 16:20:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,16 +66,16 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
-import org.apache.commons.collections.AbstractTestObject;
 
 /**
  * Extension of {@link TestObject} for exercising the {@link BlockingBuffer}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * 
  * @author Janek Bogucki
  * @author Phil Steitz
