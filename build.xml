@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.46 2003/10/09 21:00:05 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.47 2003/10/10 21:13:36 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -281,7 +281,7 @@
              srcdir="${source.src.test}"
              classpath="${classpath}"
              debug="${javac.debug}"
-             deprecation="${javac.deprecation}"
+             deprecation="false"
              optimize="${javac.optimize}"/>
    </target>
 
