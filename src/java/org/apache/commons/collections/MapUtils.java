@@ -67,7 +67,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.45 $ $Date: 2004/04/01 20:12:00 $
+ * @version $Revision: 1.46 $ $Date: 2004/04/21 20:34:11 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -865,11 +865,11 @@ public class MapUtils {
      * @throws NullPointerException if the bundle is null
      */
     public static Map toMap(final ResourceBundle resourceBundle) {
-        Enumeration enum = resourceBundle.getKeys();
+        Enumeration enumeration = resourceBundle.getKeys();
         Map map = new HashMap();
 
-        while (enum.hasMoreElements()) {
-            String key = (String) enum.nextElement();
+        while (enumeration.hasMoreElements()) {
+            String key = (String) enumeration.nextElement();
             Object value = resourceBundle.getObject(key);
             map.put(key, value);
         }

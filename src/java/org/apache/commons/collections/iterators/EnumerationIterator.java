@@ -24,7 +24,7 @@ import java.util.Iterator;
  * to be {@link Iterator Iterator} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.7 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision: 1.8 $ $Date: 2004/04/21 20:34:12 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
@@ -62,12 +62,12 @@ public class EnumerationIterator implements Iterator {
      * Constructs a new <code>EnumerationIterator</code> that will remove
      * elements from the specified collection.
      *
-     * @param enum  the enumeration to use
+     * @param enumeration  the enumeration to use
      * @param collection  the collection to remove elements form
      */
-    public EnumerationIterator(final Enumeration enum, final Collection collection) {
+    public EnumerationIterator(final Enumeration enumeration, final Collection collection) {
         super();
-        this.enumeration = enum;
+        this.enumeration = enumeration;
         this.collection = collection;
         this.last = null;
     }
