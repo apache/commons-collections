@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.7 2003/12/29 01:28:20 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.8 2004/01/05 21:46:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -75,8 +75,10 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * An implementation can be written simply by implementing the
  * <code>createMap</code> method.
  * 
+ * @see DualHashBidiMap
+ * @see DualTreeBidiMap
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.7 2003/12/29 01:28:20 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.8 2004/01/05 21:46:49 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
