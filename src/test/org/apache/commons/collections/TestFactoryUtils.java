@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.1 2003/05/16 13:42:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.2 2003/05/16 15:11:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.FactoryUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/16 13:42:57 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/16 15:11:54 $
  *
  * @author Stephen Colebourne
  */
@@ -205,8 +205,6 @@ public class TestFactoryUtils extends junit.framework.TestCase {
             
         } catch (FunctorException ex) {
             assertTrue(ex.getCause() instanceof IOException);
-            ex.printStackTrace();
-            ex.printStackTrace(System.out);
             return;
         }
         fail();
