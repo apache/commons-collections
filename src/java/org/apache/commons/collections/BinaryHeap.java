@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.20 2004/01/05 22:46:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.21 2004/01/06 21:31:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,11 +88,13 @@ import java.util.NoSuchElementException;
  * to provide synchronized access to a <code>BinaryHeap</code>:
  *
  * <pre>
- * PriorityQueue heap = PriorityQueueUtils.synchronizedPriorityQueue(new BinaryHeap());
+ * PriorityQueue heap = new SynchronizedPriorityQueue(new BinaryHeap());
  * </pre>
  *
+ * @deprecated Replaced by PriorityBuffer in buffer subpackage.
+ *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.20 $ $Date: 2004/01/05 22:46:33 $
+ * @version $Revision: 1.21 $ $Date: 2004/01/06 21:31:32 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram

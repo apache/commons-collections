@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.10 2004/01/05 22:46:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.11 2004/01/06 21:31:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,10 +61,11 @@ package org.apache.commons.collections;
  * Defines a collection for priority queues, which can insert, peek and pop.
  * <p>
  * This interface is now replaced by the <code>Buffer</code> interface.
- * It remains for backwards compatibility.
  *
+ * @deprecated Replaced by the Buffer interface and implementations in buffer subpackage.
+ *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.10 $ $Date: 2004/01/05 22:46:33 $
+ * @version $Revision: 1.11 $ $Date: 2004/01/06 21:31:32 $
  * 
  * @author Peter Donald
  */
