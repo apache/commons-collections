@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.10 2001/08/23 12:04:40 jstrachan Exp $
- * $Revision: 1.10 $
- * $Date: 2001/08/23 12:04:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.11 2001/08/29 15:28:07 jstrachan Exp $
+ * $Revision: 1.11 $
+ * $Date: 2001/08/29 15:28:07 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import junit.framework.*;
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.10 2001/08/23 12:04:40 jstrachan Exp $
+ * @version $Id: TestAll.java,v 1.11 2001/08/29 15:28:07 jstrachan Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -88,12 +88,14 @@ public class TestAll extends TestCase {
         suite.addTest(TestFastHashMap1.suite());
         suite.addTest(TestFastTreeMap.suite());
         suite.addTest(TestFastTreeMap1.suite());
+        suite.addTest(TestHashBag.suite());
         suite.addTest(TestHashMap.suite());
         suite.addTest(TestSingletonIterator.suite());
+        suite.addTest(TestTreeBag.suite());
         suite.addTest(TestTreeMap.suite());
         return suite;
     }
-
+        
     public static void main(String args[]) {
         String[] testCaseName = { TestAll.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
