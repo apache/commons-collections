@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.7 2002/02/14 22:42:45 morgand Exp $
- * $Revision: 1.7 $
- * $Date: 2002/02/14 22:42:45 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.8 2002/02/14 22:44:01 morgand Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/02/14 22:44:01 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.7 2002/02/14 22:42:45 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.8 2002/02/14 22:44:01 morgand Exp $
  */
 public class TestLRUMap extends TestHashMap
 {
@@ -158,7 +158,7 @@ public class TestLRUMap extends TestHashMap
     public void testExternalizable() throws IOException, ClassNotFoundException {
         /*
          * Test object created with this code
-         * Object created from CVS version 1.3 of this class
+         * Object created from CVS version 1.3 of the LRUMap class
          *
         LRUMap map2 = new LRUMap(3);
         map2.put(new Integer(1),"foo");
