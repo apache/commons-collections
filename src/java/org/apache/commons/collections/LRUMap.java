@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.3 2002/02/10 12:56:39 jstrachan Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/10 12:56:39 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.4 2002/02/13 21:03:20 morgand Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/13 21:03:20 $
  *
  * ====================================================================
  *
@@ -148,7 +148,7 @@ public class LRUMap extends HashMap implements Externalizable {
       * @return the key of the removed item
       */
     public Object removeLRU() {
-        int lastItem = size();
+        int lastItem = size() - 1;
         Object key = bubbleList.remove( lastItem );
         ValuePositionPair pair = removePair( key );
         return key;
