@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestAll.java,v 1.2 2003/04/15 17:09:14 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestByteIteratorInputStream.java,v 1.1 2003/04/15 17:09:14 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,26 +57,65 @@
 
 package org.apache.commons.collections.primitives.adapters.io;
 
+import java.io.InputStream;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.ArrayByteList;
+import org.apache.commons.collections.primitives.ByteList;
+
 /**
- * @version $Revision: 1.2 $ $Date: 2003/04/15 17:09:14 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/15 17:09:14 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestByteIteratorInputStream extends TestCase {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestByteIteratorInputStream(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestInputStreamByteIterator.suite());
-        suite.addTest(TestByteIteratorInputStream.suite());
-
-        return suite;
+        return new TestSuite(TestByteIteratorInputStream.class);
     }
-}
 
+    // ------------------------------------------------------------------------
+    
+
+
+    // ------------------------------------------------------------------------
+    
+    public void testReadNonEmpty() throws Exception {
+        ByteList list = new ArrayByteList();
+        for(int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; i++) {
+            list.add((byte)i);
+        }
+       
+        InputStream in = new ByteIteratorInputStream(list.iterator());
+        for(int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; i++) {
+            assertEquals(0xFF&i,in.read());
+        }
+        assertEquals(-1,in.read());
+        assertEquals(-1,in.read());
+    }
+
+    public void testReadEmpty() throws Exception {
+        ByteList list = new ArrayByteList();
+        InputStream in = new ByteIteratorInputStream(list.iterator());
+        assertEquals(-1,in.read());
+        assertEquals(-1,in.read());
+    }
+
+    public void testAdaptNull() {
+        assertNull(ByteIteratorInputStream.adapt(null));
+    }
+
+    public void testAdaptNonNull() {
+        assertNotNull(ByteIteratorInputStream.adapt(new ArrayByteList().iterator()));
+    }
+    
+}

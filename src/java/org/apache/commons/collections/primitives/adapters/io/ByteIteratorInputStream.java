@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestAll.java,v 1.2 2003/04/15 17:09:14 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/ByteIteratorInputStream.java,v 1.1 2003/04/15 17:09:15 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,26 +57,34 @@
 
 package org.apache.commons.collections.primitives.adapters.io;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.InputStream;
+
+import org.apache.commons.collections.primitives.ByteIterator;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/04/15 17:09:14 $
+ * Adapts an {@link ByteIterator} to the {@link InputStream} interface.
+ * 
+ * @version $Revision: 1.1 $ $Date: 2003/04/15 17:09:15 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+public class ByteIteratorInputStream extends InputStream {
+
+    public ByteIteratorInputStream(ByteIterator in) {
+        this.iterator= in;
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestInputStreamByteIterator.suite());
-        suite.addTest(TestByteIteratorInputStream.suite());
-
-        return suite;
+    public int read() {
+        if(iterator.hasNext()) {
+            return (0xFF & iterator.next());
+        } else {
+            return -1;
+        }
     }
+
+    public static InputStream adapt(ByteIterator in) {
+        return null == in ? null : new ByteIteratorInputStream(in);
+    }
+    
+    private ByteIterator iterator = null;
+
 }
-
