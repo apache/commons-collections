@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.11 2003/04/04 22:22:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.12 2003/04/09 23:37:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,7 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -68,7 +69,7 @@ import java.util.TreeSet;
  * Provides static utility methods and decorators for {@link Set} 
  * and {@link SortedSet} instances.
  *
- * @version $Revision: 1.11 $ $Date: 2003/04/04 22:22:29 $
+ * @version $Revision: 1.12 $ $Date: 2003/04/09 23:37:54 $
  * @since Commons Collection 2.1
  * 
  * @author Paul Jack
@@ -102,7 +103,8 @@ public class SetUtils {
      * in {@link java.util.Set#equals(java.lang.Object)}.
      * <p>
      * This method is useful for implementing <code>Set</code> when you cannot
-     * extend AbstractSet.
+     * extend AbstractSet. The method takes Collection instances to enable other
+     * collection types to use the Set implementation algorithm.
      * <p>
      * The relevant text (slightly paraphrased as this is a static method) is:
      * <blockquote>
@@ -124,7 +126,7 @@ public class SetUtils {
      * @param set2  the second set, may be null
      * @return whether the sets are equal by value comparison
      */
-    public static boolean equals(final Set set1, final Set set2) {
+    public static boolean isEqualSet(final Collection set1, final Collection set2) {
         if (set1 == set2) {
             return true;
         }
@@ -140,13 +142,14 @@ public class SetUtils {
      * {@link java.util.Set#hashCode()}.
      * <p>
      * This method is useful for implementing <code>Set</code> when you cannot
-     * extend AbstractSet.
+     * extend AbstractSet. The method takes Collection instances to enable other
+     * collection types to use the Set implementation algorithm.
      * 
      * @see java.util.Set#hashCode()
      * @param set  the set to calculate the hashcode for, may be null
      * @return the hash code
      */
-    public static int hashCode(final Set set) {
+    public static int hashCodeForSet(final Collection set) {
         if (set == null) {
             return 0;
         }

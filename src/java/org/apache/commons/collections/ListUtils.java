@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.15 2003/04/04 22:22:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.16 2003/04/09 23:37:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.util.ListIterator;
  * instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.15 $ $Date: 2003/04/04 22:22:29 $
+ * @version $Revision: 1.16 $ $Date: 2003/04/09 23:37:54 $
  * 
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
@@ -177,7 +177,8 @@ public class ListUtils {
      * {@link java.util.List#equals(java.lang.Object)}.
      * <p>
      * This method is useful for implementing <code>List</code> when you cannot
-     * extend AbstractList.
+     * extend AbstractList. The method takes Collection instances to enable other
+     * collection types to use the List implementation algorithm.
      * <p>
      * The relevant text (slightly paraphrased as this is a static method) is:
      * <blockquote>
@@ -200,7 +201,7 @@ public class ListUtils {
      * @param list2  the second list, may be null
      * @return whether the lists are equal by value comparison
      */
-    public static boolean equals(final List list1, final List list2) {
+    public static boolean isEqualList(final Collection list1, final Collection list2) {
         if (list1 == list2) {
             return true;
         }
@@ -230,13 +231,14 @@ public class ListUtils {
      * {@link java.util.List#hashCode()}.
      * <p>
      * This method is useful for implementing <code>List</code> when you cannot
-     * extend AbstractList.
+     * extend AbstractList. The method takes Collection instances to enable other
+     * collection types to use the List implementation algorithm.
      * 
      * @see java.util.List#hashCode()
      * @param list  the list to generate the hashCode for, may be null
      * @return the hash code
      */
-    public static int hashCode(final List list) {
+    public static int hashCodeForList(final Collection list) {
         if (list == null) {
             return 0;
         }
