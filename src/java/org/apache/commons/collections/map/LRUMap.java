@@ -41,7 +41,7 @@ import org.apache.commons.collections.BoundedMap;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision: 1.13 $ $Date: 2004/05/12 19:51:28 $
+ * @version $Revision: 1.14 $ $Date: 2004/06/07 22:13:53 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
@@ -56,8 +56,6 @@ public class LRUMap
     static final long serialVersionUID = -612114643488955218L;
     /** Default maximum size */
     protected static final int DEFAULT_MAX_SIZE = 100;
-    /** Default scan behaviour */
-    protected static final boolean DEFAULT_SCAN_UNTIL_REMOVABLE = false;
     
     /** Maximum size */
     private transient int maxSize;
@@ -68,7 +66,7 @@ public class LRUMap
      * Constructs a new empty map with a maximum size of 100.
      */
     public LRUMap() {
-        this(DEFAULT_MAX_SIZE, DEFAULT_LOAD_FACTOR, DEFAULT_SCAN_UNTIL_REMOVABLE);
+        this(DEFAULT_MAX_SIZE, DEFAULT_LOAD_FACTOR, false);
     }
 
     /**
@@ -87,6 +85,7 @@ public class LRUMap
      * @param maxSize  the maximum size of the map
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
+     * @since Commons Collections 3.1
      */
     public LRUMap(int maxSize, boolean scanUntilRemovable) {
         this(maxSize, DEFAULT_LOAD_FACTOR, scanUntilRemovable);
@@ -102,7 +101,7 @@ public class LRUMap
      * @throws IllegalArgumentException if the load factor is less than zero
      */
     public LRUMap(int maxSize, float loadFactor) {
-        this(maxSize, loadFactor, DEFAULT_SCAN_UNTIL_REMOVABLE);
+        this(maxSize, loadFactor, false);
     }
 
     /**
@@ -114,6 +113,7 @@ public class LRUMap
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
      * @throws IllegalArgumentException if the load factor is less than zero
+     * @since Commons Collections 3.1
      */
     public LRUMap(int maxSize, float loadFactor, boolean scanUntilRemovable) {
         super((maxSize < 1 ? DEFAULT_CAPACITY : maxSize), loadFactor);
@@ -134,7 +134,7 @@ public class LRUMap
      * @throws IllegalArgumentException if the map is empty
      */
     public LRUMap(Map map) {
-        this(map, DEFAULT_SCAN_UNTIL_REMOVABLE);
+        this(map, false);
     }
 
     /**
@@ -146,6 +146,7 @@ public class LRUMap
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the map is empty
+     * @since Commons Collections 3.1
      */
     public LRUMap(Map map, boolean scanUntilRemovable) {
         this(map.size(), DEFAULT_LOAD_FACTOR, scanUntilRemovable);
@@ -339,8 +340,9 @@ public class LRUMap
      * map is full.
      *
      * @return true if this map scans
+     * @since Commons Collections 3.1
      */
-    public boolean scanUntilRemovable() {
+    public boolean isScanUntilRemovable() {
         return scanUntilRemovable;
     }
 
