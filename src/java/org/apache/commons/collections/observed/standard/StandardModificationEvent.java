@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.6 2003/09/21 16:00:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.7 2003/09/21 20:00:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/09/21 16:00:28 $
+ * @version $Revision: 1.7 $ $Date: 2003/09/21 20:00:29 $
  * 
  * @author Stephen Colebourne
  */
@@ -96,10 +96,10 @@ public class StandardModificationEvent extends ModificationEvent {
     protected final int repeat;
     /** The result of the method call */
     protected final Object previous;
-    /** The range that the event came from, null if none */
-    protected final ObservableCollection range;
-    /** The offset of the range that the event came from, -1 if none */
-    protected final int rangeOffset;
+    /** The view that the event came from, null if none */
+    protected final ObservableCollection view;
+    /** The offset index within the main collection of the view, -1 if none */
+    protected final int viewOffset;
 
     // Constructor
     //-----------------------------------------------------------------------
@@ -114,8 +114,8 @@ public class StandardModificationEvent extends ModificationEvent {
      * @param object  the value that changed
      * @param repeat  the number of repeats
      * @param previous  the previous value being removed/replaced
-     * @param range  the range collection, null if no range
-     * @param rangeOffset  the offset of the range, -1 if unknown
+     * @param view  the view collection, null if event from main collection
+     * @param viewOffset  the offset within the main collection of the view, -1 if unknown
      */
     public StandardModificationEvent(
         final ObservableCollection obsCollection,
@@ -126,8 +126,8 @@ public class StandardModificationEvent extends ModificationEvent {
         final Object object,
         final int repeat,
         final Object previous,
-        final ObservableCollection range,
-        final int rangeOffset) {
+        final ObservableCollection view,
+        final int viewOffset) {
 
         super(obsCollection, handler, type);
         this.preSize = preSize;
@@ -135,8 +135,8 @@ public class StandardModificationEvent extends ModificationEvent {
         this.object = object;
         this.repeat = repeat;
         this.previous = previous;
-        this.range = range;
-        this.rangeOffset = rangeOffset;
+        this.view = view;
+        this.viewOffset = viewOffset;
     }
 
     // Change info
@@ -223,33 +223,37 @@ public class StandardModificationEvent extends ModificationEvent {
         return preSize;
     }
 
-    // Range info
+    // View info
     //-----------------------------------------------------------------------
     /**
-     * Gets the range, <code>null</code> if none.
+     * Gets the view, <code>null</code> if none.
+     * <p>
+     * A view is a subSet, headSet, tailSet, subList and so on.
      * 
-     * @return the range
+     * @return the view
      */
-    public ObservableCollection getRange() {
-        return range;
+    public ObservableCollection getView() {
+        return view;
     }
 
     /**
-     * Checks whether the event originated from a range.
+     * Checks whether the event originated from a view.
      * 
-     * @return the range
+     * @return true if event came from a view
      */
-    public boolean isRange() {
-        return (range != null);
+    public boolean isView() {
+        return (view != null);
     }
 
     /**
-     * Gets the range offset, <code>-1</code> if no range or unknown offset.
+     * Gets the view offset, <code>-1</code> if no view or unknown offset.
+     * <p>
+     * This refers to the index of the start of the view within the main collection.
      * 
-     * @return the range offset
+     * @return the view offset
      */
-    public int getRangeOffset() {
-        return rangeOffset;
+    public int getViewOffset() {
+        return viewOffset;
     }
 
     // Event type

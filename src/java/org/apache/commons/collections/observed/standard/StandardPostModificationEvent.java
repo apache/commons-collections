@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationEvent.java,v 1.4 2003/09/21 16:00:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationEvent.java,v 1.5 2003/09/21 20:00:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/21 16:00:28 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/21 20:00:29 $
  * 
  * @author Stephen Colebourne
  */
@@ -92,8 +92,8 @@ public class StandardPostModificationEvent extends StandardModificationEvent {
      * @param object  the value that changed
      * @param repeat  the number of repeats
      * @param previous  the previous value being removed/replaced
-     * @param range  the range collection, null if no range
-     * @param rangeOffset  the offset of the range, -1 if unknown
+     * @param view  the view collection, null if event from main collection
+     * @param viewOffset  the offset within the main collection of the view, -1 if unknown
      */
     public StandardPostModificationEvent(
         final ObservableCollection obsCollection,
@@ -104,11 +104,11 @@ public class StandardPostModificationEvent extends StandardModificationEvent {
         final Object object,
         final int repeat,
         final Object previous,
-        final ObservableCollection range,
-        final int rangeOffset) {
+        final ObservableCollection view,
+        final int viewOffset) {
 
         super(obsCollection, handler, type, preSize, index,
-            object, repeat, previous, range, rangeOffset);
+            object, repeat, previous, view, viewOffset);
         postSize = collection.size();
     }
 

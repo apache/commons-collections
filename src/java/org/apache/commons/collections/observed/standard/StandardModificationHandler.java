@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.5 2003/09/21 16:00:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.6 2003/09/21 20:00:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/09/21 16:00:28 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/21 20:00:29 $
  * 
  * @author Stephen Colebourne
  */
@@ -429,16 +429,16 @@ public class StandardModificationHandler extends ModificationHandler {
      * @param object  the object that will be added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
      * @param previous  the previous value that will be removed/replaced, must exist in coll
-     * @param range  the range collection, null if no range
-     * @param rangeOffset  the offset of the range, -1 if unknown
+     * @param view  the view collection that the change was actioned on, null if no view
+     * @param viewOffset  the offset of the subList view, -1 if unknown
      * @return true to call the decorated collection
      */
     protected boolean preEvent(
             int type, int index, Object object,
-            int repeat, Object previous, ObservableCollection range, int rangeOffset) {
+            int repeat, Object previous, ObservableCollection view, int viewOffset) {
 
         preSize = getObservedCollection().size();
-        return firePreEvent(type, index, object, repeat, previous, range, rangeOffset);
+        return firePreEvent(type, index, object, repeat, previous, view, viewOffset);
     }
 
     /**
@@ -449,13 +449,13 @@ public class StandardModificationHandler extends ModificationHandler {
      * @param object  the object that will be added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
      * @param previous  the previous value that will be removed/replaced, must exist in coll
-     * @param range  the range collection, null if no range
-     * @param rangeOffset  the offset of the range, -1 if unknown
+     * @param view  the view collection that the change was actioned on, null if no view
+     * @param viewOffset  the offset of the subList view, -1 if unknown
      * @return true to call the decorated collection
      */
     protected boolean firePreEvent(
             int type, int index, Object object, int repeat,
-            Object previous, ObservableCollection range, int rangeOffset) {
+            Object previous, ObservableCollection view, int viewOffset) {
 
         if ((preMask & type) > 0) {
             StandardPreModificationEvent event = null;
@@ -466,7 +466,7 @@ public class StandardModificationHandler extends ModificationHandler {
                         if (event == null) {
                             event = new StandardPreModificationEvent(
                                 getObservedCollection(), this, type, preSize, index, object,
-                                repeat, previous, range, rangeOffset);
+                                repeat, previous, view, viewOffset);
                         }
                         holder.listener.modificationOccurring(event);
                     }
@@ -484,18 +484,18 @@ public class StandardModificationHandler extends ModificationHandler {
      * @param modified  true if the method succeeded in changing the collection
      * @param type  the event type to send
      * @param index  the index where the change starts, the method param or derived
-     * @param object  the object that will be added/removed/set, the method param or derived
+     * @param object  the object that was added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
-     * @param previous  the previous value that will be removed/replaced, must exist in coll
-     * @param range  the range collection, null if no range
-     * @param rangeOffset  the offset of the range, -1 if unknown
+     * @param previous  the previous value that was removed/replace, must have existed in coll
+     * @param view  the view collection that the change was actioned on, null if no view
+     * @param viewOffset  the offset of the subList view, -1 if unknown
      */
     protected void postEvent(
             boolean modified, int type, int index, Object object,
-            int repeat, Object previous, ObservableCollection range, int rangeOffset) {
+            int repeat, Object previous, ObservableCollection view, int viewOffset) {
 
         if (modified) {
-            firePostEvent(type, index, object, repeat, previous, range, rangeOffset);
+            firePostEvent(type, index, object, repeat, previous, view, viewOffset);
         }
     }
     
@@ -504,15 +504,15 @@ public class StandardModificationHandler extends ModificationHandler {
      * 
      * @param type  the event type to send
      * @param index  the index where the change starts, the method param or derived
-     * @param object  the object that will be added/removed/set, the method param or derived
+     * @param object  the object that was added/removed/set, the method param or derived
      * @param repeat  the number of repeats of the add/remove, the method param or derived
-     * @param previous  the previous value that will be removed/replaced, must exist in coll
-     * @param range  the range collection, null if no range
-     * @param rangeOffset  the offset of the range, -1 if unknown
+     * @param previous  the previous value that was removed/replace, must have existed in coll
+     * @param view  the view collection that the change was actioned on, null if no view
+     * @param viewOffset  the offset of the subList view, -1 if unknown
      */
     protected void firePostEvent(
             int type, int index, Object object, int repeat,
-            Object previous, ObservableCollection range, int rangeOffset) {
+            Object previous, ObservableCollection view, int viewOffset) {
 
         if ((postMask & type) > 0) {
             StandardPostModificationEvent event = null;
@@ -523,7 +523,7 @@ public class StandardModificationHandler extends ModificationHandler {
                         if (event == null) {
                             event = new StandardPostModificationEvent(
                                 getObservedCollection(), this, type, preSize, index,
-                                object, repeat, previous, range, rangeOffset);
+                                object, repeat, previous, view, viewOffset);
                         }
                         holder.listener.modificationOccurred(event);
                     }
