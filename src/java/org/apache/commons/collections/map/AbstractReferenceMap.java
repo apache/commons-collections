@@ -15,6 +15,9 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
@@ -72,8 +75,8 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * provide synchronized access to a <code>ReferenceMap</code>.
  *
  * @see java.lang.ref.Reference
- * @since Commons Collections 3.1 (from ReferenceMap in 3.0)
- * @version $Revision: 1.1 $ $Date: 2004/04/09 22:18:18 $
+ * @since Commons Collections 3.1 (extracted from ReferenceMap in 3.0)
+ * @version $Revision: 1.2 $ $Date: 2004/04/27 21:32:52 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -93,24 +96,24 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * The reference type for keys.  Must be HARD, SOFT, WEAK.
      * @serial
      */
-    private int keyType;
+    protected int keyType;
 
     /**
      * The reference type for values.  Must be HARD, SOFT, WEAK.
      * @serial
      */
-    private int valueType;
+    protected int valueType;
 
     /**
      * Should the value be automatically purged when the associated key has been collected?
      */
-    private boolean purgeValues;
+    protected boolean purgeValues;
 
     /**
      * ReferenceQueue used to eliminate stale mappings.
      * See purge.
      */
-    private transient ReferenceQueue queue = new ReferenceQueue();
+    private transient ReferenceQueue queue;
 
     //-----------------------------------------------------------------------
     /**
@@ -144,6 +147,13 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
         this.purgeValues = purgeValues;
     }
 
+    /**
+     * Initialise this subclass during construction, cloning or deserialization.
+     */
+    protected void init() {
+        queue = new ReferenceQueue();
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Checks the type int is a valid value.
@@ -157,49 +167,6 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             throw new IllegalArgumentException(name + " must be HARD, SOFT, WEAK.");
         }
     }
-
-    //-----------------------------------------------------------------------
-//    /**
-//     * Writes this object to the given output stream.
-//     *
-//     * @param out  the output stream to write to
-//     * @throws IOException  if the stream raises it
-//     */
-//    private void writeObject(ObjectOutputStream out) throws IOException {
-//        out.defaultWriteObject();
-//        out.writeInt(data.length);
-//
-//        // Have to use null-terminated list because size might shrink
-//        // during iteration
-//
-//        for (Iterator iter = entrySet().iterator(); iter.hasNext();) {
-//            Map.Entry entry = (Map.Entry)iter.next();
-//            out.writeObject(entry.getKey());
-//            out.writeObject(entry.getValue());
-//        }
-//        out.writeObject(null);
-//    }
-//
-//
-//    /**
-//     * Reads the contents of this object from the given input stream.
-//     *
-//     * @param in  the input stream to read from
-//     * @throws IOException  if the stream raises it
-//     * @throws ClassNotFoundException  if the stream raises it
-//     */
-//    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-//        in.defaultReadObject();
-//        data = new HashEntry[in.readInt()];
-//        threshold = calculateThreshold(data.length, loadFactor);
-//        queue = new ReferenceQueue();
-//        Object key = in.readObject();
-//        while (key != null) {
-//            Object value = in.readObject();
-//            put(key, value);
-//            key = in.readObject();
-//        }
-//    }
 
     //-----------------------------------------------------------------------
     /**
@@ -439,6 +406,19 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     }
 
     /**
+     * Gets the hash code for a MapEntry.
+     * Subclasses can override this, for example to use the identityHashCode.
+     * 
+     * @param key  the key to get a hash code for, may be null
+     * @param value  the value to get a hash code for, may be null
+     * @return the hash code, as per the MapEntry specification
+     */
+    protected int hashEntry(Object key, Object value) {
+        return (key == null ? 0 : key.hashCode()) ^
+               (value == null ? 0 : value.hashCode()); 
+    }
+    
+    /**
      * Compares two keys, in internal converted form, to see if they are equal.
      * <p>
      * This implementation converts the key from the entry to a real reference
@@ -447,7 +427,6 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * @param key1  the first key to compare passed in from outside
      * @param key2  the second key extracted from the entry via <code>entry.key</code>
      * @return true if equal
-     * @since Commons Collections 3.1
      */
     protected boolean isEqualKey(Object key1, Object key2) {
         key2 = (keyType > HARD ? ((Reference) key2).get() : key2);
@@ -462,7 +441,6 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * @param key  the key to store
      * @param value  the value to store
      * @return the newly created entry
-     * @since Commons Collections 3.1
      */
     protected HashEntry createEntry(HashEntry next, int hashCode, Object key, Object value) {
         return new ReferenceEntry(this, next, hashCode, key, value);
@@ -472,7 +450,6 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * Creates an entry set iterator.
      * 
      * @return the entrySet iterator
-     * @since Commons Collections 3.1
      */
     protected Iterator createEntrySetIterator() {
         return new ReferenceEntrySetIterator(this);
@@ -482,7 +459,6 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * Creates an key set iterator.
      * 
      * @return the keySet iterator
-     * @since Commons Collections 3.1
      */
     protected Iterator createKeySetIterator() {
         return new ReferenceKeySetIterator(this);
@@ -492,7 +468,6 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * Creates an values iterator.
      * 
      * @return the values iterator
-     * @since Commons Collections 3.1
      */
     protected Iterator createValuesIterator() {
         return new ReferenceValuesIterator(this);
@@ -596,17 +571,35 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             super(next, hashCode, null, null);
             this.parent = parent;
             this.key = toReference(parent.keyType, key, hashCode);
-            this.value = toReference(parent.valueType, value, hashCode);
+            this.value = toReference(parent.valueType, value, hashCode); // the key hashCode is passed in deliberately
         }
 
+        /**
+         * Gets the key from the entry.
+         * This method dereferences weak and soft keys and thus may return null.
+         * 
+         * @return the key, which may be null if it was garbage collected
+         */
         public Object getKey() {
             return (parent.keyType > HARD) ? ((Reference) key).get() : key;
         }
 
+        /**
+         * Gets the value from the entry.
+         * This method dereferences weak and soft value and thus may return null.
+         * 
+         * @return the value, which may be null if it was garbage collected
+         */
         public Object getValue() {
             return (parent.valueType > HARD) ? ((Reference) value).get() : value;
         }
 
+        /**
+         * Sets the value of the entry.
+         * 
+         * @param obj  the object to store
+         * @return the previous value
+         */
         public Object setValue(Object obj) {
             Object old = getValue();
             if (parent.valueType > HARD) {
@@ -616,6 +609,15 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             return old;
         }
 
+        /**
+         * Compares this map entry to another.
+         * <p>
+         * This implementation uses <code>isEqualKey</code> and
+         * <code>isEqualValue</code> on the main map for comparison.
+         * 
+         * @param obj  the other map entry to compare to
+         * @return true if equal, false if not
+         */
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
@@ -625,12 +627,26 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             }
             
             Map.Entry entry = (Map.Entry)obj;
-            Object key = entry.getKey();
-            Object value = entry.getValue();
-            if ((key == null) || (value == null)) {
+            Object entryKey = entry.getKey();  // convert to hard reference
+            Object entryValue = entry.getValue();  // convert to hard reference
+            if ((entryKey == null) || (entryValue == null)) {
                 return false;
             }
-            return key.equals(getKey()) && value.equals(getValue());
+            // compare using map methods, aiding identity subclass
+            // note that key is direct access and value is via method
+            return parent.isEqualKey(entryKey, key) &&
+                   parent.isEqualValue(entryValue, getValue());
+        }
+
+        /**
+         * Gets the hashcode of the entry using temporary hard references.
+         * <p>
+         * This implementation uses <code>hashEntry</code> on the main map.
+         * 
+         * @return the hashcode of the entry
+         */
+        public int hashCode() {
+            return parent.hashEntry(getKey(), getValue());
         }
 
         /**
@@ -642,7 +658,6 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
          * @param hash  the hash code of the <i>key</i> of the mapping;
          *    this number might be different from referent.hashCode() if
          *    the referent represents a value and not a key
-         * @since Commons Collections 3.1
          */
         protected Object toReference(int type, Object referent, int hash) {
             switch (type) {
@@ -860,6 +875,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * A soft reference holder.
      */
     static class SoftRef extends SoftReference {
+        /** the hashCode of the key (even if the reference points to a value) */
         private int hash;
 
         public SoftRef(int hash, Object r, ReferenceQueue q) {
@@ -876,6 +892,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * A weak reference holder.
      */
     static class WeakRef extends WeakReference {
+        /** the hashCode of the key (even if the reference points to a value) */
         private int hash;
 
         public WeakRef(int hash, Object r, ReferenceQueue q) {
@@ -888,5 +905,74 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
         }
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Replaces the superclass method to store the state of this class.
+     * <p>
+     * Serialization is not one of the JDK's nicest topics. Normal serialization will
+     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * what you want, as in this case the <code>put()</code> method on read can be
+     * affected by subclass state.
+     * <p>
+     * The solution adopted here is to serialize the state data of this class in
+     * this protected method. This method must be called by the
+     * <code>writeObject()</code> of the first serializable subclass.
+     * <p>
+     * Subclasses may override if they have a specific field that must be present
+     * on read before this implementation will work. Generally, the read determines
+     * what must be serialized here, if anything.
+     * 
+     * @param out  the output stream
+     */
+    protected void doWriteObject(ObjectOutputStream out) throws IOException {
+        out.writeInt(keyType);
+        out.writeInt(valueType);
+        out.writeBoolean(purgeValues);
+        out.writeFloat(loadFactor);
+        out.writeInt(data.length);
+        for (MapIterator it = mapIterator(); it.hasNext();) {
+            out.writeObject(it.next());
+            out.writeObject(it.getValue());
+        }
+        out.writeObject(null);  // null terminate map
+        // do not call super.doWriteObject() as code there doesn't work for reference map
+    }
+
+    /**
+     * Replaces the superclassm method to read the state of this class.
+     * <p>
+     * Serialization is not one of the JDK's nicest topics. Normal serialization will
+     * initialise the superclass before the subclass. Sometimes however, this isn't
+     * what you want, as in this case the <code>put()</code> method on read can be
+     * affected by subclass state.
+     * <p>
+     * The solution adopted here is to deserialize the state data of this class in
+     * this protected method. This method must be called by the
+     * <code>readObject()</code> of the first serializable subclass.
+     * <p>
+     * Subclasses may override if the subclass has a specific field that must be present
+     * before <code>put()</code> or <code>calculateThreshold()</code> will work correctly.
+     * 
+     * @param in  the input stream
+     */
+    protected void doReadObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        this.keyType = in.readInt();
+        this.valueType = in.readInt();
+        this.purgeValues = in.readBoolean();
+        this.loadFactor = in.readFloat();
+        int capacity = in.readInt();
+        init();
+        data = new HashEntry[capacity];
+        while (true) {
+            Object key = in.readObject();
+            if (key == null) {
+                break;
+            }
+            Object value = in.readObject();
+            put(key, value);
+        }
+        threshold = calculateThreshold(data.length, loadFactor);
+        // do not call super.doReadObject() as code there doesn't work for reference map
+    }
 
 }
