@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.19 2003/12/06 13:03:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.20 2003/12/29 15:35:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -119,7 +119,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * 
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
- * @version $Revision: 1.19 $ $Date: 2003/12/06 13:03:15 $
+ * @version $Revision: 1.20 $ $Date: 2003/12/29 15:35:54 $
  * 
  * @author Paul Jack
  */
@@ -706,7 +706,7 @@ public class ReferenceMap extends AbstractMap {
         if (keySet != null) return keySet;
         keySet = new AbstractSet() {
             public int size() {
-                return size;
+                return ReferenceMap.this.size();
             }
 
             public Iterator iterator() {
@@ -727,6 +727,17 @@ public class ReferenceMap extends AbstractMap {
                 ReferenceMap.this.clear();
             }
 
+            public Object[] toArray() {
+                return toArray(new Object[0]);
+            }
+
+            public Object[] toArray(Object[] array) {
+                Collection c = new ArrayList(size());
+                for (Iterator it = iterator(); it.hasNext(); ) {
+                    c.add(it.next());
+                }
+                return c.toArray(array);
+            }
         };
         return keySet;
     }
@@ -741,7 +752,7 @@ public class ReferenceMap extends AbstractMap {
         if (values != null) return values;
         values = new AbstractCollection()  {
             public int size() {
-                return size;
+                return ReferenceMap.this.size();
             }
 
             public void clear() {
@@ -750,6 +761,18 @@ public class ReferenceMap extends AbstractMap {
 
             public Iterator iterator() {
                 return new ValueIterator();
+            }
+
+            public Object[] toArray() {
+                return toArray(new Object[0]);
+            }
+
+            public Object[] toArray(Object[] array) {
+                Collection c = new ArrayList(size());
+                for (Iterator it = iterator(); it.hasNext(); ) {
+                    c.add(it.next());
+                }
+                return c.toArray(array);
             }
         };
         return values;
