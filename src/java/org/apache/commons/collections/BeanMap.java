@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.6 2002/03/13 04:36:18 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/03/13 04:36:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.7 2002/03/13 05:24:58 mas Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/03/13 05:24:58 $
  *
  * ====================================================================
  *
@@ -255,7 +255,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
     /**
      *  This method reinitializes the bean map to have default values for the
      *  bean's properties.  This is accomplished by constructing a new instance
-     *  of the bean which th emap uses as its underlying data source.  This
+     *  of the bean which the map uses as its underlying data source.  This
      *  behavior for <code>clear()</code> differs from the Map contract in that
      *  the mappings are not actually removed from the map (the mappings for a
      *  BeanMap are fixed).
