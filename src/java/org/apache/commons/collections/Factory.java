@@ -1,12 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.3 2002/10/12 22:15:19 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2002/10/12 22:15:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.4 2003/05/16 13:41:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -22,20 +20,20 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
- * 4. The names "The Jakarta Project", "Struts", and "Apache Software
+ * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
  *    from this software without prior written permission. For written
  *    permission, please contact apache@apache.org.
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -59,23 +57,24 @@
  */
 package org.apache.commons.collections;
 
-
-
 /**
- * Factory
- * A simple interface that describes the most basic means of having the ability
- * to create an object.
+ * <code>Factory</code> defines an interface implemented by classes that
+ * create objects.
+ * 
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.4 $ $Date: 2003/05/16 13:41:10 $
  *
  * @author Arron Bates
- * @version $Revision: 1.3 $
- * @since 2.1
+ * @author Stephen Colebourne
  */
 public interface Factory {
-
-  /** Simple method from which will come the new object from the factory.
-   *
-   * @return Object reference to the new object.
-   */
-  public Object create();
-  
+    
+    /**
+     * Create a new object.
+     *
+     * @return a new object
+     * @throws FunctorException (runtime) if the factory cannot create an object
+     */
+    public Object create();
+    
 }

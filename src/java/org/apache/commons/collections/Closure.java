@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Closure.java,v 1.5 2003/05/11 14:15:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Closure.java,v 1.6 2003/05/16 13:41:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,21 +57,30 @@
  */
 package org.apache.commons.collections;
 
-/** 
- * An interface to represent some Closure, a block of code which is executed 
- * from inside some block, function or iteration which operates on an input 
- * object.
- *
+/**
+ * <code>Closure</code> defines an interface implemented by classes that
+ * do something.
+ * <p>
+ * A Closure represents a block of code which is executed from inside some
+ * block, function or iteration. It operates an input object.
+ *  
  * @since Commons Collections 1.0
- * @version $Revision: 1.5 $ $Date: 2003/05/11 14:15:23 $
- * 
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @version $Revision: 1.6 $ $Date: 2003/05/16 13:41:10 $
+ *
+ * @author James Strachan
+ * @author Nicola Ken Barozzi
+ * @author Stephen Colebourne
  */
 public interface Closure {
-
-    /** 
-     * Performs some operation on the input object.
+    
+    /**
+     * Performs an action on the specified input object.
+     *
+     * @param input  the input to execute on
+     * @throws ClassCastException (runtime) if the input is the wrong class
+     * @throws IllegalArgumentException (runtime) if the input is invalid
+     * @throws FunctorException (runtime) if any other error occurs
      */
-    void execute(Object input);
+    public void execute(Object input);
     
 }
