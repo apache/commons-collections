@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestDualHashBidiMap.java,v 1.1 2003/10/06 23:47:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestDualHashBidiMap.java,v 1.2 2003/10/10 21:11:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,12 +63,12 @@ import junit.textui.TestRunner;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/10/06 23:47:17 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/10 21:11:39 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class TestDualHashBidiMap extends TestBidiMap {
+public class TestDualHashBidiMap extends AbstractTestBidiMap {
 
     public static void main(String[] args) {
         TestRunner.run(suite());

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.8 2003/10/10 21:09:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.1 2003/10/10 21:11:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,12 +63,12 @@ import java.util.Map;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.8 $ $Date: 2003/10/10 21:09:27 $
+ * @version $Revision: 1.1 $ $Date: 2003/10/10 21:11:39 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public abstract class TestBidiMap extends AbstractTestMap {
+public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     // Test data.
     private static final Object[][] entriesKV =
@@ -85,12 +85,12 @@ public abstract class TestBidiMap extends AbstractTestMap {
     };
     private final Object[][] entries;
 
-    public TestBidiMap(String testName) {
+    public AbstractTestBidiMap(String testName) {
         super(testName);
         entries = entriesKV;
     }
 
-    public TestBidiMap() {
+    public AbstractTestBidiMap() {
         super("Inverse");
         entries = entriesVK;
     }
@@ -334,10 +334,10 @@ public abstract class TestBidiMap extends AbstractTestMap {
         return new TestInverseBidiMap(this);
     }
 
-    class TestInverseBidiMap extends TestBidiMap {
-        final TestBidiMap main;
+    class TestInverseBidiMap extends AbstractTestBidiMap {
+        final AbstractTestBidiMap main;
         
-        public TestInverseBidiMap(TestBidiMap main) {
+        public TestInverseBidiMap(AbstractTestBidiMap main) {
             super();
             this.main = main;
         }
