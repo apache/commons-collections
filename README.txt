@@ -44,4 +44,8 @@ ant tf.javadoc   - build the testframework javadoc
 Maven
 -----
 The component can also be built using Maven.
-http://maven.apache.org
+It can be found here :
+
+  http://maven.apache.org/
+
+Once installed, the jars may be built with 'maven jar'.
