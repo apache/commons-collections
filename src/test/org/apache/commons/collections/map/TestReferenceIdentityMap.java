@@ -23,11 +23,12 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.IterableMap;
+import org.apache.commons.collections.MapIterator;
 
 /**
  * Tests for ReferenceIdentityMap. 
  * 
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -69,6 +70,10 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
 
     public boolean isAllowNullValue() {
         return false;
+    }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
     }
 
     //-----------------------------------------------------------------------
@@ -123,11 +128,30 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
     
     
     //-----------------------------------------------------------------------
-   // Unfortunately, these tests all rely on System.gc(), which is
-   // not reliable across platforms.  Not sure how to code the tests
-   // without using System.gc() though...
-   // They all passed on my platform though. :)
-/*
+    public void testNullHandling() {
+        resetFull();
+        assertEquals(null, map.get(null));
+        assertEquals(false, map.containsKey(null));
+        assertEquals(false, map.containsValue(null));
+        assertEquals(null, map.remove(null));
+        assertEquals(false, map.entrySet().contains(null));
+        assertEquals(false, map.keySet().contains(null));
+        assertEquals(false, map.values().contains(null));
+        try {
+            map.put(null, null);
+            fail();
+        } catch (NullPointerException ex) {}
+        try {
+            map.put(new Object(), null);
+            fail();
+        } catch (NullPointerException ex) {}
+        try {
+            map.put(null, new Object());
+            fail();
+        } catch (NullPointerException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
     public void testPurge() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
@@ -135,13 +159,13 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
             hard[i] = new Object();
             map.put(hard[i], new Object());
         }
-        System.gc();
+        gc();
         assertTrue("map should be empty after purge of weak values", map.isEmpty());
 
         for (int i = 0; i < hard.length; i++) {
             map.put(new Object(), hard[i]);
         }
-        System.gc();
+        gc();
         assertTrue("map should be empty after purge of weak keys", map.isEmpty());
 
         for (int i = 0; i < hard.length; i++) {
@@ -149,7 +173,7 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
             map.put(hard[i], new Object());
         }
 
-        System.gc();
+        gc();
         assertTrue("map should be empty after purge of weak keys and values", map.isEmpty());
     }
 
@@ -160,7 +184,7 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
             map.put(new Integer(i), new Integer(i));
         }
 
-        System.gc();
+        gc();
         for (int i = 0; i < 10; i++) {
             Integer I = new Integer(i);
             assertTrue("map.containsKey should return false for GC'd element", !map.containsKey(I));
@@ -178,7 +202,7 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
             map.put(hard[i], hard[i]);
         }
 
-        System.gc();
+        gc();
         Iterator iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry)iterator.next();
@@ -199,7 +223,7 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
             map.put(hard[i], hard[i]);
         }
 
-        System.gc();
+        gc();
         MapIterator iterator = map.mapIterator();
         while (iterator.hasNext()) {
             Object key1 = iterator.next();
@@ -224,7 +248,7 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
         MapIterator iterator = map.mapIterator();
         while (iterator.hasNext()) {
             Object key1 = iterator.next();
-            System.gc();
+            gc();
             Integer key = (Integer) iterator.getKey();
             Integer value = (Integer) iterator.getValue();
             assertTrue("iterator keys should match", key == key1);
@@ -232,21 +256,6 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
             assertTrue("iterator should skip GC'd values", value.intValue() >= 10);
         }
 
-    }
-*/
-/*
-    // Uncomment to create test files in /data/test
-    public void testCreateTestFiles() throws Exception {
-        ReferenceIdentityMap m = (ReferenceIdentityMap) makeEmptyMap();
-        writeExternalFormToDisk(m, getCanonicalEmptyCollectionName(m));
-        m = (ReferenceIdentityMap) makeFullMap();
-        writeExternalFormToDisk(m, getCanonicalFullCollectionName(m));
-    }
-*/
-
-
-    public String getCompatibilityVersion() {
-        return "3.1";
     }
 
     /** Tests whether purge values setting works */
@@ -289,4 +298,15 @@ public class TestReferenceIdentityMap extends AbstractTestIterableMap {
             }
         }
     }
+
+    private static void gc() {
+        try {
+            // trigger GC
+            byte[][] tooLarge = new byte[1000000000][1000000000];
+            fail("you have too much RAM");
+        } catch (OutOfMemoryError ex) {
+            System.gc(); // ignore
+        }
+    }
+
 }

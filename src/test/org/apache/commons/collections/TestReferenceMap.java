@@ -16,6 +16,7 @@
 package org.apache.commons.collections;
 
 import java.lang.ref.WeakReference;
+import java.util.Iterator;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -25,7 +26,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Tests for ReferenceMap. 
  * 
- * @version $Revision: 1.17 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.18 $ $Date: 2004/04/30 22:53:16 $
  *
  * @author Paul Jack
  */
@@ -57,13 +58,35 @@ public class TestReferenceMap extends AbstractTestMap {
         return false;
     }
 
+    public String getCompatibilityVersion() {
+        return "2.1";
+    }
 
-/*
-   // Unfortunately, these tests all rely on System.gc(), which is
-   // not reliable across platforms.  Not sure how to code the tests
-   // without using System.gc() though...
-   // They all passed on my platform though. :)
+    //-----------------------------------------------------------------------
+    public void testNullHandling() {
+        resetFull();
+        assertEquals(null, map.get(null));
+        assertEquals(false, map.containsKey(null));
+        assertEquals(false, map.containsValue(null));
+        assertEquals(null, map.remove(null));
+        assertEquals(false, map.entrySet().contains(null));
+        assertEquals(false, map.keySet().contains(null));
+        assertEquals(false, map.values().contains(null));
+        try {
+            map.put(null, null);
+            fail();
+        } catch (NullPointerException ex) {}
+        try {
+            map.put(new Object(), null);
+            fail();
+        } catch (NullPointerException ex) {}
+        try {
+            map.put(null, new Object());
+            fail();
+        } catch (NullPointerException ex) {}
+    }
 
+    //-----------------------------------------------------------------------
     public void testPurge() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
@@ -71,13 +94,13 @@ public class TestReferenceMap extends AbstractTestMap {
             hard[i] = new Object();
             map.put(hard[i], new Object());
         }
-        System.gc();
+        gc();
         assertTrue("map should be empty after purge of weak values", map.isEmpty());
 
         for (int i = 0; i < hard.length; i++) {
             map.put(new Object(), hard[i]);
         }
-        System.gc();
+        gc();
         assertTrue("map should be empty after purge of weak keys", map.isEmpty());
 
         for (int i = 0; i < hard.length; i++) {
@@ -85,7 +108,7 @@ public class TestReferenceMap extends AbstractTestMap {
             map.put(hard[i], new Object());
         }
 
-        System.gc();
+        gc();
         assertTrue("map should be empty after purge of weak keys and values", map.isEmpty());
     }
 
@@ -96,7 +119,7 @@ public class TestReferenceMap extends AbstractTestMap {
             map.put(new Integer(i), new Integer(i));
         }
 
-        System.gc();
+        gc();
         for (int i = 0; i < 10; i++) {
             Integer I = new Integer(i);
             assertTrue("map.containsKey should return false for GC'd element", !map.containsKey(I));
@@ -114,7 +137,7 @@ public class TestReferenceMap extends AbstractTestMap {
             map.put(hard[i], hard[i]);
         }
 
-        System.gc();
+        gc();
         Iterator iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry entry = (Map.Entry)iterator.next();
@@ -125,23 +148,7 @@ public class TestReferenceMap extends AbstractTestMap {
         }
 
     }
-*/
 
-
-/*
-    // Uncomment to create test files in /data/test
-    public void testCreateTestFiles() throws Exception {
-        ReferenceMap m = (ReferenceMap)makeEmptyMap();
-        writeExternalFormToDisk(m, getCanonicalEmptyCollectionName(m));
-        m = (ReferenceMap)makeFullMap();
-        writeExternalFormToDisk(m, getCanonicalFullCollectionName(m));
-    }
-*/
-
-
-    public String getCompatibilityVersion() {
-        return "2.1";
-    }
 
     /** Tests whether purge values setting works */
     public void testPurgeValues() throws Exception {
@@ -181,6 +188,16 @@ public class TestReferenceMap extends AbstractTestMap {
                 byte[] b =  new byte[bytz];
                 bytz = bytz * 2;
             }
+        }
+    }
+    
+    private static void gc() {
+        try {
+            // trigger GC
+            byte[][] tooLarge = new byte[1000000000][1000000000];
+            fail("you have too much RAM");
+        } catch (OutOfMemoryError ex) {
+            System.gc(); // ignore
         }
     }
 }
