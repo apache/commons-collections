@@ -63,7 +63,7 @@ import java.util.Comparator;
  * @since 2.0
  * @author bayard@generationjava.com
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: ReverseComparator.java,v 1.8 2002/06/12 03:59:17 mas Exp $
+ * @version $Id: ReverseComparator.java,v 1.9 2003/01/07 23:05:33 rwaldhoff Exp $
  */
 public class ReverseComparator implements Comparator,Serializable {
 
@@ -102,4 +102,43 @@ public class ReverseComparator implements Comparator,Serializable {
         return comparator.compare(o2, o1);
     }
 
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals}.
+     * 
+     * @since Collections 2.2
+     */
+    public int hashCode() {
+        return "ReverseComparator".hashCode() ^ comparator.hashCode();
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator} whose ordering is known to be 
+     * equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>that</i>.{@link Object#getClass getClass()}</code>
+     * equals <code>this.getClass()</code>, and the underlying 
+     * comparators are equal.  Subclasses may want to override
+     * this behavior to remain consistent with the 
+     * {@link Comparator.equals} contract.
+     * 
+     * @since Collections 2.2
+     */
+    public boolean equals(Object that) {
+        if(this == that) {
+            return true;
+        } else if(null == that) {
+            return false;
+        } else if(that.getClass().equals(this.getClass())) {
+            ReverseComparator thatrc = (ReverseComparator)that;
+            return comparator.equals(thatrc.comparator);
+        } else {
+            return false;
+        }
+    }
+
+    // use serialVersionUID from Collections 2.0 for interoperability
+    private static final long serialVersionUID = 2858887242028539265L;;
 }
