@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.4 2003/10/10 21:07:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.5 2003/10/10 21:19:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -122,7 +122,7 @@ import java.util.NoSuchElementException;
  * {@link #confirmed}, the {@link #verify()} method is invoked to compare
  * the results.  You may want to override {@link #verify()} to perform
  * additional verifications.  For instance, when testing the collection
- * views of a map, {@link TestMap} would override {@link #verify()} to make
+ * views of a map, {@link AbstractTestMap} would override {@link #verify()} to make
  * sure the map is changed after the collection view is changed.
  * <p>
  * If you're extending this class directly, you will have to provide 
@@ -135,8 +135,8 @@ import java.util.NoSuchElementException;
  * Those methods should provide a confirmed collection implementation 
  * that's compatible with your collection implementation.
  * <p>
- * If you're extending {@link TestList}, {@link TestSet},
- * or {@link TestBag}, you probably don't have to worry about the
+ * If you're extending {@link AbstractTestList}, {@link AbstractTestSet},
+ * or {@link AbstractTestBag}, you probably don't have to worry about the
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.<P>
  * <p>
@@ -146,7 +146,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.4 $ $Date: 2003/10/10 21:07:48 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/10 21:19:39 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack

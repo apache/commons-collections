@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.7 2003/10/10 21:08:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.8 2003/10/10 21:19:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,8 +72,8 @@ import java.util.Set;
  * <p>
  * The forces at work here are similar to those in {@link AbstractTestCollection}.
  * If your class implements the full Map interface, including optional
- * operations, simply extend this class, and implement the {@link
- * #makeEmptyMap()} method.
+ * operations, simply extend this class, and implement the
+ * {@link #makeEmptyMap()} method.
  * <p>
  * On the other hand, if your map implementation is weird, you may have to
  * override one or more of the other protected methods.  They're described
@@ -131,12 +131,12 @@ import java.util.Set;
  * empty or full maps, so that tests can proceed from a known state.<P>
  *
  * After a modification operation to both {@link #map} and {@link #confirmed},
- * the {@link #verify()} method is invoked to compare the results.  The {@link
- * verify()} method calls separate methods to verify the map and its three
- * collection views ({@link verifyMap(), {@link verifyEntrySet()}, {@link
- * verifyKeySet()}, and {@link verifyValues()}).  You may want to override one
- * of the verification methodsto perform additional verifications.  For
- * instance, {@link TestDoubleOrderedMap} would want override its
+ * the {@link #verify()} method is invoked to compare the results.  The
+ * {@link #verify} method calls separate methods to verify the map and its three
+ * collection views ({@link #verifyMap}, {@link #verifyEntrySet},
+ * {@link #verifyKeySet}, and {@link #verifyValues}).  You may want to override
+ * one of the verification methodsto perform additional verifications.  For
+ * instance, TestDoubleOrderedMap would want override its
  * {@link #verifyValues()} method to verify that the values are unique and in
  * ascending order.<P>
  *  
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.7 $ $Date: 2003/10/10 21:08:26 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/10 21:19:39 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -292,9 +292,11 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
     /**
      * Returns a list of string elements suitable for return by
-     * {@link getOtherElements()}.  Override getOtherElements to return
-     * the results of this method if your collection does not support
-     * heterogenous elements or the null element.
+     * {@link #getOtherKeys()} or {@link #getOtherValues}.
+     *
+     * <p>Override getOtherElements to returnthe results of this method if your
+     * collection does not support heterogenous elements or the null element.
+     * </p>
      */
     protected Object[] getOtherNonNullStringElements() {
         return new Object[] {
@@ -308,7 +310,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * method must return an array with the same length as
      * {@link #getSampleKeys()}.  The default implementation constructs a set of
      * String values and includes a single null value if 
-     * {@link #isNullValueSupported()} returns <code>true</code>, and includes 
+     * {@link #isAllowNullValue()} returns <code>true</code>, and includes
      * two values that are the same if {@link #isAllowDuplicateValues()} returns
      * <code>true</code>.
      */
@@ -330,7 +332,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * returned from this method should not be the same as those returned from
      * {@link #getSampleValues()}.  The default implementation constructs a
      * set of String values and includes a single null value if
-     * {@link #isNullValueSupported()} returns <code>true</code>, and includes two values
+     * {@link #isAllowNullValue()} returns <code>true</code>, and includes two values
      * that are the same if {@link #isAllowDuplicateValues()} returns
      * <code>true</code>.  
      */
@@ -390,7 +392,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Return a new, populated map.  The mappings in the map should match the
      * keys and values returned from {@link #getSampleKeys()} and {@link
      * #getSampleValues()}.  The default implementation uses makeEmptyMap()
-     * and calls {@link #addSampleMappings()} to add all the mappings to the
+     * and calls {@link #addSampleMappings} to add all the mappings to the
      * map.
      * 
      * @return the map to be tested
@@ -787,7 +789,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             resetFull();
             int i = 0;
             for (Iterator it = map.keySet().iterator(); it.hasNext() && i < newValues.length; i++) {
-                Object key = (Object) it.next();
+                Object key = it.next();
                 Object o = map.put(key, newValues[i]);
                 Object value = confirmed.put(key, newValues[i]);
                 verify();
@@ -988,8 +990,11 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * from the map are removed from the values collection--also,
      * but that's a more difficult test to construct (lacking a
      * "removeValue" method.)
-     * 
-     * @see http://issues.apache.org/bugzilla/show_bug.cgi?id=9573
+     * </p>
+     * <p>
+     * See bug <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=9573">
+     * 9573</a>.
+     * </p>
      */
     public void testValuesRemoveChangesMap() {
         resetFull();
@@ -1061,11 +1066,11 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
     /**
      * Bulk test {@link Map#entrySet()}.  This method runs through all of
-     * the tests in {@link TestSet}.  
+     * the tests in {@link AbstractTestSet}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      *
-     * @return a {@link TestSet} instance for testing the map's entry set
+     * @return a {@link AbstractTestSet} instance for testing the map's entry set
      */
     public BulkTest bulkTestMapEntrySet() {
         return new TestMapEntrySet();
@@ -1129,11 +1134,11 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
     /**
      * Bulk test {@link Map#keySet()}.  This method runs through all of
-     * the tests in {@link TestSet}.  
+     * the tests in {@link AbstractTestSet}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      *
-     * @return a {@link TestSet} instance for testing the map's key set
+     * @return a {@link AbstractTestSet} instance for testing the map's key set
      */
     public BulkTest bulkTestMapKeySet() {
         return new TestMapKeySet();
@@ -1192,11 +1197,11 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
     /**
      * Bulk test {@link Map#values()}.  This method runs through all of
-     * the tests in {@link TestCollection}.  
+     * the tests in {@link AbstractTestCollection}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      *
-     * @return a {@link TestCollection} instance for testing the map's 
+     * @return a {@link AbstractTestCollection} instance for testing the map's
      *    values collection
      */
     public BulkTest bulkTestMapValues() {

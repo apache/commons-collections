@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedSet.java,v 1.2 2003/10/05 23:10:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedSet.java,v 1.3 2003/10/10 21:19:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import java.util.TreeSet;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/10/05 23:10:31 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/10 21:19:39 $
  * 
  * @author Stephen Colebourne
  * @author Dieter Wimberger
@@ -159,7 +159,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
     //-----------------------------------------------------------------------
     /**
      * Bulk test {@link SortedSet#subSet(Object, Object)}.  This method runs through all of
-     * the tests in {@link TestSortedSet}.
+     * the tests in {@link AbstractTestSortedSet}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
@@ -176,7 +176,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
 
     /**
      * Bulk test {@link SortedSet#headSet(Object)}.  This method runs through all of
-     * the tests in {@link TestSortedSet}.
+     * the tests in {@link AbstractTestSortedSet}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
@@ -193,7 +193,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
 
     /**
      * Bulk test {@link SortedSet#tailSet(Object)}.  This method runs through all of
-     * the tests in {@link TestSortedSet}.
+     * the tests in {@link AbstractTestSortedSet}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *

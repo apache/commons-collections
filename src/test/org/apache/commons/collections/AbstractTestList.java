@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestList.java,v 1.1 2003/10/02 22:14:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestList.java,v 1.2 2003/10/10 21:19:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,14 +76,14 @@ import java.util.NoSuchElementException;
  * Abstract test class for {@link java.util.List} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
- * the {@link #makeList} method.
+ * the {@link #makeEmptyList} method.
  * <p>
  * If your {@link List} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.1 $ $Date: 2003/10/02 22:14:29 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/10 21:19:39 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -184,7 +184,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     }
 
     /**
-     * Returns {@link makeEmptyList()}.
+     * Returns {@link #makeEmptyList()}.
      *
      * @return an empty list to be used for testing
      */
@@ -193,7 +193,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     }
 
     /**
-     * Returns {@link makeFullList()}.
+     * Returns {@link #makeFullList()}.
      *
      * @return a full list to be used for testing
      */
@@ -203,7 +203,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
 
     //-----------------------------------------------------------------------
     /**
-     * Returns the {@link collection} field cast to a {@link List}.
+     * Returns the {@link #collection} field cast to a {@link List}.
      *
      * @return the collection field as a List
      */
@@ -212,7 +212,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     }
 
     /**
-     * Returns the {@link confirmed} field cast to a {@link List}.
+     * Returns the {@link #confirmed} field cast to a {@link List}.
      *
      * @return the confirmed field as a List
      */
@@ -499,7 +499,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     }
 
     /**
-     *  Tests {@link List#indexOf()}.
+     *  Tests {@link List#indexOf}.
      */
     public void testListIndexOf() {
         resetFull();
@@ -523,7 +523,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     }
 
     /**
-     *  Tests {@link List#lastIndexOf()}.
+     *  Tests {@link List#lastIndexOf}.
      */
     public void testListLastIndexOf() {
         resetFull();
