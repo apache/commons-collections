@@ -3,7 +3,7 @@ package org.apache.commons.collections.comparators;
 /* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,13 +55,13 @@ package org.apache.commons.collections.comparators;
  */
 
 import java.io.Serializable;
-import java.lang.Comparable;
 import java.util.Comparator;
 
 /**
  * A Comparator that compares Comparable objects.
  * Throws ClassCastExceptions if the objects are not 
- * Comparable, or if they are null.
+ * Comparable, or if either is null.
+ * 
  * Throws ClassCastException if the compareTo of both 
  * objects do not provide an inverse result of each other 
  * as per the Comparable javadoc.  This Comparator is useful, for example,
@@ -70,7 +70,7 @@ import java.util.Comparator;
  *
  * @since 2.0
  * @author bayard@generationjava.com
- * @version $Id: ComparableComparator.java,v 1.5 2002/06/12 03:59:17 mas Exp $
+ * @version $Revision: 1.6 $ $Date: 2003/01/07 18:40:45 $
  */
 public class ComparableComparator implements Comparator,Serializable {
 
@@ -141,4 +141,31 @@ public class ComparableComparator implements Comparator,Serializable {
         }
     }
 
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals}.
+     *
+     * @return a hash code for this comparator.
+     * @since Collections 2.2
+     */
+    public int hashCode() {
+        return "ComparableComparator".hashCode();
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator} whose ordering is known to be 
+     * equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>that</i>.{@link Object#getClass getClass()}</code>
+     * equals <code>this.getClass()</code>.  Subclasses may want to override
+     * this behavior to remain consistent with the {@link Comparator.equals}
+     * contract.
+     * @since Collections 2.2
+     */
+    public boolean equals(Object obj) {
+        return (this == obj) || 
+               ((null != obj) && (obj.getClass().equals(this.getClass())));
+    }
 }
