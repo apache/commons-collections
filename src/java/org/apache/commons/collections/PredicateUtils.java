@@ -64,7 +64,7 @@ import org.apache.commons.collections.functors.UniquePredicate;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.17 $ $Date: 2004/03/13 16:34:46 $
+ * @version $Revision: 1.18 $ $Date: 2004/04/14 21:47:47 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg
@@ -85,6 +85,8 @@ public class PredicateUtils {
      * Gets a Predicate that always throws an exception.
      * This could be useful during testing as a placeholder.
      *
+     * @see org.apache.commons.collections.functors.ExceptionPredicate
+     * 
      * @return the predicate
      */
     public static Predicate exceptionPredicate() {
@@ -93,6 +95,8 @@ public class PredicateUtils {
 
     /**
      * Gets a Predicate that always returns true.
+     * 
+     * @see org.apache.commons.collections.functors.TruePredicate
      * 
      * @return the predicate
      */
@@ -103,6 +107,8 @@ public class PredicateUtils {
     /**
      * Gets a Predicate that always returns false.
      * 
+     * @see org.apache.commons.collections.functors.FalsePredicate
+     * 
      * @return the predicate
      */
     public static Predicate falsePredicate() {
@@ -111,6 +117,8 @@ public class PredicateUtils {
 
     /**
      * Gets a Predicate that checks if the input object passed in is null.
+     * 
+     * @see org.apache.commons.collections.functors.NullPredicate
      * 
      * @return the predicate
      */
@@ -121,6 +129,8 @@ public class PredicateUtils {
     /**
      * Gets a Predicate that checks if the input object passed in is not null.
      * 
+     * @see org.apache.commons.collections.functors.NotNullPredicate
+     * 
      * @return the predicate
      */
     public static Predicate notNullPredicate() {
@@ -130,6 +140,8 @@ public class PredicateUtils {
     /**
      * Creates a Predicate that checks if the input object is equal to the
      * specified object using equals().
+     * 
+     * @see org.apache.commons.collections.functors.EqualPredicate
      * 
      * @param value  the value to compare against
      * @return the predicate
@@ -142,6 +154,8 @@ public class PredicateUtils {
      * Creates a Predicate that checks if the input object is equal to the
      * specified object by identity.
      * 
+     * @see org.apache.commons.collections.functors.IdentityPredicate
+     * 
      * @param value  the value to compare against
      * @return the predicate
      */
@@ -153,6 +167,8 @@ public class PredicateUtils {
      * Creates a Predicate that checks if the object passed in is of
      * a particular type, using instanceof. A <code>null</code> input
      * object will return <code>false</code>.
+     * 
+     * @see org.apache.commons.collections.functors.InstanceofPredicate
      * 
      * @param type  the type to check for, may not be null
      * @return the predicate
@@ -168,6 +184,8 @@ public class PredicateUtils {
      * again. The comparison is by equals(). A <code>null</code> input object
      * is accepted and will return true the first time, and false subsequently
      * as well.
+     * 
+     * @see org.apache.commons.collections.functors.UniquePredicate
      * 
      * @return the predicate
      */
@@ -185,6 +203,9 @@ public class PredicateUtils {
      * For example, <code>PredicateUtils.invokerPredicate("isEmpty");</code>
      * will call the <code>isEmpty</code> method on the input object to 
      * determine the predicate result.
+     * 
+     * @see org.apache.commons.collections.functors.InvokerTransformer
+     * @see org.apache.commons.collections.functors.TransformerPredicate
      * 
      * @param methodName  the method name to call on the input object, may not be null
      * @return the predicate
@@ -205,6 +226,9 @@ public class PredicateUtils {
      * will call the <code>isEmpty</code> method on the input object to 
      * determine the predicate result.
      * 
+     * @see org.apache.commons.collections.functors.InvokerTransformer
+     * @see org.apache.commons.collections.functors.TransformerPredicate
+     * 
      * @param methodName  the method name to call on the input object, may not be null
      * @param paramTypes  the parameter types
      * @param args  the arguments
@@ -224,6 +248,8 @@ public class PredicateUtils {
      * Create a new Predicate that returns true only if both of the specified
      * predicates are true.
      * 
+     * @see org.apache.commons.collections.functors.AndPredicate
+     * 
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>and</code> predicate
@@ -236,6 +262,8 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true only if all of the specified
      * predicates are true.
+     * 
+     * @see org.apache.commons.collections.functors.AllPredicate
      * 
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>all</code> predicate
@@ -251,6 +279,8 @@ public class PredicateUtils {
      * Create a new Predicate that returns true only if all of the specified
      * predicates are true. The predicates are checked in iterator order.
      * 
+     * @see org.apache.commons.collections.functors.AllPredicate
+     * 
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
@@ -265,6 +295,8 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if either of the specified
      * predicates are true.
      * 
+     * @see org.apache.commons.collections.functors.OrPredicate
+     * 
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>or</code> predicate
@@ -277,6 +309,8 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if any of the specified
      * predicates are true.
+     * 
+     * @see org.apache.commons.collections.functors.AnyPredicate
      * 
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>any</code> predicate
@@ -292,6 +326,8 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if any of the specified
      * predicates are true. The predicates are checked in iterator order.
      * 
+     * @see org.apache.commons.collections.functors.AnyPredicate
+     * 
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
@@ -306,6 +342,8 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if one, but not both, of the
      * specified predicates are true.
      * 
+     * @see org.apache.commons.collections.functors.OnePredicate
+     * 
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>either</code> predicate
@@ -318,6 +356,8 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if only one of the specified
      * predicates are true.
+     * 
+     * @see org.apache.commons.collections.functors.OnePredicate
      * 
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>one</code> predicate
@@ -333,6 +373,8 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if only one of the specified
      * predicates are true. The predicates are checked in iterator order.
      * 
+     * @see org.apache.commons.collections.functors.OnePredicate
+     * 
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
@@ -347,6 +389,8 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if neither of the specified 
      * predicates are true.
      * 
+     * @see org.apache.commons.collections.functors.NonePredicate
+     * 
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>neither</code> predicate
@@ -359,6 +403,8 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if none of the specified
      * predicates are true.
+     * 
+     * @see org.apache.commons.collections.functors.NonePredicate
      * 
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>none</code> predicate
@@ -374,6 +420,8 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if none of the specified
      * predicates are true. The predicates are checked in iterator order.
      * 
+     * @see org.apache.commons.collections.functors.NonePredicate
+     * 
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>none</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
@@ -387,6 +435,8 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if the specified predicate
      * returns false and vice versa.
+     * 
+     * @see org.apache.commons.collections.functors.NotPredicate
      * 
      * @param predicate  the predicate to not
      * @return the <code>not</code> predicate
@@ -404,6 +454,8 @@ public class PredicateUtils {
      * return either Boolean.TRUE or Boolean.FALSE otherwise a PredicateException
      * will be thrown.
      * 
+     * @see org.apache.commons.collections.functors.TransformerPredicate
+     * 
      * @param transformer  the transformer to wrap, may not be null
      * @return the transformer wrapping predicate
      * @throws IllegalArgumentException if the transformer is null
@@ -420,6 +472,8 @@ public class PredicateUtils {
      * otherwise it calls the specified Predicate. This allows null handling 
      * behaviour to be added to Predicates that don't support nulls.
      * 
+     * @see org.apache.commons.collections.functors.NullIsExceptionPredicate
+     * 
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
@@ -432,6 +486,8 @@ public class PredicateUtils {
      * Gets a Predicate that returns false if the input object is null, otherwise
      * it calls the specified Predicate. This allows null handling behaviour to
      * be added to Predicates that don't support nulls.
+     * 
+     * @see org.apache.commons.collections.functors.NullIsFalsePredicate
      * 
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
@@ -446,6 +502,8 @@ public class PredicateUtils {
      * it calls the specified Predicate. This allows null handling behaviour to
      * be added to Predicates that don't support nulls.
      * 
+     * @see org.apache.commons.collections.functors.NullIsTruePredicate
+     * 
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
@@ -459,6 +517,8 @@ public class PredicateUtils {
     /**
      * Creates a predicate that transforms the input object before passing it
      * to the predicate.
+     * 
+     * @see org.apache.commons.collections.functors.TransformedPredicate
      * 
      * @param transformer  the transformer to call first
      * @param predicate  the predicate to call with the result of the transform

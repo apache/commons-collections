@@ -56,7 +56,7 @@ import org.apache.commons.collections.functors.SwitchTransformer;
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.12 $ $Date: 2004/04/14 21:47:47 $
  * 
  * @author Stephen Colebourne
  * @author James Carman
@@ -74,6 +74,8 @@ public class TransformerUtils {
      * Gets a transformer that always throws an exception.
      * This could be useful during testing as a placeholder.
      * 
+     * @see org.apache.commons.collections.functors.ExceptionTransformer
+     * 
      * @return the transformer
      */
     public static Transformer exceptionTransformer() {
@@ -82,6 +84,8 @@ public class TransformerUtils {
 
     /**
      * Gets a transformer that always returns null.
+     * 
+     * @see org.apache.commons.collections.functors.ConstantTransformer
      * 
      * @return the transformer
      */
@@ -93,6 +97,8 @@ public class TransformerUtils {
      * Gets a transformer that returns the input object.
      * The input object should be immutable to maintain the
      * contract of Transformer (although this is not checked).
+     * 
+     * @see org.apache.commons.collections.functors.NOPTransformer
      * 
      * @return the transformer
      */
@@ -110,6 +116,8 @@ public class TransformerUtils {
      * <li>serialization clone
      * <ul>
      * 
+     * @see org.apache.commons.collections.functors.CloneTransformer
+     * 
      * @return the transformer
      */
     public static Transformer cloneTransformer() {
@@ -120,6 +128,8 @@ public class TransformerUtils {
      * Creates a Transformer that will return the same object each time the 
      * transformer is used.
      *
+     * @see org.apache.commons.collections.functors.ConstantTransformer
+     * 
      * @param constantToReturn  the constant object to return each time in the transformer
      * @return the transformer.
      */
@@ -131,6 +141,8 @@ public class TransformerUtils {
      * Creates a Transformer that calls a Closure each time the transformer is used.
      * The transformer returns the input object.
      *
+     * @see org.apache.commons.collections.functors.ClosureTransformer
+     * 
      * @param closure  the closure to run each time in the transformer, not null
      * @return the transformer
      * @throws IllegalArgumentException if the closure is null
@@ -143,6 +155,8 @@ public class TransformerUtils {
      * Creates a Transformer that calls a Predicate each time the transformer is used.
      * The transformer will return either Boolean.TRUE or Boolean.FALSE.
      *
+     * @see org.apache.commons.collections.functors.PredicateTransformer
+     * 
      * @param predicate  the predicate to run each time in the transformer, not null
      * @return the transformer
      * @throws IllegalArgumentException if the predicate is null
@@ -155,6 +169,8 @@ public class TransformerUtils {
      * Creates a Transformer that calls a Factory each time the transformer is used.
      * The transformer will return the value returned by the factory.
      *
+     * @see org.apache.commons.collections.functors.FactoryTransformer
+     * 
      * @param factory  the factory to run each time in the transformer, not null
      * @return the transformer
      * @throws IllegalArgumentException if the factory is null
@@ -166,6 +182,8 @@ public class TransformerUtils {
     /**
      * Create a new Transformer that calls two transformers, passing the result of
      * the first into the second.
+     * 
+     * @see org.apache.commons.collections.functors.ChainedTransformer
      * 
      * @param transformer1  the first transformer
      * @param transformer2  the second transformer
@@ -179,6 +197,8 @@ public class TransformerUtils {
     /**
      * Create a new Transformer that calls each transformer in turn, passing the 
      * result into the next transformer.
+     * 
+     * @see org.apache.commons.collections.functors.ChainedTransformer
      * 
      * @param transformers  an array of transformers to chain
      * @return the transformer
@@ -194,6 +214,8 @@ public class TransformerUtils {
      * result into the next transformer. The ordering is that of the iterator()
      * method on the collection.
      * 
+     * @see org.apache.commons.collections.functors.ChainedTransformer
+     * 
      * @param transformers  a collection of transformers to chain
      * @return the transformer
      * @throws IllegalArgumentException if the transformers collection is null
@@ -206,6 +228,8 @@ public class TransformerUtils {
     /**
      * Create a new Transformer that calls one of two transformers depending 
      * on the specified predicate.
+     * 
+     * @see org.apache.commons.collections.functors.SwitchTransformer
      * 
      * @param predicate  the predicate to switch on
      * @param trueTransformer  the transformer called if the predicate is true
@@ -223,6 +247,8 @@ public class TransformerUtils {
      * on the predicates. The transformer at array location 0 is called if the
      * predicate at array location 0 returned true. Each predicate is evaluated
      * until one returns true. If no predicates evaluate to true, null is returned.
+     * 
+     * @see org.apache.commons.collections.functors.SwitchTransformer
      * 
      * @param predicates  an array of predicates to check
      * @param transformers  an array of transformers to call
@@ -242,6 +268,8 @@ public class TransformerUtils {
      * predicate at array location 0 returned true. Each predicate is evaluated
      * until one returns true. If no predicates evaluate to true, the default
      * transformer is called. If the default transformer is null, null is returned.
+     * 
+     * @see org.apache.commons.collections.functors.SwitchTransformer
      * 
      * @param predicates  an array of predicates to check
      * @param transformers  an array of transformers to call
@@ -268,6 +296,8 @@ public class TransformerUtils {
      * case. The ordering is that of the iterator() method on the entryset collection 
      * of the map.
      * 
+     * @see org.apache.commons.collections.functors.SwitchTransformer
+     * 
      * @param predicatesAndTransformers  a map of predicates to transformers
      * @return the transformer
      * @throws IllegalArgumentException if the map is null
@@ -287,6 +317,8 @@ public class TransformerUtils {
      * is called if the input object equals the key. If there is no match, the
      * default transformer is called. The default transformer is set in the map
      * using a null key. If no default is set, null will be returned in a default case.
+     * 
+     * @see org.apache.commons.collections.functors.SwitchTransformer
      * 
      * @param objectsAndTransformers  a map of objects to transformers
      * @return the transformer
@@ -317,6 +349,8 @@ public class TransformerUtils {
     /**
      * Gets a Transformer that expects an input Class object that it will instantiate.
      * 
+     * @see org.apache.commons.collections.functors.InstantiateTransformer
+     * 
      * @return the transformer
      */
     public static Transformer instantiateTransformer() {
@@ -328,6 +362,8 @@ public class TransformerUtils {
      * instantiate. The constructor used is determined by the arguments specified
      * to this method.
      *
+     * @see org.apache.commons.collections.functors.InstantiateTransformer
+     * 
      * @param paramTypes  parameter types for the constructor, can be null
      * @param args  the arguments to pass to the constructor, can be null
      * @return the transformer
@@ -341,6 +377,8 @@ public class TransformerUtils {
      * Creates a Transformer that uses the passed in Map to transform the input 
      * object (as a simple lookup).
      *
+     * @see org.apache.commons.collections.functors.MapTransformer
+     * 
      * @param map  the map to use to transform the objects
      * @return the transformer
      * @throws IllegalArgumentException if the map is null
@@ -358,6 +396,8 @@ public class TransformerUtils {
      * will call the <code>getName/code> method on the input object to 
      * determine the transformer result.
      * 
+     * @see org.apache.commons.collections.functors.InvokerTransformer
+     * 
      * @param methodName  the method name to call on the input object, may not be null
      * @return the transformer
      * @throws IllegalArgumentException if the methodName is null.
@@ -370,6 +410,8 @@ public class TransformerUtils {
      * Gets a Transformer that invokes a method on the input object.
      * The method parameters are specified. If the input object is null, 
      * null is returned.
+     * 
+     * @see org.apache.commons.collections.functors.InvokerTransformer
      * 
      * @param methodName  the name of the method
      * @param paramTypes  the parameter types
@@ -386,6 +428,8 @@ public class TransformerUtils {
      * Gets a transformer that returns a <code>java.lang.String</code>
      * representation of the input object. This is achieved via the
      * <code>toString</code> method, <code>null</code> returns 'null'.
+     * 
+     * @see org.apache.commons.collections.functors.StringValueTransformer
      * 
      * @return the transformer
      */

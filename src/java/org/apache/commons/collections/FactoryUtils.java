@@ -33,7 +33,7 @@ import org.apache.commons.collections.functors.PrototypeFactory;
  * All the supplied factories are Serializable.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.13 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.14 $ $Date: 2004/04/14 21:47:47 $
  *
  * @author Stephen Colebourne
  */
@@ -50,6 +50,8 @@ public class FactoryUtils {
      * Gets a Factory that always throws an exception.
      * This could be useful during testing as a placeholder.
      *
+     * @see org.apache.commons.collections.functors.ExceptionFactory
+     * 
      * @return the factory
      */
     public static Factory exceptionFactory() {
@@ -60,6 +62,8 @@ public class FactoryUtils {
      * Gets a Factory that will return null each time the factory is used.
      * This could be useful during testing as a placeholder.
      *
+     * @see org.apache.commons.collections.functors.ConstantFactory
+     * 
      * @return the factory
      */
     public static Factory nullFactory() {
@@ -72,6 +76,8 @@ public class FactoryUtils {
      * immutable objects should use the constant factory. Mutable objects should
      * use the prototype factory.
      *
+     * @see org.apache.commons.collections.functors.ConstantFactory
+     * 
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
@@ -89,6 +95,8 @@ public class FactoryUtils {
      * <li>serialization clone
      * <ul>
      *
+     * @see org.apache.commons.collections.functors.PrototypeFactory
+     * 
      * @param prototype  the object to clone each time in the factory
      * @return the <code>prototype</code> factory
      * @throws IllegalArgumentException if the prototype is null
@@ -102,6 +110,8 @@ public class FactoryUtils {
      * Creates a Factory that can create objects of a specific type using
      * a no-args constructor.
      *
+     * @see org.apache.commons.collections.functors.InstantiateFactory
+     * 
      * @param classToInstantiate  the Class to instantiate each time in the factory
      * @return the <code>reflection</code> factory
      * @throws IllegalArgumentException if the classToInstantiate is null
@@ -114,6 +124,8 @@ public class FactoryUtils {
      * Creates a Factory that can create objects of a specific type using
      * the arguments specified to this method.
      *
+     * @see org.apache.commons.collections.functors.InstantiateFactory
+     * 
      * @param classToInstantiate  the Class to instantiate each time in the factory
      * @param paramTypes  parameter types for the constructor, can be null
      * @param args  the arguments to pass to the constructor, can be null
