@@ -24,7 +24,7 @@ import org.apache.commons.collections.FunctorException;
  * Factory implementation that always throws an exception.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/31 22:06:11 $
+ * @version $Revision: 1.6 $ $Date: 2004/03/31 23:13:04 $
  *
  * @author Stephen Colebourne
  */
@@ -41,6 +41,7 @@ public final class ExceptionFactory implements Factory, Serializable {
      * Factory returning the singleton instance.
      * 
      * @return the singleton instance
+     * @since Commons Collections 3.1
      */
     public static Factory getInstance() {
         return INSTANCE;
