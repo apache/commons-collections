@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.12 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.13 2003/12/24 23:22:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @deprecated Moved to bag subpackage as AbstractMapBag. Due to be removed in v4.0.
  * @since Commons Collections 2.0
- * @version $Revision: 1.12 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.13 $ $Date: 2003/12/24 23:22:54 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -216,9 +216,20 @@ public abstract class DefaultMapBag implements Bag {
         if (object == this) {
             return true;
         }
-        return (object != null &&
-                object.getClass().equals(this.getClass()) &&
-                ((DefaultMapBag) object)._map.equals(this._map));
+        if (object instanceof Bag == false) {
+            return false;
+        }
+        Bag other = (Bag) object;
+        if (other.size() != size()) {
+            return false;
+        }
+        for (Iterator it = _map.keySet().iterator(); it.hasNext();) {
+            Object element = (Object) it.next();
+            if (other.getCount(element) != getCount(element)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.4 2003/12/24 23:09:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.5 2003/12/24 23:22:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -78,7 +78,7 @@ import org.apache.commons.collections.Bag;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Bag} fails.
  *
- * @version $Revision: 1.4 $ $Date: 2003/12/24 23:09:26 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/24 23:22:54 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -397,6 +397,71 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals(2, a);
         assertEquals(2, b);
         assertEquals(1, c);
+    }
+
+    //-----------------------------------------------------------------------
+    public void testEquals() {
+        Bag bag = makeBag();
+        Bag bag2 = makeBag();
+        assertEquals(true, bag.equals(bag2));
+        bag.add("A");
+        assertEquals(false, bag.equals(bag2));
+        bag2.add("A");
+        assertEquals(true, bag.equals(bag2));
+        bag.add("A");
+        bag.add("B");
+        bag.add("B");
+        bag.add("C");
+        bag2.add("A");
+        bag2.add("B");
+        bag2.add("B");
+        bag2.add("C");
+        assertEquals(true, bag.equals(bag2));
+    }
+
+    public void testEqualsHashBag() {
+        Bag bag = makeBag();
+        Bag bag2 = new HashBag();
+        assertEquals(true, bag.equals(bag2));
+        bag.add("A");
+        assertEquals(false, bag.equals(bag2));
+        bag2.add("A");
+        assertEquals(true, bag.equals(bag2));
+        bag.add("A");
+        bag.add("B");
+        bag.add("B");
+        bag.add("C");
+        bag2.add("A");
+        bag2.add("B");
+        bag2.add("B");
+        bag2.add("C");
+        assertEquals(true, bag.equals(bag2));
+    }
+
+    public void testHashCode() {
+        Bag bag = makeBag();
+        Bag bag2 = makeBag();
+        assertEquals(0, bag.hashCode());
+        assertEquals(0, bag2.hashCode());
+        assertEquals(bag.hashCode(), bag2.hashCode());
+        bag.add("A");
+        bag.add("A");
+        bag.add("B");
+        bag.add("B");
+        bag.add("C");
+        bag2.add("A");
+        bag2.add("A");
+        bag2.add("B");
+        bag2.add("B");
+        bag2.add("C");
+        assertEquals(bag.hashCode(), bag2.hashCode());
+        
+        int total = 0;
+        total += ("A".hashCode() ^ 2);
+        total += ("B".hashCode() ^ 2);
+        total += ("C".hashCode() ^ 1);
+        assertEquals(total, bag.hashCode());
+        assertEquals(total, bag2.hashCode());
     }
 
     //-----------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.6 2003/12/24 23:09:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.7 2003/12/24 23:22:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/12/24 23:09:26 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/24 23:22:54 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -439,6 +439,17 @@ public abstract class AbstractMapBag implements Bag {
         MutableInteger(int value) {
             this.value = value;
         }
+        
+        public boolean equals(Object obj) {
+            if (obj instanceof MutableInteger == false) {
+                return false;
+            }
+            return ((MutableInteger) obj).value == value;
+        }
+
+        public int hashCode() {
+            return value;
+        }
     }
     
     //-----------------------------------------------------------------------
@@ -527,29 +538,51 @@ public abstract class AbstractMapBag implements Bag {
     
     //-----------------------------------------------------------------------
     /**
-     * Returns true if the given object is not null, has the precise type 
-     * of this bag, and contains the same number of occurrences of all the
-     * same elements.
-     *
-     * @param object  the object to test for equality
-     * @return true if that object equals this bag
+     * Compares this Bag to another.
+     * This Bag equals another Bag if it contains the same number of occurances of
+     * the same elements.
+     * 
+     * @param obj  the Bag to compare to
+     * @return true if equal
      */
     public boolean equals(Object object) {
         if (object == this) {
             return true;
         }
-        return (object != null &&
-                object.getClass().equals(this.getClass()) &&
-                ((AbstractMapBag) object).map.equals(this.map));
+        if (object instanceof Bag == false) {
+            return false;
+        }
+        Bag other = (Bag) object;
+        if (other.size() != size()) {
+            return false;
+        }
+        for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+            Object element = (Object) it.next();
+            if (other.getCount(element) != getCount(element)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
-     * Returns the hash code of the underlying map.
-     *
-     * @return the hash code of the underlying map
+     * Gets a hash code for the Bag compatable with the definition of equals.
+     * The hash code is defined as the sum total of a hash code for each element.
+     * The per element hash code is defined as
+     * <code>(e==null ? 0 : e.hashCode()) ^ noOccurances)</code>.
+     * This hash code is compatable with the Set interface.
+     * 
+     * @return the hash code of the Bag
      */
     public int hashCode() {
-        return map.hashCode();
+        int total = 0;
+        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            Object element = entry.getKey();
+            MutableInteger count = (MutableInteger) entry.getValue();
+            total += (element == null ? 0 : element.hashCode()) ^ count.value;
+        }
+        return total;
     }
 
     /**
