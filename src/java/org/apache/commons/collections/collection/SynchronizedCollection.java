@@ -15,6 +15,7 @@
  */
 package org.apache.commons.collections.collection;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -29,14 +30,18 @@ import java.util.Iterator;
  *   // do stuff with iterator
  * }
  * </pre>
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/15 12:39:13 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/01 23:05:49 $
  * 
  * @author Stephen Colebourne
  */
-public class SynchronizedCollection implements Collection {
+public class SynchronizedCollection implements Collection, Serializable {
 
+    /** Serialization version */
+    private static final long serialVersionUID = 2412805092710877986L;
     /** The collection to decorate */
     protected final Collection collection;
     /** The object to lock on, needed for List/SortedSet views */

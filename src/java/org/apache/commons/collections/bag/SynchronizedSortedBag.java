@@ -26,9 +26,11 @@ import org.apache.commons.collections.SortedBag;
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
  * Iterators must be separately synchronized around the loop.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/05/15 12:27:04 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/01 23:05:48 $
  * 
  * @author Stephen Colebourne
  */

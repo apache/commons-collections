@@ -23,9 +23,11 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
  * for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated buffer.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/15 12:33:23 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/01 23:05:49 $
  * 
  * @author Stephen Colebourne
  */
