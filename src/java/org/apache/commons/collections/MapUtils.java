@@ -67,7 +67,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.46 $ $Date: 2004/04/21 20:34:11 $
+ * @version $Revision: 1.47 $ $Date: 2004/07/17 21:23:59 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -1074,24 +1074,27 @@ public class MapUtils {
     }
      
     /**
-     * Nice method for adding data to a map in such a way
-     * as to not get NPE's. The point being that if the
-     * value is null, map.put() will throw an exception.
-     * That blows in the case of this class cause you may want to
-     * essentially treat put("Not Null", null ) == put("Not Null", "")
-     * We will still throw a NPE if the key is null cause that should
-     * never happen.
+     * Protects against adding null values to a map.
+     * <p>
+     * This method checks the value being added to the map, and if it is null
+     * it is replaced by an empty string.
+     * <p>
+     * This could be useful if the map does not accept null values, or for
+     * receiving data from a source that may provide null or empty string
+     * which should be held in the same way in the map.
+     * <p>
+     * Keys are not validated.
      * 
      * @param map  the map to add to, may not be null
      * @param key  the key
-     * @param value  the value
+     * @param value  the value, null converted to ""
      * @throws NullPointerException if the map is null
      */
     public static void safeAddToMap(Map map, Object key, Object value) throws NullPointerException {
         if (value == null) {
-            map.put ( key, "" );
+            map.put(key, "");
         } else {
-           map.put ( key, value );
+            map.put(key, value);
         }
     }
 
