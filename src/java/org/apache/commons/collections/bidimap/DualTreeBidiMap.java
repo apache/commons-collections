@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.2 2003/11/19 23:58:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.3 2003/11/20 00:31:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,6 +61,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.ListIterator;
@@ -68,7 +69,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.OrderedMapIterator;
 import org.apache.commons.collections.iterators.ResettableIterator;
 import org.apache.commons.collections.map.AbstractSortedMapDecorator;
@@ -85,7 +85,7 @@ import org.apache.commons.collections.map.OrderedMap;
  * not store each object twice, which can save on memory use.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.2 2003/11/19 23:58:11 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.3 2003/11/20 00:31:42 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -290,7 +290,7 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
         protected BidiOrderedMapIterator(AbstractDualBidiMap map) {
             super();
             this.map = map;
-            iterator = new ListIteratorWrapper(map.entrySet().iterator());
+            iterator = new ArrayList(map.entrySet()).listIterator();
         }
         
         public boolean hasNext() {
@@ -314,6 +314,7 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
         public void remove() {
             iterator.remove();
             map.remove(last.getKey());
+            last = null;
         }
         
         public Object getKey() {
@@ -342,7 +343,7 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
         }
         
         public void reset() {
-            iterator = new ListIteratorWrapper(map.entrySet().iterator());
+            iterator = new ArrayList(map.entrySet()).listIterator();
             last = null;
         }
         

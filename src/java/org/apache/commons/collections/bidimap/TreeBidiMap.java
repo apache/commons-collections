@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.2 2003/11/20 00:31:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.pairs.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/20 00:31:42 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -1644,10 +1644,16 @@ public class TreeBidiMap implements OrderedBidiMap {
         }
         
         public Object getKey() {
+            if (lastReturnedNode == null) {
+                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+            }
             return lastReturnedNode.getData(dataType);
         }
 
         public Object getValue() {
+            if (lastReturnedNode == null) {
+                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+            }
             return lastReturnedNode.getData(oppositeType);
         }
 

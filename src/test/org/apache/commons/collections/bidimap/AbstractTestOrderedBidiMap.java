@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestOrderedBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestOrderedBidiMap.java,v 1.2 2003/11/20 00:31:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,15 +61,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.iterators.OrderedMapIterator;
 
 /**
  * Abstract test class for {@link OrderedBidiMap} methods and contracts.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/20 00:31:42 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -186,33 +188,50 @@ public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
     }
     
     //-----------------------------------------------------------------------
-    public void testMapIteratorOrder() {
-        resetFull();
-        OrderedBidiMap bidi = (OrderedBidiMap) map;
-        List ordered = new ArrayList(map.keySet());
-        List ordered2 = new ArrayList(map.keySet());
-        assertEquals("KeySet iterator is not consistent", ordered, ordered2);
+    public BulkTest bulkTestOrderedMapIterator() {
+        return new TestBidiOrderedMapIterator();
+    }
+    
+    public class TestBidiOrderedMapIterator extends AbstractTestMapIterator {
+        public TestBidiOrderedMapIterator() {
+            super("TestBidiOrderedMapIterator");
+        }
         
-        int i = 0;
-        for (MapIterator it = bidi.mapIterator(); it.hasNext(); i++) {
-            Object key = (Object) it.next();
-            assertEquals("Inconsistent order", ordered.get(i), key);
-            assertEquals("Incorrect value for key", bidi.get(key), it.getValue());
+        public Object[] addSetValues() {
+            return AbstractTestOrderedBidiMap.this.getNewSampleValues();
         }
-        i = 0;
-        OrderedMapIterator it = bidi.orderedMapIterator();
-        for (; it.hasNext(); i++) {
-            Object key = (Object) it.next();
-            assertEquals("Inconsistent order", ordered.get(i), key);
-            assertEquals("Incorrect value for key", bidi.get(key), it.getValue());
-            assertEquals(true, it.hasPrevious());
+        
+        public boolean supportsRemove() {
+            return AbstractTestOrderedBidiMap.this.isRemoveSupported();
         }
-        i--;
-        for (; it.hasPrevious(); i--) {
-            Object key = (Object) it.previous();
-            assertEquals("Inconsistent order", ordered.get(i), key);
-            assertEquals("Incorrect value for key", bidi.get(key), it.getValue());
-            assertEquals(true, it.hasNext());
+
+        public boolean supportsSetValue() {
+            return AbstractTestOrderedBidiMap.this.isSetValueSupported();
+        }
+
+        public MapIterator makeEmptyMapIterator() {
+            resetEmpty();
+            return ((OrderedBidiMap) AbstractTestOrderedBidiMap.this.map).orderedMapIterator();
+        }
+
+        public MapIterator makeFullMapIterator() {
+            resetFull();
+            return ((OrderedBidiMap) AbstractTestOrderedBidiMap.this.map).orderedMapIterator();
+        }
+        
+        public Map getMap() {
+            // assumes makeFullMapIterator() called first
+            return AbstractTestOrderedBidiMap.this.map;
+        }
+        
+        public Map getConfirmedMap() {
+            // assumes makeFullMapIterator() called first
+            return AbstractTestOrderedBidiMap.this.confirmed;
+        }
+        
+        public void verify() {
+            super.verify();
+            AbstractTestOrderedBidiMap.this.verify();
         }
     }
     

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.5 2003/11/20 00:03:05 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.6 2003/11/20 00:31:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import java.util.Set;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/11/20 00:03:05 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/20 00:31:42 $
  * 
  * @author Stephen Colebourne
  */
@@ -328,6 +328,52 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
         
         try {
             it.setValue(newValue);
+            fail();
+        } catch (IllegalStateException ex) {}
+        verify();
+    }
+
+    //-----------------------------------------------------------------------
+    public void testMapIteratorRemoveGetKey() {
+        if (supportsRemove() == false) {
+            return;
+        }
+        MapIterator it = makeFullMapIterator();
+        Map map = getMap();
+        Map confirmed = getConfirmedMap();
+        
+        assertEquals(true, it.hasNext());
+        Object key = it.next();
+        
+        it.remove();
+        confirmed.remove(key);
+        verify();
+        
+        try {
+            it.getKey();
+            fail();
+        } catch (IllegalStateException ex) {}
+        verify();
+    }
+
+    //-----------------------------------------------------------------------
+    public void testMapIteratorRemoveGetValue() {
+        if (supportsRemove() == false) {
+            return;
+        }
+        MapIterator it = makeFullMapIterator();
+        Map map = getMap();
+        Map confirmed = getConfirmedMap();
+        
+        assertEquals(true, it.hasNext());
+        Object key = it.next();
+        
+        it.remove();
+        confirmed.remove(key);
+        verify();
+        
+        try {
+            it.getValue();
             fail();
         } catch (IllegalStateException ex) {}
         verify();
