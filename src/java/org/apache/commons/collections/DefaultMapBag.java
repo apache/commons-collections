@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.3 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.4 2002/06/16 18:56:19 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/06/16 18:56:19 $
  *
  * ====================================================================
  *
@@ -334,6 +334,27 @@ public abstract class DefaultMapBag implements Bag {
    private int modCount() {
       return _mods;
    }
+
+    /**
+     *  Implement a toString() method suitable for debugging
+     **/
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("[");
+        Iterator i = uniqueSet().iterator();
+        while(i.hasNext()) {
+            Object current = i.next();
+            int count = getCount(current);
+            buf.append(count);
+            buf.append(":");
+            buf.append(current);
+            if(i.hasNext()) {
+                buf.append(",");
+            }
+        }
+        buf.append("]");
+        return buf.toString();
+    }
 }
 
 
