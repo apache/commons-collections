@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.2 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.3 2002/03/19 13:19:13 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/03/19 13:19:13 $
  *
  * ====================================================================
  *
@@ -102,7 +102,7 @@ public final class SynchronizedPriorityQueue
      *
      * @param element the element to be inserted
      */
-    public synchronized void insert( final Comparable element )
+    public synchronized void insert( final Object element )
     {
         m_priorityQueue.insert( element );
     }
@@ -113,7 +113,7 @@ public final class SynchronizedPriorityQueue
      * @return the element at top of heap
      * @exception NoSuchElementException if isEmpty() == true
      */
-    public synchronized Comparable peek() throws NoSuchElementException
+    public synchronized Object peek() throws NoSuchElementException
     {
         return m_priorityQueue.peek();
     }
@@ -124,7 +124,7 @@ public final class SynchronizedPriorityQueue
      * @return the element at top of heap
      * @exception NoSuchElementException if isEmpty() == true
      */
-    public synchronized Comparable pop() throws NoSuchElementException
+    public synchronized Object pop() throws NoSuchElementException
     {
         return m_priorityQueue.pop();
     }
