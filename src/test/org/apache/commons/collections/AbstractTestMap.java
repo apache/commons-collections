@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.5 2003/10/07 22:35:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.6 2003/10/09 20:20:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.5 $ $Date: 2003/10/07 22:35:59 $
+ * @version $Revision: 1.6 $ $Date: 2003/10/09 20:20:23 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -702,9 +702,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
         // test to make sure the canonical form has been preserved
         Map map = makeEmptyMap();
-        if(map instanceof Serializable && !skipSerializedCanonicalTests()) {
+        if (map instanceof Serializable && !skipSerializedCanonicalTests()) {
             Map map2 = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
-            assertTrue("Map is empty",map2.isEmpty());
+            assertEquals("Map is empty", 0, map2.size());
         }
     }
 
@@ -723,9 +723,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
         // test to make sure the canonical form has been preserved
         Map map = makeFullMap();
-        if(map instanceof Serializable && !skipSerializedCanonicalTests()) {
+        if (map instanceof Serializable && !skipSerializedCanonicalTests()) {
             Map map2 = (Map) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
-            assertEquals("Map is the right size",map2.size(), getSampleKeys().length);
+            assertEquals("Map is the right size", getSampleKeys().length, map2.size());
         }
     }
 
