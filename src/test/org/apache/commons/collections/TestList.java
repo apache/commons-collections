@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.19 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.20 2003/09/20 17:00:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,7 +82,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
  *
- * @version $Revision: 1.19 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.20 $ $Date: 2003/09/20 17:00:32 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -227,10 +227,11 @@ public abstract class TestList extends TestCollection {
     public void testListAddByIndexBoundsChecking() {
         if (!isAddSupported()) return;
 
-        List list = makeEmptyList();
+        List list;
         Object element = getOtherElements()[0];
 
         try {
+            list = makeEmptyList();
             list.add(Integer.MIN_VALUE, element);
             fail("List.add should throw IndexOutOfBoundsException " +
               "[Integer.MIN_VALUE]");
@@ -239,6 +240,7 @@ public abstract class TestList extends TestCollection {
         }
 
         try {
+            list = makeEmptyList();
             list.add(-1, element);
             fail("List.add should throw IndexOutOfBoundsException [-1]");
         } catch(IndexOutOfBoundsException e) {
@@ -246,6 +248,7 @@ public abstract class TestList extends TestCollection {
         }
 
         try {
+            list = makeEmptyList();
             list.add(1, element);
             fail("List.add should throw IndexOutOfBoundsException [1]");
         } catch(IndexOutOfBoundsException e) {
@@ -253,6 +256,7 @@ public abstract class TestList extends TestCollection {
         }
 
         try {
+            list = makeEmptyList();
             list.add(Integer.MAX_VALUE, element);
             fail("List.add should throw IndexOutOfBoundsException " + 
               "[Integer.MAX_VALUE]");
@@ -269,10 +273,11 @@ public abstract class TestList extends TestCollection {
     public void testListAddByIndexBoundsChecking2() {
         if (!isAddSupported()) return;
 
-        List list = makeFullList();
+        List list;
         Object element = getOtherElements()[0];
 
         try {
+            list = makeFullList();
             list.add(Integer.MIN_VALUE, element);
             fail("List.add should throw IndexOutOfBoundsException " +
               "[Integer.MIN_VALUE]");
@@ -281,6 +286,7 @@ public abstract class TestList extends TestCollection {
         }
 
         try {
+            list = makeFullList();
             list.add(-1, element);
             fail("List.add should throw IndexOutOfBoundsException [-1]");
         } catch(IndexOutOfBoundsException e) {
@@ -288,6 +294,7 @@ public abstract class TestList extends TestCollection {
         }
 
         try {
+            list = makeFullList();
             list.add(list.size() + 1, element);
             fail("List.add should throw IndexOutOfBoundsException [size + 1]");
         } catch(IndexOutOfBoundsException e) {
@@ -295,6 +302,7 @@ public abstract class TestList extends TestCollection {
         }
 
         try {
+            list = makeFullList();
             list.add(Integer.MAX_VALUE, element);
             fail("List.add should throw IndexOutOfBoundsException " + 
               "[Integer.MAX_VALUE]");
