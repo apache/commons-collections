@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedIntList.java,v 1.1 2003/04/09 06:44:34 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedIntList.java,v 1.2 2003/04/11 21:50:15 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -76,7 +76,7 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/04/09 06:44:34 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/11 21:50:15 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -160,7 +160,7 @@ public class ArrayUnsignedIntList extends AbstractRandomAccessLongList implement
     public long removeElementAt(int index) {
         checkRange(index);
         incrModCount();
-        int oldval = _data[index];
+        long oldval = toLong(_data[index]);
         int numtomove = _size - index - 1;
         if(numtomove > 0) {
             System.arraycopy(_data,index+1,_data,index,numtomove);

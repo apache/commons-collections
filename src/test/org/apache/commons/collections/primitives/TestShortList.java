@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestShortList.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestShortList.java,v 1.2 2003/04/11 21:50:15 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.adapters.ShortListList;
 import org.apache.commons.collections.primitives.adapters.ListShortList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/11 21:50:15 $
  * @author Rodney Waldhoff
  */
 public abstract class TestShortList extends TestList {
@@ -299,10 +299,10 @@ public abstract class TestShortList extends TestList {
     
     public void testAddGet() {
         ShortList list = makeEmptyShortList();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 255; i++) {
             list.add((short)i);
         }
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 255; i++) {
             assertEquals((short)i, list.get(i));
         }
     }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedShortList.java,v 1.5 2003/04/11 21:50:15 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedByteList.java,v 1.1 2003/04/11 21:50:15 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,11 +63,11 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
- * An {@link IntList} backed by an array of unsigned
- * <code>short</code> values.
- * This list stores <code>int</code> values
- * in the range [{@link #MIN_VALUE <code>0</code>},
- * {@link #MAX_VALUE <code>65535</code>}] in 16-bits 
+ * A {@link ShortList} backed by an array of unsigned
+ * <code>byte</code> values.
+ * This list stores <code>short</code> values
+ * in the range [{@link #MIN_VALUE},
+ * {@link #MAX_VALUE}] in 8-bits 
  * per element.  Attempts to use elements outside this 
  * range may cause an 
  * {@link IllegalArgumentException IllegalArgumentException} 
@@ -76,11 +76,11 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/04/11 21:50:15 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/11 21:50:15 $
  * 
  * @author Rodney Waldhoff 
  */
-public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implements IntList, Serializable {
+public class ArrayUnsignedByteList extends AbstractRandomAccessShortList implements ShortList, Serializable {
 
     // constructors
     //-------------------------------------------------------------------------
@@ -89,7 +89,7 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
      * Construct an empty list with the default
      * initial capacity.
      */
-    protected ArrayUnsignedShortList() {
+    protected ArrayUnsignedByteList() {
         this(8);
     }    
 
@@ -98,11 +98,11 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
      * initial capacity.
      * @throws IllegalArgumentException when <i>initialCapacity</i> is negative
      */
-    protected ArrayUnsignedShortList(int initialCapacity) {
+    protected ArrayUnsignedByteList(int initialCapacity) {
         if(initialCapacity < 0) {
             throw new IllegalArgumentException("capacity " + initialCapacity);
         }
-        _data = new short[initialCapacity];
+        _data = new byte[initialCapacity];
         _size = 0;
     }    
 
@@ -110,17 +110,17 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
      * Constructs a list containing the elements of the given collection, 
      * in the order they are returned by that collection's iterator.
      * 
-     * @see ArrayIntList#addAll(org.apache.commons.collections.primitives.IntCollection)
+     * @see ShortList#addAll(org.apache.commons.collections.primitives.ShortCollection)
      * @param that the non-<code>null</code> collection of <code>int</code>s 
      *        to add
      * @throws NullPointerException if <i>that</i> is <code>null</code>
      */
-    public ArrayUnsignedShortList(IntCollection that) { 
+    public ArrayUnsignedByteList(ShortCollection that) { 
         this(that.size());
         addAll(that);
     }    
 
-    // IntList methods
+    // ShortList methods
     //-------------------------------------------------------------------------
 
     /** 
@@ -133,9 +133,9 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
      * @return the value of the element at the specified position
      * @throws IndexOutOfBoundsException if the specified index is out of range
      */
-    public int get(int index) {
+    public short get(int index) {
         checkRange(index);
-        return toInt(_data[index]);
+        return toShort(_data[index]);
     }
     
     public int size() {
@@ -157,10 +157,10 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
      *         supported
      * @throws IndexOutOfBoundsException if the specified index is out of range
      */
-    public int removeElementAt(int index) {
+    public short removeElementAt(int index) {
         checkRange(index);
         incrModCount();
-        int oldval = toInt(_data[index]);
+        short oldval = toShort(_data[index]);
         int numtomove = _size - index - 1;
         if(numtomove > 0) {
             System.arraycopy(_data,index+1,_data,index,numtomove);
@@ -184,12 +184,12 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
      *         supported
      * @throws IndexOutOfBoundsException if the specified index is out of range
      */
-    public int set(int index, int element) {
-        assertValidUnsignedShort(element);
+    public short set(int index, short element) {
+        assertValidUnsignedByte(element);
         checkRange(index);
         incrModCount();
-        int oldval = toInt(_data[index]);
-        _data[index] = fromInt(element);
+        short oldval = toShort(_data[index]);
+        _data[index] = fromShort(element);
         return oldval;
     }
         
@@ -210,14 +210,14 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
      *         prevents it from being added to me
      * @throws IndexOutOfBoundsException if the specified index is out of range
      */
-    public void add(int index, int element) {
-        assertValidUnsignedShort(element);
+    public void add(int index, short element) {
+        assertValidUnsignedByte(element);
         checkRangeIncludingEndpoint(index);
         incrModCount();
         ensureCapacity(_size+1);
         int numtomove = _size-index;
         System.arraycopy(_data,index,_data,index+1,numtomove);
-        _data[index] = fromInt(element);
+        _data[index] = fromShort(element);
         _size++;
     }
 
@@ -233,8 +233,8 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
         incrModCount();
         if(mincap > _data.length) {
             int newcap = (_data.length * 3)/2 + 1;
-            short[] olddata = _data;
-            _data = new short[newcap < mincap ? mincap : newcap];
+            byte[] olddata = _data;
+            _data = new byte[newcap < mincap ? mincap : newcap];
             System.arraycopy(olddata,0,_data,0,_size);
         }
     }
@@ -246,8 +246,8 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
     public void trimToSize() {
         incrModCount();
         if(_size < _data.length) {
-            short[] olddata = _data;
-            _data = new short[_size];
+            byte[] olddata = _data;
+            _data = new byte[_size];
             System.arraycopy(olddata,0,_data,0,_size);
         }
     }
@@ -255,15 +255,15 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
     // private methods
     //-------------------------------------------------------------------------
 
-    private final int toInt(short value) { 
-        return ((int)value)&MAX_VALUE;
+    private final short toShort(byte value) { 
+        return (short)(((short)value)&MAX_VALUE);
     }
 
-    private final short fromInt(int value) {
-        return (short)(value&MAX_VALUE);
+    private final byte fromShort(short value) {
+        return (byte)(value&MAX_VALUE);
     }
 
-    private final void assertValidUnsignedShort(int value) throws IllegalArgumentException {
+    private final void assertValidUnsignedByte(short value) throws IllegalArgumentException {
         if(value > MAX_VALUE) {
             throw new IllegalArgumentException(value + " > " + MAX_VALUE);
         }
@@ -276,15 +276,15 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
         out.defaultWriteObject();
         out.writeInt(_data.length);
         for(int i=0;i<_size;i++) {
-            out.writeShort(_data[i]);
+            out.writeByte(_data[i]);
         }
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        _data = new short[in.readInt()];
+        _data = new byte[in.readInt()];
         for(int i=0;i<_size;i++) {
-            _data[i] = in.readShort();
+            _data[i] = in.readByte();
         }
     }
     
@@ -300,17 +300,17 @@ public class ArrayUnsignedShortList extends AbstractRandomAccessIntList implemen
         }
     }
 
-    // attributes
-    //-------------------------------------------------------------------------
-    
-    /** The maximum possible unsigned 16-bit value (<code>0xFFFF</code>). */
-    public static final int MAX_VALUE = 0xFFFF;
-
-
-    /** The minimum possible unsigned 16-bit value  (<code>0x0000</code>). */
-    public static final int MIN_VALUE = 0;
-
-    private transient short[] _data = null;
+    private transient byte[] _data = null;
     private int _size = 0;
+
+    /**
+     *  The maximum possible unsigned 8-bit value.
+     */
+    public static final short MAX_VALUE = 0xFF;
+
+    /**
+     *  The minimum possible unsigned 8-bit value.
+     */
+    public static final short MIN_VALUE = 0;
 
 }
