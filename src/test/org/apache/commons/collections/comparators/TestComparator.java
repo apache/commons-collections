@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,6 +37,10 @@ public abstract class TestComparator extends TestObject {
         Collections.reverse(list);
     }
 
+    public void randomizeObjects(List list) {
+        Collections.shuffle(list);
+    }
+
     /**
      * Sort object according to the given Comparator.
      * 
@@ -66,7 +71,7 @@ public abstract class TestComparator extends TestObject {
                    list2.equals(list));
     }
 
-    public void testRandomListSort() {
+    public void testReverseListSort() {
         Comparator comparator = makeComparator();
 
         List randomList = getComparableObjectsOrdered();
@@ -74,6 +79,27 @@ public abstract class TestComparator extends TestObject {
         sortObjects(randomList,comparator);
 
         List orderedList = getComparableObjectsOrdered();
+
+        assertTrue("Comparator did not reorder the List correctly",
+                   orderedList.equals(randomList));
+
+    }
+
+    public void testRandomListSort() {
+        Comparator comparator = makeComparator();
+
+        List randomList = getComparableObjectsOrdered();
+        randomizeObjects(randomList);
+        sortObjects(randomList,comparator);
+
+        List orderedList = getComparableObjectsOrdered();
+
+        /* debug 
+        Iterator i = randomList.iterator();
+        while (i.hasNext()) {
+            System.out.println(i.next());
+        }
+        */
 
         assertTrue("Comparator did not reorder the List correctly",
                    orderedList.equals(randomList));
