@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedSet.java,v 1.5 2003/10/12 06:37:30 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedSortedSet.java,v 1.1 2003/10/12 06:37:30 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,7 +58,7 @@
 package org.apache.commons.collections.decorators;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -68,56 +68,107 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestSortedSet;
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.PredicateUtils;
 
 /**
- * Extension of {@link TestSortedSet} for exercising the {@link TransformedSortedSet}
- * implementation.
+ * Extension of {@link AbstractTestSortedSet} for exercising the 
+ * {@link PredicatedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/10/12 06:37:30 $
+ * @version $Revision: 1.1 $ $Date: 2003/10/12 06:37:30 $
  * 
- * @author Stephen Colebourne
+ * @author Phil Steitz
  */
-public class TestTransformedSortedSet extends AbstractTestSortedSet {
+public class TestPredicatedSortedSet extends AbstractTestSortedSet{
     
-    public TestTransformedSortedSet(String testName) {
+    public TestPredicatedSortedSet(String testName) {
         super(testName);
     }
-
+    
     public static Test suite() {
-        return BulkTest.makeSuite(TestTransformedSortedSet.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedSortedSet.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    //-----------------------------------------------------------------------
-    protected Set makeEmptySet() {
-        return TransformedSortedSet.decorate(new TreeSet(), TestTransformedCollection.NOOP_TRANSFORMER);
-    }
-
-    protected Set makeFullSet() {
-        SortedSet set = new TreeSet();
-        set.addAll(Arrays.asList(getFullElements()));
-        return TransformedSortedSet.decorate(set, TestTransformedCollection.NOOP_TRANSFORMER);
+        return BulkTest.makeSuite(TestPredicatedSortedSet.class);
     }
     
-    //-----------------------------------------------------------------------   
-    public void testTransformedSet() {
-        Set set = TransformedSortedSet.decorate(new HashSet(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(0, set.size());
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (int i = 0; i < els.length; i++) {
-            set.add(els[i]);
-            assertEquals(i + 1, set.size());
-            assertEquals(true, set.contains(new Integer((String) els[i])));
-            assertEquals(false, set.contains(els[i]));
+    public static void main(String args[]) {
+        String[] testCaseName = { TestPredicatedSortedMap.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+    
+ //-------------------------------------------------------------------    
+    
+    protected Predicate truePredicate = PredicateUtils.truePredicate();
+    
+    public Set makeEmptySet() {
+        return PredicatedSortedSet.decorate(new TreeSet(), truePredicate);
+    }
+    
+    public Set makeFullSet() {
+        TreeSet set = new TreeSet();
+        set.addAll(Arrays.asList(getFullElements()));
+        return PredicatedSortedSet.decorate(set, truePredicate);
+    }
+   
+    
+//--------------------------------------------------------------------   
+    protected Predicate testPredicate =  
+        new Predicate() {
+            public boolean evaluate(Object o) {
+                return (o instanceof String) && (((String) o).startsWith("A"));
+            }
+        };      
+     
+    
+    protected SortedSet makeTestSet() {
+        return PredicatedSortedSet.decorate(new TreeSet(), testPredicate);
+    }
+    
+    public void testGetSet() {
+        SortedSet set = makeTestSet();
+        assertTrue("returned set should not be null",
+            ((PredicatedSortedSet) set).getSet() != null);
+    }
+    
+    public void testIllegalAdd() {
+        SortedSet set = makeTestSet();
+        String testString = "B";
+        try {
+            set.add(testString);
+            fail("Should fail string predicate.");
+        } catch (IllegalArgumentException e) {
+            // expected
         }
+        assertTrue("Collection shouldn't contain illegal element", 
+         !set.contains(testString));   
+    }
+
+    public void testIllegalAddAll() {
+        SortedSet set = makeTestSet();
+        Set elements = new TreeSet();
+        elements.add("Aone");
+        elements.add("Atwo");
+        elements.add("Bthree");
+        elements.add("Afour");
+        try {
+            set.addAll(elements);
+            fail("Should fail string predicate.");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        assertTrue("Set shouldn't contain illegal element", 
+         !set.contains("Aone"));   
+        assertTrue("Set shouldn't contain illegal element", 
+         !set.contains("Atwo"));   
+        assertTrue("Set shouldn't contain illegal element", 
+         !set.contains("Bthree"));   
+        assertTrue("Set shouldn't contain illegal element", 
+         !set.contains("Afour"));   
+    }
+    
+    public void testComparator() {
+        SortedSet set = makeTestSet();
+        Comparator c = set.comparator();
+        assertTrue("natural order, so comparator should be null", c == null);
+    }
         
-        assertEquals(false, set.remove(els[0]));
-        assertEquals(true, set.remove(new Integer((String) els[0])));
-        
-    } 
 }

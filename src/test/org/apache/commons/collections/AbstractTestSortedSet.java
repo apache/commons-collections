@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedSet.java,v 1.3 2003/10/10 21:19:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedSet.java,v 1.4 2003/10/12 06:37:30 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import java.util.TreeSet;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/10/10 21:19:39 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/12 06:37:30 $
  * 
  * @author Stephen Colebourne
  * @author Dieter Wimberger
@@ -96,11 +96,26 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
     protected void verify() {
         super.verify();
         
-        //Sorted sets should return in-order iterators by contract
+        // Check that iterator returns elements in order and first() and last()
+        // are consistent
         Iterator colliter = collection.iterator();
         Iterator confiter = confirmed.iterator();
+        Object first = null;
+        Object last = null;
         while (colliter.hasNext()) {
-            assertEquals("Element appears to be out of order.", colliter.next(), confiter.next());
+            if (first == null) {
+                first = colliter.next();
+                last = first;
+            } else {
+              last = colliter.next();
+            }  
+            assertEquals("Element appears to be out of order.", last, confiter.next());
+        }
+        if (collection.size() > 0) {
+            assertEquals("Incorrect element returned by first().", first,
+                ((SortedSet) collection).first());
+            assertEquals("Incorrect element returned by last().", last,
+                ((SortedSet) collection).last());
         }
     }
 
