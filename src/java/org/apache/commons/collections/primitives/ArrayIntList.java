@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayIntList.java,v 1.1 2003/01/06 03:59:12 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/06 03:59:12 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayIntList.java,v 1.2 2003/01/07 01:29:28 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/07 01:29:28 $
  *
  * ====================================================================
  *
@@ -61,6 +61,12 @@
 
 package org.apache.commons.collections.primitives;
 
+/**
+ * A list of <code>int</code> elements backed by an <code>int</code> array.
+ *
+ * @version $Revision: 1.2 $ $Date: 2003/01/07 01:29:28 $
+ * @author Rodney Waldhoff 
+ */
 public class ArrayIntList extends AbstractRandomAccessIntList implements IntList {
 
     // constructors

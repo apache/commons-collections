@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.1 2003/01/06 03:59:12 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/06 03:59:12 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.2 2003/01/07 01:29:28 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/07 01:29:28 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.TestList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/01/06 03:59:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/07 01:29:28 $
  * @author Rodney Waldhoff
  */
 public class TestArrayIntList extends TestList {
@@ -180,5 +180,9 @@ public class TestArrayIntList extends TestList {
         for (int i = 0; i < 5; i++) {
             assertEquals("Should get entry back", i, list.get(i));
         }
+    }
+
+    public void testZeroInitialCapacityIsValid() {
+        ArrayIntList list = new ArrayIntList(0);
     }
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.2 2003/01/07 00:59:51 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2003/01/07 00:59:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.3 2003/01/07 01:29:28 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/01/07 01:29:28 $
  *
  * ====================================================================
  *
@@ -177,6 +177,19 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
             hash = 31*hash + iter.next();
         }
         return hash;
+    }
+    
+    public String toString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("[");
+        for(IntIterator iter = iterator(); iter.hasNext();) {
+            buf.append(iter.next());
+            if(iter.hasNext()) {
+                buf.append(", ");
+            }
+        }
+        buf.append("]");
+        return buf.toString();
     }
     
     // protected utilities
