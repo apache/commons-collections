@@ -4,7 +4,7 @@
   <extend>../project.xml</extend>
   <name>Collections</name>
   <id>commons-collections</id>
-  <currentVersion>2.1</currentVersion>
+  <currentVersion>2.2-dev</currentVersion>
   <inceptionYear>2002</inceptionYear>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
   <shortDescription>Commons Collections</shortDescription>
@@ -14,6 +14,12 @@
   </description>
   
   <developers>
+    <developer>
+      <name>Stephen Colebourne</name>
+      <id></id>
+      <email></email>
+      <organization></organization>
+    </developer>
     <developer>
       <name>Morgan Delagrange</name>
       <id></id>
@@ -33,6 +39,12 @@
       <organization></organization>
     </developer>
     <developer>
+      <name>Michael Smith</name>
+      <id></id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
       <name>Rodney Waldoff</name>
       <id>rwaldof</id>
       <email></email>
@@ -40,6 +52,12 @@
     </developer>
     <developer>
       <name>David Weinrich</name>
+      <id></id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <name>Henri Yandell</name>
       <id></id>
       <email></email>
       <organization></organization>
