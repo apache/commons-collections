@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableMap.java,v 1.1 2003/05/09 16:42:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableMap.java,v 1.2 2003/05/09 18:33:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.util.Set;
  * to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/09 16:42:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/09 18:33:27 $
  * 
  * @author Stephen Colebourne
  */
@@ -103,7 +103,7 @@ public class UnmodifiableMap extends AbstractMapDecorator {
         throw new UnsupportedOperationException();
     }
 
-    public void putAll(Map map) {
+    public void putAll(Map mapToCopy) {
         throw new UnsupportedOperationException();
     }
 

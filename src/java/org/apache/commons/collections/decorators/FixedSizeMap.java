@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/FixedSizeMap.java,v 1.1 2003/05/09 16:42:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/FixedSizeMap.java,v 1.2 2003/05/09 18:33:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import java.util.Set;
  * is not always unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/09 16:42:35 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/09 18:33:27 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -112,13 +112,13 @@ public class FixedSizeMap extends AbstractMapDecorator implements Map {
         return map.put(key, value);
     }
 
-    public void putAll(Map map) {
-        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
-            if (map.containsKey(it.next()) == false) {
+    public void putAll(Map mapToCopy) {
+        for (Iterator it = mapToCopy.keySet().iterator(); it.hasNext(); ) {
+            if (mapToCopy.containsKey(it.next()) == false) {
                 throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
             }
         }
-        map.putAll(map);
+        map.putAll(mapToCopy);
     }
 
     public void clear() {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedMap.java,v 1.1 2003/05/09 16:42:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedMap.java,v 1.2 2003/05/09 18:33:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.Predicate;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/09 16:42:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/09 18:33:27 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -136,15 +136,15 @@ public class PredicatedMap extends AbstractMapDecorator {
         return map.put(key, value);
     }
 
-    public void putAll(Map map) {
-        Iterator it = map.entrySet().iterator();
+    public void putAll(Map mapToCopy) {
+        Iterator it = mapToCopy.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry entry = (Map.Entry) it.next();
             Object key = entry.getKey();
             Object value = entry.getValue();
             validate(key, value);
         }
-        map.putAll(map);
+        map.putAll(mapToCopy);
     }
 
     public Set entrySet() {

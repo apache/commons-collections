@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/AbstractMapDecorator.java,v 1.1 2003/05/09 16:38:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/AbstractMapDecorator.java,v 1.2 2003/05/09 18:33:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import java.util.Set;
  * you might want that loophole, so this class is kept simple.</p>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/09 16:38:16 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/09 18:33:27 $
  * 
  * @author Daniel Rall
  * @author Stephen Colebourne
@@ -142,8 +142,8 @@ public abstract class AbstractMapDecorator implements Map {
         return map.put(key, value);
     }
 
-    public void putAll(Map map) {
-        map.putAll(map);
+    public void putAll(Map mapToCopy) {
+        map.putAll(mapToCopy);
     }
 
     public Object remove(Object key) {
