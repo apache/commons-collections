@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.5 2001/04/30 18:16:02 craigmcc Exp $ -->
+<!-- $Id: build.xml,v 1.6 2001/05/04 02:29:03 geirm Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -48,6 +48,9 @@
       <property name="Name" value="Commons-Collections"/>
       <property name="Name-Long" value="Jakarta Commons Collections Package"/>
 
+      <!-- The current version number of this component -->
+      <property name="component.version"       value="0.01"/>
+        
       <property name="test.entry" value="org.apache.commons.collections.TestAll"/>
       <property name="test.failonerror" value="true" /> 
       <property name="test.runner" value="junit.textui.TestRunner" /> 
@@ -63,7 +66,7 @@
       <property name="dest.doc" value="${dest}/docs"/>
       <property name="dest.doc.api" value="${dest.doc}/api"/>
       <property name="dest.jardir" value="${dest}"/>
-      <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
+      <property name="dest.jardir.jar" value="${dest.jardir}/${name}-${component.version}.jar"/>
 
       <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
       <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->      
@@ -224,7 +227,7 @@
             <patternset refid="patternset-non-test-classes"/>
          </fileset>
       </copy>
-      <jar jarfile="${dest.jardir.jar}">
+      <jar jarfile="${dest.jardir.jar}" manifest="${source.src}/conf/MANIFEST.MF">
          <fileset dir="${workdir}"/>
       </jar>
       <delete dir="${workdir}"/>
