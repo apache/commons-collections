@@ -147,7 +147,7 @@ public class BeanMap extends AbstractMap {
         }
     }
 
-    public boolean containsKey(String name) {
+    public boolean containsKey(Object name) {
         Method method = getReadMethod( name );
         return method != null;
     }
