@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.5 2003/12/02 23:51:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.6 2003/12/03 19:03:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,7 +60,6 @@ package org.apache.commons.collections.map;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -70,7 +69,6 @@ import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.ResettableIterator;
-import org.apache.commons.collections.iterators.EntrySetMapIterator;
 
 /**
  * A <code>Map</code> implementation that stores data in simple fields until
@@ -100,7 +98,7 @@ import org.apache.commons.collections.iterators.EntrySetMapIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/02 23:51:50 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/03 19:03:50 $
  *
  * @author Stephen Colebourne
  */
@@ -127,7 +125,7 @@ public class Flat3Map implements IterableMap {
     /** Value, used while in flat mode */
     private Object iValue3;
     /** Map, used while in delegate mode */
-    private HashMap iMap;
+    private HashedMap iMap;
 
     /**
      * Constructor.
@@ -388,7 +386,7 @@ public class Flat3Map implements IterableMap {
      * Converts the flat map data to a HashMap.
      */
     private void convertToMap() {
-        iMap = new HashMap();
+        iMap = new HashedMap();
         switch (iSize) {  // drop through
             case 3:
                 iMap.put(iKey3, iValue3);
@@ -578,13 +576,13 @@ public class Flat3Map implements IterableMap {
      * A MapIterator returns the keys in the map. It also provides convenient
      * methods to get the key and value, and set the value.
      * It avoids the need to create an entrySet/keySet/values object.
-     * It also avoids creating the Mep Entry object.
+     * It also avoids creating the Map Entry object.
      * 
      * @return the map iterator
      */
     public MapIterator mapIterator() {
         if (iMap != null) {
-            return new EntrySetMapIterator(this);
+            return iMap.mapIterator();
         }
         if (iSize == 0) {
             return IteratorUtils.EMPTY_MAP_ITERATOR;
