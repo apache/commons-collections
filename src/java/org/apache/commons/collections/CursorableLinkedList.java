@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.13 2003/06/20 07:59:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.14 2003/06/24 16:08:42 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import java.util.NoSuchElementException;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.13 $ $Date: 2003/06/20 07:59:59 $
+ * @version $Revision: 1.14 $ $Date: 2003/06/24 16:08:42 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki
@@ -1093,7 +1093,7 @@ public class CursorableLinkedList implements List, Serializable {
         }
     }
 
-    class Cursor extends ListIter implements ListIterator {
+    public class Cursor extends ListIter implements ListIterator {
         boolean _valid = false;
 
         Cursor(int index) {
