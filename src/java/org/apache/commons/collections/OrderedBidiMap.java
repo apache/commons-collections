@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedBidiMap.java,v 1.1 2003/12/01 22:34:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedBidiMap.java,v 1.2 2004/01/05 22:27:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,12 +65,12 @@ package org.apache.commons.collections;
  * a key to be looked up from a value with equal performance.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:55 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/05 22:27:08 $
  *
  * @author Stephen Colebourne
  */
 public interface OrderedBidiMap extends BidiMap, OrderedMap {
-    
+
     /**
      * Gets a view of this map where the keys and values are reversed.
      * <p>

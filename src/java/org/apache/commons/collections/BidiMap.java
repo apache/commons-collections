@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.10 2003/12/02 23:51:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.11 2004/01/05 22:27:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -70,12 +70,12 @@ package org.apache.commons.collections;
  * a key to be looked up from a value with equal performance.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2003/12/02 23:51:49 $
+ * @version $Revision: 1.11 $ $Date: 2004/01/05 22:27:08 $
  *
  * @author Stephen Colebourne
  */
 public interface BidiMap extends IterableMap {
-    
+
     /**
      * Obtains a <code>MapIterator</code> over the map.
      * <p>

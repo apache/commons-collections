@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/KeyValue.java,v 1.1 2003/12/05 20:23:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/KeyValue.java,v 1.2 2004/01/05 22:27:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,12 +65,12 @@ package org.apache.commons.collections;
  * two get methods.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:57 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/05 22:27:08 $
  * 
  * @author Stephen Colebourne
  */
 public interface KeyValue {
-    
+
     /**
      * Gets the key from the pair.
      *

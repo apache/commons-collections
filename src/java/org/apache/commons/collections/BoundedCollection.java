@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedCollection.java,v 1.7 2003/12/11 22:48:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedCollection.java,v 1.8 2004/01/05 22:27:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ import java.util.Collection;
  * associated with the maximum number of elements.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/12/11 22:48:09 $
+ * @version $Revision: 1.8 $ $Date: 2004/01/05 22:27:08 $
  * 
  * @author Herve Quiroz
  * @author Stephen Colebourne
@@ -80,12 +80,12 @@ public interface BoundedCollection extends Collection {
      * @return <code>true</code> if the collection is full
      */
     boolean isFull();
-    
+
     /**
      * Gets the maximum size of the collection (the bound).
      *
      * @return the maximum number of elements the collection can hold
      */
     int maxSize();
-    
+
 }

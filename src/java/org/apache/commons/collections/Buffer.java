@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.7 2003/12/13 23:51:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.8 2004/01/05 22:27:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,7 +77,7 @@ import java.util.Collection;
  * {@link Bag}.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.7 $ $Date: 2003/12/13 23:51:28 $
+ * @version $Revision: 1.8 $ $Date: 2004/01/05 22:27:08 $
  * 
  * @author Avalon
  * @author Berin Loritsch
@@ -101,5 +101,5 @@ public interface Buffer extends Collection {
      * @throws BufferUnderflowException if the buffer is empty
      */
     Object get();
-    
+
 }

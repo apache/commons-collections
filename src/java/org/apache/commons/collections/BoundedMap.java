@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedMap.java,v 1.1 2003/12/11 22:48:52 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedMap.java,v 1.2 2004/01/05 22:27:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,7 +67,7 @@ import java.util.Map;
  * associated with the maximum number of elements.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/11 22:48:52 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/05 22:27:08 $
  * 
  * @author Stephen Colebourne
  */
@@ -79,12 +79,12 @@ public interface BoundedMap extends Map {
      * @return <code>true</code> if the map is full
      */
     boolean isFull();
-    
+
     /**
      * Gets the maximum size of the map (the bound).
      *
      * @return the maximum number of elements the map can hold
      */
     int maxSize();
-    
+
 }

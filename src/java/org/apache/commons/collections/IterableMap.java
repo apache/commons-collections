@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IterableMap.java,v 1.1 2003/12/02 23:51:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IterableMap.java,v 1.2 2004/01/05 22:27:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -75,12 +75,12 @@ import java.util.Map;
  * </pre>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/02 23:51:49 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/05 22:27:08 $
  *
  * @author Stephen Colebourne
  */
 public interface IterableMap extends Map {
-    
+
     /**
      * Obtains a <code>MapIterator</code> over the map.
      * <p>
