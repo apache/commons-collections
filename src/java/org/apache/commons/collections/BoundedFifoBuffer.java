@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.3 2002/07/03 02:16:48 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/07/03 02:16:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/13 00:46:25 $
  *
  * ====================================================================
  *
@@ -89,7 +89,8 @@ import java.util.NoSuchElementException;
  *
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author Paul Jack
- * @version $Id: BoundedFifoBuffer.java,v 1.3 2002/07/03 02:16:48 mas Exp $
+ * @version $Id: BoundedFifoBuffer.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
+ * @since Avalon 4.0
  */
 public class BoundedFifoBuffer extends AbstractCollection implements Buffer
 {

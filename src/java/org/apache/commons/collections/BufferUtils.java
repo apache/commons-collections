@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.4 2002/08/13 00:26:51 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/13 00:26:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.5 2002/08/13 00:46:25 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/13 00:46:25 $
  *
  * ====================================================================
  *
@@ -69,7 +69,8 @@ import java.util.Iterator;
  *  Contains static utility methods for operating on {@link Buffer} objects.
  *
  *  @author Paul Jack
- *  @version $Id: BufferUtils.java,v 1.4 2002/08/13 00:26:51 pjack Exp $
+ *  @version $Id: BufferUtils.java,v 1.5 2002/08/13 00:46:25 pjack Exp $
+ *  @since 2.1
  */
 public class BufferUtils {
 

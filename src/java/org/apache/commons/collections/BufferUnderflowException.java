@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUnderflowException.java,v 1.2 2002/07/03 01:45:47 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:45:47 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUnderflowException.java,v 1.3 2002/08/13 00:46:25 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/13 00:46:25 $
  *
  * ====================================================================
  *
@@ -65,6 +65,8 @@ package org.apache.commons.collections;
  *
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
+ * @since Avalon 4.0
+ * @version $Id: BufferUnderflowException.java,v 1.3 2002/08/13 00:46:25 pjack Exp $
  */
 public class BufferUnderflowException extends RuntimeException
 {

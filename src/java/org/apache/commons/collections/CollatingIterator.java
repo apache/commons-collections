@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CollatingIterator.java,v 1.2 2002/07/10 14:06:39 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/10 14:06:39 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CollatingIterator.java,v 1.3 2002/08/13 00:46:25 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/13 00:46:25 $
  *
  * ====================================================================
  *
@@ -73,8 +73,9 @@ import java.util.BitSet;
  * my {@link #next} method will return the lesser of 
  * <code>A.next()</code> and <code>B.next()</code>.
  *
- * @version $Revision: 1.2 $ $Date: 2002/07/10 14:06:39 $
+ * @version $Revision: 1.3 $ $Date: 2002/08/13 00:46:25 $
  * @author Rodney Waldhoff
+ * @since 2.1
  */
 public class CollatingIterator implements Iterator {
 

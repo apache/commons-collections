@@ -13,7 +13,8 @@ import java.util.SortedSet;
  *  and {@link SortedSet} instances.
  *
  *  @author Paul Jack
- *  @version $Id: SetUtils.java,v 1.1 2002/08/13 00:26:51 pjack Exp $
+ *  @version $Id: SetUtils.java,v 1.2 2002/08/13 00:46:25 pjack Exp $
+ *  @since 2.1
  */
 public class SetUtils {
 

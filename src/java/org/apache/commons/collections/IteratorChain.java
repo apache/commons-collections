@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorChain.java,v 1.3 2002/04/09 16:33:40 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/04/09 16:33:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorChain.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/13 00:46:25 $
  *
  * ====================================================================
  *
@@ -85,6 +85,8 @@ import java.util.NoSuchElementException;
  * to not alter the underlying List of Iterators.</p>
  * 
  * @author Morgan Delagrange
+ * @version $Id: IteratorChain.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
+ * @since 2.1
  */
 public class IteratorChain implements Iterator {
 

@@ -77,8 +77,13 @@ import org.apache.commons.collections.comparators.TransformingComparator;
  *
  *  @author Paul Jack
  *  @version $Id$
+ *  @since 2.1
  */
 public class ComparatorUtils {
+
+
+    private ComparatorUtils() {
+    }
 
 
     /**

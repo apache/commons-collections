@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.3 2002/08/13 00:26:51 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/13 00:26:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/13 00:46:25 $
  *
  * ====================================================================
  *
@@ -86,6 +86,8 @@ import java.util.SortedMap;
  * And, Or and instanceof.
  * 
  * @author Stephen Colebourne
+ * @version $Id: PredicateUtils.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
+ * @since 2.1
  */
 public class PredicateUtils {
     

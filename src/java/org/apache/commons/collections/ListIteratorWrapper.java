@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ListIteratorWrapper.java,v 1.1 2002/04/09 16:40:43 morgand Exp $
- * $Revision: 1.1 $
- * $Date: 2002/04/09 16:40:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ListIteratorWrapper.java,v 1.2 2002/08/13 00:46:25 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/13 00:46:25 $
  *
  * ====================================================================
  *
@@ -71,7 +71,8 @@ import java.util.NoSuchElementException;
  * operations of ListIterator.
  * 
  * @author Morgan Delagrange
- * @version $Revision: 1.1 $ $Date: 2002/04/09 16:40:43 $
+ * @version $Revision: 1.2 $ $Date: 2002/08/13 00:46:25 $
+ * @since 2.1
  */
 public class ListIteratorWrapper implements ListIterator {
 
