@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/EnumerationUtils.java,v 1.3 2004/01/05 21:37:13 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -66,7 +62,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * Provides utility methods for {@link Enumeration} instances.
  * 
  * @since Commons Collections 3.0
- * @version $Id: EnumerationUtils.java,v 1.3 2004/01/05 21:37:13 scolebourne Exp $
+ * @version $Id: EnumerationUtils.java,v 1.4 2004/01/14 21:43:04 scolebourne Exp $
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  */

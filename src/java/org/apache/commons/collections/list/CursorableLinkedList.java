@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/CursorableLinkedList.java,v 1.3 2004/01/08 22:37:31 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.list;
 
@@ -94,7 +90,7 @@ import java.util.ListIterator;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.3 $ $Date: 2004/01/08 22:37:31 $
+ * @version $Revision: 1.4 $ $Date: 2004/01/14 21:43:17 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki

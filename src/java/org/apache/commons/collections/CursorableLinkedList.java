@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.21 2004/01/05 22:46:33 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -87,7 +83,7 @@ import java.lang.ref.WeakReference;
  *  and now returns the cursor from the listIterator method. Will be removed in v4.0
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.21 $ $Date: 2004/01/05 22:46:33 $
+ * @version $Revision: 1.22 $ $Date: 2004/01/14 21:43:03 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki

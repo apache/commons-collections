@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapIterator.java,v 1.5 2004/01/05 21:37:13 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -82,7 +78,7 @@ import java.util.Iterator;
  * </pre>
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/01/05 21:37:13 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/14 21:43:03 $
  *
  * @author Stephen Colebourne
  */

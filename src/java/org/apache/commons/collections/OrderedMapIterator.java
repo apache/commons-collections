@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedMapIterator.java,v 1.2 2004/01/08 22:26:07 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -63,7 +59,7 @@ package org.apache.commons.collections;
  * This iterator allows both forward and reverse iteration through the map.
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2004/01/08 22:26:07 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/14 21:43:04 $
  *
  * @author Stephen Colebourne
  */

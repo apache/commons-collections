@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/BoundedFifoBuffer.java,v 1.5 2004/01/04 18:56:37 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.buffer;
 
@@ -89,7 +85,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This buffer prevents null objects from being added.
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.5 $ $Date: 2004/01/04 18:56:37 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/14 21:43:08 $
  * 
  * @author Avalon
  * @author Berin Loritsch

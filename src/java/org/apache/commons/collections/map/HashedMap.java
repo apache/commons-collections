@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.13 2004/01/08 22:37:30 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.map;
 
@@ -72,7 +68,7 @@ import java.util.Map;
  * functionality and many methods for subclassing.
  * <p>
  * @since Commons Collections 3.0
- * @version $Revision: 1.13 $ $Date: 2004/01/08 22:37:30 $
+ * @version $Revision: 1.14 $ $Date: 2004/01/14 21:43:10 $
  *
  * @author Stephen Colebourne
  */

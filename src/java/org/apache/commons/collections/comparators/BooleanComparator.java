@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.9 2004/01/04 18:58:32 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.comparators;
 
@@ -68,7 +64,7 @@ import java.util.Comparator;
  * @see #getBooleanComparator
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/01/04 18:58:32 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/14 21:43:18 $
  * 
  * @author Rodney Waldhoff
  */

@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.10 2004/01/08 22:37:30 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.bidimap;
 
@@ -88,7 +84,7 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * not store each object twice, which can save on memory use.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.10 2004/01/08 22:37:30 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.11 2004/01/14 21:43:16 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

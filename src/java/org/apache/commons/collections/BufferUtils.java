@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.17 2004/01/04 18:03:41 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -68,7 +64,7 @@ import org.apache.commons.collections.buffer.UnmodifiableBuffer;
  * Provides utility methods and decorators for {@link Buffer} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.17 $ $Date: 2004/01/04 18:03:41 $
+ * @version $Revision: 1.18 $ $Date: 2004/01/14 21:43:03 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne

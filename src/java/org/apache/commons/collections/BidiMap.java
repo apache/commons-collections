@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.12 2004/01/05 22:46:33 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -70,7 +66,7 @@ package org.apache.commons.collections;
  * a key to be looked up from a value with equal performance.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2004/01/05 22:46:33 $
+ * @version $Revision: 1.13 $ $Date: 2004/01/14 21:43:04 $
  *
  * @author Stephen Colebourne
  */

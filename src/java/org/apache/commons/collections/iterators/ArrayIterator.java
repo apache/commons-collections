@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.9 2004/01/08 22:37:29 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.iterators;
 
@@ -74,7 +70,7 @@ import org.apache.commons.collections.ResettableIterator;
  * the iterator back to the start if required.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.9 $ $Date: 2004/01/08 22:37:29 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/14 21:43:14 $
  *
  * @author James Strachan
  * @author Mauricio S. Moura

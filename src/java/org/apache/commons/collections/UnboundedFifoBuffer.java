@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.13 2004/01/04 18:55:03 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -84,7 +80,7 @@ import java.util.NoSuchElementException;
  * 
  * @deprecated Moved to buffer subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
- * @version $Revision: 1.13 $ $Date: 2004/01/04 18:55:03 $
+ * @version $Revision: 1.14 $ $Date: 2004/01/14 21:43:04 $
  *
  * @author Avalon
  * @author Federico Barbieri

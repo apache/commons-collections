@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.10 2004/01/05 22:04:19 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.map;
 
@@ -89,7 +85,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/01/05 22:04:19 $
+ * @version $Revision: 1.11 $ $Date: 2004/01/14 21:43:11 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne

@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.14 2004/01/12 21:41:41 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -77,7 +73,7 @@ import java.util.Set;
  * which unfortunately will break backwards compatibility with this version.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.14 $ $Date: 2004/01/12 21:41:41 $
+ * @version $Revision: 1.15 $ $Date: 2004/01/14 21:43:03 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne

@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.9 2004/01/08 22:37:30 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.map;
 
@@ -132,7 +128,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.9 $ $Date: 2004/01/08 22:37:30 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/14 21:43:10 $
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich

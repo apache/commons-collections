@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.11 2004/01/08 22:37:30 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.map;
 
@@ -98,7 +94,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2004/01/08 22:37:30 $
+ * @version $Revision: 1.12 $ $Date: 2004/01/14 21:43:11 $
  *
  * @author Stephen Colebourne
  */

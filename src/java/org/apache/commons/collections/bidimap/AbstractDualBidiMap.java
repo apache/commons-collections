@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.8 2004/01/05 21:46:49 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.bidimap;
 
@@ -78,7 +74,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.8 2004/01/05 21:46:49 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.9 2004/01/14 21:43:16 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

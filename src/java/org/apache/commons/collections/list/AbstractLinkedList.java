@@ -1,10 +1,7 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.6 2004/01/08 22:37:31 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections.list;
 
@@ -80,7 +76,7 @@ import org.apache.commons.collections.OrderedIterator;
  * is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/01/08 22:37:31 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/14 21:43:17 $
  *
  * @author Rich Dougherty
  * @author Phil Steitz

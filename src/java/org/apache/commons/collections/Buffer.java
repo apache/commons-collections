@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.8 2004/01/05 22:27:08 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -77,7 +73,7 @@ import java.util.Collection;
  * {@link Bag}.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.8 $ $Date: 2004/01/05 22:27:08 $
+ * @version $Revision: 1.9 $ $Date: 2004/01/14 21:43:04 $
  * 
  * @author Avalon
  * @author Berin Loritsch

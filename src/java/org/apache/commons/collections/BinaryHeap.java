@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.22 2004/01/08 22:18:16 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -93,7 +89,7 @@ import java.util.NoSuchElementException;
  * @deprecated Replaced by PriorityBuffer in buffer subpackage.
  *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.22 $ $Date: 2004/01/08 22:18:16 $
+ * @version $Revision: 1.23 $ $Date: 2004/01/14 21:43:03 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram

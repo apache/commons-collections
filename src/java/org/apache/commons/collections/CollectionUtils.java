@@ -1,7 +1,4 @@
-/*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.54 2004/01/08 22:26:07 scolebourne Exp $
- * ====================================================================
- *
+/* ====================================================================
  * The Apache Software License, Version 1.1
  *
  * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
@@ -53,7 +50,6 @@
  * individuals on behalf of the Apache Software Foundation.  For more
  * information on the Apache Software Foundation, please see
  * <http://www.apache.org/>.
- *
  */
 package org.apache.commons.collections;
 
@@ -79,7 +75,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.54 $ $Date: 2004/01/08 22:26:07 $
+ * @version $Revision: 1.55 $ $Date: 2004/01/14 21:43:03 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
