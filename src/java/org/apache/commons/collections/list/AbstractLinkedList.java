@@ -38,7 +38,7 @@ import org.apache.commons.collections.OrderedIterator;
  * is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/02/18 01:12:26 $
+ * @version $Revision: 1.9 $ $Date: 2004/04/20 23:33:54 $
  *
  * @author Rich Dougherty
  * @author Phil Steitz
@@ -110,7 +110,7 @@ public abstract class AbstractLinkedList implements List {
 
     public Object get(int index) {
         Node node = getNode(index, false);
-        return node.value;
+        return node.getValue();
     }
 
     //-----------------------------------------------------------------------
@@ -130,7 +130,7 @@ public abstract class AbstractLinkedList implements List {
     public int indexOf(Object value) {
         int i = 0;
         for (Node node = header.next; node != header; node = node.next) {
-            if (isEqualValue(node.value, value)) {
+            if (isEqualValue(node.getValue(), value)) {
                 return i;
             }
             i++;
@@ -141,7 +141,7 @@ public abstract class AbstractLinkedList implements List {
     public int lastIndexOf(Object value) {
         int i = size - 1;
         for (Node node = header.previous; node != header; node = node.previous) {
-            if (isEqualValue(node.value, value)) {
+            if (isEqualValue(node.getValue(), value)) {
                 return i;
             }
             i--;
@@ -177,7 +177,7 @@ public abstract class AbstractLinkedList implements List {
         // Copy the values into the array
         int i = 0;
         for (Node node = header.next; node != header; node = node.next, i++) {
-            array[i] = node.value;
+            array[i] = node.getValue();
         }
         // Set the value after the last value to null
         if (array.length > size) {
@@ -224,14 +224,14 @@ public abstract class AbstractLinkedList implements List {
     //-----------------------------------------------------------------------
     public Object remove(int index) {
         Node node = getNode(index, false);
-        Object oldValue = node.value;
+        Object oldValue = node.getValue();
         removeNode(node);
         return oldValue;
     }
 
     public boolean remove(Object value) {
         for (Node node = header.next; node != header; node = node.next) {
-            if (isEqualValue(node.value, value)) {
+            if (isEqualValue(node.getValue(), value)) {
                 removeNode(node);
                 return true;
             }
@@ -266,7 +266,7 @@ public abstract class AbstractLinkedList implements List {
 
     public Object set(int index, Object value) {
         Node node = getNode(index, false);
-        Object oldValue = node.value;
+        Object oldValue = node.getValue();
         updateNode(node, value);
         return oldValue;
     }
@@ -281,7 +281,7 @@ public abstract class AbstractLinkedList implements List {
         if (node == header) {
             throw new NoSuchElementException();
         }
-        return node.value;
+        return node.getValue();
     }
 
     public Object getLast() {
@@ -289,7 +289,7 @@ public abstract class AbstractLinkedList implements List {
         if (node == header) {
             throw new NoSuchElementException();
         }
-        return node.value;
+        return node.getValue();
     }
 
     public boolean addFirst(Object o) {
@@ -307,7 +307,7 @@ public abstract class AbstractLinkedList implements List {
         if (node == header) {
             throw new NoSuchElementException();
         }
-        Object oldValue = node.value;
+        Object oldValue = node.getValue();
         removeNode(node);
         return oldValue;
     }
@@ -317,7 +317,7 @@ public abstract class AbstractLinkedList implements List {
         if (node == header) {
             throw new NoSuchElementException();
         }
-        Object oldValue = node.value;
+        Object oldValue = node.getValue();
         removeNode(node);
         return oldValue;
     }
@@ -399,7 +399,7 @@ public abstract class AbstractLinkedList implements List {
      * @param value  new value of the node
      */
     protected void updateNode(Node node, Object value) {
-        node.value = value;
+        node.setValue(value);
     }
 
     /**
@@ -590,6 +590,9 @@ public abstract class AbstractLinkedList implements List {
     //-----------------------------------------------------------------------
     /**
      * A node within the linked list.
+     * <p>
+     * From Commons Collections 3.1, all access to the <code>value</code> property
+     * is via the methods on this class.
      */
     protected static class Node {
 
@@ -631,6 +634,66 @@ public abstract class AbstractLinkedList implements List {
             this.previous = previous;
             this.next = next;
             this.value = value;
+        }
+        
+        /**
+         * Gets the value of the node.
+         * 
+         * @return the value
+         * @since Commons Collections 3.1
+         */
+        protected Object getValue() {
+            return value;
+        }
+        
+        /**
+         * Sets the value of the node.
+         * 
+         * @param value  the value
+         * @since Commons Collections 3.1
+         */
+        protected void setValue(Object value) {
+            this.value = value;
+        }
+        
+        /**
+         * Gets the previous node.
+         * 
+         * @return the previous node
+         * @since Commons Collections 3.1
+         */
+        protected Node getPreviousNode() {
+            return previous;
+        }
+        
+        /**
+         * Sets the previous node.
+         * 
+         * @param previous  the previous node
+         * @since Commons Collections 3.1
+         */
+        protected void setPreviousNode(Node previous) {
+            this.previous = previous;
+        }
+        
+        /**
+         * Gets the next node.
+         * 
+         * @return the next node
+         * @since Commons Collections 3.1
+         */
+        protected Node getNextNode() {
+            return next;
+        }
+        
+        /**
+         * Sets the next node.
+         * 
+         * @param next  the next node
+         * @since Commons Collections 3.1
+         */
+        protected void setNextNode(Node next) {
+            this.next = next;
         }
     }
 
@@ -720,10 +783,9 @@ public abstract class AbstractLinkedList implements List {
         public Object next() {
             checkModCount();
             if (!hasNext()) {
-                throw new NoSuchElementException("No element at index " +
-                        nextIndex + ".");
+                throw new NoSuchElementException("No element at index " + nextIndex + ".");
             }
-            Object value = next.value;
+            Object value = next.getValue();
             current = next;
             next = next.next;
             nextIndex++;
@@ -740,7 +802,7 @@ public abstract class AbstractLinkedList implements List {
                 throw new NoSuchElementException("Already at start of list.");
             }
             next = next.previous;
-            Object value = next.value;
+            Object value = next.getValue();
             current = next;
             nextIndex--;
             return value;
@@ -765,7 +827,7 @@ public abstract class AbstractLinkedList implements List {
 
         public void set(Object obj) {
             checkModCount();
-            getLastNodeReturned().value = obj;
+            getLastNodeReturned().setValue(obj);
         }
 
         public void add(Object obj) {
