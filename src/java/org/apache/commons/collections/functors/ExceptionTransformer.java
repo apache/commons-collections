@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/ExceptionTransformer.java,v 1.1 2003/11/23 17:01:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/functors/ExceptionTransformer.java,v 1.2 2003/12/29 01:18:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,13 +59,14 @@ package org.apache.commons.collections.functors;
 
 import java.io.Serializable;
 
+import org.apache.commons.collections.FunctorException;
 import org.apache.commons.collections.Transformer;
 
 /**
  * Transformer implementation that always throws an exception.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/23 17:01:35 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/29 01:18:23 $
  *
  * @author Stephen Colebourne
  */

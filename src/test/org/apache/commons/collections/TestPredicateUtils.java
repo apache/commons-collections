@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestPredicateUtils.java,v 1.4 2003/11/23 14:41:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestPredicateUtils.java,v 1.5 2003/12/29 01:18:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,7 +62,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.apache.commons.collections.functors.FunctorException;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -72,7 +71,7 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.PredicateUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/11/23 14:41:27 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/29 01:18:23 $
  *
  * @author Stephen Colebourne
  */

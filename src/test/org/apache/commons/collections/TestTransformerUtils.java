@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTransformerUtils.java,v 1.7 2003/11/27 23:57:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTransformerUtils.java,v 1.8 2003/12/29 01:18:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,14 +70,13 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.commons.collections.functors.ConstantTransformer;
-import org.apache.commons.collections.functors.FunctorException;
 import org.apache.commons.collections.functors.NOPTransformer;
 
 /**
  * Tests the org.apache.commons.collections.TransformerUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/11/27 23:57:09 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/29 01:18:23 $
  *
  * @author Stephen Colebourne
  * @author James Carman
