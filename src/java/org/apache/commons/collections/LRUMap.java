@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.12 2002/03/19 01:18:09 jefft Exp $
- * $Revision: 1.12 $
- * $Date: 2002/03/19 01:18:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.13 2002/04/16 21:15:13 morgand Exp $
+ * $Revision: 1.13 $
+ * $Date: 2002/04/16 21:15:13 $
  *
  * ====================================================================
  *
@@ -68,30 +68,30 @@ import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
 
-/** <p>
-  * An implementation of a Map which has a maximum size and uses a Least Recently Used
-  * algorithm to remove items from the Map when the maximum size is reached and new items are added.
-  * </p>
-  *
-  * <p>
-  * A synchronized version can be obtained with:
-  * <code>Collections.synchronizedMap( theMapToSynchronize )</code>
-  * If it will be accessed by multiple threads, you _must_ synchronize access 
-  * to this Map.  Even concurrent get(Object) operations produce indeterminate
-  * behaviour.
-  * </p>
-  *
-  * <p>
-  * Unlike that Collections 1.0 version, this version of LRUMap does use a true
-  * LRU algorithm.  The keys for all gets and puts are moved to the front of
-  * the list.  LRUMap is now a subclass of SequencedHashMap, and the "LRU"
-  * key is now equivalent to LRUMap.getFirst().
-  * </p>
-  * 
-  * 
-  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
-  */
+/**
+ * <p>
+ * An implementation of a Map which has a maximum size and uses a Least Recently Used
+ * algorithm to remove items from the Map when the maximum size is reached and new items are added.
+ * </p>
+ * 
+ * <p>
+ * A synchronized version can be obtained with:
+ * <code>Collections.synchronizedMap( theMapToSynchronize )</code>
+ * If it will be accessed by multiple threads, you _must_ synchronize access
+ * to this Map.  Even concurrent get(Object) operations produce indeterminate
+ * behaviour.
+ * </p>
+ * 
+ * <p>
+ * Unlike the Collections 1.0 version, this version of LRUMap does use a true
+ * LRU algorithm.  The keys for all gets and puts are moved to the front of
+ * the list.  LRUMap is now a subclass of SequencedHashMap, and the "LRU"
+ * key is now equivalent to LRUMap.getFirst().
+ * </p>
+ * 
+ * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
+ */
 public class LRUMap extends SequencedHashMap implements Externalizable {
         
     private int maximumSize = 0;
