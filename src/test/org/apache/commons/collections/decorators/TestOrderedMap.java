@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestOrderedMap.java,v 1.1 2003/10/03 06:24:13 bayard Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestOrderedMap.java,v 1.2 2003/10/03 12:54:54 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,18 +67,18 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestMap;
+import org.apache.commons.collections.AbstractTestMap;
 
 /**
  * Extension of {@link TestMap} for exercising the {@link OrderedMap}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/03 06:24:13 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/03 12:54:54 $
  * 
  * @author Henri Yandell
  */
-public class TestOrderedMap extends TestMap {
+public class TestOrderedMap extends AbstractTestMap {
 
     public TestOrderedMap(String testName) {
         super(testName);
