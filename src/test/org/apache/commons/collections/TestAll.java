@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.28 2002/06/21 06:17:45 mas Exp $
- * $Revision: 1.28 $
- * $Date: 2002/06/21 06:17:45 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.29 2002/07/03 01:57:08 mas Exp $
+ * $Revision: 1.29 $
+ * $Date: 2002/07/03 01:57:08 $
  *
  * ====================================================================
  *
@@ -67,7 +67,7 @@ import junit.framework.*;
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.28 2002/06/21 06:17:45 mas Exp $
+ * @version $Id: TestAll.java,v 1.29 2002/07/03 01:57:08 mas Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -81,6 +81,8 @@ public class TestAll extends TestCase {
         suite.addTest(TestArrayStack.suite());
         suite.addTest(TestBeanMap.suite());
         suite.addTest(TestBinaryHeap.suite());
+        suite.addTest(TestBoundedFifoBuffer.suite());
+        suite.addTest(TestBoundedFifoBuffer2.suite());
         suite.addTest(TestCollectionUtils.suite());
         suite.addTest(TestComparableComparator.suite());
         suite.addTest(TestComparatorChain.suite());
@@ -106,6 +108,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestSingletonIterator.suite());
         suite.addTest(TestStaticBucketMap.suite());
         suite.addTest(TestTreeBag.suite());
+        suite.addTest(TestUnboundedFifoBuffer.suite());
         suite.addTest(TestUniqueFilterIterator.suite());
         suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
         return suite;
