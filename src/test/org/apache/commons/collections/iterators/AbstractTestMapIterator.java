@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.7 2003/12/01 22:48:58 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.8 2003/12/02 21:56:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.MapIterator;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/12/01 22:48:58 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/02 21:56:34 $
  * 
  * @author Stephen Colebourne
  */
@@ -265,7 +265,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
         assertSame("setValue must return old value", value, old);
         assertEquals("Map must contain key", true, map.containsKey(key));
         assertEquals("Map must not contain old value", false, map.containsValue(old));
-        assertEquals("Map must contain old value", true, map.containsValue(newValue));
+        assertEquals("Map must contain new value", true, map.containsValue(newValue));
         verify();
         
         it.setValue(newValue);  // same value - should be OK
