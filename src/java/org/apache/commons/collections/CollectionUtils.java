@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.35 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.36 2003/09/05 02:16:33 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.35 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.36 $ $Date: 2003/09/05 02:16:33 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -282,13 +282,19 @@ public class CollectionUtils {
      * for each element <i>e</i> in <i>a</i>, and there is at least one
      * element <i>f</i> such that the cardinality of <i>f</i> in <i>b</i>
      * is strictly greater than the cardinality of <i>f</i> in <i>a</i>.
+     * <p>
+     * The implementation assumes
+     * <ul>
+     *    <li><code>a.size()</code> and <code>b.size()</code> represent the 
+     *    total cardinality of <i>a</i> and <i>b</i>, resp. </li>
+     *    <li><code>a.size() < Integer.MAXVALUE</code></li>
+     * </ul></p>
      *
      * @see #isSubCollection
      * @see Collection#containsAll
      */
     public static boolean isProperSubCollection(final Collection a, final Collection b) {
-        // XXX optimize me!
-        return CollectionUtils.isSubCollection(a,b) && (!(CollectionUtils.isEqualCollection(a,b)));
+        return (a.size() < b.size()) && CollectionUtils.isSubCollection(a,b);
     }
 
     /**
@@ -675,7 +681,7 @@ public class CollectionUtils {
      * </ul>
      * 
      * @param obj  the object to get an index of
-     * @param index  the index to get
+     * @param idx  the index to get
      * @throws IndexOutOfBoundsException
      * @throws NoSuchElementException
      */

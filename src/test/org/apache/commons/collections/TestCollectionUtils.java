@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.17 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.17 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Id: TestCollectionUtils.java,v 1.18 2003/09/05 02:16:33 psteitz Exp $
+ * $Revision: 1.18 $
+ * $Date: 2003/09/05 02:16:33 $
  *
  * ====================================================================
  *
@@ -81,7 +81,7 @@ import junit.framework.TestSuite;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  * 
- * @version $Revision: 1.17 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.18 $ $Date: 2003/09/05 02:16:33 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -410,6 +410,30 @@ public class TestCollectionUtils extends TestCase {
         b.add("1");
         assertTrue(CollectionUtils.isEqualCollection(a,b));
         assertTrue(CollectionUtils.isEqualCollection(b,a));
+    }
+    
+    public void testIsProperSubCollection() {
+        Collection a = new ArrayList();
+        Collection b = new ArrayList();
+        assertTrue(!CollectionUtils.isProperSubCollection(a,b));
+        b.add("1");
+        assertTrue(CollectionUtils.isProperSubCollection(a,b));
+        assertTrue(!CollectionUtils.isProperSubCollection(b,a));
+        assertTrue(!CollectionUtils.isProperSubCollection(b,b));
+        assertTrue(!CollectionUtils.isProperSubCollection(a,a));
+        a.add("1");
+        a.add("2");
+        b.add("2");
+        assertTrue(!CollectionUtils.isProperSubCollection(b,a));
+        assertTrue(!CollectionUtils.isProperSubCollection(a,b));
+        a.add("1");
+        assertTrue(CollectionUtils.isProperSubCollection(b,a));
+        assertTrue(CollectionUtils.isProperSubCollection(
+            CollectionUtils.intersection(_a, _b), _a));
+        assertTrue(CollectionUtils.isProperSubCollection(
+            CollectionUtils.subtract(a, b), a));
+        assertTrue(!CollectionUtils.isProperSubCollection(
+            a, CollectionUtils.subtract(a, b)));
     }
 
 
