@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.1 2003/12/03 19:04:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.2 2003/12/06 14:02:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import org.apache.commons.collections.ResettableIterator;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/03 19:04:41 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/06 14:02:11 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -324,7 +324,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
         public Object getKey() {
             HashEntry current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+                throw new IllegalStateException(HashedMap.GETKEY_INVALID);
             }
             return current.getKey();
         }
@@ -332,7 +332,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
         public Object getValue() {
             HashEntry current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+                throw new IllegalStateException(HashedMap.GETVALUE_INVALID);
             }
             return current.getValue();
         }
@@ -340,7 +340,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
         public Object setValue(Object value) {
             HashEntry current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+                throw new IllegalStateException(HashedMap.SETVALUE_INVALID);
             }
             return current.setValue(value);
         }
@@ -487,7 +487,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
                 throw new ConcurrentModificationException();
             }
             if (next == map.header)  {
-                throw new NoSuchElementException("No more elements in the iteration");
+                throw new NoSuchElementException(HashedMap.NO_NEXT_ENTRY);
             }
             current = next;
             next = next.after;
@@ -500,7 +500,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
             }
             LinkedEntry previous = next.before;
             if (previous == map.header)  {
-                throw new NoSuchElementException("No more elements in the iteration");
+                throw new NoSuchElementException(HashedMap.NO_PREVIOUS_ENTRY);
             }
             next = previous;
             current = previous;
@@ -513,7 +513,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
         
         public void remove() {
             if (current == null) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+                throw new IllegalStateException(HashedMap.REMOVE_INVALID);
             }
             if (map.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.6 2003/12/06 13:03:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.7 2003/12/06 14:02:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -87,12 +87,19 @@ import org.apache.commons.collections.MapIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/12/06 13:03:15 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/06 14:02:11 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
  */
 public class HashedMap implements IterableMap, Serializable, Cloneable {
+    
+    protected static final String NO_NEXT_ENTRY = "No next() entry in the iteration";
+    protected static final String NO_PREVIOUS_ENTRY = "No previous() entry in the iteration";
+    protected static final String REMOVE_INVALID = "remove() can only be called once after next()";
+    protected static final String GETKEY_INVALID = "getKey() can only be called after next() and before remove()";
+    protected static final String GETVALUE_INVALID = "getValue() can only be called after next() and before remove()";
+    protected static final String SETVALUE_INVALID = "setValue() can only be called after next() and before remove()";
     
     /** Serialisation version */
     static final long serialVersionUID = -1593250834999590599L;
@@ -596,7 +603,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         public Object getKey() {
             HashEntry current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+                throw new IllegalStateException(HashedMap.GETKEY_INVALID);
             }
             return current.getKey();
         }
@@ -604,7 +611,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         public Object getValue() {
             HashEntry current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+                throw new IllegalStateException(HashedMap.GETVALUE_INVALID);
             }
             return current.getValue();
         }
@@ -612,7 +619,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         public Object setValue(Object value) {
             HashEntry current = currentEntry();
             if (current == null) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+                throw new IllegalStateException(HashedMap.SETVALUE_INVALID);
             }
             return current.setValue(value);
         }
@@ -933,7 +940,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
             }
             HashEntry newCurrent = next;
             if (newCurrent == null)  {
-                throw new NoSuchElementException("No more elements in the iteration");
+                throw new NoSuchElementException(HashedMap.NO_NEXT_ENTRY);
             }
             HashEntry[] data = map.data;
             int i = hashIndex;
@@ -953,7 +960,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         
         public void remove() {
             if (current == null) {
-                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+                throw new IllegalStateException(HashedMap.REMOVE_INVALID);
             }
             if (map.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();

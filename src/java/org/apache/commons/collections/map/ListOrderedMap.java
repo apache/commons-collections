@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.6 2003/12/05 20:23:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.7 2003/12/06 14:02:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -87,7 +87,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntry;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/12/05 20:23:57 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/06 14:02:11 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -466,7 +466,7 @@ public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
         
         public void remove() {
             if (readable == false) {
-                throw new IllegalStateException("Iterator remove() can only be called after next() and before remove()");
+                throw new IllegalStateException(HashedMap.REMOVE_INVALID);
             }
             iterator.remove();
             parent.map.remove(last);
@@ -475,21 +475,21 @@ public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
         
         public Object getKey() {
             if (readable == false) {
-                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+                throw new IllegalStateException(HashedMap.GETKEY_INVALID);
             }
             return last;
         }
 
         public Object getValue() {
             if (readable == false) {
-                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+                throw new IllegalStateException(HashedMap.GETVALUE_INVALID);
             }
             return parent.get(last);
         }
         
         public Object setValue(Object value) {
             if (readable == false) {
-                throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
+                throw new IllegalStateException(HashedMap.SETVALUE_INVALID);
             }
             return parent.map.put(last, value);
         }
@@ -502,9 +502,9 @@ public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
         
         public String toString() {
             if (readable == true) {
-                return "MapIterator[" + getKey() + "=" + getValue() + "]";
+                return "Iterator[" + getKey() + "=" + getValue() + "]";
             } else {
-                return "MapIterator[]";
+                return "Iterator[]";
             }
         }
     }
