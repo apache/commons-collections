@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayIterator.java,v 1.2 2002/12/13 12:10:48 scolebourne Exp $
- * $Revision: 1.2 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestObjectArrayListIterator.java,v 1.1 2002/12/13 12:10:48 scolebourne Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/12/13 12:10:48 $
  *
  * ====================================================================
@@ -60,96 +60,105 @@
  */
 package org.apache.commons.collections.iterators;
 
-import junit.framework.*;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 /**
- * Tests the ArrayIterator to ensure that the next() method will actually
- * perform the iteration rather than the hasNext() method.
- * The code of this test was supplied by Mauricio S. Moura
  * 
- * @author James Strachan
- * @author Mauricio S. Moura
- * @author Morgan Delagrange
- * @author Stephen Colebourne
- * @version $Id: TestArrayIterator.java,v 1.2 2002/12/13 12:10:48 scolebourne Exp $
+ * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
+ * @version $Id: TestObjectArrayListIterator.java,v 1.1 2002/12/13 12:10:48 scolebourne Exp $
  */
-public class TestArrayIterator extends TestIterator {
+public class TestObjectArrayListIterator extends TestObjectArrayIterator {
 
-    protected String[] testArray = { "One", "Two", "Three" };
-
-    public static Test suite() {
-        return new TestSuite(TestArrayIterator.class);
-    }
-
-    public TestArrayIterator(String testName) {
+    public TestObjectArrayListIterator(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestObjectArrayListIterator.class);
+    }
+
     public Iterator makeEmptyIterator() {
-        return new ArrayIterator(new Object[0]);
+        return new ObjectArrayListIterator(new Object[0]);
     }
 
     public Iterator makeFullIterator() {
-        return new ArrayIterator(testArray);
+        return new ObjectArrayListIterator(testArray);
+    }
+
+    public ListIterator makeArrayListIterator(Object[] array) {
+        return new ObjectArrayListIterator(array);
     }
 
     /**
-     * Return a new, empty {@link Object} to used for testing.
+     * Test the basic ListIterator functionality - going backwards using
+     * <code>previous()</code>.
      */
-    public Object makeObject() {
-        return makeFullIterator();
-    }
+    public void testListIterator() {
+        ListIterator iter = (ListIterator) makeFullIterator();
 
-    public boolean supportsRemove() {
-        return false;
-    }
+        // TestArrayIterator#testIterator() has already tested the iterator forward,
+        //  now we need to test it in reverse
 
+        // fast-forward the iterator to the end...
+        while (iter.hasNext()) {
+            iter.next();
+        }
 
-    public void testIterator() {
-        Iterator iter = (Iterator) makeFullIterator();
-        for (int i = 0; i < testArray.length; i++) {
-            Object testValue = testArray[i];
-            Object iterValue = iter.next();
+        for (int x = testArray.length - 1; x >= 0; x--) {
+            Object testValue = testArray[x];
+            Object iterValue = iter.previous();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
 
-        assertTrue("Iterator should now be empty", !iter.hasNext());
+        assertTrue("Iterator should now be empty", !iter.hasPrevious());
 
         try {
-            Object testValue = iter.next();
+            Object testValue = iter.previous();
         } catch (Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
                 e.getClass().equals((new NoSuchElementException()).getClass()));
         }
+
     }
 
-    public void testNullArray() {
-        try {
-            Iterator iter = new ArrayIterator(null);
+    /**
+     * Tests the {@link java.util.ListIterator#set} operation.
+     */
+    public void testListIteratorSet() {
+        String[] testData = new String[] { "a", "b", "c" };
 
-            fail("Constructor should throw a NullPointerException when constructed with a null array");
-        } catch (NullPointerException e) {
-            // expected
+        String[] result = new String[] { "0", "1", "2" };
+
+        ListIterator iter = (ListIterator) makeArrayListIterator(testData);
+        int x = 0;
+
+        while (iter.hasNext()) {
+            iter.next();
+            iter.set(Integer.toString(x));
+            x++;
         }
 
-        ArrayIterator iter = new ArrayIterator();
-        try {
-            iter.setArray(null);
+        assertTrue("The two arrays should have the same value, i.e. {0,1,2}", Arrays.equals(testData, result));
 
-            fail("setArray(null) should throw a NullPointerException");
-        } catch (NullPointerException e) {
+        // a call to set() before a call to next() or previous() should throw an IllegalStateException
+        iter = makeArrayListIterator(testArray);
+
+        try {
+            iter.set("should fail");
+            fail("ListIterator#set should fail if next() or previous() have not yet been called.");
+        } catch (IllegalStateException e) {
             // expected
+        } catch (Throwable t) { // should never happen
+            fail(t.toString());
         }
-    }
-    
-    public void testReset() {
-        ArrayIterator it = (ArrayIterator) makeFullIterator();
-        it.next();
-        it.reset();
-        assertEquals("One", it.next());
+
     }
 
 }

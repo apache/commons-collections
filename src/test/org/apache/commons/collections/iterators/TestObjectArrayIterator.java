@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayIterator.java,v 1.2 2002/12/13 12:10:48 scolebourne Exp $
- * $Revision: 1.2 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestObjectArrayIterator.java,v 1.1 2002/12/13 12:10:48 scolebourne Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/12/13 12:10:48 $
  *
  * ====================================================================
@@ -60,38 +60,58 @@
  */
 package org.apache.commons.collections.iterators;
 
-import junit.framework.*;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 /**
- * Tests the ArrayIterator to ensure that the next() method will actually
- * perform the iteration rather than the hasNext() method.
- * The code of this test was supplied by Mauricio S. Moura
+ * Tests the ObjectArrayIterator.
  * 
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
  * @author Stephen Colebourne
- * @version $Id: TestArrayIterator.java,v 1.2 2002/12/13 12:10:48 scolebourne Exp $
+ * @version $Id: TestObjectArrayIterator.java,v 1.1 2002/12/13 12:10:48 scolebourne Exp $
  */
-public class TestArrayIterator extends TestIterator {
+public class TestObjectArrayIterator extends TestIterator {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
     public static Test suite() {
-        return new TestSuite(TestArrayIterator.class);
+        return new TestSuite(TestObjectArrayIterator.class);
     }
 
-    public TestArrayIterator(String testName) {
+    public TestObjectArrayIterator(String testName) {
         super(testName);
     }
 
     public Iterator makeEmptyIterator() {
-        return new ArrayIterator(new Object[0]);
+        return new ObjectArrayIterator(new Object[0]);
     }
 
     public Iterator makeFullIterator() {
-        return new ArrayIterator(testArray);
+        return new ObjectArrayIterator(testArray);
+    }
+
+    public ObjectArrayIterator makeArrayIterator() {
+        return new ObjectArrayIterator();
+    }
+
+    public ObjectArrayIterator makeArrayIterator(Object[] array) {
+        return new ObjectArrayIterator(array);
+    }
+
+    public ObjectArrayIterator makeArrayIterator(Object[] array, int index) {
+        return new ObjectArrayIterator(array, index);
+    }
+
+    public ObjectArrayIterator makeArrayIterator(Object[] array, int start, int end) {
+        return new ObjectArrayIterator(array, start, end);
+    }
+
+    public boolean supportsRemove() {
+        return false;
     }
 
     /**
@@ -100,11 +120,6 @@ public class TestArrayIterator extends TestIterator {
     public Object makeObject() {
         return makeFullIterator();
     }
-
-    public boolean supportsRemove() {
-        return false;
-    }
-
 
     public void testIterator() {
         Iterator iter = (Iterator) makeFullIterator();
@@ -128,14 +143,14 @@ public class TestArrayIterator extends TestIterator {
 
     public void testNullArray() {
         try {
-            Iterator iter = new ArrayIterator(null);
+            Iterator iter = makeArrayIterator(null);
 
             fail("Constructor should throw a NullPointerException when constructed with a null array");
         } catch (NullPointerException e) {
             // expected
         }
 
-        ArrayIterator iter = new ArrayIterator();
+        ObjectArrayIterator iter = makeArrayIterator();
         try {
             iter.setArray(null);
 
@@ -144,9 +159,19 @@ public class TestArrayIterator extends TestIterator {
             // expected
         }
     }
-    
+
+    public void testDoubleSet() {
+        ObjectArrayIterator it = makeArrayIterator();
+        it.setArray(new String[0]);
+        try {
+            it.setArray(new String[0]);
+            fail();
+        } catch (IllegalStateException ex) {
+        }
+    }
+
     public void testReset() {
-        ArrayIterator it = (ArrayIterator) makeFullIterator();
+        ObjectArrayIterator it = makeArrayIterator(testArray);
         it.next();
         it.reset();
         assertEquals("One", it.next());

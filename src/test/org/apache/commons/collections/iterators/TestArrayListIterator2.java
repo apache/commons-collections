@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.4 2002/12/13 12:10:48 scolebourne Exp $
- * $Revision: 1.4 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayListIterator2.java,v 1.1 2002/12/13 12:10:48 scolebourne Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/12/13 12:10:48 $
  *
  * ====================================================================
@@ -61,42 +61,47 @@
 
 package org.apache.commons.collections.iterators;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Iterator;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.4 2002/12/13 12:10:48 scolebourne Exp $
+ * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
+ * @see org.apache.commons.collections.iterators.TestArrayIterator2
+ * @version $Id: TestArrayListIterator2.java,v 1.1 2002/12/13 12:10:48 scolebourne Exp $
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestArrayListIterator2 extends TestArrayIterator2 {
+
+    public TestArrayListIterator2(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
-        suite.addTest(TestArrayListIterator.suite());
-        suite.addTest(TestArrayListIterator2.suite());
-        suite.addTest(TestObjectArrayIterator.suite());
-        suite.addTest(TestObjectArrayListIterator.suite());
-        suite.addTest(TestCollatingIterator.suite());
-        suite.addTest(TestFilterIterator.suite());
-        suite.addTest(TestFilterListIterator.suite());
-        suite.addTest(TestIteratorChain.suite());
-        suite.addTest(TestListIteratorWrapper.suite());
-        suite.addTest(TestLoopingIterator.suite());
-        suite.addTest(TestSingletonIterator.suite());
-        suite.addTest(TestSingletonListIterator.suite());
-        suite.addTest(TestUniqueFilterIterator.suite());
-        return suite;
+        return new TestSuite(TestArrayListIterator2.class);
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    public Iterator makeEmptyIterator() {
+        return new ArrayListIterator(new int[0]);
     }
+
+    public Iterator makeFullIterator() {
+        return new ArrayListIterator(testArray);
+    }
+
+    public ArrayIterator makeArrayIterator() {
+        return (ArrayIterator) makeEmptyIterator();
+    }
+
+    public ArrayIterator makeArrayIterator(Object array) {
+        return new ArrayListIterator(array);
+    }
+
+    public ArrayIterator makeArrayIterator(Object array, int index) {
+        return new ArrayListIterator(array, index);
+    }
+
+    public ArrayIterator makeArrayIterator(Object array, int start, int end) {
+        return new ArrayListIterator(array, start, end);
+    }
+
 }
