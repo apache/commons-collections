@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.41 2003/03/09 00:07:41 scolebourne Exp $
- * $Revision: 1.41 $
- * $Date: 2003/03/09 00:07:41 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.42 2003/04/26 15:13:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import junit.framework.Test;
@@ -67,8 +63,11 @@ import junit.framework.TestSuite;
 
 /**
  * Entry point for all Collections tests.
+ * 
+ * @version $Revision: 1.42 $ $Date: 2003/04/26 15:13:54 $
+ * 
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.41 2003/03/09 00:07:41 scolebourne Exp $
+ * @author Stephen Colebourne
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -82,6 +81,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestBinaryHeap.suite());
         suite.addTest(TestBoundedFifoBuffer.suite());
         suite.addTest(TestBoundedFifoBuffer2.suite());
+        suite.addTest(TestCircularFifoBuffer.suite());
         suite.addTest(TestCollectionUtils.suite());
         suite.addTest(TestCommonsLinkedList.suite());
         suite.addTest(TestBufferUtils.suite());
