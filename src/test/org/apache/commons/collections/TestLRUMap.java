@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.10 2002/02/19 21:17:41 morgand Exp $
- * $Revision: 1.10 $
- * $Date: 2002/02/19 21:17:41 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.11 2002/02/19 21:28:53 morgand Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/02/19 21:28:53 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.10 2002/02/19 21:17:41 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.11 2002/02/19 21:28:53 morgand Exp $
  */
 public class TestLRUMap extends TestMap
 {
@@ -162,6 +162,32 @@ public class TestLRUMap extends TestMap
 
         assertTrue("null value in Map",map.containsValue(null));
         assertTrue("key to a null value",map.containsKey(new Integer(2)));
+    }
+
+    /**
+     * Test performs a complex series of puts, then makes sure
+     * that they have ended up in the correct LRU order.
+     */
+    public void testTrueLRU() {
+        // implement when subclass of SequencedHashMap
+    }
+
+    /**
+     * Test that the size of the map is reduced immediately
+     * when setMaximumSize(int) is called
+     */
+    public void testSetMaximumSize() {
+        LRUMap map = new LRUMap(6);
+        map.put("1","1");
+        map.put("2","2");
+        map.put("3","3");
+        map.put("4","4");
+        map.put("5","5");
+        map.put("6","6");
+        map.setMaximumSize(3);
+
+        assertTrue("map should have size = 3, but actually = " + map.size(), 
+                   map.size() == 3);
     }
 
 
