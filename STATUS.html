@@ -7,7 +7,7 @@
 
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
-$Id: STATUS.html,v 1.12 2002/03/07 18:17:47 morgand Exp $<br>
+$Id: STATUS.html,v 1.13 2002/03/15 05:41:23 morgand Exp $<br>
 <a href="#Introduction">[Introduction]</a>
 <a href="#Dependencies">[Dependencies]</a>
 <a href="#Release Info">[Release Info]</a>
@@ -98,6 +98,12 @@ The following classes are included:</p>
 <li><strong>PriorityQueue</strong> - a PriorityQueue interface, with
     <strong>BinaryHeap</strong> and <strong>SynchronizedPriorityQueue</strong>
     implementations.</li>
+<li><strong>ProxyMap</strong> - This <code>Map</code> wraps another <code>Map</code>
+    implementation, using the wrapped instance for its default
+    implementation.  This class is used as a framework on which to
+    build to extensions for its wrapped <code>Map</code> object which
+    would be unavailable or inconvenient via sub-classing (but usable
+    via composition).</li>
 <li><strong>ReverseComparator</strong> - Reverses the order of another comparator.</li>
 <li><strong>SequencedHashMap</strong> -  A map of objects whose mapping entries are 
     sequenced based on the order in

@@ -37,6 +37,12 @@ useful Comparator classes.</p>
     and then a Object get( key ); will return you a Collection 
     instead of an Integer.  This is an interface implemented
     by <strong>MultiHashMap</strong>.</li>
+<li><strong>ProxyMap</strong> - This <code>Map</code> wraps another <code>Map</code>
+    implementation, using the wrapped instance for its default
+    implementation.  This class is used as a framework on which to
+    build to extensions for its wrapped <code>Map</code> object which
+    would be unavailable or inconvenient via sub-classing (but usable
+    via composition).</li>
 <li><strong>SequencedHashMap</strong> -  A map of objects whose mapping entries are 
     sequenced based on the order in
     which they were added.</li>
