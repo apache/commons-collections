@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.17 2003/09/21 16:26:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.18 2003/09/28 21:54:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,13 +77,14 @@ import org.apache.commons.collections.decorators.UnmodifiableSet;
 import org.apache.commons.collections.decorators.UnmodifiableSortedSet;
 import org.apache.commons.collections.observed.ModificationListener;
 import org.apache.commons.collections.observed.ObservableSet;
+import org.apache.commons.collections.observed.ObservableSortedSet;
 
 /**
  * Provides utility methods and decorators for
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.17 $ $Date: 2003/09/21 16:26:08 $
+ * @version $Revision: 1.18 $ $Date: 2003/09/28 21:54:35 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -381,6 +382,26 @@ public class SetUtils {
      */
     public static SortedSet transformedSortedSet(SortedSet set, Transformer transformer) {
         return TransformedSortedSet.decorate(set, transformer);
+    }
+    
+    /**
+     * Returns an observable sorted set where changes are notified to listeners.
+     * <p>
+     * This method creates an observable set and attaches the specified listener.
+     * If more than one listener or other complex setup is required then the
+     * ObservableSortedSet class should be accessed directly.
+     *
+     * @param set  the set to decorate, must not be null
+     * @param listener  set listener, must not be null
+     * @return the observed set
+     * @throws IllegalArgumentException if the set or listener is null
+     * @throws IllegalArgumentException if there is no valid handler for the listener
+     */
+    public static ObservableSortedSet observableSortedSet(SortedSet set, ModificationListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
+        return ObservableSortedSet.decorate(set, listener);
     }
     
 }
