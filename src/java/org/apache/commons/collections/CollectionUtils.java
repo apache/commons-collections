@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.3 2001/05/06 11:04:25 jstrachan Exp $
- * $Revision: 1.3 $
- * $Date: 2001/05/06 11:04:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.4 2001/05/22 15:53:06 jstrachan Exp $
+ * $Revision: 1.4 $
+ * $Date: 2001/05/22 15:53:06 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.Set;
  *
  * @author Rodney Waldhoff
  *
- * @version $Id: CollectionUtils.java,v 1.3 2001/05/06 11:04:25 jstrachan Exp $
+ * @version $Id: CollectionUtils.java,v 1.4 2001/05/22 15:53:06 jstrachan Exp $
  */
 public class CollectionUtils {
     /**
@@ -325,10 +325,8 @@ public class CollectionUtils {
     
     /** Selects all elements from inputCollection which match the given predicate
       * and adds them to outputCollection
-      *
-      * @return the outputCollection
       */
-    public static Collection select( Collection inputCollection, Predicate predicate, Collection outputCollection ) {
+    public static void select( Collection inputCollection, Predicate predicate, Collection outputCollection ) {
         if ( inputCollection != null && predicate != null ) {            
             for ( Iterator iter = inputCollection.iterator(); iter.hasNext(); ) {
                 Object item = iter.next();
@@ -337,7 +335,6 @@ public class CollectionUtils {
                 }
             }
         }
-        return outputCollection;
     }
     
     /** Transforms all elements from inputCollection with the given transformer 
