@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.33 2003/09/09 21:05:51 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.34 2003/09/17 19:59:45 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.33 $ $Date: 2003/09/09 21:05:51 $
+ * @version $Revision: 1.34 $ $Date: 2003/09/17 19:59:45 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -641,7 +641,7 @@ public class MapUtils {
      * @param map  the map to convert to a Properties object, may not be null
      * @return the properties object
      */
-    public static Properties toProperties(Map map) {
+    public static Properties toProperties(final Map map) {
         Properties answer = new Properties();
         if (map != null) {
             for (Iterator iter = map.entrySet().iterator(); iter.hasNext();) {
@@ -661,7 +661,7 @@ public class MapUtils {
      * @return the hashmap containing the data
      * @throws NullPointerException if the bundle is null
      */
-    public static Map toMap(ResourceBundle resourceBundle) {
+    public static Map toMap(final ResourceBundle resourceBundle) {
         Enumeration enum = resourceBundle.getKeys();
         Map map = new HashMap();
 
@@ -698,7 +698,7 @@ public class MapUtils {
         final Map map) {
 
         indentDepth = 0;
-        verbosePrintInternal(out, label, map, false);
+        verbosePrintInternal(out, label, map, new ArrayStack(), false);
     }
 
     /**
@@ -722,7 +722,7 @@ public class MapUtils {
         final Map map) {
 
         indentDepth = 0;
-        verbosePrintInternal(out, label, map, true);
+        verbosePrintInternal(out, label, map, new ArrayStack(), true);
     }
 
     // Implementation methods
@@ -733,7 +733,7 @@ public class MapUtils {
      *
      * @param out  the stream to indent
      */
-    protected static void printIndent(PrintStream out) {
+    protected static void printIndent(final PrintStream out) {
         for (int i = 0; i < indentDepth; i++) {
             out.print(INDENT_STRING);
         }
@@ -744,7 +744,7 @@ public class MapUtils {
      *
      * @param ex  the exception to log
      */
-    protected static void logInfo(Exception ex) {
+    protected static void logInfo(final Exception ex) {
         System.out.println("INFO: Exception: " + ex);
     }
 
@@ -752,14 +752,23 @@ public class MapUtils {
      * Implementation providing functionality for {@link #debugPrint} and for 
      * {@link #verbosePrint}.  This prints the given map with nice line breaks.
      * If the debug flag is true, it additionally prints the type of the object 
-     * value.
+     * value.  If the contents of a map include the map itself, then the text 
+     * <em>(this Map)</em> is printed out.  If the contents include a 
+     * parent container of the map, the the text <em>(ancestor[i] Map)</em> is 
+     * printed, where i actually indicates the number of levels which must be 
+     * traversed in the sequential list of ancesters (e.g. father, grandfather, 
+     * great-grandfather, etc).  
      *
      * @param out  the stream to print to
-     * @param label  The label to be used, may be <code>null</code>.
+     * @param label  the label to be used, may be <code>null</code>.
      *  If <code>null</code>, the label is not output.
      *  It typically represents the name of the property in a bean or similar.
-     * @param map  The map to print, may be <code>null</code>.
-     *  If <code>null</code>, the text 'null' is output.
+     * @param map  the map to print, may be <code>null</code>.
+     *  If <code>null</code>, the text 'null' is output
+     * @param lineage  a stack consisting of any maps in which the previous 
+     *  argument is contained. This is checked to avoid infinite recursion when
+     *  printing the output
+     *                   
      * @param debug flag indicating whether type names should be output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
@@ -767,8 +776,9 @@ public class MapUtils {
         final PrintStream out,
         final Object label,
         final Map map,
+        final ArrayStack lineage,
         final boolean debug) {
-
+        
         printIndent(out);
 
         if (map == null) {
@@ -786,19 +796,38 @@ public class MapUtils {
 
         printIndent(out);
         out.println("{");
+
         indentDepth++;
+        lineage.push(map);
 
         for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
             Object childKey = entry.getKey();
             Object childValue = entry.getValue();
-            if (childValue instanceof Map && childValue != map) {
-                verbosePrintInternal(out, (childKey == null ? "null" : childKey), (Map) childValue, debug);
+            if (childValue instanceof Map && !lineage.contains(childValue)) {
+                verbosePrintInternal(
+                    out,
+                    (childKey == null ? "null" : childKey),
+                    (Map) childValue,
+                    lineage,
+                    debug);
             } else {
                 printIndent(out);
                 out.print(childKey);
                 out.print(" = ");
-                out.print(childValue == map ? "(this Map)" : childValue);
+                
+                final int lineageIndex = lineage.indexOf(childValue);
+                if (lineageIndex == -1) {
+                    out.print(childValue);
+                } else if (lineage.size() - 1 == lineageIndex) {
+                    out.print("(this Map)");    
+                } else {
+                    out.print(
+                        "(ancestor["
+                            + (lineage.size() - 1 - lineageIndex - 1)
+                            + "] Map)");
+                }
+                
                 if (debug && childValue != null) {
                     out.print(' ');
                     out.println(childValue.getClass().getName());
@@ -808,7 +837,9 @@ public class MapUtils {
             }
         }
         
+        lineage.pop();
         indentDepth--;
+
         printIndent(out);
         out.println(debug ? "} " + map.getClass().getName() : "}");
     }
