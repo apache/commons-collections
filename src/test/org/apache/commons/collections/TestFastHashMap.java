@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.7 2002/08/12 18:00:46 pjack Exp $
- * $Revision: 1.7 $
- * $Date: 2002/08/12 18:00:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.8 2002/10/12 22:36:21 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/10/12 22:36:21 $
  *
  * ====================================================================
  *
@@ -61,15 +61,13 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import java.util.HashMap;
 import java.util.Map;
+
+import junit.framework.Test;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastHashMap.java,v 1.7 2002/08/12 18:00:46 pjack Exp $
+ * @version $Id: TestFastHashMap.java,v 1.8 2002/10/12 22:36:21 scolebourne Exp $
  */
 public class TestFastHashMap extends TestMap
 {

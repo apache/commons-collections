@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.11 2002/08/13 00:26:52 pjack Exp $
- * $Revision: 1.11 $
- * $Date: 2002/08/13 00:26:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.12 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,17 +61,16 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.AbstractCollection;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
-import java.util.Arrays;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -90,7 +89,7 @@ import java.util.NoSuchElementException;
  *
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Id: TestList.java,v 1.11 2002/08/13 00:26:52 pjack Exp $
+ * @version $Id: TestList.java,v 1.12 2002/10/12 22:36:22 scolebourne Exp $
  */
 public abstract class TestList extends TestCollection {
 

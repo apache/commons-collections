@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestProxyMap.java,v 1.1 2002/03/15 05:37:21 morgand Exp $
- * $Revision: 1.1 $
- * $Date: 2002/03/15 05:37:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestProxyMap.java,v 1.2 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,10 +61,7 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import java.util.Map;
+
 
 /**
  * Tests the {@link org.apache.commons.collections.ProxyMap} class.

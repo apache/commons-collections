@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractIntArrayList.java,v 1.3 2002/08/19 21:19:03 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/19 21:19:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractIntArrayList.java,v 1.4 2002/10/12 22:36:21 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/10/12 22:36:21 $
  *
  * ====================================================================
  *
@@ -61,14 +61,12 @@
 
 package org.apache.commons.collections.primitives;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.apache.commons.collections.TestList;
 import java.util.List;
 
+import org.apache.commons.collections.TestList;
+
 /**
- * @version $Revision: 1.3 $ $Date: 2002/08/19 21:19:03 $
+ * @version $Revision: 1.4 $ $Date: 2002/10/12 22:36:21 $
  * @author Rodney Waldhoff
  */
 public abstract class TestAbstractIntArrayList extends TestList {

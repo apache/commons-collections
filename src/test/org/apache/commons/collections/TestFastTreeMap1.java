@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.4 2002/08/13 04:34:09 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/13 04:34:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.5 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,17 +61,16 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.util.Map;
 import java.util.TreeMap;
+
+import junit.framework.Test;
 
 /**
  * Test FastTreeMap in <strong>fast</strong> mode.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap1.java,v 1.4 2002/08/13 04:34:09 pjack Exp $
+ * @version $Id: TestFastTreeMap1.java,v 1.5 2002/10/12 22:36:22 scolebourne Exp $
  */
 public class TestFastTreeMap1 extends TestFastTreeMap
 {

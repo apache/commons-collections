@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.18 2002/06/18 03:28:35 mas Exp $
- * $Revision: 1.18 $
- * $Date: 2002/06/18 03:28:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.19 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.19 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,21 +61,13 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.ConcurrentModificationException;
-import java.util.Map;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-import java.util.Iterator;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Tests base {@link java.util.Map} methods and contracts.
@@ -160,7 +152,7 @@ import java.util.NoSuchElementException;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Id: TestMap.java,v 1.18 2002/06/18 03:28:35 mas Exp $
+ * @version $Id: TestMap.java,v 1.19 2002/10/12 22:36:22 scolebourne Exp $
  */
 public abstract class TestMap extends TestObject {
 

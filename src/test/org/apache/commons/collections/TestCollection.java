@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.8 2002/06/21 03:32:06 mas Exp $
- * $Revision: 1.8 $
- * $Date: 2002/06/21 03:32:06 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.9 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,7 +61,6 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +71,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 
 /**
@@ -157,7 +155,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestCollection.java,v 1.8 2002/06/21 03:32:06 mas Exp $
+ * @version $Id: TestCollection.java,v 1.9 2002/10/12 22:36:22 scolebourne Exp $
  */
 public abstract class TestCollection extends TestObject {
 

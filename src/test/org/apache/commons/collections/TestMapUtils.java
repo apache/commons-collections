@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.1 2002/08/13 00:26:52 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/13 00:26:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.2 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -60,11 +60,11 @@
  */
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import java.util.Arrays;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+
+import junit.framework.Test;
 
 
 /**

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterIterator.java,v 1.2 2002/10/12 22:36:23 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/10/12 22:36:23 $
  *
  * ====================================================================
  *
@@ -63,7 +63,6 @@
 // TestFilterIterator.java 
 package org.apache.commons.collections.iterators;
 
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Test;
 import java.util.Iterator;

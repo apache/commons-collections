@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.11 2002/06/18 01:04:03 mas Exp $
- * $Revision: 1.11 $
- * $Date: 2002/06/18 01:04:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.12 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,24 +61,17 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Tests base {@link java.util.Object} methods and contracts.
@@ -91,7 +84,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.11 2002/06/18 01:04:03 mas Exp $
+ * @version $Id: TestObject.java,v 1.12 2002/10/12 22:36:22 scolebourne Exp $
  */
 public abstract class TestObject extends BulkTest {
     public TestObject(String testName) {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.1 2002/08/17 22:14:47 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/17 22:14:47 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.2 2002/10/12 22:36:21 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/10/12 22:36:21 $
  *
  * ====================================================================
  *
@@ -65,7 +65,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 /**
  *  Tests for IteratorUtils.
  */

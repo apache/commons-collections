@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 public class TestComparableComparator extends TestComparator {

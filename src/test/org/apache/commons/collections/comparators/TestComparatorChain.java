@@ -1,13 +1,11 @@
 package org.apache.commons.collections.comparators;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 public class TestComparatorChain extends TestComparator {

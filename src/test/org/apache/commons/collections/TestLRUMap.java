@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.22 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.22 $
- * $Date: 2002/06/18 05:35:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.23 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.23 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,20 +61,19 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Set;
+
+import junit.framework.Test;
 
 /**
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.22 2002/06/18 05:35:58 mas Exp $
+ * @version $Id: TestLRUMap.java,v 1.23 2002/10/12 22:36:22 scolebourne Exp $
  */
 public class TestLRUMap extends TestSequencedHashMap
 {

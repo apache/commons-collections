@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.5 2002/02/26 00:31:32 morgand Exp $
- * $Revision: 1.5 $
- * $Date: 2002/02/26 00:31:32 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.6 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,15 +61,11 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.util.TreeMap;
-import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestTreeMap.java,v 1.5 2002/02/26 00:31:32 morgand Exp $
+ * @version $Id: TestTreeMap.java,v 1.6 2002/10/12 22:36:22 scolebourne Exp $
  */
 public abstract class TestTreeMap extends TestMap
 {

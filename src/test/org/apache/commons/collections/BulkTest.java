@@ -1,7 +1,6 @@
 package org.apache.commons.collections;
 
 
-import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.lang.reflect.Constructor;
@@ -120,7 +119,7 @@ import java.util.List;
  *  interpret bulk test methods.
  *
  *  @author Paul Jack
- *  @version $Id: BulkTest.java,v 1.1 2002/06/18 01:04:03 mas Exp $
+ *  @version $Id: BulkTest.java,v 1.2 2002/10/12 22:36:22 scolebourne Exp $
  */
 public class BulkTest extends TestCase implements Cloneable {
 

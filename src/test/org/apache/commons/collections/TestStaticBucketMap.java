@@ -54,15 +54,9 @@ package org.apache.commons.collections;
  * <http://www.apache.org/>.
  */
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Unit tests 

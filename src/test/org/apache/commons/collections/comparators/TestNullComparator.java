@@ -59,14 +59,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  *  Test the NullComparator 
  *
  *  @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- *  @version $Id: TestNullComparator.java,v 1.2 2002/06/11 02:41:47 mas Exp $
+ *  @version $Id: TestNullComparator.java,v 1.3 2002/10/12 22:36:23 scolebourne Exp $
  **/
 public abstract class TestNullComparator extends TestComparator {
 

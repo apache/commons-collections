@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.5 2002/08/17 12:07:24 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/17 12:07:24 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.6 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -61,13 +61,14 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.NoSuchElementException;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
@@ -76,7 +77,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * Tests the BinaryHeap.
  * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestBinaryHeap.java,v 1.5 2002/08/17 12:07:24 scolebourne Exp $
+ * @version $Id: TestBinaryHeap.java,v 1.6 2002/10/12 22:36:22 scolebourne Exp $
  */
 public class TestBinaryHeap extends TestCollection {
     

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.1 2002/08/12 18:13:09 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/12 18:13:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.2 2002/10/12 22:36:21 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/10/12 22:36:21 $
  *
  * ====================================================================
  *
@@ -61,24 +61,18 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
-import java.lang.ref.ReferenceQueue;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+
+import junit.framework.Test;
 
 
 /**
  * Tests for ReferenceMap. 
  *
  * @author Paul Jack
- * @version $Id: TestReferenceMap.java,v 1.1 2002/08/12 18:13:09 pjack Exp $
+ * @version $Id: TestReferenceMap.java,v 1.2 2002/10/12 22:36:21 scolebourne Exp $
  */
 public class TestReferenceMap extends TestMap {
 

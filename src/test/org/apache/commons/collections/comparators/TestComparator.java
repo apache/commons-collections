@@ -5,11 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.TestObject;
 
 public abstract class TestComparator extends TestObject {

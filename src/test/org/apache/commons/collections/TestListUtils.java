@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.4 2002/08/18 20:11:38 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/18 20:11:38 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.5 2002/10/12 22:36:22 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/10/12 22:36:22 $
  *
  * ====================================================================
  *
@@ -60,11 +60,11 @@
  */
 package org.apache.commons.collections;
 
-import junit.framework.Test;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
+
+import junit.framework.Test;
 
 
 public class TestListUtils extends BulkTest {

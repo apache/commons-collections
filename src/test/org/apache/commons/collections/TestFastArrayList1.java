@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.3 2002/08/13 04:34:09 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/13 04:34:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.4 2002/10/12 22:36:21 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/10/12 22:36:21 $
  *
  * ====================================================================
  *
@@ -61,17 +61,16 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import java.util.ArrayList;
 import java.util.List;
+
+import junit.framework.Test;
 
 /**
  * Test FastArrayList implementation in <strong>fast</strong> mode.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList1.java,v 1.3 2002/08/13 04:34:09 pjack Exp $
+ * @version $Id: TestFastArrayList1.java,v 1.4 2002/10/12 22:36:21 scolebourne Exp $
  */
 public class TestFastArrayList1 extends TestFastArrayList
 {
