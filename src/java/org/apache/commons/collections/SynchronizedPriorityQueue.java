@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.9 2003/11/29 17:26:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.10 2004/01/01 18:57:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,11 +64,11 @@ import java.util.NoSuchElementException;
  * Provides synchronized wrapper methods for all the methods 
  * defined in the PriorityQueue interface.
  *
- * @deprecated Moved to buffer subpackage. Due to be removed in v4.0.
+ * @deprecated Use PriorityQueueUtils. Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.9 $ $Date: 2003/11/29 17:26:21 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/01 18:57:37 $
  * 
- * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a> 
+ * @author Ram Chidambaram
  */
 public final class SynchronizedPriorityQueue implements PriorityQueue {
 

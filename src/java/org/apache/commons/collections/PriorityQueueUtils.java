@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/PriorityQueueUtils.java,v 1.4 2003/12/03 14:39:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/PriorityQueueUtils.java,v 1.5 2004/01/01 18:57:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,15 +57,13 @@
  */
 package org.apache.commons.collections;
 
-import org.apache.commons.collections.buffer.BinaryHeap;
-import org.apache.commons.collections.buffer.SynchronizedPriorityQueue;
-import org.apache.commons.collections.buffer.UnmodifiablePriorityQueue;
+import java.util.NoSuchElementException;
 
 /**
  * Provides static utility methods and decorators for {@link PriorityQueue}.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/03 14:39:42 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/01 18:57:37 $
  * 
  * @author Stephen Colebourne
  */
@@ -74,7 +72,7 @@ public class PriorityQueueUtils {
     /**
      * An empty unmodifiable priority queue.
      */
-    public static final PriorityQueue EMPTY_PRIORITY_QUEUE = UnmodifiablePriorityQueue.decorate(new BinaryHeap());
+    public static final PriorityQueue EMPTY_PRIORITY_QUEUE = new EmptyPriorityQueue();
 
     /**
      * <code>PriorityQueueUtils</code> should not normally be instantiated.
@@ -91,7 +89,7 @@ public class PriorityQueueUtils {
      * @throws IllegalArgumentException  if the priority queue is null
      */
     public static PriorityQueue synchronizedPriorityQueue(PriorityQueue priorityQueue) {
-        return SynchronizedPriorityQueue.decorate(priorityQueue);
+        return new SynchronizedPriorityQueue(priorityQueue);
     }
 
     /**
@@ -102,7 +100,124 @@ public class PriorityQueueUtils {
      * @throws IllegalArgumentException  if the priority queue is null
      */
     public static PriorityQueue unmodifiablePriorityQueue(PriorityQueue priorityQueue) {
-        return UnmodifiablePriorityQueue.decorate(priorityQueue);
+        return new UnmodifiablePriorityQueue(priorityQueue);
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Decorator for PriorityQueue that adds synchronization.
+     */
+    static class SynchronizedPriorityQueue implements PriorityQueue {
+
+        /** The priority queue to decorate */
+        protected final PriorityQueue priorityQueue;
+
+        protected SynchronizedPriorityQueue(PriorityQueue priorityQueue) {
+            if (priorityQueue == null) {
+                throw new IllegalArgumentException("PriorityQueue must not be null");
+            }
+            this.priorityQueue = priorityQueue;
+        }
+
+        public synchronized boolean isEmpty() {
+            return priorityQueue.isEmpty();
+        }
+
+        public synchronized Object peek() {
+            return priorityQueue.peek();
+        }
+
+        public synchronized Object pop() {
+            return priorityQueue.pop();
+        }
+
+        public synchronized void insert(Object obj) {
+            priorityQueue.insert(obj);
+        }
+
+        public synchronized void clear() {
+            priorityQueue.clear();
+        }
+
+        public synchronized String toString() {
+            return priorityQueue.toString();
+        }
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Decorator for PriorityQueue that prevents changes.
+     */
+    static class UnmodifiablePriorityQueue implements PriorityQueue, Unmodifiable {
+
+        /** The priority queue to decorate */
+        protected final PriorityQueue priorityQueue;
+
+        protected UnmodifiablePriorityQueue(PriorityQueue priorityQueue) {
+            if (priorityQueue == null) {
+                throw new IllegalArgumentException("PriorityQueue must not be null");
+            }
+            this.priorityQueue = priorityQueue;
+        }
+
+        public synchronized boolean isEmpty() {
+            return priorityQueue.isEmpty();
+        }
+
+        public synchronized Object peek() {
+            return priorityQueue.peek();
+        }
+
+        public synchronized Object pop() {
+            throw new UnsupportedOperationException();
+        }
+
+        public synchronized void insert(Object obj) {
+            throw new UnsupportedOperationException();
+        }
+
+        public synchronized void clear() {
+            throw new UnsupportedOperationException();
+        }
+
+        public synchronized String toString() {
+            return priorityQueue.toString();
+        }
+    
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * PriorityQueue that is empty.
+     */
+    static class EmptyPriorityQueue implements PriorityQueue, Unmodifiable {
+
+        protected EmptyPriorityQueue() {
+        }
+
+        public synchronized boolean isEmpty() {
+            return true;
+        }
+
+        public synchronized Object peek() {
+            throw new NoSuchElementException();
+        }
+
+        public synchronized Object pop() {
+            throw new UnsupportedOperationException();
+        }
+
+        public synchronized void insert(Object obj) {
+            throw new UnsupportedOperationException();
+        }
+
+        public synchronized void clear() {
+            throw new UnsupportedOperationException();
+        }
+
+        public synchronized String toString() {
+            return "[]";
+        }
+    
+    }
 }
