@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.33.2.1 2004/05/22 11:18:45 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.33.2.2 2004/05/22 22:58:22 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -68,7 +68,8 @@
       <property name="dest.doc" value="${dest}/docs"/>
       <property name="dest.doc.api" value="${dest.doc}/api"/>
       <property name="dest.jardir" value="${dest}"/>
-      <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
+      <property name="jar.name" value="${name}-${component.version}.jar"/>
+      <property name="dest.jardir.jar" value="${dest.jardir}/${jar.name}"/>
       
       <property name="bin.name" value="${name}-${component.version}"/>
       <property name="dest.bin.tar" value="${dest}/${bin.name}.tar"/>
@@ -81,10 +82,10 @@
       <property name="dest.src.zip" value="${dest}/${src.name}.zip"/>
       
       <patternset id="patternset-exclude-distros">
-        <exclude name="**/${bin.name}.tar.gz"/>
-        <exclude name="**/${bin.name}.zip"/>
-        <exclude name="**/${src.name}.tar.gz"/>
-        <exclude name="**/${src.name}.zip"/>
+        <exclude name="**/${bin.name}.tar.gz*"/>
+        <exclude name="**/${bin.name}.zip*"/>
+        <exclude name="**/${src.name}.tar.gz*"/>
+        <exclude name="**/${src.name}.zip*"/>
       </patternset>
       
       <!-- set the cvs.root property in the build.properties file -->
@@ -175,7 +176,7 @@
                destdir="${dest.doc.api}"
                windowtitle="${Name-Long}"
                doctitle="${Name-Long}"
-               bottom="&lt;small&gt;Copyright &amp;copy; 2001-2002 Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
+               bottom="&lt;small&gt;Copyright &amp;copy; 2001-2004 Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
                protected="true"
                version="true"
                author="true"
@@ -189,7 +190,7 @@
                nonavbar="false"
                serialwarn="false">
           <group title="Jakarta-commons Collections" packages="org.apache.commons.collections"/>
-          <link href="http://java.sun.com/products/jdk/1.3/docs/api"/>
+          <link href="http://java.sun.com/products/j2se/1.4/docs/api"/>
       </javadoc>
       <delete dir="${workdir}"/>
    </target>
@@ -245,7 +246,7 @@
 
    <!-- ######################################################### -->
 
-   <target name="dist" depends="dist-jar,doc,dist-tar,dist-zip" description="builds binary distribution"/>
+   <target name="dist" depends="dist-jar,doc,dist-tar,dist-zip,dist-src" description="builds binary distribution"/>
 
    <target name="dist-jar" depends="build">
       <mkdir dir="${dest.jardir}"/>
@@ -258,6 +259,7 @@
       
       <mkdir dir="${workdir}/META-INF"/>
       <copy todir="${workdir}/META-INF" file="./LICENSE.txt"/>
+      <copy todir="${workdir}/META-INF" file="./NOTICE.txt"/>
       
       <jar jarfile="${dest.jardir.jar}" manifest="${source.src}/conf/MANIFEST.MF">
          <fileset dir="${workdir}"/>
@@ -313,19 +315,39 @@
 
    <target name="dist-src" depends="init">
    
-      <!-- not executed in default dist, because it is configuration-rich
-        and requires an active network connection -->
-                       
       <mkdir dir="${workdir}"/>
       <mkdir dir="${dest.jardir}"/>
-
-      <cvs dest="${workdir}" cvsRoot="${cvs.root}" 
+      
+      <copy toDir="${workdir}/${src.name}">
+         <fileset dir=".">
+            <include name="src/**" />
+            <include name="data/**" />
+            <include name="xdocs/**" />
+            <include name="LICENSE.txt" />
+            <include name="NOTICE.txt" />
+            <include name="README.txt" />
+            <include name="RELEASE-NOTES*" />
+            <include name="DEVELOPERS-GUIDE*" />
+            <include name="PROPOSAL*" />
+            <include name="STATUS*" />
+            <include name="build.xml" />
+            <include name="build.properties.sample" />
+         </fileset>
+      </copy>
+      <copy toDir="${workdir}/${src.name}">
+         <fileset dir="${dest.jardir}">
+            <include name="${jar.name}" />
+         </fileset>
+      </copy>
+      
+      <!--cvs dest="${workdir}" cvsRoot="${cvs.root}" 
           package="jakarta-commons" tag="${cvs.tag}"/>
       <move toDir="${workdir}/${src.name}">
         <fileset dir="${workdir}/jakarta-commons/collections"/>
       </move>
       <delete dir="${workdir}/jakarta-commons"/> 
       <copy file="./LICENSE.txt" toDir="${workdir}/${src.name}"/>
+      <copy file="./NOTICE.txt" toDir="${workdir}/${src.name}"/-->
       
       <!-- create tar.gz -->
       <tar longfile="gnu" tarfile="${dest.src.tar}">
