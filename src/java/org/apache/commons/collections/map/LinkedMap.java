@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.2 2003/12/06 14:02:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.3 2003/12/07 01:23:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,8 @@ import org.apache.commons.collections.ResettableIterator;
 
 /**
  * A <code>Map</code> implementation that maintains the order of the entries.
- * The order maintained is by insertion.
+ * In this implementation order is maintained is by original insertion, but
+ * subclasses may work differently.
  * <p>
  * This implementation improves on the JDK1.4 LinkedHashMap by adding the 
  * {@link org.apache.commons.collections.iterators.MapIterator MapIterator}
@@ -84,9 +85,12 @@ import org.apache.commons.collections.ResettableIterator;
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * <p>
+ * The implementation is also designed to be subclassed, with lots of useful
+ * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/06 14:02:11 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/07 01:23:54 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -97,7 +101,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
     static final long serialVersionUID = -1954063410665686469L;
     
     /** Header in the linked list */
-    private transient LinkedEntry header;
+    protected transient LinkEntry header;
 
     /**
      * Constructs a new empty map with default size and load factor.
@@ -123,7 +127,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
      * @throws IllegalArgumentException if the initial capacity is less than one
-     * @throws IllegalArgumentException if the load factor is less than one
+     * @throws IllegalArgumentException if the load factor is less than zero
      */
     public LinkedMap(int initialCapacity, float loadFactor) {
         super(initialCapacity, loadFactor);
@@ -143,7 +147,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
      * Initialise this subclass during construction.
      */
     protected void init() {
-        header = new LinkedEntry(null, -1, null, null);
+        header = new LinkEntry(null, -1, null, null);
         header.before = header.after = header;
     }
 
@@ -157,13 +161,13 @@ public class LinkedMap extends HashedMap implements OrderedMap {
     public boolean containsValue(Object value) {
         // override uses faster iterator
         if (value == null) {
-            for (LinkedEntry entry = header.after; entry != header; entry = entry.after) {
+            for (LinkEntry entry = header.after; entry != header; entry = entry.after) {
                 if (entry.getValue() == null) {
                     return true;
                 }
             }
         } else {
-            for (LinkedEntry entry = header.after; entry != header; entry = entry.after) {
+            for (LinkEntry entry = header.after; entry != header; entry = entry.after) {
                 if (isEqualValue(value, entry.getValue())) {
                     return true;
                 }
@@ -214,7 +218,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
      * @return the next key
      */
     public Object nextKey(Object key) {
-        LinkedEntry entry = (LinkedEntry) getEntry(key);
+        LinkEntry entry = (LinkEntry) getEntry(key);
         return (entry == null || entry.after == header ? null : entry.after.getKey());
     }
 
@@ -225,14 +229,33 @@ public class LinkedMap extends HashedMap implements OrderedMap {
      * @return the previous key
      */
     public Object previousKey(Object key) {
-        LinkedEntry entry = (LinkedEntry) getEntry(key);
+        LinkEntry entry = (LinkEntry) getEntry(key);
         return (entry == null || entry.before == header ? null : entry.before.getKey());
     }
 
     //-----------------------------------------------------------------------    
     /**
+     * Adds an entry into this map, maintaining insertion order.
+     * <p>
+     * This implementation adds the entry to the data storage table and
+     * to the end of the linked list.
+     * 
+     * @param entry  the entry to add
+     * @param hashIndex  the index into the data array to store at
+     */
+    protected void addEntry(HashEntry entry, int hashIndex) {
+        LinkEntry link = (LinkEntry) entry;
+        link.after  = header;
+        link.before = header.before;
+        header.before.after = link;
+        header.before = link;
+        data[hashIndex] = entry;
+    }
+    
+    /**
      * Creates an entry to store the data.
-     * This implementation creates a LinkEntry instance in the linked list.
+     * <p>
+     * This implementation creates a new LinkEntry instance.
      * 
      * @param next  the next entry in sequence
      * @param hashCode  the hash code to use
@@ -241,30 +264,26 @@ public class LinkedMap extends HashedMap implements OrderedMap {
      * @return the newly created entry
      */
     protected HashEntry createEntry(HashEntry next, int hashCode, Object key, Object value) {
-        LinkedEntry entry = new LinkedEntry(next, hashCode, key, value);
-        entry.after  = header;
-        entry.before = header.before;
-        header.before.after = entry;
-        header.before = entry;
-        return entry;
+        return new LinkEntry(next, hashCode, key, value);
     }
     
     /**
-     * Kills an entry ready for the garbage collector.
-     * This implementation manages the linked list and prepares the
-     * LinkEntry for garbage collection.
+     * Removes an entry from the map and the linked list.
+     * <p>
+     * This implementation removes the entry from the linked list chain, then
+     * calls the superclass implementation.
      * 
-     * @param entry  the entry to destroy
-     * @return the value from the entry
+     * @param entry  the entry to remove
+     * @param hashIndex  the index into the data structure
+     * @param previous  the previous entry in the chain
      */
-    protected Object destroyEntry(HashEntry entry) {
-        LinkedEntry link = (LinkedEntry) entry;
+    protected void removeEntry(HashEntry entry, int hashIndex, HashEntry previous) {
+        LinkEntry link = (LinkEntry) entry;
         link.before.after = link.after;
         link.after.before = link.before;
-        link.next = null;
         link.after = null;
         link.before = null;
-        return entry.value;
+        super.removeEntry(entry, hashIndex, previous);
     }
     
     //-----------------------------------------------------------------------
@@ -283,7 +302,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
         if (size == 0) {
             return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
         }
-        return new LinkedMapIterator(this);
+        return new LinkMapIterator(this);
     }
 
     /**
@@ -301,15 +320,15 @@ public class LinkedMap extends HashedMap implements OrderedMap {
         if (size == 0) {
             return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
         }
-        return new LinkedMapIterator(this);
+        return new LinkMapIterator(this);
     }
 
     /**
      * MapIterator
      */
-    static class LinkedMapIterator extends LinkedIterator implements OrderedMapIterator {
+    static class LinkMapIterator extends LinkIterator implements OrderedMapIterator {
         
-        LinkedMapIterator(LinkedMap map) {
+        LinkMapIterator(LinkedMap map) {
             super(map);
         }
 
@@ -363,7 +382,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
     /**
      * EntrySetIterator and MapEntry
      */
-    static class EntrySetIterator extends LinkedIterator {
+    static class EntrySetIterator extends LinkIterator {
         
         EntrySetIterator(LinkedMap map) {
             super(map);
@@ -427,7 +446,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
     /**
      * ValuesIterator
      */
-    static class ValuesIterator extends LinkedIterator {
+    static class ValuesIterator extends LinkIterator {
         
         ValuesIterator(LinkedMap map) {
             super(map);
@@ -446,12 +465,12 @@ public class LinkedMap extends HashedMap implements OrderedMap {
     /**
      * LinkEntry
      */
-    protected static class LinkedEntry extends HashEntry {
+    protected static class LinkEntry extends HashEntry {
         
-        LinkedEntry before;
-        LinkedEntry after;
+        protected LinkEntry before;
+        protected LinkEntry after;
         
-        protected LinkedEntry(HashEntry next, int hashCode, Object key, Object value) {
+        protected LinkEntry(HashEntry next, int hashCode, Object key, Object value) {
             super(next, hashCode, key, value);
         }
     }
@@ -459,15 +478,15 @@ public class LinkedMap extends HashedMap implements OrderedMap {
     /**
      * Base Iterator
      */
-    protected static abstract class LinkedIterator
+    protected static abstract class LinkIterator
             implements OrderedIterator, ResettableIterator {
                 
-        private final LinkedMap map;
-        private LinkedEntry current;
-        private LinkedEntry next;
-        private int expectedModCount;
+        protected final LinkedMap map;
+        protected LinkEntry current;
+        protected LinkEntry next;
+        protected int expectedModCount;
         
-        protected LinkedIterator(LinkedMap map) {
+        protected LinkIterator(LinkedMap map) {
             super();
             this.map = map;
             this.next = map.header.after;
@@ -482,7 +501,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
             return (next.before != map.header);
         }
 
-        protected LinkedEntry nextEntry() {
+        protected LinkEntry nextEntry() {
             if (map.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
@@ -494,11 +513,11 @@ public class LinkedMap extends HashedMap implements OrderedMap {
             return current;
         }
 
-        protected LinkedEntry previousEntry() {
+        protected LinkEntry previousEntry() {
             if (map.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            LinkedEntry previous = next.before;
+            LinkEntry previous = next.before;
             if (previous == map.header)  {
                 throw new NoSuchElementException(HashedMap.NO_PREVIOUS_ENTRY);
             }
@@ -507,7 +526,7 @@ public class LinkedMap extends HashedMap implements OrderedMap {
             return current;
         }
         
-        protected LinkedEntry currentEntry() {
+        protected LinkEntry currentEntry() {
             return current;
         }
         

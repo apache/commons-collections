@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.7 2003/12/06 14:02:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.8 2003/12/07 01:23:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -87,7 +87,7 @@ import org.apache.commons.collections.MapIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/12/06 14:02:11 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/07 01:23:54 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -113,7 +113,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
     protected static final Object NULL = new Object();
     
     /** Load factor, normally 0.75 */
-    protected final float loadFactor;
+    protected transient float loadFactor;
     /** The size of the map */
     protected transient int size;
     /** Map entries */
@@ -157,14 +157,14 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
      * @throws IllegalArgumentException if the initial capacity is less than one
-     * @throws IllegalArgumentException if the load factor is less than one
+     * @throws IllegalArgumentException if the load factor is less than zero
      */
     public HashedMap(int initialCapacity, float loadFactor) {
         super();
         if (initialCapacity < 1) {
             throw new IllegalArgumentException("Initial capacity must be greater than 0");
         }
-        if (loadFactor <= 0 || Float.isNaN(loadFactor)) {
+        if (loadFactor <= 0.0f || Float.isNaN(loadFactor)) {
             throw new IllegalArgumentException("Load factor must be greater than 0");
         }
         this.loadFactor = loadFactor;
@@ -296,14 +296,13 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(key, entry.key)) {
                 Object oldValue = entry.getValue();
-                entry.setValue(value);
+                updateEntry(entry, value);
                 return oldValue;
             }
             entry = entry.next;
         }
         
-        modCount++;
-        add(hashCode, index, key, value);
+        addMapping(index, hashCode, key, value);
         return null;
     }
 
@@ -335,18 +334,13 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         key = convertKey(key);
         int hashCode = hash(key);
         int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index]; 
+        HashEntry entry = data[index];
         HashEntry previous = null;
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(key, entry.key)) {
-                modCount++;
-                if (previous == null) {
-                    data[index] = entry.next;
-                } else {
-                    previous.next = entry.next;
-                }
-                size--;
-                return destroyEntry(entry);
+                Object oldValue = entry.getValue();
+                removeMapping(entry, index, previous);
+                return oldValue;
             }
             previous = entry;
             entry = entry.next;
@@ -368,25 +362,6 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Gets the entry mapped to the key specified.
-     * 
-     * @param key  the key
-     * @return the entry, null if no match
-     */
-    protected HashEntry getEntry(Object key) {
-        key = convertKey(key);
-        int hashCode = hash(key);
-        HashEntry entry = data[hashIndex(hashCode, data.length)]; // no local for hash index
-        while (entry != null) {
-            if (entry.hashCode == hashCode && isEqualKey(key, entry.key)) {
-                return entry;
-            }
-            entry = entry.next;
-        }
-        return null;
-    }
-
     /**
      * Converts input keys to another object for storage in the map.
      * This implementation masks nulls.
@@ -459,9 +434,91 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         return hashCode & (dataSize - 1);
     }
     
+    //-----------------------------------------------------------------------
     /**
-     * Creates an entry to store the data.
-     * This implementation creates a HashEntry instance.
+     * Gets the entry mapped to the key specified.
+     * <p>
+     * This method exists for subclasses that may need to perform a multi-step
+     * process accessing the entry. The public methods in this class don't use this
+     * method to gain a small performance boost.
+     * 
+     * @param key  the key
+     * @return the entry, null if no match
+     */
+    protected HashEntry getEntry(Object key) {
+        key = convertKey(key);
+        int hashCode = hash(key);
+        HashEntry entry = data[hashIndex(hashCode, data.length)]; // no local for hash index
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(key, entry.key)) {
+                return entry;
+            }
+            entry = entry.next;
+        }
+        return null;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Updates an existing key-value mapping to change the value.
+     * <p>
+     * This implementation calls <code>setValue()</code> on the entry.
+     * Subclasses could override to handle changes to the map.
+     * 
+     * @param entry  the entry to update
+     * @param newValue  the new value to store
+     * @return value  the previous value
+     */
+    protected void updateEntry(HashEntry entry, Object newValue) {
+        entry.setValue(newValue);
+    }
+    
+    /**
+     * Reuses an existing key-value mapping, storing completely new data.
+     * <p>
+     * This implementation sets all the data fields on the entry.
+     * Subclasses could populate additional entry fields.
+     * 
+     * @param entry  the entry to update, not null
+     * @param hashIndex  the index in the data array
+     * @param hashCode  the hash code of the key to add
+     * @param key  the key to add
+     * @param value  the value to add
+     */
+    protected void reuseEntry(HashEntry entry, int hashIndex, int hashCode, Object key, Object value) {
+        entry.next = data[hashIndex];
+        entry.hashCode = hashCode;
+        entry.key = key;
+        entry.value = value;
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Adds a new key-value mapping into this map.
+     * <p>
+     * This implementation calls <code>createEntry()</code>, <code>addEntry()</code>
+     * and <code>checkCapacity</code>.
+     * It also handles changes to <code>modCount</code> and <code>size</code>.
+     * Subclasses could override to fully control adds to the map.
+     * 
+     * @param hashIndex  the index into the data array to store at
+     * @param hashCode  the hash code of the key to add
+     * @param key  the key to add
+     * @param value  the value to add
+     * @return the value previously mapped to this key, null if none
+     */
+    protected void addMapping(int hashIndex, int hashCode, Object key, Object value) {
+        modCount++;
+        HashEntry entry = createEntry(data[hashIndex], hashCode, key, value);
+        addEntry(entry, hashIndex);
+        size++;
+        checkCapacity();
+    }
+    
+    /**
+     * Creates an entry to store the key-value data.
+     * <p>
+     * This implementation creates a new HashEntry instance.
      * Subclasses can override this to return a different storage class,
      * or implement caching.
      * 
@@ -476,29 +533,81 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
     }
     
     /**
-     * Kills an entry ready for the garbage collector.
-     * This implementation prepares the HashEntry for garbage collection.
-     * Subclasses can override this to implement caching (override clear as well).
+     * Adds an entry into this map.
+     * <p>
+     * This implementation adds the entry to the data storage table.
+     * Subclasses could override to handle changes to the map.
      * 
-     * @param entry  the entry to destroy
-     * @return the value from the entry
-     */
-    protected Object destroyEntry(HashEntry entry) {
-        entry.next = null;
-        return entry.value;
-    }
-    
-    /**
-     * Adds a new key-value mapping into this map.
-     * Subclasses could override to fix the size of the map.
-     * 
+     * @param hashIndex  the index into the data array to store at
+     * @param hashCode  the hash code of the key to add
      * @param key  the key to add
      * @param value  the value to add
      * @return the value previously mapped to this key, null if none
      */
-    protected void add(int hashCode, int hashIndex, Object key, Object value) {
-        data[hashIndex] = createEntry(data[hashIndex], hashCode, key, value);
-        if (size++ >= threshold) {
+    protected void addEntry(HashEntry entry, int hashIndex) {
+        data[hashIndex] = entry;
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Removes a mapping from the map.
+     * <p>
+     * This implementation calls <code>removeEntry()</code> and <code>destroyEntry()</code>.
+     * It also handles changes to <code>modCount</code> and <code>size</code>.
+     * Subclasses could override to fully control removals from the map.
+     * 
+     * @param entry  the entry to remove
+     * @param hashIndex  the index into the data structure
+     * @param previous  the previous entry in the chain
+     */
+    protected void removeMapping(HashEntry entry, int hashIndex, HashEntry previous) {
+        modCount++;
+        removeEntry(entry, hashIndex, previous);
+        size--;
+        destroyEntry(entry);
+    }
+    
+    /**
+     * Removes an entry from the chain stored in a particular index.
+     * <p>
+     * This implementation removes the entry from the data storage table.
+     * The size is not updated.
+     * Subclasses could override to handle changes to the map.
+     * 
+     * @param entry  the entry to remove
+     * @param hashIndex  the index into the data structure
+     * @param previous  the previous entry in the chain
+     */
+    protected void removeEntry(HashEntry entry, int hashIndex, HashEntry previous) {
+        if (previous == null) {
+            data[hashIndex] = entry.next;
+        } else {
+            previous.next = entry.next;
+        }
+    }
+    
+    /**
+     * Kills an entry ready for the garbage collector.
+     * <p>
+     * This implementation prepares the HashEntry for garbage collection.
+     * Subclasses can override this to implement caching (override clear as well).
+     * 
+     * @param entry  the entry to destroy
+     */
+    protected void destroyEntry(HashEntry entry) {
+        entry.next = null;
+        entry.key = null;
+        entry.value = null;
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Checks the capacity of the map and enlarges it if necessary.
+     * <p>
+     * This implementation uses the threshold to check if the map needs enlarging
+     */
+    protected void checkCapacity() {
+        if (size >= threshold) {
             ensureCapacity(data.length * 2);
         }
     }
@@ -874,17 +983,21 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
             this.key = key;
             this.value = value;
         }
+        
         public Object getKey() {
             return (key == NULL ? null : key);
         }
+        
         public Object getValue() {
             return value;
         }
+        
         public Object setValue(Object value) {
             Object old = this.value;
             this.value = value;
             return old;
         }
+        
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
@@ -897,10 +1010,12 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
                 (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
                 (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
         }
+        
         public int hashCode() {
             return (getKey() == null ? 0 : getKey().hashCode()) ^
                    (getValue() == null ? 0 : getValue().hashCode()); 
         }
+        
         public String toString() {
             return new StringBuffer().append(getKey()).append('=').append(getValue()).toString();
         }
@@ -981,12 +1096,48 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
     
     //-----------------------------------------------------------------------
     /**
+     * Write the data of subclasses.
+     * <p>
+     * Serialization is not one of the JDK's nicest topics. Normal serialization will
+     * not load subclass fields until this object is setup. In other words the readObject
+     * on this class is performed before that on the subclass. Unfortunately, data setup in
+     * the subclass may affect the ability of methods such as put() to work properly.
+     * <p>
+     * The solution adopted here is to have a method called by this class as part of the
+     * serialization and deserialization process. Override this method if the subclass
+     * stores additional data needed for put() to work.
+     * A sub-subclass must call super.doWriteObject().
+     */
+    protected void doWriteObject(ObjectOutputStream out) throws IOException {
+        // do nothing
+    }
+
+    /**
+     * Read the data of subclasses.
+     * <p>
+     * Serialization is not one of the JDK's nicest topics. Normal serialization will
+     * not load subclass fields until this object is setup. In other words the readObject
+     * on this class is performed before that on the subclass. Unfortunately, data setup in
+     * the subclass may affect the ability of methods such as put() to work properly.
+     * <p>
+     * The solution adopted here is to have a method called by this class as part of the
+     * serialization and deserialization process. Override this method if the subclass
+     * stores additional data needed for put() to work.
+     * A sub-subclass must call super.doReadObject().
+     */
+    protected void doReadObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        // do nothing
+    }
+    
+    /**
      * Write the map out using a custom routine.
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
+        out.writeFloat(loadFactor);
         out.writeInt(data.length);
         out.writeInt(size);
+        doWriteObject(out);
         for (MapIterator it = mapIterator(); it.hasNext();) {
             out.writeObject(it.next());
             out.writeObject(it.getValue());
@@ -998,16 +1149,20 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
      */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
+        loadFactor = in.readFloat();
         int capacity = in.readInt();
         int size = in.readInt();
-        data = new HashEntry[capacity];
+        doReadObject(in);
         init();
+        data = new HashEntry[capacity];
         for (int i = 0; i < size; i++) {
             Object key = in.readObject();
             Object value = in.readObject();
             put(key, value);
         }
+        threshold = calculateThreshold(data.length, loadFactor);
     }
+    
     //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the keys or values.
