@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterIterator.java,v 1.3 2002/11/01 19:07:54 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2002/11/01 19:07:54 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterIterator.java,v 1.4 2002/12/13 12:03:06 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/12/13 12:03:06 $
  *
  * ====================================================================
  *
@@ -127,6 +127,11 @@ public class TestFilterIterator extends TestIterator {
     public Object makeObject() {
         return makeFullIterator();
     }
+
+    public boolean supportsRemove() {
+        return false;
+    }
+
 
     public void testRepeatedHasNext() {
         for (int i = 0; i <= array.length; i++) {

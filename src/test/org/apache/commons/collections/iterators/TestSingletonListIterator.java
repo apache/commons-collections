@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.1 2002/08/17 11:39:16 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/17 11:39:16 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.2 2002/12/13 12:03:05 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/12/13 12:03:05 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import java.util.NoSuchElementException;
  * Tests the SingletonListIterator.
  *
  * @author Stephen Colebourne
- * @version $Id: TestSingletonListIterator.java,v 1.1 2002/08/17 11:39:16 scolebourne Exp $
+ * @version $Id: TestSingletonListIterator.java,v 1.2 2002/12/13 12:03:05 scolebourne Exp $
  */
 public class TestSingletonListIterator extends TestIterator {
 
@@ -105,6 +105,10 @@ public class TestSingletonListIterator extends TestIterator {
         return makeFullIterator();
     }
     
+    public boolean supportsRemove() {
+        return false;
+    }
+
     /**
      * Whether or not we are testing an iterator that can be
      * empty.  SingletonIterators are never empty;
