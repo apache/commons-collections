@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.19 2003/04/06 20:07:55 scolebourne Exp $
- * $Revision: 1.19 $
- * $Date: 2003/04/06 20:07:55 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.20 2003/04/07 16:57:33 rwaldhoff Exp $
+ * $Revision: 1.20 $
+ * $Date: 2003/04/07 16:57:33 $
  *
  * ====================================================================
  *
@@ -61,7 +61,6 @@
 package org.apache.commons.collections;
 
 import java.io.PrintStream;
-import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Collections;
