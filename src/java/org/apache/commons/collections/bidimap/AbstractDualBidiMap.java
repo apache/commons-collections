@@ -36,7 +36,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.13 2004/06/11 23:27:37 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.14 2004/06/22 21:54:35 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -90,6 +90,7 @@ public abstract class AbstractDualBidiMap implements BidiMap {
      * 
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
+     * @since Commons Collections 3.1
      */
     protected AbstractDualBidiMap(Map normalMap, Map reverseMap) {
         super();
