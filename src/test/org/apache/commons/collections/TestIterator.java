@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestIterator.java,v 1.3 2002/02/25 23:26:25 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/25 23:26:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestIterator.java,v 1.4 2002/02/25 23:37:38 morgand Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/25 23:37:38 $
  *
  * ====================================================================
  *
@@ -79,11 +79,34 @@ public abstract class TestIterator extends TestObject {
 
     public abstract Iterator makeFullIterator();
 
+    /**
+     * Whether or not we are testing an iterator that can be
+     * empty.  Default is true.
+     * 
+     * @return true if Iterators can be empty
+     */
+    public boolean supportsEmptyIterator() {
+        return true;
+    }
+
+    /**
+     * Whether or not we are testing an iterator that can contain
+     * elements.  Default is true.
+     * 
+     * @return true if Iterators can be empty
+     */
+    public boolean supportsFullIterator() {
+        return true;
+    }
 
     /**
      * Should throw a NoSuchElementException.
      */
     public void testEmptyIterator() {
+        if (supportsEmptyIterator() == false) {
+            return;
+        }
+
         Iterator iter = makeEmptyIterator();
         assertTrue("hasNext() should return false for empty iterators",iter.hasNext() == false);
         try {
@@ -100,6 +123,10 @@ public abstract class TestIterator extends TestObject {
      * hasNext() returns false
      */
     public void testFullIterator() {
+        if (supportsFullIterator() == false) {
+            return;
+        }
+
         Iterator iter = makeFullIterator();
 
         assertTrue("hasNext() should return true for at least one element",iter.hasNext());
