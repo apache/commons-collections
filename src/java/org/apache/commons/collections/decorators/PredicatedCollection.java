@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedCollection.java,v 1.1 2003/04/29 18:43:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedCollection.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.Predicate;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/04/29 18:43:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -117,6 +117,7 @@ public class PredicatedCollection extends AbstractCollectionDecorator {
         }
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Override to validate the object being added to ensure it matches
      * the predicate.
@@ -127,7 +128,7 @@ public class PredicatedCollection extends AbstractCollectionDecorator {
      */
     public boolean add(Object object) {
         validate(object);
-        return collection.add(object);
+        return getCollection().add(object);
     }
 
     /**
@@ -143,7 +144,7 @@ public class PredicatedCollection extends AbstractCollectionDecorator {
         for (Iterator it = coll.iterator(); it.hasNext(); ) {
             validate(it.next());
         }
-        return collection.addAll(coll);
+        return getCollection().addAll(coll);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedList.java,v 1.1 2003/04/29 18:43:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/PredicatedList.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.Predicate;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/04/29 18:43:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -80,15 +80,15 @@ import org.apache.commons.collections.Predicate;
 public class PredicatedList extends PredicatedCollection implements List {
 
     /**
-     * Factory method to create a predicated (validating) collection.
+     * Factory method to create a predicated (validating) list.
      * <p>
      * If there are any elements already in the list being decorated, they
      * are validated.
      * 
-     * @param coll  the collection to decorate, must not be null
+     * @param list  the list to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @throws IllegalArgumentException if collection or predicate is null
-     * @throws IllegalArgumentException if the collection contains invalid elements
+     * @throws IllegalArgumentException if list or predicate is null
+     * @throws IllegalArgumentException if the list contains invalid elements
      */
     public static List decorate(List list, Predicate predicate) {
         return new PredicatedList(list, predicate);
@@ -102,13 +102,23 @@ public class PredicatedList extends PredicatedCollection implements List {
      * 
      * @param list  the list to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @throws IllegalArgumentException if collection or predicate is null
-     * @throws IllegalArgumentException if the collection contains invalid elements
+     * @throws IllegalArgumentException if list or predicate is null
+     * @throws IllegalArgumentException if the list contains invalid elements
      */
     protected PredicatedList(List list, Predicate predicate) {
         super(list, predicate);
     }
 
+    /**
+     * Gets the list being decorated.
+     * 
+     * @return the decorated list
+     */
+    protected List getList() {
+        return (List) getCollection();
+    }
+
+    //-----------------------------------------------------------------------
     public void add(int index, Object object) {
         validate(object);
         getList().add(index, object);
@@ -141,12 +151,12 @@ public class PredicatedList extends PredicatedCollection implements List {
         return new AbstractListIteratorDecorator(getList().listIterator(i)) {
             public void add(Object object) {
                 validate(object);
-                iterator.add(object);
+                getIterator().add(object);
             }
 
             public void set(Object object) {
                 validate(object);
-                iterator.set(object);
+                getIterator().set(object);
             }
         };
     }
@@ -163,10 +173,6 @@ public class PredicatedList extends PredicatedCollection implements List {
     public List subList(int fromIndex, int toIndex) {
         List sub = getList().subList(fromIndex, toIndex);
         return new PredicatedList(sub, predicate);
-    }
-
-    protected List getList() {
-        return (List) collection;
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/FixedSizeList.java,v 1.2 2003/05/05 23:25:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/FixedSizeList.java,v 1.3 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.util.ListIterator;
  * The set method is allowed (as it doesn't change the list size).
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:22 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -96,6 +96,16 @@ public class FixedSizeList extends UnmodifiableCollection implements List {
         super(list);
     }
 
+    /**
+     * Gets the list being decorated.
+     * 
+     * @return the decorated list
+     */
+    protected List getList() {
+        return (List) getCollection();
+    }
+
+    //-----------------------------------------------------------------------
     public void add(int index, Object object) {
         throw new UnsupportedOperationException();
     }
@@ -121,19 +131,7 @@ public class FixedSizeList extends UnmodifiableCollection implements List {
     }
 
     public ListIterator listIterator(int index) {
-        return new AbstractListIteratorDecorator(getList().listIterator(index)) {
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-            public void add(Object object) {
-                throw new UnsupportedOperationException();
-            }
-
-            public void remove(Object object) {
-                throw new UnsupportedOperationException();
-            }
-        };
+        return new FixedSizeListIterator(getList().listIterator(index));
     }
 
     public Object remove(int index) {
@@ -149,8 +147,22 @@ public class FixedSizeList extends UnmodifiableCollection implements List {
         return new FixedSizeList(sub);
     }
 
-    protected List getList() {
-        return (List) collection;
+    /**
+     * List iterator that only permits changes via set()
+     */
+    public static class FixedSizeListIterator extends AbstractListIteratorDecorator {
+        protected FixedSizeListIterator(ListIterator iterator) {
+            super(iterator);
+        }
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+        public void add(Object object) {
+            throw new UnsupportedOperationException();
+        }
+        public void remove(Object object) {
+            throw new UnsupportedOperationException();
+        }
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SynchronizedCollection.java,v 1.1 2003/04/29 18:43:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SynchronizedCollection.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import java.util.Iterator;
  * }
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/04/29 18:43:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  */
@@ -80,6 +80,8 @@ public class SynchronizedCollection implements Collection {
 
     /** The collection to decorate */
     protected final Collection collection;
+    /** The object to lock on, needed for List/SortedSet views */
+    protected final Object lock;
 
     /**
      * Factory method to create a synchronized collection.
@@ -102,30 +104,59 @@ public class SynchronizedCollection implements Collection {
             throw new IllegalArgumentException("Collection must not be null");
         }
         this.collection = collection;
+        this.lock = this;
     }
 
-    public synchronized boolean add(Object object) {
-        return collection.add(object);
+    /**
+     * Constructor that wraps (not copies).
+     * 
+     * @param coll  the collection to decorate, must not be null
+     * @param lock  the lock object to use, must not be null
+     * @throws IllegalArgumentException if the collection is null
+     */
+    protected SynchronizedCollection(Collection collection, Object lock) {
+        if (collection == null) {
+            throw new IllegalArgumentException("Collection must not be null");
+        }
+        this.collection = collection;
+        this.lock = lock;
     }
 
-    public synchronized boolean addAll(Collection coll) {
-        return collection.addAll(coll);
+    //-----------------------------------------------------------------------
+    public boolean add(Object object) {
+        synchronized (lock) {
+            return collection.add(object);
+        }
     }
 
-    public synchronized void clear() {
-        collection.clear();
+    public boolean addAll(Collection coll) {
+        synchronized (lock) {
+            return collection.addAll(coll);
+        }
     }
 
-    public synchronized boolean contains(Object object) {
-        return collection.contains(object);
+    public void clear() {
+        synchronized (lock) {
+            collection.clear();
+        }
     }
 
-    public synchronized boolean containsAll(Collection coll) {
-        return collection.containsAll(coll);
+    public boolean contains(Object object) {
+        synchronized (lock) {
+            return collection.contains(object);
+        }
     }
 
-    public synchronized boolean isEmpty() {
-        return collection.isEmpty();
+    public boolean containsAll(Collection coll) {
+        synchronized (lock) {
+            return collection.containsAll(coll);
+        }
+    }
+
+    public boolean isEmpty() {
+        synchronized (lock) {
+            return collection.isEmpty();
+        }
     }
 
     /**
@@ -142,43 +173,61 @@ public class SynchronizedCollection implements Collection {
         return collection.iterator();
     }
 
-    public synchronized Object[] toArray() {
-        return collection.toArray();
-    }
-
-    public synchronized Object[] toArray(Object[] object) {
-        return collection.toArray(object);
-    }
-
-    public synchronized boolean remove(Object object) {
-        return collection.remove(object);
-    }
-
-    public synchronized boolean removeAll(Collection coll) {
-        return collection.removeAll(coll);
-    }
-
-    public synchronized boolean retainAll(Collection coll) {
-        return collection.retainAll(coll);
-    }
-
-    public synchronized int size() {
-        return collection.size();
-    }
-
-    public synchronized boolean equals(Object object) {
-        if (object == this) {
-            return true;
+    public Object[] toArray() {
+        synchronized (lock) {
+            return collection.toArray();
         }
-        return collection.equals(object);
     }
 
-    public synchronized int hashCode() {
-        return collection.hashCode();
+    public Object[] toArray(Object[] object) {
+        synchronized (lock) {
+            return collection.toArray(object);
+        }
     }
 
-    public synchronized String toString() {
-        return collection.toString();
+    public boolean remove(Object object) {
+        synchronized (lock) {
+            return collection.remove(object);
+        }
+    }
+
+    public boolean removeAll(Collection coll) {
+        synchronized (lock) {
+            return collection.removeAll(coll);
+        }
+    }
+
+    public boolean retainAll(Collection coll) {
+        synchronized (lock) {
+            return collection.retainAll(coll);
+        }
+    }
+
+    public int size() {
+        synchronized (lock) {
+            return collection.size();
+        }
+    }
+
+    public boolean equals(Object object) {
+        synchronized (lock) {
+            if (object == this) {
+                return true;
+            }
+            return collection.equals(object);
+        }
+    }
+
+    public int hashCode() {
+        synchronized (lock) {
+            return collection.hashCode();
+        }
+    }
+
+    public String toString() {
+        synchronized (lock) {
+            return collection.toString();
+        }
     }
 
 }

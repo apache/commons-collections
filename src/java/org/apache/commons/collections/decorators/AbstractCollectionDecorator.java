@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/AbstractCollectionDecorator.java,v 1.1 2003/04/29 18:43:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/AbstractCollectionDecorator.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import java.util.Iterator;
  * to write an unmodifiable implementation it might provide a loophole.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/04/29 18:43:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -85,7 +85,7 @@ import java.util.Iterator;
 public abstract class AbstractCollectionDecorator implements Collection {
 
     /** The collection being decorated */
-    protected final Collection collection;
+    private final Collection collection;
 
     /**
      * Constructor that wraps (not copies).
@@ -100,6 +100,16 @@ public abstract class AbstractCollectionDecorator implements Collection {
         this.collection = coll;
     }
 
+    /**
+     * Gets the collection being decorated.
+     * 
+     * @return the decorated collection
+     */
+    protected Collection getCollection() {
+        return collection;
+    }
+
+    //-----------------------------------------------------------------------
     public boolean add(Object object) {
         return collection.add(object);
     }

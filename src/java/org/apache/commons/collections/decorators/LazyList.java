@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/LazyList.java,v 1.1 2003/04/29 18:43:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/LazyList.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -90,7 +90,7 @@ import org.apache.commons.collections.Factory;
  * and third element are all set to <code>null</code>.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/04/29 18:43:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  * @author Arron Bates
@@ -127,7 +127,7 @@ public class LazyList extends AbstractListDecorator {
         this.factory = factory;
     }
 
-    
+    //-----------------------------------------------------------------------
     /**
      * Decorate the get method to perform the lazy behaviour.
      * <p>

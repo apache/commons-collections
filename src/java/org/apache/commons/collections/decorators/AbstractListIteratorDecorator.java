@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/AbstractListIteratorDecorator.java,v 1.2 2003/05/05 23:25:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/AbstractListIteratorDecorator.java,v 1.3 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,14 +70,14 @@ import java.util.ListIterator;
  * for some list implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:22 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  */
 public abstract class AbstractListIteratorDecorator implements ListIterator {
 
     /** The iterator to delegate to */
-    protected final ListIterator iterator;
+    private final ListIterator iterator;
 
     /**
      * Constructor that wraps the specified iterator.
@@ -87,7 +87,17 @@ public abstract class AbstractListIteratorDecorator implements ListIterator {
     public AbstractListIteratorDecorator(ListIterator iterator) {
         this.iterator = iterator;
     }
+    
+    /**
+     * Gets the decorated iterator.
+     * 
+     * @return the decorated iterator
+     */
+    protected ListIterator getIterator() {
+        return iterator;
+    }
 
+    //-----------------------------------------------------------------------
     public boolean hasNext() {
         return iterator.hasNext();
     }

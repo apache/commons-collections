@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableCollection.java,v 1.2 2003/05/05 23:25:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableCollection.java,v 1.3 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.IteratorUtils;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:22 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  */
@@ -96,6 +96,7 @@ public class UnmodifiableCollection extends AbstractCollectionDecorator {
         super(coll);
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Override as method unsupported.
      * @throws UnsupportedOperationException
@@ -126,7 +127,7 @@ public class UnmodifiableCollection extends AbstractCollectionDecorator {
      * @return unmodifiable iterator
      */
     public Iterator iterator() {
-        return IteratorUtils.unmodifiableIterator(collection.iterator());
+        return IteratorUtils.unmodifiableIterator(getCollection().iterator());
     }
 
     /**

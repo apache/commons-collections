@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SynchronizedList.java,v 1.2 2003/05/05 23:25:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SynchronizedList.java,v 1.3 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import java.util.ListIterator;
  * Methods are synchronized, then forwarded to the decorated list.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:22 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  */
@@ -77,7 +77,7 @@ public class SynchronizedList extends SynchronizedCollection implements List {
      * Factory method to create a synchronized list.
      * 
      * @param list  the list to decorate, must not be null
-     * @throws IllegalArgumentException if collection is null
+     * @throws IllegalArgumentException if list is null
      */
     public static List decorate(List list) {
         return new SynchronizedList(list);
@@ -93,24 +93,55 @@ public class SynchronizedList extends SynchronizedCollection implements List {
         super(list);
     }
 
-    public synchronized void add(int index, Object object) {
-        getList().add(index, object);
+    /**
+     * Constructor that wraps (not copies).
+     * 
+     * @param list  the list to decorate, must not be null
+     * @param lock  the lock to use, must not be null
+     * @throws IllegalArgumentException if list is null
+     */
+    protected SynchronizedList(List list, Object lock) {
+        super(list, lock);
     }
 
-    public synchronized boolean addAll(int index, Collection coll) {
-        return getList().addAll(index, coll);
+    /**
+     * Gets the decorated list.
+     * 
+     * @return the decorated list
+     */
+    protected List getList() {
+        return (List) collection;
     }
 
-    public synchronized Object get(int index) {
-        return getList().get(index);
+    //-----------------------------------------------------------------------
+    public void add(int index, Object object) {
+        synchronized (lock) {
+            getList().add(index, object);
+        }
     }
 
-    public synchronized int indexOf(Object object) {
-        return getList().indexOf(object);
+    public boolean addAll(int index, Collection coll) {
+        synchronized (lock) {
+            return getList().addAll(index, coll);
+        }
     }
 
-    public synchronized int lastIndexOf(Object object) {
-        return getList().lastIndexOf(object);
+    public Object get(int index) {
+        synchronized (lock) {
+            return getList().get(index);
+        }
+    }
+
+    public int indexOf(Object object) {
+        synchronized (lock) {
+            return getList().indexOf(object);
+        }
+    }
+
+    public int lastIndexOf(Object object) {
+        synchronized (lock) {
+            return getList().lastIndexOf(object);
+        }
     }
 
     /**
@@ -141,20 +172,25 @@ public class SynchronizedList extends SynchronizedCollection implements List {
         return getList().listIterator(index);
     }
 
-    public synchronized Object remove(int index) {
-        return getList().remove(index);
+    public Object remove(int index) {
+        synchronized (lock) {
+            return getList().remove(index);
+        }
     }
 
-    public synchronized Object set(int index, Object object) {
-        return getList().set(index, object);
+    public Object set(int index, Object object) {
+        synchronized (lock) {
+            return getList().set(index, object);
+        }
     }
 
-    public synchronized List subList(int fromIndex, int toIndex) {
-        return getList().subList(fromIndex, toIndex);
-    }
-
-    protected List getList() {
-        return (List) collection;
+    public List subList(int fromIndex, int toIndex) {
+        synchronized (lock) {
+            List list = getList().subList(fromIndex, toIndex);
+            // the lock is passed into the constructor here to ensure that the sublist is
+            // synchronized on the same lock as the parent list
+            return new SynchronizedList(list, lock);
+        }
     }
 
 }

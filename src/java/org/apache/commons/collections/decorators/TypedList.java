@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedList.java,v 1.1 2003/04/29 18:43:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedList.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.util.List;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/04/29 18:43:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -76,9 +76,9 @@ import java.util.List;
 public class TypedList extends PredicatedList {
 
     /**
-     * Factory method to create a typed collection.
+     * Factory method to create a typed list.
      * <p>
-     * If there are any elements already in the collection being decorated, they
+     * If there are any elements already in the list being decorated, they
      * are validated.
      * 
      * @param list  the list to decorate, must not be null
@@ -93,7 +93,7 @@ public class TypedList extends PredicatedList {
     /**
      * Constructor that wraps (not copies).
      * <p>
-     * If there are any elements already in the collection being decorated, they
+     * If there are any elements already in the list being decorated, they
      * are validated.
      * 
      * @param list  the list to decorate, must not be null
