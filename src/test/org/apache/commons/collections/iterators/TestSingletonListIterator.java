@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.2 2002/12/13 12:03:05 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/12/13 12:03:05 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.3 2003/01/15 21:54:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections.iterators;
 
 import junit.framework.*;
@@ -70,7 +66,7 @@ import java.util.NoSuchElementException;
  * Tests the SingletonListIterator.
  *
  * @author Stephen Colebourne
- * @version $Id: TestSingletonListIterator.java,v 1.2 2002/12/13 12:03:05 scolebourne Exp $
+ * @version $Id: TestSingletonListIterator.java,v 1.3 2003/01/15 21:54:12 scolebourne Exp $
  */
 public class TestSingletonListIterator extends TestIterator {
 
@@ -164,5 +160,29 @@ public class TestSingletonListIterator extends TestIterator {
              e.getClass().equals((new NoSuchElementException()).getClass()));
         }
     }
+    
+    public void testReset() {
+        ResetableListIterator it = (ResetableListIterator) makeObject();
+        
+        assertEquals(true, it.hasNext());
+        assertEquals(false, it.hasPrevious());
+        assertEquals(testValue, it.next());
+        assertEquals(false, it.hasNext());
+        assertEquals(true, it.hasPrevious());
+
+        it.reset();
+        
+        assertEquals(true, it.hasNext());
+        assertEquals(false, it.hasPrevious());
+        assertEquals(testValue, it.next());
+        assertEquals(false, it.hasNext());
+        assertEquals(true, it.hasPrevious());
+        
+        it.reset();
+        it.reset();
+        
+        assertEquals(true, it.hasNext());
+    }
+    
 }
 
