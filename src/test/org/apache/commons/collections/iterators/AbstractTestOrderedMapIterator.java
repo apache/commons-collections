@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestOrderedMapIterator.java,v 1.3 2003/12/01 22:48:58 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestOrderedMapIterator.java,v 1.4 2003/12/03 19:03:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/01 22:48:58 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/03 19:03:21 $
  * 
  * @author Stephen Colebourne
  */
@@ -196,11 +196,13 @@ public abstract class AbstractTestOrderedMapIterator extends AbstractTestMapIter
             assertEquals(it2.next(), key);
             list.add(key);
         }
+        assertEquals(map.size(), list.size());
         while (it.hasPrevious()) {
             Object key = it.previous();
             assertEquals(list.get(list.size() - 1), key);
             list.remove(list.size() - 1);
         }
+        assertEquals(0, list.size());
     }
     
 }
