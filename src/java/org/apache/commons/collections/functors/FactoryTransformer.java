@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that calls a Factory and returns the result.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/03 12:03:11 $
  *
  * @author Stephen Colebourne
  */
@@ -33,7 +33,7 @@ public class FactoryTransformer implements Transformer, Serializable {
     /** Serial version UID */
     static final long serialVersionUID = -6817674502475353160L;
 
-    /** The closure to wrap */
+    /** The factory to wrap */
     private final Factory iFactory;
 
     /**
