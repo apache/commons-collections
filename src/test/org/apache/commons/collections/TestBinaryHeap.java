@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.6 2002/10/12 22:36:22 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2002/10/12 22:36:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.7 2002/10/13 12:59:52 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/10/13 12:59:52 $
  *
  * ====================================================================
  *
@@ -77,7 +77,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * Tests the BinaryHeap.
  * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestBinaryHeap.java,v 1.6 2002/10/12 22:36:22 scolebourne Exp $
+ * @version $Id: TestBinaryHeap.java,v 1.7 2002/10/13 12:59:52 scolebourne Exp $
  */
 public class TestBinaryHeap extends TestCollection {
     
@@ -274,7 +274,7 @@ public class TestBinaryHeap extends TestCollection {
       super.verify();
       BinaryHeap heap = (BinaryHeap)collection;
 
-      Comparator c = heap.comparator();
+      Comparator c = heap.m_comparator;
       if (c == null) c = ComparatorUtils.naturalComparator();
       if (!heap.m_isMinHeap) c = ComparatorUtils.reversedComparator(c);
 
