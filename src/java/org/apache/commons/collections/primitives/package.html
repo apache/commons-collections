@@ -1,18 +1,29 @@
-<BODY>
-Contains collection implementations that use primitive elements.  Currently
-the package offers lists of primitive elements that are backed by primitive
-arrays, offering substantial memory and performance savings.<p>
-
-There are generally two layers of abstract per primitive list type.  The
-first layer, implemented by the <Code>Abstract*List</Code> classes, provides
-default implementations for all of the <Code>java.util.List</Code> methods
-and most of their primitive counterparts.  The second layer of abstraction,
-implemented by the <Code>Abstract*ArrayList</Code> classes, provides 
-additional method signatures for manipulating a list that's backed by a
-primitive array.<p>
-
-Note that these layers are not provided for <Code>FloatArrayList</Code>,
-and that many primitive types are not represented in this package at all;
-these inconsistencies may be addressed by a future release.
-
-</BODY>
+<!-- $Id: package.html,v 1.3 2003/01/05 13:33:05 rwaldhoff Exp $ -->
+<html>
+   <head>
+      <title>Package Documentation for org.apache.commons.collections.primitives</title>
+   </head>
+   <body>
+      <p>
+         Collections that are based upon primitive
+         types. Generally these extensions offer memory 
+         and performance improvements over the 
+         <code>Object</code> wrapped alternative.
+      </p>
+      <p>
+      	 The package provides (or will provide) versions of 
+      	 the major collections framework interfaces
+      	 (<code>Collection</code>, <code>List</code>, 
+      	 <code>Map</code>, <code>Set</code>) and their 
+      	 helpers (<code>Iterator</code>, <code>ListIterator</code>, 
+      	 etc) for each primitive type, and various concrete 
+      	 implementations of these.
+      </p>
+      <p>
+      	 Adapters are provided for converting between the 
+      	 primitive and object based versions of the collections 
+      	 framework.
+      </p>
+   </body>
+</html>
+      
