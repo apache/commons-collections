@@ -67,7 +67,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.12 $ $Date: 2004/02/18 00:57:39 $
+ * @version $Revision: 1.13 $ $Date: 2004/05/15 11:59:15 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -505,8 +505,8 @@ public class TreeBidiMap implements OrderedBidiMap {
         
         // store previous and remove previous mappings
         Object prev = (index == KEY ? doGet(key, KEY) :  doGet(value, VALUE));
-        doRemove((Comparable) key, KEY);
-        doRemove((Comparable) value, VALUE);
+        doRemove(key, KEY);
+        doRemove(value, VALUE);
         
         Node node = rootNode[KEY];
         if (node == null) {
@@ -1464,8 +1464,11 @@ public class TreeBidiMap implements OrderedBidiMap {
      */
     static class View extends AbstractSet {
         
+        /** The parent map. */
         protected final TreeBidiMap main;
+        /** Whether to return KEY or VALUE order. */
         protected final int orderType;
+        /** Whether to return KEY, VALUE, MAPENTRY or INVERSEMAPENTRY data. */
         protected final int dataType;
 
         /**
@@ -1510,12 +1513,19 @@ public class TreeBidiMap implements OrderedBidiMap {
      */
     static class ViewIterator implements OrderedIterator {
 
+        /** The parent map. */
         protected final TreeBidiMap main;
+        /** Whether to return KEY or VALUE order. */
         protected final int orderType;
+        /** Whether to return KEY, VALUE, MAPENTRY or INVERSEMAPENTRY data. */
         protected final int dataType;
+        /** The last node returned by the iterator. */
         protected Node lastReturnedNode;
+        /** The next node to be returned by the iterator. */
         protected Node nextNode;
+        /** The previous node in the sequence returned by the iterator. */
         protected Node previousNode;
+        /** The modification count. */
         private int expectedModifications;
 
         /**
@@ -1573,6 +1583,10 @@ public class TreeBidiMap implements OrderedBidiMap {
             return doGetData();
         }
 
+        /**
+         * Gets the data value for the lastReturnedNode field.
+         * @return the data value
+         */
         protected Object doGetData() {
             switch (dataType) {
                 case KEY:
@@ -1887,10 +1901,8 @@ public class TreeBidiMap implements OrderedBidiMap {
          * Returns true if the given object is also a map entry and
          * the two entries represent the same mapping.
          *
-         * @param o object to be compared for equality with this map
-         *          entry.
-         * @return true if the specified object is equal to this map
-         *         entry.
+         * @param obj  the object to be compared for equality with this entry.
+         * @return true if the specified object is equal to this entry.
          */
         public boolean equals(final Object obj) {
             if (obj == this) {
@@ -1921,11 +1933,19 @@ public class TreeBidiMap implements OrderedBidiMap {
      */
     static class Inverse implements OrderedBidiMap {
         
+        /** The parent map. */
         private final TreeBidiMap main;
+        /** Store the keySet once created. */
         private Set keySet;
+        /** Store the valuesSet once created. */
         private Set valuesSet;
+        /** Store the entrySet once created. */
         private Set entrySet;
         
+        /**
+         * Constructor.
+         * @param main  the main map
+         */
         Inverse(final TreeBidiMap main) {
             super();
             this.main = main;
