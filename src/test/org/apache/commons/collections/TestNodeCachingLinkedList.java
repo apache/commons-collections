@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestNodeCachingLinkedList.java,v 1.6 2003/10/05 21:23:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestNodeCachingLinkedList.java,v 1.7 2003/10/05 23:21:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.Test;
 /**
  * Test class for NodeCachingLinkedList, a performance optimised LinkedList.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/10/05 21:23:21 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/05 23:21:07 $
  * 
  * @author Jeff Varszegi
  * @author Phil Steitz
@@ -89,7 +89,7 @@ public class TestNodeCachingLinkedList extends TestCommonsLinkedList {
     }
     
     public String getCompatibilityVersion() {
-        return "2.2";
+        return "3.0";
     }
     
     public void testShrinkCache() {
