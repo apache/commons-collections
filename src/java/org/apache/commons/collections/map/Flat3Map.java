@@ -60,7 +60,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.16 $ $Date: 2004/04/09 22:52:48 $
+ * @version $Revision: 1.17 $ $Date: 2004/05/03 22:57:40 $
  *
  * @author Stephen Colebourne
  */
@@ -90,7 +90,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     /** Value, used while in flat mode */
     private transient Object value3;
     /** Map, used while in delegate mode */
-    private transient HashedMap delegateMap;
+    private transient AbstractHashedMap delegateMap;
 
     /**
      * Constructor.
@@ -350,7 +350,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     }
 
     /**
-     * Converts the flat map data to a HashMap.
+     * Converts the flat map data to a map.
      */
     private void convertToMap() {
         delegateMap = createDelegateMap();
@@ -371,12 +371,15 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
 
     /**
      * Create an instance of the map used for storage when in delegation mode.
-     * This can be overridden by subclasses.
+     * <p>
+     * This can be overridden by subclasses to provide a different map implementation.
+     * Not every AbstractHashedMap is suitable, identity and reference based maps
+     * would be poor choices.
      *
-     * @return a new HashedMap or subclass
+     * @return a new AbstractHashedMap or subclass
      * @since Commons Collections 3.1
      */
-    protected HashedMap createDelegateMap() {
+    protected AbstractHashedMap createDelegateMap() {
         return new HashedMap();
     }
 
