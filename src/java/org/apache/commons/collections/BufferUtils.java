@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.2 2002/07/03 01:59:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:59:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.3 2002/07/03 02:16:48 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/07/03 02:16:48 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Iterator;
  *  Contains static utility methods for operating on {@link Buffer} objects.
  *
  *  @author Paul Jack
- *  @version $Id: BufferUtils.java,v 1.2 2002/07/03 01:59:50 mas Exp $
+ *  @version $Id: BufferUtils.java,v 1.3 2002/07/03 02:16:48 mas Exp $
  */
 public class BufferUtils {
 
@@ -100,9 +100,9 @@ public class BufferUtils {
 
     /**
      *  Returns a synchronized buffer backed by the given buffer that will
-     *  block on {@link Buffer.get()} and {@link Buffer.remove()} operations.
-     *  If the buffer is empty, then the {@link Buffer.get()} and 
-     *  {@link Buffer.remove()} operations will block until new elements
+     *  block on {@link Buffer#get()} and {@link Buffer#remove()} operations.
+     *  If the buffer is empty, then the {@link Buffer#get()} and 
+     *  {@link Buffer#remove()} operations will block until new elements
      *  are added to the buffer, rather than immediately throwing a 
      *  <Code>BufferUnderflowException</Code>.
      *

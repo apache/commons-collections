@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.2 2002/07/03 01:59:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:59:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.3 2002/07/03 02:16:48 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/07/03 02:16:48 $
  *
  * ====================================================================
  *
@@ -76,8 +76,8 @@ import java.util.NoSuchElementException;
  * order; elements are removed in the same order in which they were added.
  * The iteration order is the same as the removal order.<P>
  *
- * The {@link remove()} and {@link get()} operations perform in constant time.
- * The {@link add()} operation performs in amortized constant time.  All
+ * The {@link #remove()} and {@link #get()} operations perform in constant time.
+ * The {@link #add(Object)} operation performs in amortized constant time.  All
  * other operations perform in linear time or worse.<P>
  *
  * Note that this implementation is not synchronized.  The following can be
@@ -90,7 +90,7 @@ import java.util.NoSuchElementException;
  * @author  <a href="fede@apache.org">Federico Barbieri</a>
  * @author  <a href="bloritsch@apache.org">Berin Loritsch</a>
  * @author Paul Jack
- * @version CVS $Revision: 1.2 $ $Date: 2002/07/03 01:59:50 $
+ * @version CVS $Revision: 1.3 $ $Date: 2002/07/03 02:16:48 $
  * @since Avalon 4.0
  */
 public final class UnboundedFifoBuffer extends AbstractCollection implements Buffer

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.8 2002/07/03 02:09:06 mas Exp $
- * $Revision: 1.8 $
- * $Date: 2002/07/03 02:09:06 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.9 2002/07/03 02:16:48 mas Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/07/03 02:16:48 $
  *
  * ====================================================================
  *
@@ -70,19 +70,19 @@ import java.util.Comparator;
  *
  * The removal order of a binary heap is based on either the natural sort
  * order of its elements or a specified {@link Comparator}.  The 
- * {@link remove()} method always returns the first element as determined
+ * {@link #remove()} method always returns the first element as determined
  * by the sort order.  (The <Code>isMinHeap</Code> flag in the constructors
- * can be used to reverse the sort order, in which case {@link remove()}
+ * can be used to reverse the sort order, in which case {@link #remove()}
  * will always remove the last element.)  The removal order is 
  * <I>not</I> the same as the order of iteration; elements are
  * returned by the iterator in no particular order.<P>
  *
- * The {@link add(Object)} and {@link remove()} operations perform
- * in logarithmic time.  The {@link get()} operation performs in constant
+ * The {@link #add(Object)} and {@link #remove()} operations perform
+ * in logarithmic time.  The {@link #get()} operation performs in constant
  * time.  All other operations perform in linear time or worse.<P>
  *
  * Note that this implementation is not synchronized.  Use 
- * {@link BufferUtils.synchronizedBuffer(Buffer)} to provide
+ * {@link BufferUtils#synchronizedBuffer(Buffer)} to provide
  * synchronized access to a <Code>BinaryHeap</Code>:
  *
  * <Pre>
@@ -469,7 +469,7 @@ public final class BinaryHeap extends AbstractCollection
 
 
     /**
-     *  Adds an object to this heap.  Same as {@link insert(Object)}.
+     *  Adds an object to this heap.  Same as {@link #insert(Object)}.
      *
      *  @param o  the object to add
      *  @return true, always
@@ -481,7 +481,7 @@ public final class BinaryHeap extends AbstractCollection
 
 
     /**
-     *  Returns the priority element.  Same as {@link peek()}.
+     *  Returns the priority element.  Same as {@link #peek()}.
      *
      *  @return the priority element
      *  @throws BufferUnderflowException if this heap is empty
@@ -496,7 +496,7 @@ public final class BinaryHeap extends AbstractCollection
 
 
     /**
-     *  Removes the priority element.  Same as {@link pop()}.
+     *  Removes the priority element.  Same as {@link #pop()}.
      *
      *  @return the removed priority element
      *  @throws BufferUnderflowException if this heap is empty

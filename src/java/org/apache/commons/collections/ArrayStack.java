@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.6 2002/07/03 02:09:06 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/07/03 02:09:06 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.7 2002/07/03 02:16:48 mas Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/07/03 02:16:48 $
  *
  * ====================================================================
  *
@@ -77,12 +77,12 @@ import java.util.Stack; // only used in javadoc comments, javadoc won't find it 
  * The removal order of an <Code>ArrayStack</Code> is based on insertion 
  * order: The most recently added element is removed first.  The iteration
  * order is <I>not</I> the same as the removal order.  The iterator returns
- * elements from the bottom up, whereas the {@link remove()} method removes
+ * elements from the bottom up, whereas the {@link #remove()} method removes
  * them from the top down.
  *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.6 $ $Date: 2002/07/03 02:09:06 $
+ * @version $Revision: 1.7 $ $Date: 2002/07/03 02:16:48 $
  * @see java.util.Stack
  */
 

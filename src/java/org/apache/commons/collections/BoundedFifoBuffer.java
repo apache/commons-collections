@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.2 2002/07/03 01:59:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:59:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.3 2002/07/03 02:16:48 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/07/03 02:16:48 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.NoSuchElementException;
  * insertion order; elements are removed in the same order in which they
  * were added.  The iteration order is the same as the removal order.<P>
  *
- * The {@link add(Object}, {@link remove()} and {@link get()} operations
+ * The {@link #add(Object)}, {@link #remove()} and {@link #get()} operations
  * all perform in constant time.  All other operations perform in linear
  * time or worse.
  *
@@ -89,7 +89,7 @@ import java.util.NoSuchElementException;
  *
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author Paul Jack
- * @version $Id: BoundedFifoBuffer.java,v 1.2 2002/07/03 01:59:50 mas Exp $
+ * @version $Id: BoundedFifoBuffer.java,v 1.3 2002/07/03 02:16:48 mas Exp $
  */
 public class BoundedFifoBuffer extends AbstractCollection implements Buffer
 {
