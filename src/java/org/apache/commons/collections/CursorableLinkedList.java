@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.4 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.5 2002/03/20 05:16:24 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/03/20 05:16:24 $
  *
  * ====================================================================
  *
@@ -91,7 +91,7 @@ import java.lang.UnsupportedOperationException; // stops a javadoc warning
  * <b>Note that this implementation is not synchronized.</b>
  *
  * @author Rodney Waldhoff
- * @version $Id: CursorableLinkedList.java,v 1.4 2002/02/10 08:07:42 jstrachan Exp $
+ * @version $Id: CursorableLinkedList.java,v 1.5 2002/03/20 05:16:24 mas Exp $
  * @see java.util.LinkedList
  */
 public class CursorableLinkedList implements List, Serializable {
@@ -903,7 +903,7 @@ public class CursorableLinkedList implements List, Serializable {
      * <tt>_head.next().prev()</tt> and <tt>_head.prev().next()</tt> to be
      * non-null, as when I am a sublist for some larger list.
      * Use <tt>== _head.next()</tt> and <tt>== _head.prev()</tt> to determine
-     * if a given {@link Listable} is the first or last element in the list.
+     * if a given {@link CursorableLinkedList.Listable} is the first or last element in the list.
      */
     transient protected Listable _head = new Listable(null,null,null);
 

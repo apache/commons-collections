@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.4 2002/03/13 05:40:30 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/03/13 05:40:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.5 2002/03/20 05:16:24 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/03/20 05:16:24 $
  *
  * ====================================================================
  *
@@ -61,8 +61,9 @@
 package org.apache.commons.collections;
 
 import java.util.Map;
+import java.util.Map.Entry; // to keep javadoc from spewing warnings
 
-/** A default implementation of {@link Map.Entry Map.Entry}
+/** A default implementation of {@link Map.Entry}
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
