@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterIterator.java,v 1.4 2002/12/13 12:03:06 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2002/12/13 12:03:06 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterIterator.java,v 1.5 2003/01/30 23:11:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,20 +55,25 @@
  * <http://www.apache.org/>.
  *
  */
-
-
-// TestFilterIterator.java 
 package org.apache.commons.collections.iterators;
 
-import junit.framework.TestSuite;
-import junit.framework.Test;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 import org.apache.commons.collections.Predicate;
 
 /**
+ * Test the filter iterator.
  *
  * @author  Jan Sorensen
+ * @author Ralph Wagner
+ * @version $Revision: 1.5 $ $Date: 2003/01/30 23:11:58 $
  */
 public class TestFilterIterator extends TestIterator {
 
@@ -81,6 +83,7 @@ public class TestFilterIterator extends TestIterator {
     }
 
     private String[] array;
+    private List list;
     private FilterIterator iterator;
     /**
      * Set up instance variables required by this test case.
@@ -121,17 +124,14 @@ public class TestFilterIterator extends TestIterator {
      * @return 
      */
     public Iterator makeFullIterator() {
-        return makePassThroughFilter(new ArrayIterator(array));
+        array = new String[] { "a", "b", "c" };
+        list = new ArrayList(Arrays.asList(array));
+        return makePassThroughFilter(list.iterator());
     }
 
     public Object makeObject() {
         return makeFullIterator();
     }
-
-    public boolean supportsRemove() {
-        return false;
-    }
-
 
     public void testRepeatedHasNext() {
         for (int i = 0; i <= array.length; i++) {
@@ -184,10 +184,19 @@ public class TestFilterIterator extends TestIterator {
             assertTrue(i == elements.length - 1 ? !iterator.hasNext() : iterator.hasNext());
         }
         verifyNoMoreElements();
+
+        // test removal
+        initIterator();
+        iterator.setPredicate(pred);
+        if (iterator.hasNext()) {
+            Object last = iterator.next();
+            iterator.remove();
+            assertTrue("Base of FilterIterator still contains removed element.", !list.contains(last));
+        }
     }
 
     private void initIterator() {
-        iterator = makePassThroughFilter(new ArrayIterator(array));
+        iterator = (FilterIterator) makeFullIterator();
     }
 
     /**
