@@ -2,75 +2,48 @@
 
 <center><h2>RELEASE NOTES: COLLECTIONS 2.1</h2></center>
 
-<center><h3>REFACTORING</h3></center>
-
-<p><u>Documentation</u></p>
-
-<p>Almost every class released in 2.0 was touched to improve on, or in
-some cases complete, the JavaDoc.  Those documentation changes are not
-described in detail below; but the goal was simply to have the public
-and protected Collections API completely documentated.  If a class released
-in 2.0 had missing public or protected JavaDoc, then the class was modified
-to add it.</p>
-
-<p><u>New Testing Suite</u></p>
-
-<p>The unit testing framework used to test collections and maps underwent
-a major overhaul between 2.0 and 2.1.  The new tests check for stricter 
-Collection and Map contract conformance.  Many bugs were found and addressed
-with the new tests; bug fixes are described below.  The testing suite is
-not considered part of the binary release and may undergo further changes.</p>
-
-<p><u>New iterators Subpackage</u></p>
-
-<p>All of the iterator classes released in <i>Collections 2.0</i> have been
-moved to an iterators subpackage in <i>Collections 2.1</i>.  Versions of
-the iterators still exist in the main package, but have been deprecated.  
-This was a simple organizational move that will hopefully make the packages
-easier to navigate and absorb.</p>
-
-<p>The affected classes from 2.0 are:</p>
-
+<p><i>Collections 2.1</i> includes a significant number of new collections
+in addition to various bug fixes and refactoring changes. The major additions
+are:
+</p>
 <ul>
-<li>ArrayIterator</li>
-<li>EnumerationIterator</li>
-<li>FilterIterator</li>
-<li>FilterListIterator</li>
-<li>IteratorEnumeration</li>
-<li>ProxyIterator</li>
-<li>ProxyListIterator</li>
-<li>SingletonIterator</li>
-<li>UniqueFilterIterator</li>
+<li><strong>Buffers</strong> - A new collection interface for queues and 
+queue-like things.</li>
+<li><strong>Primitives</strong> - A new package for collections that store the
+data as primitive elements instead of objects.</li>
+<li><strong>Decorators</strong> - A group of static utility classes that provide
+decorators for other collections</li>
 </ul>
+<p>
+The decorators are found on classes named <code>XxxUtils</code> where Xxx is the
+collection type. The decorators are:
+</p>
+<ul>
+<li><strong>Synchronized</strong> - Synchronized decorators where not provided 
+by <code>Collections</code>.</li>
+<li><strong>Unmodifiable</strong> - Unmodifiable decorators where not provided 
+by <code>Collections</code>.</li>
+<li><strong>Predicated</strong> - Decorators that only allow the addition of an
+element to the collection if it matches a <code>Predicate</code>.</li>
+<li><strong>FixedSize</strong> - Decorators that ensure that the list/map 
+cannot change size.</li>
+<li><strong>Lazy</strong> - Decorators that create objects on demand using a
+<code>Factory</code>.</li>
+</ul>
+<p>
+Access to Iterators and Comparators has also been brought in line, by the provision
+of <code>IteratorUtils</code> and <code>ComparatorUtils</code>.
+</p>
 
-<p>In addition, new iterators were added to the subpackage; these are 
-described below.</p>
-
-<p>Note that other than being in a new package, no other changes were made
-to the iterator implementations.</p>
+<hr />
 
 <center><h3>
 NEW COLLECTIONS, COMPARATORS, ITERATORS AND UTILITY CLASSES
 </h3></center>
 
-<p><i>Collections 2.1</i> includes a significant number of new collections, 
-including a new Collection interface for queues and queue-like things.  In
-addition, a new package was created to house collections that operate on 
-primitive elements.  New comparators were added to the comparators 
-subpackage, and new iterators were added to the iterators subpackage.</p>
-
-<p>Also, many new utility classes were added to the main package.  The 
-new utility classes primarly provide decorators for various collection
-or collection-related interfaces.</p>
-
-<p>Descriptions of the new collections, comparators, iterators and utility
-classes follow.  (For descriptions of all classes in <i>Collections</i>, 
-see the <i>STATUS.html</i> file.)</p> 
-
 <p>These collections are new to <i>Collections 2.1</i>:</p>
 
 <ul>
-
 <li><strong>Buffer</strong> - A collection that allows elements to be removed
     in some well-defined order.  Can describe queues, stacks, priority queues,
     LRU caches or any other structure that allows elements to be removed in a
@@ -91,6 +64,12 @@ see the <i>STATUS.html</i> file.)</p>
 <p>These are the new collections in the primitives subpackage:</P>
 
 <ul>
+<li><strong>AbstractIntList</strong> - Abstract base class for lists 
+    of ints.</li>
+<li><strong>AbstractLongList</strong> - Abstract base class for lists 
+    of longs.</li>
+<li><strong>AbstractShortList</strong> - Abstract base class for lists 
+    of shorts.</li>
 <li><strong>AbstractIntArrayList</strong> - Abstract base class for lists 
     backed by an int array.</li>
 <li><strong>AbstractLongArrayList</strong> - Abstract base class for lists 
@@ -140,17 +119,17 @@ with bags.</li>
 <li><strong>BufferUtils</strong> - Contains static utility methods for 
 dealing with buffers.</li>
 <li><strong>ComparatorUtils</strong> - Contains static utility methods for
-dealing with comparators.  Note that the functionality provided by this
-class is redundant; users can also use the individual classes in the 
-comparators subpackage.</li>
+dealing with comparators.  Note that the functionality can also be achieved
+by using the individual classes in the comparators subpackage.</li>
 <li><strong>IteratorUtils</strong> - Contains static utility methods for
-dealing with iterators.  Note that the functionality provided by this
-class is redundant; users can also use the individual classes in the 
-iterators subpackage.</li>
+dealing with iterators.  Note that the functionality can also be achieved
+by using the individual classes in the iterators subpackage.</li>
 <li><strong>SetUtils</strong> - Contains static utility methods for dealing
 with sets.</li>
 </ul>
 
+
+<hr />
 
 <center><h3>CHANGED CLASSES</h3></center>
 
@@ -254,3 +233,53 @@ unintuitive side-effects, it violated the java.util.Map contract in several
 places and its internal algorithms were inefficient.  A new class,
 ReferenceMap, is a more general solution that can be used in place of 
 SoftRefHashMap.
+</p>
+
+<hr />
+
+
+<center><h3>REFACTORING</h3></center>
+
+<p><u>Documentation</u></p>
+
+<p>Almost every class released in 2.0 was touched to improve on, or in
+some cases complete, the JavaDoc.  Those documentation changes are not
+described in detail below; but the goal was simply to have the public
+and protected Collections API completely documentated.  If a class released
+in 2.0 had missing public or protected JavaDoc, then the class was modified
+to add it.</p>
+
+<p><u>New Testing Suite</u></p>
+
+<p>The unit testing framework used to test collections and maps underwent
+a major overhaul between 2.0 and 2.1.  The new tests check for stricter 
+Collection and Map contract conformance.  Many bugs were found and addressed
+with the new tests; bug fixes are described below.  The testing suite is
+not considered part of the binary release and may undergo further changes.</p>
+
+<p><u>New iterators Subpackage</u></p>
+
+<p>All of the iterator classes released in <i>Collections 2.0</i> have been
+moved to an iterators subpackage in <i>Collections 2.1</i>.  Versions of
+the iterators still exist in the main package, but have been deprecated.  
+This was a simple organizational move that will hopefully make the packages
+easier to navigate and absorb.</p>
+
+<p>The affected classes from 2.0 are:</p>
+
+<ul>
+<li>ArrayIterator</li>
+<li>EnumerationIterator</li>
+<li>FilterIterator</li>
+<li>FilterListIterator</li>
+<li>IteratorEnumeration</li>
+<li>ProxyIterator</li>
+<li>ProxyListIterator</li>
+<li>SingletonIterator</li>
+</ul>
+
+<p>In addition, new iterators were added to the subpackage; these are 
+described below.</p>
+
+<p>Note that other than being in a new package, no other changes were made
+to the iterator implementations.</p>
