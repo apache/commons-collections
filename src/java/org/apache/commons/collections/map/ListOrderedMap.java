@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.9 2003/12/28 22:45:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.10 2004/01/05 22:04:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -89,12 +89,13 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2003/12/28 22:45:47 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/05 22:04:19 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
  */
-public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
+public class ListOrderedMap
+        extends AbstractMapDecorator implements OrderedMap {
 
     /** Internal list to hold the sequence of objects */
     protected final List insertOrder = new ArrayList();

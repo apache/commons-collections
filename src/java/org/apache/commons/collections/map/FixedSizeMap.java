@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/FixedSizeMap.java,v 1.2 2003/12/11 22:55:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/FixedSizeMap.java,v 1.3 2004/01/05 22:04:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -80,13 +80,13 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * is not always unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/11 22:55:25 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/05 22:04:19 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeMap extends AbstractMapDecorator
-        implements Map, BoundedMap {
+public class FixedSizeMap
+        extends AbstractMapDecorator implements Map, BoundedMap {
 
     /**
      * Factory method to create a fixed size map.

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/IdentityMap.java,v 1.2 2003/12/07 23:59:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/IdentityMap.java,v 1.3 2004/01/05 22:04:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -71,13 +71,14 @@ import java.util.Map;
  * As a general rule, don't compare this map to other maps.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/07 23:59:13 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/05 22:04:19 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
  */
-public class IdentityMap extends AbstractHashedMap implements Serializable, Cloneable {
-    
+public class IdentityMap
+        extends AbstractHashedMap implements Serializable, Cloneable {
+
     /** Serialisation version */
     private static final long serialVersionUID = 2028493495224302329L;
 

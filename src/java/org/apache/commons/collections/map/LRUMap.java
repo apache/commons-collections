@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.6 2004/01/05 21:32:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.7 2004/01/05 22:04:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,15 +82,15 @@ import org.apache.commons.collections.BoundedMap;
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
- * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/01/05 21:32:47 $
+ * @since Commons Collections 3.0 (previously in main package v1.0)
+ * @version $Revision: 1.7 $ $Date: 2004/01/05 22:04:19 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public class LRUMap extends AbstractLinkedMap
-        implements BoundedMap, Serializable, Cloneable {
+public class LRUMap
+        extends AbstractLinkedMap implements BoundedMap, Serializable, Cloneable {
     
     /** Serialisation version */
     static final long serialVersionUID = -612114643488955218L;
