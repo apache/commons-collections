@@ -70,7 +70,7 @@ import org.apache.commons.collections.Transformer;
  * more efficient (and convenient) than using nested for loops to extract a list.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.2 $ $Date: 2004/05/03 11:38:49 $
+ * @version $Revision: 1.3 $ $Date: 2004/05/03 11:50:30 $
  * 
  * @author Stephen Colebourne
  */
@@ -148,41 +148,19 @@ public class ObjectGraphIterator implements Iterator {
                 root = null;
             }
         } else {
-            findNext(currentIterator);
+            findNextByIterator(currentIterator);
         }
     }
 
     /**
-     * Finds the next object in the iteration.
+     * Finds the next object in the iteration given any start object.
      * 
      * @param value  the value to start from
      */
     protected void findNext(Object value) {
         if (value instanceof Iterator) {
-            if (value != currentIterator) {
-                // recurse a level
-                if (currentIterator != null) {
-                    stack.push(currentIterator);
-                }
-                currentIterator = (Iterator) value;
-            }
-            
-            while (currentIterator.hasNext() && hasNext == false) {
-                Object next = currentIterator.next();
-                if (transformer != null) {
-                    next = transformer.transform(next);
-                }
-                findNext(next);
-            }
-            if (hasNext) {
-                // next value found
-            } else if (stack.isEmpty()) {
-                // all iterators exhausted
-            } else {
-                // current iterator exhausted, go up a level
-                currentIterator = (Iterator) stack.pop();
-                findNext(currentIterator);
-            }
+            // need to examine this iterator
+            findNextByIterator((Iterator) value);
         } else {
             // next value found
             currentValue = value;
@@ -190,7 +168,38 @@ public class ObjectGraphIterator implements Iterator {
         }
     }
     
-    
+    /**
+     * Finds the next object in the iteration given an iterator.
+     * 
+     * @param iterator  the iterator to start from
+     */
+    protected void findNextByIterator(Iterator iterator) {
+        if (iterator != currentIterator) {
+            // recurse a level
+            if (currentIterator != null) {
+                stack.push(currentIterator);
+            }
+            currentIterator = iterator;
+        }
+        
+        while (currentIterator.hasNext() && hasNext == false) {
+            Object next = currentIterator.next();
+            if (transformer != null) {
+                next = transformer.transform(next);
+            }
+            findNext(next);
+        }
+        if (hasNext) {
+            // next value found
+        } else if (stack.isEmpty()) {
+            // all iterators exhausted
+        } else {
+            // current iterator exhausted, go up a level
+            currentIterator = (Iterator) stack.pop();
+            findNextByIterator(currentIterator);
+        }
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Checks whether there are any more elements in the iteration to obtain.
