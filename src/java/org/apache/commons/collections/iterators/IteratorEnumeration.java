@@ -19,15 +19,17 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 /** 
- * Adapter to make an {@link Iterator Iterator} instance appear to be an {@link Enumeration Enumeration} instance.
+ * Adapter to make an {@link Iterator Iterator} instance appear to be
+ * an {@link Enumeration Enumeration} instance.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.8 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision: 1.9 $ $Date: 2004/05/03 10:23:38 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */
 public class IteratorEnumeration implements Enumeration {
     
+    /** The iterator being decorated. */
     private Iterator iterator;
     
     /**
