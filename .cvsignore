@@ -1,9 +1,0 @@
-build.properties
-dist
-maven.log
-velocity.log
-target
-.classpath
-.project
-eclipse
-bin
