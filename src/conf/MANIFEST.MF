@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Package: org.apache.commons.collections.*
 Extension-Name: commons-collections
-Specification-Version: 2.1
+Specification-Version: 3.0
 Specification-Vendor: Apache Software Foundation
 Specification-Title: Commons Collections
-Implementation-Version: 2.1
+Implementation-Version: 3.0
 Implementation-Vendor: Apache Software Foundation
 Implementation-Vendor-Id: 
 

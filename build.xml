@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.56 2004/01/04 18:04:16 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.57 2004/01/24 16:15:09 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -94,7 +94,7 @@
       <property name="Name-Long" value="Apache Jakarta Commons Collections"/>
 
       <!-- The current version number of this component -->
-      <property name="component.version" value="2.1"/>
+      <property name="component.version" value="3.0"/>
       <property name="doc.release.notes" value="RELEASE-NOTES.html"/>
       <property name="doc.status" value="STATUS.html"/>
 
@@ -133,7 +133,7 @@
       <property name="javac.optimize" value="true"/>
 
       <!-- set the cvs.root property in the build.properties file -->
-      <property name="cvs.tag" value="COLLECTIONS_2_1"/>      
+      <property name="cvs.tag" value="COLLECTIONS_3_0"/>      
       
       <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
       <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->
