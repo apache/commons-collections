@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayByteList.java,v 1.4 2003/08/31 17:28:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayByteList.java,v 1.5 2003/10/05 20:48:59 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:28:40 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/05 20:48:59 $
  * @author Rodney Waldhoff
  */
 public class TestArrayByteList extends TestByteList {
@@ -87,7 +87,7 @@ public class TestArrayByteList extends TestByteList {
         return new ArrayByteList();
     }
 
-    public String[] ignoredSimpleTests() {
+    protected String[] ignoredTests() {
         // sublists are not serializable
         return new String[] { 
             "TestArrayByteList.bulkTestSubList.testFullListSerialization",

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestListIntList.java,v 1.5 2003/08/31 17:28:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestListIntList.java,v 1.6 2003/10/05 20:48:58 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -69,7 +69,7 @@ import org.apache.commons.collections.primitives.IntList;
 import org.apache.commons.collections.primitives.TestIntList;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:28:38 $
+ * @version $Revision: 1.6 $ $Date: 2003/10/05 20:48:58 $
  * @author Rodney Waldhoff
  */
 public class TestListIntList extends TestIntList {
@@ -96,7 +96,7 @@ public class TestListIntList extends TestIntList {
         return new ListIntList(new ArrayList());
     }
     
-    public String[] ignoredSimpleTests() {
+    protected String[] ignoredTests() {
         // sublists are not serializable
         return new String[] { 
             "TestListIntList.bulkTestSubList.testFullListSerialization",

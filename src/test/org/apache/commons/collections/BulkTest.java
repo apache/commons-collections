@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/BulkTest.java,v 1.5 2003/10/02 22:14:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/BulkTest.java,v 1.6 2003/10/05 20:48:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -167,7 +167,7 @@ import junit.framework.TestSuite;
  *  A subclass can override a superclass's bulk test by
  *  returning <code>null</code> from the bulk test method.  If you only
  *  want to override specific simple tests within a bulk test, use the
- *  {@link #ignoredSimpleTests} method.<P>
+ *  {@link #ignoredTests} method.<P>
  *
  *  Note that if you want to use the bulk test methods, you <I>must</I>
  *  define your <code>suite()</code> method to use {@link #makeSuite}.
@@ -175,7 +175,7 @@ import junit.framework.TestSuite;
  *  interpret bulk test methods.
  *
  *  @author Paul Jack
- *  @version $Id: BulkTest.java,v 1.5 2003/10/02 22:14:29 scolebourne Exp $
+ *  @version $Id: BulkTest.java,v 1.6 2003/10/05 20:48:29 scolebourne Exp $
  */
 public class BulkTest extends TestCase implements Cloneable {
 
@@ -191,7 +191,7 @@ public class BulkTest extends TestCase implements Cloneable {
 
     /**
      *  The full name of this bulk test instance.  This is the full name
-     *  that is compared to {@link #ignoredSimpleTests} to see if this
+     *  that is compared to {@link #ignoredTests} to see if this
      *  test should be ignored.  It's also displayed in the text runner
      *  to ease debugging.
      */
@@ -225,39 +225,39 @@ public class BulkTest extends TestCase implements Cloneable {
 
 
     /**
-     *  Returns an array of simple test names to ignore.<P>
+     *  Returns an array of test names to ignore.<P>
      *
-     *  If a simple test that's defined by this <code>BulkTest</code> or
+     *  If a test that's defined by this <code>BulkTest</code> or
      *  by one of its bulk test methods has a name that's in the returned
      *  array, then that simple test will not be executed.<P>
      *
-     *  A simple test's name is formed by taking the class name of the
+     *  A test's name is formed by taking the class name of the
      *  root <code>BulkTest</code>, eliminating the package name, then
      *  appending the names of any bulk test methods that were invoked
      *  to get to the simple test, and then appending the simple test
      *  method name.  The method names are delimited by periods:
      *
-     *  <Pre>
+     *  <pre>
      *  TestHashMap.bulkTestEntrySet.testClear
-     *  </Pre>
+     *  </pre>
      *
      *  is the name of one of the simple tests defined in the sample classes
      *  described above.  If the sample <code>TestHashMap</code> class
      *  included this method:
      *
-     *  <Pre>
-     *  public String[] ignoredSimpleTests() {
+     *  <pre>
+     *  public String[] ignoredTests() {
      *      return new String[] { "TestHashMap.bulkTestEntrySet.testClear" };
      *  }
-     *  </Pre>
+     *  </pre>
      *
      *  then the entry set's clear method wouldn't be tested, but the key
      *  set's clear method would.
      *
-     *  @return an array of the names of simple tests to ignore, or null if
+     *  @return an array of the names of tests to ignore, or null if
      *   no tests should be ignored
      */
-    public String[] ignoredSimpleTests() {
+    protected String[] ignoredTests() {
         return null;
     }
 
@@ -341,7 +341,7 @@ class BulkTestSuiteMaker {
 
          BulkTest bulk = makeFirstTestCase(startingClass);
          ignored = new ArrayList();
-         String[] s = bulk.ignoredSimpleTests();
+         String[] s = bulk.ignoredTests();
          if (s != null) {
              ignored.addAll(Arrays.asList(s));
          }
@@ -391,6 +391,9 @@ class BulkTestSuiteMaker {
      *  @param m  The bulk test method
      */
     void addBulk(BulkTest bulk, Method m) {
+        String verboseName = prefix + "." + m.getName();
+        if (ignored.contains(verboseName)) return;
+        
         BulkTest bulk2;
         try {
             bulk2 = (BulkTest)m.invoke(bulk, null);
