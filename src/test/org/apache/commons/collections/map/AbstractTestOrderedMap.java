@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestOrderedMap.java,v 1.1 2003/11/20 22:34:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestOrderedMap.java,v 1.2 2003/12/01 22:34:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,19 +67,19 @@ import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.comparators.NullComparator;
-import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 import org.apache.commons.collections.iterators.AbstractTestOrderedMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
 
 /**
  * Abstract test class for {@link OrderedMap} methods and contracts.
  *
- * @version $Revision: 1.1 $ $Date: 2003/11/20 22:34:49 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/01 22:34:54 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestOrderedMap extends AbstractTestMap {
+public abstract class AbstractTestOrderedMap extends AbstractTestAMap {
 
     /**
      * JUnit constructor.
@@ -214,56 +214,10 @@ public abstract class AbstractTestOrderedMap extends AbstractTestMap {
     }
     
     //-----------------------------------------------------------------------
-    public BulkTest bulkTestMapIterator() {
-        return new InnerTestOrderedMapIterator();
-    }
-    
-    // TODO: Test mapIterator() and orderedMapIterator() separately
-    public class InnerTestMapIterator extends AbstractTestMapIterator {
-        public InnerTestMapIterator() {
-            super("InnerTestMapIterator");
-        }
-        
-        public boolean supportsRemove() {
-            return AbstractTestOrderedMap.this.isRemoveSupported();
-        }
-
-        public boolean supportsSetValue() {
-            return AbstractTestOrderedMap.this.isSetValueSupported();
-        }
-
-        public MapIterator makeEmptyMapIterator() {
-            resetEmpty();
-            return ((OrderedMap) AbstractTestOrderedMap.this.map).mapIterator();
-        }
-
-        public MapIterator makeFullMapIterator() {
-            resetFull();
-            return ((OrderedMap) AbstractTestOrderedMap.this.map).mapIterator();
-        }
-        
-        public Map getMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractTestOrderedMap.this.map;
-        }
-        
-        public Map getConfirmedMap() {
-            // assumes makeFullMapIterator() called first
-            return AbstractTestOrderedMap.this.confirmed;
-        }
-        
-        public void verify() {
-            super.verify();
-            AbstractTestOrderedMap.this.verify();
-        }
-    }
-    
-    //-----------------------------------------------------------------------
     public BulkTest bulkTestOrderedMapIterator() {
         return new InnerTestOrderedMapIterator();
     }
     
-    // TODO: Test mapIterator() and orderedMapIterator() separately
     public class InnerTestOrderedMapIterator extends AbstractTestOrderedMapIterator {
         public InnerTestOrderedMapIterator() {
             super("InnerTestOrderedMapIterator");

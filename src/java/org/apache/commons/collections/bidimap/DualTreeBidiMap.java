@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.3 2003/11/20 00:31:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.4 2003/12/01 22:34:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,10 +69,13 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.OrderedBidiMap;
+import org.apache.commons.collections.OrderedMap;
+import org.apache.commons.collections.SortedBidiMap;
 import org.apache.commons.collections.iterators.OrderedMapIterator;
 import org.apache.commons.collections.iterators.ResettableIterator;
 import org.apache.commons.collections.map.AbstractSortedMapDecorator;
-import org.apache.commons.collections.map.OrderedMap;
 
 /**
  * Implementation of <code>BidiMap</code> that uses two <code>TreeMap</code> instances.
@@ -85,7 +88,7 @@ import org.apache.commons.collections.map.OrderedMap;
  * not store each object twice, which can save on memory use.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.3 2003/11/20 00:31:42 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.4 2003/12/01 22:34:54 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

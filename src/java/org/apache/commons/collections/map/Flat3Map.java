@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.2 2003/11/18 23:34:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.3 2003/12/01 22:34:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,6 +66,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.AMap;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.iterators.EntrySetMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
@@ -99,11 +100,11 @@ import org.apache.commons.collections.iterators.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/18 23:34:47 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/01 22:34:53 $
  *
  * @author Stephen Colebourne
  */
-public class Flat3Map implements Map {
+public class Flat3Map implements AMap {
     
     /** The size of the map, used while in flat mode */
     private int iSize;

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestFlat3Map.java,v 1.2 2003/12/01 22:34:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/Attic/AbstractTestAMap.java,v 1.1 2003/12/01 22:34:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,85 +57,149 @@
  */
 package org.apache.commons.collections.map;
 
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.textui.TestRunner;
-
+import org.apache.commons.collections.AMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
 
 /**
- * JUnit tests.
- * 
- * @version $Revision: 1.2 $ $Date: 2003/12/01 22:34:54 $
+ * Abstract test class for {@link AMap} methods and contracts.
+ *
+ * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:54 $
  * 
  * @author Stephen Colebourne
  */
-public class TestFlat3Map extends AbstractTestAMap {
+public abstract class AbstractTestAMap extends AbstractTestMap {
 
-    public TestFlat3Map(String testName) {
+    /**
+     * JUnit constructor.
+     * 
+     * @param testName  the test name
+     */
+    public AbstractTestAMap(String testName) {
         super(testName);
     }
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
+    
+    //-----------------------------------------------------------------------
+    public void testFailFastEntrySet() {
+        if (isRemoveSupported() == false) return;
+        resetFull();
+        Iterator it = map.entrySet().iterator();
+        Map.Entry val = (Map.Entry) it.next();
+        map.remove(val.getKey());
+        try {
+            it.next();
+            fail();
+        } catch (ConcurrentModificationException ex) {}
+        
+        resetFull();
+        it = map.entrySet().iterator();
+        it.next();
+        map.clear();
+        try {
+            it.next();
+            fail();
+        } catch (ConcurrentModificationException ex) {}
     }
     
-    public static Test suite() {
-        return BulkTest.makeSuite(TestFlat3Map.class);
+    public void testFailFastKeySet() {
+        if (isRemoveSupported() == false) return;
+        resetFull();
+        Iterator it = map.keySet().iterator();
+        Object val = it.next();
+        map.remove(val);
+        try {
+            it.next();
+            fail();
+        } catch (ConcurrentModificationException ex) {}
+        
+        resetFull();
+        it = map.keySet().iterator();
+        it.next();
+        map.clear();
+        try {
+            it.next();
+            fail();
+        } catch (ConcurrentModificationException ex) {}
     }
-
-    public Map makeEmptyMap() {
-        return new Flat3Map();
+    
+    public void testFailFastValues() {
+        if (isRemoveSupported() == false) return;
+        resetFull();
+        Iterator it = map.values().iterator();
+        it.next();
+        map.remove(map.keySet().iterator().next());
+        try {
+            it.next();
+            fail();
+        } catch (ConcurrentModificationException ex) {}
+        
+        resetFull();
+        it = map.values().iterator();
+        it.next();
+        map.clear();
+        try {
+            it.next();
+            fail();
+        } catch (ConcurrentModificationException ex) {}
     }
-
+    
     //-----------------------------------------------------------------------
     public BulkTest bulkTestMapIterator() {
-        return new TestFlatMapIterator();
+        return new InnerTestMapIterator();
     }
     
-    public class TestFlatMapIterator extends AbstractTestMapIterator {
-        public TestFlatMapIterator() {
-            super("TestFlatMapIterator");
+    public class InnerTestMapIterator extends AbstractTestMapIterator {
+        public InnerTestMapIterator() {
+            super("InnerTestMapIterator");
         }
         
         public Object[] addSetValues() {
-            return TestFlat3Map.this.getNewSampleValues();
+            return AbstractTestAMap.this.getNewSampleValues();
         }
         
         public boolean supportsRemove() {
-            return TestFlat3Map.this.isRemoveSupported();
+            return AbstractTestAMap.this.isRemoveSupported();
         }
 
         public boolean supportsSetValue() {
-            return TestFlat3Map.this.isSetValueSupported();
+            return AbstractTestAMap.this.isSetValueSupported();
         }
 
         public MapIterator makeEmptyMapIterator() {
             resetEmpty();
-            return ((Flat3Map) TestFlat3Map.this.map).mapIterator();
+            return ((AMap) AbstractTestAMap.this.map).mapIterator();
         }
 
         public MapIterator makeFullMapIterator() {
             resetFull();
-            return ((Flat3Map) TestFlat3Map.this.map).mapIterator();
+            return ((AMap) AbstractTestAMap.this.map).mapIterator();
         }
         
         public Map getMap() {
             // assumes makeFullMapIterator() called first
-            return TestFlat3Map.this.map;
+            return AbstractTestAMap.this.map;
         }
         
         public Map getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return TestFlat3Map.this.confirmed;
+            return AbstractTestAMap.this.confirmed;
         }
         
         public void verify() {
             super.verify();
-            TestFlat3Map.this.verify();
+            AbstractTestAMap.this.verify();
         }
     }
+    
+//  public void testCreate() throws Exception {
+//      resetEmpty();
+//      writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/HashedMap.emptyCollection.version3.obj");
+//      resetFull();
+//      writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/HashedMap.fullCollection.version3.obj");
+//  }
 }

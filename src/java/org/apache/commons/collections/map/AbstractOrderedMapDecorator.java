@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractOrderedMapDecorator.java,v 1.1 2003/11/20 22:33:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractOrderedMapDecorator.java,v 1.2 2003/12/01 22:34:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,7 @@
  */
 package org.apache.commons.collections.map;
 
+import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.OrderedMapIterator;
 
@@ -73,7 +74,7 @@ import org.apache.commons.collections.iterators.OrderedMapIterator;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/20 22:33:54 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/01 22:34:53 $
  * 
  * @author Stephen Colebourne
  */

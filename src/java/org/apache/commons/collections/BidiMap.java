@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/Attic/BidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.8 2003/12/01 22:34:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.bidimap;
+package org.apache.commons.collections;
 
 import java.util.Map;
 
@@ -74,7 +74,7 @@ import org.apache.commons.collections.iterators.MapIterator;
  * a key to be looked up from a value with equal performance.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/01 22:34:55 $
  *
  * @author Stephen Colebourne
  */

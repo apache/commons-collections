@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableMap.java,v 1.2 2003/11/20 22:35:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableMap.java,v 1.3 2003/12/01 22:34:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,9 +63,13 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.AMap;
 import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
+import org.apache.commons.collections.iterators.EntrySetMapIterator;
+import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
 import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
@@ -73,11 +77,11 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>Map</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/20 22:35:50 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/01 22:34:53 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableMap extends AbstractMapDecorator implements Unmodifiable {
+public final class UnmodifiableMap extends AbstractMapDecorator implements AMap, Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable map.
@@ -118,6 +122,16 @@ public final class UnmodifiableMap extends AbstractMapDecorator implements Unmod
 
     public Object remove(Object key) {
         throw new UnsupportedOperationException();
+    }
+
+    public MapIterator mapIterator() {
+        if (map instanceof AMap) {
+            MapIterator it = ((AMap) map).mapIterator();
+            return UnmodifiableMapIterator.decorate(it);
+        } else {
+            MapIterator it = new EntrySetMapIterator(map);
+            return UnmodifiableMapIterator.decorate(it);
+        }
     }
 
     public Set entrySet() {

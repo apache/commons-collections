@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.2 2003/12/01 22:34:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,6 +62,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.collection.AbstractCollectionDecorator;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections.iterators.MapIterator;
@@ -75,7 +76,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.2 2003/12/01 22:34:54 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

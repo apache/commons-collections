@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableOrderedMapIterator.java,v 1.2 2003/12/01 22:34:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestHashedMap.java,v 1.1 2003/12/01 22:34:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,86 +55,42 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.iterators;
+package org.apache.commons.collections.map;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.textui.TestRunner;
 
-import org.apache.commons.collections.OrderedMap;
-import org.apache.commons.collections.Unmodifiable;
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections.BulkTest;
 
 /**
- * Tests the UnmodifiableOrderedMapIterator.
+ * JUnit tests.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/12/01 22:34:55 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:54 $
  * 
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableOrderedMapIterator extends AbstractTestOrderedMapIterator {
+public class TestHashedMap extends AbstractTestAMap {
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableOrderedMapIterator.class);
-    }
-
-    public TestUnmodifiableOrderedMapIterator(String testName) {
+    public TestHashedMap(String testName) {
         super(testName);
     }
 
-    public MapIterator makeEmptyMapIterator() {
-        return UnmodifiableOrderedMapIterator.decorate(
-            ListOrderedMap.decorate(new HashMap()).orderedMapIterator());
-    }
-
-    public MapIterator makeFullMapIterator() {
-        return UnmodifiableOrderedMapIterator.decorate(
-            ((OrderedMap) getMap()).orderedMapIterator());
+    public static void main(String[] args) {
+        TestRunner.run(suite());
     }
     
-    public Map getMap() {
-        Map testMap = ListOrderedMap.decorate(new HashMap());
-        testMap.put("A", "a");
-        testMap.put("B", "b");
-        testMap.put("C", "c");
-        return testMap;
+    public static Test suite() {
+        return BulkTest.makeSuite(TestHashedMap.class);
     }
 
-    public Map getConfirmedMap() {
-        Map testMap = new TreeMap();
-        testMap.put("A", "a");
-        testMap.put("B", "b");
-        testMap.put("C", "c");
-        return testMap;
-    }
-
-    public boolean supportsRemove() {
-        return false;
-    }
-
-    public boolean supportsSetValue() {
-        return false;
+    public Map makeEmptyMap() {
+        return new HashedMap();
     }
     
-    //-----------------------------------------------------------------------
-    public void testOrderedMapIterator() {
-        assertTrue(makeEmptyOrderedMapIterator() instanceof Unmodifiable);
-    }
-    
-    public void testDecorateFactory() {
-        OrderedMapIterator it = makeFullOrderedMapIterator();
-        assertSame(it, UnmodifiableOrderedMapIterator.decorate(it));
-        
-        it = ((OrderedMap) getMap()).orderedMapIterator() ;
-        assertTrue(it != UnmodifiableOrderedMapIterator.decorate(it));
-        
-        try {
-            UnmodifiableOrderedMapIterator.decorate(null);
-            fail();
-        } catch (IllegalArgumentException ex) {}
+    public String getCompatibilityVersion() {
+        return "3";
     }
 
 }

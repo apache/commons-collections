@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestUnmodifiableOrderedMap.java,v 1.1 2003/11/20 22:35:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestUnmodifiableOrderedMap.java,v 1.2 2003/12/01 22:34:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,6 +63,7 @@ import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.Unmodifiable;
 
 /**
@@ -70,7 +71,7 @@ import org.apache.commons.collections.Unmodifiable;
  * {@link UnmodifiableOrderedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/20 22:35:50 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/01 22:34:54 $
  * 
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Attic/OrderedMap.java,v 1.2 2003/11/19 23:57:51 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AMap.java,v 1.1 2003/12/01 22:34:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,83 +55,51 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.map;
+package org.apache.commons.collections;
 
 import java.util.Map;
 
 import org.apache.commons.collections.iterators.MapIterator;
-import org.apache.commons.collections.iterators.OrderedMapIterator;
 
 /**
- * Defines a map that maintains order and allows both forward and backward
- * iteration through that order.
+ * Defines a map that can be iterated directly without needing to create an entry set.
+ * <p>
+ * A map iterator is an efficient way of iterating over maps.
+ * There is no need to access the entry set or cast to Map Entry objects.
+ * <pre>
+ * AMap map = new HashedMap();
+ * MapIterator it = map.mapIterator();
+ * while (it.hasNext()) {
+ *   Object key = it.next();
+ *   Object value = it.getValue();
+ *   it.setValue("newValue");
+ * }
+ * </pre>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/19 23:57:51 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:55 $
  *
  * @author Stephen Colebourne
  */
-public interface OrderedMap extends Map {
+public interface AMap extends Map {
     
     /**
      * Obtains a <code>MapIterator</code> over the map.
      * <p>
      * A map iterator is an efficient way of iterating over maps.
-     * 
-     * @return a map iterator
-     */
-    MapIterator mapIterator();
-    
-    /**
-     * Obtains an <code>OrderedMapIterator</code> over the map.
-     * <p>
-     * A ordered map iterator is an efficient way of iterating over maps
-     * in both directions.
+     * There is no need to access the entry set or cast to Map Entry objects.
      * <pre>
-     * BidiMap map = new TreeBidiMap();
+     * AMap map = new HashedMap();
      * MapIterator it = map.mapIterator();
      * while (it.hasNext()) {
      *   Object key = it.next();
      *   Object value = it.getValue();
      *   it.setValue("newValue");
-     *   Object previousKey = it.previous();
      * }
      * </pre>
      * 
      * @return a map iterator
      */
-    OrderedMapIterator orderedMapIterator();
-    
-    /**
-     * Gets the first key currently in this map.
-     *
-     * @return the first key currently in this map
-     * @throws NoSuchElementException if this map is empty
-     */
-    public Object firstKey();
-
-    /**
-     * Gets the last key currently in this map.
-     *
-     * @return the last key currently in this map
-     * @throws NoSuchElementException if this map is empty
-     */
-    public Object lastKey();
-    
-    /**
-     * Gets the next key after the one specified.
-     *
-     * @param key  the key to search for next from
-     * @return the next key, null if no match or at end
-     */
-    public Object nextKey(Object key);
-
-    /**
-     * Gets the previous key before the one specified.
-     *
-     * @param key  the key to search for previous from
-     * @return the previous key, null if no match or at start
-     */
-    public Object previousKey(Object key);
+    MapIterator mapIterator();
     
 }

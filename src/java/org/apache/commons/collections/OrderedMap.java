@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableOrderedMapIterator.java,v 1.2 2003/12/01 22:34:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedMap.java,v 1.1 2003/12/01 22:34:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,86 +55,71 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.iterators;
+package org.apache.commons.collections;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TreeMap;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.apache.commons.collections.OrderedMap;
-import org.apache.commons.collections.Unmodifiable;
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections.iterators.OrderedMapIterator;
 
 /**
- * Tests the UnmodifiableOrderedMapIterator.
+ * Defines a map that maintains order and allows both forward and backward
+ * iteration through that order.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/12/01 22:34:55 $
- * 
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:55 $
+ *
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableOrderedMapIterator extends AbstractTestOrderedMapIterator {
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableOrderedMapIterator.class);
-    }
-
-    public TestUnmodifiableOrderedMapIterator(String testName) {
-        super(testName);
-    }
-
-    public MapIterator makeEmptyMapIterator() {
-        return UnmodifiableOrderedMapIterator.decorate(
-            ListOrderedMap.decorate(new HashMap()).orderedMapIterator());
-    }
-
-    public MapIterator makeFullMapIterator() {
-        return UnmodifiableOrderedMapIterator.decorate(
-            ((OrderedMap) getMap()).orderedMapIterator());
-    }
+public interface OrderedMap extends AMap {
     
-    public Map getMap() {
-        Map testMap = ListOrderedMap.decorate(new HashMap());
-        testMap.put("A", "a");
-        testMap.put("B", "b");
-        testMap.put("C", "c");
-        return testMap;
-    }
-
-    public Map getConfirmedMap() {
-        Map testMap = new TreeMap();
-        testMap.put("A", "a");
-        testMap.put("B", "b");
-        testMap.put("C", "c");
-        return testMap;
-    }
-
-    public boolean supportsRemove() {
-        return false;
-    }
-
-    public boolean supportsSetValue() {
-        return false;
-    }
+    /**
+     * Obtains an <code>OrderedMapIterator</code> over the map.
+     * <p>
+     * A ordered map iterator is an efficient way of iterating over maps
+     * in both directions.
+     * <pre>
+     * BidiMap map = new TreeBidiMap();
+     * MapIterator it = map.mapIterator();
+     * while (it.hasNext()) {
+     *   Object key = it.next();
+     *   Object value = it.getValue();
+     *   it.setValue("newValue");
+     *   Object previousKey = it.previous();
+     * }
+     * </pre>
+     * 
+     * @return a map iterator
+     */
+    OrderedMapIterator orderedMapIterator();
     
-    //-----------------------------------------------------------------------
-    public void testOrderedMapIterator() {
-        assertTrue(makeEmptyOrderedMapIterator() instanceof Unmodifiable);
-    }
-    
-    public void testDecorateFactory() {
-        OrderedMapIterator it = makeFullOrderedMapIterator();
-        assertSame(it, UnmodifiableOrderedMapIterator.decorate(it));
-        
-        it = ((OrderedMap) getMap()).orderedMapIterator() ;
-        assertTrue(it != UnmodifiableOrderedMapIterator.decorate(it));
-        
-        try {
-            UnmodifiableOrderedMapIterator.decorate(null);
-            fail();
-        } catch (IllegalArgumentException ex) {}
-    }
+    /**
+     * Gets the first key currently in this map.
+     *
+     * @return the first key currently in this map
+     * @throws NoSuchElementException if this map is empty
+     */
+    public Object firstKey();
 
+    /**
+     * Gets the last key currently in this map.
+     *
+     * @return the last key currently in this map
+     * @throws NoSuchElementException if this map is empty
+     */
+    public Object lastKey();
+    
+    /**
+     * Gets the next key after the one specified.
+     *
+     * @param key  the key to search for next from
+     * @return the next key, null if no match or at end
+     */
+    public Object nextKey(Object key);
+
+    /**
+     * Gets the previous key before the one specified.
+     *
+     * @param key  the key to search for previous from
+     * @return the previous key, null if no match or at start
+     */
+    public Object previousKey(Object key);
+    
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualHashBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualHashBidiMap.java,v 1.2 2003/12/01 22:34:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,11 +64,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.BidiMap;
+
 /**
  * Implementation of <code>BidiMap</code> that uses two <code>HashMap</code> instances.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualHashBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * @version $Id: DualHashBidiMap.java,v 1.2 2003/12/01 22:34:54 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
