@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/CollectionIntCollection.java,v 1.2 2003/01/07 00:59:51 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2003/01/07 00:59:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/CollectionIntCollection.java,v 1.3 2003/01/07 01:34:07 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/01/07 01:34:07 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import java.util.Collection;
  * {@link java.util.Collection Collection} to the
  * {@link IntCollection} interface.
  *
- * @version $Revision: 1.2 $ $Date: 2003/01/07 00:59:51 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/07 01:34:07 $
  * @author Rodney Waldhoff 
  */
 public class CollectionIntCollection implements IntCollection {
@@ -108,6 +108,10 @@ public class CollectionIntCollection implements IntCollection {
         return _collection.hashCode();
     }
     
+    public String toString() {
+        return _collection.toString();
+    }
+
     public boolean isEmpty() {
         return _collection.isEmpty();
     }
