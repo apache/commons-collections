@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.5 2003/10/09 20:58:52 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.6 2003/11/23 14:41:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,6 +64,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.collections.functors.FunctorException;
+
 /**
  * <code>TransformerUtils</code> provides reference implementations and 
  * utilities for the Transformer functor interface. The supplied transformers are:
@@ -87,7 +89,7 @@ import java.util.Map;
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/10/09 20:58:52 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/23 14:41:27 $
  * 
  * @author Stephen Colebourne
  * @author James Carman

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.10 2003/10/29 23:21:39 ggregory Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.11 2003/11/23 14:41:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,6 +63,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.commons.collections.functors.FunctorException;
+
 /**
  * <code>PredicateUtils</code> provides reference implementations and utilities
  * for the Predicate functor interface. The supplied predicates are:
@@ -88,7 +90,7 @@ import java.util.Set;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2003/10/29 23:21:39 $
+ * @version $Revision: 1.11 $ $Date: 2003/11/23 14:41:27 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg

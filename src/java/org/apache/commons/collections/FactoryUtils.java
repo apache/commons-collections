@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.8 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.9 2003/11/23 14:41:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,6 +67,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.commons.collections.functors.FunctorException;
+
 /**
  * <code>FactoryUtils</code> provides reference implementations and utilities
  * for the Factory functor interface. The supplied factories are:
@@ -80,7 +82,7 @@ import java.lang.reflect.Method;
  * All the supplied factories are Serializable.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/23 14:41:27 $
  *
  * @author Stephen Colebourne
  */

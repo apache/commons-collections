@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.5 2003/10/05 21:11:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.6 2003/11/23 14:41:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,6 +62,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.apache.commons.collections.functors.FunctorException;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
@@ -70,7 +72,7 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.FactoryUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/10/05 21:11:06 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/23 14:41:27 $
  *
  * @author Stephen Colebourne
  */
