@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.7 2003/12/06 14:02:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.8 2003/12/07 23:59:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -98,7 +98,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/12/06 14:02:11 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/07 23:59:13 $
  *
  * @author Stephen Colebourne
  */
@@ -609,7 +609,7 @@ public class Flat3Map implements IterableMap {
 
         public Object next() {
             if (hasNext() == false) {
-                throw new NoSuchElementException(HashedMap.NO_NEXT_ENTRY);
+                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
             iCanRemove = true;
             iIndex++;
@@ -618,7 +618,7 @@ public class Flat3Map implements IterableMap {
 
         public void remove() {
             if (iCanRemove == false) {
-                throw new IllegalStateException(HashedMap.REMOVE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
             iFlatMap.remove(getKey());
             iIndex--;
@@ -627,7 +627,7 @@ public class Flat3Map implements IterableMap {
 
         public Object getKey() {
             if (iCanRemove == false) {
-                throw new IllegalStateException(HashedMap.GETKEY_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             switch (iIndex) {
                 case 3:
@@ -642,7 +642,7 @@ public class Flat3Map implements IterableMap {
 
         public Object getValue() {
             if (iCanRemove == false) {
-                throw new IllegalStateException(HashedMap.GETVALUE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             switch (iIndex) {
                 case 3:
@@ -657,7 +657,7 @@ public class Flat3Map implements IterableMap {
 
         public Object setValue(Object value) {
             if (iCanRemove == false) {
-                throw new IllegalStateException(HashedMap.SETVALUE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             Object old = getValue();
             switch (iIndex) {
@@ -761,7 +761,7 @@ public class Flat3Map implements IterableMap {
 
         public Object next() {
             if (hasNext() == false) {
-                throw new NoSuchElementException(HashedMap.NO_NEXT_ENTRY);
+                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
             iCanRemove = true;
             iIndex++;
@@ -770,7 +770,7 @@ public class Flat3Map implements IterableMap {
 
         public void remove() {
             if (iCanRemove == false) {
-                throw new IllegalStateException(HashedMap.REMOVE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
             iFlatMap.remove(getKey());
             iIndex--;
@@ -779,7 +779,7 @@ public class Flat3Map implements IterableMap {
 
         public Object getKey() {
             if (iCanRemove == false) {
-                throw new IllegalStateException(HashedMap.GETKEY_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             switch (iIndex) {
                 case 3:
@@ -794,7 +794,7 @@ public class Flat3Map implements IterableMap {
 
         public Object getValue() {
             if (iCanRemove == false) {
-                throw new IllegalStateException(HashedMap.GETVALUE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             switch (iIndex) {
                 case 3:
@@ -809,7 +809,7 @@ public class Flat3Map implements IterableMap {
 
         public Object setValue(Object value) {
             if (iCanRemove == false) {
-                throw new IllegalStateException(HashedMap.SETVALUE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             Object old = getValue();
             switch (iIndex) {

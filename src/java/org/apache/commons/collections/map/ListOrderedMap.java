@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.7 2003/12/06 14:02:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.8 2003/12/07 23:59:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -87,7 +87,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntry;
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/12/06 14:02:11 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/07 23:59:13 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -466,7 +466,7 @@ public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
         
         public void remove() {
             if (readable == false) {
-                throw new IllegalStateException(HashedMap.REMOVE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
             iterator.remove();
             parent.map.remove(last);
@@ -475,21 +475,21 @@ public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
         
         public Object getKey() {
             if (readable == false) {
-                throw new IllegalStateException(HashedMap.GETKEY_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             return last;
         }
 
         public Object getValue() {
             if (readable == false) {
-                throw new IllegalStateException(HashedMap.GETVALUE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             return parent.get(last);
         }
         
         public Object setValue(Object value) {
             if (readable == false) {
-                throw new IllegalStateException(HashedMap.SETVALUE_INVALID);
+                throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             return parent.map.put(last, value);
         }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/IdentityMap.java,v 1.1 2003/12/02 21:57:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/IdentityMap.java,v 1.2 2003/12/07 23:59:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -67,20 +71,21 @@ import java.util.Map;
  * As a general rule, don't compare this map to other maps.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/02 21:57:08 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/07 23:59:13 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
  */
-public class IdentityMap extends HashedMap {
+public class IdentityMap extends AbstractHashedMap implements Serializable, Cloneable {
     
     /** Serialisation version */
+    private static final long serialVersionUID = 2028493495224302329L;
 
     /**
      * Constructs a new empty map with default size and load factor.
      */
     public IdentityMap() {
-        super();
+        super(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, DEFAULT_THRESHOLD);
     }
 
     /**
@@ -100,7 +105,7 @@ public class IdentityMap extends HashedMap {
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
      * @throws IllegalArgumentException if the initial capacity is less than one
-     * @throws IllegalArgumentException if the load factor is less than one
+     * @throws IllegalArgumentException if the load factor is less than zero
      */
     public IdentityMap(int initialCapacity, float loadFactor) {
         super(initialCapacity, loadFactor);
@@ -193,6 +198,32 @@ public class IdentityMap extends HashedMap {
             return System.identityHashCode(getKey()) ^
                    System.identityHashCode(getValue());
         }
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    public Object clone() {
+        return super.clone();
+    }
+    
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
     }
     
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.3 2003/12/07 01:23:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.4 2003/12/07 23:59:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,22 +57,15 @@
  */
 package org.apache.commons.collections.map;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Map;
-import java.util.NoSuchElementException;
-
-import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.OrderedIterator;
-import org.apache.commons.collections.OrderedMap;
-import org.apache.commons.collections.OrderedMapIterator;
-import org.apache.commons.collections.ResettableIterator;
 
 /**
  * A <code>Map</code> implementation that maintains the order of the entries.
- * In this implementation order is maintained is by original insertion, but
- * subclasses may work differently.
+ * In this implementation order is maintained is by original insertion.
  * <p>
  * This implementation improves on the JDK1.4 LinkedHashMap by adding the 
  * {@link org.apache.commons.collections.iterators.MapIterator MapIterator}
@@ -90,24 +83,20 @@ import org.apache.commons.collections.ResettableIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/07 01:23:54 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/07 23:59:13 $
  *
- * @author java util LinkedHashMap
  * @author Stephen Colebourne
  */
-public class LinkedMap extends HashedMap implements OrderedMap {
+public class LinkedMap extends AbstractLinkedMap implements Serializable, Cloneable {
     
     /** Serialisation version */
-    static final long serialVersionUID = -1954063410665686469L;
+    private static final long serialVersionUID = 9077234323521161066L;
     
-    /** Header in the linked list */
-    protected transient LinkEntry header;
-
     /**
      * Constructs a new empty map with default size and load factor.
      */
     public LinkedMap() {
-        super();
+        super(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, DEFAULT_THRESHOLD);
     }
 
     /**
@@ -143,417 +132,30 @@ public class LinkedMap extends HashedMap implements OrderedMap {
         super(map);
     }
 
-    /**
-     * Initialise this subclass during construction.
-     */
-    protected void init() {
-        header = new LinkEntry(null, -1, null, null);
-        header.before = header.after = header;
-    }
-
     //-----------------------------------------------------------------------
     /**
-     * Checks whether the map contains the specified value.
-     * 
-     * @param value  the value to search for
-     * @return true if the map contains the value
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
      */
-    public boolean containsValue(Object value) {
-        // override uses faster iterator
-        if (value == null) {
-            for (LinkEntry entry = header.after; entry != header; entry = entry.after) {
-                if (entry.getValue() == null) {
-                    return true;
-                }
-            }
-        } else {
-            for (LinkEntry entry = header.after; entry != header; entry = entry.after) {
-                if (isEqualValue(value, entry.getValue())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Clears the map, resetting the size to zero and nullifying references
-     * to avoid garbage collection issues.
-     */
-    public void clear() {
-        // override to reset the linked list
-        super.clear();
-        header.before = header.after = header;
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Gets the first key in the map, which is the most recently inserted.
-     * 
-     * @return the most recently inserted key
-     */
-    public Object firstKey() {
-        if (size == 0) {
-            throw new NoSuchElementException("Map is empty");
-        }
-        return header.after.getKey();
-    }
-
-    /**
-     * Gets the last key in the map, which is the first inserted.
-     * 
-     * @return the eldest key
-     */
-    public Object lastKey() {
-        if (size == 0) {
-            throw new NoSuchElementException("Map is empty");
-        }
-        return header.before.getKey();
-    }
-
-    /**
-     * Gets the next key in sequence.
-     * 
-     * @param key  the key to get after
-     * @return the next key
-     */
-    public Object nextKey(Object key) {
-        LinkEntry entry = (LinkEntry) getEntry(key);
-        return (entry == null || entry.after == header ? null : entry.after.getKey());
-    }
-
-    /**
-     * Gets the previous key in sequence.
-     * 
-     * @param key  the key to get before
-     * @return the previous key
-     */
-    public Object previousKey(Object key) {
-        LinkEntry entry = (LinkEntry) getEntry(key);
-        return (entry == null || entry.before == header ? null : entry.before.getKey());
-    }
-
-    //-----------------------------------------------------------------------    
-    /**
-     * Adds an entry into this map, maintaining insertion order.
-     * <p>
-     * This implementation adds the entry to the data storage table and
-     * to the end of the linked list.
-     * 
-     * @param entry  the entry to add
-     * @param hashIndex  the index into the data array to store at
-     */
-    protected void addEntry(HashEntry entry, int hashIndex) {
-        LinkEntry link = (LinkEntry) entry;
-        link.after  = header;
-        link.before = header.before;
-        header.before.after = link;
-        header.before = link;
-        data[hashIndex] = entry;
+    public Object clone() {
+        return super.clone();
     }
     
     /**
-     * Creates an entry to store the data.
-     * <p>
-     * This implementation creates a new LinkEntry instance.
-     * 
-     * @param next  the next entry in sequence
-     * @param hashCode  the hash code to use
-     * @param key  the key to store
-     * @param value  the value to store
-     * @return the newly created entry
+     * Write the map out using a custom routine.
      */
-    protected HashEntry createEntry(HashEntry next, int hashCode, Object key, Object value) {
-        return new LinkEntry(next, hashCode, key, value);
-    }
-    
-    /**
-     * Removes an entry from the map and the linked list.
-     * <p>
-     * This implementation removes the entry from the linked list chain, then
-     * calls the superclass implementation.
-     * 
-     * @param entry  the entry to remove
-     * @param hashIndex  the index into the data structure
-     * @param previous  the previous entry in the chain
-     */
-    protected void removeEntry(HashEntry entry, int hashIndex, HashEntry previous) {
-        LinkEntry link = (LinkEntry) entry;
-        link.before.after = link.after;
-        link.after.before = link.before;
-        link.after = null;
-        link.before = null;
-        super.removeEntry(entry, hashIndex, previous);
-    }
-    
-    //-----------------------------------------------------------------------
-    /**
-     * Gets an iterator over the map.
-     * Changes made to the iterator affect this map.
-     * <p>
-     * A MapIterator returns the keys in the map. It also provides convenient
-     * methods to get the key and value, and set the value.
-     * It avoids the need to create an entrySet/keySet/values object.
-     * It also avoids creating the Mep Entry object.
-     * 
-     * @return the map iterator
-     */
-    public MapIterator mapIterator() {
-        if (size == 0) {
-            return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
-        }
-        return new LinkMapIterator(this);
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
     }
 
     /**
-     * Gets a bidirectional iterator over the map.
-     * Changes made to the iterator affect this map.
-     * <p>
-     * A MapIterator returns the keys in the map. It also provides convenient
-     * methods to get the key and value, and set the value.
-     * It avoids the need to create an entrySet/keySet/values object.
-     * It also avoids creating the Mep Entry object.
-     * 
-     * @return the map iterator
+     * Read the map in using a custom routine.
      */
-    public OrderedMapIterator orderedMapIterator() {
-        if (size == 0) {
-            return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
-        }
-        return new LinkMapIterator(this);
-    }
-
-    /**
-     * MapIterator
-     */
-    static class LinkMapIterator extends LinkIterator implements OrderedMapIterator {
-        
-        LinkMapIterator(LinkedMap map) {
-            super(map);
-        }
-
-        public Object next() {
-            return super.nextEntry().getKey();
-        }
-
-        public Object previous() {
-            return super.previousEntry().getKey();
-        }
-
-        public Object getKey() {
-            HashEntry current = currentEntry();
-            if (current == null) {
-                throw new IllegalStateException(HashedMap.GETKEY_INVALID);
-            }
-            return current.getKey();
-        }
-
-        public Object getValue() {
-            HashEntry current = currentEntry();
-            if (current == null) {
-                throw new IllegalStateException(HashedMap.GETVALUE_INVALID);
-            }
-            return current.getValue();
-        }
-
-        public Object setValue(Object value) {
-            HashEntry current = currentEntry();
-            if (current == null) {
-                throw new IllegalStateException(HashedMap.SETVALUE_INVALID);
-            }
-            return current.setValue(value);
-        }
-    }
-    
-    //-----------------------------------------------------------------------    
-    /**
-     * Creates an entry set iterator.
-     * Subclasses can override this to return iterators with different properties.
-     * 
-     * @return the entrySet iterator
-     */
-    protected Iterator createEntrySetIterator() {
-        if (size() == 0) {
-            return IteratorUtils.EMPTY_ORDERED_ITERATOR;
-        }
-        return new EntrySetIterator(this);
-    }
-
-    /**
-     * EntrySetIterator and MapEntry
-     */
-    static class EntrySetIterator extends LinkIterator {
-        
-        EntrySetIterator(LinkedMap map) {
-            super(map);
-        }
-
-        public Object next() {
-            return super.nextEntry();
-        }
-
-        public Object previous() {
-            return super.previousEntry();
-        }
-    }
-
-    //-----------------------------------------------------------------------    
-    /**
-     * Creates a key set iterator.
-     * Subclasses can override this to return iterators with different properties.
-     * 
-     * @return the keySet iterator
-     */
-    protected Iterator createKeySetIterator() {
-        if (size() == 0) {
-            return IteratorUtils.EMPTY_ORDERED_ITERATOR;
-        }
-        return new KeySetIterator(this);
-    }
-
-    /**
-     * KeySetIterator
-     */
-    static class KeySetIterator extends EntrySetIterator {
-        
-        KeySetIterator(LinkedMap map) {
-            super(map);
-        }
-
-        public Object next() {
-            return super.nextEntry().getKey();
-        }
-
-        public Object previous() {
-            return super.previousEntry().getKey();
-        }
-    }
-    
-    //-----------------------------------------------------------------------    
-    /**
-     * Creates a values iterator.
-     * Subclasses can override this to return iterators with different properties.
-     * 
-     * @return the values iterator
-     */
-    protected Iterator createValuesIterator() {
-        if (size() == 0) {
-            return IteratorUtils.EMPTY_ORDERED_ITERATOR;
-        }
-        return new ValuesIterator(this);
-    }
-
-    /**
-     * ValuesIterator
-     */
-    static class ValuesIterator extends LinkIterator {
-        
-        ValuesIterator(LinkedMap map) {
-            super(map);
-        }
-
-        public Object next() {
-            return super.nextEntry().getValue();
-        }
-
-        public Object previous() {
-            return super.previousEntry().getValue();
-        }
-    }
-    
-    //-----------------------------------------------------------------------
-    /**
-     * LinkEntry
-     */
-    protected static class LinkEntry extends HashEntry {
-        
-        protected LinkEntry before;
-        protected LinkEntry after;
-        
-        protected LinkEntry(HashEntry next, int hashCode, Object key, Object value) {
-            super(next, hashCode, key, value);
-        }
-    }
-    
-    /**
-     * Base Iterator
-     */
-    protected static abstract class LinkIterator
-            implements OrderedIterator, ResettableIterator {
-                
-        protected final LinkedMap map;
-        protected LinkEntry current;
-        protected LinkEntry next;
-        protected int expectedModCount;
-        
-        protected LinkIterator(LinkedMap map) {
-            super();
-            this.map = map;
-            this.next = map.header.after;
-            this.expectedModCount = map.modCount;
-        }
-
-        public boolean hasNext() {
-            return (next != map.header);
-        }
-
-        public boolean hasPrevious() {
-            return (next.before != map.header);
-        }
-
-        protected LinkEntry nextEntry() {
-            if (map.modCount != expectedModCount) {
-                throw new ConcurrentModificationException();
-            }
-            if (next == map.header)  {
-                throw new NoSuchElementException(HashedMap.NO_NEXT_ENTRY);
-            }
-            current = next;
-            next = next.after;
-            return current;
-        }
-
-        protected LinkEntry previousEntry() {
-            if (map.modCount != expectedModCount) {
-                throw new ConcurrentModificationException();
-            }
-            LinkEntry previous = next.before;
-            if (previous == map.header)  {
-                throw new NoSuchElementException(HashedMap.NO_PREVIOUS_ENTRY);
-            }
-            next = previous;
-            current = previous;
-            return current;
-        }
-        
-        protected LinkEntry currentEntry() {
-            return current;
-        }
-        
-        public void remove() {
-            if (current == null) {
-                throw new IllegalStateException(HashedMap.REMOVE_INVALID);
-            }
-            if (map.modCount != expectedModCount) {
-                throw new ConcurrentModificationException();
-            }
-            map.remove(current.getKey());
-            current = null;
-            expectedModCount = map.modCount;
-        }
-        
-        public void reset() {
-            current = null;
-            next = map.header.after;
-        }
-
-        public String toString() {
-            if (current != null) {
-                return "Iterator[" + current.getKey() + "=" + current.getValue() + "]";
-            } else {
-                return "Iterator[]";
-            }
-        }
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
     }
     
 }

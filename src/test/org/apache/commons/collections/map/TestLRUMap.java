@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestLRUMap.java,v 1.1 2003/12/07 01:23:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestLRUMap.java,v 1.2 2003/12/07 23:59:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.ResettableIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/12/07 01:23:54 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/07 23:59:12 $
  * 
  * @author Stephen Colebourne
  */
@@ -339,8 +339,8 @@ public class TestLRUMap extends AbstractTestOrderedMap {
     
 //    public void testCreate() throws Exception {
 //        resetEmpty();
-//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/LRUMap.emptyCollection.version3.obj");
+//        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/LRUMap.emptyCollection.version3.obj");
 //        resetFull();
-//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/LRUMap.fullCollection.version3.obj");
+//        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/LRUMap.fullCollection.version3.obj");
 //    }
 }

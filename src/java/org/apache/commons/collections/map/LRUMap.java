@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.1 2003/12/07 01:23:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LRUMap.java,v 1.2 2003/12/07 23:59:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,9 +60,8 @@ package org.apache.commons.collections.map;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Map;
-
-import org.apache.commons.collections.OrderedMap;
 
 /**
  * A <code>Map</code> implementation with a fixed maximum size which removes
@@ -86,16 +85,16 @@ import org.apache.commons.collections.OrderedMap;
  * to least recently used.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/07 01:23:54 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/07 23:59:13 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public class LRUMap extends LinkedMap implements OrderedMap {
+public class LRUMap extends AbstractLinkedMap implements Serializable, Cloneable {
     
     /** Serialisation version */
-    static final long serialVersionUID = -2848625157350244215L;
+    static final long serialVersionUID = -612114643488955218L;
     /** Default maximum size */
     protected static final int DEFAULT_MAX_SIZE = 100;
     
@@ -307,8 +306,32 @@ public class LRUMap extends LinkedMap implements OrderedMap {
 
     //-----------------------------------------------------------------------
     /**
-     * Write the data of subclasses.
-     * A sub-subclass must call super.doWriteObject().
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    public Object clone() {
+        return super.clone();
+    }
+    
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        doWriteObject(out);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        doReadObject(in);
+    }
+    
+    /**
+     * Writes the data necessary for <code>put()</code> to work in deserialization.
      */
     protected void doWriteObject(ObjectOutputStream out) throws IOException {
         out.writeInt(maxSize);
@@ -316,8 +339,7 @@ public class LRUMap extends LinkedMap implements OrderedMap {
     }
 
     /**
-     * Read the data of subclasses.
-     * A sub-subclass must call super.doReadObject().
+     * Reads the data necessary for <code>put()</code> to work in the superclass.
      */
     protected void doReadObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         maxSize = in.readInt();

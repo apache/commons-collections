@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestIdentityMap.java,v 1.3 2003/12/07 01:22:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestIdentityMap.java,v 1.4 2003/12/07 23:59:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,8 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -70,7 +72,7 @@ import org.apache.commons.collections.IterableMap;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/12/07 01:22:50 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/07 23:59:12 $
  * 
  * @author Stephen Colebourne
  */
@@ -152,13 +154,26 @@ public class TestIdentityMap extends AbstractTestObject {
         assertEquals(false, entry1.equals(entry3));
     }
     
+    /**
+     * Compare the current serialized form of the Map
+     * against the canonical version in CVS.
+     */
+    public void testEmptyMapCompatibility() throws IOException, ClassNotFoundException {
+        // test to make sure the canonical form has been preserved
+        Map map = (Map) makeObject();
+        if (map instanceof Serializable && !skipSerializedCanonicalTests()) {
+            Map map2 = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
+            assertEquals("Map is empty", 0, map2.size());
+        }
+    }
+
 //    public void testCreate() throws Exception {
 //        Map map = new IdentityMap();
-//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/IdentityMap.emptyCollection.version3.obj");
+//        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/IdentityMap.emptyCollection.version3.obj");
 //        map = new IdentityMap();
 //        map.put(I1A, I2A);
 //        map.put(I1B, I2A);
 //        map.put(I2A, I2B);
-//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/IdentityMap.fullCollection.version3.obj");
+//        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/IdentityMap.fullCollection.version3.obj");
 //    }
 }
