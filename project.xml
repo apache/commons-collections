@@ -53,12 +53,6 @@
       <organization></organization>
     </developer>
     <developer>
-      <name>Michael Smith</name>
-      <id>msmith</id>
-      <email></email>
-      <organization></organization>
-    </developer>
-    <developer>
       <name>Phil Steitz</name>
       <id>psteitz</id>
       <email></email>
@@ -73,12 +67,6 @@
     <developer>
       <name>Rodney Waldhoff</name>
       <id>rwaldhoff</id>
-      <email></email>
-      <organization></organization>
-    </developer>
-    <developer>
-      <name>David Weinrich</name>
-      <id>dweinr1</id>
       <email></email>
       <organization></organization>
     </developer>
@@ -212,6 +200,9 @@
       <name>Joe Raysa</name>
     </contributor>
     <contributor>
+      <name>Michael Smith</name>
+    </contributor>
+    <contributor>
       <name>Jan Sorensen</name>
     </contributor>
     <contributor>
@@ -234,6 +225,9 @@
     </contributor>
     <contributor>
       <name>Ralph Wagner</name>
+    </contributor>
+    <contributor>
+      <name>David Weinrich</name>
     </contributor>
     <contributor>
       <name>Dieter Wimberger</name>
@@ -275,7 +269,7 @@
      <report>maven-license-plugin</report>
      <!--report>maven-linkcheck-plugin</report-->
      <!--report>maven-statcvs-plugin</report-->
-     <report>maven-tasklist-plugin</report>
+     <!--report>maven-tasklist-plugin</report-->
   </reports>
 
 </project>
