@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationListener.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationListener.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,16 +57,21 @@
  */
 package org.apache.commons.collections.event;
 
+import java.util.EventListener;
+
 /**
- * A listener for the <code>StandardModificationHandler</code> that is called
- * both before the collection is changed and after the change has occurred.
+ * An empty listener designed to be subclassed.
+ * <p>
+ * This interface exists to mark independent subclasses as fulfilling the
+ * role of an event listener for collection modification events.
  *
  * @since Commons Collections 3.0
  * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
  * 
  * @author Stephen Colebourne
  */
-public interface StandardModificationListener 
-    extends StandardPreModificationListener, StandardPostModificationListener {
+public interface ModificationListener extends EventListener {
 
+    // no methods - subinterfaces define them
+    
 }

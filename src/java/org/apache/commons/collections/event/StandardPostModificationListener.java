@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationAdaptor.java,v 1.2 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardPostModificationListener.java,v 1.1 2003/08/31 22:44:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,36 +58,25 @@
 package org.apache.commons.collections.event;
 
 /**
- * An adaptor for <code>StandardModificationListener</code> that provides no-op
- * implementations of both methods.
+ * A listener for the <code>StandardModificationHandler</code> that is called
+ * when a collection has been changed.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/08/31 22:44:54 $
  * 
  * @author Stephen Colebourne
  */
-public class StandardModificationAdaptor implements StandardModificationListener {
+public interface StandardPostModificationListener extends ModificationListener {
 
-    /**
-     * A collection modification is occurring and may be vetoed.
-     * <p>
-     * This implementation does nothing.
-     * 
-     * @param event  the event detail
-     * @throws ModicationVetoedException to veto
-     */
-    public void modificationOccurring(StandardModificationEvent event) {
-        // do nothing
-    }
-    
     /**
      * A collection modification occurred.
      * <p>
-     * This implementation does nothing.
+     * This method should be processed quickly, as with all event handling.
+     * It should also avoid modifying the event source (the collection).
+     * Finally it should avoid throwing an exception.
      * 
      * @param event  the event detail
      */
-    public void modificationOccurred(StandardModificationEvent event) {
-        // do nothing
-    }
+    public void modificationOccurred(StandardModificationEvent event);
+    
 }

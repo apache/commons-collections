@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/ObservedTestHelper.java,v 1.3 2003/08/31 21:09:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/ObservedTestHelper.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,13 +67,15 @@ import org.apache.commons.collections.event.ModificationEventType;
 import org.apache.commons.collections.event.StandardModificationEvent;
 import org.apache.commons.collections.event.StandardModificationHandler;
 import org.apache.commons.collections.event.StandardModificationListener;
+import org.apache.commons.collections.event.StandardPostModificationListener;
+import org.apache.commons.collections.event.StandardPreModificationListener;
 
 /**
  * Helper for testing
  * {@link ObservedCollection} implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 21:09:49 $
+ * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
  * 
  * @author Stephen Colebourne
  */
@@ -101,8 +103,26 @@ public class ObservedTestHelper {
         }
     }
     
+    public static class PreListener implements StandardPreModificationListener {
+        public StandardModificationEvent preEvent = null;
+        
+        public void modificationOccurring(StandardModificationEvent event) {
+            this.preEvent = event;
+        }
+    }
+    
+    public static class PostListener implements StandardPostModificationListener {
+        public StandardModificationEvent postEvent = null;
+        
+        public void modificationOccurred(StandardModificationEvent event) {
+            this.postEvent = event;
+        }
+    }
+    
     public static final Listener LISTENER = new Listener();
     public static final Listener LISTENER2 = new Listener();
+    public static final PreListener PRE_LISTENER = new PreListener();
+    public static final PostListener POST_LISTENER = new PostListener();
     
     public ObservedTestHelper() {
         super();
@@ -111,52 +131,100 @@ public class ObservedTestHelper {
     //-----------------------------------------------------------------------
     public static void doTestFactoryPlain(ObservedCollection coll) {
         Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
-        Assert.assertEquals(0, coll.getModificationListeners().length);
+        Assert.assertEquals(0, coll.getHandler().getPreModificationListeners().length);
+        Assert.assertEquals(0, coll.getHandler().getPostModificationListeners().length);
+    }
+    
+    public static void doTestFactoryWithPreListener(ObservedCollection coll) {
+        Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
+        Assert.assertEquals(1, coll.getHandler().getPreModificationListeners().length);
+        Assert.assertEquals(0, coll.getHandler().getPostModificationListeners().length);
+        Assert.assertSame(PRE_LISTENER, coll.getHandler().getPreModificationListeners()[0]);
+        
+        PRE_LISTENER.preEvent = null;
+        coll.add(SIX);
+        Assert.assertTrue(PRE_LISTENER.preEvent != null);
+    }
+    
+    public static void doTestFactoryWithPostListener(ObservedCollection coll) {
+        Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
+        Assert.assertEquals(0, coll.getHandler().getPreModificationListeners().length);
+        Assert.assertEquals(1, coll.getHandler().getPostModificationListeners().length);
+        Assert.assertSame(POST_LISTENER, coll.getHandler().getPostModificationListeners()[0]);
+        
+        POST_LISTENER.postEvent = null;
+        coll.add(SIX);
+        Assert.assertTrue(POST_LISTENER.postEvent != null);
     }
     
     public static void doTestFactoryWithListener(ObservedCollection coll) {
         Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
-        Assert.assertEquals(1, coll.getModificationListeners().length);
-        Assert.assertSame(LISTENER, coll.getModificationListeners()[0]);
-    }
-    
-    public static void doTestFactoryPostEvents(ObservedCollection coll) {
-        Assert.assertEquals(StandardModificationHandler.class, coll.getHandler().getClass());
-        Assert.assertEquals(1, coll.getModificationListeners().length);
-        Assert.assertSame(LISTENER, coll.getModificationListeners()[0]);
+        Assert.assertEquals(1, coll.getHandler().getPreModificationListeners().length);
+        Assert.assertEquals(1, coll.getHandler().getPostModificationListeners().length);
+        Assert.assertSame(LISTENER, coll.getHandler().getPreModificationListeners()[0]);
+        Assert.assertSame(LISTENER, coll.getHandler().getPostModificationListeners()[0]);
         
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
         coll.add(SIX);
-        Assert.assertTrue(LISTENER.preEvent == null);
+        Assert.assertTrue(LISTENER.preEvent != null);
         Assert.assertTrue(LISTENER.postEvent != null);
     }
     
     //-----------------------------------------------------------------------
-    public static void doTestAddRemoveGetListeners(ObservedCollection coll) {
-        Assert.assertEquals(0, coll.getModificationListeners().length);
-        coll.addModificationListener(LISTENER);
-        Assert.assertEquals(1, coll.getModificationListeners().length);
-        Assert.assertSame(LISTENER, coll.getModificationListeners()[0]);
+    public static void doTestAddRemoveGetPreListeners(ObservedCollection coll) {
+        Assert.assertEquals(0, coll.getHandler().getPreModificationListeners().length);
+        coll.getHandler().addPreModificationListener(LISTENER);
+        Assert.assertEquals(1, coll.getHandler().getPreModificationListeners().length);
+        Assert.assertSame(LISTENER, coll.getHandler().getPreModificationListeners()[0]);
         
-        coll.addModificationListener(LISTENER2);
-        Assert.assertEquals(2, coll.getModificationListeners().length);
-        Assert.assertSame(LISTENER, coll.getModificationListeners()[0]);
-        Assert.assertSame(LISTENER2, coll.getModificationListeners()[1]);
+        coll.getHandler().addPreModificationListener(LISTENER2);
+        Assert.assertEquals(2, coll.getHandler().getPreModificationListeners().length);
+        Assert.assertSame(LISTENER, coll.getHandler().getPreModificationListeners()[0]);
+        Assert.assertSame(LISTENER2, coll.getHandler().getPreModificationListeners()[1]);
         
-        coll.removeModificationListener(LISTENER);
-        Assert.assertEquals(1, coll.getModificationListeners().length);
-        Assert.assertSame(LISTENER2, coll.getModificationListeners()[0]);
+        coll.getHandler().removePreModificationListener(LISTENER);
+        Assert.assertEquals(1, coll.getHandler().getPreModificationListeners().length);
+        Assert.assertSame(LISTENER2, coll.getHandler().getPreModificationListeners()[0]);
         
-        coll.removeModificationListener(LISTENER);  // check no error if not present
-        Assert.assertEquals(1, coll.getModificationListeners().length);
-        Assert.assertSame(LISTENER2, coll.getModificationListeners()[0]);
+        coll.getHandler().removePreModificationListener(LISTENER);  // check no error if not present
+        Assert.assertEquals(1, coll.getHandler().getPreModificationListeners().length);
+        Assert.assertSame(LISTENER2, coll.getHandler().getPreModificationListeners()[0]);
         
-        coll.removeModificationListener(LISTENER2);
-        Assert.assertEquals(0, coll.getModificationListeners().length);
+        coll.getHandler().removePreModificationListener(LISTENER2);
+        Assert.assertEquals(0, coll.getHandler().getPreModificationListeners().length);
         
         try {
-            coll.addModificationListener(new Object());
+            coll.getHandler().addPreModificationListener(new Object());
+            Assert.fail();
+        } catch (ClassCastException ex) {
+        }
+    }
+    
+    public static void doTestAddRemoveGetPostListeners(ObservedCollection coll) {
+        Assert.assertEquals(0, coll.getHandler().getPostModificationListeners().length);
+        coll.getHandler().addPostModificationListener(LISTENER);
+        Assert.assertEquals(1, coll.getHandler().getPostModificationListeners().length);
+        Assert.assertSame(LISTENER, coll.getHandler().getPostModificationListeners()[0]);
+        
+        coll.getHandler().addPostModificationListener(LISTENER2);
+        Assert.assertEquals(2, coll.getHandler().getPostModificationListeners().length);
+        Assert.assertSame(LISTENER, coll.getHandler().getPostModificationListeners()[0]);
+        Assert.assertSame(LISTENER2, coll.getHandler().getPostModificationListeners()[1]);
+        
+        coll.getHandler().removePostModificationListener(LISTENER);
+        Assert.assertEquals(1, coll.getHandler().getPostModificationListeners().length);
+        Assert.assertSame(LISTENER2, coll.getHandler().getPostModificationListeners()[0]);
+        
+        coll.getHandler().removePostModificationListener(LISTENER);  // check no error if not present
+        Assert.assertEquals(1, coll.getHandler().getPostModificationListeners().length);
+        Assert.assertSame(LISTENER2, coll.getHandler().getPostModificationListeners()[0]);
+        
+        coll.getHandler().removePostModificationListener(LISTENER2);
+        Assert.assertEquals(0, coll.getHandler().getPostModificationListeners().length);
+        
+        try {
+            coll.getHandler().addPostModificationListener(new Object());
             Assert.fail();
         } catch (ClassCastException ex) {
         }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationHandler.java,v 1.3 2003/08/31 21:09:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationHandler.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,35 +66,30 @@ package org.apache.commons.collections.event;
  * In addition, the <code>size</code> method is used on the collection.
  * All objects used are the real objects from the method calls, not clones.
  * <p>
- * Each listener can be filtered. There are separate filters for pre events
- * (modificationOccurring) and post events (modificationOccurred).
- * <p>
- * This implementation is the standard one. Most listeners will probably be
- * content with the events generated from here. However, if you need something
- * extra then this class can be subclassed or replaced as required. For example:
- * <ul>
- * <li>to store the state of the collection before the change
- * <li>to change the event classes
- * <li>to change the event dispatch mechanism to something other than listeners
- * <li>to clone the objects before placing them in the event
- * </ul>
+ * Each listener can be filtered. There are separate filters for pre and post
+ * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 21:09:49 $
+ * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
  * 
  * @author Stephen Colebourne
  */
 public class StandardModificationHandler extends ModificationHandler {
 
     /** A reusable empty holders array. */    
-    protected static final Holder[] EMPTY_HOLDERS = new Holder[0];
+    protected static final PreHolder[] EMPTY_PRE_HOLDERS = new PreHolder[0];
+    /** A reusable empty holders array. */    
+    protected static final PostHolder[] EMPTY_POST_HOLDERS = new PostHolder[0];
     
     /** The event mask as to which event types to send on pre events. */
     protected int preMask = ModificationEventType.GROUP_NONE;
     /** The event mask as to which event types to send on post events. */
     protected int postMask = ModificationEventType.GROUP_NONE;
+    
     /** The event listeners. */
-    protected Holder[] holders = EMPTY_HOLDERS;
+    protected PreHolder[] preHolder = EMPTY_PRE_HOLDERS;
+    /** The event listeners. */
+    protected PostHolder[] postHolder = EMPTY_POST_HOLDERS;
     /**
      * Temporary store for the size.
      * This makes the class thread-unsafe, but you should sync collections anyway.
@@ -114,57 +109,84 @@ public class StandardModificationHandler extends ModificationHandler {
         super();
     }
 
-    // Listeners
+    /**
+     * Constructor the creates the handler but leaves it invalid.
+     * <p>
+     * The handler can only be used after {@link #init(ObservedCollection)} is
+     * called. This is normally done automatically by
+     * {@link ObservedCollection#decorate(Collection, ModificationHandler)}.
+     * 
+     * @param pre  the pre listener
+     * @param preMask  the mask for the pre listener
+     * @param post  the post listener
+     * @param postMask  the mask for the post listener
+     */
+    public StandardModificationHandler(
+            StandardPreModificationListener pre, int preMask,
+            StandardPostModificationListener post, int postMask) {
+        super();
+        if (pre != null) {
+            preHolder = new PreHolder[1];
+            preHolder[0] = new PreHolder(pre, preMask);
+            this.preMask = preMask;
+        }
+        if (post != null) {
+            postHolder = new PostHolder[1];
+            postHolder[0] = new PostHolder(post, postMask);
+            this.postMask = postMask;
+        }
+    }
+
+    // Pre Listeners
     //----------------------------------------------------------------------
     /**
-     * Gets an array of all the listeners active in the handler.
+     * Gets an array of all the pre listeners active in the handler.
      * <p>
-     * All listeners will be instances of StandardModificationListener.
+     * All listeners will be instances of StandardPreModificationListener.
      * 
      * @return the listeners
      */
-    public synchronized Object[] getModificationListeners() {
-        Object[] lnrs = new Object[holders.length];
-        for (int i = 0; i < holders.length; i++) {
-            lnrs[i] = holders[i].listener;
+    public synchronized Object[] getPreModificationListeners() {
+        Object[] lnrs = new Object[preHolder.length];
+        for (int i = 0; i < preHolder.length; i++) {
+            lnrs[i] = preHolder[i].listener;
         }
         return lnrs;
     }
     
     /**
-     * Adds a listener to the list held in the handler.
+     * Adds a listener to the handler for pre modification events.
      * <p>
      * No error occurs if the listener is <code>null</code>.
      * 
      * @param listener  the listener to add, may be null (ignored)
-     * @throws ClassCastException if the listener is not a StandardModificationListener
+     * @throws ClassCastException if the listener is not a StandardPreModificationListener
      */
-    public void addModificationListener(Object listener) {
-        addModificationListener((StandardModificationListener) listener, -1, -1);
+    public void addPreModificationListener(Object listener) {
+        addPreModificationListener((StandardPreModificationListener) listener, -1);
     }
     
     /**
-     * Adds a listener to the list held in the handler.
+     * Adds a pre listener to the list held in the handler.
      * <p>
      * No error occurs if the listener is <code>null</code>.
      * 
      * @param listener  the listener to add, may be null (ignored)
-     * @param preMask  the mask for pre events (0 for none, -1 for all)
-     * @param postMask  the mask for post events (0 for none, -1 for all)
+     * @param mask  the mask for events (0 for none, -1 for all)
      */
-    public synchronized void addModificationListener(StandardModificationListener listener, int preMask, int postMask) {
+    public synchronized void addPreModificationListener(StandardPreModificationListener listener, int mask) {
         if (listener != null) {
-            int oldSize = holders.length;
-            Holder[] array = new Holder[oldSize + 1];
-            System.arraycopy(holders, 0, array, 0, oldSize);
-            array[oldSize] = new Holder(listener, preMask, postMask);
-            holders = array;
-            calculateMasks();
+            int oldSize = preHolder.length;
+            PreHolder[] array = new PreHolder[oldSize + 1];
+            System.arraycopy(preHolder, 0, array, 0, oldSize);
+            array[oldSize] = new PreHolder(listener, mask);
+            preHolder = array;
+            calculatePreMask();
         }
     }
     
     /**
-     * Removes a listener to the list held in the handler.
+     * Removes a pre listener to the list held in the handler.
      * <p>
      * No error occurs if the listener is not in the list or the type
      * of the listener is incorrect.
@@ -172,33 +194,33 @@ public class StandardModificationHandler extends ModificationHandler {
      * 
      * @param listener  the listener to remove, may be null (ignored)
      */
-    public synchronized void removeModificationListener(Object listener) {
+    public synchronized void removePreModificationListener(Object listener) {
         if (listener != null) {
-            switch (holders.length) {
+            switch (preHolder.length) {
                 case 0:
                 return;
                 
                 case 1:
-                if (holders[0].listener == listener) {
-                    holders = EMPTY_HOLDERS;
-                    calculateMasks();
+                if (preHolder[0].listener == listener) {
+                    preHolder = EMPTY_PRE_HOLDERS;
+                    calculatePreMask();
                 }
                 return;
                 
                 default:
-                Holder[] array = new Holder[holders.length - 1];
+                PreHolder[] array = new PreHolder[preHolder.length - 1];
                 boolean match = false;
-                for (int i = 0; i < holders.length; i++) {
+                for (int i = 0; i < preHolder.length; i++) {
                     if (match) {
-                        array[i - 1] = holders[i];
-                    } else if (holders[i].listener == listener) {
+                        array[i - 1] = preHolder[i];
+                    } else if (preHolder[i].listener == listener) {
                         match = true;
                     } else {
-                        array[i] = holders[i];
+                        array[i] = preHolder[i];
                     }
                 }
-                holders = array;
-                calculateMasks();
+                preHolder = array;
+                calculatePreMask();
                 return;
             }
         }
@@ -210,56 +232,183 @@ public class StandardModificationHandler extends ModificationHandler {
      * No error occurs if the listener is not in the list.
      * The listener is matched using ==.
      * 
+     * @param listener  the listener to change, may be null
+     * @param mask  the new mask (0 for none, -1 for all)
      * @return a non-null array of listeners
      */
-    public synchronized void setModificationListenerMasks(StandardModificationListener listener, int preMask, int postMask) {
+    public synchronized void setPreModificationListenerMask(StandardPreModificationListener listener, int mask) {
         if (listener != null) {
-            for (int i = 0; i < holders.length; i++) {
-                if (holders[i].listener == listener) {
-                    holders[i].preMask = preMask;
-                    holders[i].postMask = postMask;
-                    calculateMasks();
+            for (int i = 0; i < preHolder.length; i++) {
+                if (preHolder[i].listener == listener) {
+                    preHolder[i].mask = mask;
+                    calculatePreMask();
                     break;
                 }
             }
         }
     }
     
-    // Holder for listener and masks
-    //-----------------------------------------------------------------------
-    protected static class Holder {
-        StandardModificationListener listener;
-        int preMask;
-        int postMask;
+    /**
+     * Calculate the combined masks.
+     */
+    protected void calculatePreMask() {
+        preMask = ModificationEventType.GROUP_NONE;
+        for (int i = 0; i < preHolder.length; i++) {
+            preMask |= preHolder[i].mask;
+        }
+    }
+    
+    protected static class PreHolder {
+        final StandardPreModificationListener listener;
+        int mask;
         
-        Holder(StandardModificationListener listener, int preMask, int postMask) {
+        PreHolder(StandardPreModificationListener listener, int mask) {
             this.listener = listener;
-            this.preMask = preMask;
-            this.postMask = postMask;
+            this.mask = mask;
         }
         
         public String toString() {
-            return "[" + listener + ","
-                + ModificationEventType.toString(preMask) + ","
-                + ModificationEventType.toString(postMask) + "]";
+            return "[" + listener + "," + ModificationEventType.toString(mask) + "]";
         }
 
     }
     
-    // Masks
-    //-----------------------------------------------------------------------
+    // Post Listeners
+    //----------------------------------------------------------------------
+    /**
+     * Gets an array of all the post listeners active in the handler.
+     * <p>
+     * All listeners will be instances of StandardModificationListener.
+     * 
+     * @return the listeners
+     */
+    public synchronized Object[] getPostModificationListeners() {
+        Object[] lnrs = new Object[postHolder.length];
+        for (int i = 0; i < postHolder.length; i++) {
+            lnrs[i] = postHolder[i].listener;
+        }
+        return lnrs;
+    }
+    
+    /**
+     * Adds a listener to the handler for post modification events.
+     * <p>
+     * No error occurs if the listener is <code>null</code>.
+     * 
+     * @param listener  the listener to add, may be null (ignored)
+     * @throws ClassCastException if the listener is not a StandardPreModificationListener
+     */
+    public void addPostModificationListener(Object listener) {
+        addPostModificationListener((StandardPostModificationListener) listener, -1);
+    }
+    
+    /**
+     * Adds a post listener to the list held in the handler.
+     * <p>
+     * No error occurs if the listener is <code>null</code>.
+     * 
+     * @param listener  the listener to add, may be null (ignored)
+     * @param mask  the mask for events (0 for none, -1 for all)
+     */
+    public synchronized void addPostModificationListener(StandardPostModificationListener listener, int mask) {
+        if (listener != null) {
+            int oldSize = postHolder.length;
+            PostHolder[] array = new PostHolder[oldSize + 1];
+            System.arraycopy(postHolder, 0, array, 0, oldSize);
+            array[oldSize] = new PostHolder(listener, mask);
+            postHolder = array;
+            calculatePostMask();
+        }
+    }
+    
+    /**
+     * Removes a post listener to the list held in the handler.
+     * <p>
+     * No error occurs if the listener is not in the list or the type
+     * of the listener is incorrect.
+     * The listener is matched using ==.
+     * 
+     * @param listener  the listener to remove, may be null (ignored)
+     */
+    public synchronized void removePostModificationListener(Object listener) {
+        if (listener != null) {
+            switch (postHolder.length) {
+                case 0:
+                return;
+                
+                case 1:
+                if (postHolder[0].listener == listener) {
+                    postHolder = EMPTY_POST_HOLDERS;
+                    calculatePostMask();
+                }
+                return;
+                
+                default:
+                PostHolder[] array = new PostHolder[postHolder.length - 1];
+                boolean match = false;
+                for (int i = 0; i < postHolder.length; i++) {
+                    if (match) {
+                        array[i - 1] = postHolder[i];
+                    } else if (postHolder[i].listener == listener) {
+                        match = true;
+                    } else {
+                        array[i] = postHolder[i];
+                    }
+                }
+                postHolder = array;
+                calculatePostMask();
+                return;
+            }
+        }
+    }
+    
+    /**
+     * Sets the masks of a listener.
+     * <p>
+     * No error occurs if the listener is not in the list.
+     * The listener is matched using ==.
+     * 
+     * @param listener  the listener to change, may be null
+     * @param mask  the new mask (0 for none, -1 for all)
+     * @return a non-null array of listeners
+     */
+    public synchronized void setPostModificationListenerMask(StandardPostModificationListener listener, int mask) {
+        if (listener != null) {
+            for (int i = 0; i < postHolder.length; i++) {
+                if (postHolder[i].listener == listener) {
+                    postHolder[i].mask = mask;
+                    calculatePostMask();
+                    break;
+                }
+            }
+        }
+    }
+    
     /**
      * Calculate the combined masks.
      */
-    protected void calculateMasks() {
-        preMask = ModificationEventType.GROUP_NONE;
+    protected void calculatePostMask() {
         postMask = ModificationEventType.GROUP_NONE;
-        for (int i = 0; i < holders.length; i++) {
-            preMask |= holders[i].preMask;
-            postMask |= holders[i].postMask;
+        for (int i = 0; i < postHolder.length; i++) {
+            postMask |= postHolder[i].mask;
         }
     }
 
+    protected static class PostHolder {
+        final StandardPostModificationListener listener;
+        int mask;
+        
+        PostHolder(StandardPostModificationListener listener, int mask) {
+            this.listener = listener;
+            this.mask = mask;
+        }
+        
+        public String toString() {
+            return "[" + listener + "," + ModificationEventType.toString(mask) + "]";
+        }
+
+    }
+    
     // Pre event sending
     //-----------------------------------------------------------------------
     /**
@@ -289,9 +438,9 @@ public class StandardModificationHandler extends ModificationHandler {
         if ((preMask & type) > 0) {
             StandardModificationEvent event = null;
             synchronized (this) {
-                for (int i = 0; i < holders.length; i++) {
-                    Holder holder = holders[i];
-                    if ((holder.preMask & type) > 0) {
+                for (int i = 0; i < preHolder.length; i++) {
+                    PreHolder holder = preHolder[i];
+                    if ((holder.mask & type) > 0) {
                         if (event == null) {
                             event = new StandardModificationEvent(
                                 getCollection(), this, type, preSize, index, object, repeat, null);
@@ -350,9 +499,9 @@ public class StandardModificationHandler extends ModificationHandler {
         if ((postMask & type) > 0) {
             StandardModificationEvent event = null;
             synchronized (this) {
-                for (int i = 0; i < holders.length; i++) {
-                    Holder holder = holders[i];
-                    if ((holder.postMask & type) > 0) {
+                for (int i = 0; i < postHolder.length; i++) {
+                    PostHolder holder = postHolder[i];
+                    if ((holder.mask & type) > 0) {
                         if (event == null) {
                             event = new StandardModificationEvent(
                                 getCollection(), this, type, preSize, index, object, repeat, result);

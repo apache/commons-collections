@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestObservedSet.java,v 1.2 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestObservedSet.java,v 1.3 2003/08/31 22:44:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.TestSet;
-import org.apache.commons.collections.event.ModificationEventType;
 import org.apache.commons.collections.event.StandardModificationHandler;
 
 /**
@@ -73,7 +72,7 @@ import org.apache.commons.collections.event.StandardModificationHandler;
  * {@link ObservedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.3 $ $Date: 2003/08/31 22:44:54 $
  * 
  * @author Stephen Colebourne
  */
@@ -83,6 +82,8 @@ public class TestObservedSet extends TestSet {
     private static Integer SEVEN = new Integer(7);
     private static Integer EIGHT = new Integer(8);
     private static final ObservedTestHelper.Listener LISTENER = ObservedTestHelper.LISTENER;
+    private static final ObservedTestHelper.PreListener PRE_LISTENER = ObservedTestHelper.PRE_LISTENER;
+    private static final ObservedTestHelper.PostListener POST_LISTENER = ObservedTestHelper.POST_LISTENER;
     
     public TestObservedSet(String testName) {
         super(testName);
@@ -116,11 +117,17 @@ public class TestObservedSet extends TestSet {
         coll = ObservedSet.decorate(new HashSet(), LISTENER);
         ObservedTestHelper.doTestFactoryWithListener(coll);
         
-        coll = ObservedSet.decoratePostEventsOnly(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestFactoryPostEvents(coll);
+        coll = ObservedSet.decorate(new HashSet(), PRE_LISTENER);
+        ObservedTestHelper.doTestFactoryWithPreListener(coll);
+        
+        coll = ObservedSet.decorate(new HashSet(), POST_LISTENER);
+        ObservedTestHelper.doTestFactoryWithPostListener(coll);
         
         coll = ObservedSet.decorate(new HashSet());
-        ObservedTestHelper.doTestAddRemoveGetListeners(coll);
+        ObservedTestHelper.doTestAddRemoveGetPreListeners(coll);
+        
+        coll = ObservedSet.decorate(new HashSet());
+        ObservedTestHelper.doTestAddRemoveGetPostListeners(coll);
         
         coll = ObservedSet.decorate(new HashSet(), LISTENER);
         ObservedTestHelper.doTestAdd(coll);
@@ -150,44 +157,45 @@ public class TestObservedSet extends TestSet {
         ObservedSet coll = ObservedSet.decorate(new HashSet(), handler);
         
         assertSame(handler, coll.getHandler());
-        assertEquals(0, coll.getModificationListeners().length);
+        assertEquals(0, coll.getHandler().getPreModificationListeners().length);
+        assertEquals(0, coll.getHandler().getPostModificationListeners().length);
     }
     
-    public void testFactoryWithMasks() {
-        ObservedSet coll = ObservedSet.decorate(new HashSet(), LISTENER, -1, 0);
-        LISTENER.preEvent = null;
-        LISTENER.postEvent = null;
-        coll.add(SIX);
-        assertTrue(LISTENER.preEvent != null);
-        assertTrue(LISTENER.postEvent == null);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER, 0, -1);
-        LISTENER.preEvent = null;
-        LISTENER.postEvent = null;
-        coll.add(SIX);
-        assertTrue(LISTENER.preEvent == null);
-        assertTrue(LISTENER.postEvent != null);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER, -1, -1);
-        LISTENER.preEvent = null;
-        LISTENER.postEvent = null;
-        coll.add(SIX);
-        assertTrue(LISTENER.preEvent != null);
-        assertTrue(LISTENER.postEvent != null);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER, 0, 0);
-        LISTENER.preEvent = null;
-        LISTENER.postEvent = null;
-        coll.add(SIX);
-        assertTrue(LISTENER.preEvent == null);
-        assertTrue(LISTENER.postEvent == null);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER, ModificationEventType.ADD, ModificationEventType.ADD_ALL);
-        LISTENER.preEvent = null;
-        LISTENER.postEvent = null;
-        coll.add(SIX);
-        assertTrue(LISTENER.preEvent != null);
-        assertTrue(LISTENER.postEvent == null);
-    }
-    
+//    public void testFactoryWithMasks() {
+//        ObservedSet coll = ObservedSet.decorate(new HashSet(), LISTENER, -1, 0);
+//        LISTENER.preEvent = null;
+//        LISTENER.postEvent = null;
+//        coll.add(SIX);
+//        assertTrue(LISTENER.preEvent != null);
+//        assertTrue(LISTENER.postEvent == null);
+//        
+//        coll = ObservedSet.decorate(new HashSet(), LISTENER, 0, -1);
+//        LISTENER.preEvent = null;
+//        LISTENER.postEvent = null;
+//        coll.add(SIX);
+//        assertTrue(LISTENER.preEvent == null);
+//        assertTrue(LISTENER.postEvent != null);
+//        
+//        coll = ObservedSet.decorate(new HashSet(), LISTENER, -1, -1);
+//        LISTENER.preEvent = null;
+//        LISTENER.postEvent = null;
+//        coll.add(SIX);
+//        assertTrue(LISTENER.preEvent != null);
+//        assertTrue(LISTENER.postEvent != null);
+//        
+//        coll = ObservedSet.decorate(new HashSet(), LISTENER, 0, 0);
+//        LISTENER.preEvent = null;
+//        LISTENER.postEvent = null;
+//        coll.add(SIX);
+//        assertTrue(LISTENER.preEvent == null);
+//        assertTrue(LISTENER.postEvent == null);
+//        
+//        coll = ObservedSet.decorate(new HashSet(), LISTENER, ModificationEventType.ADD, ModificationEventType.ADD_ALL);
+//        LISTENER.preEvent = null;
+//        LISTENER.postEvent = null;
+//        coll.add(SIX);
+//        assertTrue(LISTENER.preEvent != null);
+//        assertTrue(LISTENER.postEvent == null);
+//    }
+//    
 }

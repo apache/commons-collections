@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedSet.java,v 1.2 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedSet.java,v 1.3 2003/08/31 22:44:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,6 +62,8 @@ import java.util.Set;
 import org.apache.commons.collections.event.ModificationHandler;
 import org.apache.commons.collections.event.StandardModificationHandler;
 import org.apache.commons.collections.event.StandardModificationListener;
+import org.apache.commons.collections.event.StandardPostModificationListener;
+import org.apache.commons.collections.event.StandardPreModificationListener;
 
 /**
  * <code>ObservedSet</code> decorates a <code>Set</code>
@@ -80,7 +82,7 @@ import org.apache.commons.collections.event.StandardModificationListener;
  * uses a technique other than listeners to communicate events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.3 $ $Date: 2003/08/31 22:44:54 $
  * 
  * @author Stephen Colebourne
  */
@@ -104,74 +106,86 @@ public class ObservedSet extends ObservedCollection implements Set {
 
     /**
      * Factory method to create an observable set and register one
-     * listener to receive all events.
+     * listener to receive events before the change is made.
      * <p>
      * A {@link StandardModificationHandler} will be created.
      * The listener will be added to the handler.
      *
-     * @param set  the set to decorate, must not be null
-     * @param listener  the listener, must not be null
+     * @param coll  the set to decorate, must not be null
+     * @param listener  set listener, must not be null
      * @return the observed set
      * @throws IllegalArgumentException if the set or listener is null
      */
     public static ObservedSet decorate(
-            final Set set,
-            final StandardModificationListener listener) {
+            final Set coll,
+            final StandardPreModificationListener listener) {
         
-        return decorate(set, listener, -1, -1);
-    }
-
-    /**
-     * Factory method to create an observable set and register one
-     * listener to receive all post events.
-     * <p>
-     * A {@link StandardModificationHandler} will be created.
-     * The listener will be added to the handler.
-     *
-     * @param set  the set to decorate, must not be null
-     * @param listener  the listener, must not be null
-     * @return the observed set
-     * @throws IllegalArgumentException if the set or listener is null
-     */
-    public static ObservedSet decoratePostEventsOnly(
-            final Set set,
-            final StandardModificationListener listener) {
-        
-        return decorate(set, listener, 0, -1);
-    }
-
-    /**
-     * Factory method to create an observable set and
-     * register one listener using event masks.
-     * <p>
-     * A {@link StandardModificationHandler} will be created.
-     * The listener will be added to the handler.
-     * The masks are defined in 
-     * {@link org.apache.commons.collections.event.ModificationEventType ModificationEventType}.
-     *
-     * @param set  the set to decorate, must not be null
-     * @param listener  the listener, must not be null
-     * @param preEventMask  mask for pre events (0 for none, -1 for all)
-     * @param postEventMask  mask for post events (0 for none, -1 for all)
-     * @return the observed set
-     * @throws IllegalArgumentException if the set or listener is null
-     */
-    public static ObservedSet decorate(
-            final Set set,
-            final StandardModificationListener listener,
-            final int preEventMask,
-            final int postEventMask) {
-            
-        if (set == null) {
+        if (coll == null) {
             throw new IllegalArgumentException("Set must not be null");
         }
         if (listener == null) {
             throw new IllegalArgumentException("Listener must not be null");
         }
-        StandardModificationHandler handler = new StandardModificationHandler();
-        ObservedSet oc = new ObservedSet(set, handler);
-        handler.addModificationListener(listener, preEventMask, postEventMask);
-        return oc;
+        StandardModificationHandler handler = new StandardModificationHandler(
+            listener, -1, null, 0
+        );
+        return new ObservedSet(coll, handler);
+    }
+
+    /**
+     * Factory method to create an observable set and register one
+     * listener to receive events after the change is made.
+     * <p>
+     * A {@link StandardModificationHandler} will be created.
+     * The listener will be added to the handler.
+     *
+     * @param coll  the set to decorate, must not be null
+     * @param listener  set listener, must not be null
+     * @return the observed set
+     * @throws IllegalArgumentException if the set or listener is null
+     */
+    public static ObservedSet decorate(
+            final Set coll,
+            final StandardPostModificationListener listener) {
+        
+        if (coll == null) {
+            throw new IllegalArgumentException("Set must not be null");
+        }
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
+        StandardModificationHandler handler = new StandardModificationHandler(
+            null, 0, listener, -1
+        );
+        return new ObservedSet(coll, handler);
+    }
+
+    /**
+     * Factory method to create an observable set and register one
+     * listener to receive events both before and after the change is made.
+     * <p>
+     * A {@link StandardModificationHandler} will be created.
+     * The listener will be added to the handler.
+     *
+     * @param coll  the set to decorate, must not be null
+     * @param listener  set listener, must not be null
+     * @return the observed set
+     * @throws IllegalArgumentException if the set or listener is null
+     */
+    public static ObservedSet decorate(
+            final Set coll,
+            final StandardModificationListener listener) {
+        
+        if (coll == null) {
+            throw new IllegalArgumentException("Set must not be null");
+        }
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
+        StandardModificationHandler handler = new StandardModificationHandler(
+            listener, -1, listener, -1
+        );
+        return new ObservedSet(coll, handler);
     }
 
     /**
@@ -209,7 +223,7 @@ public class ObservedSet extends ObservedCollection implements Set {
      * 
      * @param set  the set to decorate, must not be null
      * @param handler  the observing handler, may be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws IllegalArgumentException if the set is null
      */
     protected ObservedSet(
             final Set set,

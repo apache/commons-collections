@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationHandler.java,v 1.3 2003/08/31 21:09:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationHandler.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import org.apache.commons.collections.decorators.ObservedCollection;
  * that forwards to single points.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 21:09:49 $
+ * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
  * 
  * @author Stephen Colebourne
  */
@@ -119,22 +119,22 @@ public abstract class ModificationHandler {
         return collection;
     }
     
-    // Listeners
+    // PreListeners
     //----------------------------------------------------------------------
     /**
-     * Gets an array of all the listeners active in the handler.
+     * Gets an array of all the pre listeners active in the handler.
      * <p>
      * This implementation throws UnsupportedOperationException.
      * 
      * @return the listeners
      * @throws UnsupportedOperationException if the handler does not support listeners
      */
-    public Object[] getModificationListeners() {
+    public Object[] getPreModificationListeners() {
         throw new UnsupportedOperationException("Listeners not supported by " + getClass().getName());
     }
     
     /**
-     * Adds a listener to the list held in the handler.
+     * Adds a pre listener to the list held in the handler.
      * <p>
      * No error occurs if the listener is <code>null</code>.
      * <p>
@@ -149,12 +149,12 @@ public abstract class ModificationHandler {
      * @throws ClassCastException if the listener is not of the correct type
      * @throws UnsupportedOperationException if the handler does not support listeners
      */
-    public void addModificationListener(Object listener) {
+    public void addPreModificationListener(Object listener) {
         throw new UnsupportedOperationException("Listeners not supported by " + getClass().getName());
     }
     
     /**
-     * Removes a listener to the list held in the handler.
+     * Removes a pre listener to the list held in the handler.
      * <p>
      * No error occurs if the listener is not in the list or the type
      * of the listener is incorrect.
@@ -164,7 +164,56 @@ public abstract class ModificationHandler {
      * @param listener  the listener to remove, may be null (ignored)
      * @throws UnsupportedOperationException if the handler does not support listeners
      */
-    public void removeModificationListener(Object listener) {
+    public void removePreModificationListener(Object listener) {
+        throw new UnsupportedOperationException("Listeners not supported by " + getClass().getName());
+    }
+    
+    // PostListeners
+    //----------------------------------------------------------------------
+    /**
+     * Gets an array of all the post listeners active in the handler.
+     * <p>
+     * This implementation throws UnsupportedOperationException.
+     * 
+     * @return the listeners
+     * @throws UnsupportedOperationException if the handler does not support listeners
+     */
+    public Object[] getPostModificationListeners() {
+        throw new UnsupportedOperationException("Listeners not supported by " + getClass().getName());
+    }
+    
+    /**
+     * Adds a post listener to the list held in the handler.
+     * <p>
+     * No error occurs if the listener is <code>null</code>.
+     * <p>
+     * The listener does not necessarily have to be a listener in the classic
+     * JavaBean sense. It is entirely up to the handler as to how it interprets
+     * the listener parameter. A ClassCastException is thrown if the handler
+     * cannot interpret the parameter.
+     * <p>
+     * This implementation throws UnsupportedOperationException.
+     * 
+     * @param listener  the listener to add, may be null (ignored)
+     * @throws ClassCastException if the listener is not of the correct type
+     * @throws UnsupportedOperationException if the handler does not support listeners
+     */
+    public void addPostModificationListener(Object listener) {
+        throw new UnsupportedOperationException("Listeners not supported by " + getClass().getName());
+    }
+    
+    /**
+     * Removes a post listener to the list held in the handler.
+     * <p>
+     * No error occurs if the listener is not in the list or the type
+     * of the listener is incorrect.
+     * <p>
+     * This implementation throws UnsupportedOperationException.
+     * 
+     * @param listener  the listener to remove, may be null (ignored)
+     * @throws UnsupportedOperationException if the handler does not support listeners
+     */
+    public void removePostModificationListener(Object listener) {
         throw new UnsupportedOperationException("Listeners not supported by " + getClass().getName());
     }
     

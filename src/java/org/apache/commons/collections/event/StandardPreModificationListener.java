@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationListener.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardPreModificationListener.java,v 1.1 2003/08/31 22:44:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,14 +59,26 @@ package org.apache.commons.collections.event;
 
 /**
  * A listener for the <code>StandardModificationHandler</code> that is called
- * both before the collection is changed and after the change has occurred.
+ * when a collection is about to be modified.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.1 $ $Date: 2003/08/31 22:44:54 $
  * 
  * @author Stephen Colebourne
  */
-public interface StandardModificationListener 
-    extends StandardPreModificationListener, StandardPostModificationListener {
+public interface StandardPreModificationListener extends ModificationListener {
 
+    /**
+     * A collection modification is occurring.
+     * <p>
+     * To veto the change, throw <code>ModicationVetoedException</code>.
+     * <p>
+     * This method should be processed quickly, as with all event handling.
+     * It should also avoid modifying the event source (the collection).
+     * 
+     * @param event  the event detail
+     * @throws ModicationVetoedException to veto
+     */
+    public void modificationOccurring(StandardModificationEvent event);
+    
 }
