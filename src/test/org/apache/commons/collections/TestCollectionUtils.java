@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.12 2003/01/25 11:40:26 scolebourne Exp $
- * $Revision: 1.12 $
- * $Date: 2003/01/25 11:40:26 $
+ * $Id: TestCollectionUtils.java,v 1.13 2003/01/27 23:19:28 rwaldhoff Exp $
+ * $Revision: 1.13 $
+ * $Date: 2003/01/27 23:19:28 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Revision: 1.12 $ $Date: 2003/01/25 11:40:26 $
+ * @version $Revision: 1.13 $ $Date: 2003/01/27 23:19:28 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -632,4 +632,43 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(3, CollectionUtils.maxSize(buf2));
     }
 
+    public void testIntersectionUsesMethodEquals() {
+        // Let elta and eltb be objects...
+        Object elta = new Integer(17);
+        Object eltb = new Integer(17);
+        
+        // ...which are equal...
+        assertEquals(elta,eltb);
+        assertEquals(eltb,elta);
+        
+        // ...but not the same (==).
+        assertTrue(elta != eltb);
+        
+        // Let cola and colb be collections...
+        Collection cola = new ArrayList();
+        Collection colb = new ArrayList();
+        
+        // ...which contain elta and eltb, 
+        // repsectively.
+        cola.add(elta);
+        colb.add(eltb);
+        
+        // Then the intersection of the two
+        // should contain one element.
+        Collection intersection = CollectionUtils.intersection(cola,colb);
+        assertEquals(1,intersection.size());
+        
+        // In practice, this element will be the same (==) as elta
+        // or eltb, although this isn't strictly part of the
+        // contract.
+        Object eltc = intersection.iterator().next();
+        assertTrue((eltc == elta  && eltc != eltb) || (eltc != elta  && eltc == eltb));
+        
+        // In any event, this element remains equal,
+        // to both elta and eltb.
+        assertEquals(elta,eltc);
+        assertEquals(eltc,elta);
+        assertEquals(eltb,eltc);
+        assertEquals(eltc,eltb);
+    }
 }
