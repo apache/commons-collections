@@ -7,20 +7,23 @@
  */
 package org.apache.commons.collections;
 
-import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /** A Proxy {@link Iterator Iterator} which takes a {@link Predicate Predicate} instance to filter
   * out objects from an underlying {@link Iterator Iterator} instance.
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  * @author Jan Sorensen
   */
 
 public class FilterIterator extends ProxyIterator {
     
     /** Holds value of property predicate. */
     private Predicate predicate;
+
     private Object nextObject;
+    private boolean nextObjectSet = false;
     
     
     //-------------------------------------------------------------------------
@@ -39,21 +42,31 @@ public class FilterIterator extends ProxyIterator {
     // Iterator interface
     //-------------------------------------------------------------------------
     public boolean hasNext() {
-        Iterator iterator = getIterator();
-        Predicate predicate = getPredicate();
-        while ( iterator.hasNext() ) {
-            Object object = iterator.next();
-            if ( predicate.evaluate( object ) ) {
-                nextObject = object;
-                return true;
-            }
+        if ( nextObjectSet ) {
+            return true;
+        } else {
+            return setNextObject();
         }
-        return false;
     }
 
     public Object next() {
+        if ( !nextObjectSet ) {
+            if (!setNextObject()) {
+                throw new NoSuchElementException();
+            }
+        }
+        nextObjectSet = false;
         return nextObject;
     }
+
+    /**
+     * Always throws UnsupportedOperationException as this class 
+     * does look-ahead with its internal iterator.
+     */
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+        
 
     // Properties
     //-------------------------------------------------------------------------
@@ -68,5 +81,23 @@ public class FilterIterator extends ProxyIterator {
      */
     public void setPredicate(Predicate predicate) {
         this.predicate = predicate;
+    }
+
+    /**
+     * Set nextObject to the next object. If there are no more 
+     * objects then return false. Otherwise, return true.
+     */
+    private boolean setNextObject() {
+        Iterator iterator = getIterator();
+        Predicate predicate = getPredicate();
+        while ( iterator.hasNext() ) {
+            Object object = iterator.next();
+            if ( predicate.evaluate( object ) ) {
+                nextObject = object;
+                nextObjectSet = true;
+                return true;
+            }
+        }
+        return false;
     }
 }
