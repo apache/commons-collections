@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.1 2001/04/14 19:32:38 craigmcc Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/14 19:32:38 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.2 2001/04/14 19:50:31 craigmcc Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/04/14 19:50:31 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Craig McClanahan
- * @version $Id: TestArrayStack.java,v 1.1 2001/04/14 19:32:38 craigmcc Exp $
+ * @version $Id: TestArrayStack.java,v 1.2 2001/04/14 19:50:31 craigmcc Exp $
  */
 
 public class TestArrayStack extends TestList {
@@ -92,8 +92,67 @@ public class TestArrayStack extends TestList {
     }
 
 
-    public void testNew() {
-        assert(stack.empty());
+    public void testNewStack() {
+
+        assert("New stack is empty", stack.empty());
+        assertEquals("New stack has size zero", stack.size(), 0);
+
+        try {
+            stack.peek();
+            fail("peek() should have thrown EmptyStackException");
+        } catch (EmptyStackException e) {
+            ; // Expected result
+        }
+
+        try {
+            stack.pop();
+            fail("pop() should have thrown EmptyStackException");
+        } catch (EmptyStackException e) {
+            ; // Expected result
+        }
+
+    }
+
+
+    public void testPushPeekPop() {
+
+        stack.push("First Item");
+        assert("Stack is not empty", !stack.empty());
+        assertEquals("Stack size is one", stack.size(), 1);
+        assertEquals("Top item is 'First Item'",
+                     (String) stack.peek(), "First Item");
+        assertEquals("Stack size is one", stack.size(), 1);
+
+        stack.push("Second Item");
+        assertEquals("Stack size is two", stack.size(), 2);
+        assertEquals("Top item is 'Second Item'",
+                     (String) stack.peek(), "Second Item");
+        assertEquals("Stack size is two", stack.size(), 2);
+
+        assertEquals("Popped item is 'Second Item'",
+                     (String) stack.pop(), "Second Item");
+        assertEquals("Top item is 'First Item'",
+                     (String) stack.peek(), "First Item");
+        assertEquals("Stack size is one", stack.size(), 1);
+
+        assertEquals("Popped item is 'First Item'",
+                     (String) stack.pop(), "First Item");
+        assertEquals("Stack size is zero", stack.size(), 0);
+
+    }
+
+
+    public void testSearch() {
+
+        stack.push("First Item");
+        stack.push("Second Item");
+        assertEquals("Top item is 'Second Item'",
+                     stack.search("Second Item"), 1);
+        assertEquals("Next Item is 'First Item'",
+                     stack.search("First Item"), 2);
+        assertEquals("Cannot find 'Missing Item'",
+                     stack.search("Missing Item"), -1);
+
     }
 
 
