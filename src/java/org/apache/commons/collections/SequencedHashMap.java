@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.7 2002/02/22 03:17:40 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/02/22 03:17:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.8 2002/02/22 04:58:17 mas Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/02/22 04:58:17 $
  *
  * ====================================================================
  *
@@ -92,7 +92,7 @@ import java.util.NoSuchElementException;
  *  required, use {@link Collections#synchronizedMap(Map)} as it is documented,
  *  or use explicit synchronization controls.
  *
- *  @author <a href="mailto:michael@iammichael.org">Michael A. Smith</A>
+ *  @author <a href="mailto:mas@apache.org">Michael A. Smith</A>
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */

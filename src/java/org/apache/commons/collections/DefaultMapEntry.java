@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.2 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.3 2002/02/22 04:58:17 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/22 04:58:17 $
  *
  * ====================================================================
  *
@@ -65,7 +65,7 @@ import java.util.Map;
 /** A default implementation of {@link Map.Entry Map.Entry}
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @author <a href="mailto:michael@iammichael.org">Michael Smith</a>
+  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
   */
   
 public class DefaultMapEntry implements Map.Entry {
