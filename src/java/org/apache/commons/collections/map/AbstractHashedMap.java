@@ -46,7 +46,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.16 $ $Date: 2004/04/09 22:52:48 $
+ * @version $Revision: 1.17 $ $Date: 2004/04/27 21:28:40 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -384,7 +384,7 @@ public class AbstractHashedMap implements IterableMap {
     
     /**
      * Compares two values, in external form, to see if they are equal.
-     * This implementation uses the equals method and assumes neither key is null.
+     * This implementation uses the equals method and assumes neither value is null.
      * Subclasses can override this to match differently.
      * 
      * @param value1  the first value to compare passed in from outside
