@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.4 2002/02/22 02:18:50 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/22 02:18:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.5 2002/02/26 00:31:32 morgand Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/02/26 00:31:32 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.TreeMap;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap.java,v 1.4 2002/02/22 02:18:50 mas Exp $
+ * @version $Id: TestFastTreeMap.java,v 1.5 2002/02/26 00:31:32 morgand Exp $
  */
 public class TestFastTreeMap extends TestTreeMap
 {
@@ -89,7 +89,7 @@ public class TestFastTreeMap extends TestTreeMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         FastTreeMap ftm = new FastTreeMap();
         ftm.setFast(false);
         return (ftm);
@@ -104,7 +104,7 @@ public class TestFastTreeMap extends TestTreeMap
 
     public void setUp()
     {
-        map = (TreeMap) makeMap();
+        map = (TreeMap) makeEmptyMap();
     }
 
 }

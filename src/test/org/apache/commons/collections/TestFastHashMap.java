@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.3 $
- * $Date: 2001/04/21 12:22:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.4 2002/02/26 00:31:32 morgand Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/26 00:31:32 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastHashMap.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestFastHashMap.java,v 1.4 2002/02/26 00:31:32 morgand Exp $
  */
 public class TestFastHashMap extends TestHashMap
 {
@@ -89,7 +89,7 @@ public class TestFastHashMap extends TestHashMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         FastHashMap fhm = new FastHashMap();
         fhm.setFast(false);
         return (fhm);
@@ -97,7 +97,7 @@ public class TestFastHashMap extends TestHashMap
 
     public void setUp()
     {
-        map = (HashMap) makeMap();
+        map = (HashMap) makeEmptyMap();
     }
 
 }

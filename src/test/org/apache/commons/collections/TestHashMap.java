@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestHashMap.java,v 1.5 2002/02/26 00:21:46 morgand Exp $
- * $Revision: 1.5 $
- * $Date: 2002/02/26 00:21:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestHashMap.java,v 1.6 2002/02/26 00:31:32 morgand Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/02/26 00:31:32 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestHashMap.java,v 1.5 2002/02/26 00:21:46 morgand Exp $
+ * @version $Id: TestHashMap.java,v 1.6 2002/02/26 00:31:32 morgand Exp $
  */
 public abstract class TestHashMap extends TestMap
 {
@@ -82,11 +82,6 @@ public abstract class TestHashMap extends TestMap
     {
         String[] testCaseName = { TestHashMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
-    }
-
-    public Map makeEmptyMap() {
-        HashMap hm = new HashMap();
-        return (hm);
     }
 
     protected HashMap map = null;
