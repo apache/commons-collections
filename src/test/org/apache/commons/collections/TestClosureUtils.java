@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestClosureUtils.java,v 1.4 2003/11/23 14:41:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestClosureUtils.java,v 1.5 2003/11/23 17:01:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,12 +68,13 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.commons.collections.functors.FunctorException;
+import org.apache.commons.collections.functors.NOPClosure;
 
 /**
  * Tests the org.apache.commons.collections.ClosureUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/11/23 14:41:27 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/23 17:01:36 $
  *
  * @author Stephen Colebourne
  */
@@ -174,12 +175,11 @@ public class TestClosureUtils extends junit.framework.TestCase {
         MockClosure cmd = new MockClosure();
         ClosureUtils.forClosure(5, cmd).execute(null);
         assertEquals(5, cmd.count);
-        try {
-            ClosureUtils.forClosure(-1, new MockClosure());
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(0, new MockClosure()));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(-1, new MockClosure()));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(1, null));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(3, null));
+        assertSame(cmd, ClosureUtils.forClosure(1, cmd));
     }
 
     // whileClosure
@@ -237,72 +237,33 @@ public class TestClosureUtils extends junit.framework.TestCase {
         ClosureUtils.chainedClosure(coll).execute(null);
         assertEquals(1, a.count);
         assertEquals(2, b.count);
-    }
-
-    public void testChainedClosureEx1a() {
+        
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.chainedClosure(new Closure[0]));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.chainedClosure(Collections.EMPTY_LIST));
+        
         try {
             ClosureUtils.chainedClosure(null, null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testChainedClosureEx1b() {
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
             ClosureUtils.chainedClosure((Closure[]) null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testChainedClosureEx1c() {
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
             ClosureUtils.chainedClosure((Collection) null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testChainedClosureEx2() {
-        try {
-            ClosureUtils.chainedClosure(new Closure[0]);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testChainedClosureEx3() {
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
             ClosureUtils.chainedClosure(new Closure[] {null, null});
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testChainedClosureEx4() {
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
-            ClosureUtils.chainedClosure(Collections.EMPTY_LIST);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testChainedClosureEx5() {
-        try {
-            Collection coll = new ArrayList();
+            coll = new ArrayList();
             coll.add(null);
             coll.add(null);
             ClosureUtils.chainedClosure(coll);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
     
     // switchClosure
@@ -311,13 +272,13 @@ public class TestClosureUtils extends junit.framework.TestCase {
     public void testSwitchClosure() {
         MockClosure a = new MockClosure();
         MockClosure b = new MockClosure();
-        ClosureUtils.switchClosure(PredicateUtils.truePredicate(), a, b).execute(null);
+        ClosureUtils.ifClosure(PredicateUtils.truePredicate(), a, b).execute(null);
         assertEquals(1, a.count);
         assertEquals(0, b.count);
         
         a = new MockClosure();
         b = new MockClosure();
-        ClosureUtils.switchClosure(PredicateUtils.falsePredicate(), a, b).execute(null);
+        ClosureUtils.ifClosure(PredicateUtils.falsePredicate(), a, b).execute(null);
         assertEquals(0, a.count);
         assertEquals(1, b.count);
         
@@ -376,81 +337,33 @@ public class TestClosureUtils extends junit.framework.TestCase {
         assertEquals(0, a.count);
         assertEquals(0, b.count);
         assertEquals(1, c.count);
-    }
+        
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.switchClosure(new Predicate[0], new Closure[0]));
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.switchClosure(new HashMap()));
+        map = new HashMap();
+        map.put(null, null);
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.switchClosure(map));
 
-    public void testSwitchClosureEx1a() {
         try {
             ClosureUtils.switchClosure(null, null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testSwitchClosureEx1b() {
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
             ClosureUtils.switchClosure((Predicate[]) null, (Closure[]) null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testSwitchClosureEx1c() {
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
             ClosureUtils.switchClosure((Map) null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testSwitchClosureEx2() {
-        try {
-            ClosureUtils.switchClosure(new Predicate[0], new Closure[0]);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testSwitchClosureEx3() {
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
             ClosureUtils.switchClosure(new Predicate[2], new Closure[2]);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testSwitchClosureEx4() {
-        try {
-            ClosureUtils.switchClosure(new HashMap());
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testSwitchClosureEx5() {
-        try {
-            Map map = new HashMap();
-            map.put(null, null);
-            map.put(null, null);
-            ClosureUtils.switchClosure(map);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testSwitchClosureEx6() {
+            fail();
+        } catch (IllegalArgumentException ex) {}
         try {
             ClosureUtils.switchClosure(new Predicate[2], new Closure[1]);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
     
     // switchMapClosure
@@ -486,24 +399,13 @@ public class TestClosureUtils extends junit.framework.TestCase {
         assertEquals(0, a.count);
         assertEquals(0, b.count);
         assertEquals(1, c.count);
-    }
 
-    public void testSwitchMapClosureEx1() {
+        assertSame(NOPClosure.INSTANCE, ClosureUtils.switchMapClosure(new HashMap()));
+        
         try {
             ClosureUtils.switchMapClosure(null);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
-    }
-    
-    public void testSwitchMapClosureEx2() {
-        try {
-            ClosureUtils.switchMapClosure(new HashMap());
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
     
     

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.6 2003/11/23 14:41:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/TransformerUtils.java,v 1.7 2003/11/23 17:01:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,6 +64,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.collections.functors.ExceptionTransformer;
 import org.apache.commons.collections.functors.FunctorException;
 
 /**
@@ -89,17 +90,13 @@ import org.apache.commons.collections.functors.FunctorException;
  * All the supplied transformers are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/11/23 14:41:27 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/23 17:01:36 $
  * 
  * @author Stephen Colebourne
  * @author James Carman
  */
 public class TransformerUtils {
 
-    /**
-     * A transformer that always throws an exception
-     */
-    private static final Transformer EXCEPTION_TRANSFORMER = new ExceptionTransformer();
     /**
      * A transformer that always returns null
      */
@@ -137,7 +134,7 @@ public class TransformerUtils {
      * @return the transformer
      */
     public static Transformer exceptionTransformer() {
-        return EXCEPTION_TRANSFORMER;
+        return ExceptionTransformer.INSTANCE;
     }
 
     /**
@@ -574,29 +571,6 @@ public class TransformerUtils {
                 throw new IllegalArgumentException(
                     "The transformer array must not contain a null transformer, index " + i + " was null");
             }
-        }
-    }
-
-    // ExceptionTransformer
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ExceptionTransformer always throws an exception.
-     */
-    private static class ExceptionTransformer implements Transformer, Serializable {
-
-        /**
-         * Constructor
-         */
-        private ExceptionTransformer() {
-            super();
-        }
-
-        /**
-         * Always throw exception
-         */
-        public Object transform(Object input) {
-            throw new FunctorException("ExceptionTransformer invoked");
         }
     }
 

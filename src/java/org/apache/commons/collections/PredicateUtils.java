@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.11 2003/11/23 14:41:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.12 2003/11/23 17:01:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,6 +63,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.commons.collections.functors.ExceptionPredicate;
 import org.apache.commons.collections.functors.FunctorException;
 
 /**
@@ -90,17 +91,13 @@ import org.apache.commons.collections.functors.FunctorException;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2003/11/23 14:41:27 $
+ * @version $Revision: 1.12 $ $Date: 2003/11/23 17:01:36 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg
  */
 public class PredicateUtils {
 
-    /**
-     * A predicate that always throws an exception
-     */
-    private static final Predicate EXCEPTION_PREDICATE = new ExceptionPredicate();
     /**
      * A predicate that always returns true
      */
@@ -135,7 +132,7 @@ public class PredicateUtils {
      * @return the predicate
      */
     public static Predicate exceptionPredicate() {
-        return EXCEPTION_PREDICATE;
+        return ExceptionPredicate.INSTANCE;
     }
 
     /**
@@ -582,29 +579,6 @@ public class PredicateUtils {
             preds[i] = predicates[i];
         }
         return preds;
-    }
-
-    // ExceptionPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ExceptionPredicate always throws an exception
-     */
-    private static class ExceptionPredicate implements Predicate, Serializable {
-
-        /**
-         * Constructor
-         */
-        private ExceptionPredicate() {
-            super();
-        }
-
-        /**
-         * Always throw an exception
-         */
-        public boolean evaluate(Object object) {
-            throw new FunctorException("ExceptionPredicate invoked");
-        }
     }
 
     // ConstantPredicate

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.9 2003/11/23 14:41:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.10 2003/11/23 17:01:36 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,6 +67,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.commons.collections.functors.ExceptionFactory;
 import org.apache.commons.collections.functors.FunctorException;
 
 /**
@@ -82,16 +83,12 @@ import org.apache.commons.collections.functors.FunctorException;
  * All the supplied factories are Serializable.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2003/11/23 14:41:27 $
+ * @version $Revision: 1.10 $ $Date: 2003/11/23 17:01:36 $
  *
  * @author Stephen Colebourne
  */
 public class FactoryUtils {
 
-    /**
-     * A factory that always throws an exception
-     */
-    private static final Factory EXCEPTION_FACTORY = new ExceptionFactory();
     /**
      * A factory that always returns null
      */
@@ -111,7 +108,7 @@ public class FactoryUtils {
      * @return the factory
      */
     public static Factory exceptionFactory() {
-        return EXCEPTION_FACTORY;
+        return ExceptionFactory.INSTANCE;
     }
 
     /**
@@ -200,29 +197,6 @@ public class FactoryUtils {
      */
     public static Factory reflectionFactory(Class classToInstantiate, Class[] paramTypes, Object[] args) {
         return new ReflectionFactory(classToInstantiate, paramTypes, args);
-    }
-
-    // ExceptionFactory
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ExceptionFactory always throws an exception
-     */
-    private static class ExceptionFactory implements Factory, Serializable {
-
-        /**
-         * Constructor
-         */
-        private ExceptionFactory() {
-            super();
-        }
-
-        /**
-         * Always throw an exception
-         */
-        public Object create() {
-            throw new FunctorException("ExceptionFactory invoked");
-        }
     }
 
     // ConstantFactory
