@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.5 2001/07/14 23:33:27 craigmcc Exp $
- * $Revision: 1.5 $
- * $Date: 2001/07/14 23:33:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.6 2002/02/25 23:51:24 morgand Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/02/25 23:51:24 $
  *
  * ====================================================================
  *
@@ -80,7 +80,7 @@ import java.util.ListIterator;
  * test case (method) your {@link List} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestList.java,v 1.5 2001/07/14 23:33:27 craigmcc Exp $
+ * @version $Id: TestList.java,v 1.6 2002/02/25 23:51:24 morgand Exp $
  */
 public abstract class TestList extends TestCollection {
     public TestList(String testName) {
@@ -90,14 +90,14 @@ public abstract class TestList extends TestCollection {
     /**
      * Return a new, empty {@link List} to used for testing.
      */
-    public abstract List makeList();
+    public abstract List makeEmptyList();
 
     public Collection makeCollection() {
-        return makeList();
+        return makeEmptyList();
     }
 
     public void testListAddByIndexBoundsChecking() {
-        List list = makeList();
+        List list = makeEmptyList();
 
         try {
             list.add(Integer.MIN_VALUE,"element");
@@ -153,7 +153,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListAddByIndexBoundsChecking2() {
-        List list = makeList();
+        List list = makeEmptyList();
         boolean added = tryToAdd(list,"element");
 
         try {
@@ -184,7 +184,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListAddByIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         assertEquals(0,list.size());
         if(tryToAdd(list,0,"element2")) {
             assertEquals(1,list.size());
@@ -201,7 +201,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListAdd() {
-        List list = makeList();
+        List list = makeEmptyList();
         if(tryToAdd(list,"1")) {
             assertTrue(list.contains("1"));
             if(tryToAdd(list,"2")) {
@@ -223,7 +223,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListEqualsSelf() {
-        List list = makeList();
+        List list = makeEmptyList();
         assertTrue(list.equals(list));
         tryToAdd(list,"elt");
         assertTrue(list.equals(list));
@@ -232,7 +232,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListEqualsArrayList() {
-        List list1 = makeList();
+        List list1 = makeEmptyList();
         List list2 = new ArrayList();
         assertTrue(list1.equals(list2));
         assertEquals(list1.hashCode(),list2.hashCode());
@@ -252,8 +252,8 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListEquals() {
-        List list1 = makeList();
-        List list2 = makeList();
+        List list1 = makeEmptyList();
+        List list2 = makeEmptyList();
         assertTrue(list1.equals(list2));
         if(tryToAdd(list1,"a") && tryToAdd(list2,"a")) {
             assertTrue(list1.equals(list2));
@@ -270,7 +270,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListGetByIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"a");
         tryToAdd(list,"b");
         tryToAdd(list,"c");
@@ -284,7 +284,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListGetByIndexBoundsChecking() {
-        List list = makeList();
+        List list = makeEmptyList();
 
         try {
             list.get(Integer.MIN_VALUE);
@@ -323,7 +323,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListGetByIndexBoundsChecking2() {
-        List list = makeList();
+        List list = makeEmptyList();
         boolean added = tryToAdd(list,"a");
 
         try {
@@ -356,7 +356,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListIndexOf() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"a");
         tryToAdd(list,"b");
         tryToAdd(list,"c");
@@ -371,7 +371,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListLastIndexOf1() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"a");
         tryToAdd(list,"b");
         tryToAdd(list,"c");
@@ -386,7 +386,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListLastIndexOf2() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"a");
         tryToAdd(list,"b");
         tryToAdd(list,"c");
@@ -434,7 +434,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListSetByIndexBoundsChecking() {
-        List list = makeList();
+        List list = makeEmptyList();
 
         try {
             list.set(Integer.MIN_VALUE,"a");
@@ -503,7 +503,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListSetByIndexBoundsChecking2() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element");
         tryToAdd(list,"element2");
 
@@ -561,7 +561,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListSetByIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -586,7 +586,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListRemoveByIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -615,7 +615,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListRemoveByValue() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element1");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -637,7 +637,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListListIteratorNextPrev() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element1");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -667,7 +667,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListListIteratorNextIndexPrevIndex() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element1");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");
@@ -689,7 +689,7 @@ public abstract class TestList extends TestCollection {
     }
 
     public void testListListIteratorSet() {
-        List list = makeList();
+        List list = makeEmptyList();
         tryToAdd(list,"element1");
         tryToAdd(list,"element2");
         tryToAdd(list,"element3");

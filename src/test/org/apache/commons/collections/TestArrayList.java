@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.2 2001/07/14 23:33:26 craigmcc Exp $
- * $Revision: 1.2 $
- * $Date: 2001/07/14 23:33:26 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.3 2002/02/25 23:51:24 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/25 23:51:24 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestArrayList.java,v 1.2 2001/07/14 23:33:26 craigmcc Exp $
+ * @version $Id: TestArrayList.java,v 1.3 2002/02/25 23:51:24 morgand Exp $
  */
 public class TestArrayList extends TestList
 {
@@ -93,10 +93,10 @@ public class TestArrayList extends TestList
 
     public void setUp()
     {
-        list = (ArrayList) makeList();
+        list = (ArrayList) makeEmptyList();
     }
 
-    public List makeList()
+    public List makeEmptyList()
     {
         ArrayList al = new ArrayList();
         return (al);
