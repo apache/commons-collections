@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.5 2001/08/29 16:10:29 jstrachan Exp $
- * $Revision: 1.5 $
- * $Date: 2001/08/29 16:10:29 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.6 2001/11/26 17:15:33 bayard Exp $
+ * $Revision: 1.6 $
+ * $Date: 2001/11/26 17:15:33 $
  *
  * ====================================================================
  *
@@ -77,9 +77,34 @@ import java.util.Set;
  *
  * @author Rodney Waldhoff
  *
- * @version $Id: CollectionUtils.java,v 1.5 2001/08/29 16:10:29 jstrachan Exp $
+ * @version $Id: CollectionUtils.java,v 1.6 2001/11/26 17:15:33 bayard Exp $
  */
 public class CollectionUtils {
+
+    /**
+     * The empty iterator (immutable).
+     */
+    public static final Iterator EMPTY_ITERATOR = new EmptyIterator();
+
+    /**
+     * 'Hidden' class which acts as an EmptyIterator.
+     * An alternative is to use: Collections.EMPTY_LIST.iterator();
+     * however that will create a new iterator object each time.
+     */
+    private static class EmptyIterator implements Iterator {
+        public boolean hasNext() {
+            return false;
+        }
+
+        public Object next() {
+            throw new NoSuchElementException();
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
+
     /**
      * Returns a {@link Collection} containing the union
      * of the given {@link Collection}s.
@@ -502,6 +527,7 @@ public class CollectionUtils {
             return null;
         }
     }
+
 
     /** Reverses the order of the given array */
     public static void reverseArray(Object[] array) {
