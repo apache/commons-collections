@@ -23,7 +23,7 @@ import java.util.ListIterator;
  *
  * @deprecated Use AbstractListIteratorDecorator. Will be removed in v4.0
  * @since Commons Collections 2.0
- * @version $Revision: 1.9 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  */

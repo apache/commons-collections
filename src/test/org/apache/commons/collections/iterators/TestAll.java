@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all iterator tests.
  * 
- * @version $Revision: 1.16 $ $Date: 2004/07/17 21:02:47 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  */

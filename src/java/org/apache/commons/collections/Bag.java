@@ -38,7 +38,7 @@ import java.util.Set;
  * it has been decided to maintain backwards compatibility instead.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.18 $ $Date: 2004/05/03 15:12:20 $
+ * @version $Revision$ $Date$
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne

@@ -26,7 +26,7 @@ import org.apache.commons.collections.Predicate;
  * passed into the predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/16 11:16:01 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

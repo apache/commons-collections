@@ -43,7 +43,7 @@ import java.util.NoSuchElementException;
  *
  * @deprecated Moved to buffer subpackage. Due to be removed in v4.0.
  * @since 2.1
- * @version $Revision: 1.16 $ $Date: 2004/02/18 01:15:43 $
+ * @version $Revision$ $Date$
  * 
  * @author Avalon
  * @author Berin Loritsch

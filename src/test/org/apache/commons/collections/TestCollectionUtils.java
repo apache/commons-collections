@@ -51,7 +51,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Steven Melzer
  * @author Neil O'Toole
  * 
- * @version $Revision: 1.44 $ $Date: 2004/12/24 11:03:45 $
+ * @version $Revision$ $Date$
  */
 public class TestCollectionUtils extends TestCase {
     

@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  * implementation.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/06/07 21:42:12 $
+ * @version $Revision$ $Date$
  * 
  * @author Henning P. Schmiedehausen
  * @author Stephen Colebourne

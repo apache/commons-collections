@@ -29,7 +29,7 @@ package org.apache.commons.collections;
  * cloning and returning the string value.
  * 
  * @since Commons Collections 1.0
- * @version $Revision: 1.10 $ $Date: 2004/04/14 20:08:57 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Stephen Colebourne

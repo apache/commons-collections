@@ -33,7 +33,7 @@ import java.util.Map;
  * </pre>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:15:43 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

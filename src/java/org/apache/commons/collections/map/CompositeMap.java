@@ -32,7 +32,7 @@ import org.apache.commons.collections.set.CompositeSet;
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision$ $Date$
  *
  * @author Brian McCallister
  */

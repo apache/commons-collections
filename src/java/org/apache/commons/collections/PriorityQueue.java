@@ -23,7 +23,7 @@ package org.apache.commons.collections;
  * @deprecated Replaced by the Buffer interface and implementations in buffer subpackage.
  *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.14 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Peter Donald
  */

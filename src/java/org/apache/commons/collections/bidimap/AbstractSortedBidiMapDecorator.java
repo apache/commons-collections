@@ -33,7 +33,7 @@ import org.apache.commons.collections.SortedBidiMap;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:57:39 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

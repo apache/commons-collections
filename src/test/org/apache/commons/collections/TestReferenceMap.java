@@ -25,7 +25,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Tests for ReferenceMap. 
  * 
- * @version $Revision: 1.19 $ $Date: 2004/05/03 22:03:06 $
+ * @version $Revision$ $Date$
  *
  * @author Paul Jack
  */

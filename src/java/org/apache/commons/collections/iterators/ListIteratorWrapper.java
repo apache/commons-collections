@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  * operations of ListIterator.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.7 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision$ $Date$
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne

@@ -133,7 +133,7 @@ import junit.framework.TestSuite;
  *  interpret bulk test methods.
  *
  *  @author Paul Jack
- *  @version $Id: BulkTest.java,v 1.10 2004/02/18 01:20:35 scolebourne Exp $
+ *  @version $Id$
  */
 public class BulkTest extends TestCase implements Cloneable {
 

@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
 /**
  * Tests the ObjectArrayListIterator class.
  * 
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

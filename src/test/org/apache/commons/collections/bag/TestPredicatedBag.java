@@ -29,7 +29,7 @@ import org.apache.commons.collections.PredicateUtils;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/06/02 22:05:03 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

@@ -45,7 +45,7 @@ import java.lang.ref.WeakReference;
  *  and now returns the cursor from the listIterator method. Will be removed in v4.0
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.23 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki

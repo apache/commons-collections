@@ -28,7 +28,7 @@ package org.apache.commons.collections;
  * or, not, method invokation and null testing.
  * 
  * @since Commons Collections 1.0
- * @version $Revision: 1.11 $ $Date: 2004/04/14 20:08:57 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Stephen Colebourne

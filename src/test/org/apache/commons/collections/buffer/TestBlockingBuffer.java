@@ -33,7 +33,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $
+ * @version $Revision$
  * 
  * @author Janek Bogucki
  * @author Phil Steitz

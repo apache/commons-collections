@@ -26,7 +26,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for UnboundedFifoBuffer.
  * 
- * @version $Revision: 1.12 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Unknown
  */

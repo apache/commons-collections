@@ -35,7 +35,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for CircularFifoBuffer.
  * 
- * @version $Revision: 1.6 $ $Date: 2005/01/22 00:47:49 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

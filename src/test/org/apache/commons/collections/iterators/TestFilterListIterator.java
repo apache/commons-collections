@@ -29,7 +29,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Tests the FilterListIterator class.
  * 
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  */

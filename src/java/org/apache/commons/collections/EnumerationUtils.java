@@ -24,7 +24,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * Provides utility methods for {@link Enumeration} instances.
  * 
  * @since Commons Collections 3.0
- * @version $Id: EnumerationUtils.java,v 1.5 2004/02/18 01:15:42 scolebourne Exp $
+ * @version $Id$
  * 
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  */

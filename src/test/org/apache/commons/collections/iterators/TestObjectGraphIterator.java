@@ -30,7 +30,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * Testcase.
  * 
- * @version $Revision: 1.1 $ $Date: 2004/03/20 00:21:08 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

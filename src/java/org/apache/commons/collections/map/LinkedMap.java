@@ -51,7 +51,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

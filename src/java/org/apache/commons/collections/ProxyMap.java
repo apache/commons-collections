@@ -36,7 +36,7 @@ import java.util.Set;
  *
  * @deprecated Moved to map subpackage as AbstractMapDecorator. It will be removed in v4.0.
  * @since Commons Collections 2.0
- * @version $Revision: 1.15 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Daniel Rall
  * @author Stephen Colebourne

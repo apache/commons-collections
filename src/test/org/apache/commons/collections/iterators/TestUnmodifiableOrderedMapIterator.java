@@ -31,7 +31,7 @@ import org.apache.commons.collections.map.ListOrderedMap;
 /**
  * Tests the UnmodifiableOrderedMapIterator.
  * 
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

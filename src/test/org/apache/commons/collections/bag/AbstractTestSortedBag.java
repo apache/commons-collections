@@ -21,7 +21,7 @@ package org.apache.commons.collections.bag;
  * methods and contracts.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -123,7 +123,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.24 $ $Date: 2004/09/22 23:35:03 $
+ * @version $Revision$ $Date$
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>

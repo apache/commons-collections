@@ -33,7 +33,7 @@ import org.apache.commons.collections.map.TestPredicatedSortedMap;
  * {@link PredicatedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/06/02 22:12:14 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

@@ -34,7 +34,7 @@ import org.apache.commons.collections.ResettableIterator;
  * </pre>
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

@@ -31,7 +31,7 @@ import java.util.SortedMap;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/02 21:16:50 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  * Tests the ListIteratorWrapper to insure that it simulates
  * a ListIterator correctly.
  *
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author Morgan Delagrange
  */

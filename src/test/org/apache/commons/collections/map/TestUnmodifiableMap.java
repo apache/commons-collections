@@ -28,7 +28,7 @@ import org.apache.commons.collections.Unmodifiable;
  * {@link UnmodifiableMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/04/09 10:46:32 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

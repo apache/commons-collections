@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections project tests.
  * 
- * @version $Revision: 1.10 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

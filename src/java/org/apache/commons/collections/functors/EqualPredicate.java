@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * as the one stored in this predicate by equals.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/16 11:16:01 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

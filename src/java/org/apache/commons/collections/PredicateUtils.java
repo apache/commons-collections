@@ -66,7 +66,7 @@ import org.apache.commons.collections.functors.UniquePredicate;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.19 $ $Date: 2004/05/26 21:50:52 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  * @author Ola Berg

@@ -30,7 +30,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Test class.
  * 
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:34 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  * @author Simon Kitching

@@ -25,7 +25,7 @@ import java.util.NoSuchElementException;
  * @deprecated PriorityQueue is replaced by the Buffer interface, see buffer subpackage.
  *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.13 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Ram Chidambaram
  */

@@ -30,7 +30,7 @@ import org.apache.commons.collections.PredicateUtils;
  * {@link PredicatedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/09 09:43:09 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

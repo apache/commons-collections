@@ -52,7 +52,7 @@ import java.util.ListIterator;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:12:26 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki

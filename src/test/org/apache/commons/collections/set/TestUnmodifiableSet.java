@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  * {@link UnmodifiableSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/06/02 22:12:14 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

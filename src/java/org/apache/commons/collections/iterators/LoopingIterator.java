@@ -32,7 +32,7 @@ import org.apache.commons.collections.ResettableIterator;
  * implementations will throw a ConcurrentModificationException. 
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision$ $Date$
  *
  * @author <a href="mailto:joncrlsn@users.sf.net">Jonathan Carlson</a>
  * @author Stephen Colebourne

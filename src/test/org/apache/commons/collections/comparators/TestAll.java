@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Comparator Collections tests.
  * 
- * @version $Revision: 1.7 $ $Date: 2004/02/18 01:20:34 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

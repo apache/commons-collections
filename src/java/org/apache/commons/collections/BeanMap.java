@@ -42,7 +42,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.29 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Stephen Colebourne

@@ -36,7 +36,7 @@ import org.apache.commons.collections.BidiMap;
  * and the flawed <code>createMap</code> method is ignored.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualHashBidiMap.java,v 1.7 2004/06/11 23:27:37 scolebourne Exp $
+ * @version $Id$
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

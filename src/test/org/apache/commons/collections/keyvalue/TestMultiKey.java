@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 /**
  * Unit tests for {@link org.apache.commons.collections.MultiKey}.
  * 
- * @version $Revision: 1.4 $ $Date: 2004/03/13 12:43:43 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

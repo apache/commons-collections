@@ -41,7 +41,7 @@ import java.util.Map;
  * multiple comparisons  after all the setup operations are complete.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/05/15 13:24:11 $
+ * @version $Revision$ $Date$
  *
  * @author David Leppik
  * @author Stephen Colebourne

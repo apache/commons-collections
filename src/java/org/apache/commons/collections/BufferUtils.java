@@ -26,7 +26,7 @@ import org.apache.commons.collections.buffer.UnmodifiableBuffer;
  * Provides utility methods and decorators for {@link Buffer} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.20 $ $Date: 2004/04/01 20:12:00 $
+ * @version $Revision$ $Date$
  * 
  * @author Paul Jack
  * @author Stephen Colebourne

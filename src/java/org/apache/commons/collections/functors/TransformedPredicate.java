@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * another <code>Predicate</code>.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.4 $ $Date: 2004/05/31 16:43:17 $
+ * @version $Revision$ $Date$
  * @author Alban Peignier
  * @author Stephen Colebourne
  */

@@ -51,7 +51,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * @see org.apache.commons.collections.map.LinkedMap
  * @see org.apache.commons.collections.map.ListOrderedMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.28 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Michael A. Smith
  * @author Daniel Rall

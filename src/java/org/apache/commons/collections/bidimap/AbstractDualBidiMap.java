@@ -36,7 +36,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.14 2004/06/22 21:54:35 scolebourne Exp $
+ * @version $Id$
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

@@ -26,7 +26,7 @@ import org.apache.commons.collections.KeyValue;
  * itself as a key or value.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:00:08 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Michael A. Smith

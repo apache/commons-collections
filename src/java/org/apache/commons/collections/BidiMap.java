@@ -33,7 +33,7 @@ package org.apache.commons.collections;
  * duplicate keys. See the {@link #put} method description for more information.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.16 $ $Date: 2004/05/10 20:37:19 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

@@ -33,7 +33,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/05/26 21:58:02 $
+ * @version $Revision$ $Date$
  *
  * @author Brian McCallister
  * @author Stephen Colebourne

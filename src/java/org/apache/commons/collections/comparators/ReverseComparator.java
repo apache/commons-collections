@@ -23,7 +23,7 @@ import java.util.Comparator;
  * to its {@link #compare(Object, Object) compare} method.
  * 
  * @since Commons Collections 2.0
- * @version $Revision: 1.20 $ $Date: 2004/05/16 11:49:24 $
+ * @version $Revision$ $Date$
  *
  * @author Henri Yandell
  * @author Michael A. Smith

@@ -38,7 +38,7 @@ import org.apache.commons.collections.OrderedIterator;
  * is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/04/20 23:33:54 $
+ * @version $Revision$ $Date$
  *
  * @author Rich Dougherty
  * @author Phil Steitz

@@ -32,7 +32,7 @@ import org.apache.commons.collections.MapIterator;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2004/04/09 14:38:13 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
  * Provides an implementation of an empty iterator.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.2 $ $Date: 2004/05/26 20:57:43 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if both the predicates return true.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/05/31 16:43:17 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

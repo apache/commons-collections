@@ -55,7 +55,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.16 $ $Date: 2004/06/07 21:51:39 $
+ * @version $Revision$ $Date$
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne

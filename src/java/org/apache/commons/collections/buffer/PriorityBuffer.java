@@ -50,7 +50,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * </pre>
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
- * @version $Revision: 1.5 $ $Date: 2004/05/15 12:33:23 $
+ * @version $Revision$ $Date$
  * 
  * @author Peter Donald
  * @author Ram Chidambaram

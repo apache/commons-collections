@@ -26,7 +26,7 @@ package org.apache.commons.collections;
  * a copy of a prototype or a new instance.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.9 $ $Date: 2004/04/14 20:08:57 $
+ * @version $Revision$ $Date$
  *
  * @author Arron Bates
  * @author Stephen Colebourne

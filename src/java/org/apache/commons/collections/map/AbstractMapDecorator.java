@@ -33,7 +33,7 @@ import java.util.Set;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/02 21:02:54 $
+ * @version $Revision$ $Date$
  * 
  * @author Daniel Rall
  * @author Stephen Colebourne

@@ -77,7 +77,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * 
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
- * @version $Revision: 1.22 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Paul Jack
  */

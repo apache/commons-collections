@@ -27,7 +27,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.2 $ $Date: 2004/04/30 23:51:36 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

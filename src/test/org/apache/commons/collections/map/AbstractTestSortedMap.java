@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.9 $ $Date: 2004/05/31 22:39:20 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

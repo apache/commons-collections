@@ -23,7 +23,7 @@ import java.io.PrintWriter;
  * If required, a root cause error can be wrapped within this one.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

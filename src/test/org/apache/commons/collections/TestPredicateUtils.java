@@ -31,7 +31,7 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.PredicateUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/03/13 16:34:46 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

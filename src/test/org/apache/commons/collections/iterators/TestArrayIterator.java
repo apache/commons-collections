@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
  * perform the iteration rather than the hasNext() method.
  * The code of this test was supplied by Mauricio S. Moura.
  * 
- * @version $Revision: 1.7 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Mauricio S. Moura

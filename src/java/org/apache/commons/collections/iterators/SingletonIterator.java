@@ -25,7 +25,7 @@ import org.apache.commons.collections.ResettableIterator;
  * object instance.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.14 $ $Date: 2004/04/09 22:52:48 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Stephen Colebourne

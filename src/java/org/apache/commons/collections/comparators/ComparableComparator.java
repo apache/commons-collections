@@ -35,7 +35,7 @@ import java.util.Comparator;
  * {@link #compare(Object, Object) compare} for details.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.15 $ $Date: 2004/05/15 13:24:11 $
+ * @version $Revision$ $Date$
  *
  * @author Henri Yandell
  *

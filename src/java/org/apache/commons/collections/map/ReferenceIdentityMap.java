@@ -59,7 +59,7 @@ import java.lang.ref.Reference;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.2 $ $Date: 2004/10/16 21:26:14 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

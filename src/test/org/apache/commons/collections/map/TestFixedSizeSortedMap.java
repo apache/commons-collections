@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/04/09 09:40:15 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -41,7 +41,7 @@ import org.apache.commons.collections.BoundedMap;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision: 1.15 $ $Date: 2004/10/16 21:26:14 $
+ * @version $Revision$ $Date$
  *
  * @author James Strachan
  * @author Morgan Delagrange

@@ -31,7 +31,7 @@ import org.apache.commons.collections.PredicateUtils;
  * {@link PredicatedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/06/02 22:06:33 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

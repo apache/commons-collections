@@ -61,7 +61,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.18 $ $Date: 2004/05/26 21:56:05 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

@@ -29,7 +29,7 @@ import org.apache.commons.collections.Unmodifiable;
  * {@link UnmodifiableOrderedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/09 10:46:32 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -45,7 +45,7 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.10 $ $Date: 2004/07/29 22:28:57 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack

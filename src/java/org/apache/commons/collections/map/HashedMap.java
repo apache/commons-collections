@@ -30,7 +30,7 @@ import java.util.Map;
  * functionality and many methods for subclassing.
  * <p>
  * @since Commons Collections 3.0
- * @version $Revision: 1.15 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

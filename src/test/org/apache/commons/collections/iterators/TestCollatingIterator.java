@@ -27,7 +27,7 @@ import org.apache.commons.collections.comparators.ComparableComparator;
 /**
  * Unit test suite for {@link CollatingIterator}.
  * 
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * @author Rodney Waldhoff
  */
 public class TestCollatingIterator extends AbstractTestIterator {

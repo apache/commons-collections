@@ -116,7 +116,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.16 $ $Date: 2004/06/07 23:14:40 $
+ * @version $Revision$ $Date$
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 

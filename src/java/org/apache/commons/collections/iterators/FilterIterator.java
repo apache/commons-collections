@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
  * are returned.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.8 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Jan Sorensen

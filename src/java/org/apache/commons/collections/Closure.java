@@ -25,7 +25,7 @@ package org.apache.commons.collections;
  * {@link ClosureUtils}. These include method invokation and for/while loops.
  *  
  * @since Commons Collections 1.0
- * @version $Revision: 1.11 $ $Date: 2004/04/14 20:08:56 $
+ * @version $Revision$ $Date$
  *
  * @author James Strachan
  * @author Nicola Ken Barozzi

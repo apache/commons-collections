@@ -67,7 +67,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.16 $ $Date: 2005/01/03 23:52:49 $
+ * @version $Revision$ $Date$
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne

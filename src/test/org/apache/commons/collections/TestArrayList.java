@@ -25,7 +25,7 @@ import org.apache.commons.collections.list.AbstractTestList;
 /**
  * Abstract test class for ArrayList.
  * 
- * @version $Revision: 1.12 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Jason van Zyl
  */

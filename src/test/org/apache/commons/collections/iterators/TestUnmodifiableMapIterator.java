@@ -29,7 +29,7 @@ import org.apache.commons.collections.bidimap.DualHashBidiMap;
 /**
  * Tests the UnmodifiableMapIterator.
  * 
- * @version $Revision: 1.8 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

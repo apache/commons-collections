@@ -35,7 +35,7 @@ import org.apache.commons.collections.comparators.TransformingComparator;
  * in the <code>comparators</code> subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: $ $Date: $
+ * @version $Revision$ $Date$
  * 
  * @author Paul Jack
  * @author Stephen Colebourne

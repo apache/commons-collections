@@ -25,7 +25,7 @@ import java.util.Map;
  * associated with the maximum number of elements.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

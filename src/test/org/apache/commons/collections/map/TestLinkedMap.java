@@ -32,7 +32,7 @@ import org.apache.commons.collections.list.AbstractTestList;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.8 $ $Date: 2004/05/31 22:39:20 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

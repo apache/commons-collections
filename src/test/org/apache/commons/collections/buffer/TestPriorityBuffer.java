@@ -34,7 +34,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * Tests the PriorityBuffer.
  * 
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:37 $
+ * @version $Revision$ $Date$
  * 
  * @author Michael A. Smith
  */

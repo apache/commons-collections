@@ -29,7 +29,7 @@ import org.apache.commons.collections.FactoryUtils;
  * {@link LazyMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/04/09 09:39:16 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

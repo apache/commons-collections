@@ -23,7 +23,7 @@ import java.util.Iterator;
  * This iterator allows both forward and reverse iteration through the collection.
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/09/22 23:16:48 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

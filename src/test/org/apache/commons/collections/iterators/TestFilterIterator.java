@@ -29,7 +29,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Test the filter iterator.
  *
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author  Jan Sorensen
  * @author Ralph Wagner

@@ -33,7 +33,7 @@ import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 /**
  * Tests for IteratorUtils.
  * 
- * @version $Revision: 1.16 $ $Date: 2004/05/26 21:56:45 $
+ * @version $Revision$ $Date$
  * 
  * @author Unknown
  */

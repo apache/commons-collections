@@ -39,7 +39,7 @@ import org.apache.commons.collections.set.AbstractSetDecorator;
  * versions of Commons Collections.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.3 $ $Date: 2005/01/03 23:52:49 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

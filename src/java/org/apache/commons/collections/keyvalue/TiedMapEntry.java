@@ -27,7 +27,7 @@ import org.apache.commons.collections.KeyValue;
  * map, however this will probably mess up any iterators.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/09 14:35:10 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * Entry point for tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.19 $ $Date: 2004/06/07 21:51:39 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

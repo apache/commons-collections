@@ -99,7 +99,7 @@ import java.util.Set;
  * @see org.apache.commons.collections.bidimap.DualTreeBidiMap
  * @see org.apache.commons.collections.bidimap.DualHashBidiMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.14 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Marc Johnson
  */

@@ -30,7 +30,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * {@link SynchronizedBuffer} implementation.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/06/02 22:05:54 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  * @author Stephen Colebourne

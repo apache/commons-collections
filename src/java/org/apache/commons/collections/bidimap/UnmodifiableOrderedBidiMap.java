@@ -33,7 +33,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>OrderedBidiMap</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/15 12:13:03 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -40,7 +40,7 @@ import java.util.Map;
  * as they were defined in the superinterface <code>Map</code> anyway.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.12 $ $Date: 2004/03/14 15:33:57 $
+ * @version $Revision$ $Date$
  * 
  * @author Christopher Berry
  * @author James Strachan

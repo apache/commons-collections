@@ -30,7 +30,7 @@ import org.apache.commons.collections.functors.InstanceofPredicate;
  * The returned implementation is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/05/07 23:18:26 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne

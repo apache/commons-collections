@@ -30,7 +30,7 @@ import junit.textui.TestRunner;
  * JUnit tests.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date$
+ * @version $Revision$ $Date$
  * 
  * @author Matthew Hawthorne
  * @author Tom Dunham

@@ -23,7 +23,7 @@ import java.util.Iterator;
  * an {@link Enumeration Enumeration} instance.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.9 $ $Date: 2004/05/03 10:23:38 $
+ * @version $Revision$ $Date$
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */

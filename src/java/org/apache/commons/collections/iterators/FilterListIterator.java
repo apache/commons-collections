@@ -29,7 +29,7 @@ import org.apache.commons.collections.Predicate;
  * returned by the iterator.
  * 
  * @since Commons Collections 2.0
- * @version $Revision: 1.7 $ $Date: 2004/02/18 00:59:50 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  */

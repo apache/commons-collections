@@ -27,7 +27,7 @@ import org.apache.commons.collections.BulkTest;
  * {@link TypedSet} implementation.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/06/02 22:12:14 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

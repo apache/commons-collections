@@ -24,7 +24,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Tests FastHashMap.
  * 
- * @version $Revision: 1.16 $ $Date: 2004/04/12 12:01:38 $
+ * @version $Revision$ $Date$
  * 
  * @author Jason van Zyl
  */

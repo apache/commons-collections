@@ -37,7 +37,7 @@ import org.apache.commons.collections.map.TestPredicatedMap;
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.27 $ $Date: 2004/12/24 11:03:45 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas

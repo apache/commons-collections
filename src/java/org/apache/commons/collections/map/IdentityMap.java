@@ -29,7 +29,7 @@ import java.util.Map;
  * As a general rule, don't compare this map to other maps.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision$ $Date$
  *
  * @author java util HashMap
  * @author Stephen Colebourne

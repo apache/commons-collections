@@ -70,7 +70,7 @@ import org.apache.commons.collections.Transformer;
  * more efficient (and convenient) than using nested for loops to extract a list.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.3 $ $Date: 2004/05/03 11:50:30 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

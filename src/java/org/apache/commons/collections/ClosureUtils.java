@@ -48,7 +48,7 @@ import org.apache.commons.collections.functors.WhileClosure;
  * All the supplied closures are Serializable.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/05/26 21:50:52 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

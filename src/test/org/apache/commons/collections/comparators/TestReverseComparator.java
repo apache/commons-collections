@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for ReverseComparator.
  * 
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:20:34 $
+ * @version $Revision$ $Date$
  * 
  * @author Unknown
  */

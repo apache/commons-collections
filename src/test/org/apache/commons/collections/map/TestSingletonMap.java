@@ -28,7 +28,7 @@ import org.apache.commons.collections.KeyValue;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2004/04/09 14:46:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

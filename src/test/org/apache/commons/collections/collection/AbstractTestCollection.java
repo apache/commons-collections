@@ -112,7 +112,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.8 $ $Date: 2004/06/01 22:55:14 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack

@@ -52,7 +52,7 @@ import org.apache.commons.collections.iterators.EmptyIterator;
  * <code>list</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.21 $ $Date: 2005/01/04 00:13:25 $
+ * @version $Revision$ $Date$
  * 
  * @author Christopher Berry
  * @author James Strachan

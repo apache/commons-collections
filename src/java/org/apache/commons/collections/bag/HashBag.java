@@ -35,7 +35,7 @@ import org.apache.commons.collections.Bag;
  * <code>Collection</code> interface specification.
  *
  * @since Commons Collections 3.0 (previously in main package v2.0)
- * @version $Revision: 1.8 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision$ $Date$
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne

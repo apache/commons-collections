@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
  * use the prototype factory.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/16 11:36:31 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

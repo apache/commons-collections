@@ -42,7 +42,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * iterators. In this case the class will function as an empty iterator.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.13 $ $Date: 2004/05/26 21:58:02 $
+ * @version $Revision$ $Date$
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne

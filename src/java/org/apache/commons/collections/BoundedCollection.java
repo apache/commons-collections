@@ -28,7 +28,7 @@ import java.util.Collection;
  * @see CollectionUtils#maxSize
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2004/04/14 20:13:11 $
+ * @version $Revision$ $Date$
  * 
  * @author Herve Quiroz
  * @author Stephen Colebourne

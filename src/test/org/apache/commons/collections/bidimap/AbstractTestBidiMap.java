@@ -30,7 +30,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:20:40 $
+ * @version $Revision$ $Date$
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

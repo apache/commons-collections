@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 /**
  * Tests the IteratorChain class.
  * 
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Mauricio S. Moura

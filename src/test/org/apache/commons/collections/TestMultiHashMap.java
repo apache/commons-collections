@@ -30,7 +30,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Unit Tests for <code>MultiHashMap</code>.
  * 
- * @version $Revision: 1.21 $ $Date: 2005/01/04 00:13:25 $
+ * @version $Revision$ $Date$
  *
  * @author Unknown
  */

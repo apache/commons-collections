@@ -26,7 +26,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for BoundedFifoBuffer.
  * 
- * @version $Revision: 1.13 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Paul Jack
  */

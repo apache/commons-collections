@@ -30,7 +30,7 @@ import org.apache.commons.collections.ResettableIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.8 $ $Date: 2004/05/12 19:51:28 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

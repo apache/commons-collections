@@ -20,7 +20,7 @@ package org.apache.commons.collections;
  * exceeded.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  * 
  * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>

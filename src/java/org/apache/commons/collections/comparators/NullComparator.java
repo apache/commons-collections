@@ -23,7 +23,7 @@ import java.util.Comparator;
  * other objects.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.13 $ $Date: 2004/05/15 13:24:11 $ 
+ * @version $Revision$ $Date$ 
  *
  * @author Michael A. Smith
  */

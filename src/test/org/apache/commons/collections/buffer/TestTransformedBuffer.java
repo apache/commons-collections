@@ -28,7 +28,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:37 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

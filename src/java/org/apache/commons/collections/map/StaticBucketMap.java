@@ -90,7 +90,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.11 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision$ $Date$
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich

@@ -28,7 +28,7 @@ import org.apache.commons.collections.functors.InstanceofPredicate;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/07 23:28:38 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne

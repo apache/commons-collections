@@ -37,7 +37,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
  * Map that does not support duplicate keys, duplicate 
  * values, or null values.
  * 
- * @version $Revision: 1.15 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne

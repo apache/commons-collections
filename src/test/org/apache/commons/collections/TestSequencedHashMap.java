@@ -31,7 +31,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
  * Be sure to use the "labRat" instance whenever possible,
  * so that subclasses will be tested correctly.
  * 
- * @version $Revision: 1.26 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Morgan Delagrange
  * @author Daniel Rall

@@ -51,7 +51,7 @@ import java.util.List;
  * 
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision: 1.18 $ $Date: 2004/05/16 11:48:49 $
+ * @version $Revision$ $Date$
  */
 public class ComparatorChain implements Comparator, Serializable {
 

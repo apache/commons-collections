@@ -38,7 +38,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.65 $ $Date: 2004/12/24 11:03:45 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack

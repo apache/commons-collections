@@ -37,7 +37,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/04/09 10:32:25 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

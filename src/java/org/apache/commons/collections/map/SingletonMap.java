@@ -54,7 +54,7 @@ import org.apache.commons.collections.keyvalue.TiedMapEntry;
  * </ul>
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.2 $ $Date: 2004/10/16 21:26:14 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

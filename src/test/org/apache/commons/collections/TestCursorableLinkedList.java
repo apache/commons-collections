@@ -28,7 +28,7 @@ import org.apache.commons.collections.list.AbstractTestList;
 /**
  * Test class.
  * 
- * @version $Revision: 1.18 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  * @author Simon Kitching

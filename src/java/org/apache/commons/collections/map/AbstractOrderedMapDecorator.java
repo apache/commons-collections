@@ -32,7 +32,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/04/02 21:17:48 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

@@ -22,7 +22,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Provides an implementation of an empty map iterator.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/05/22 09:46:39 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

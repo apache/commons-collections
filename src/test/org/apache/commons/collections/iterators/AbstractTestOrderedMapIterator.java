@@ -34,7 +34,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

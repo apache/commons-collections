@@ -32,7 +32,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * Tests the BinaryHeap.
  * 
- * @version $Revision: 1.16 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Michael A. Smith
  */

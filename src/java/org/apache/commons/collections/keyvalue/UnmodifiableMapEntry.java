@@ -25,7 +25,7 @@ import org.apache.commons.collections.Unmodifiable;
  * when <code>setValue</code> is called.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:00:08 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

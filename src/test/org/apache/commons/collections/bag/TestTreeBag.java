@@ -25,7 +25,7 @@ import org.apache.commons.collections.SortedBag;
  * Extension of {@link TestBag} for exercising the {@link TreeBag}
  * implementation.
  * 
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision$ $Date$
  *
  * @author Chuck Burdick
  */

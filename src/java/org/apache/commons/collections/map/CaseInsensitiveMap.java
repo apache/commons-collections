@@ -46,7 +46,7 @@ import java.util.Map;
  * equals <code>{"one", "two", null}.</code>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision$ $Date$
  *
  * @author Commons-Collections team
  */

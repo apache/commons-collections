@@ -23,7 +23,7 @@ import junit.framework.Test;
 /**
  * Tests FastTreeMap.
  * 
- * @version $Revision: 1.15 $ $Date: 2004/04/12 12:01:38 $
+ * @version $Revision$ $Date$
  * 
  * @author Jason van Zyl
  */

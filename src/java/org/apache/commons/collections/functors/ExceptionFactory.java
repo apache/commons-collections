@@ -24,7 +24,7 @@ import org.apache.commons.collections.FunctorException;
  * Factory implementation that always throws an exception.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/05/16 11:47:38 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

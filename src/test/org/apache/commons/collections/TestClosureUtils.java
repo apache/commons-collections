@@ -31,7 +31,7 @@ import org.apache.commons.collections.functors.NOPClosure;
  * Tests the org.apache.commons.collections.ClosureUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

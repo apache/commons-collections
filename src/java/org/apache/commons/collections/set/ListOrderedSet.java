@@ -44,7 +44,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2005/01/04 00:01:31 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen

@@ -23,7 +23,7 @@ package org.apache.commons.collections;
  * a key to be looked up from a value with equal performance.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */

@@ -49,7 +49,7 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * and the flawed <code>createMap</code> method is ignored.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.14 2004/06/11 23:27:37 scolebourne Exp $
+ * @version $Id$
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

@@ -23,7 +23,7 @@ import junit.framework.Test;
 /**
  * Test FastArrayList.
  * 
- * @version $Revision: 1.10 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision$ $Date$
  * 
  * @author Jason van Zyl
  */

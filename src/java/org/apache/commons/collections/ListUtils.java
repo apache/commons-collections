@@ -33,7 +33,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.31 $ $Date: 2004/12/24 11:03:45 $
+ * @version $Revision$ $Date$
  * 
  * @author Federico Barbieri
  * @author Peter Donald

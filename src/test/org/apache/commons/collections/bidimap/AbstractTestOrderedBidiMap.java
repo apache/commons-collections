@@ -30,7 +30,7 @@ import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 /**
  * Abstract test class for {@link OrderedBidiMap} methods and contracts.
  * 
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:40 $
+ * @version $Revision$ $Date$
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

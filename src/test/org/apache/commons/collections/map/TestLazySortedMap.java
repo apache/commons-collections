@@ -33,7 +33,7 @@ import org.apache.commons.collections.TransformerUtils;
  * {@link LazySortedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/09 09:39:47 $
+ * @version $Revision$ $Date$
  * 
  * @author Phil Steitz
  */

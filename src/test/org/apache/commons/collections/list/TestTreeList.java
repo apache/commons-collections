@@ -25,7 +25,7 @@ import org.apache.commons.collections.BulkTest;
  * JUnit tests
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.2 $ $Date: 2004/05/12 23:24:44 $
+ * @version $Revision$ $Date$
  *
  * @author Joerg Schmuecker
  */

@@ -34,7 +34,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/06/03 22:02:13 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

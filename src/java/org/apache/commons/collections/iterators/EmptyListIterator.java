@@ -27,7 +27,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * 2.1.1 and 3.1 due to issues with <code>IteratorUtils</code>.
  *
  * @since Commons Collections 2.1.1 and 3.1
- * @version $Revision: 1.2 $ $Date: 2004/05/26 21:53:18 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */

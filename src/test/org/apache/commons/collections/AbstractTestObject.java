@@ -37,7 +37,7 @@ import java.io.Serializable;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  *
- * @version $Revision: 1.7 $ $Date: 2004/06/01 22:55:14 $
+ * @version $Revision$ $Date$
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne

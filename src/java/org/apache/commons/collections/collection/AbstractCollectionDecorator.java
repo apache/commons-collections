@@ -34,7 +34,7 @@ import java.util.Iterator;
  * to write an unmodifiable implementation it might provide a loophole.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/06/02 21:53:03 $
+ * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

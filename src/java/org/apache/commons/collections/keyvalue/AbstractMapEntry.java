@@ -21,7 +21,7 @@ import java.util.Map;
  * Abstract Pair class to assist with creating correct Map Entry implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:00:08 $
+ * @version $Revision$ $Date$
  * 
  * @author James Strachan
  * @author Michael A. Smith
