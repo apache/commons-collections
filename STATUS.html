@@ -7,7 +7,7 @@
 
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
-$Id: STATUS.html,v 1.25 2003/05/07 09:51:41 scolebourne Exp $<br>
+$Id: STATUS.html,v 1.26 2003/05/16 15:59:51 scolebourne Exp $<br>
 <a href="#Introduction">[Introduction]</a>
 <a href="#Dependencies">[Dependencies]</a>
 <a href="#Release Info">[Release Info]</a>
@@ -48,6 +48,8 @@ have a variable number of elements up to a fixed bound.</li>
     in some well-defined order.</li>
 <li><strong>BufferUtils</strong> - Contains static utility methods for 
     buffers.</li>
+<li><strong>CircularFifoBuffer</strong> - a Buffer implementation that is fixed in
+    size and overwrites its oldest entry when full.</li>
 <li><strong>CollectionUtils</strong> - a variety of helper methods
     for working with collections.</li>
 <li><strong>ComparatorUtils</strong> - Contains static utility methods for
@@ -77,21 +79,18 @@ have a variable number of elements up to a fixed bound.</li>
 <li><strong>IteratorUtils</strong> - Contains static utility methods for
     iterators.</li>
 <li><strong>ListUtils</strong> - miscelaneous utilities to manipulate Lists.</li>
+<li><strong>LRUMap</strong> - a least recently used Map implementation.</li>
 <li><strong>MultiMap</strong> - This is simply a Map with slightly different semantics.
     Instead of returning an Object, it returns a Collection.
     So for example, you can put( key, new Integer(1) ); 
     and then a Object get( key ); will return you a Collection 
     instead of an Integer.  This is an interface implemented
     by <strong>MultiHashMap</strong>.</li>
+<li><strong>NodeCachingLinkedList</strong> - a LinkedList implementation that has better
+    performance.</li>
 <li><strong>PriorityQueue</strong> - a PriorityQueue interface, with
-    <strong>BinaryHeap</strong> and <strong>SynchronizedPriorityQueue</strong>
-    implementations.</li>
-<li><strong>ProxyMap</strong> - This <code>Map</code> wraps another <code>Map</code>
-    implementation, using the wrapped instance for its default
-    implementation.  This class is used as a framework on which to
-    build to extensions for its wrapped <code>Map</code> object which
-    would be unavailable or inconvenient via sub-classing (but usable
-    via composition).</li>
+    <strong>BinaryHeap</strong> as an implementation.</li>
+<li><strong>PriorityQueueUtils</strong> - miscelaneous utilities to manipulate PriorityQueues.</li>
 <li><strong>ReferenceMap</strong> - Hashtable-based Map implementation that 
     allows mappings to be removed by the garbage collector.</li>
 <li><strong>SequencedHashMap</strong> -  A map of objects whose mapping entries are 
@@ -102,9 +101,6 @@ have a variable number of elements up to a fixed bound.</li>
 <li><strong>StaticBucketMap</strong> - An efficient, thread-safe 
     implementation of java.util.Map that performs well in in a highly 
     thread-contentious environment.</li>
-<li><strong>StringStack</strong> - A stack for string objects.</li>
-<li><strong>SynchronizedPriorityQueue</strong> - A thread-safe version of
-    the priority queue.</li>
 <li><strong>TreeBag</strong> - An implementation of <strong>Bag</strong> that is backed by a 
     TreeMap. Order will be maintained among the unique representative
     members.</li>
@@ -130,6 +126,8 @@ have a variable number of elements up to a fixed bound.</li>
    to multi-column sorting in SQL, and this class
    allows Java classes to emulate that kind of behaviour
    when sorting a List.</li>
+<li><strong>FixedOrderComparator</strong> - A comparator that will compare in an order
+    specified at construction time.</li>
 <li><strong>NullComparator</strong> - A comparator that will compare nulls
     to be either higher or lower than other objects.</li>
 <li><strong>ReverseComparator</strong> - Reverses the order of another 
