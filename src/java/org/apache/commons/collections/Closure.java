@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Closure.java,v 1.7 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Closure.java,v 1.8 2003/12/13 23:51:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,14 +58,13 @@
 package org.apache.commons.collections;
 
 /**
- * <code>Closure</code> defines an interface implemented by classes that
- * do something.
+ * Defines a functor interface implemented by classes that do something.
  * <p>
  * A Closure represents a block of code which is executed from inside some
  * block, function or iteration. It operates an input object.
  *  
  * @since Commons Collections 1.0
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/13 23:51:28 $
  *
  * @author James Strachan
  * @author Nicola Ken Barozzi

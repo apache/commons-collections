@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiMap.java,v 1.8 2003/10/09 20:58:52 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiMap.java,v 1.9 2003/12/13 23:51:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,7 +60,7 @@ package org.apache.commons.collections;
 import java.util.Map;
 
 /** 
- * This is simply a Map with slightly different semantics.
+ * Defines a map that holds a collection of values against each key.
  * <p>
  * A <code>MultiMap</code> is a Map with slightly different semantics.
  * Putting a value into the map will add the value to a Collection at that
@@ -79,7 +79,7 @@ import java.util.Map;
  * <code>coll</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.8 $ $Date: 2003/10/09 20:58:52 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/13 23:51:28 $
  * 
  * @author Christopher Berry
  * @author James Strachan

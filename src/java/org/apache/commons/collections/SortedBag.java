@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SortedBag.java,v 1.6 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SortedBag.java,v 1.7 2003/12/13 23:51:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,11 +60,11 @@ package org.apache.commons.collections;
 import java.util.Comparator;
 
 /**
- * A type of {@link Bag} that maintains order among its unique
- * representative members.
+ * Defines a type of <code>Bag</code> that maintains a sorted order among
+ * its unique representative members.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.6 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/13 23:51:28 $
  * 
  * @author Chuck Burdick
  */

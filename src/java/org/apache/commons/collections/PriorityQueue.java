@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.7 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.8 2003/12/13 23:51:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,11 +60,12 @@ package org.apache.commons.collections;
 import java.util.NoSuchElementException;
 
 /**
- * Interface for priority queues.
+ * Defines a collection for priority queues, which can insert, peek and pop.
+ * <p>
  * This interface does not dictate whether it is min or max heap.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/13 23:51:28 $
  * 
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  */

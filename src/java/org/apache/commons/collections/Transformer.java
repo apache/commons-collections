@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Transformer.java,v 1.6 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Transformer.java,v 1.7 2003/12/13 23:51:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,13 +58,13 @@
 package org.apache.commons.collections;
 
 /**
- * <code>Transformer</code> defines an interface implemented by classes that
+ * Defines a functor interface implemented by classes that
  * transform one object into another. The original object is left unchanged.
  * Transformers are typically used for type conversions, or extracting data
  * from an object.
  * 
  * @since Commons Collections 1.0
- * @version $Revision: 1.6 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/13 23:51:28 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne

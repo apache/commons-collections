@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.5 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.6 2003/12/13 23:51:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,11 +58,10 @@
 package org.apache.commons.collections;
 
 /**
- * <code>Factory</code> defines an interface implemented by classes that
- * create objects.
+ * Defines a functor interface implemented by classes that create objects.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/13 23:51:28 $
  *
  * @author Arron Bates
  * @author Stephen Colebourne

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ResettableListIterator.java,v 1.1 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ResettableListIterator.java,v 1.2 2003/12/13 23:51:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,11 +60,12 @@ package org.apache.commons.collections;
 import java.util.ListIterator;
 
 /** 
- * Interface implemented by those list iterators that can be reset back 
- * to an initial state.
+ * Defines a list iterator that can be reset back to an initial state.
+ * <p>
+ * This interface allows an iterator to be repeatedly reused.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/13 23:51:28 $
  * 
  * @author Stephen Colebourne
  */
