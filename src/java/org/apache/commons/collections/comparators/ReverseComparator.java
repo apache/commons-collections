@@ -60,7 +60,7 @@ import java.util.Comparator;
  * Reverses the order of another comparator.
  *
  * @author bayard@generationjava.com
- * @version $Id: ReverseComparator.java,v 1.2 2002/03/01 18:56:53 morgand Exp $
+ * @version $Id: ReverseComparator.java,v 1.3 2002/03/01 18:58:05 morgand Exp $
  */
 public class ReverseComparator implements Comparator {
 
@@ -70,6 +70,8 @@ public class ReverseComparator implements Comparator {
      * Creates a reverse comparator that will invert any List.
      * It merely reverses the existing order; it does not
      * reorder the List according to reverse "natural" order.
+     * In many cases, a better alternative to this is
+     * the reverse(List) method of java.util.Collection.
      */
     public ReverseComparator() {
     }
