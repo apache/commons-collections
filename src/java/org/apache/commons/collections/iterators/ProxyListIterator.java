@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyListIterator.java,v 1.4 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.4 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyListIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
@@ -58,7 +58,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import java.util.ListIterator;
 
@@ -68,12 +68,10 @@ import java.util.ListIterator;
  *
  * @since 2.0
  * @see ProxyIterator
- * @version $Revision: 1.4 $ $Date: 2002/08/15 23:13:51 $
+ * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:51 $
  * @author Rodney Waldhoff
- * @deprecated this class has been moved to the iterators subpackage
  */
-public class ProxyListIterator 
-extends org.apache.commons.collections.iterators.ProxyListIterator {
+public class ProxyListIterator implements ListIterator {
 
     // Constructor
     //-------------------------------------------------------------------------
@@ -84,7 +82,6 @@ extends org.apache.commons.collections.iterators.ProxyListIterator {
      *  is invoked.
      */
     public ProxyListIterator() {
-        super();
     }
 
     /**
@@ -94,8 +91,117 @@ extends org.apache.commons.collections.iterators.ProxyListIterator {
      *  @param iterator  the list iterator to use
      */
     public ProxyListIterator(ListIterator iterator) {
-        super(iterator);
+        this.iterator = iterator;
     }
+
+    // ListIterator interface
+    //-------------------------------------------------------------------------
+
+    /**
+     *  Invokes the underlying {@link ListIterator#add(Object)} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public void add(Object o) {
+        getListIterator().add(o);
+    }
+
+    /**
+     *  Invokes the underlying {@link ListIterator#hasNext()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public boolean hasNext() {
+        return getListIterator().hasNext();
+    }
+
+    /**
+     *  Invokes the underlying {@link ListIterator#hasPrevious()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public boolean hasPrevious() {
+        return getListIterator().hasPrevious();
+    }
+
+    /**
+     *  Invokes the underlying {@link ListIterator#next()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public Object next() {
+        return getListIterator().next();
+    }
+
+    /**
+     *  Invokes the underlying {@link ListIterator#nextIndex()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public int nextIndex() {
+        return getListIterator().nextIndex();
+    }
+
+    /**
+     *  Invokes the underlying {@link ListIterator#previous()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public Object previous() {
+        return getListIterator().previous();
+    }
+
+    /**
+     *  Invokes the underlying {@link ListIterator#previousIndex()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public int previousIndex() {
+        return getListIterator().previousIndex();
+    }
+
+    /**
+     *  Invokes the underlying {@link ListIterator#remove()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public void remove() {
+        getListIterator().remove();
+    }
+
+    /**
+     *  Invokes the underlying {@link ListIterator#set(Object)} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
+    public void set(Object o) {
+        getListIterator().set(o);
+    }
+
+    // Properties
+    //-------------------------------------------------------------------------
+
+    /** 
+     * Getter for property iterator.
+     * @return Value of property iterator.
+     */
+    public ListIterator getListIterator() {
+        return iterator;
+    }
+
+    /**
+     * Setter for property iterator.
+     * @param iterator New value of property iterator.
+     */
+    public void setListIterator(ListIterator iterator) {
+        this.iterator = iterator;
+    }
+
+    // Attributes
+    //-------------------------------------------------------------------------
+
+    /** Holds value of property "iterator". */
+    private ListIterator iterator;
 
 }
 

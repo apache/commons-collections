@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator2.java,v 1.4 2002/06/20 02:51:18 bayard Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/20 02:51:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayIterator2.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/15 23:13:52 $
  *
  * ====================================================================
  *
@@ -59,7 +59,7 @@
  *
  */
 
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import junit.framework.*;
 import java.util.Iterator;
@@ -70,7 +70,7 @@ import java.util.NoSuchElementException;
  * 
  * @author Morgan Delagrange
  * @author James Strachan
- * @version $Id: TestArrayIterator2.java,v 1.4 2002/06/20 02:51:18 bayard Exp $
+ * @version $Id: TestArrayIterator2.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
  */
 public class TestArrayIterator2 extends TestIterator {
     

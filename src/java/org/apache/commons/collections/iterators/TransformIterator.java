@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/EnumerationIterator.java,v 1.6 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.6 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/TransformIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
@@ -58,50 +58,92 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
+import org.apache.commons.collections.Transformer;
 
-/** Adapter to make {@link Enumeration Enumeration} instances appear
-  * to be {@link Iterator Iterator} instances.
+/** A Proxy {@link Iterator Iterator} which uses a {@link Transformer Transformer} instance to 
+  * transform the contents of the {@link Iterator Iterator} into some other form
   *
   * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
-  * @deprecated this class has been moved to the iterators subpackage
   */
-public class EnumerationIterator
-extends org.apache.commons.collections.iterators.EnumerationIterator {
+
+public class TransformIterator extends ProxyIterator {
+    
+    /** Holds value of property transformer. */
+    private Transformer transformer;
+    
     
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that will not
-     *  function until {@link #setEnumeration(Enumeration)} is called.
+     *  Constructs a new <Code>TransformIterator</Code> that will not function
+     *  until the {@link #setIterator(Iterator) setIterator} method is 
+     *  invoked.
      */
-    public EnumerationIterator() {
-        super();
+    public TransformIterator() {
+    }
+    
+    /**
+     *  Constructs a new <Code>TransformIterator</Code> that won't transform
+     *  elements from the given iterator.
+     *
+     *  @param iterator  the iterator to use
+     */
+    public TransformIterator( Iterator iterator ) {
+        super( iterator );
     }
 
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that provides
-     *  an iterator view of the given enumeration.
+     *  Constructs a new <Code>TransformIterator</Code> that will use the
+     *  given iterator and transformer.  If the given transformer is null,
+     *  then objects will not be transformed.
      *
-     *  @param enumeration  the enumeration to use
+     *  @param iterator  the iterator to use
+     *  @param transformer  the transformer to use
      */
-    public EnumerationIterator( Enumeration enumeration ) {
-        super(enumeration);
+    public TransformIterator( Iterator iterator, Transformer transformer ) {
+        super( iterator );
+        this.transformer = transformer;
     }
+
+    // Iterator interface
+    //-------------------------------------------------------------------------
+    public Object next() {
+        return transform( super.next() );
+    }
+
+    // Properties
+    //-------------------------------------------------------------------------
+    /** Getter for property transformer.
+     * @return Value of property transformer.
+     */
+    public Transformer getTransformer() {
+        return transformer;
+    }
+    /** Setter for property transformer.
+     * @param transformer New value of property transformer.
+     */
+    public void setTransformer(Transformer transformer) {
+        this.transformer = transformer;
+    }
+    
+    // Implementation methods
+    //-------------------------------------------------------------------------
 
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that will remove
-     *  elements from the specified collection.
+     *  Transforms the given object using the transformer.  If the 
+     *  transformer is null, the original object is returned as-is.
      *
-     *  @param enum  the enumeration to use
-     *  @param collection  the collection to remove elements form
+     *  @param source  the object to transform
+     *  @return  the transformed object
      */
-    public EnumerationIterator( Enumeration enum, Collection collection ) {
-        super(enum, collection);
+    protected Object transform( Object source ) {
+        Transformer transformer = getTransformer();
+        if ( transformer != null ) {
+            return transformer.transform( source );
+        }
+        return source;
     }
-
 }

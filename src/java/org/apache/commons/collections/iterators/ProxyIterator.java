@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestIterator.java,v 1.4 2002/02/25 23:37:38 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/25 23:37:38 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,94 +58,84 @@
  * <http://www.apache.org/>.
  *
  */
-     
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
-/**
- * Base class for tetsing Iterator interface
- * 
- * @author Morgan Delagrange
- */
-public abstract class TestIterator extends TestObject {
+/** A Proxy {@link Iterator Iterator} which delegates its methods to a proxy instance.
+  *
+  * @since 1.0
+  * @see ProxyListIterator
+  * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:51 $
+  *
+  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  */
 
-    public TestIterator(String testName) {
-        super(testName);
+public class ProxyIterator implements Iterator {
+    
+    /** Holds value of property iterator. */
+    private Iterator iterator;
+    
+    /**
+     *  Constructs a new <Code>ProxyIterator</Code> that will not function
+     *  until {@link #setIterator(Iterator)} is called.
+     */
+    public ProxyIterator() {
+    }
+    
+    /**
+     *  Constructs a new <Code>ProxyIterator</Code> that will use the
+     *  given iterator.
+     *
+     *  @param iterator  the underyling iterator
+     */
+    public ProxyIterator( Iterator iterator ) {
+        this.iterator = iterator;
     }
 
-    public abstract Iterator makeEmptyIterator();
-
-    public abstract Iterator makeFullIterator();
-
-    /**
-     * Whether or not we are testing an iterator that can be
-     * empty.  Default is true.
-     * 
-     * @return true if Iterators can be empty
-     */
-    public boolean supportsEmptyIterator() {
-        return true;
-    }
+    // Iterator interface
+    //-------------------------------------------------------------------------
 
     /**
-     * Whether or not we are testing an iterator that can contain
-     * elements.  Default is true.
-     * 
-     * @return true if Iterators can be empty
+     *  Returns true if the underlying iterator has more elements.
+     *
+     *  @return true if the underlying iterator has more elements
      */
-    public boolean supportsFullIterator() {
-        return true;
-    }
-
-    /**
-     * Should throw a NoSuchElementException.
-     */
-    public void testEmptyIterator() {
-        if (supportsEmptyIterator() == false) {
-            return;
-        }
-
-        Iterator iter = makeEmptyIterator();
-        assertTrue("hasNext() should return false for empty iterators",iter.hasNext() == false);
-        try {
-	    iter.next();
-            fail("NoSuchElementException must be thrown when Iterator is exhausted");
-	} catch (NoSuchElementException e) {
-	}
+    public boolean hasNext() {
+        return getIterator().hasNext();
     }
 
     /**
-     * NoSuchElementException (or any other exception)
-     * should not be thrown for the first element.  
-     * NoSuchElementException must be thrown when
-     * hasNext() returns false
+     *  Returns the next element from the underlying iterator.
+     *
+     *  @return the next element from the underlying iterator
+     *  @throws NoSuchElementException  if the underlying iterator 
+     *    raises it because it has no more elements
      */
-    public void testFullIterator() {
-        if (supportsFullIterator() == false) {
-            return;
-        }
-
-        Iterator iter = makeFullIterator();
-
-        assertTrue("hasNext() should return true for at least one element",iter.hasNext());
-
-        try {
-	    iter.next();
-	} catch (NoSuchElementException e) {
-            fail("Full iterators must have at least one element");
-	}
-
-        while (iter.hasNext()) {
-            iter.next();
-        }
-
-        try {
-	    iter.next();
-            fail("NoSuchElementException must be thrown when Iterator is exhausted");
-	} catch (NoSuchElementException e) {
-	}
+    public Object next() {
+        return getIterator().next();
     }
 
+    /**
+     *  Removes the last returned element from the collection that spawned
+     *  the underlying iterator.
+     */
+    public void remove() {
+        getIterator().remove();
+    }
+
+    // Properties
+    //-------------------------------------------------------------------------
+    /** Getter for property iterator.
+     * @return Value of property iterator.
+     */
+    public Iterator getIterator() {
+        return iterator;
+    }
+    /** Setter for property iterator.
+     * @param iterator New value of property iterator.
+     */
+    public void setIterator(Iterator iterator) {
+        this.iterator = iterator;
+    }
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyIterator.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyIterator.java,v 1.6 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
@@ -66,21 +66,21 @@ import java.util.Iterator;
   *
   * @since 1.0
   * @see ProxyListIterator
-  * @version $Revision: 1.5 $ $Date: 2002/08/15 20:04:31 $
+  * @version $Revision: 1.6 $ $Date: 2002/08/15 23:13:51 $
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  * @deprecated this class has been moved to the iterators subpackage
   */
 
-public class ProxyIterator implements Iterator {
-    
-    /** Holds value of property iterator. */
-    private Iterator iterator;
+public class ProxyIterator
+extends org.apache.commons.collections.iterators.ProxyIterator {
     
     /**
      *  Constructs a new <Code>ProxyIterator</Code> that will not function
      *  until {@link #setIterator(Iterator)} is called.
      */
     public ProxyIterator() {
+        super();
     }
     
     /**
@@ -90,52 +90,7 @@ public class ProxyIterator implements Iterator {
      *  @param iterator  the underyling iterator
      */
     public ProxyIterator( Iterator iterator ) {
-        this.iterator = iterator;
+        super(iterator);
     }
 
-    // Iterator interface
-    //-------------------------------------------------------------------------
-
-    /**
-     *  Returns true if the underlying iterator has more elements.
-     *
-     *  @return true if the underlying iterator has more elements
-     */
-    public boolean hasNext() {
-        return getIterator().hasNext();
-    }
-
-    /**
-     *  Returns the next element from the underlying iterator.
-     *
-     *  @return the next element from the underlying iterator
-     *  @throws NoSuchElementException  if the underlying iterator 
-     *    raises it because it has no more elements
-     */
-    public Object next() {
-        return getIterator().next();
-    }
-
-    /**
-     *  Removes the last returned element from the collection that spawned
-     *  the underlying iterator.
-     */
-    public void remove() {
-        getIterator().remove();
-    }
-
-    // Properties
-    //-------------------------------------------------------------------------
-    /** Getter for property iterator.
-     * @return Value of property iterator.
-     */
-    public Iterator getIterator() {
-        return iterator;
-    }
-    /** Setter for property iterator.
-     * @param iterator New value of property iterator.
-     */
-    public void setIterator(Iterator iterator) {
-        this.iterator = iterator;
-    }
 }

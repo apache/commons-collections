@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestUniqueFilterIterator.java,v 1.1 2002/04/09 16:43:29 morgand Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestIteratorChain.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
  * $Revision: 1.1 $
- * $Date: 2002/04/09 16:43:29 $
+ * $Date: 2002/08/15 23:13:52 $
  *
  * ====================================================================
  *
@@ -59,7 +59,7 @@
  *
  */
 
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import junit.framework.*;
 import java.io.Serializable;
@@ -76,21 +76,23 @@ import java.util.NoSuchElementException;
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
- * @version $Id: TestUniqueFilterIterator.java,v 1.1 2002/04/09 16:43:29 morgand Exp $
+ * @version $Id: TestIteratorChain.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
  */
-public class TestUniqueFilterIterator extends TestIterator {
+public class TestIteratorChain extends TestIterator {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
     protected List list1 = null;
+    protected List list2 = null;
+    protected List list3 = null;
 
     public static Test suite() {
-        return new TestSuite(TestUniqueFilterIterator.class);
+        return new TestSuite(TestIteratorChain.class);
     }
 
-    public TestUniqueFilterIterator(String testName) {
+    public TestIteratorChain(String testName) {
         super(testName);
     }
 
@@ -99,24 +101,27 @@ public class TestUniqueFilterIterator extends TestIterator {
         list1.add("One");
         list1.add("Two");
         list1.add("Three");
-        list1.add("Two");
-        list1.add("One");
-        list1.add("Four");
-        list1.add("Five");
-        list1.add("Five");
-        list1.add("Six");
-        list1.add("Five");
+        list2 = new ArrayList();
+        list2.add("Four");
+        list3 = new ArrayList();
+        list3.add("Five");
+        list3.add("Six");        
     }
 
     public Iterator makeEmptyIterator() {
         ArrayList list = new ArrayList();
-        return new UniqueFilterIterator(list.iterator());
+        return new IteratorChain(list.iterator());
     }
 
     public Iterator makeFullIterator() {
+        IteratorChain chain = new IteratorChain();
+
         Iterator i = list1.iterator();
 
-        return new UniqueFilterIterator(i);
+        chain.addIterator(list1.iterator());
+        chain.addIterator(list2.iterator());
+        chain.addIterator(list3.iterator());
+        return chain;
     }
 
     /**
@@ -150,11 +155,25 @@ public class TestUniqueFilterIterator extends TestIterator {
 
         try {
             iter.remove();
-            fail("FilterIterator does not support the remove() method");
-        } catch (UnsupportedOperationException e) {
+            fail("Calling remove before the first call to next() should throw an exception");
+        } catch (IllegalStateException e) {
 
         }
 
+        for ( int i = 0; i < testArray.length; i++ ) {
+            Object testValue = testArray[i];            
+            Object iterValue = iter.next();
+
+            assertEquals( "Iteration value is correct", testValue, iterValue );
+
+            if (! iterValue.equals("Four")) {
+                iter.remove();
+            }
+        }
+
+        assertTrue("List is empty",list1.size() == 0);
+        assertTrue("List is empty",list2.size() == 1);
+        assertTrue("List is empty",list3.size() == 0);
     }
 
 }

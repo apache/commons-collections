@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorChain.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
@@ -58,7 +58,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -85,7 +85,7 @@ import java.util.NoSuchElementException;
  * to not alter the underlying List of Iterators.</p>
  * 
  * @author Morgan Delagrange
- * @version $Id: IteratorChain.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
+ * @version $Id: IteratorChain.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
  * @since 2.1
  */
 public class IteratorChain implements Iterator {

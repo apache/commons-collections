@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterIterator.java,v 1.7 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.7 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/FilterIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
@@ -58,10 +58,12 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.apache.commons.collections.Predicate;
+
 
 /** A Proxy {@link Iterator Iterator} which takes a {@link Predicate Predicate} instance to filter
   * out objects from an underlying {@link Iterator Iterator} instance.
@@ -72,18 +74,24 @@ import java.util.NoSuchElementException;
   * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Jan Sorensen
-  * @deprecated this class has been moved to the iterators subpackage
   */
 
-public class FilterIterator 
-extends org.apache.commons.collections.iterators.FilterIterator {
+public class FilterIterator extends ProxyIterator {
+    
+    /** Holds value of property predicate. */
+    private Predicate predicate;
+
+    private Object nextObject;
+    private boolean nextObjectSet = false;
+    
+    
+    //-------------------------------------------------------------------------
 
     /**
      *  Constructs a new <Code>FilterIterator</Code> that will not function
      *  until {@link #setIterator(Iterator) setIterator} is invoked.
      */
     public FilterIterator() {
-        super();
     }
     
     /**
@@ -104,7 +112,85 @@ extends org.apache.commons.collections.iterators.FilterIterator {
      *  @param predicate  the predicate to use
      */
     public FilterIterator( Iterator iterator, Predicate predicate ) {
-        super( iterator, predicate );
+        super( iterator );
+        this.predicate = predicate;
     }
 
+    // Iterator interface
+    //-------------------------------------------------------------------------
+    
+    /** 
+     *  Returns true if the underlying iterator contains an object that 
+     *  matches the predicate.
+     *
+     *  @return true if there is another object that matches the predicate 
+     */
+    public boolean hasNext() {
+        if ( nextObjectSet ) {
+            return true;
+        } else {
+            return setNextObject();
+        }
+    }
+
+    /** 
+     *  Returns the next object that matches the predicate.
+     * 
+     *  @return the next object which matches the given predicate
+     *  @throws NoSuchElementException if there are no more elements that
+     *   match the predicate 
+     */
+    public Object next() {
+        if ( !nextObjectSet ) {
+            if (!setNextObject()) {
+                throw new NoSuchElementException();
+            }
+        }
+        nextObjectSet = false;
+        return nextObject;
+    }
+
+    /**
+     * Always throws UnsupportedOperationException as this class 
+     * does look-ahead with its internal iterator.
+     *
+     * @throws UnsupportedOperationException  always
+     */
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+        
+
+    // Properties
+    //-------------------------------------------------------------------------
+    /** Getter for property predicate.
+     * @return Value of property predicate.
+     */
+    public Predicate getPredicate() {
+        return predicate;
+    }
+    /** Setter for property predicate.
+     * @param predicate New value of property predicate.
+     */
+    public void setPredicate(Predicate predicate) {
+        this.predicate = predicate;
+    }
+
+    /**
+     * Set nextObject to the next object. If there are no more 
+     * objects then return false. Otherwise, return true.
+     */
+    private boolean setNextObject() {
+        Iterator iterator = getIterator();
+        Predicate predicate = getPredicate();
+        while ( iterator.hasNext() ) {
+            Object object = iterator.next();
+            if ( predicate.evaluate( object ) ) {
+                nextObject = object;
+                nextObjectSet = true;
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CollatingIterator.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/CollatingIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
@@ -58,7 +58,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import java.util.Comparator;
 import java.util.Iterator;
@@ -73,7 +73,7 @@ import java.util.BitSet;
  * my {@link #next} method will return the lesser of 
  * <code>A.next()</code> and <code>B.next()</code>.
  *
- * @version $Revision: 1.4 $ $Date: 2002/08/15 20:04:31 $
+ * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:51 $
  * @author Rodney Waldhoff
  * @since 2.1
  */

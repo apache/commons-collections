@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSingletonIterator.java,v 1.2 2002/02/25 23:37:48 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/25 23:37:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/UniqueFilterIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,79 +58,43 @@
  * <http://www.apache.org/>.
  *
  */
+package org.apache.commons.collections.iterators;
 
-package org.apache.commons.collections;
-
-import junit.framework.*;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.apache.commons.collections.Predicate;
 
-/**
- * Tests the SingletonIterator to ensure that the next() method will actually
- * perform the iteration rather than the hasNext() method.
- *
- * @author James Strachan
- * @version $Id: TestSingletonIterator.java,v 1.2 2002/02/25 23:37:48 morgand Exp $
- */
-public class TestSingletonIterator extends TestIterator {
+/** A FilterIterator which only returns "unique" Objects.  Internally,
+  * the Iterator maintains a Set of objects it has already encountered,
+  * and duplicate Objects are skipped.
+  *
+  * @author Morgan Delagrange
+  * @version $Id: UniqueFilterIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+  * @since 2.1
+  */
 
-    private static final Object testValue = "foo";
-    
-    public static Test suite() {
-        return new TestSuite(TestSingletonIterator.class);
-    }
-    
-    public TestSingletonIterator(String testName) {
-        super(testName);
-    }
+public class UniqueFilterIterator extends FilterIterator {
+       
+    //-------------------------------------------------------------------------
     
     /**
-     * Returns null. SingletonIterators can never be empty;
-     * they always have exactly one element.
-     * 
-     * @return null
+     *  Constructs a new <Code>UniqueFilterIterator</Code>.
+     *
+     *  @param iterator  the iterator to use
      */
-    public Iterator makeEmptyIterator() {
-        return null;
+    public UniqueFilterIterator( Iterator iterator ) {
+        super( iterator, new UniquePredicate() );
     }
 
-    public Iterator makeFullIterator() {
-        return new SingletonIterator( testValue );
+    private static class UniquePredicate implements Predicate {
+
+        HashSet set = new HashSet();
+
+        public boolean evaluate(Object object) {
+            return set.add(object);       
+        }
+
     }
 
-    /**
-     * Return a new, empty {@link Object} to used for testing.
-     */
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
-    /**
-     * Whether or not we are testing an iterator that can be
-     * empty.  SingletonIterators are never empty;
-     * 
-     * @return false
-     */
-    public boolean supportsEmptyIterator() {
-        return false;
-    }
-
-    public void testIterator() {
-        Iterator iter = (Iterator) makeObject();
-        assertTrue( "Iterator has a first item", iter.hasNext() );
-        
-        Object iterValue = iter.next();
-        assertEquals( "Iteration value is correct", testValue, iterValue );
-        
-        assertTrue("Iterator should now be empty", ! iter.hasNext() );
-
-	try {
-	    Object testValue = iter.next();
-	} 
-        catch (Exception e) {
-	  assertTrue("NoSuchElementException must be thrown", 
-		 e.getClass().equals((new NoSuchElementException()).getClass()));
-	}
-    }
 }
-

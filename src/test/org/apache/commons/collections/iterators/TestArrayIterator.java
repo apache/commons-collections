@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestListIteratorWrapper.java,v 1.1 2002/04/09 16:40:58 morgand Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
  * $Revision: 1.1 $
- * $Date: 2002/04/09 16:40:58 $
+ * $Date: 2002/08/15 23:13:52 $
  *
  * ====================================================================
  *
@@ -59,121 +59,88 @@
  *
  */
 
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import junit.framework.*;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
- * Tests the ListIteratorWrapper to insure that it simulates
- * a ListIterator correctly.
- *
+ * Tests the ArrayIterator to ensure that the next() method will actually
+ * perform the iteration rather than the hasNext() method.
+ * The code of this test was supplied by Mauricio S. Moura
+ * 
+ * @author James Strachan
+ * @author Mauricio S. Moura
  * @author Morgan Delagrange
- * @version $Id: TestListIteratorWrapper.java,v 1.1 2002/04/09 16:40:58 morgand Exp $
+ * @version $Id: TestArrayIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
  */
-public class TestListIteratorWrapper extends TestIterator {
-
+public class TestArrayIterator extends TestIterator {
+    
     protected String[] testArray = {
-        "One", "Two", "Three", "Four", "Five", "Six"
+        "One", "Two", "Three"
     };
-
-    protected List list1 = null;
-
+    
     public static Test suite() {
-        return new TestSuite(TestListIteratorWrapper.class);
+        return new TestSuite(TestArrayIterator.class);
     }
-
-    public TestListIteratorWrapper(String testName) {
+    
+    public TestArrayIterator(String testName) {
         super(testName);
     }
 
-    public void setUp() {
-        list1 = new ArrayList();
-        list1.add("One");
-        list1.add("Two");
-        list1.add("Three");
-        list1.add("Four");
-        list1.add("Five");
-        list1.add("Six");
-    }
-
     public Iterator makeEmptyIterator() {
-        ArrayList list = new ArrayList();
-        return new ListIteratorWrapper(list.iterator());
+        return new ArrayIterator(new Object[0]);
     }
 
     public Iterator makeFullIterator() {
-        Iterator i = list1.iterator();
-
-        return new ListIteratorWrapper(i);
+        return new ArrayIterator(testArray);
     }
-
+    
     /**
      * Return a new, empty {@link Object} to used for testing.
      */
     public Object makeObject() {
         return makeFullIterator();
     }
-
+    
     public void testIterator() {
-        ListIterator iter = (ListIterator) makeFullIterator();
+        Iterator iter = (Iterator) makeFullIterator();
         for ( int i = 0; i < testArray.length; i++ ) {
             Object testValue = testArray[i];            
             Object iterValue = iter.next();
-
+            
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
-
+        
         assertTrue("Iterator should now be empty", ! iter.hasNext() );
 
-        try {
-            Object testValue = iter.next();
-        } catch (Exception e) {
-            assertTrue("NoSuchElementException must be thrown", 
-                       e.getClass().equals((new NoSuchElementException()).getClass()));
-        }
-
-        // now, read it backwards
-        for (int i = testArray.length - 1; i > -1; --i) {
-            Object testValue = testArray[i];
-            Object iterValue = iter.previous();
-
-            assertEquals( "Iteration value is correct", testValue, iterValue );
-        }
-
-        try {
-            Object testValue = iter.previous();
-        } catch (Exception e) {
-            assertTrue("NoSuchElementException must be thrown", 
-                       e.getClass().equals((new NoSuchElementException()).getClass()));
-        }
-
-        // now, read it forwards again
-        for ( int i = 0; i < testArray.length; i++ ) {
-            Object testValue = testArray[i];            
-            Object iterValue = iter.next();
-
-            assertEquals( "Iteration value is correct", testValue, iterValue );
-        }
-
+	try {
+	    Object testValue = iter.next();
+	} catch (Exception e) {
+	  assertTrue("NoSuchElementException must be thrown", 
+		 e.getClass().equals((new NoSuchElementException()).getClass()));
+	}
     }
 
-    public void testRemove() {
-        Iterator iter = (Iterator) makeFullIterator();
-
+    public void testNullArray() {
         try {
-            iter.remove();
-            fail("FilterIterator does not support the remove() method");
-        } catch (UnsupportedOperationException e) {
-
+            Iterator iter = new ArrayIterator(null);
+            
+            fail("Constructor should throw a NullPointerException when " +
+                 "constructed with a null array");
+        } catch (NullPointerException e) {
+            // expected
         }
 
-    }
+        ArrayIterator iter = new ArrayIterator();
+        try {
+            iter.setArray(null);
 
+            fail("setArray(null) should throw a NullPointerException");
+        } catch (NullPointerException e) {
+            // expected
+        }
+    }
 }
 

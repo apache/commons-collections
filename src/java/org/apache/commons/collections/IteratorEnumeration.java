@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorEnumeration.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorEnumeration.java,v 1.6 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
@@ -67,11 +67,11 @@ import java.util.Iterator;
   *
   * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  * @deprecated this class has been moved to the iterators subpackage
   */
 
-public class IteratorEnumeration implements Enumeration {
-    
-    private Iterator iterator;
+public class IteratorEnumeration 
+extends org.apache.commons.collections.iterators.IteratorEnumeration {
     
     /**
      *  Constructs a new <Code>IteratorEnumeration</Code> that will not 
@@ -79,6 +79,7 @@ public class IteratorEnumeration implements Enumeration {
      *  invoked.
      */
     public IteratorEnumeration() {
+        super();
     }
 
     /**
@@ -88,51 +89,8 @@ public class IteratorEnumeration implements Enumeration {
      *  @param iterator  the iterator to use
      */
     public IteratorEnumeration( Iterator iterator ) {
-        this.iterator = iterator;
+        super(iterator);
     }
 
-    // Iterator interface
-    //-------------------------------------------------------------------------
-
-    /**
-     *  Returns true if the underlying iterator has more elements.
-     *
-     *  @return true if the underlying iterator has more elements
-     */
-    public boolean hasMoreElements() {
-        return iterator.hasNext();
-    }
-
-    /**
-     *  Returns the next element from the underlying iterator.
-     *
-     *  @return the next element from the underlying iterator.
-     *  @throws NoSuchElementException  if the underlying iterator has no
-     *    more elements
-     */
-    public Object nextElement() {
-        return iterator.next();
-    }
-
-    // Properties
-    //-------------------------------------------------------------------------
-
-    /**
-     *  Returns the underlying iterator.
-     * 
-     *  @return the underlying iterator
-     */
-    public Iterator getIterator() {
-        return iterator;
-    }
-
-    /**
-     *  Sets the underlying iterator.
-     *
-     *  @param iterator  the new underlying iterator
-     */
-    public void setIterator( Iterator iterator ) {
-        this.iterator = iterator;
-    }
     
 }

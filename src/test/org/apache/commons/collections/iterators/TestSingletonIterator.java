@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.33 2002/08/15 23:13:52 pjack Exp $
- * $Revision: 1.33 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/08/15 23:13:52 $
  *
  * ====================================================================
@@ -59,61 +59,78 @@
  *
  */
 
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
-import org.apache.commons.collections.comparators.*;
 import junit.framework.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.33 2002/08/15 23:13:52 pjack Exp $
+ * Tests the SingletonIterator to ensure that the next() method will actually
+ * perform the iteration rather than the hasNext() method.
+ *
+ * @author James Strachan
+ * @version $Id: TestSingletonIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestSingletonIterator extends TestIterator {
+
+    private static final Object testValue = "foo";
+    
+    public static Test suite() {
+        return new TestSuite(TestSingletonIterator.class);
+    }
+    
+    public TestSingletonIterator(String testName) {
         super(testName);
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestBinaryHeap.suite());
-        suite.addTest(TestBoundedFifoBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestBufferUtils.suite());
-        suite.addTest(TestSetUtils.suite());
-        suite.addTest(TestListUtils.suite());
-        suite.addTest(TestMapUtils.suite());
-        suite.addTest(TestComparableComparator.suite());
-        suite.addTest(TestComparatorChain.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestReverseComparator.suite());
-	suite.addTest(TestNullComparator.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
-        return suite;
+    
+    /**
+     * Returns null. SingletonIterators can never be empty;
+     * they always have exactly one element.
+     * 
+     * @return null
+     */
+    public Iterator makeEmptyIterator() {
+        return null;
     }
+
+    public Iterator makeFullIterator() {
+        return new SingletonIterator( testValue );
+    }
+
+    /**
+     * Return a new, empty {@link Object} to used for testing.
+     */
+    public Object makeObject() {
+        return makeFullIterator();
+    }
+    
+    /**
+     * Whether or not we are testing an iterator that can be
+     * empty.  SingletonIterators are never empty;
+     * 
+     * @return false
+     */
+    public boolean supportsEmptyIterator() {
+        return false;
+    }
+
+    public void testIterator() {
+        Iterator iter = (Iterator) makeObject();
+        assertTrue( "Iterator has a first item", iter.hasNext() );
         
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+        Object iterValue = iter.next();
+        assertEquals( "Iteration value is correct", testValue, iterValue );
+        
+        assertTrue("Iterator should now be empty", ! iter.hasNext() );
+
+	try {
+	    Object testValue = iter.next();
+	} 
+        catch (Exception e) {
+	  assertTrue("NoSuchElementException must be thrown", 
+		 e.getClass().equals((new NoSuchElementException()).getClass()));
+	}
     }
 }
+

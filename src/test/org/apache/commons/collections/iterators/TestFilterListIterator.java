@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestFilterListIterator.java,v 1.3 2002/05/13 16:10:37 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2002/05/13 16:10:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterListIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/15 23:13:52 $
  *
  * ====================================================================
  *
@@ -58,7 +58,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -68,9 +68,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
+import org.apache.commons.collections.Predicate;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2002/05/13 16:10:37 $
+ * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:52 $
  * @author Rodney Waldhoff
  */
 public class TestFilterListIterator extends TestCase {

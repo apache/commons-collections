@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/TransformIterator.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/TransformIterator.java,v 1.6 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
@@ -68,13 +68,11 @@ import java.util.Iterator;
   *
   * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  * @deprecated this class has been moved to the iterators subpackage
   */
 
-public class TransformIterator extends ProxyIterator {
-    
-    /** Holds value of property transformer. */
-    private Transformer transformer;
-    
+public class TransformIterator 
+extends org.apache.commons.collections.iterators.TransformIterator {
     
     /**
      *  Constructs a new <Code>TransformIterator</Code> that will not function
@@ -82,6 +80,7 @@ public class TransformIterator extends ProxyIterator {
      *  invoked.
      */
     public TransformIterator() {
+        super();
     }
     
     /**
@@ -103,46 +102,7 @@ public class TransformIterator extends ProxyIterator {
      *  @param transformer  the transformer to use
      */
     public TransformIterator( Iterator iterator, Transformer transformer ) {
-        super( iterator );
-        this.transformer = transformer;
+        super( iterator, transformer );
     }
 
-    // Iterator interface
-    //-------------------------------------------------------------------------
-    public Object next() {
-        return transform( super.next() );
-    }
-
-    // Properties
-    //-------------------------------------------------------------------------
-    /** Getter for property transformer.
-     * @return Value of property transformer.
-     */
-    public Transformer getTransformer() {
-        return transformer;
-    }
-    /** Setter for property transformer.
-     * @param transformer New value of property transformer.
-     */
-    public void setTransformer(Transformer transformer) {
-        this.transformer = transformer;
-    }
-    
-    // Implementation methods
-    //-------------------------------------------------------------------------
-
-    /**
-     *  Transforms the given object using the transformer.  If the 
-     *  transformer is null, the original object is returned as-is.
-     *
-     *  @param source  the object to transform
-     *  @return  the transformed object
-     */
-    protected Object transform( Object source ) {
-        Transformer transformer = getTransformer();
-        if ( transformer != null ) {
-            return transformer.transform( source );
-        }
-        return source;
-    }
 }

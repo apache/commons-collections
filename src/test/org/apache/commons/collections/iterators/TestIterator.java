@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.33 2002/08/15 23:13:52 pjack Exp $
- * $Revision: 1.33 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestIterator.java,v 1.1 2002/08/15 23:13:52 pjack Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/08/15 23:13:52 $
  *
  * ====================================================================
@@ -58,62 +58,95 @@
  * <http://www.apache.org/>.
  *
  */
+     
+package org.apache.commons.collections.iterators;
 
-package org.apache.commons.collections;
-
-import org.apache.commons.collections.comparators.*;
-import junit.framework.*;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import org.apache.commons.collections.TestObject;
 
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.33 2002/08/15 23:13:52 pjack Exp $
+ * Base class for tetsing Iterator interface
+ * 
+ * @author Morgan Delagrange
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public abstract class TestIterator extends TestObject {
+
+    public TestIterator(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestBinaryHeap.suite());
-        suite.addTest(TestBoundedFifoBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestBufferUtils.suite());
-        suite.addTest(TestSetUtils.suite());
-        suite.addTest(TestListUtils.suite());
-        suite.addTest(TestMapUtils.suite());
-        suite.addTest(TestComparableComparator.suite());
-        suite.addTest(TestComparatorChain.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestReverseComparator.suite());
-	suite.addTest(TestNullComparator.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
-        return suite;
+    public abstract Iterator makeEmptyIterator();
+
+    public abstract Iterator makeFullIterator();
+
+    /**
+     * Whether or not we are testing an iterator that can be
+     * empty.  Default is true.
+     * 
+     * @return true if Iterators can be empty
+     */
+    public boolean supportsEmptyIterator() {
+        return true;
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    /**
+     * Whether or not we are testing an iterator that can contain
+     * elements.  Default is true.
+     * 
+     * @return true if Iterators can be empty
+     */
+    public boolean supportsFullIterator() {
+        return true;
     }
+
+    /**
+     * Should throw a NoSuchElementException.
+     */
+    public void testEmptyIterator() {
+        if (supportsEmptyIterator() == false) {
+            return;
+        }
+
+        Iterator iter = makeEmptyIterator();
+        assertTrue("hasNext() should return false for empty iterators",iter.hasNext() == false);
+        try {
+	    iter.next();
+            fail("NoSuchElementException must be thrown when Iterator is exhausted");
+	} catch (NoSuchElementException e) {
+	}
+    }
+
+    /**
+     * NoSuchElementException (or any other exception)
+     * should not be thrown for the first element.  
+     * NoSuchElementException must be thrown when
+     * hasNext() returns false
+     */
+    public void testFullIterator() {
+        if (supportsFullIterator() == false) {
+            return;
+        }
+
+        Iterator iter = makeFullIterator();
+
+        assertTrue("hasNext() should return true for at least one element",iter.hasNext());
+
+        try {
+	    iter.next();
+	} catch (NoSuchElementException e) {
+            fail("Full iterators must have at least one element");
+	}
+
+        while (iter.hasNext()) {
+            iter.next();
+        }
+
+        try {
+	    iter.next();
+            fail("NoSuchElementException must be thrown when Iterator is exhausted");
+	} catch (NoSuchElementException e) {
+	}
+    }
+
 }

@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/EnumerationIterator.java,v 1.6 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.6 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
@@ -58,50 +58,64 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
-import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-/** Adapter to make {@link Enumeration Enumeration} instances appear
-  * to be {@link Iterator Iterator} instances.
+/** <p><code>SingletonIterator</code> is an {@link Iterator} over a single 
+  * object instance.</p>
   *
-  * @since 1.0
+  * @since 2.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
-  * @deprecated this class has been moved to the iterators subpackage
+  * @version $Revision: 1.1 $
   */
-public class EnumerationIterator
-extends org.apache.commons.collections.iterators.EnumerationIterator {
+public class SingletonIterator implements Iterator {
+
+    private boolean first = true;
+    private Object object;
     
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that will not
-     *  function until {@link #setEnumeration(Enumeration)} is called.
+     *  Constructs a new <Code>SingletonIterator</Code>.
+     *
+     *  @param object  the single object to return from the iterator
      */
-    public EnumerationIterator() {
-        super();
+    public SingletonIterator(Object object) {
+        this.object = object;
     }
 
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that provides
-     *  an iterator view of the given enumeration.
-     *
-     *  @param enumeration  the enumeration to use
+     *  Returns true if the single object hasn't been returned yet.
+     * 
+     *  @return true if the single object hasn't been returned yet
      */
-    public EnumerationIterator( Enumeration enumeration ) {
-        super(enumeration);
+    public boolean hasNext() {
+        return first;
     }
 
     /**
-     *  Constructs a new <Code>EnumerationIterator</Code> that will remove
-     *  elements from the specified collection.
+     *  Returns the single object if it hasn't been returned yet.
      *
-     *  @param enum  the enumeration to use
-     *  @param collection  the collection to remove elements form
+     *  @return the single object
+     *  @throws NoSuchElementException if the single object has already been
+     *    returned
      */
-    public EnumerationIterator( Enumeration enum, Collection collection ) {
-        super(enum, collection);
+    public Object next() {
+        if (! first ) {
+            throw new NoSuchElementException();
+        }
+        Object answer = object;
+        object = null;
+        first = false;
+        return answer;
     }
 
+    /**
+     *  Throws {@link UnsupportedOperationException}.
+     *
+     *  @throws UnsupportedOperationException always
+     */
+    public void remove() {
+        throw new UnsupportedOperationException( "remove() is not supported by this iterator" );
+    }
 }

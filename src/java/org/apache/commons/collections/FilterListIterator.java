@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterListIterator.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterListIterator.java,v 1.6 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
@@ -72,10 +72,12 @@ import java.util.NoSuchElementException;
   * returned by the iterator.
   * 
   * @since 2.0
-  * @version $Revision: 1.5 $ $Date: 2002/08/15 20:04:31 $
+  * @version $Revision: 1.6 $ $Date: 2002/08/15 23:13:51 $
   * @author Rodney Waldhoff
+  * @deprecated this class has been moved to the iterators subpackage
   */
-public class FilterListIterator extends ProxyListIterator {
+public class FilterListIterator 
+extends org.apache.commons.collections.iterators.FilterListIterator {
 
     // Constructors    
     //-------------------------------------------------------------------------
@@ -87,6 +89,7 @@ public class FilterListIterator extends ProxyListIterator {
      *  and {@link #setPredicate(Predicate) setPredicate} are invoked.
      */
     public FilterListIterator() {
+        super();
     }
 
     /**
@@ -106,8 +109,7 @@ public class FilterListIterator extends ProxyListIterator {
      *  @param predicate  the predicate to use
      */
     public FilterListIterator(ListIterator iterator, Predicate predicate) {
-        super(iterator);
-        this.predicate = predicate;
+        super(iterator, predicate);
     }
 
     /**
@@ -119,194 +121,7 @@ public class FilterListIterator extends ProxyListIterator {
      *  @param predicate  the predicate to use.
      */
     public FilterListIterator(Predicate predicate) {
-        this.predicate = predicate;
+        super(predicate);
     }
 
-    // ListIterator interface
-    //-------------------------------------------------------------------------
-
-    /** Not supported. */
-    public void add(Object o) {
-        throw new UnsupportedOperationException("FilterListIterator.add(Object) is not supported.");
-    }
-
-    public boolean hasNext() {
-        if(nextObjectSet) {
-            return true;
-        } else {
-            return setNextObject();
-        }
-    }
-
-    public boolean hasPrevious() {
-        if(previousObjectSet) {
-            return true;
-        } else {
-            return setPreviousObject();
-        }
-    }
-
-    public Object next() {
-        if(!nextObjectSet) {
-            if(!setNextObject()) {
-                throw new NoSuchElementException();
-            }
-        }
-        nextIndex++;
-        Object temp = nextObject;
-        clearNextObject();
-        return temp;
-    }
-
-    public int nextIndex() {
-        return nextIndex;
-    }
-
-    public Object previous() {
-        if(!previousObjectSet) {
-            if(!setPreviousObject()) {
-                throw new NoSuchElementException();
-            }
-        }
-        nextIndex--;
-        Object temp = previousObject;
-        clearPreviousObject();
-        return temp;
-    }
-
-    public int previousIndex() {
-        return (nextIndex-1);
-    }
-
-    /** Not supported. */
-    public void remove() {
-        throw new UnsupportedOperationException("FilterListIterator.remove() is not supported.");
-    }
-
-    /** Not supported. */
-    public void set(Object o) {
-        throw new UnsupportedOperationException("FilterListIterator.set(Object) is not supported.");
-    }
-
-    // Properties
-    //-------------------------------------------------------------------------
-
-    /** 
-     * Getter for the predicate property.
-     * @return value of the predicate property.
-     */
-    public Predicate getPredicate() {
-        return predicate;
-    }
-    /** 
-     * Setter for the predicate property.
-     * @param predicate new value for the predicate property.
-     */
-    public void setPredicate(Predicate predicate) {
-        this.predicate = predicate;
-    }
-
-    // Private Methods
-    //-------------------------------------------------------------------------
-
-    private void clearNextObject() {
-        nextObject = null;
-        nextObjectSet = false;
-    }
-
-    private boolean setNextObject() {
-        ListIterator iterator = getListIterator();
-        Predicate predicate = getPredicate();
-        
-        // if previousObjectSet,
-        // then we've walked back one step in the 
-        // underlying list (due to a hasPrevious() call)
-        // so skip ahead one matching object
-        if(previousObjectSet) {
-            clearPreviousObject();
-            if(!setNextObject()) {
-                return false;
-            } else {
-                clearNextObject();
-            }
-        }
-
-        while(iterator.hasNext()) {
-            Object object = iterator.next();
-            if(predicate.evaluate(object)) {
-                nextObject = object;
-                nextObjectSet = true;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void clearPreviousObject() {
-        previousObject = null;
-        previousObjectSet = false;
-    }
-
-    private boolean setPreviousObject() {
-        ListIterator iterator = getListIterator();
-        Predicate predicate = getPredicate();
-        
-        // if nextObjectSet,
-        // then we've walked back one step in the 
-        // underlying list (due to a hasNext() call)
-        // so skip ahead one matching object
-        if(nextObjectSet) {
-            clearNextObject();
-            if(!setPreviousObject()) {
-                return false;
-            } else {
-                clearPreviousObject();
-            }
-        }
-
-        while(iterator.hasPrevious()) {
-            Object object = iterator.previous();
-            if(predicate.evaluate(object)) {
-                previousObject = object;
-                previousObjectSet = true;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // Attributes
-    //-------------------------------------------------------------------------
-
-    /** Holds value of property "predicate". */
-    private Predicate predicate;
-
-    /** 
-     * The value of the next (matching) object, when 
-     * {@link #nextObjectSet} is true. 
-     */
-    private Object nextObject;
-
-    /** 
-     * Whether or not the {@link #nextObject} has been set
-     * (possibly to <code>null</code>). 
-     */
-    private boolean nextObjectSet = false;   
-
-    /** 
-     * The value of the previous (matching) object, when 
-     * {@link #previousObjectSet} is true. 
-     */
-    private Object previousObject;
-
-    /** 
-     * Whether or not the {@link #previousObject} has been set
-     * (possibly to <code>null</code>). 
-     */
-    private boolean previousObjectSet = false;   
-
-    /** 
-     * The index of the element that would be returned by {@link #next}.
-     */
-    private int nextIndex = 0;
 }

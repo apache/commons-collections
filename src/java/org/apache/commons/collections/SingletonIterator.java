@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SingletonIterator.java,v 1.6 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.6 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SingletonIterator.java,v 1.7 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
@@ -68,12 +68,11 @@ import java.util.NoSuchElementException;
   *
   * @since 2.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @version $Revision: 1.6 $
+  * @version $Revision: 1.7 $
+  * @deprecated this class has been moved to the iterators subpackage
   */
-public class SingletonIterator implements Iterator {
-
-    private boolean first = true;
-    private Object object;
+public class SingletonIterator 
+extends org.apache.commons.collections.iterators.SingletonIterator {
     
     /**
      *  Constructs a new <Code>SingletonIterator</Code>.
@@ -81,41 +80,7 @@ public class SingletonIterator implements Iterator {
      *  @param object  the single object to return from the iterator
      */
     public SingletonIterator(Object object) {
-        this.object = object;
+        super(object);
     }
 
-    /**
-     *  Returns true if the single object hasn't been returned yet.
-     * 
-     *  @return true if the single object hasn't been returned yet
-     */
-    public boolean hasNext() {
-        return first;
-    }
-
-    /**
-     *  Returns the single object if it hasn't been returned yet.
-     *
-     *  @return the single object
-     *  @throws NoSuchElementException if the single object has already been
-     *    returned
-     */
-    public Object next() {
-        if (! first ) {
-            throw new NoSuchElementException();
-        }
-        Object answer = object;
-        object = null;
-        first = false;
-        return answer;
-    }
-
-    /**
-     *  Throws {@link UnsupportedOperationException}.
-     *
-     *  @throws UnsupportedOperationException always
-     */
-    public void remove() {
-        throw new UnsupportedOperationException( "remove() is not supported by this iterator" );
-    }
 }

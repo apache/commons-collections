@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.16 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.16 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
@@ -58,7 +58,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;
@@ -70,11 +70,14 @@ import java.util.NoSuchElementException;
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
   * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
-  * @version $Revision: 1.16 $
-  * @deprecated this class has been moved to the iterators subpackage
+  * @version $Revision: 1.1 $
   */
-public class ArrayIterator 
-extends org.apache.commons.collections.iterators.ArrayIterator {
+public class ArrayIterator implements Iterator {
+    
+    private Object array;
+    private int length = 0;
+    private int index = 0;
+  
     
     /**
      *  Construct an ArrayIterator.  Using this constructor, the iterator is
@@ -82,7 +85,6 @@ extends org.apache.commons.collections.iterators.ArrayIterator {
      *  called to establish the array to iterate over.
      **/
     public ArrayIterator() {
-        super();
     }
    
     /**
@@ -98,7 +100,7 @@ extends org.apache.commons.collections.iterators.ArrayIterator {
      *  if <code>array</code> is <code>null</code>
      **/
     public ArrayIterator(Object array) {
-        super(array);
+        setArray( array );
     }
 
     /**
@@ -115,7 +117,9 @@ extends org.apache.commons.collections.iterators.ArrayIterator {
      *  if <code>array</code> is <code>null</code>
      **/
     public ArrayIterator(Object array, int start) {
-        super(array, start);
+        setArray( array );
+        checkBound(start, "start");
+        this.index = start;
     }
 
     /**
@@ -133,7 +137,116 @@ extends org.apache.commons.collections.iterators.ArrayIterator {
      *  if <code>array</code> is <code>null</code>
      **/
     public ArrayIterator(Object array, int start, int end) {
-        super(array, start, end);
+        setArray( array );
+        checkBound(start, "start");
+        checkBound(end, "end");
+        if(end <= start) {
+            throw new IllegalArgumentException(
+                "End index must be greater than start index. "
+            );
+        }
+        this.index = start;
+        this.length = end;
     }
 
+    private void checkBound(int bound, String type ) {
+        if(bound > this.length) {
+            throw new ArrayIndexOutOfBoundsException(
+              "Attempt to make an ArrayIterator that "+type+
+              "s beyond the end of the array. "
+            );
+        }
+        if(bound < 0) {
+            throw new ArrayIndexOutOfBoundsException(
+              "Attempt to make an ArrayIterator that "+type+
+              "s before the start of the array. "
+            );
+        }
+    }
+
+    // Iterator interface
+    //-------------------------------------------------------------------------
+
+    /**
+     *  Returns true if there are more elements to return from the array.
+     *
+     *  @return true if there is a next element to return
+     */
+    public boolean hasNext() {
+        return index < length;
+    }
+
+    /**
+     *  Returns the next element in the array.
+     *
+     *  @return the next element in the array
+     *  @throws NoSuchElementException if all the elements in the array
+     *    have already been returned
+     */
+    public Object next() {
+        if(!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        return Array.get( array, index++ );
+    }
+
+    /**
+     *  Throws {@link UnsupportedOperationException}.
+     *
+     *  @throws UnsupportedOperationException always
+     */
+    public void remove() {
+        throw new UnsupportedOperationException( "remove() method is not supported" );
+    }
+
+    // Properties
+    //-------------------------------------------------------------------------
+
+    /**
+     *  Retrieves the array that this iterator is iterating over. 
+     *
+     *  @return the array this iterator iterates over, or <code>null</code> if
+     *  the no-arg constructor was used and {@link #setArray(Object)} has never
+     *  been called with a valid array.
+     **/
+    public Object getArray() {
+        return array;
+    }
+    
+    /**
+     *  Changes the array that the ArrayIterator should iterate over.  If an
+     *  array has previously been set (using the single-arg constructor or this
+     *  method), that array along with the current iterator position within
+     *  that array is discarded in favor of the argument to this method.  This
+     *  method can be used in combination with {@link #getArray()} to "reset"
+     *  the iterator to the beginning of the array:
+     *
+     *  <pre>
+     *    ArrayIterator iterator = ...
+     *    ...
+     *    iterator.setArray(iterator.getArray());
+     *  </pre>
+     *
+     *  Note: Using i.setArray(i.getArray()) may throw a NullPointerException
+     *  if no array has ever been set for the iterator (see {@link
+     *  #getArray()})
+     *
+     *  @param array the array that the iterator should iterate over.
+     *
+     *  @exception IllegalArgumentException if <code>array</code> is not an
+     *  array.
+     *
+     *  @exception NullPointerException 
+     *  if <code>array</code> is <code>null</code>
+     **/
+    public void setArray( Object array ) {
+        // Array.getLength throws IllegalArgumentException if the object is not
+        // an array or NullPointerException if the object is null.  This call
+        // is made before saving the array and resetting the index so that the
+        // array iterator remains in a consistent state if the argument is not
+        // an array or is null.
+        this.length = Array.getLength( array );
+        this.array = array;
+        this.index = 0;
+    }
 }

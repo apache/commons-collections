@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.8 2002/03/19 01:37:40 mas Exp $
- * $Revision: 1.8 $
- * $Date: 2002/03/19 01:37:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorEnumeration.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,89 +58,81 @@
  * <http://www.apache.org/>.
  *
  */
+package org.apache.commons.collections.iterators;
 
-package org.apache.commons.collections;
-
-import junit.framework.*;
+import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
-/**
- * Tests the ArrayIterator to ensure that the next() method will actually
- * perform the iteration rather than the hasNext() method.
- * The code of this test was supplied by Mauricio S. Moura
- * 
- * @author James Strachan
- * @author Mauricio S. Moura
- * @author Morgan Delagrange
- * @version $Id: TestArrayIterator.java,v 1.8 2002/03/19 01:37:40 mas Exp $
- */
-public class TestArrayIterator extends TestIterator {
-    
-    protected String[] testArray = {
-        "One", "Two", "Three"
-    };
-    
-    public static Test suite() {
-        return new TestSuite(TestArrayIterator.class);
-    }
-    
-    public TestArrayIterator(String testName) {
-        super(testName);
-    }
+/** Adapter to make an {@link Iterator Iterator} instance appear to be an {@link Enumeration Enumeration} instances
+  *
+  * @since 1.0
+  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  */
 
-    public Iterator makeEmptyIterator() {
-        return new ArrayIterator(new Object[0]);
-    }
-
-    public Iterator makeFullIterator() {
-        return new ArrayIterator(testArray);
-    }
+public class IteratorEnumeration implements Enumeration {
+    
+    private Iterator iterator;
     
     /**
-     * Return a new, empty {@link Object} to used for testing.
+     *  Constructs a new <Code>IteratorEnumeration</Code> that will not 
+     *  function until {@link #setIterator(Iterator) setIterator} is  
+     *  invoked.
      */
-    public Object makeObject() {
-        return makeFullIterator();
+    public IteratorEnumeration() {
+    }
+
+    /**
+     *  Constructs a new <Code>IteratorEnumeration</Code> that will use
+     *  the given iterator. 
+     * 
+     *  @param iterator  the iterator to use
+     */
+    public IteratorEnumeration( Iterator iterator ) {
+        this.iterator = iterator;
+    }
+
+    // Iterator interface
+    //-------------------------------------------------------------------------
+
+    /**
+     *  Returns true if the underlying iterator has more elements.
+     *
+     *  @return true if the underlying iterator has more elements
+     */
+    public boolean hasMoreElements() {
+        return iterator.hasNext();
+    }
+
+    /**
+     *  Returns the next element from the underlying iterator.
+     *
+     *  @return the next element from the underlying iterator.
+     *  @throws NoSuchElementException  if the underlying iterator has no
+     *    more elements
+     */
+    public Object nextElement() {
+        return iterator.next();
+    }
+
+    // Properties
+    //-------------------------------------------------------------------------
+
+    /**
+     *  Returns the underlying iterator.
+     * 
+     *  @return the underlying iterator
+     */
+    public Iterator getIterator() {
+        return iterator;
+    }
+
+    /**
+     *  Sets the underlying iterator.
+     *
+     *  @param iterator  the new underlying iterator
+     */
+    public void setIterator( Iterator iterator ) {
+        this.iterator = iterator;
     }
     
-    public void testIterator() {
-        Iterator iter = (Iterator) makeFullIterator();
-        for ( int i = 0; i < testArray.length; i++ ) {
-            Object testValue = testArray[i];            
-            Object iterValue = iter.next();
-            
-            assertEquals( "Iteration value is correct", testValue, iterValue );
-        }
-        
-        assertTrue("Iterator should now be empty", ! iter.hasNext() );
-
-	try {
-	    Object testValue = iter.next();
-	} catch (Exception e) {
-	  assertTrue("NoSuchElementException must be thrown", 
-		 e.getClass().equals((new NoSuchElementException()).getClass()));
-	}
-    }
-
-    public void testNullArray() {
-        try {
-            Iterator iter = new ArrayIterator(null);
-            
-            fail("Constructor should throw a NullPointerException when " +
-                 "constructed with a null array");
-        } catch (NullPointerException e) {
-            // expected
-        }
-
-        ArrayIterator iter = new ArrayIterator();
-        try {
-            iter.setArray(null);
-
-            fail("setArray(null) should throw a NullPointerException");
-        } catch (NullPointerException e) {
-            // expected
-        }
-    }
 }
-

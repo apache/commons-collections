@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ListIteratorWrapper.java,v 1.3 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ListIteratorWrapper.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/15 23:13:51 $
  *
  * ====================================================================
  *
@@ -58,7 +58,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -71,7 +71,7 @@ import java.util.NoSuchElementException;
  * operations of ListIterator.
  * 
  * @author Morgan Delagrange
- * @version $Revision: 1.3 $ $Date: 2002/08/15 20:04:31 $
+ * @version $Revision: 1.1 $ $Date: 2002/08/15 23:13:51 $
  * @since 2.1
  */
 public class ListIteratorWrapper implements ListIterator {
