@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.4 2003/12/28 16:36:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.5 2003/12/29 15:08:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -132,7 +132,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.4 $ $Date: 2003/12/28 16:36:48 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/29 15:08:15 $
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich
@@ -498,23 +498,23 @@ public final class StaticBucketMap implements Map {
                     (value == null ? 0 : value.hashCode()));
         }
 
-        public boolean equals(Object o) {
-            if (o == this) {
+        public boolean equals(Object obj) {
+            if (obj == this) {
                 return true;
             }
-            if (o instanceof Map.Entry == false) {
+            if (obj instanceof Map.Entry == false) {
                 return false;
             }
 
-            Map.Entry e2 = (Map.Entry) o;
+            Map.Entry e2 = (Map.Entry) obj;
             return (
                 (key == null ? e2.getKey() == null : key.equals(e2.getKey())) &&
                 (value == null ? e2.getValue() == null : value.equals(e2.getValue())));
         }
 
-        public Object setValue(Object val) {
+        public Object setValue(Object obj) {
             Object retVal = value;
-            value = val;
+            value = obj;
             return retVal;
         }
     }
@@ -600,8 +600,8 @@ public final class StaticBucketMap implements Map {
             return new EntryIterator();
         }
 
-        public boolean contains(Object o) {
-            Map.Entry entry = (Map.Entry)o;
+        public boolean contains(Object obj) {
+            Map.Entry entry = (Map.Entry) obj;
             int hash = getHash(entry.getKey());
             synchronized (m_locks[hash]) {
                 for (Node n = m_buckets[hash]; n != null; n = n.next) {
@@ -615,7 +615,7 @@ public final class StaticBucketMap implements Map {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry entry = (Map.Entry)obj;
+            Map.Entry entry = (Map.Entry) obj;
             int hash = getHash(entry.getKey());
             synchronized (m_locks[hash]) {
                 for (Node n = m_buckets[hash]; n != null; n = n.next) {
@@ -645,16 +645,16 @@ public final class StaticBucketMap implements Map {
             return new KeyIterator();
         }
 
-        public boolean contains(Object o) {
-            return StaticBucketMap.this.containsKey(o);
+        public boolean contains(Object obj) {
+            return StaticBucketMap.this.containsKey(obj);
         }
 
-        public boolean remove(Object o) {
-            int hash = getHash(o);
+        public boolean remove(Object obj) {
+            int hash = getHash(obj);
             synchronized (m_locks[hash]) {
                 for (Node n = m_buckets[hash]; n != null; n = n.next) {
                     Object k = n.getKey();
-                    if ((k == o) || ((k != null) && k.equals(o))) {
+                    if ((k == obj) || ((k != null) && k.equals(obj))) {
                         StaticBucketMap.this.remove(k);
                         return true;
                     }

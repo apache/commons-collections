@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.5 2003/12/29 14:54:58 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.6 2003/12/29 15:08:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -119,7 +119,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.5 $ $Date: 2003/12/29 14:54:58 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/29 15:08:15 $
  * 
  * @author Paul Jack
  */
@@ -373,16 +373,16 @@ public class ReferenceMap extends AbstractMap {
      *  @throws IOException  if the stream raises it
      *  @throws ClassNotFoundException  if the stream raises it
      */
-    private void readObject(ObjectInputStream inp) throws IOException, ClassNotFoundException {
-        inp.defaultReadObject();
-        table = new Entry[inp.readInt()];
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        table = new Entry[in.readInt()];
         threshold = (int)(table.length * loadFactor);
         queue = new ReferenceQueue();
-        Object key = inp.readObject();
+        Object key = in.readObject();
         while (key != null) {
-            Object value = inp.readObject();
+            Object value = in.readObject();
             put(key, value);
-            key = inp.readObject();
+            key = in.readObject();
         }
     }
 
@@ -416,7 +416,9 @@ public class ReferenceMap extends AbstractMap {
      *    if the key is not in this map
      */
     private Entry getEntry(Object key) {
-        if (key == null) return null;
+        if (key == null) {
+            return null;
+        }
         int hash = key.hashCode();
         int index = indexFor(hash);
         for (Entry entry = table[index]; entry != null; entry = entry.next) {
@@ -502,8 +504,11 @@ public class ReferenceMap extends AbstractMap {
         Entry entry = table[index];
         while (entry != null) {
             if (entry.purge(ref)) {
-                if (previous == null) table[index] = entry.next;
-                else previous.next = entry.next;
+                if (previous == null) {
+                    table[index] = entry.next;
+                } else {
+                    previous.next = entry.next;
+                }
                 this.size--;
                 return;
             }
@@ -544,7 +549,9 @@ public class ReferenceMap extends AbstractMap {
     public boolean containsKey(Object key) {
         purge();
         Entry entry = getEntry(key);
-        if (entry == null) return false;
+        if (entry == null) {
+            return false;
+        }
         return entry.getValue() != null;
     }
 
@@ -558,7 +565,9 @@ public class ReferenceMap extends AbstractMap {
     public Object get(Object key) {
         purge();
         Entry entry = getEntry(key);
-        if (entry == null) return null;
+        if (entry == null) {
+            return null;
+        }
         return entry.getValue();
     }
 
@@ -575,11 +584,17 @@ public class ReferenceMap extends AbstractMap {
      *   is null
      */
     public Object put(Object key, Object value) {
-        if (key == null) throw new NullPointerException("null keys not allowed");
-        if (value == null) throw new NullPointerException("null values not allowed");
+        if (key == null) {
+            throw new NullPointerException("null keys not allowed");
+        }
+        if (value == null) {
+            throw new NullPointerException("null values not allowed");
+        }
 
         purge();
-        if (size + 1 > threshold) resize();
+        if (size + 1 > threshold) {
+            resize();
+        }
 
         int hash = key.hashCode();
         int index = indexFor(hash);
@@ -609,7 +624,9 @@ public class ReferenceMap extends AbstractMap {
      *   the key was not in the map
      */
     public Object remove(Object key) {
-        if (key == null) return null;
+        if (key == null) {
+            return null;
+        }
         purge();
         int hash = key.hashCode();
         int index = indexFor(hash);
@@ -617,8 +634,11 @@ public class ReferenceMap extends AbstractMap {
         Entry entry = table[index];
         while (entry != null) {
             if ((hash == entry.hash) && key.equals(entry.getKey())) {
-                if (previous == null) table[index] = entry.next;
-                else previous.next = entry.next;
+                if (previous == null) {
+                    table[index] = entry.next;
+                } else {
+                    previous.next = entry.next;
+                }
                 this.size--;
                 modCount++;
                 return entry.getValue();
@@ -636,7 +656,7 @@ public class ReferenceMap extends AbstractMap {
     public void clear() {
         Arrays.fill(table, null);
         size = 0;
-        while (queue.poll() != null); // drain the queue
+        while (queue.poll() != null) {}; // drain the queue
     }
 
 
@@ -658,18 +678,22 @@ public class ReferenceMap extends AbstractMap {
                 ReferenceMap.this.clear();
             }
 
-            public boolean contains(Object o) {
-                if (o == null) return false;
-                if (!(o instanceof Map.Entry)) return false;
-                Map.Entry e = (Map.Entry)o;
+            public boolean contains(Object obj) {
+                if (obj == null) {
+                    return false;
+                }
+                if (obj instanceof Map.Entry == false) {
+                    return false;
+                }
+                Map.Entry e = (Map.Entry) obj;
                 Entry e2 = getEntry(e.getKey());
                 return (e2 != null) && e.equals(e2);
             }
 
-            public boolean remove(Object o) {
-                boolean r = contains(o);
+            public boolean remove(Object obj) {
+                boolean r = contains(obj);
                 if (r) {
-                    Map.Entry e = (Map.Entry)o;
+                    Map.Entry e = (Map.Entry) obj;
                     ReferenceMap.this.remove(e.getKey());
                 }
                 return r;
@@ -713,13 +737,13 @@ public class ReferenceMap extends AbstractMap {
                 return new KeyIterator();
             }
 
-            public boolean contains(Object o) {
-                return containsKey(o);
+            public boolean contains(Object obj) {
+                return containsKey(obj);
             }
 
 
-            public boolean remove(Object o) {
-                Object r = ReferenceMap.this.remove(o);
+            public boolean remove(Object obj) {
+                Object r = ReferenceMap.this.remove(obj);
                 return r != null;
             }
 

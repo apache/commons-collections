@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/PredicatedMap.java,v 1.3 2003/12/25 00:49:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/PredicatedMap.java,v 1.4 2003/12/29 15:08:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,7 +75,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/25 00:49:14 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/29 15:08:15 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -243,11 +243,11 @@ public class PredicatedMap extends AbstractMapDecorator {
             this.predicate = valuePredicate;
         }
 
-        public Object setValue(Object o) {
-            if (predicate != null && predicate.evaluate(o) == false) {
+        public Object setValue(Object obj) {
+            if (predicate != null && predicate.evaluate(obj) == false) {
                 throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
             }
-            return entry.setValue(o);
+            return entry.setValue(obj);
         }
     }
 
