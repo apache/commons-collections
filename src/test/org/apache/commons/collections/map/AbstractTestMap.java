@@ -15,7 +15,6 @@
  */
 package org.apache.commons.collections.map;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -118,7 +117,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.9 $ $Date: 2004/04/01 22:18:12 $
+ * @version $Revision: 1.10 $ $Date: 2004/04/09 09:38:31 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -718,7 +717,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Compare the current serialized form of the Map
      * against the canonical version in CVS.
      */
-    public void testEmptyMapCompatibility() throws IOException, ClassNotFoundException {
+    public void testEmptyMapCompatibility() throws Exception {
         /**
          * Create canonical objects with this code
         Map map = makeEmptyMap();
@@ -739,7 +738,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Compare the current serialized form of the Map
      * against the canonical version in CVS.
      */
-    public void testFullMapCompatibility() throws IOException, ClassNotFoundException {
+    public void testFullMapCompatibility() throws Exception {
         /**
          * Create canonical objects with this code
         Map map = makeFullMap();

@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.5 $ $Date: 2004/04/02 23:09:09 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/09 09:38:31 $
  * 
  * @author Stephen Colebourne
  */
@@ -44,6 +44,17 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
     }
     
     //-----------------------------------------------------------------------
+    /**
+     * Returns whether the sub map views are serializable.
+     * If the class being tested is based around a TreeMap then you should
+     * override and return false as TreeMap has a bug in deserialization.
+     * 
+     * @return false
+     */
+    public boolean isSubMapViewsSerializable() {
+        return true;
+    }
+    
     /**
      * Can't sort null keys.
      * 
@@ -160,6 +171,18 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
         }
         public boolean supportsFullCollections() {
             return false;
+        }
+        public void testSerializeDeserializeThenCompare() throws Exception {
+            if (((AbstractTestSortedMap) main).isSubMapViewsSerializable() == false) return;
+            super.testSerializeDeserializeThenCompare();
+        }
+        public void testEmptyMapCompatibility() throws Exception {
+            if (((AbstractTestSortedMap) main).isSubMapViewsSerializable() == false) return;
+            super.testEmptyMapCompatibility();
+        }
+        public void testFullMapCompatibility() throws Exception {
+            if (((AbstractTestSortedMap) main).isSubMapViewsSerializable() == false) return;
+            super.testFullMapCompatibility();
         }
     }
     
@@ -313,11 +336,11 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
 //            Map map = makeEmptyMap();
 //            writeExternalFormToDisk(
 //                (java.io.Serializable) map,
-//                "D:/dev/collections/data/test/FixedSizeSortedMap.emptyCollection.version3.1.SubMapView.obj");
+//                "D:/dev/collections/data/test/TransformedSortedMap.emptyCollection.version3.1.SubMapView.obj");
 //            map = makeFullMap();
 //            writeExternalFormToDisk(
 //                (java.io.Serializable) map,
-//                "D:/dev/collections/data/test/FixedSizeSortedMap.fullCollection.version3.1.SubMapView.obj");
+//                "D:/dev/collections/data/test/TransformedSortedMap.fullCollection.version3.1.SubMapView.obj");
 //        }
     }
     
