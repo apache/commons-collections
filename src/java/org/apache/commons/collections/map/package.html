@@ -1,14 +1,19 @@
 <BODY>
 <p>
-This package contains implementations of the Set and SortedSet interfaces.
+This package contains implementations of the Map, OrderedMap and SortedMap interfaces.
+A Map provides a lookup from a key to a value.
 <p>
-The implementations are in the form of direct implementations and decorators.
-A decorator wraps another implementation of the interface to add some
-specific additional functionality.
-<p>
-The following implementations are provided in the package:
+The following implementations are provided:
 <ul>
-<li>Synchronized - synchronizes method access for multi-threaded environments
+<li>HashedMap - general purpose HashMap replacement supporting MapIterator
+<li>IdentityMap - Map that uses == for comparison instead of equals()
+<li>Flat3Map - designed for good performance at size 3 or less
+<li>StaticBucketMap - internally synchronized and designed for thread-contentious environments
+</ul>
+<p>
+The following decorators are provided:
+<ul>
+<!--li>Synchronized - synchronizes method access for multi-threaded environments-->
 <li>Unmodifiable - ensures the collection cannot be altered
 <li>Predicated - ensures that only elements that are valid according to a predicate can be added
 <li>Typed - ensures that only elements that are of a specific type can be added
@@ -16,7 +21,6 @@ The following implementations are provided in the package:
 <li>FixedSize - ensures that the size of the map cannot change
 <li>Lazy - creates objects in the map on demand
 <li>ListOrdered - ensures that insertion order is retained
-<li>Flat3 - designed for good performance at size 3 or less
 </ul>
 </pre>
 </BODY>

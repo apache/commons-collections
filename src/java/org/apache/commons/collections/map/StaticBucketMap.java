@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.13 2003/12/03 15:16:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.1 2003/12/03 15:16:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.map;
 
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
@@ -129,13 +129,12 @@ import java.util.Set;
  * iterations, or if you can make your own guarantees about how bulk 
  * operations will affect the map.<p>
  *
- * @deprecated Moved to map subpackage. Due to be removed in v4.0.
- * @since Commons Collections 2.1
- * @version $Revision: 1.13 $ $Date: 2003/12/03 15:16:49 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/12/03 15:16:49 $
  * 
- * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
- * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @author Berin Loritsch
+ * @author Gerhard Froehlich
+ * @author Michael A. Smith
  * @author Paul Jack
  * @author Leo Sutic
  * @author Janek Bogucki
@@ -149,9 +148,8 @@ public final class StaticBucketMap implements Map {
     /**
      * Initializes the map with the default number of buckets (255).
      */
-    public StaticBucketMap()
-    {
-        this( DEFAULT_BUCKETS );
+    public StaticBucketMap() {
+        this(DEFAULT_BUCKETS);
     }
 
     /**
@@ -164,25 +162,23 @@ public final class StaticBucketMap implements Map {
      *
      * @param numBuckets  the number of buckets for this map
      */
-    public StaticBucketMap( int numBuckets )
-    {
-        int size = Math.max( 17, numBuckets );
+    public StaticBucketMap(int numBuckets) {
+        int size = Math.max(17, numBuckets);
 
         // Ensure that bucketSize is never a power of 2 (to ensure maximal distribution)
-        if( size % 2 == 0 )
-        {
+        if (size % 2 == 0) {
             size--;
         }
 
-        m_buckets = new Node[ size ];
-        m_locks = new Lock[ size ];
+        m_buckets = new Node[size];
+        m_locks = new Lock[size];
 
-        for( int i = 0; i < size; i++ )
-        {
-            m_locks[ i ] = new Lock();
+        for (int i = 0; i < size; i++) {
+            m_locks[i] = new Lock();
         }
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Determine the exact hash entry for the key.  The hash algorithm
      * is rather simplistic, but it does the job:
@@ -196,9 +192,10 @@ public final class StaticBucketMap implements Map {
      *   the number of buckets.
      * </p>
      */
-    private final int getHash( Object key )
-    {
-        if( key == null ) return 0;
+    private final int getHash(Object key) {
+        if (key == null) {
+            return 0;
+        }
         int hash = key.hashCode();
         hash += ~(hash << 15);
         hash ^= (hash >>> 10);
@@ -207,49 +204,121 @@ public final class StaticBucketMap implements Map {
         hash += ~(hash << 11);
         hash ^= (hash >>> 16);
         hash %= m_buckets.length;
-        return ( hash < 0 ) ? hash * -1 : hash;
+        return (hash < 0) ? hash * -1 : hash;
     }
 
     /**
-     *  Implements {@link Map#keySet()}.
+     * Gets the current size of the map.
+     * The value is computed fresh each time the method is called.
+     * 
+     * @return the current size
      */
-    public Set keySet()
-    {
-        return new KeySet();
-    }
-
-    /**
-     *  Implements {@link Map#size()}.
-     */
-    public int size()
-    {
+    public int size() {
         int cnt = 0;
 
-        for( int i = 0; i < m_buckets.length; i++ )
-        {
+        for (int i = 0; i < m_buckets.length; i++) {
             cnt += m_locks[i].size;
         }
-
         return cnt;
     }
 
     /**
-     *  Implements {@link Map#put(Object, Object)}.
+     * Checks if the size is currently zero.
+     * 
+     * @return true if empty
      */
-    public Object put( final Object key, final Object value )
-    {
-        int hash = getHash( key );
+    public boolean isEmpty() {
+        return (size() == 0);
+    }
 
-        synchronized( m_locks[ hash ] )
-        {
-            Node n = m_buckets[ hash ];
+    /**
+     * Gets the value associated with the key.
+     * 
+     * @param key  the key to retrieve
+     * @return the associated value
+     */
+    public Object get(final Object key) {
+        int hash = getHash(key);
 
-            if( n == null )
-            {
+        synchronized (m_locks[hash]) {
+            Node n = m_buckets[hash];
+
+            while (n != null) {
+                if (n.key == key || (n.key != null && n.key.equals(key))) {
+                    return n.value;
+                }
+
+                n = n.next;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Checks if the map contains the specified key.
+     * 
+     * @param key  the key to check
+     * @return true if found
+     */
+    public boolean containsKey(final Object key) {
+        int hash = getHash(key);
+
+        synchronized (m_locks[hash]) {
+            Node n = m_buckets[hash];
+
+            while (n != null) {
+                if (n.key == null || (n.key != null && n.key.equals(key))) {
+                    return true;
+                }
+
+                n = n.next;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the map contains the specified value.
+     * 
+     * @param value  the value to check
+     * @return true if found
+     */
+    public boolean containsValue(final Object value) {
+        for (int i = 0; i < m_buckets.length; i++) {
+            synchronized (m_locks[i]) {
+                Node n = m_buckets[i];
+
+                while (n != null) {
+                    if (n.value == value || (n.value != null && n.value.equals(value))) {
+                        return true;
+                    }
+
+                    n = n.next;
+                }
+            }
+        }
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Puts a new key value mapping into the map.
+     * 
+     * @param key  the key to use
+     * @param value  the value to use
+     * @return the previous mapping for the key
+     */
+    public Object put(final Object key, final Object value) {
+        int hash = getHash(key);
+
+        synchronized (m_locks[hash]) {
+            Node n = m_buckets[hash];
+
+            if (n == null) {
                 n = new Node();
                 n.key = key;
                 n.value = value;
-                m_buckets[ hash ] = n;
+                m_buckets[hash] = n;
                 m_locks[hash].size++;
                 return null;
             }
@@ -257,12 +326,10 @@ public final class StaticBucketMap implements Map {
             // Set n to the last node in the linked list.  Check each key along the way
             //  If the key is found, then change the value of that node and return
             //  the old value.
-            for( Node next = n; next != null; next = next.next )
-            {
+            for (Node next = n; next != null; next = next.next) {
                 n = next;
 
-                if( n.key == key || ( n.key != null && n.key.equals( key ) ) )
-                {
+                if (n.key == key || (n.key != null && n.key.equals(key))) {
                     Object returnVal = n.value;
                     n.value = value;
                     return returnVal;
@@ -277,141 +344,29 @@ public final class StaticBucketMap implements Map {
             n.next = newNode;
             m_locks[hash].size++;
         }
-
         return null;
     }
 
     /**
-     *  Implements {@link Map#get(Object)}.
+     * Removes the specified key from the map.
+     * 
+     * @param key  the key to remove
+     * @return the previous value at this key
      */
-    public Object get( final Object key )
-    {
-        int hash = getHash( key );
+    public Object remove(Object key) {
+        int hash = getHash(key);
 
-        synchronized( m_locks[ hash ] )
-        {
-            Node n = m_buckets[ hash ];
-
-            while( n != null )
-            {
-                if( n.key == key || ( n.key != null && n.key.equals( key ) ) )
-                {
-                    return n.value;
-                }
-
-                n = n.next;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Implements {@link Map#containsKey(Object)}.
-     */
-    public boolean containsKey( final Object key )
-    {
-        int hash = getHash( key );
-
-        synchronized( m_locks[ hash ] )
-        {
-            Node n = m_buckets[ hash ];
-
-            while( n != null )
-            {
-                if( n.key == null || ( n.key != null && n.key.equals( key ) ) )
-                {
-                    return true;
-                }
-
-                n = n.next;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Implements {@link Map#containsValue(Object)}.
-     */
-    public boolean containsValue( final Object value )
-    {
-        for( int i = 0; i < m_buckets.length; i++ )
-        {
-            synchronized( m_locks[ i ] )
-            {
-                Node n = m_buckets[ i ];
-
-                while( n != null )
-                {
-                    if( n.value == value || 
-                        (n.value != null && n.value.equals( value ) ) )
-                    {
-                        return true;
-                    }
-
-                    n = n.next;
-                }
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     *  Implements {@link Map#values()}.
-     */
-    public Collection values()
-    {
-        return new Values();
-    }
-
-    /**
-     *  Implements {@link Map#entrySet()}.
-     */
-    public Set entrySet()
-    {
-        return new EntrySet();
-    }
-
-    /**
-     *  Implements {@link Map#putAll(Map)}.
-     */
-    public void putAll( Map other )
-    {
-        Iterator i = other.keySet().iterator();
-
-        while( i.hasNext() )
-        {
-            Object key = i.next();
-            put( key, other.get( key ) );
-        }
-    }
-
-    /**
-     *  Implements {@link Map#remove(Object)}.
-     */
-    public Object remove( Object key )
-    {
-        int hash = getHash( key );
-
-        synchronized( m_locks[ hash ] )
-        {
-            Node n = m_buckets[ hash ];
+        synchronized (m_locks[hash]) {
+            Node n = m_buckets[hash];
             Node prev = null;
 
-            while( n != null )
-            {
-                if( n.key == key || ( n.key != null && n.key.equals( key ) ) )
-                {
+            while (n != null) {
+                if (n.key == key || (n.key != null && n.key.equals(key))) {
                     // Remove this node from the linked list of nodes.
-                    if( null == prev )
-                    {
+                    if (null == prev) {
                         // This node was the head, set the next node to be the new head.
-                        m_buckets[ hash ] = n.next;
-                    }
-                    else
-                    {
+                        m_buckets[hash] = n.next;
+                    } else {
                         // Set the next node of the previous node to be the node after this one.
                         prev.next = n.next;
                     }
@@ -423,63 +378,94 @@ public final class StaticBucketMap implements Map {
                 n = n.next;
             }
         }
-
         return null;
     }
-
+    
+    //-----------------------------------------------------------------------
     /**
-     *  Implements {@link Map#isEmpty()}.
+     * Gets the key set.
+     * 
+     * @return the key set
      */
-    public final boolean isEmpty()
-    {
-        return size() == 0;
+    public Set keySet() {
+        return new KeySet();
     }
 
     /**
-     *  Implements {@link Map#clear()}.
+     * Gets the values.
+     * 
+     * @return the values
      */
-    public final void clear()
-    {
-        for( int i = 0; i < m_buckets.length; i++ )
-        {
+    public Collection values() {
+        return new Values();
+    }
+
+    /**
+     * Gets the entry set.
+     * 
+     * @return the entry set
+     */
+    public Set entrySet() {
+        return new EntrySet();
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Puts all the entries from the specified map into this map.
+     * This operation is <b>not atomic</b> and may have undesired effects.
+     */
+    public void putAll(Map other) {
+        Iterator i = other.keySet().iterator();
+
+        while (i.hasNext()) {
+            Object key = i.next();
+            put(key, other.get(key));
+        }
+    }
+
+    /**
+     * Clears the map of all entries.
+     */
+    public void clear() {
+        for (int i = 0; i < m_buckets.length; i++) {
             Lock lock = m_locks[i];
             synchronized (lock) {
-                m_buckets[ i ] = null;
+                m_buckets[i] = null;
                 lock.size = 0;
             }
         }
     }
 
     /**
-     *  Implements {@link Map#equals(Object)}.
+     * Compares this map to another, as per the Map specification.
+     * 
+     * @param obj  the object to compare to
+     * @return true if equal
      */
-    public final boolean equals( Object obj )
-    {
-        if( obj == null ) return false;
-        if( obj == this ) return true;
-
-        if( !( obj instanceof Map ) ) return false;
-
-        Map other = (Map)obj;
-        
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof Map == false) {
+            return false;
+        }
+        Map other = (Map) obj;
         return entrySet().equals(other.entrySet());
     }
 
     /**
-     *  Implements {@link Map#hashCode()}.
+     * Gets the hashcode, as per the Map specification.
+     * 
+     * @return the hashcode
      */
-    public final int hashCode() 
-    {
+    public int hashCode() {
         int hashCode = 0;
 
-        for( int i = 0; i < m_buckets.length; i++ )
-        {
-            synchronized( m_locks[ i ] )
-            {
-                Node n = m_buckets[ i ];
+        for (int i = 0; i < m_buckets.length; i++) {
+            synchronized (m_locks[i]) {
+                Node n = m_buckets[i];
 
-                while( n != null )
-                {
+                while (n != null) {
                     hashCode += n.hashCode();
                     n = n.next;
                 }
@@ -488,61 +474,59 @@ public final class StaticBucketMap implements Map {
         return hashCode;
     }
 
+    //-----------------------------------------------------------------------
     /**
      * The Map.Entry for the StaticBucketMap.
      */
-    private static final class Node implements Map.Entry
-    {
+    private static final class Node implements Map.Entry {
         protected Object key;
         protected Object value;
         protected Node next;
 
-        public Object getKey()
-        {
+        public Object getKey() {
             return key;
         }
 
-        public Object getValue()
-        {
+        public Object getValue() {
             return value;
         }
 
-        public int hashCode()
-        {
-            return ( ( key == null ? 0 : key.hashCode() ) ^
-                     ( value == null ? 0 : value.hashCode() ) ); 
+        public int hashCode() {
+            return ((key == null ? 0 : key.hashCode()) ^
+                    (value == null ? 0 : value.hashCode()));
         }
 
         public boolean equals(Object o) {
-            if( o == null ) return false;
-            if( o == this ) return true;        
-            
-            if ( ! (o instanceof Map.Entry ) )
+            if (o == this) {
+                return true;
+            }
+            if (o instanceof Map.Entry == false) {
                 return false;
+            }
 
-            Map.Entry e2 = (Map.Entry)o;
-
-            return ((key == null ?
-                     e2.getKey() == null : key.equals(e2.getKey())) &&
-                    (value == null ?
-                     e2.getValue() == null : value.equals(e2.getValue())));
+            Map.Entry e2 = (Map.Entry) o;
+            return (
+                (key == null ? e2.getKey() == null : key.equals(e2.getKey())) &&
+                (value == null ? e2.getValue() == null : value.equals(e2.getValue())));
         }
 
-        public Object setValue( Object val )
-        {
+        public Object setValue(Object val) {
             Object retVal = value;
             value = val;
             return retVal;
         }
     }
 
+
+    /**
+     * The lock object, which also includes a count of the nodes in this lock.
+     */
     private final static class Lock {
-
         public int size;
-
     }
 
 
+    //-----------------------------------------------------------------------
     private class EntryIterator implements Iterator {
 
         private ArrayList current = new ArrayList();
@@ -721,7 +705,7 @@ public final class StaticBucketMap implements Map {
      *    });
      *  </pre>
      *
-     *  <B>Implementation note:</B> This method requires a lot of time
+     *  <b>Implementation note:</b> This method requires a lot of time
      *  and a ton of stack space.  Essentially a recursive algorithm is used
      *  to enter each bucket's monitor.  If you have twenty thousand buckets
      *  in your map, then the recursive method will be invoked twenty thousand

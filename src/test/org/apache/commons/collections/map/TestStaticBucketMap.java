@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestAll.java,v 1.7 2003/12/03 15:16:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestStaticBucketMap.java,v 1.1 2003/12/03 15:16:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,51 +57,46 @@
  */
 package org.apache.commons.collections.map;
 
+import java.util.Map;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.apache.commons.collections.BulkTest;
 
 /**
- * Entry point for tests.
+ * Unit tests 
+ * {@link org.apache.commons.collections.StaticBucketMap}.
  * 
- * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/12/03 15:16:49 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/03 15:16:49 $
  * 
- * @author Stephen Colebourne
+ * @author Michael A. Smith
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
-        super(testName);
+public class TestStaticBucketMap extends AbstractTestMap {
+
+    public TestStaticBucketMap(String name) {
+        super(name);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+    public static Test suite() {
+        return BulkTest.makeSuite(TestStaticBucketMap.class);
+    }
+
+    public static void main(String[] args[]) {
+        String[] testCaseName = { TestStaticBucketMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestFlat3Map.suite());
-        suite.addTest(TestHashedMap.suite());
-        suite.addTest(TestIdentityMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestLazyMap.suite());
-        suite.addTest(TestLazySortedMap.suite());
-        suite.addTest(TestListOrderedMap.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestPredicatedMap.suite());
-        suite.addTest(TestPredicatedSortedMap.suite());
-        suite.addTest(TestUnmodifiableMap.suite());
-        suite.addTest(TestUnmodifiableOrderedMap.suite());
-        suite.addTest(TestUnmodifiableSortedMap.suite());
-        
-        return suite;
+
+    public Map makeEmptyMap() {
+        return new StaticBucketMap(30);
     }
-        
+
+    public String[] ignoredTests() {
+        String pre = "TestStaticBucketMap.bulkTestMap";
+        String post = ".testCollectionIteratorFailFast";
+        return new String[] {
+            pre + "EntrySet" + post,
+            pre + "KeySet" + post,
+            pre + "Values" + post
+        };
+    }   
 }
