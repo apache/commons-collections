@@ -41,11 +41,12 @@ import org.apache.commons.collections.BoundedMap;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision: 1.11 $ $Date: 2004/04/25 23:27:43 $
+ * @version $Revision: 1.12 $ $Date: 2004/04/25 23:30:07 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
  * @author Stephen Colebourne
+ * @author Mike Pettypiece
  */
 public class LRUMap
         extends AbstractLinkedMap implements BoundedMap, Serializable, Cloneable {
@@ -166,6 +167,9 @@ public class LRUMap
      * <p>
      * This implementation checks the LRU size and determines whether to
      * discard an entry or not using {@link #removeLRU(LinkEntry)}.
+     * <p>
+     * From Commons Collections 3.1 this method uses {@link #isFull()} rather
+     * than accessing <code>size</code> and <code>maxSize</code> directly.
      * 
      * @param hashIndex  the index into the data array to store at
      * @param hashCode  the hash code of the key to add
@@ -173,7 +177,7 @@ public class LRUMap
      * @param value  the value to add
      */
     protected void addMapping(int hashIndex, int hashCode, Object key, Object value) {
-        if (size >= maxSize && removeLRU(header.after)) {
+        if (isFull() && removeLRU(header.after)) {
             reuseMapping(header.after, hashIndex, hashCode, key, value);
         } else {
             super.addMapping(hashIndex, hashCode, key, value);
