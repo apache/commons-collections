@@ -27,6 +27,12 @@
       <organization></organization>
     </developer>
     <developer>
+      <name>Matthew Hawthorne</name>
+      <id>matth</id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
       <name>Geir Magnusson</name>
       <id>geirm</id>
       <email></email>
@@ -41,6 +47,12 @@
     <developer>
       <name>Michael Smith</name>
       <id>msmith</id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <name>Phil Steitz</name>
+      <id>psteitz</id>
       <email></email>
       <organization></organization>
     </developer>
@@ -62,18 +74,6 @@
       <email></email>
       <organization></organization>
     </developer>
-    <developer>
-      <name>Phil Steitz</name>
-      <id>psteitz</id>
-      <email></email>
-      <organization></organization>
-    </developer>
-    <contributor>
-      <name>Matthew Hawthorne</name>
-      <id>matth</id>
-      <email></email>
-      <organization></organization>
-    </contributor>
   </developers>
   
   <contributors>
@@ -163,6 +163,9 @@
     </contributor>
     <contributor>
       <name>Stefano Mazzocchi</name>
+    </contributor>
+    <contributor>
+      <name>Brian McCallister</name>
     </contributor>
     <contributor>
       <name>Leon Messerschmidt</name>
@@ -255,7 +258,7 @@
      <report>maven-license-plugin</report>
      <report>maven-linkcheck-plugin</report>
      <report>maven-statcvs-plugin</report>
-     <report>maven-tasklist-plugin</report> 
+     <report>maven-tasklist-plugin</report>
   </reports>
 
 </project>
