@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.5 2002/03/19 04:34:18 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/03/19 04:34:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.6 2002/03/19 04:49:00 mas Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/03/19 04:49:00 $
  *
  * ====================================================================
  *
@@ -68,6 +68,7 @@ import java.util.Comparator;
  *
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a>
+ * @author  <a href="mailto:mas@apache.org">Michael A. Smith</a>
  */
 public final class BinaryHeap
     implements PriorityQueue
