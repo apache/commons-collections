@@ -1,8 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.2 2003/01/09 13:40:11 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2003/01/09 13:40:11 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.3 2003/01/10 13:27:55 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,12 +68,13 @@ import org.apache.commons.collections.TestList;
 import org.apache.commons.collections.primitives.adapters.IntListList;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/01/09 13:40:11 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/10 13:27:55 $
  * @author Rodney Waldhoff
  */
-public class TestArrayUnsignedShortList extends TestList {
+public class TestArrayUnsignedShortList extends TestIntList {
 
-    //------------------------------------------------------------ Conventional
+    // conventional
+    // ------------------------------------------------------------------------
 
     public TestArrayUnsignedShortList(String testName) {
         super(testName);
@@ -87,50 +85,35 @@ public class TestArrayUnsignedShortList extends TestList {
         return suite;
     }
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
 
-    //------------------------------------------------------- TestList interface
-
-    public List makeEmptyList() {
-        return new IntListList(new ArrayUnsignedShortList());
+    protected IntList makeEmptyIntList() {
+        return new ArrayUnsignedShortList();
     }
 
-    /**
-     *  Returns small Integer objects for testing.
-     */
-    protected Object[] getFullElements() {
-        Integer[] result = new Integer[19];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = new Integer(i + 19);
-        }
-        return result;
-    }
-
-    /**
-     *  Returns small Integer objects for testing.
-     */
-    protected Object[] getOtherElements() {
-        Integer[] result = new Integer[16];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = new Integer(i + 48);
-        }
-        return result;
-    }
-
-    // TODO:  Create canonical collections in CVS
+    // tests
+    // ------------------------------------------------------------------------
 
     public void testCanonicalEmptyCollectionExists() {
+        // XXX FIX ME XXX
+        // need to a serialized form to cvs
     }
 
     public void testCanonicalFullCollectionExists() {
+        // XXX FIX ME XXX
+        // need to a serialized form to cvs
     }
 
     public void testEmptyListCompatibility() {
+        // XXX FIX ME XXX
+        // need to a serialized form to cvs
     }
 
     public void testFullListCompatibility() {
+        // XXX FIX ME XXX
+        // need to a serialized form to cvs
     }
-
-    //------------------------------------------------------------------- Tests
 
     public void testZeroInitialCapacityIsValid() {
         ArrayUnsignedShortList list = new ArrayUnsignedShortList(0);
