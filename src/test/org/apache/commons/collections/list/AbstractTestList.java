@@ -45,7 +45,7 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.9 $ $Date: 2004/05/31 22:39:20 $
+ * @version $Revision: 1.10 $ $Date: 2004/07/29 22:28:57 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -1038,7 +1038,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
        private AbstractTestList outer;
 
 
-       BulkTestSubList(AbstractTestList outer) {
+       public BulkTestSubList(AbstractTestList outer) {
            super("");
            this.outer = outer;
        }
