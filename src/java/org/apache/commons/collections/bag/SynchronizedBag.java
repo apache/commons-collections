@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/SynchronizedBag.java,v 1.2 2003/12/28 14:55:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/SynchronizedBag.java,v 1.3 2004/01/05 21:54:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -71,11 +71,12 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * Iterators must be separately synchronized around the loop.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/28 14:55:46 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/05 21:54:06 $
  * 
  * @author Stephen Colebourne
  */
-public class SynchronizedBag extends SynchronizedCollection implements Bag {
+public class SynchronizedBag
+        extends SynchronizedCollection implements Bag {
 
     /**
      * Factory method to create a synchronized bag.

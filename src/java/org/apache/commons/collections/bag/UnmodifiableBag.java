@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/UnmodifiableBag.java,v 1.3 2003/12/03 12:27:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/UnmodifiableBag.java,v 1.4 2004/01/05 21:54:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -70,11 +70,12 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>Bag</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/03 12:27:37 $
+ * @version $Revision: 1.4 $ $Date: 2004/01/05 21:54:06 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableBag extends AbstractBagDecorator implements Unmodifiable {
+public final class UnmodifiableBag
+        extends AbstractBagDecorator implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable bag.
