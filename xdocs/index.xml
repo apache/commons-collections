@@ -15,7 +15,7 @@
 The <a href="http://java.sun.com/products/j2se/1.4/docs/guide/collections/">Java Collections Framework</a>
 was a major addition in JDK 1.2.
 It added many powerful data structures that accelerate development of most significant Java applications.
-Since that time it has become the recognised standard for collection handling in the Java language.
+Since that time it has become the recognised standard for collection handling in Java.
 </p>
 <p>
 Commons-Collections seek to build upon the JDK classes by providing new interfaces, implementations and utilities.
@@ -42,14 +42,16 @@ There are many features, including:
 
 <section name="Documentation">
 <p>
-A getting started <a href="userguide.html">User's Guide</a> is available.
+A getting started<span> </span><a href="userguide.html">User's Guide</a> is available.
 </p>
 <p>
-The JavaDoc API documents are available online for the
-<a href="apidocs-COLLECTIONS_3_0/index.html">current release 3.0</a>, the
-<a href="apidocs-COLLECTIONS_2_1/index.html">previous version 2.1</a>, and the
-<a href="apidocs/index.html">latest CVS</a>.
+The JavaDoc API documents are available online:
 </p>
+<ul>
+<li>The <a href="apidocs-COLLECTIONS_3_0/index.html">current release 3.0</a></li>
+<li>The <a href="apidocs-COLLECTIONS_2_1/index.html">previous version 2.1</a></li>
+<li>The <a href="apidocs/index.html">latest CVS</a></li>
+</ul>
 <p>
 The <a href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/">CVS repository</a> can be browsed.
 </p>
