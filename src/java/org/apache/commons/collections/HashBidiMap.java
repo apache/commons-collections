@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/HashBidiMap.java,v 1.1 2003/09/23 20:29:34 matth Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/HashBidiMap.java,v 1.2 2003/09/26 23:28:43 matth Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,7 @@
  */
 package org.apache.commons.collections;
 
+import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.AbstractSet;
 import java.util.HashMap;
@@ -68,14 +69,14 @@ import java.util.Set;
  * Default implementation of <code>BidiMap</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Id: HashBidiMap.java,v 1.1 2003/09/23 20:29:34 matth Exp $
+ * @version $Id: HashBidiMap.java,v 1.2 2003/09/26 23:28:43 matth Exp $
  * 
  * @author Matthew Hawthorne
  */
-public class HashBidiMap extends AbstractMap implements BidiMap {
+public class HashBidiMap extends AbstractMap implements BidiMap, Serializable {
 
     /**
-     * Delegate map array.  The first map contains standards entries, and the 
+     * Delegate map array.  The first map contains standard entries, and the 
      * second contains inverses.
      */
     final Map[] maps = new Map[] { new HashMap(), new HashMap()};
@@ -114,31 +115,36 @@ public class HashBidiMap extends AbstractMap implements BidiMap {
     }
 
     public Object put(Object key, Object value) {
+        // Removes pair from standard map if a previous inverse entry exists
+        final Object oldValue = maps[1].put(value, key);
+        if (oldValue != null) {
+            maps[0].remove(oldValue);
+        }
+        
         final Object obj = maps[0].put(key, value);
-        maps[1].put(value, key);
         return obj;
     }
 
     public Set entrySet() {
         // The entrySet is the root of most Map methods, care must be taken not 
         // to reference instance methods like size()
-        
+
         // Creates anonymous AbstractSet
         return new AbstractSet() {
-            
+
             public Iterator iterator() {
                 // Creates anonymous Iterator
                 return new Iterator() {
 
                     // Delegate iterator.
                     final Iterator it = maps[0].entrySet().iterator();
-                    
+
                     // Current iterator entry
                     Map.Entry currentEntry;
 
                     public void remove() {
                         // Removes from standard and inverse Maps.
-                        
+
                         // Object must be removed using the iterator or a 
                         // ConcurrentModificationException is thrown
                         it.remove();
@@ -168,7 +174,7 @@ public class HashBidiMap extends AbstractMap implements BidiMap {
             public int size() {
                 return HashBidiMap.this.maps[0].size();
             }
-            
+
         }; // anonymous AbstractSet
 
     } // entrySet()
@@ -225,8 +231,8 @@ public class HashBidiMap extends AbstractMap implements BidiMap {
                     }; // anonymous Iterator
                 }
 
-            };  // anonymous AbstractSet
-            
+            }; // anonymous AbstractSet
+
         } // entrySet()
 
     } // InverseBidiMap

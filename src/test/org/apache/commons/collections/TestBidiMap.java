@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.1 2003/09/23 20:29:34 matth Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.2 2003/09/26 23:28:43 matth Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,14 +59,16 @@ package org.apache.commons.collections;
 
 import java.util.Map;
 
+import junit.framework.TestCase;
+
 /**
  * JUnit tests.
  * 
  * @author Matthew Hawthorne
- * @version $Id: TestBidiMap.java,v 1.1 2003/09/23 20:29:34 matth Exp $
+ * @version $Id: TestBidiMap.java,v 1.2 2003/09/26 23:28:43 matth Exp $
  * @see org.apache.commons.collections.BidiMap
  */
-public abstract class TestBidiMap extends TestMap {
+public abstract class TestBidiMap extends TestCase {
 
     // Test data.
     private static final Object KEY = "key1";
@@ -130,7 +132,36 @@ public abstract class TestBidiMap extends TestMap {
             inverseMap.getKey(entries[0][0]));
     }
 
+    /**
+     * Ensures that calling:
+     * 
+     * <pre>
+     * map.add(a, c)
+     * map.add(b, c)
+     * </pre>
+     * 
+     * Removes the entry (a, c)
+     */
+    public void testAddDuplicateValue() {
+        final BidiMap map = createBidiMap();
+
+        final Object key1 = "key1";
+        final Object key2 = "key2";
+        final Object value = "value";
+
+        map.put(key1, value);
+        map.put(key2, value);
+
+        assertTrue(
+            "Key/value pair was not removed on duplicate value.",
+            !map.containsKey(key1));
+            
+        assertEquals("Key/value mismatch", key2, map.getKey(value));
+    }
+
+    // ----------------------------------------------------------------
     // Removal tests
+    // ----------------------------------------------------------------
 
     public void testClear() {
         BidiMap map = createBidiMapWithData();
@@ -153,7 +184,7 @@ public abstract class TestBidiMap extends TestMap {
     public void testRemove() {
         remove(createBidiMapWithData(), KEY);
         remove(createBidiMapWithData().inverseBidiMap(), VALUE);
-        
+
         removeKey(createBidiMapWithData(), VALUE);
         removeKey(createBidiMapWithData().inverseBidiMap(), KEY);
     }
@@ -163,7 +194,7 @@ public abstract class TestBidiMap extends TestMap {
         assertTrue("Key was not removed.", !map.containsKey(key));
         assertNull("Value was not removed.", map.getKey(value));
     }
-    
+
     private final void removeKey(BidiMap map, Object value) {
         final Object key = map.removeKey(value);
         assertTrue("Key was not removed.", !map.containsKey(key));
@@ -215,11 +246,15 @@ public abstract class TestBidiMap extends TestMap {
     // Data generation methods
     // ----------------------------------------------------------------
 
+    /**
+     * This classes used to extend collections.TestMap, but can't anymore since 
+     * put() breaks a contract.
+     */
     protected Map makeEmptyMap() {
         return createBidiMap();
     }
 
-    private final BidiMap createBidiMapWithData() {
+    protected final BidiMap createBidiMapWithData() {
         final BidiMap map = createBidiMap();
         fillMap(map);
         return map;
