@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractBag.java,v 1.4 2002/02/22 04:58:17 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/22 04:58:17 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractBag.java,v 1.5 2002/03/13 05:40:30 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/03/13 05:40:30 $
  *
  * ====================================================================
  *

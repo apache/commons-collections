@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SingletonIterator.java,v 1.3 2002/02/26 21:30:40 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/26 21:30:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SingletonIterator.java,v 1.4 2002/03/13 05:40:31 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/03/13 05:40:31 $
  *
  * ====================================================================
  *
@@ -67,7 +67,7 @@ import java.util.NoSuchElementException;
   * object instance.</p>
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @version $Revision: 1.3 $
+  * @version $Revision: 1.4 $
   */
 public class SingletonIterator implements Iterator {
 
