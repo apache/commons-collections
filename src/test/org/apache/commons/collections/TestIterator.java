@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestIterator.java,v 1.1 2002/02/25 22:43:04 morgand Exp $
- * $Revision: 1.1 $
- * $Date: 2002/02/25 22:43:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestIterator.java,v 1.2 2002/02/25 22:48:52 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/02/25 22:48:52 $
  *
  * ====================================================================
  *
@@ -64,6 +64,11 @@ package org.apache.commons.collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Base class for tetsing Iterator interface
+ * 
+ * @author Morgan Delagrange
+ */
 public abstract class TestIterator extends TestObject {
 
     public TestIterator(String testName) {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.5 2002/02/25 22:43:04 morgand Exp $
- * $Revision: 1.5 $
- * $Date: 2002/02/25 22:43:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.6 2002/02/25 22:48:52 morgand Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/02/25 22:48:52 $
  *
  * ====================================================================
  *
@@ -69,10 +69,11 @@ import java.util.NoSuchElementException;
  * Tests the ArrayIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  * The code of this test was supplied by Mauricio S. Moura
- *
+ * 
  * @author James Strachan
  * @author Mauricio S. Moura
- * @version $Id: TestArrayIterator.java,v 1.5 2002/02/25 22:43:04 morgand Exp $
+ * @author Morgan Delagrange
+ * @version $Id: TestArrayIterator.java,v 1.6 2002/02/25 22:48:52 morgand Exp $
  */
 public class TestArrayIterator extends TestIterator {
     

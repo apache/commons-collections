@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator2.java,v 1.1 2001/08/23 12:04:40 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2001/08/23 12:04:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator2.java,v 1.2 2002/02/25 22:48:52 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/02/25 22:48:52 $
  *
  * ====================================================================
  *
@@ -67,11 +67,12 @@ import java.util.NoSuchElementException;
 
 /**
  * Tests the ArrayIterator with primitive type arrays
- *
+ * 
+ * @author Morgan Delagrange
  * @author James Strachan
- * @version $Id: TestArrayIterator2.java,v 1.1 2001/08/23 12:04:40 jstrachan Exp $
+ * @version $Id: TestArrayIterator2.java,v 1.2 2002/02/25 22:48:52 morgand Exp $
  */
-public class TestArrayIterator2 extends TestObject {
+public class TestArrayIterator2 extends TestIterator {
     
     protected int[] testArray = {
         2, 4, 6, 8
@@ -85,15 +86,23 @@ public class TestArrayIterator2 extends TestObject {
         super(testName);
     }
     
+    public Iterator makeEmptyIterator() {
+        return new ArrayIterator(new int[0]);
+    }
+
+    public Iterator makeFullIterator() {
+        return new ArrayIterator(testArray);
+    }
+
     /**
      * Return a new, empty {@link Object} to used for testing.
      */
     public Object makeObject() {
-        return new ArrayIterator( testArray );
+        return makeFullIterator();
     }
     
     public void testIterator() {
-        Iterator iter = (Iterator) makeObject();
+        Iterator iter = (Iterator) makeFullIterator();
         for ( int i = 0; i < testArray.length; i++ ) {
             Integer testValue = new Integer( testArray[i] );            
             Number iterValue = (Number) iter.next();
