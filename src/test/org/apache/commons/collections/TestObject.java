@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.18 2003/01/10 00:15:09 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.19 2003/02/26 00:35:19 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,41 +81,30 @@ import java.io.Serializable;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Revision: 1.18 $ $Date: 2003/01/10 00:15:09 $
+ * @author Anonymous
+ * 
+ * @version $Revision: 1.19 $ $Date: 2003/02/26 00:35:19 $
  */
 public abstract class TestObject extends BulkTest {
+
+    // constructor
+    // ------------------------------------------------------------------------
+    
     public TestObject(String testName) {
         super(testName);
     }
 
-    // current major release for Collections
-    public static final int COLLECTIONS_MAJOR_VERSION = 2;
-
-    /**
-     * Get the version of Collections that this object tries to
-     * maintain serialization compatibility with. Defaults to 1, the
-     * earliest Collections version. (Note: some collections did not
-     * even exist in this version).
-     * 
-     * This constant makes it possible for TestMap (and other subclasses,
-     * if necessary) to automatically check CVS for a versionX copy of a
-     * Serialized object, so we can make sure that compatibility is maintained.
-     * See, for example, TestMap.getCanonicalFullMapName(Map map).
-     * Subclasses can override this variable, indicating compatibility
-     * with earlier Collections versions.
-     * 
-     * @return The version, or <code>null</code> if this object shouldn't be
-     * tested for compatibility with previous versions.
-     */
-    public String getCompatibilityVersion() {
-        return "1";
-    }
-
+    // abstract
+    // ------------------------------------------------------------------------
+    
     /**
      * Return a new, empty {@link Object} to used for testing.
      */
-    public abstract Object makeObject();
+    protected abstract Object makeObject();
 
+    // tests
+    // ------------------------------------------------------------------------
+    
     public void testObjectEqualsSelf() {
         Object obj = makeObject();
         assertEquals("A Object should equal itself",obj,obj);
@@ -158,10 +147,121 @@ public abstract class TestObject extends BulkTest {
         }
     }
 
-    private void writeExternalFormToStream(Serializable o, OutputStream stream) 
-    throws IOException {
-        ObjectOutputStream oStream = new ObjectOutputStream(stream);
-        oStream.writeObject(o);
+    /**
+     * Sanity check method, makes sure that any Serializable
+     * class can be serialized and de-serialized in memory, 
+     * using the handy makeObject() method
+     * 
+     * @exception IOException
+     * @exception ClassNotFoundException
+     */
+    public void testSimpleSerialization() throws IOException, ClassNotFoundException {
+        Object o = makeObject();
+        if (o instanceof Serializable) {
+            byte[] objekt = writeExternalFormToBytes((Serializable) o);
+            Object p = readExternalFormFromBytes(objekt);
+        }
+    }
+
+    /**
+     * If the test object is serializable, confirm that 
+     * a canonical form exists in CVS
+     * 
+     */
+    public void testCanonicalEmptyCollectionExists() {
+        if(supportsEmptyCollections()) {    
+            Object object = makeObject();
+            if(object instanceof Serializable) {
+                String name = getCanonicalEmptyCollectionName(object);
+                assertTrue("Canonical empty collection (" + name + ") is not in CVS",
+                           new File(name).exists());
+            }
+        }
+    }
+
+    /**
+     * If the test object is serializable, confirm that 
+     * a canonical form exists in CVS
+     * 
+     */
+    public void testCanonicalFullCollectionExists() {
+        if(supportsFullCollections()) {
+            Object object = makeObject();
+            if(object instanceof Serializable) {
+                String name = getCanonicalFullCollectionName(object);
+                assertTrue("Canonical full collection (" + name + ") is not in CVS",
+                           new File(name).exists());
+            }
+        }
+    }
+
+    // protected
+    // ------------------------------------------------------------------------
+    
+    /**
+     * Get the version of Collections that this object tries to
+     * maintain serialization compatibility with. Defaults to 1, the
+     * earliest Collections version. (Note: some collections did not
+     * even exist in this version).
+     * 
+     * This constant makes it possible for TestMap (and other subclasses,
+     * if necessary) to automatically check CVS for a versionX copy of a
+     * Serialized object, so we can make sure that compatibility is maintained.
+     * See, for example, TestMap.getCanonicalFullMapName(Map map).
+     * Subclasses can override this variable, indicating compatibility
+     * with earlier Collections versions.
+     * 
+     * @return The version, or <code>null</code> if this object shouldn't be
+     * tested for compatibility with previous versions.
+     */
+    protected String getCompatibilityVersion() {
+        return "1";
+    }
+
+    /**
+     * Override this method if a subclass is testing a 
+     * Collections that cannot serialize an "empty" Collection
+     * (e.g. Comparators have no contents)
+     * 
+     * @return true
+     */
+    protected boolean supportsEmptyCollections() {
+        return true;
+    }
+
+    /**
+     * Override this method if a subclass is testing a 
+     * Collections that cannot serialize a "full" Collection
+     * (e.g. Comparators have no contents)
+     * 
+     * @return true
+     */
+    protected boolean supportsFullCollections() {
+        return true;
+    }
+
+    protected String getCanonicalEmptyCollectionName(Object object) {
+        StringBuffer retval = new StringBuffer();
+        retval.append("data/test/");
+        String colName = object.getClass().getName();
+        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
+        retval.append(colName);
+        retval.append(".emptyCollection.version");
+        retval.append(getCompatibilityVersion());
+        retval.append(".obj");
+        return retval.toString();
+    }
+
+    protected String getCanonicalFullCollectionName(Object object) {
+        StringBuffer retval = new StringBuffer();
+        retval.append("data/test/");
+        String colName = object.getClass().getName();
+        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
+        retval.append(colName);
+        retval.append(".fullCollection.version");
+        retval.append(getCompatibilityVersion());
+        retval.append(".obj");
+        return retval.toString();
     }
 
     /**
@@ -234,104 +334,19 @@ public abstract class TestObject extends BulkTest {
         return readExternalFormFromStream(stream);
     }
 
-    /**
-     * Sanity check method, makes sure that any Serializable
-     * class can be serialized and de-serialized in memory, 
-     * using the handy makeObject() method
-     * 
-     * @exception IOException
-     * @exception ClassNotFoundException
-     */
-    public void testSimpleSerialization() 
-    throws IOException, ClassNotFoundException {
-        Object o = makeObject();
-        if (o instanceof Serializable) {
-            byte[] objekt = writeExternalFormToBytes((Serializable) o);
-            Object p = readExternalFormFromBytes(objekt);
-        }
+    // private
+    // ------------------------------------------------------------------------
+
+    private void writeExternalFormToStream(Serializable o, OutputStream stream) 
+    throws IOException {
+        ObjectOutputStream oStream = new ObjectOutputStream(stream);
+        oStream.writeObject(o);
     }
 
-    public String getCanonicalEmptyCollectionName(Object object) {
-        StringBuffer retval = new StringBuffer();
-        retval.append("data/test/");
-        String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
-        retval.append(colName);
-        retval.append(".emptyCollection.version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
-    }
+    // attributes
+    // ------------------------------------------------------------------------
 
-    public String getCanonicalFullCollectionName(Object object) {
-        StringBuffer retval = new StringBuffer();
-        retval.append("data/test/");
-        String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
-        retval.append(colName);
-        retval.append(".fullCollection.version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
-    }
+    // current major release for Collections
+    public static final int COLLECTIONS_MAJOR_VERSION = 2;
 
-    /**
-     * Override this method if a subclass is testing a 
-     * Collections that cannot serialize an "empty" Collection
-     * (e.g. Comparators have no contents)
-     * 
-     * @return true
-     */
-    public boolean supportsEmptyCollections() {
-        return true;
-    }
-
-    /**
-     * Override this method if a subclass is testing a 
-     * Collections that cannot serialize a "full" Collection
-     * (e.g. Comparators have no contents)
-     * 
-     * @return true
-     */
-    public boolean supportsFullCollections() {
-        return true;
-    }
-
-    /**
-     * If the test object is serializable, confirm that 
-     * a canonical form exists in CVS
-     * 
-     */
-    public void testCanonicalEmptyCollectionExists() {
-        if (!supportsEmptyCollections()) {
-            return;
-        }
-
-        Object object = makeObject();
-        if (!(object instanceof Serializable)) {
-            return;
-        }
-        String name = getCanonicalEmptyCollectionName(object);
-        assertTrue("Canonical empty collection (" + name + ") is not in CVS",
-                   new File(name).exists());
-    }
-
-    /**
-     * If the test object is serializable, confirm that 
-     * a canonical form exists in CVS
-     * 
-     */
-    public void testCanonicalFullCollectionExists() {
-        if (!supportsFullCollections()) {
-            return;
-        }
-        
-        Object object = makeObject();
-        if (!(object instanceof Serializable)) {
-            return;
-        }
-        String name = getCanonicalFullCollectionName(object);
-        assertTrue("Canonical full collection (" + name + ") is not in CVS",
-                   new File(name).exists());
-    }
 }
