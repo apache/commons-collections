@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.23 2002/03/28 05:13:54 morgand Exp $ -->
+<!-- $Id: build.xml,v 1.24 2002/03/28 05:23:37 morgand Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -239,6 +239,10 @@
             <patternset refid="patternset-non-test-classes"/>
          </fileset>
       </copy>
+      
+      <mkdir dir="${workdir}/META-INF"/>
+      <copy todir="${workdir}/META-INF" file="../LICENSE"/>
+      
       <jar jarfile="${dest.jardir.jar}" manifest="${source.src}/conf/MANIFEST.MF">
          <fileset dir="${workdir}"/>
       </jar>
