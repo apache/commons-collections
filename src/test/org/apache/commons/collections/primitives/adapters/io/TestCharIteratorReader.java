@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestCharIteratorReader.java,v 1.1 2003/04/16 19:45:13 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestCharIteratorReader.java,v 1.2 2003/04/17 12:13:14 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -67,7 +67,7 @@ import org.apache.commons.collections.primitives.ArrayCharList;
 import org.apache.commons.collections.primitives.CharList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/16 19:45:13 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/17 12:13:14 $
  * @author Rodney Waldhoff
  */
 public class TestCharIteratorReader extends TestCase {
@@ -102,6 +102,7 @@ public class TestCharIteratorReader extends TestCase {
         }
         assertEquals(-1,in.read());
         assertEquals(-1,in.read());
+        in.close();
     }
 
     public void testReadEmpty() throws Exception {
@@ -109,6 +110,7 @@ public class TestCharIteratorReader extends TestCase {
         Reader in = new CharIteratorReader(list.iterator());
         assertEquals(-1,in.read());
         assertEquals(-1,in.read());
+        in.close();
     }
 
     public void testAdaptNull() {
