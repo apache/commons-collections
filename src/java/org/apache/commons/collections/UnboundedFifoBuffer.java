@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.9 2003/10/09 20:58:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.10 2003/10/14 18:05:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,15 +75,15 @@ import java.util.NoSuchElementException;
  * other operations perform in linear time or worse.
  * <p>
  * Note that this implementation is not synchronized.  The following can be
- * used to provide synchronized access to your <code>UnboundedFifo</code>:
+ * used to provide synchronized access to your <code>UnboundedFifoBuffer</code>:
  * <pre>
- *   Buffer fifo = BufferUtils.synchronizedBuffer(new UnboundedFifo());
+ *   Buffer fifo = BufferUtils.synchronizedBuffer(new UnboundedFifoBuffer());
  * </pre>
  * <p>
  * This buffer prevents null objects from being added.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.9 $ $Date: 2003/10/09 20:58:53 $
+ * @version $Revision: 1.10 $ $Date: 2003/10/14 18:05:42 $
  *
  * @author Avalon
  * @author Federico Barbieri
@@ -113,13 +113,14 @@ public final class UnboundedFifoBuffer extends AbstractCollection implements Buf
      * Constructs an UnboundedFifoBuffer with the specified number of elements.
      * The integer must be a positive integer.
      * 
+     * @param initialSize  the initial size of the buffer
      * @throws IllegalArgumentException  if the size is less than 1
      */
-    public UnboundedFifoBuffer(int size) {
-        if (size <= 0) {
+    public UnboundedFifoBuffer(int initialSize) {
+        if (initialSize <= 0) {
             throw new IllegalArgumentException("The size must be greater than 0");
         }
-        m_buffer = new Object[size + 1];
+        m_buffer = new Object[initialSize + 1];
         m_head = 0;
         m_tail = 0;
     }
@@ -153,13 +154,13 @@ public final class UnboundedFifoBuffer extends AbstractCollection implements Buf
     /**
      * Adds the given element to this buffer.
      *
-     * @param o  the element to add
+     * @param obj  the element to add
      * @return true, always
      * @throws NullPointerException  if the given element is null
      * @throws BufferOverflowException  if this buffer is full
      */
-    public boolean add(final Object o) {
-        if (null == o) {
+    public boolean add(final Object obj) {
+        if (obj == null) {
             throw new NullPointerException("Attempted to add null object to buffer");
         }
 
@@ -183,7 +184,7 @@ public final class UnboundedFifoBuffer extends AbstractCollection implements Buf
             m_tail = j;
         }
 
-        m_buffer[m_tail] = o;
+        m_buffer[m_tail] = obj;
         m_tail++;
         if (m_tail >= m_buffer.length) {
             m_tail = 0;
@@ -238,8 +239,9 @@ public final class UnboundedFifoBuffer extends AbstractCollection implements Buf
      */
     private int increment(int index) {
         index++;
-        if (index >= m_buffer.length)
+        if (index >= m_buffer.length) {
             index = 0;
+        }
         return index;
     }
 
@@ -251,8 +253,9 @@ public final class UnboundedFifoBuffer extends AbstractCollection implements Buf
      */
     private int decrement(int index) {
         index--;
-        if (index < 0)
+        if (index < 0) {
             index = m_buffer.length - 1;
+        }
         return index;
     }
 
