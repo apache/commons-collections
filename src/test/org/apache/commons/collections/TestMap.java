@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.10 2002/02/22 22:01:48 morgand Exp $
- * $Revision: 1.10 $
- * $Date: 2002/02/22 22:01:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.11 2002/02/22 22:21:50 morgand Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/02/22 22:21:50 $
  *
  * ====================================================================
  *
@@ -87,7 +87,7 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.10 2002/02/22 22:01:48 morgand Exp $
+ * @version $Id: TestMap.java,v 1.11 2002/02/22 22:21:50 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
 
@@ -970,7 +970,7 @@ public abstract class TestMap extends TestObject {
         // test to make sure the canonical form has been preserved
         if (!(makeEmptyMap() instanceof Serializable)) return;
         Map map = (Map) readExternalFormFromDisk(getCanonicalEmptyMapName(makeEmptyMap()));
-        assertTrue("Maps is empty",map.isEmpty()  == true);
+        assertTrue("Map is empty",map.isEmpty()  == true);
     }
 
         /**
@@ -989,7 +989,7 @@ public abstract class TestMap extends TestObject {
         // test to make sure the canonical form has been preserved
         if (!(makeFullMap() instanceof Serializable)) return;
         Map map = (Map) readExternalFormFromDisk(getCanonicalFullMapName(makeFullMap()));
-        assertEquals("Both maps are same size",map.size(), getSampleKeys().length);
+        assertEquals("Map is the right size",map.size(), getSampleKeys().length);
     }
 
     /*
