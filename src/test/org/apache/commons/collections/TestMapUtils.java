@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.13 2003/09/17 19:59:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.14 2003/09/20 11:26:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import junit.framework.Test;
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.13 $ $Date: 2003/09/17 19:59:45 $
+ * @version $Revision: 1.14 $ $Date: 2003/09/20 11:26:57 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -648,11 +648,6 @@ public class TestMapUtils extends BulkTest {
         out.reset();
         MapUtils.verbosePrint(outPrint, "Print Map", grandfather);
 
-        System.out.println(EXPECTED_OUT);
-        System.out.println(EXPECTED_OUT.length());
-        System.out.println(out.toString());
-        System.out.println(out.toString().length());
-
         assertEquals(EXPECTED_OUT, out.toString());
     }
     
@@ -699,11 +694,6 @@ public class TestMapUtils extends BulkTest {
     
         out.reset();
         MapUtils.debugPrint(outPrint, "Print Map", grandfather);
-    
-        System.out.println(EXPECTED_OUT);
-        System.out.println(EXPECTED_OUT.length());
-        System.out.println(out.toString());
-        System.out.println(out.toString().length());
     
         assertEquals(EXPECTED_OUT, out.toString());
     }
