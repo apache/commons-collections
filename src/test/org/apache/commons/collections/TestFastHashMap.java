@@ -24,7 +24,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Tests FastHashMap.
  * 
- * @version $Revision: 1.15 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.16 $ $Date: 2004/04/12 12:01:38 $
  * 
  * @author Jason van Zyl
  */
@@ -49,11 +49,4 @@ public class TestFastHashMap extends AbstractTestMap {
         return (fhm);
     }
 
-    /**
-     *  There is a bug in JDK1.2 HashMap; the keySet() will incorrectly
-     *  return false when a null value is removed.
-     */
-    public boolean isAllowNullValue() {
-        return false;
-    }
 }

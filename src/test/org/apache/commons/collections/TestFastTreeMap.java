@@ -23,7 +23,7 @@ import junit.framework.Test;
 /**
  * Tests FastTreeMap.
  * 
- * @version $Revision: 1.14 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.15 $ $Date: 2004/04/12 12:01:38 $
  * 
  * @author Jason van Zyl
  */
@@ -56,14 +56,6 @@ public class TestFastTreeMap extends TestTreeMap {
      *  The comparator for the fast tree map does not support null keys.
      **/
     public boolean isAllowNullKey() {
-        return false;
-    }
-
-    /**
-     * There is a bug in JDK1.2.2 TreeMap; the keySet will incorrectly
-     * return false when a null value is removed
-     */
-    public boolean isAllowNullValue() {
         return false;
     }
 
