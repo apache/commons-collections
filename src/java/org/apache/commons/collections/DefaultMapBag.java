@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.2 2002/06/11 02:41:47 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/11 02:41:47 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.3 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -78,6 +78,7 @@ import java.util.Set;
  * specifying a map instance that will be used to store the contents of 
  * the bag. 
  *
+ * @since 2.0
  * @author Chuck Burdick
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  **/

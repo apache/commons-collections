@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.2 2002/03/21 03:31:09 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/03/21 03:31:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ProxyMap.java,v 1.3 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -77,8 +77,8 @@ import java.util.Set;
  * returned by <code>Collections.synchronizedMap(map)</code>
  * hides part of <code>map</code>'s public interface.</p>
  *
- * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @since 2.0
+ * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  */
 public abstract class ProxyMap implements Map {
     

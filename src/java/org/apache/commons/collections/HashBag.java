@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/HashBag.java,v 1.4 2002/03/25 05:50:57 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/03/25 05:50:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/HashBag.java,v 1.5 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -68,6 +68,7 @@ import java.util.HashMap;
  * An implementation of {@link Bag} that is backed by a {@link
  * HashMap}.
  *
+ * @since 2.0
  * @author Chuck Burdick
  **/
 public class HashBag extends DefaultMapBag implements Bag {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.12 2002/03/19 01:33:12 mas Exp $
- * $Revision: 1.12 $
- * $Date: 2002/03/19 01:33:12 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.13 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.13 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -66,10 +66,11 @@ import java.util.NoSuchElementException;
 
 /** Implements an {@link Iterator} over an array of objects.
   *
+  * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
   * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
-  * @version $Revision: 1.12 $
+  * @version $Revision: 1.13 $
   */
 public class ArrayIterator implements Iterator {
     

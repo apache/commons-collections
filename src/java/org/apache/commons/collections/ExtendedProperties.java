@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.6 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.6 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.7 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -163,6 +163,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  *
+ * @since 1.0
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
  * @author <a href="mailto:daveb@miceda-data">Dave Bryson</a>
@@ -172,7 +173,7 @@ import java.util.Vector;
  * @author <a href="mailto:kjohnson@transparent.com">Kent Johnson</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
- * @version $Id: ExtendedProperties.java,v 1.6 2002/02/10 08:07:42 jstrachan Exp $
+ * @version $Id: ExtendedProperties.java,v 1.7 2002/06/12 03:59:15 mas Exp $
  */
 public class ExtendedProperties extends Hashtable
 {

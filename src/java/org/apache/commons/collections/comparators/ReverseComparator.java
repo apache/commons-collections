@@ -60,9 +60,10 @@ import java.util.Comparator;
 /**
  * Reverses the order of another comparator.
  * 
+ * @since 2.0
  * @author bayard@generationjava.com
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: ReverseComparator.java,v 1.7 2002/03/20 17:09:16 morgand Exp $
+ * @version $Id: ReverseComparator.java,v 1.8 2002/06/12 03:59:17 mas Exp $
  */
 public class ReverseComparator implements Comparator,Serializable {
 

@@ -61,9 +61,10 @@ import java.util.Stack;
 /**
  * This class implements a stack for String objects.
  *
+ * @since 2.0
  * @author <a href="mailto:jmcnally@collab.net">John D. McNally</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
- * @version $Id: StringStack.java,v 1.1 2002/02/23 03:52:02 bayard Exp $
+ * @version $Id: StringStack.java,v 1.2 2002/06/12 03:59:15 mas Exp $
  */
 public class StringStack implements Serializable
 {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterListIterator.java,v 1.3 2002/05/13 16:10:37 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2002/05/13 16:10:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterListIterator.java,v 1.4 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -71,7 +71,8 @@ import java.util.NoSuchElementException;
   * <code>Predicate</code> evaluates to <code>true</code> are
   * returned by the iterator.
   * 
-  * @version $Revision: 1.3 $ $Date: 2002/05/13 16:10:37 $
+  * @since 2.0
+  * @version $Revision: 1.4 $ $Date: 2002/06/12 03:59:15 $
   * @author Rodney Waldhoff
   */
 public class FilterListIterator extends ProxyListIterator {

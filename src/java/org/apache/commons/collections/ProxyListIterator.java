@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyListIterator.java,v 1.1 2002/02/25 23:53:20 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/02/25 23:53:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyListIterator.java,v 1.2 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -66,8 +66,9 @@ import java.util.ListIterator;
  * A proxy {@link ListIterator ListIterator} which delegates its
  * methods to a proxy instance.
  *
+ * @since 2.0
  * @see ProxyIterator
- * @version $Revision: 1.1 $ $Date: 2002/02/25 23:53:20 $
+ * @version $Revision: 1.2 $ $Date: 2002/06/12 03:59:15 $
  * @author Rodney Waldhoff
  */
 public class ProxyListIterator implements ListIterator {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.5 2002/03/20 05:16:24 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/03/20 05:16:24 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.6 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -90,8 +90,9 @@ import java.lang.UnsupportedOperationException; // stops a javadoc warning
  * <p>
  * <b>Note that this implementation is not synchronized.</b>
  *
+ * @since 1.0
  * @author Rodney Waldhoff
- * @version $Id: CursorableLinkedList.java,v 1.5 2002/03/20 05:16:24 mas Exp $
+ * @version $Id: CursorableLinkedList.java,v 1.6 2002/06/12 03:59:15 mas Exp $
  * @see java.util.LinkedList
  */
 public class CursorableLinkedList implements List, Serializable {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.10 2002/03/24 22:00:55 mas Exp $
- * $Revision: 1.10 $
- * $Date: 2002/03/24 22:00:55 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.11 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -84,6 +84,7 @@ import java.util.Set;
   * If an exception occurs during attempts to get or set a property then the
   * property is considered non existent in the Map
   *
+  * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   */
 

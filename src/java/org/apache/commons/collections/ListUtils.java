@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.3 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.4 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -67,6 +67,7 @@ import java.util.List;
 /**
  * Miscelaneous utilities to manipulate Lists.
  *
+ * @since 1.0
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  * @deprecated See {@link org.apache.commons.collections.CollectionUtils}.

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.6 2002/03/25 21:20:53 morgand Exp $
- * $Revision: 1.6 $
- * $Date: 2002/03/25 21:20:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.7 2002/06/12 03:59:17 mas Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/06/12 03:59:17 $
  *
  * ====================================================================
  *
@@ -94,6 +94,7 @@ import java.util.List;
  * it <i>is</i> thread-safe to perform multiple comparisons
  * after all the setup operations are complete.</p>
  * 
+ * @since 2.0
  * @author Morgan Delagrange
  */
 public class ComparatorChain implements Comparator,Serializable {

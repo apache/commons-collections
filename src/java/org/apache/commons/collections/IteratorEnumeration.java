@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorEnumeration.java,v 1.3 2002/03/13 05:40:31 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/03/13 05:40:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorEnumeration.java,v 1.4 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -65,6 +65,7 @@ import java.util.Iterator;
 
 /** Adapter to make an {@link Iterator Iterator} instance appear to be an {@link Enumeration Enumeration} instances
   *
+  * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   */
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.15 2002/05/09 03:10:46 mas Exp $
- * $Revision: 1.15 $
- * $Date: 2002/05/09 03:10:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.16 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.16 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -89,6 +89,7 @@ import java.util.Iterator;
  * key is now equivalent to LRUMap.getFirst().
  * </p>
  * 
+ * @since 1.0
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
  */

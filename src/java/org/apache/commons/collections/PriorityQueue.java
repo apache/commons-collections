@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.4 2002/03/19 04:34:18 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/03/19 04:34:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.5 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -66,6 +66,7 @@ import java.util.NoSuchElementException;
  * Interface for priority queues.
  * This interface does not dictate whether it is min or max heap.
  *
+ * @since 1.0
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  */
 public interface PriorityQueue

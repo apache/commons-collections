@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.1 2002/01/20 04:36:08 craigmcc Exp $
- * $Revision: 1.1 $
- * $Date: 2002/01/20 04:36:08 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.2 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -134,6 +134,7 @@ import java.util.*;
 * Collection valuesByValue() returns the values in a Collection whose
 * iterator will iterate over the values in ascending order.<p>
 *
+* @since 2.0
 * @author Marc Johnson (marcj at users dot sourceforge dot net)
 */
 

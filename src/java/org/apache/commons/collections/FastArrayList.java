@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.4 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.5 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -93,8 +93,9 @@ import java.util.ListIterator;
  * <code>java.util.ArrayList</code> directly (with no synchronization), for
  * maximum performance.</p>
  *
+ * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.4 $ $Date: 2002/02/10 08:07:42 $
+ * @version $Revision: 1.5 $ $Date: 2002/06/12 03:59:15 $
  */
 
 public class FastArrayList extends ArrayList {

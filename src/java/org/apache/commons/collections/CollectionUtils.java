@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.7 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.7 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.8 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -77,7 +77,8 @@ import java.util.Set;
  *
  * @author Rodney Waldhoff
  *
- * @version $Id: CollectionUtils.java,v 1.7 2002/02/10 08:07:42 jstrachan Exp $
+ * @since 1.0
+ * @version $Id: CollectionUtils.java,v 1.8 2002/06/12 03:59:15 mas Exp $
  */
 public class CollectionUtils {
 

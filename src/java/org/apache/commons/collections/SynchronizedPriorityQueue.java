@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.3 2002/03/19 13:19:13 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/03/19 13:19:13 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.4 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -67,6 +67,7 @@ import java.util.NoSuchElementException;
  * Provides synchronized wrapper methods for all the methods 
  * defined in the PriorityQueue interface.
  *
+ * @since 1.0
  * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a> 
  */
 public final class SynchronizedPriorityQueue 

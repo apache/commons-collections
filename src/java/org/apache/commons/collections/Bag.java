@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.5 2002/03/13 06:00:20 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/03/13 06:00:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.6 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -71,6 +71,7 @@ import java.util.Set;
  * c}</code>.  Calling {@link #getCount(Object)} on <code>a</code> would return
  * 2, while calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
  *
+ * @since 2.0
  * @author Chuck Burdick
  **/
 public interface Bag extends Collection {

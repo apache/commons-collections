@@ -68,8 +68,9 @@ import java.util.Comparator;
  * for enforcing the natural order in custom implementations
  * of SortedSet and SortedMap.
  *
+ * @since 2.0
  * @author bayard@generationjava.com
- * @version $Id: ComparableComparator.java,v 1.4 2002/03/19 05:09:05 mas Exp $
+ * @version $Id: ComparableComparator.java,v 1.5 2002/06/12 03:59:17 mas Exp $
  */
 public class ComparableComparator implements Comparator,Serializable {
 

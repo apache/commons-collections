@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.11 2002/06/09 07:14:14 mas Exp $
- * $Revision: 1.11 $
- * $Date: 2002/06/09 07:14:14 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.12 2002/06/12 03:59:15 mas Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/06/12 03:59:15 $
  *
  * ====================================================================
  *
@@ -93,6 +93,7 @@ import java.util.ConcurrentModificationException;
  *  required, use {@link Collections#synchronizedMap(Map)} as it is documented,
  *  or use explicit synchronization controls.
  *
+ *  @since 2.0
  *  @author <a href="mailto:mas@apache.org">Michael A. Smith</A>
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
