@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.6 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.7 2002/08/10 00:49:45 pjack Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/08/10 00:49:45 $
  *
  * ====================================================================
  *
@@ -94,9 +94,21 @@ import java.util.Set;
  * <code>java.util.HashMap</code> directly (with no synchronization), for
  * maximum performance.</p>
  *
+ * <P><strong>NOTE</strong>: <I>This class is not cross-platform.  
+ * Using it may cause unexpected failures on some architectures.</I>
+ * It suffers from the same problems as the double-checked locking idiom.  
+ * In particular, the instruction that clones the internal collection and the 
+ * instruction that sets the internal reference to the clone can be executed 
+ * or perceived out-of-order.  This means that any read operation might fail 
+ * unexpectedly, as it may be reading the state of the internal collection
+ * before the internal collection is fully formed.
+ * For more information on the double-checked locking idiom, see the
+ * <A Href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">
+ * Double-Checked Locking Idiom Is Broken Declartion</A>.</P>
+ *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.6 $ $Date: 2002/06/12 03:59:15 $
+ * @version $Revision: 1.7 $ $Date: 2002/08/10 00:49:45 $
  */
 
 public class FastHashMap extends HashMap {
