@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.6 2003/10/07 22:20:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.7 2003/10/09 20:21:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/10/07 22:20:57 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/09 20:21:32 $
  * 
  * @author Matthew Hawthorne
  */
@@ -132,6 +132,13 @@ public abstract class TestBidiMap extends AbstractTestMap {
         return false;
     }
     
+    /**
+     * Override as DualHashBidiMap didn't exist until version 3.
+     */
+    protected String getCompatibilityVersion() {
+        return "3";
+    }
+
     // BidiPut
     //-----------------------------------------------------------------------
     public void testBidiPut() {
@@ -338,10 +345,29 @@ public abstract class TestBidiMap extends AbstractTestMap {
         protected BidiMap makeEmptyBidiMap() {
             return main.makeEmptyBidiMap().inverseBidiMap();
         }
-        
         protected BidiMap makeFullBidiMap() {
             return main.makeFullBidiMap().inverseBidiMap();
         }
+        
+        protected String getCompatibilityVersion() {
+            return main.getCompatibilityVersion();
+        }
+        protected boolean isAllowNullKey() {
+            return main.isAllowNullKey();
+        }
+        protected boolean isAllowNullValue() {
+            return main.isAllowNullValue();
+        }
+        protected boolean isPutAddSupported() {
+            return main.isPutAddSupported();
+        }
+        protected boolean isPutChangeSupported() {
+            return main.isPutChangeSupported();
+        }
+        protected boolean isRemoveSupported() {
+            return main.isRemoveSupported();
+        }
+
     }
     
 }

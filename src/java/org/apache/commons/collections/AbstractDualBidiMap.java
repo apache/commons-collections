@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.1 2003/10/06 23:47:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.2 2003/10/09 20:21:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.1 2003/10/06 23:47:17 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.2 2003/10/09 20:21:32 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -99,22 +99,19 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     protected transient Set entrySet = null;
 
     /**
-     * Creates an empty map.
+     * Creates an empty map, initialised by <code>createMap</code>.
      * <p>
-     * The maps passed in are not validated, so subclasses need to ensure
-     * that they are non-null, empty and compatible.
-     * 
-     * @param normalMap  the normal direction map
-     * @param reverseMap  the reverse direction map
+     * The map array must be populated by the subclass.
      */
-    protected AbstractDualBidiMap(Map normalMap, Map reverseMap) {
+    protected AbstractDualBidiMap() {
         super();
-        maps[0] = normalMap;
-        maps[1] = reverseMap;
+        maps[0] = createMap();
+        maps[1] = createMap();
     }
 
     /** 
-     * Constructs a map that decorates the specified maps.
+     * Constructs a map that decorates the specified maps,
+     * used by the subclass <code>createBidiMap</code> implementation.
      *
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
@@ -126,7 +123,16 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         maps[1] = reverseMap;
         this.inverseBidiMap = inverseBidiMap;
     }
-    
+
+    /**
+     * Creates a new instance of the map used by the subclass to store data.
+     * <p>
+     * Do not change any instance variables from this method.
+     * 
+     * @return the map to be used for internal storage
+     */
+    protected abstract Map createMap();
+
     /**
      * Creates a new instance of the subclass.
      * 
