@@ -27,7 +27,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for UnboundedFifoBuffer.
  * 
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:37 $
+ * @version $Revision: 1.4 $ $Date: 2004/06/01 22:55:54 $
  * 
  * @author Unknown
  */
@@ -143,5 +143,16 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         }
         fail();
     }
-}
 
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnboundedFifoBuffer.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnboundedFifoBuffer.fullCollection.version3.1.obj");
+//    }
+
+}

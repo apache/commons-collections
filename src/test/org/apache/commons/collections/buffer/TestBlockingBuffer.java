@@ -33,7 +33,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * 
  * @author Janek Bogucki
  * @author Phil Steitz
@@ -55,6 +55,10 @@ public class TestBlockingBuffer extends AbstractTestObject {
 
     public Object makeObject() {
         return BlockingBuffer.decorate(new MyBuffer());
+    }
+
+    public boolean isEqualsCheckable() {
+        return false;
     }
 
     //-----------------------------------------------------------------------
@@ -480,4 +484,19 @@ public class TestBlockingBuffer extends AbstractTestObject {
             Thread.currentThread().sleep(100);
         } catch (InterruptedException e) {}
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        Buffer buffer = BlockingBuffer.decorate(new UnboundedFifoBuffer());
+//        writeExternalFormToDisk((java.io.Serializable) buffer, "D:/dev/collections/data/test/BlockingBuffer.emptyCollection.version3.1.obj");
+//        buffer = BlockingBuffer.decorate(new UnboundedFifoBuffer());
+//        buffer.add("A");
+//        buffer.add("B");
+//        buffer.add("C");
+//        writeExternalFormToDisk((java.io.Serializable) buffer, "D:/dev/collections/data/test/BlockingBuffer.fullCollection.version3.1.obj");
+//    }
+
 }
