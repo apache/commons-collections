@@ -77,4 +77,118 @@
         tofile="${jardir__}/${testfwkName}.jar" />
   </postGoal>
 
+  <!-- ============== JAVADOC PREVIOUS VERSIONS ================== -->
+  <postGoal name="javadoc:generate">
+<!-- This is a postGoal because we need data from the javadoc plugin which I can't get another way -->
+<!--    description="Retrieves a tagged version of the source and generates the javadoc"-->
+
+    <j:if test="${context.getVariable('collections.javadoc.tag') == null}">
+      <ant:echo message="The collections.javadoc.tag property must be set for javadoc:tag" />
+    </j:if>
+    <j:if test="${context.getVariable('collections.javadoc.tag') != null}">
+      <ant:echo message="Generate javadoc for ${collections.javadoc.tag}" />
+      <!-- not in javadoc plugin, so have to setup properties -->
+      <j:set var="maven.javadoc.destdir" value="${pom.getPluginContext('maven-javadoc-plugin').getVariable('maven.javadoc.destdir')}" />
+      <j:set var="maven.javadoc.stylesheet" value="${pom.getPluginContext('maven-javadoc-plugin').getVariable('maven.javadoc.stylesheet')}" />
+      
+      <ant:property name="collections.javadoc.tag.destdir" value="${maven.javadoc.destdir}-${collections.javadoc.tag}"/>
+      <ant:property name="collections.javadoc.tag.stylesheet" value="${maven.javadoc.stylesheet}"/>
+      
+      <ant:property name="taggedBaseDir" value="${maven.build.dir}/javadoc/${collections.javadoc.tag}" />
+      <ant:mkdir dir="${taggedBaseDir}" />
+      <maven:makeRelativePath var="relativeSrcDir" basedir="${basedir}" path="${pom.build.sourceDirectory}" />
+      <util:replace var="relativeSrcDir" oldChar="\" newChar="/" value="${relativeSrcDir}" />
+      <ant:property name="taggedSourceDir" 
+          value="${taggedBaseDir}/${pom.repository.cvsModule}/${relativeSrcDir}"/>
+      <ant:cvs
+          cvsRoot="${pom.repository.cvsRoot}"
+          package="${pom.repository.cvsModule}/${relativeSrcDir}"
+          dest="${taggedBaseDir}"
+          tag="${collections.javadoc.tag}"
+      />    
+          
+      <ant:mkdir dir="${collections.javadoc.tag.destdir}" />
+      <ant:tstamp>
+         <ant:format property="currentYear" pattern="yyyy"/>
+      </ant:tstamp>
+      <ant:tstamp>
+        <j:choose>
+          <j:when test="${pom.inceptionYear.equals(currentYear)}">
+            <ant:format property="year" pattern="yyyy"/>
+          </j:when>
+          <j:otherwise>
+            <ant:format property="year" pattern="${pom.inceptionYear}-yyyy"/>
+          </j:otherwise>
+        </j:choose>
+      </ant:tstamp>
+      <ant:property name="copyright"
+        value="Copyright &amp;copy; ${year} ${pom.organization.name}. All Rights Reserved." />
+        
+      <ant:javadoc
+        packagenames="${pom.package}.*"
+        destdir="${collections.javadoc.tag.destdir}"
+        sourcepath="${taggedSourceDir}"
+        author="true"
+        protected="true"
+        version="true"
+        use="true"
+        windowtitle="${collections.javadoc.tag.windowtitle}"
+        doctitle="${collections.javadoc.tag.windowtitle}"
+        bottom="${copyright}"
+        stylesheetfile="${maven.javadoc.stylesheet}">
+        
+      </ant:javadoc>
+    </j:if>
+  </postGoal>
+
+  <!-- ============== DIST ================== -->
+  <postGoal name="dist:prepare-bin-filesystem">
+    <j:set var="maven.dist.bin.assembly.dir" value="${pom.getPluginContext('maven-dist-plugin').getVariable('maven.dist.bin.assembly.dir')}" />
+    
+    <!-- Copy Files -->
+    <ant:copy todir="${maven.dist.bin.assembly.dir}">
+      <ant:fileset dir=".">
+        <ant:include name="RELEASE-NOTES.html"/>
+      </ant:fileset>
+    </ant:copy>
+
+    <!-- Copy Jars -->
+    <ant:copy todir="${maven.dist.bin.assembly.dir}">
+      <ant:fileset dir="${maven.build.dir}">
+        <ant:include name="*testframework*.jar"/>
+      </ant:fileset>
+    </ant:copy>
+
+    <!-- Delete tagged old release documentation -->
+    <ant:delete includeEmptyDirs="true">
+      <ant:fileset dir="${maven.dist.bin.assembly.dir}/docs" includes="apidocs-*/**" />
+    </ant:delete>
+    
+  </postGoal>
+  
+  <postGoal name="dist:prepare-src-filesystem">
+    <j:set var="maven.dist.src.assembly.dir" value="${pom.getPluginContext('maven-dist-plugin').getVariable('maven.dist.src.assembly.dir')}" />
+    
+    <!-- Copy Files -->
+    <ant:copy todir="${maven.dist.src.assembly.dir}">
+      <ant:fileset dir=".">
+        <ant:include name="RELEASE-NOTES.html"/>
+        <ant:include name="DEVELOPERS-GUIDE.html"/>
+      </ant:fileset>
+    </ant:copy>
+
+    <!-- Copy Jars -->
+    <ant:copy todir="${maven.dist.src.assembly.dir}">
+      <ant:fileset dir="${maven.build.dir}">
+        <ant:include name="*.jar"/>
+      </ant:fileset>
+    </ant:copy>
+    
+    <!-- Copy Test Data -->
+    <ant:copy todir="${maven.dist.src.assembly.dir}/data">
+      <ant:fileset dir="data" />
+    </ant:copy>
+    
+  </postGoal>
+  
 </project>
