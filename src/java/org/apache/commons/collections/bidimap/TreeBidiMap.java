@@ -67,7 +67,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.14 $ $Date: 2004/05/26 21:58:02 $
+ * @version $Revision: 1.15 $ $Date: 2004/11/12 00:02:58 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -1612,7 +1612,7 @@ public class TreeBidiMap implements OrderedBidiMap {
             expectedModifications++;
             lastReturnedNode = null;
             if (nextNode == null) {
-                previousNode = main.greatestNode(main.rootNode[orderType], orderType);
+                previousNode = TreeBidiMap.greatestNode(main.rootNode[orderType], orderType);
             } else {
                 previousNode = main.nextSmaller(nextNode, orderType);
             }
@@ -1674,7 +1674,7 @@ public class TreeBidiMap implements OrderedBidiMap {
          */
         EntryView(final TreeBidiMap main, final int orderType, final int dataType) {
             super(main, orderType, dataType);
-            this.oppositeType = main.oppositeIndex(orderType);
+            this.oppositeType = TreeBidiMap.oppositeIndex(orderType);
         }
         
         public boolean contains(Object obj) {
@@ -1979,14 +1979,14 @@ public class TreeBidiMap implements OrderedBidiMap {
             if (main.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
             }
-            return main.leastNode(main.rootNode[VALUE], VALUE).getValue();
+            return TreeBidiMap.leastNode(main.rootNode[VALUE], VALUE).getValue();
         }
 
         public Object lastKey() {
             if (main.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
             }
-            return main.greatestNode(main.rootNode[VALUE], VALUE).getValue();
+            return TreeBidiMap.greatestNode(main.rootNode[VALUE], VALUE).getValue();
         }
     
         public Object nextKey(Object key) {

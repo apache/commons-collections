@@ -33,7 +33,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * 
  * @author Janek Bogucki
  * @author Phil Steitz
@@ -380,7 +380,7 @@ public class TestBlockingBuffer extends AbstractTestObject {
 
             try {
                 // wait for other thread to block on get() or remove()
-                Thread.currentThread().sleep(100);
+                Thread.sleep(100);
             }
             catch (InterruptedException e) {}
 
@@ -403,7 +403,7 @@ public class TestBlockingBuffer extends AbstractTestObject {
 
             try {
                 // wait for other thread to block on get() or remove()
-                Thread.currentThread().sleep(100);
+                Thread.sleep(100);
             }
             catch (InterruptedException e) {}
 
@@ -481,7 +481,7 @@ public class TestBlockingBuffer extends AbstractTestObject {
 
     private void delay(){
         try {
-            Thread.currentThread().sleep(100);
+            Thread.sleep(100);
         } catch (InterruptedException e) {}
     }
 
