@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.14 2002/05/08 18:11:36 morgand Exp $
- * $Revision: 1.14 $
- * $Date: 2002/05/08 18:11:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.15 2002/05/09 03:10:46 mas Exp $
+ * $Revision: 1.15 $
+ * $Date: 2002/05/09 03:10:46 $
  *
  * ====================================================================
  *
@@ -131,6 +131,8 @@ public class LRUMap extends SequencedHashMap implements Externalizable {
      *         null value <i>or</i> if the key has no value.
      */
     public Object get(Object key) {
+        if(!containsKey(key)) return null;
+
         Object value = remove(key);
         super.put(key,value);
         return value;
@@ -240,5 +242,9 @@ public class LRUMap extends SequencedHashMap implements Externalizable {
             removeLRU();
         }
     }
-        
+
+
+    // add a serial version uid, so that if we change things in the future
+    // without changing the format, we can still deserialize properly.
+    private static final long serialVersionUID = 2197433140769957051L;
 }
