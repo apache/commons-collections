@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.2 2003/05/10 15:50:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeSortedMap.java,v 1.1 2003/05/10 15:50:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,35 +57,50 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestSortedMap;
+
 /**
- * Entry point for all collections decorators tests.
- * 
- * @version $Revision: 1.2 $ $Date: 2003/05/10 15:50:14 $
+ * Extension of {@link TestSortedMap} for exercising the {@link FixedSizeSortedMap}
+ * implementation.
+ *
+ * @version $Revision: 1.1 $ $Date: 2003/05/10 15:50:13 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestFixedSizeSortedMap extends TestSortedMap {
+
+    public TestFixedSizeSortedMap(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestFixedSizeSortedMap.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestFixedSizeSortedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestSequencedSet.suite());
-        return suite;
+
+    public Map makeEmptyMap() {
+        return FixedSizeSortedMap.decorate(new TreeMap());
     }
-        
+
+    protected Map makeFullMap() {
+        SortedMap map = new TreeMap();
+        addSampleMappings(map);
+        return FixedSizeSortedMap.decorate(map);
+    }
+    
+    protected boolean isAddRemoveModifiable() {
+        return false;
+    }
+
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.2 2003/05/10 15:50:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSortedMap.java,v 1.1 2003/05/10 15:50:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,37 +55,31 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.decorators;
+package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
- * Entry point for all collections decorators tests.
- * 
- * @version $Revision: 1.2 $ $Date: 2003/05/10 15:50:14 $
+ * Tests base {@link java.util.SortedMap} methods and contracts.
+ *
+ * @version $Revision: 1.1 $ $Date: 2003/05/10 15:50:14 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public abstract class TestSortedMap extends TestMap {
+
+    public TestSortedMap(String testName) {
         super(testName);
     }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
     
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestSequencedSet.suite());
-        return suite;
+    /**
+     * Can't sort null keys.
+     * 
+     * @return false
+     */
+    protected boolean useNullKey() {
+        return false;
     }
-        
+
+
+    // TODO: Add the SortedMap tests!
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.2 2003/05/10 15:50:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeList.java,v 1.1 2003/05/10 15:50:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,35 +57,54 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestList;
+
 /**
- * Entry point for all collections decorators tests.
- * 
- * @version $Revision: 1.2 $ $Date: 2003/05/10 15:50:14 $
+ * Extension of {@link TestList} for exercising the {@link FixedSizeList}
+ * implementation.
+ *
+ * @version $Revision: 1.1 $ $Date: 2003/05/10 15:50:14 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestFixedSizeList extends TestList {
+
+    public TestFixedSizeList(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestFixedSizeList.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestFixedSizeList.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestSequencedSet.suite());
-        return suite;
+
+    public List makeEmptyList() {
+        return FixedSizeList.decorate(new ArrayList());
     }
-        
+
+    protected List makeFullList() {
+        List list = new ArrayList();
+        list.addAll(Arrays.asList(getFullElements()));
+        return FixedSizeList.decorate(list);
+    }
+    
+    protected boolean isAddSupported() {
+        return false;
+    }
+
+    protected boolean isRemoveSupported() {
+        return false;
+    }
+
 }

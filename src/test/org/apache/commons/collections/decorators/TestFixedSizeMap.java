@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.2 2003/05/10 15:50:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeMap.java,v 1.1 2003/05/10 15:50:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,35 +57,49 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestMap;
+
 /**
- * Entry point for all collections decorators tests.
- * 
- * @version $Revision: 1.2 $ $Date: 2003/05/10 15:50:14 $
+ * Extension of {@link TestMap} for exercising the {@link FixedSizeMap}
+ * implementation.
+ *
+ * @version $Revision: 1.1 $ $Date: 2003/05/10 15:50:14 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestFixedSizeMap extends TestMap {
+
+    public TestFixedSizeMap(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestFixedSizeMap.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestFixedSizeMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestSequencedSet.suite());
-        return suite;
+
+    public Map makeEmptyMap() {
+        return FixedSizeMap.decorate(new HashMap());
     }
-        
+
+    protected Map makeFullMap() {
+        Map map = new HashMap();
+        addSampleMappings(map);
+        return FixedSizeMap.decorate(map);
+    }
+    
+    protected boolean isAddRemoveModifiable() {
+        return false;
+    }
+
 }
