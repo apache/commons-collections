@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.24 2003/12/28 17:59:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.25 2003/12/28 22:50:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -89,9 +89,11 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * required, use {@link java.util.Collections#synchronizedMap(Map)} as it is documented,
  * or use explicit synchronization controls.
  *
- * @see org.apache.commons.collections.set.ListOrderedSet
+ * @deprecated Replaced by LinkedMap and ListOrderedMap in map subpackage. Due to be removed in v4.0.
+ * @see org.apache.commons.collections.map.LinkedMap
+ * @see org.apache.commons.collections.map.ListOrderedMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.24 $ $Date: 2003/12/28 17:59:47 $
+ * @version $Revision: 1.25 $ $Date: 2003/12/28 22:50:42 $
  * 
  * @author Michael A. Smith
  * @author Daniel Rall
