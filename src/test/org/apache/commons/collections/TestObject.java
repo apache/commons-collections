@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.4 2002/02/22 22:01:32 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/22 22:01:32 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.5 2002/02/25 18:14:57 morgand Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/02/25 18:14:57 $
  *
  * ====================================================================
  *
@@ -90,13 +90,17 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.4 2002/02/22 22:01:32 morgand Exp $
+ * @version $Id: TestObject.java,v 1.5 2002/02/25 18:14:57 morgand Exp $
  */
 public abstract class TestObject extends TestCase {
     public TestObject(String testName) {
         super(testName);
     }
 
+    // This constant makes it possible for TestMap (and other subclasses, 
+    // if necessary) to automatically check CVS for a versionX copy of a 
+    // Serialized object, so we can make sure that compatibility is maintained.  
+    // See, for example, TestMap.getCanonicalFullMapName(Map map).
     public static final String COLLECTIONS_VERSION = "version2";
 
     /**
