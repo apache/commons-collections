@@ -1,5 +1,5 @@
 /*
- * $Header:$ 
+ * $Header$ 
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.Transformer;
  * <p />
  * 
  * @since Commons Collections 2.0 (?)
- * @version $Revision:$ $Date:$
+ * @version $Revision$ $Date$
  * 
  * @see org.apache.commons.collections.Transformer
  * @see org.apache.commons.collections.comparators.ComparableComparator

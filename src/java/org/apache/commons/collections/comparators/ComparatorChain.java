@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.13 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.14 2003/09/17 08:38:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -93,7 +93,7 @@ import java.util.List;
  * 
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision: 1.13 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.14 $ $Date: 2003/09/17 08:38:59 $
  */
 public class ComparatorChain implements Comparator,Serializable {
 
@@ -206,7 +206,7 @@ public class ComparatorChain implements Comparator,Serializable {
      * @param index      index of the Comparator to replace
      * @param comparator Comparator to place at the given index
      * @exception IndexOutOfBoundsException
-     *                   if index &lt; 0 or index &gt; size()
+     *                   if index &lt; 0 or index &gt;= size()
      */
     public void setComparator(int index, Comparator comparator) 
     throws IndexOutOfBoundsException {
