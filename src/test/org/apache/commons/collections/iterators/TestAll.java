@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all iterator tests.
  * 
- * @version $Revision: 1.12 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision: 1.13 $ $Date: 2004/03/14 23:27:22 $
  * 
  * @author Rodney Waldhoff
  */
@@ -49,6 +49,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestLoopingIterator.suite());
         suite.addTest(TestSingletonIterator.suite());
         suite.addTest(TestSingletonListIterator.suite());
+        suite.addTest(TestTreeIterator.suite());
         suite.addTest(TestUniqueFilterIterator.suite());
         suite.addTest(TestUnmodifiableIterator.suite());
         suite.addTest(TestUnmodifiableListIterator.suite());
