@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.4 2002/02/13 22:32:37 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/13 22:32:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.5 2002/02/13 23:55:41 morgand Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/02/13 23:55:41 $
  *
  * ====================================================================
  *
@@ -68,8 +68,10 @@ import java.util.Map;
 import java.util.HashMap;
 
 /**
+ * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @version $Id: TestLRUMap.java,v 1.4 2002/02/13 22:32:37 morgand Exp $
+ * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
+ * @version $Id: TestLRUMap.java,v 1.5 2002/02/13 23:55:41 morgand Exp $
  */
 public class TestLRUMap extends TestHashMap
 {
@@ -126,5 +128,27 @@ public class TestLRUMap extends TestHashMap
         
         assertTrue("size of Map should be 3, but was " + map2.size(), map2.size() == 3);
     }
+
+    /**
+     * Confirm that putAll(Map) does not cause the LRUMap
+     * to exceed its maxiumum size.
+     */
+    public void testPutAll() {
+        LRUMap map2 = new LRUMap(3);
+        map2.put(new Integer(1),"foo");
+        map2.put(new Integer(2),"foo");
+        map2.put(new Integer(3),"foo");
+
+        HashMap hashMap = new HashMap();
+        hashMap.put(new Integer(4),"foo");
+
+        map2.putAll(hashMap);
+
+        assertTrue("max size is 3, but actual size is " + map2.size(),
+                   map2.size() == 3);
+        assertTrue("map should contain the Integer(4) object",
+                   map2.containsKey(new Integer(4)));
+    }
+
 
 }
