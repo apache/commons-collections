@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/TestCompositeCollection.java,v 1.3 2003/11/18 22:37:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/TestCompositeCollection.java,v 1.4 2003/12/14 21:42:55 psteitz Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,7 +68,7 @@ import junit.framework.TestSuite;
  * {@link CompositeCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:18 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/14 21:42:55 $
  * 
  * @author Brian McCallister
  * @author Phil Steitz
@@ -116,7 +116,7 @@ public class TestCompositeCollection extends AbstractTestCollection {
     }
     
     /**
-     * Full collection consists of 5 collections, each with one element
+     * Full collection consists of 4 collections, each with one element
      */
     public Collection makeFullCollection() {
         CompositeCollection compositeCollection = new CompositeCollection();
@@ -130,7 +130,7 @@ public class TestCompositeCollection extends AbstractTestCollection {
     }
     
     /**
-     * Full collection should look like a collection with 5 elements
+     * Full collection should look like a collection with 4 elements
      */
     public Collection makeConfirmedFullCollection() {
         Collection collection = new HashSet();

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/CompositeCollection.java,v 1.2 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/CompositeCollection.java,v 1.3 2003/12/14 21:42:55 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,14 +68,14 @@ import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
- * Decorates a other collections to provide a single unified view.
+ * Decorates a collection of other collections to provide a single unified view.
  * <p>
  * Changes made to this collection will actually be made on the decorated collection.
  * Add and remove operations require the use of a pluggable strategy. If no 
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/14 21:42:55 $
  *
  * @author Brian McCallister
  * @author Stephen Colebourne
@@ -103,7 +103,7 @@ public class CompositeCollection implements Collection {
      * @param coll  a collection to decorate
      */
     public CompositeCollection(Collection coll) {
-        super();
+        this();
         this.addComposited(coll);
     }
     
@@ -114,7 +114,7 @@ public class CompositeCollection implements Collection {
      * @param colls  an array of collections to decorate
      */
     public CompositeCollection(Collection[] colls) {
-        super();
+        this();
         this.addComposited(colls);
     }
     
