@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/02 23:09:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -140,9 +140,6 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             return subSortedNewValues.toArray();
         }
         
-        public String getCompatibilityVersion() {
-            return main.getCompatibilityVersion();
-        }
         public boolean isAllowNullKey() {
             return main.isAllowNullKey();
         }
@@ -199,6 +196,20 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             } catch (IllegalArgumentException ex) {}
             verify();
         }
+        public String getCompatibilityVersion() {
+            return main.getCompatibilityVersion() + ".HeadMapView";
+        }
+
+//        public void testCreate() throws Exception {
+//            Map map = makeEmptyMap();
+//            writeExternalFormToDisk(
+//                (java.io.Serializable) map,
+//                "D:/dev/collections/data/test/FixedSizeSortedMap.emptyCollection.version3.1.HeadMapView.obj");
+//            map = makeFullMap();
+//            writeExternalFormToDisk(
+//                (java.io.Serializable) map,
+//                "D:/dev/collections/data/test/FixedSizeSortedMap.fullCollection.version3.1.HeadMapView.obj");
+//        }
     }
     
     public static class TestTailMap extends TestViewMap {
@@ -236,6 +247,20 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             } catch (IllegalArgumentException ex) {}
             verify();
         }
+        public String getCompatibilityVersion() {
+            return main.getCompatibilityVersion() + ".TailMapView";
+        }
+
+//        public void testCreate() throws Exception {
+//            Map map = makeEmptyMap();
+//            writeExternalFormToDisk(
+//                (java.io.Serializable) map,
+//                "D:/dev/collections/data/test/FixedSizeSortedMap.emptyCollection.version3.1.TailMapView.obj");
+//            map = makeFullMap();
+//            writeExternalFormToDisk(
+//                (java.io.Serializable) map,
+//                "D:/dev/collections/data/test/FixedSizeSortedMap.fullCollection.version3.1.TailMapView.obj");
+//        }
     }
     
     public static class TestSubMap extends TestViewMap {
@@ -280,6 +305,20 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             } catch (IllegalArgumentException ex) {}
             verify();
         }
+        public String getCompatibilityVersion() {
+            return main.getCompatibilityVersion() + ".SubMapView";
+        }
+
+//        public void testCreate() throws Exception {
+//            Map map = makeEmptyMap();
+//            writeExternalFormToDisk(
+//                (java.io.Serializable) map,
+//                "D:/dev/collections/data/test/FixedSizeSortedMap.emptyCollection.version3.1.SubMapView.obj");
+//            map = makeFullMap();
+//            writeExternalFormToDisk(
+//                (java.io.Serializable) map,
+//                "D:/dev/collections/data/test/FixedSizeSortedMap.fullCollection.version3.1.SubMapView.obj");
+//        }
     }
     
 }
