@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.2 2002/10/12 22:36:21 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/10/12 22:36:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.3 2002/11/07 21:43:36 bayard Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/11/07 21:43:36 $
  *
  * ====================================================================
  *
@@ -72,18 +72,9 @@ import junit.framework.Test;
  * Tests for ReferenceMap. 
  *
  * @author Paul Jack
- * @version $Id: TestReferenceMap.java,v 1.2 2002/10/12 22:36:21 scolebourne Exp $
+ * @version $Id: TestReferenceMap.java,v 1.3 2002/11/07 21:43:36 bayard Exp $
  */
 public class TestReferenceMap extends TestMap {
-
-
-    private static Random random = new Random();
-
-
-    private Object[] hardKeys;
-    private Object[] hardValues;
-    private HashMap refs = new HashMap();
-    
 
     public TestReferenceMap(String testName) {
         super(testName);

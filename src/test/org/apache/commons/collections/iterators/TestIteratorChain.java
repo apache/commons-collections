@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestIteratorChain.java,v 1.3 2002/10/31 21:55:23 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2002/10/31 21:55:23 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestIteratorChain.java,v 1.4 2002/11/07 21:43:36 bayard Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/11/07 21:43:36 $
  *
  * ====================================================================
  *
@@ -77,7 +77,7 @@ import junit.framework.TestSuite;
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
- * @version $Id: TestIteratorChain.java,v 1.3 2002/10/31 21:55:23 rwaldhoff Exp $
+ * @version $Id: TestIteratorChain.java,v 1.4 2002/11/07 21:43:36 bayard Exp $
  */
 public class TestIteratorChain extends TestIterator {
 
@@ -116,8 +116,6 @@ public class TestIteratorChain extends TestIterator {
 
     public Iterator makeFullIterator() {
         IteratorChain chain = new IteratorChain();
-
-        Iterator i = list1.iterator();
 
         chain.addIterator(list1.iterator());
         chain.addIterator(list2.iterator());
