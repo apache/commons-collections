@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestLongCollectionCollection.java,v 1.1 2003/04/08 18:24:35 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestLongCollectionCollection.java,v 1.2 2003/04/13 22:30:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,12 +64,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.TestObject;
-import org.apache.commons.collections.primitives.AbstractRandomAccessLongList;
+import org.apache.commons.collections.primitives.RandomAccessLongList;
 import org.apache.commons.collections.primitives.ArrayLongList;
 import org.apache.commons.collections.primitives.LongList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:35 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/13 22:30:56 $
  * @author Rodney Waldhoff
  */
 public class TestLongCollectionCollection extends TestObject {
@@ -125,7 +125,7 @@ public class TestLongCollectionCollection extends TestObject {
     }
     
     public void testWrapNonSerializable() {
-        Collection collection = LongCollectionCollection.wrap(new AbstractRandomAccessLongList() { 
+        Collection collection = LongCollectionCollection.wrap(new RandomAccessLongList() { 
             public long get(int i) { throw new IndexOutOfBoundsException(); } 
             public int size() { return 0; } 
         });

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayIntList.java,v 1.6 2003/02/26 15:45:19 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayIntList.java,v 1.7 2003/04/13 22:30:57 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -67,11 +67,11 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.6 $ $Date: 2003/02/26 15:45:19 $
+ * @version $Revision: 1.7 $ $Date: 2003/04/13 22:30:57 $
  * 
  * @author Rodney Waldhoff 
  */
-public class ArrayIntList extends AbstractRandomAccessIntList implements IntList, Serializable {
+public class ArrayIntList extends RandomAccessIntList implements IntList, Serializable {
 
     // constructors
     //-------------------------------------------------------------------------

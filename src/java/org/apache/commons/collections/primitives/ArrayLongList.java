@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayLongList.java,v 1.1 2003/04/08 18:24:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayLongList.java,v 1.2 2003/04/13 22:30:57 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -67,11 +67,11 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/13 22:30:57 $
  * 
  * @author Rodney Waldhoff 
  */
-public class ArrayLongList extends AbstractRandomAccessLongList implements LongList, Serializable {
+public class ArrayLongList extends RandomAccessLongList implements LongList, Serializable {
 
     // constructors
     //-------------------------------------------------------------------------

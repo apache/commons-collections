@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.14 2003/04/13 22:08:08 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.15 2003/04/13 22:30:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,7 +62,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.14 $ $Date: 2003/04/13 22:08:08 $
+ * @version $Revision: 1.15 $ $Date: 2003/04/13 22:30:56 $
  * @author Rodney Waldhoff
  */
 public class TestAll extends TestCase {
@@ -79,22 +79,22 @@ public class TestAll extends TestCase {
         TestSuite suite = new TestSuite();
 
         suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestAbstractRandomAccessShortList.suite());
+        suite.addTest(TestRandomAccessShortList.suite());
         suite.addTest(TestArrayShortList.suite());
         suite.addTest(TestArrayUnsignedByteList.suite());
 
         suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestAbstractRandomAccessIntList.suite());
+        suite.addTest(TestRandomAccessIntList.suite());
         suite.addTest(TestArrayIntList.suite());
         suite.addTest(TestArrayUnsignedShortList.suite());
 
 		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestAbstractRandomAccessLongList.suite());
+		suite.addTest(TestRandomAccessLongList.suite());
         suite.addTest(TestArrayLongList.suite());
         suite.addTest(TestArrayUnsignedIntList.suite());
 
         suite.addTest(TestAbstractFloatCollection.suite());
-        suite.addTest(TestAbstractRandomAccessFloatList.suite());
+        suite.addTest(TestRandomAccessFloatList.suite());
         suite.addTest(TestArrayFloatList.suite());
 
         suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());

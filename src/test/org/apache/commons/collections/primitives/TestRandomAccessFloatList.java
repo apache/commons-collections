@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractRandomAccessLongList.java,v 1.1 2003/04/08 18:24:34 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestRandomAccessFloatList.java,v 1.1 2003/04/13 22:30:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,35 +62,35 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:34 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:30:56 $
  * @author Rodney Waldhoff
  */
-public class TestAbstractRandomAccessLongList extends TestCase {
+public class TestRandomAccessFloatList extends TestCase {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestAbstractRandomAccessLongList(String testName) {
+    public TestRandomAccessFloatList(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestAbstractRandomAccessLongList.class);
+        return new TestSuite(TestRandomAccessFloatList.class);
     }
 
     // tests
     // ------------------------------------------------------------------------
     
     public void testAddIsUnsupportedByDefault() {
-        AbstractRandomAccessLongList list = new AbstractRandomAccessLongListImpl();
+        RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl();
         try {
-            list.add((long)1);
+            list.add((float)1);
             fail("Expected UnsupportedOperationException");
         } catch(UnsupportedOperationException e) {
             // expected
         }        
         try {
-            list.set(0,(long)1);
+            list.set(0,(float)1);
             fail("Expected UnsupportedOperationException");
         } catch(UnsupportedOperationException e) {
             // expected
@@ -98,9 +98,9 @@ public class TestAbstractRandomAccessLongList extends TestCase {
     }
 
     public void testAddAllIsUnsupportedByDefault() {
-        AbstractRandomAccessLongList list = new AbstractRandomAccessLongListImpl();
-        LongList list2 = new ArrayLongList();
-        list2.add(3);
+        RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl();
+        FloatList list2 = new ArrayFloatList();
+        list2.add((float)3);
         try {
             list.addAll(list2);
             fail("Expected UnsupportedOperationException");
@@ -110,9 +110,9 @@ public class TestAbstractRandomAccessLongList extends TestCase {
     }
     
     public void testSetIsUnsupportedByDefault() {
-        AbstractRandomAccessLongList list = new AbstractRandomAccessLongListImpl();
+        RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl();
         try {
-            list.set(0,(long)1);
+            list.set(0,(float)1);
             fail("Expected UnsupportedOperationException");
         } catch(UnsupportedOperationException e) {
             // expected
@@ -120,7 +120,7 @@ public class TestAbstractRandomAccessLongList extends TestCase {
     }
     
     public void testRemoveElementIsUnsupportedByDefault() {
-        AbstractRandomAccessLongList list = new AbstractRandomAccessLongListImpl();
+        RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl();
         try {
             list.removeElementAt(0);
             fail("Expected UnsupportedOperationException");
@@ -133,19 +133,19 @@ public class TestAbstractRandomAccessLongList extends TestCase {
     // ------------------------------------------------------------------------
 
 
-    static class AbstractRandomAccessLongListImpl extends AbstractRandomAccessLongList {
-        public AbstractRandomAccessLongListImpl() {
+    static class AbstractRandomAccessFloatListImpl extends RandomAccessFloatList {
+        public AbstractRandomAccessFloatListImpl() {
         }
 
         /**
-         * @see org.apache.commons.collections.primitives.LongList#get(int)
+         * @see org.apache.commons.collections.primitives.FloatList#get(int)
          */
-        public long get(int index) {
+        public float get(int index) {
             throw new IndexOutOfBoundsException();
         }
 
         /**
-         * @see org.apache.commons.collections.primitives.LongCollection#size()
+         * @see org.apache.commons.collections.primitives.FloatCollection#size()
          */
         public int size() {
             return 0;

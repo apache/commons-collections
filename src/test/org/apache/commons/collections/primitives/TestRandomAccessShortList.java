@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractRandomAccessIntList.java,v 1.1 2003/03/03 23:23:40 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestRandomAccessShortList.java,v 1.1 2003/04/13 22:30:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,35 +62,35 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/03/03 23:23:40 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:30:56 $
  * @author Rodney Waldhoff
  */
-public class TestAbstractRandomAccessIntList extends TestCase {
+public class TestRandomAccessShortList extends TestCase {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestAbstractRandomAccessIntList(String testName) {
+    public TestRandomAccessShortList(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestAbstractRandomAccessIntList.class);
+        return new TestSuite(TestRandomAccessShortList.class);
     }
 
     // tests
     // ------------------------------------------------------------------------
     
     public void testAddIsUnsupportedByDefault() {
-        AbstractRandomAccessIntList list = new AbstractRandomAccessIntListImpl();
+        RandomAccessShortList list = new AbstractRandomAccessShortListImpl();
         try {
-            list.add(1);
+            list.add((short)1);
             fail("Expected UnsupportedOperationException");
         } catch(UnsupportedOperationException e) {
             // expected
         }        
         try {
-            list.set(0,1);
+            list.set(0,(short)1);
             fail("Expected UnsupportedOperationException");
         } catch(UnsupportedOperationException e) {
             // expected
@@ -98,9 +98,9 @@ public class TestAbstractRandomAccessIntList extends TestCase {
     }
 
     public void testAddAllIsUnsupportedByDefault() {
-        AbstractRandomAccessIntList list = new AbstractRandomAccessIntListImpl();
-        IntList list2 = new ArrayIntList();
-        list2.add(3);
+        RandomAccessShortList list = new AbstractRandomAccessShortListImpl();
+        ShortList list2 = new ArrayShortList();
+        list2.add((short)3);
         try {
             list.addAll(list2);
             fail("Expected UnsupportedOperationException");
@@ -110,9 +110,9 @@ public class TestAbstractRandomAccessIntList extends TestCase {
     }
     
     public void testSetIsUnsupportedByDefault() {
-        AbstractRandomAccessIntList list = new AbstractRandomAccessIntListImpl();
+        RandomAccessShortList list = new AbstractRandomAccessShortListImpl();
         try {
-            list.set(0,1);
+            list.set(0,(short)1);
             fail("Expected UnsupportedOperationException");
         } catch(UnsupportedOperationException e) {
             // expected
@@ -120,7 +120,7 @@ public class TestAbstractRandomAccessIntList extends TestCase {
     }
     
     public void testRemoveElementIsUnsupportedByDefault() {
-        AbstractRandomAccessIntList list = new AbstractRandomAccessIntListImpl();
+        RandomAccessShortList list = new AbstractRandomAccessShortListImpl();
         try {
             list.removeElementAt(0);
             fail("Expected UnsupportedOperationException");
@@ -133,19 +133,19 @@ public class TestAbstractRandomAccessIntList extends TestCase {
     // ------------------------------------------------------------------------
 
 
-    static class AbstractRandomAccessIntListImpl extends AbstractRandomAccessIntList {
-        public AbstractRandomAccessIntListImpl() {
+    static class AbstractRandomAccessShortListImpl extends RandomAccessShortList {
+        public AbstractRandomAccessShortListImpl() {
         }
 
         /**
-         * @see org.apache.commons.collections.primitives.IntList#get(int)
+         * @see org.apache.commons.collections.primitives.ShortList#get(int)
          */
-        public int get(int index) {
+        public short get(int index) {
             throw new IndexOutOfBoundsException();
         }
 
         /**
-         * @see org.apache.commons.collections.primitives.IntCollection#size()
+         * @see org.apache.commons.collections.primitives.ShortCollection#size()
          */
         public int size() {
             return 0;

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortCollectionCollection.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortCollectionCollection.java,v 1.2 2003/04/13 22:30:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,12 +64,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.TestObject;
-import org.apache.commons.collections.primitives.AbstractRandomAccessShortList;
+import org.apache.commons.collections.primitives.RandomAccessShortList;
 import org.apache.commons.collections.primitives.ArrayShortList;
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/13 22:30:56 $
  * @author Rodney Waldhoff
  */
 public class TestShortCollectionCollection extends TestObject {
@@ -125,7 +125,7 @@ public class TestShortCollectionCollection extends TestObject {
     }
     
     public void testWrapNonSerializable() {
-        Collection collection = ShortCollectionCollection.wrap(new AbstractRandomAccessShortList() { 
+        Collection collection = ShortCollectionCollection.wrap(new RandomAccessShortList() { 
             public short get(int i) { throw new IndexOutOfBoundsException(); } 
             public int size() { return 0; } 
         });

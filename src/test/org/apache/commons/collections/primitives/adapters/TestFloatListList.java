@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestFloatListList.java,v 1.1 2003/04/13 22:08:07 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestFloatListList.java,v 1.2 2003/04/13 22:30:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -65,11 +65,11 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.TestList;
-import org.apache.commons.collections.primitives.AbstractRandomAccessFloatList;
+import org.apache.commons.collections.primitives.RandomAccessFloatList;
 import org.apache.commons.collections.primitives.ArrayFloatList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/13 22:08:07 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/13 22:30:56 $
  * @author Rodney Waldhoff
  */
 public class TestFloatListList extends TestList {
@@ -145,7 +145,7 @@ public class TestFloatListList extends TestList {
     }
     
     public void testWrapNonSerializable() {
-        List list = FloatListList.wrap(new AbstractRandomAccessFloatList() { 
+        List list = FloatListList.wrap(new RandomAccessFloatList() { 
             public float get(int i) { throw new IndexOutOfBoundsException(); } 
             public int size() { return 0; } 
         });

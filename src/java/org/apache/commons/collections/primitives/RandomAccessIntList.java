@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessShortList.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/RandomAccessIntList.java,v 1.1 2003/04/13 22:30:57 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -61,7 +61,7 @@ import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
 /**
- * Abstract base class for {@link ShortList}s backed 
+ * Abstract base class for {@link IntList}s backed 
  * by random access structures like arrays.
  * <p />
  * Read-only subclasses must override {@link #get}
@@ -74,23 +74,23 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:30:57 $
  * 
  * @author Rodney Waldhoff 
  */
-public abstract class AbstractRandomAccessShortList extends AbstractShortCollection implements ShortList {
+public abstract class RandomAccessIntList extends AbstractIntCollection implements IntList {
 
     // constructors
     //-------------------------------------------------------------------------
 
     /** Constructs an empty list. */
-    protected AbstractRandomAccessShortList() { 
+    protected RandomAccessIntList() { 
     }    
 
     // fully abstract methods
     //-------------------------------------------------------------------------
     
-    public abstract short get(int index);
+    public abstract int get(int index);
     public abstract int size();
 
     // unsupported in base
@@ -100,7 +100,7 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public short removeElementAt(int index) {
+    public int removeElementAt(int index) {
         throw new UnsupportedOperationException();
     }
     
@@ -108,7 +108,7 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public short set(int index, short element) {
+    public int set(int index, int element) {
         throw new UnsupportedOperationException();
     }
         
@@ -116,7 +116,7 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public void add(int index, short element) {
+    public void add(int index, int element) {
         throw new UnsupportedOperationException();
     }
 
@@ -124,23 +124,23 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
 
     // javadocs here are inherited
     
-    public boolean add(short element) {
+    public boolean add(int element) {
         add(size(),element);
         return true;
     }
 
-    public boolean addAll(int index, ShortCollection collection) {
+    public boolean addAll(int index, IntCollection collection) {
         boolean modified = false;
-        for(ShortIterator iter = collection.iterator(); iter.hasNext(); ) {
+        for(IntIterator iter = collection.iterator(); iter.hasNext(); ) {
             add(index++,iter.next());
             modified = true;
         }
         return modified;
     }
 
-    public int indexOf(short element) {
+    public int indexOf(int element) {
         int i = 0;
-        for(ShortIterator iter = iterator(); iter.hasNext(); ) {
+        for(IntIterator iter = iterator(); iter.hasNext(); ) {
             if(iter.next() == element) { 
                 return i;
             } else {
@@ -150,8 +150,8 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
         return -1;
     }
 
-    public int lastIndexOf(short element) {
-        for(ShortListIterator iter = listIterator(size()); iter.hasPrevious(); ) {
+    public int lastIndexOf(int element) {
+        for(IntListIterator iter = listIterator(size()); iter.hasPrevious(); ) {
             if(iter.previous() == element) {
                 return iter.nextIndex();
             }
@@ -159,31 +159,31 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
         return -1;
     }
 
-    public ShortIterator iterator() {
+    public IntIterator iterator() {
         return listIterator();
     }
 
-    public ShortListIterator listIterator() {
+    public IntListIterator listIterator() {
         return listIterator(0);
     }
 
-    public ShortListIterator listIterator(int index) {
-        return new RandomAccessShortListIterator(this,index);            
+    public IntListIterator listIterator(int index) {
+        return new RandomAccessIntListIterator(this,index);            
     }
 
-    public ShortList subList(int fromIndex, int toIndex) {
-        return new RandomAccessShortSubList(this,fromIndex,toIndex);
+    public IntList subList(int fromIndex, int toIndex) {
+        return new RandomAccessIntSubList(this,fromIndex,toIndex);
     }
 
     public boolean equals(Object that) {
         if(this == that) { 
             return true; 
-        } else if(that instanceof ShortList) {
-            ShortList thatList = (ShortList)that;
+        } else if(that instanceof IntList) {
+            IntList thatList = (IntList)that;
             if(size() != thatList.size()) {
                 return false;
             }
-            for(ShortIterator thatIter = thatList.iterator(), thisIter = iterator(); thisIter.hasNext();) {
+            for(IntIterator thatIter = thatList.iterator(), thisIter = iterator(); thisIter.hasNext();) {
                 if(thisIter.next() != thatIter.next()) { 
                     return false; 
                 }
@@ -196,7 +196,7 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
     
     public int hashCode() {
         int hash = 1;
-        for(ShortIterator iter = iterator(); iter.hasNext(); ) {
+        for(IntIterator iter = iterator(); iter.hasNext(); ) {
             hash = 31*hash + iter.next();
         }
         return hash;
@@ -205,7 +205,7 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
     public String toString() {
         StringBuffer buf = new StringBuffer();
         buf.append("[");
-        for(ShortIterator iter = iterator(); iter.hasNext();) {
+        for(IntIterator iter = iterator(); iter.hasNext();) {
             buf.append(iter.next());
             if(iter.hasNext()) {
                 buf.append(", ");
@@ -237,12 +237,12 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
     //-------------------------------------------------------------------------
     
     private static class ComodChecker {
-        ComodChecker(AbstractRandomAccessShortList source) {
+        ComodChecker(RandomAccessIntList source) {
             _source = source;  
             resyncModCount();             
         }
         
-        protected AbstractRandomAccessShortList getList() {
+        protected RandomAccessIntList getList() {
             return _source;
         }
         
@@ -256,12 +256,12 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
             _expectedModCount = getList().getModCount();
         }
         
-        private AbstractRandomAccessShortList _source = null;
+        private RandomAccessIntList _source = null;
         private int _expectedModCount = -1;
     }
     
-    protected static class RandomAccessShortListIterator extends ComodChecker implements ShortListIterator {
-        RandomAccessShortListIterator(AbstractRandomAccessShortList list, int index) {
+    protected static class RandomAccessIntListIterator extends ComodChecker implements IntListIterator {
+        RandomAccessIntListIterator(RandomAccessIntList list, int index) {
             super(list);
             if(index < 0 || index > getList().size()) {
                 throw new IndexOutOfBoundsException("Index " + index + " not in [0," + getList().size() + ")");
@@ -291,31 +291,31 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
             return _nextIndex - 1;
         }
         
-        public short next() {
+        public int next() {
             assertNotComodified();
             if(!hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                short val = getList().get(_nextIndex);
+                int val = getList().get(_nextIndex);
                 _lastReturnedIndex = _nextIndex;
                 _nextIndex++;
                 return val;
             }
         }
         
-        public short previous() {
+        public int previous() {
             assertNotComodified();
             if(!hasPrevious()) {
                 throw new NoSuchElementException();
             } else {
-                short val = getList().get(_nextIndex-1);
+                int val = getList().get(_nextIndex-1);
                 _lastReturnedIndex = _nextIndex-1;
                 _nextIndex--;
                 return val;
             }
         }
         
-        public void add(short value) {
+        public void add(int value) {
             assertNotComodified();
             getList().add(_nextIndex,value);
             _nextIndex++;
@@ -335,7 +335,7 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
             }
         }
         
-        public void set(short value) {
+        public void set(int value) {
             assertNotComodified();
             if(-1 == _lastReturnedIndex) {
                 throw new IllegalStateException();
@@ -349,8 +349,8 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
         private int _lastReturnedIndex = -1;        
     }   
 
-    protected static class RandomAccessShortSubList extends AbstractRandomAccessShortList implements ShortList {
-        RandomAccessShortSubList(AbstractRandomAccessShortList list, int fromIndex, int toIndex) {
+    protected static class RandomAccessIntSubList extends RandomAccessIntList implements IntList {
+        RandomAccessIntSubList(RandomAccessIntList list, int fromIndex, int toIndex) {
             if(fromIndex < 0 || toIndex > list.size()) {
                 throw new IndexOutOfBoundsException();
             } else if(fromIndex > toIndex) {
@@ -364,32 +364,32 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
             }            
         }
     
-        public short get(int index) {
+        public int get(int index) {
             checkRange(index);
             _comod.assertNotComodified();
             return _list.get(toUnderlyingIndex(index));
         }
     
-        public short removeElementAt(int index) {
+        public int removeElementAt(int index) {
             checkRange(index);
             _comod.assertNotComodified();
-            short val = _list.removeElementAt(toUnderlyingIndex(index));
+            int val = _list.removeElementAt(toUnderlyingIndex(index));
             _limit--;
             _comod.resyncModCount();
             incrModCount();
             return val;
         }
     
-        public short set(int index, short element) {
+        public int set(int index, int element) {
             checkRange(index);
             _comod.assertNotComodified();
-            short val = _list.set(toUnderlyingIndex(index),element);
+            int val = _list.set(toUnderlyingIndex(index),element);
             incrModCount();
             _comod.resyncModCount();
             return val;
         }
     
-        public void add(int index, short element) {
+        public void add(int index, int element) {
             checkRangeIncludingEndpoint(index);
             _comod.assertNotComodified();
              _list.add(toUnderlyingIndex(index),element);
@@ -421,7 +421,7 @@ public abstract class AbstractRandomAccessShortList extends AbstractShortCollect
         
         private int _offset = 0;        
         private int _limit = 0; 
-        private AbstractRandomAccessShortList _list = null;
+        private RandomAccessIntList _list = null;
         private ComodChecker _comod = null;
     
     }

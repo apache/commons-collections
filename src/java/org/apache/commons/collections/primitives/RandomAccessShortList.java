@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessLongList.java,v 1.1 2003/04/08 18:24:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/RandomAccessShortList.java,v 1.1 2003/04/13 22:30:57 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -61,7 +61,7 @@ import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
 /**
- * Abstract base class for {@link LongList}s backed 
+ * Abstract base class for {@link ShortList}s backed 
  * by random access structures like arrays.
  * <p />
  * Read-only subclasses must override {@link #get}
@@ -74,23 +74,23 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:36 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:30:57 $
  * 
  * @author Rodney Waldhoff 
  */
-public abstract class AbstractRandomAccessLongList extends AbstractLongCollection implements LongList {
+public abstract class RandomAccessShortList extends AbstractShortCollection implements ShortList {
 
     // constructors
     //-------------------------------------------------------------------------
 
     /** Constructs an empty list. */
-    protected AbstractRandomAccessLongList() { 
+    protected RandomAccessShortList() { 
     }    
 
     // fully abstract methods
     //-------------------------------------------------------------------------
     
-    public abstract long get(int index);
+    public abstract short get(int index);
     public abstract int size();
 
     // unsupported in base
@@ -100,7 +100,7 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public long removeElementAt(int index) {
+    public short removeElementAt(int index) {
         throw new UnsupportedOperationException();
     }
     
@@ -108,7 +108,7 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public long set(int index, long element) {
+    public short set(int index, short element) {
         throw new UnsupportedOperationException();
     }
         
@@ -116,7 +116,7 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public void add(int index, long element) {
+    public void add(int index, short element) {
         throw new UnsupportedOperationException();
     }
 
@@ -124,23 +124,23 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
 
     // javadocs here are inherited
     
-    public boolean add(long element) {
+    public boolean add(short element) {
         add(size(),element);
         return true;
     }
 
-    public boolean addAll(int index, LongCollection collection) {
+    public boolean addAll(int index, ShortCollection collection) {
         boolean modified = false;
-        for(LongIterator iter = collection.iterator(); iter.hasNext(); ) {
+        for(ShortIterator iter = collection.iterator(); iter.hasNext(); ) {
             add(index++,iter.next());
             modified = true;
         }
         return modified;
     }
 
-    public int indexOf(long element) {
+    public int indexOf(short element) {
         int i = 0;
-        for(LongIterator iter = iterator(); iter.hasNext(); ) {
+        for(ShortIterator iter = iterator(); iter.hasNext(); ) {
             if(iter.next() == element) { 
                 return i;
             } else {
@@ -150,8 +150,8 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
         return -1;
     }
 
-    public int lastIndexOf(long element) {
-        for(LongListIterator iter = listIterator(size()); iter.hasPrevious(); ) {
+    public int lastIndexOf(short element) {
+        for(ShortListIterator iter = listIterator(size()); iter.hasPrevious(); ) {
             if(iter.previous() == element) {
                 return iter.nextIndex();
             }
@@ -159,31 +159,31 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
         return -1;
     }
 
-    public LongIterator iterator() {
+    public ShortIterator iterator() {
         return listIterator();
     }
 
-    public LongListIterator listIterator() {
+    public ShortListIterator listIterator() {
         return listIterator(0);
     }
 
-    public LongListIterator listIterator(int index) {
-        return new RandomAccessLongListIterator(this,index);            
+    public ShortListIterator listIterator(int index) {
+        return new RandomAccessShortListIterator(this,index);            
     }
 
-    public LongList subList(int fromIndex, int toIndex) {
-        return new RandomAccessLongSubList(this,fromIndex,toIndex);
+    public ShortList subList(int fromIndex, int toIndex) {
+        return new RandomAccessShortSubList(this,fromIndex,toIndex);
     }
 
     public boolean equals(Object that) {
         if(this == that) { 
             return true; 
-        } else if(that instanceof LongList) {
-            LongList thatList = (LongList)that;
+        } else if(that instanceof ShortList) {
+            ShortList thatList = (ShortList)that;
             if(size() != thatList.size()) {
                 return false;
             }
-            for(LongIterator thatIter = thatList.iterator(), thisIter = iterator(); thisIter.hasNext();) {
+            for(ShortIterator thatIter = thatList.iterator(), thisIter = iterator(); thisIter.hasNext();) {
                 if(thisIter.next() != thatIter.next()) { 
                     return false; 
                 }
@@ -196,9 +196,8 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
     
     public int hashCode() {
         int hash = 1;
-        for(LongIterator iter = iterator(); iter.hasNext(); ) {
-        	long val = iter.next();
-            hash = 31*hash + ((int)(val ^ (val >>> 32)));
+        for(ShortIterator iter = iterator(); iter.hasNext(); ) {
+            hash = 31*hash + iter.next();
         }
         return hash;
     }
@@ -206,7 +205,7 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
     public String toString() {
         StringBuffer buf = new StringBuffer();
         buf.append("[");
-        for(LongIterator iter = iterator(); iter.hasNext();) {
+        for(ShortIterator iter = iterator(); iter.hasNext();) {
             buf.append(iter.next());
             if(iter.hasNext()) {
                 buf.append(", ");
@@ -238,12 +237,12 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
     //-------------------------------------------------------------------------
     
     private static class ComodChecker {
-        ComodChecker(AbstractRandomAccessLongList source) {
+        ComodChecker(RandomAccessShortList source) {
             _source = source;  
             resyncModCount();             
         }
         
-        protected AbstractRandomAccessLongList getList() {
+        protected RandomAccessShortList getList() {
             return _source;
         }
         
@@ -257,12 +256,12 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
             _expectedModCount = getList().getModCount();
         }
         
-        private AbstractRandomAccessLongList _source = null;
+        private RandomAccessShortList _source = null;
         private int _expectedModCount = -1;
     }
     
-    protected static class RandomAccessLongListIterator extends ComodChecker implements LongListIterator {
-        RandomAccessLongListIterator(AbstractRandomAccessLongList list, int index) {
+    protected static class RandomAccessShortListIterator extends ComodChecker implements ShortListIterator {
+        RandomAccessShortListIterator(RandomAccessShortList list, int index) {
             super(list);
             if(index < 0 || index > getList().size()) {
                 throw new IndexOutOfBoundsException("Index " + index + " not in [0," + getList().size() + ")");
@@ -292,31 +291,31 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
             return _nextIndex - 1;
         }
         
-        public long next() {
+        public short next() {
             assertNotComodified();
             if(!hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                long val = getList().get(_nextIndex);
+                short val = getList().get(_nextIndex);
                 _lastReturnedIndex = _nextIndex;
                 _nextIndex++;
                 return val;
             }
         }
         
-        public long previous() {
+        public short previous() {
             assertNotComodified();
             if(!hasPrevious()) {
                 throw new NoSuchElementException();
             } else {
-                long val = getList().get(_nextIndex-1);
+                short val = getList().get(_nextIndex-1);
                 _lastReturnedIndex = _nextIndex-1;
                 _nextIndex--;
                 return val;
             }
         }
         
-        public void add(long value) {
+        public void add(short value) {
             assertNotComodified();
             getList().add(_nextIndex,value);
             _nextIndex++;
@@ -336,7 +335,7 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
             }
         }
         
-        public void set(long value) {
+        public void set(short value) {
             assertNotComodified();
             if(-1 == _lastReturnedIndex) {
                 throw new IllegalStateException();
@@ -350,8 +349,8 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
         private int _lastReturnedIndex = -1;        
     }   
 
-    protected static class RandomAccessLongSubList extends AbstractRandomAccessLongList implements LongList {
-        RandomAccessLongSubList(AbstractRandomAccessLongList list, int fromIndex, int toIndex) {
+    protected static class RandomAccessShortSubList extends RandomAccessShortList implements ShortList {
+        RandomAccessShortSubList(RandomAccessShortList list, int fromIndex, int toIndex) {
             if(fromIndex < 0 || toIndex > list.size()) {
                 throw new IndexOutOfBoundsException();
             } else if(fromIndex > toIndex) {
@@ -365,32 +364,32 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
             }            
         }
     
-        public long get(int index) {
+        public short get(int index) {
             checkRange(index);
             _comod.assertNotComodified();
             return _list.get(toUnderlyingIndex(index));
         }
     
-        public long removeElementAt(int index) {
+        public short removeElementAt(int index) {
             checkRange(index);
             _comod.assertNotComodified();
-            long val = _list.removeElementAt(toUnderlyingIndex(index));
+            short val = _list.removeElementAt(toUnderlyingIndex(index));
             _limit--;
             _comod.resyncModCount();
             incrModCount();
             return val;
         }
     
-        public long set(int index, long element) {
+        public short set(int index, short element) {
             checkRange(index);
             _comod.assertNotComodified();
-            long val = _list.set(toUnderlyingIndex(index),element);
+            short val = _list.set(toUnderlyingIndex(index),element);
             incrModCount();
             _comod.resyncModCount();
             return val;
         }
     
-        public void add(int index, long element) {
+        public void add(int index, short element) {
             checkRangeIncludingEndpoint(index);
             _comod.assertNotComodified();
              _list.add(toUnderlyingIndex(index),element);
@@ -422,7 +421,7 @@ public abstract class AbstractRandomAccessLongList extends AbstractLongCollectio
         
         private int _offset = 0;        
         private int _limit = 0; 
-        private AbstractRandomAccessLongList _list = null;
+        private RandomAccessShortList _list = null;
         private ComodChecker _comod = null;
     
     }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessFloatList.java,v 1.1 2003/04/13 22:08:08 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/RandomAccessLongList.java,v 1.1 2003/04/13 22:30:57 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -61,7 +61,7 @@ import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
 /**
- * Abstract base class for {@link FloatList}s backed 
+ * Abstract base class for {@link LongList}s backed 
  * by random access structures like arrays.
  * <p />
  * Read-only subclasses must override {@link #get}
@@ -74,23 +74,23 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/04/13 22:08:08 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/13 22:30:57 $
  * 
  * @author Rodney Waldhoff 
  */
-public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollection implements FloatList {
+public abstract class RandomAccessLongList extends AbstractLongCollection implements LongList {
 
     // constructors
     //-------------------------------------------------------------------------
 
     /** Constructs an empty list. */
-    protected AbstractRandomAccessFloatList() { 
+    protected RandomAccessLongList() { 
     }    
 
     // fully abstract methods
     //-------------------------------------------------------------------------
     
-    public abstract float get(int index);
+    public abstract long get(int index);
     public abstract int size();
 
     // unsupported in base
@@ -100,7 +100,7 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public float removeElementAt(int index) {
+    public long removeElementAt(int index) {
         throw new UnsupportedOperationException();
     }
     
@@ -108,7 +108,7 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public float set(int index, float element) {
+    public long set(int index, long element) {
         throw new UnsupportedOperationException();
     }
         
@@ -116,7 +116,7 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
      * Unsupported in this implementation. 
      * @throws UnsupportedOperationException since this method is not supported
      */
-    public void add(int index, float element) {
+    public void add(int index, long element) {
         throw new UnsupportedOperationException();
     }
 
@@ -124,23 +124,23 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
 
     // javadocs here are inherited
     
-    public boolean add(float element) {
+    public boolean add(long element) {
         add(size(),element);
         return true;
     }
 
-    public boolean addAll(int index, FloatCollection collection) {
+    public boolean addAll(int index, LongCollection collection) {
         boolean modified = false;
-        for(FloatIterator iter = collection.iterator(); iter.hasNext(); ) {
+        for(LongIterator iter = collection.iterator(); iter.hasNext(); ) {
             add(index++,iter.next());
             modified = true;
         }
         return modified;
     }
 
-    public int indexOf(float element) {
+    public int indexOf(long element) {
         int i = 0;
-        for(FloatIterator iter = iterator(); iter.hasNext(); ) {
+        for(LongIterator iter = iterator(); iter.hasNext(); ) {
             if(iter.next() == element) { 
                 return i;
             } else {
@@ -150,8 +150,8 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
         return -1;
     }
 
-    public int lastIndexOf(float element) {
-        for(FloatListIterator iter = listIterator(size()); iter.hasPrevious(); ) {
+    public int lastIndexOf(long element) {
+        for(LongListIterator iter = listIterator(size()); iter.hasPrevious(); ) {
             if(iter.previous() == element) {
                 return iter.nextIndex();
             }
@@ -159,31 +159,31 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
         return -1;
     }
 
-    public FloatIterator iterator() {
+    public LongIterator iterator() {
         return listIterator();
     }
 
-    public FloatListIterator listIterator() {
+    public LongListIterator listIterator() {
         return listIterator(0);
     }
 
-    public FloatListIterator listIterator(int index) {
-        return new RandomAccessFloatListIterator(this,index);            
+    public LongListIterator listIterator(int index) {
+        return new RandomAccessLongListIterator(this,index);            
     }
 
-    public FloatList subList(int fromIndex, int toIndex) {
-        return new RandomAccessFloatSubList(this,fromIndex,toIndex);
+    public LongList subList(int fromIndex, int toIndex) {
+        return new RandomAccessLongSubList(this,fromIndex,toIndex);
     }
 
     public boolean equals(Object that) {
         if(this == that) { 
             return true; 
-        } else if(that instanceof FloatList) {
-            FloatList thatList = (FloatList)that;
+        } else if(that instanceof LongList) {
+            LongList thatList = (LongList)that;
             if(size() != thatList.size()) {
                 return false;
             }
-            for(FloatIterator thatIter = thatList.iterator(), thisIter = iterator(); thisIter.hasNext();) {
+            for(LongIterator thatIter = thatList.iterator(), thisIter = iterator(); thisIter.hasNext();) {
                 if(thisIter.next() != thatIter.next()) { 
                     return false; 
                 }
@@ -196,8 +196,9 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
     
     public int hashCode() {
         int hash = 1;
-        for(FloatIterator iter = iterator(); iter.hasNext(); ) {
-            hash = 31*hash + Float.floatToIntBits(iter.next());
+        for(LongIterator iter = iterator(); iter.hasNext(); ) {
+        	long val = iter.next();
+            hash = 31*hash + ((int)(val ^ (val >>> 32)));
         }
         return hash;
     }
@@ -205,7 +206,7 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
     public String toString() {
         StringBuffer buf = new StringBuffer();
         buf.append("[");
-        for(FloatIterator iter = iterator(); iter.hasNext();) {
+        for(LongIterator iter = iterator(); iter.hasNext();) {
             buf.append(iter.next());
             if(iter.hasNext()) {
                 buf.append(", ");
@@ -237,12 +238,12 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
     //-------------------------------------------------------------------------
     
     private static class ComodChecker {
-        ComodChecker(AbstractRandomAccessFloatList source) {
+        ComodChecker(RandomAccessLongList source) {
             _source = source;  
             resyncModCount();             
         }
         
-        protected AbstractRandomAccessFloatList getList() {
+        protected RandomAccessLongList getList() {
             return _source;
         }
         
@@ -256,12 +257,12 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
             _expectedModCount = getList().getModCount();
         }
         
-        private AbstractRandomAccessFloatList _source = null;
+        private RandomAccessLongList _source = null;
         private int _expectedModCount = -1;
     }
     
-    protected static class RandomAccessFloatListIterator extends ComodChecker implements FloatListIterator {
-        RandomAccessFloatListIterator(AbstractRandomAccessFloatList list, int index) {
+    protected static class RandomAccessLongListIterator extends ComodChecker implements LongListIterator {
+        RandomAccessLongListIterator(RandomAccessLongList list, int index) {
             super(list);
             if(index < 0 || index > getList().size()) {
                 throw new IndexOutOfBoundsException("Index " + index + " not in [0," + getList().size() + ")");
@@ -291,31 +292,31 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
             return _nextIndex - 1;
         }
         
-        public float next() {
+        public long next() {
             assertNotComodified();
             if(!hasNext()) {
                 throw new NoSuchElementException();
             } else {
-                float val = getList().get(_nextIndex);
+                long val = getList().get(_nextIndex);
                 _lastReturnedIndex = _nextIndex;
                 _nextIndex++;
                 return val;
             }
         }
         
-        public float previous() {
+        public long previous() {
             assertNotComodified();
             if(!hasPrevious()) {
                 throw new NoSuchElementException();
             } else {
-                float val = getList().get(_nextIndex-1);
+                long val = getList().get(_nextIndex-1);
                 _lastReturnedIndex = _nextIndex-1;
                 _nextIndex--;
                 return val;
             }
         }
         
-        public void add(float value) {
+        public void add(long value) {
             assertNotComodified();
             getList().add(_nextIndex,value);
             _nextIndex++;
@@ -335,7 +336,7 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
             }
         }
         
-        public void set(float value) {
+        public void set(long value) {
             assertNotComodified();
             if(-1 == _lastReturnedIndex) {
                 throw new IllegalStateException();
@@ -349,8 +350,8 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
         private int _lastReturnedIndex = -1;        
     }   
 
-    protected static class RandomAccessFloatSubList extends AbstractRandomAccessFloatList implements FloatList {
-        RandomAccessFloatSubList(AbstractRandomAccessFloatList list, int fromIndex, int toIndex) {
+    protected static class RandomAccessLongSubList extends RandomAccessLongList implements LongList {
+        RandomAccessLongSubList(RandomAccessLongList list, int fromIndex, int toIndex) {
             if(fromIndex < 0 || toIndex > list.size()) {
                 throw new IndexOutOfBoundsException();
             } else if(fromIndex > toIndex) {
@@ -364,32 +365,32 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
             }            
         }
     
-        public float get(int index) {
+        public long get(int index) {
             checkRange(index);
             _comod.assertNotComodified();
             return _list.get(toUnderlyingIndex(index));
         }
     
-        public float removeElementAt(int index) {
+        public long removeElementAt(int index) {
             checkRange(index);
             _comod.assertNotComodified();
-            float val = _list.removeElementAt(toUnderlyingIndex(index));
+            long val = _list.removeElementAt(toUnderlyingIndex(index));
             _limit--;
             _comod.resyncModCount();
             incrModCount();
             return val;
         }
     
-        public float set(int index, float element) {
+        public long set(int index, long element) {
             checkRange(index);
             _comod.assertNotComodified();
-            float val = _list.set(toUnderlyingIndex(index),element);
+            long val = _list.set(toUnderlyingIndex(index),element);
             incrModCount();
             _comod.resyncModCount();
             return val;
         }
     
-        public void add(int index, float element) {
+        public void add(int index, long element) {
             checkRangeIncludingEndpoint(index);
             _comod.assertNotComodified();
              _list.add(toUnderlyingIndex(index),element);
@@ -421,7 +422,7 @@ public abstract class AbstractRandomAccessFloatList extends AbstractFloatCollect
         
         private int _offset = 0;        
         private int _limit = 0; 
-        private AbstractRandomAccessFloatList _list = null;
+        private RandomAccessLongList _list = null;
         private ComodChecker _comod = null;
     
     }

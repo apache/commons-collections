@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestLongListList.java,v 1.1 2003/04/08 18:24:35 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestLongListList.java,v 1.2 2003/04/13 22:30:56 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -65,11 +65,11 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.TestList;
-import org.apache.commons.collections.primitives.AbstractRandomAccessLongList;
+import org.apache.commons.collections.primitives.RandomAccessLongList;
 import org.apache.commons.collections.primitives.ArrayLongList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:35 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/13 22:30:56 $
  * @author Rodney Waldhoff
  */
 public class TestLongListList extends TestList {
@@ -145,7 +145,7 @@ public class TestLongListList extends TestList {
     }
     
     public void testWrapNonSerializable() {
-        List list = LongListList.wrap(new AbstractRandomAccessLongList() { 
+        List list = LongListList.wrap(new RandomAccessLongList() { 
             public long get(int i) { throw new IndexOutOfBoundsException(); } 
             public int size() { return 0; } 
         });

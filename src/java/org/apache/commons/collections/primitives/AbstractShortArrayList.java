@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortArrayList.java,v 1.8 2003/04/11 22:01:25 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortArrayList.java,v 1.9 2003/04/13 22:30:57 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,9 +68,9 @@ package org.apache.commons.collections.primitives;
  * primitive values will be stored in an underlying primitive array, and
  * provides methods for manipulating the capacity of that array.<P>
  *
- * @version $Revision: 1.8 $ $Date: 2003/04/11 22:01:25 $
+ * @version $Revision: 1.9 $ $Date: 2003/04/13 22:30:57 $
  * @author Rodney Waldhoff 
- * @deprecated See {@link AbstractRandomAccessShortList}.
+ * @deprecated See {@link RandomAccessShortList}.
  */
 public abstract class AbstractShortArrayList extends AbstractShortList {
 
