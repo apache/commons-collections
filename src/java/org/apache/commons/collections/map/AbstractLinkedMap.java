@@ -56,7 +56,7 @@ import org.apache.commons.collections.ResettableIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.10 $ $Date: 2004/03/13 15:54:34 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -293,6 +293,31 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     
     //-----------------------------------------------------------------------
     /**
+     * Gets the <code>before</code> field from a <code>LinkEntry</code>.
+     * Used in subclasses that have no visibility of the field.
+     * 
+     * @param entry  the entry to query, must not be null
+     * @return the <code>before</code> field of the entry
+     * @throws NullPointerException if the entry is null
+     */
+    protected LinkEntry entryBefore(LinkEntry entry) {
+        return entry.before;
+    }
+    
+    /**
+     * Gets the <code>after</code> field from a <code>LinkEntry</code>.
+     * Used in subclasses that have no visibility of the field.
+     * 
+     * @param entry  the entry to query, must not be null
+     * @return the <code>after</code> field of the entry
+     * @throws NullPointerException if the entry is null
+     */
+    protected LinkEntry entryAfter(LinkEntry entry) {
+        return entry.after;
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
      * Gets an iterator over the map.
      * Changes made to the iterator affect this map.
      * <p>
@@ -467,9 +492,13 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     //-----------------------------------------------------------------------
     /**
      * LinkEntry that stores the data.
+     * <p>
+     * If you subclass <code>AbstractLinkedMap</code> but not <code>LinkEntry</code>
+     * then you will not be able to access the protected fields.
+     * The <code>entryXxx()</code> methods on <code>AbstractLinkedMap</code> exist
+     * to provide the necessary access.
      */
     protected static class LinkEntry extends HashEntry {
-        
         /** The entry before this one in the order */
         protected LinkEntry before;
         /** The entry after this one in the order */

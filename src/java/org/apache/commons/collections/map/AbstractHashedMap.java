@@ -46,7 +46,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2004/02/27 00:24:05 $
+ * @version $Revision: 1.13 $ $Date: 2004/03/13 15:54:34 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -645,6 +645,55 @@ public class AbstractHashedMap implements IterableMap {
     
     //-----------------------------------------------------------------------
     /**
+     * Gets the <code>next</code> field from a <code>HashEntry</code>.
+     * Used in subclasses that have no visibility of the field.
+     * 
+     * @param entry  the entry to query, must not be null
+     * @return the <code>next</code> field of the entry
+     * @throws NullPointerException if the entry is null
+     */
+    protected HashEntry entryNext(HashEntry entry) {
+        return entry.next;
+    }
+    
+    /**
+     * Gets the <code>hashCode</code> field from a <code>HashEntry</code>.
+     * Used in subclasses that have no visibility of the field.
+     * 
+     * @param entry  the entry to query, must not be null
+     * @return the <code>hashCode</code> field of the entry
+     * @throws NullPointerException if the entry is null
+     */
+    protected int entryHashCode(HashEntry entry) {
+        return entry.hashCode;
+    }
+    
+    /**
+     * Gets the <code>key</code> field from a <code>HashEntry</code>.
+     * Used in subclasses that have no visibility of the field.
+     * 
+     * @param entry  the entry to query, must not be null
+     * @return the <code>key</code> field of the entry
+     * @throws NullPointerException if the entry is null
+     */
+    protected Object entryKey(HashEntry entry) {
+        return entry.key;
+    }
+    
+    /**
+     * Gets the <code>value</code> field from a <code>HashEntry</code>.
+     * Used in subclasses that have no visibility of the field.
+     * 
+     * @param entry  the entry to query, must not be null
+     * @return the <code>value</code> field of the entry
+     * @throws NullPointerException if the entry is null
+     */
+    protected Object entryValue(HashEntry entry) {
+        return entry.value;
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
      * Gets an iterator over the map.
      * Changes made to the iterator affect this map.
      * <p>
@@ -937,7 +986,12 @@ public class AbstractHashedMap implements IterableMap {
     
     //-----------------------------------------------------------------------
     /**
-     * HashEntry used to store the data
+     * HashEntry used to store the data.
+     * <p>
+     * If you subclass <code>AbstractHashedMap</code> but not <code>HashEntry</code>
+     * then you will not be able to access the protected fields.
+     * The <code>entryXxx()</code> methods on <code>AbstractHashedMap</code> exist
+     * to provide the necessary access.
      */
     protected static class HashEntry implements Map.Entry, KeyValue {
         /** The next entry in the hash chain */
