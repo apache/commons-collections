@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.21 2004/01/06 21:31:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.22 2004/01/08 22:18:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,8 +83,7 @@ import java.util.NoSuchElementException;
  * in logarithmic time.  The {@link #peek()} operation performs in constant
  * time.  All other operations perform in linear time or worse.
  * <p>
- * Note that this implementation is not synchronized.  Use 
- * {@link PriorityQueueUtils#synchronizedPriorityQueue(PriorityQueue)}
+ * Note that this implementation is not synchronized.  Use SynchronizedPriorityQueue
  * to provide synchronized access to a <code>BinaryHeap</code>:
  *
  * <pre>
@@ -94,7 +93,7 @@ import java.util.NoSuchElementException;
  * @deprecated Replaced by PriorityBuffer in buffer subpackage.
  *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.21 $ $Date: 2004/01/06 21:31:32 $
+ * @version $Revision: 1.22 $ $Date: 2004/01/08 22:18:16 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
