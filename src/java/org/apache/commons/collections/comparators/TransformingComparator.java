@@ -59,7 +59,7 @@ import java.util.Comparator;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Decorates another Comparator with transformation behavior.&nbsp;That is, the
+ * Decorates another Comparator with transformation behavior. That is, the
  * return value from the transform operation will be passed to the decorated
  * <CODE>Comparator#compare</CODE> method.
  * <p>

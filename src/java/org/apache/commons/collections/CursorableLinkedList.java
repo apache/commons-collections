@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.7 2002/06/15 03:52:24 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/15 03:52:24 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.8 2002/06/16 03:39:40 mas Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/06/16 03:39:40 $
  *
  * ====================================================================
  *
@@ -92,7 +92,7 @@ import java.lang.UnsupportedOperationException; // stops a javadoc warning
  *
  * @since 1.0
  * @author Rodney Waldhoff
- * @version $Id: CursorableLinkedList.java,v 1.7 2002/06/15 03:52:24 mas Exp $
+ * @version $Id: CursorableLinkedList.java,v 1.8 2002/06/16 03:39:40 mas Exp $
  * @see java.util.LinkedList
  */
 public class CursorableLinkedList implements List, Serializable {
@@ -743,7 +743,8 @@ public class CursorableLinkedList implements List, Serializable {
      * list, after the specified <i>before</i> element, and before the
      * specified <i>after</i> element
      *
-     * @returns the newly created {@link CursorableLinkedList.Listable}
+     * @return the newly created 
+     * {@link org.apache.commons.collections.CursorableLinkedList.Listable}
      */
     protected Listable insertListable(Listable before, Listable after, Object value) {
         _modCount++;
@@ -765,7 +766,9 @@ public class CursorableLinkedList implements List, Serializable {
     }
 
     /**
-     * Removes the given {@link CursorableLinkedList.Listable} from my list.
+     * Removes the given 
+     * {@link org.apache.commons.collections.CursorableLinkedList.Listable} 
+     * from my list.
      */
     protected void removeListable(Listable elt) {
         _modCount++;
@@ -786,8 +789,10 @@ public class CursorableLinkedList implements List, Serializable {
     }
 
     /**
-     * Returns the {@link CursorableLinkedList.Listable} at the specified
-     * index.
+     * Returns the 
+     * {@link org.apache.commons.collections.CursorableLinkedList.Listable} 
+     * at the specified index.
+     *
      * @throws IndexOutOfBoundsException if index is less than zero or
      *         greater than or equal to the size of this list.
      */
@@ -905,7 +910,9 @@ public class CursorableLinkedList implements List, Serializable {
      * <tt>_head.next().prev()</tt> and <tt>_head.prev().next()</tt> to be
      * non-null, as when I am a sublist for some larger list.
      * Use <tt>== _head.next()</tt> and <tt>== _head.prev()</tt> to determine
-     * if a given {@link CursorableLinkedList.Listable} is the first or last element in the list.
+     * if a given 
+     * {@link org.apache.commons.collections.CursorableLinkedList.Listable} 
+     * is the first or last element in the list.
      */
     transient protected Listable _head = new Listable(null,null,null);
 
@@ -1354,7 +1361,7 @@ class CursorableSubList extends CursorableLinkedList implements List {
      * list, after the specified <i>before</i> element, and before the
      * specified <i>after</i> element
      *
-     * @returns the newly created {@link CursorableLinkedList.Listable}
+     * @return the newly created {@link CursorableLinkedList.Listable}
      */
     protected Listable insertListable(Listable before, Listable after, Object value) {
         _modCount++;

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/LazyCollections.java,v 1.2 2002/05/29 03:22:42 arron Exp $
- * $Revision: 1.2 $
- * $Date: 2002/05/29 03:22:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/LazyCollections.java,v 1.3 2002/06/16 03:39:40 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/06/16 03:39:40 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,12 +76,8 @@ import java.lang.reflect.*;
  * new class built from an empty constructor, then all you need to provide is
  * the class definition.
  *
- * @see org.apache.commons.collections.LazyList
- * @see org.apache.commons.collections.LazyMap
- * @see org.apache.commons.collections.LazySortedMap
- *
  * @author Arron Bates
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class LazyCollections {
 

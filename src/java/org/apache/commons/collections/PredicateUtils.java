@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.1 2002/05/02 06:17:19 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2002/05/02 06:17:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.2 2002/06/16 03:39:40 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/16 03:39:40 $
  *
  * ====================================================================
  *
@@ -1116,21 +1116,21 @@ public class PredicateUtils {
 	    }
 	    
         /**
-         * @see Map.Entry#getKey()
+         * @see java.util.Map.Entry#getKey()
          */
         public Object getKey() {
             return iEntry.getKey();
         }
 
         /**
-         * @see Map.Entry#getValue()
+         * @see java.util.Map.Entry#getValue()
          */
         public Object getValue() {
             return iEntry.getValue();
         }
 
         /**
-         * @see Map.Entry#setValue()
+         * @see java.util.Map.Entry#setValue(Object)
          */
         public Object setValue(Object object) {
             validate(iValuePredicate, object);

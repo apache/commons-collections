@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.6 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.7 2002/06/16 03:39:40 mas Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/06/16 03:39:40 $
  *
  * ====================================================================
  *
@@ -61,9 +61,8 @@
 package org.apache.commons.collections;
 
 import java.util.Map;
-import java.util.Map.Entry; // to keep javadoc from spewing warnings
 
-/** A default implementation of {@link Map.Entry}
+/** A default implementation of {@link java.util.Map.Entry}
   *
   * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
@@ -84,7 +83,8 @@ public class DefaultMapEntry implements Map.Entry {
     }
 
     /**
-     *  Implemented per API documentation of {@link Map.Entry#equals(Object)}
+     *  Implemented per API documentation of 
+     *  {@link java.util.Map.Entry#equals(Object)}
      **/
     public boolean equals(Object o) {
         if( o == null ) return false;
@@ -101,7 +101,8 @@ public class DefaultMapEntry implements Map.Entry {
      
      
     /**
-     *  Implemented per API documentation of {@link Map.Entry#hashCode()}
+     *  Implemented per API documentation of 
+     *  {@link java.util.Map.Entry#hashCode()}
      **/
     public int hashCode() {
         return ( ( getKey() == null ? 0 : getKey().hashCode() ) ^
