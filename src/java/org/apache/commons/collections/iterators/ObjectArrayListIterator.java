@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.2 2003/01/10 20:21:25 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.3 2003/01/15 21:51:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,12 +74,12 @@ import java.util.NoSuchElementException;
  * @see java.util.ListIterator
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/01/10 20:21:25 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/15 21:51:57 $
  * 
  * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
  * @author Stephen Colebourne
  */
-public class ObjectArrayListIterator extends ObjectArrayIterator implements ListIterator {
+public class ObjectArrayListIterator extends ObjectArrayIterator implements ResetableListIterator {
 
     /**
      * Holds the index of the last item returned by a call to <code>next()</code> 
