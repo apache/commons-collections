@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.13 2002/08/17 21:10:46 pjack Exp $
- * $Revision: 1.13 $
- * $Date: 2002/08/17 21:10:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.14 2002/08/18 15:26:20 scolebourne Exp $
+ * $Revision: 1.14 $
+ * $Date: 2002/08/18 15:26:20 $
  *
  * ====================================================================
  *
@@ -68,6 +68,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -78,39 +79,22 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
 /**
  * A set of {@link Collection} related utility methods.
  *
- * @author Rodney Waldhoff
- *
  * @since 1.0
- * @version $Id: CollectionUtils.java,v 1.13 2002/08/17 21:10:46 pjack Exp $
+ * @author Rodney Waldhoff
+ * @author Paul Jack
+ * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
+ * @version $Id: CollectionUtils.java,v 1.14 2002/08/18 15:26:20 scolebourne Exp $
  */
 public class CollectionUtils {
 
     /**
      * The empty iterator (immutable).
+     * @deprecated use IteratorUtils.EMPTY_ITERATOR
      */
-    public static final Iterator EMPTY_ITERATOR = new EmptyIterator();
+    public static final Iterator EMPTY_ITERATOR = IteratorUtils.EMPTY_ITERATOR;
 
     /**
-     * 'Hidden' class which acts as an EmptyIterator.
-     * An alternative is to use: Collections.EMPTY_LIST.iterator();
-     * however that will create a new iterator object each time.
-     */
-    private static class EmptyIterator implements Iterator {
-        public boolean hasNext() {
-            return false;
-        }
-
-        public Object next() {
-            throw new NoSuchElementException();
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
-    }
-
-    /**
-     *  Please don't ever instantiate a <Code>CollectionUtils</Code>.
+     * Please don't ever instantiate a <code>CollectionUtils</code>.
      */
     public CollectionUtils() {
     }
@@ -320,18 +304,20 @@ public class CollectionUtils {
         return count;
     }
 
-    
-    
-    
-    /** Finds the first element in the given collection which matches the given predicate
-      *
-      * @return the first element of the collection which matches the predicate or null if none could be found
-      */
-    public static Object find( Collection collection, Predicate predicate ) {
-        if ( collection != null && predicate != null ) {            
-            for ( Iterator iter = collection.iterator(); iter.hasNext(); ) {
+    /** 
+     * Finds the first element in the given collection which matches the given predicate.
+     * <p>
+     * If the input collection or predicate is null, null is returned.
+     *
+     * @param collection  the collection to search, may be null
+     * @param predicate  the predicate to use, may be null
+     * @return the first element of the collection which matches the predicate or null if none could be found
+     */
+    public static Object find(Collection collection, Predicate predicate) {
+        if (collection != null && predicate != null) {
+            for (Iterator iter = collection.iterator(); iter.hasNext();) {
                 Object item = iter.next();
-                if ( predicate.evaluate( item ) ) {
+                if (predicate.evaluate(item)) {
                     return item;
                 }
             }
@@ -339,121 +325,266 @@ public class CollectionUtils {
         return null;
     }
     
-    /** Executes the given closure on each element in the colleciton
-      */
-    public static void forAllDo( Collection collection, Closure closure) {
-        if ( collection != null ) {
-            for ( Iterator iter = collection.iterator(); iter.hasNext(); ) {
+    /** 
+     * Executes the given closure on each element in the collection.
+     * <p>
+     * If the input collection is null, there is no change made.
+     * 
+     * @param collection  the collection to get the input from, may be null
+     * @param closure  the closure to perform, may not be null
+     * @throws NullPointerException if the closure is null
+     */
+    public static void forAllDo(Collection collection, Closure closure) {
+        if (collection != null) {
+            for (Iterator iter = collection.iterator(); iter.hasNext();) {
                 Object element = iter.next();
-                closure.execute( element );
+                closure.execute(element);
             }
         }
     }
 
-    /** Selects all elements from inputCollection which match the given predicate
-      * into an output collection
-      */
-    public static Collection select( Collection inputCollection, Predicate predicate ) {
-        ArrayList answer = new ArrayList( inputCollection.size() );
-        select( inputCollection, predicate, answer );
+    /** 
+     * Filter the collection by applying a Predicate to each element. If the
+     * predicate returns false, remove the element.
+     * <p>
+     * If the input collection or predicate is null, there is no change made.
+     * 
+     * @param collection  the collection to get the input from, may be null
+     * @param predicate  the predicate to use as a filter, may be null
+     */
+    public static void filter(Collection collection, Predicate predicate) {
+        if (collection != null && predicate != null) {
+            for (Iterator iter = collection.iterator(); iter.hasNext();) {
+                Object element = iter.next();
+                if (predicate.evaluate(element) == false) {
+                    iter.remove();
+                }
+            }
+        }
+    }
+
+    /** 
+     * Transform the collection by applying a Transformer to each element.
+     * <p>
+     * If the input collection or transformer is null, there is no change made.
+     * <p>
+     * This routine is best for Lists and uses set(), however it adapts for all
+     * Collections that support clear() and addAll().
+     * <p>
+     * If the input collection controls its input, such as a Set, and the
+     * Transformer creates duplicates (or are otherwise invalid), the 
+     * collection may reduce in size due to calling this method.
+     * 
+     * @param collection  the collection to get the input from, may be null
+     * @param transformer  the transformer to perform, may be null
+     */
+    public static void transform(Collection collection, Transformer transformer) {
+        if (collection != null && transformer != null) {
+            if (collection instanceof List) {
+                List list = (List) collection;
+                for (ListIterator iter = list.listIterator(); iter.hasNext();) {
+                    Object element = iter.next();
+                    iter.set(transformer.transform(element));
+                }
+            } else {
+                Collection resultCollection = collect(collection, transformer);
+                collection.clear();
+                collection.addAll(resultCollection);
+            }
+        }
+    }
+
+    /** 
+     * Selects all elements from input collection which match the given predicate
+     * into an output collection.
+     * 
+     * @param inputCollection  the collection to get the input from, may not be null
+     * @param predicate  the predicate to use, may be null
+     * @return the elements matching the predicate (new list)
+     * @throws NullPointerException if the input collection is null
+     */
+    public static Collection select(Collection inputCollection, Predicate predicate) {
+        ArrayList answer = new ArrayList(inputCollection.size());
+        select(inputCollection, predicate, answer);
         return answer;
     }
-    
-    /** Selects all elements from inputCollection which match the given predicate
-      * and adds them to outputCollection
-      */
-    public static void select( Collection inputCollection, Predicate predicate, Collection outputCollection ) {
-        if ( inputCollection != null && predicate != null ) {            
-            for ( Iterator iter = inputCollection.iterator(); iter.hasNext(); ) {
+
+    /** 
+     * Selects all elements from input collection which match the given predicate
+     * and adds them to outputCollection.
+     * <p>
+     * If the input collection or predicate is null, there is no change to the 
+     * output collection.
+     * 
+     * @param inputCollection  the collection to get the input from, may be null
+     * @param predicate  the predicate to use, may be null
+     * @param outputCollection  the collection to output into, may not be null
+     * @return the outputCollection with the the elements matching the predicate added
+     * @throws NullPointerException if the input collection is null
+     */
+    public static void select(Collection inputCollection, Predicate predicate, Collection outputCollection) {
+        if (inputCollection != null && predicate != null) {
+            for (Iterator iter = inputCollection.iterator(); iter.hasNext();) {
                 Object item = iter.next();
-                if ( predicate.evaluate( item ) ) {
-                    outputCollection.add( item );
+                if (predicate.evaluate(item)) {
+                    outputCollection.add(item);
                 }
             }
         }
     }
     
-    /** Transforms all elements from inputCollection with the given transformer 
-      * and adds them to the outputCollection
-      */
-    public static Collection collect( Collection inputCollection, Transformer transformer ) {
-        ArrayList answer = new ArrayList( inputCollection.size() );
-        collect( inputCollection, transformer, answer );
+    /** 
+     * Transforms all elements from inputCollection with the given transformer 
+     * and adds them to the outputCollection.
+     * <p>
+     * If the input transfomer is null, the result is an empty list.
+     * 
+     * @param inputCollection  the collection to get the input from, may not be null
+     * @param transformer  the transformer to use, may be null
+     * @return the transformed result (new list)
+     * @throws NullPointerException if the input collection is null
+     */
+    public static Collection collect(Collection inputCollection, Transformer transformer) {
+        ArrayList answer = new ArrayList(inputCollection.size());
+        collect(inputCollection, transformer, answer);
         return answer;
     }
     
-    /** Transforms all elements from the inputIterator  with the given transformer 
-      * and adds them to the outputCollection
-      */
-    public static Collection collect( Iterator inputIterator, Transformer transformer ) {
+    /** 
+     * Transforms all elements from the inputIterator  with the given transformer 
+     * and adds them to the outputCollection.
+     * <p>
+     * If the input iterator or transfomer is null, the result is an empty list.
+     * 
+     * @param inputIterator  the iterator to get the input from, may be null
+     * @param transformer  the transformer to use, may be null
+     * @return the transformed result (new list)
+     */
+    public static Collection collect(Iterator inputIterator, Transformer transformer) {
         ArrayList answer = new ArrayList();
-        collect( inputIterator, transformer, answer );
+        collect(inputIterator, transformer, answer);
         return answer;
     }
     
-    /** Transforms all elements from inputCollection with the given transformer 
-      * and adds them to the outputCollection
-      *
-      * @return the outputCollection
-      */
-    public static Collection collect( Collection inputCollection, final Transformer transformer, final Collection outputCollection ) {
-        if ( inputCollection != null ) {
-            return collect( inputCollection.iterator(), transformer, outputCollection );
+    /** 
+     * Transforms all elements from inputCollection with the given transformer 
+     * and adds them to the outputCollection.
+     * <p>
+     * If the input collection or transfomer is null, there is no change to the 
+     * output collection.
+     *
+     * @param inputCollection  the collection to get the input from, may be null
+     * @param transformer  the transformer to use, may be null
+     * @param outputCollection  the collection to output into, may not be null
+     * @return the outputCollection with the transformed input added
+     * @throws NullPointerException if the output collection is null
+     */
+    public static Collection collect(Collection inputCollection, final Transformer transformer, final Collection outputCollection) {
+        if (inputCollection != null) {
+            return collect(inputCollection.iterator(), transformer, outputCollection);
         }
         return outputCollection;
     }
 
-    /** Transforms all elements from the inputIterator with the given transformer 
-      * and adds them to the outputCollection
-      *
-      * @return the outputCollection
-      */
-    public static Collection collect( Iterator inputIterator, final Transformer transformer, final Collection outputCollection ) {
-        if ( inputIterator != null && transformer != null ) {            
-            while ( inputIterator.hasNext() ) {
+    /** 
+     * Transforms all elements from the inputIterator with the given transformer 
+     * and adds them to the outputCollection.
+     * <p>
+     * If the input iterator or transfomer is null, there is no change to the 
+     * output collection.
+     *
+     * @param inputIterator  the iterator to get the input from, may be null
+     * @param transformer  the transformer to use, may be null
+     * @param outputCollection  the collection to output into, may not be null
+     * @return the outputCollection with the transformed input added
+     * @throws NullPointerException if the output collection is null
+     */
+    public static Collection collect(Iterator inputIterator, final Transformer transformer, final Collection outputCollection) {
+        if (inputIterator != null && transformer != null) {
+            while (inputIterator.hasNext()) {
                 Object item = inputIterator.next();
-                Object value = transformer.transform( item );
-                outputCollection.add( value );
+                Object value = transformer.transform(item);
+                outputCollection.add(value);
             }
         }
         return outputCollection;
     }
 
-    /** Adds all elements in the iteration to the given collection 
-      */
-    public static void addAll( Collection collection, Iterator iterator ) {
-        while ( iterator.hasNext() ) {
-            collection.add( iterator.next() );
+    /**
+     * Adds all elements in the iteration to the given collection.
+     * 
+     * @param collection  the collection to add to
+     * @param iterator  the iterator of elements to add, may not be null
+     * @throws NullPointerException if the collection or iterator is null
+     */
+    public static void addAll(Collection collection, Iterator iterator) {
+        while (iterator.hasNext()) {
+            collection.add(iterator.next());
         }
     }
     
-    /** Adds all elements in the enumeration to the given collection 
-      */
-    public static void addAll( Collection collection, Enumeration enumeration ) {
-        while ( enumeration.hasMoreElements() ) {
-            collection.add( enumeration.nextElement() );
+    /**
+     * Adds all elements in the enumeration to the given collection.
+     * 
+     * @param collection  the collection to add to
+     * @param enumeration  the enumeration of elements to add, may not be null
+     * @throws NullPointerException if the collection or enumeration is null
+     */
+    public static void addAll(Collection collection, Enumeration enumeration) {
+        while (enumeration.hasMoreElements()) {
+            collection.add(enumeration.nextElement());
         }
     }    
     
-    /** Adds all elements in the array to the given collection 
-      */
-    public static void addAll( Collection collection, Object[] elements ) {
-        for ( int i = 0, size = elements.length; i < size; i++ ) {
-            collection.add( elements[i] );
+    /** 
+     * Adds all elements in the array to the given collection.
+     * 
+     * @param collection  the collection to add to
+     * @param elements  the array of elements to add, may be null
+     * @throws NullPointerException if the collection or array is null
+     */
+    public static void addAll(Collection collection, Object[] elements) {
+        for (int i = 0, size = elements.length; i < size; i++) {
+            collection.add(elements[i]);
         }
     }    
     
     /**
      * Given an Object, and an index, it will get the nth value in the
      * object.
+     * <ul>
+     * <li>If obj is a Map, get the nth value from the <b>key</b> iterator.
+     * <li>If obj is a List or an array, get the nth value.
+     * <li>If obj is an iterator, enumeration or Collection, get the nth value from the iterator.
+     * <li>Return the original obj.
+     * </ul>
+     * 
+     * @param obj  the object to get an index of
+     * @param index  the index to get
+     * @throws IndexOutOfBoundsException
+     * @throws NoSuchElementException
      */
     public static Object index(Object obj, int idx) {
         return index(obj, new Integer(idx));
     }
     
     /**
-     * Given an Object, and an index, it will get the nth value in the
-     * object.
+     * Given an Object, and a key (index), it will get value associated with
+     * that key in the Object. The following checks are made:
+     * <ul>
+     * <li>If obj is a Map, use the index as a key to get a value. If no match continue.
+     * <li>Check key is an Integer. If not, return the object passed in.
+     * <li>If obj is a Map, get the nth value from the <b>key</b> iterator.
+     * <li>If obj is a List or an array, get the nth value.
+     * <li>If obj is an iterator, enumeration or Collection, get the nth value from the iterator.
+     * <li>Return the original obj.
+     * </ul>
+     * 
+     * @param obj  the object to get an index of
+     * @param index  the index to get
+     * @return the object at the specified index
+     * @throws IndexOutOfBoundsException
+     * @throws NoSuchElementException
      */
     public static Object index(Object obj, Object index) {
         if(obj instanceof Map) {
