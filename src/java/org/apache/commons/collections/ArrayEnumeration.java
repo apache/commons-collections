@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayEnumeration.java,v 1.3 2002/03/18 23:49:20 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/03/18 23:49:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayEnumeration.java,v 1.4 2002/03/24 21:50:24 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/03/24 21:50:24 $
  *
  * ====================================================================
  *
@@ -87,7 +87,11 @@ public final class ArrayEnumeration
 
     public ArrayEnumeration( final Object[] elements )
     {
-        m_elements = elements;
+        if(elements == null) {
+            m_elements = new Object[0];
+        } else {
+            m_elements = elements;
+        }
     }
 
     public boolean hasMoreElements()
