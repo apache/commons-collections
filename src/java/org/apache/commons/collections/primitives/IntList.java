@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.9 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.10 2003/01/11 21:34:39 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,8 +57,6 @@
 
 package org.apache.commons.collections.primitives;
 
-
-
 /**
  * An ordered collection (a list) of <code>int</code> values.
  *
@@ -66,7 +64,7 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.ListIntList
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.9 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.10 $ $Date: 2003/01/11 21:34:39 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -237,7 +235,7 @@ public interface IntList extends IntCollection {
      * <p/>
      * Note that when <code><i>fromIndex</i> == <i>toIndex</i></code>,
      * the returned list is empty, and when 
-     * <code><i>fromIndex</i> == 0 && <i>fromIndex</i> == {@link #size() size()}</code>
+     * <code><i>fromIndex</i> == 0 && <i>toIndex</i> == {@link #size() size()}</code>
      * the returned list is my "improper" sublist, containing all my elements.
      * <p/>
      * The semantics of the returned list become undefined

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntIterator.java,v 1.3 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntIterator.java,v 1.4 2003/01/11 21:34:39 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,7 +64,7 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.IteratorIntIterator
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.3 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.4 $ $Date: 2003/01/11 21:34:39 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -73,7 +73,7 @@ public interface IntIterator {
      * Returns <code>true</code> iff I have more elements. 
      * (In other words, returns <code>true</code> iff 
      * a call to {@link #next next} will return an element
-     * rather than throwing an exception.
+     * rather than throwing an exception.)
      * 
      * @return <code>true</code> iff I have more elements
      */
