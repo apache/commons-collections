@@ -71,7 +71,8 @@ import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
 
 /**
- * Red-Black tree-based implementation of BidiMap.
+ * Red-Black tree-based implementation of BidiMap where all objects added
+ * implement the <code>Comparable</code> interface.
  * <p>
  * This class guarantees that the map will be in both ascending key order
  * and ascending value order, sorted according to the natural order for
@@ -104,7 +105,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.9 $ $Date: 2004/01/14 21:43:16 $
+ * @version $Revision: 1.10 $ $Date: 2004/01/29 21:13:05 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -170,6 +171,8 @@ public class TreeBidiMap implements OrderedBidiMap {
 
     /**
      * Checks whether this map contains the a mapping for the specified key.
+     * <p>
+     * The key must implement <code>Comparable</code>.
      *
      * @param key  key whose presence in this map is to be tested
      * @return true if this map contains a mapping for the specified key
@@ -183,6 +186,8 @@ public class TreeBidiMap implements OrderedBidiMap {
 
     /**
      * Checks whether this map contains the a mapping for the specified value.
+     * <p>
+     * The value must implement <code>Comparable</code>.
      *
      * @param value  value whose presence in this map is to be tested
      * @return true if this map contains a mapping for the specified value
@@ -197,6 +202,8 @@ public class TreeBidiMap implements OrderedBidiMap {
     /**
      * Gets the value to which this map maps the specified key.
      * Returns null if the map contains no mapping for this key.
+     * <p>
+     * The key must implement <code>Comparable</code>.
      *
      * @param key  key whose associated value is to be returned
      * @return the value to which this map maps the specified key,
@@ -223,6 +230,8 @@ public class TreeBidiMap implements OrderedBidiMap {
      *  map.put("A","B");  // contains A mapped to B, as per Map
      *  map.put("C","B");  // contains C mapped to B, key A is removed
      * </pre>
+     * <p>
+     * Both key and value must implement <code>Comparable</code>.
      *
      * @param key  key with which the specified value is to be  associated
      * @param value  value to be associated with the specified key
@@ -236,6 +245,8 @@ public class TreeBidiMap implements OrderedBidiMap {
 
     /**
      * Puts all the mappings from the specified map into this map.
+     * <p>
+     * All keys and values must implement <code>Comparable</code>.
      * 
      * @param map  the map to copy from
      */
@@ -249,6 +260,8 @@ public class TreeBidiMap implements OrderedBidiMap {
         
     /**
      * Removes the mapping for this key from this map if present.
+     * <p>
+     * The key must implement <code>Comparable</code>.
      *
      * @param key  key whose mapping is to be removed from the map.
      * @return previous value associated with specified key,
@@ -275,6 +288,8 @@ public class TreeBidiMap implements OrderedBidiMap {
     /**
      * Returns the key to which this map maps the specified value.
      * Returns null if the map contains no mapping for this value.
+     * <p>
+     * The value must implement <code>Comparable</code>.
      *
      * @param value  value whose associated key is to be returned.
      * @return the key to which this map maps the specified value,
@@ -288,6 +303,8 @@ public class TreeBidiMap implements OrderedBidiMap {
 
     /**
      * Removes the mapping for this value from this map if present
+     * <p>
+     * The value must implement <code>Comparable</code>.
      *
      * @param value  value whose mapping is to be removed from the map
      * @return previous key associated with specified value,
@@ -328,6 +345,8 @@ public class TreeBidiMap implements OrderedBidiMap {
     
     /**
      * Gets the next key after the one specified.
+     * <p>
+     * The key must implement <code>Comparable</code>.
      *
      * @param key the key to search for next from
      * @return the next key, null if no match or at end
@@ -340,6 +359,8 @@ public class TreeBidiMap implements OrderedBidiMap {
 
     /**
      * Gets the previous key before the one specified.
+     * <p>
+     * The key must implement <code>Comparable</code>.
      *
      * @param key the key to search for previous from
      * @return the previous key, null if no match or at start
