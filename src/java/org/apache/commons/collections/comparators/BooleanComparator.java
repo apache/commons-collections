@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.4 2003/01/13 22:34:57 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.5 2003/01/15 20:36:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.util.Comparator;
  * 
  * @since Commons Collections 2.2
  * 
- * @version $Revision: 1.4 $ $Date: 2003/01/13 22:34:57 $
+ * @version $Revision: 1.5 $ $Date: 2003/01/15 20:36:38 $
  * 
  * @author Rodney Waldhoff
  */
@@ -202,6 +202,11 @@ public final class BooleanComparator implements Comparator, Serializable {
      * to reduce allocation and garbage collection overhead when
      * multiple BooleanComparators may be used in the same 
      * virtual machine.
+     * 
+     * @param trueFirst when <code>true</code>, sort 
+     *        <code>true</code> {@link Boolean}s before
+     *        <code>false</code> {@link Boolean}s.
+     * @return a cached BooleanComparator instance
      */
     public static BooleanComparator getBooleanComparator(boolean trueFirst) {
         return trueFirst ? TRUE_FIRST : FALSE_FIRST;
