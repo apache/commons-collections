@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.40 2003/09/09 21:36:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.41 2003/09/09 21:53:04 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.apache.commons.collections.decorators.PredicatedCollection;
@@ -81,7 +80,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.40 $ $Date: 2003/09/09 21:36:53 $
+ * @version $Revision: 1.41 $ $Date: 2003/09/09 21:53:04 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -826,12 +825,9 @@ public class CollectionUtils {
     }
 
     private static final int getFreq(final Object obj, final Map freqMap) {
-        try {
-            return ((Integer)(freqMap.get(obj))).intValue();
-        } catch(NullPointerException e) {
-            // ignored
-        } catch(NoSuchElementException e) {
-            // ignored
+        Integer count = (Integer) freqMap.get(obj);
+        if (count != null) {
+            return count.intValue();
         }
         return 0;
     }
