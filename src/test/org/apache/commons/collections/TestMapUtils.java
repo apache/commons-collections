@@ -37,12 +37,13 @@ import org.apache.commons.collections.map.TestPredicatedMap;
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.24 $ $Date: 2004/09/22 23:03:50 $
+ * @version $Revision: 1.25 $ $Date: 2004/12/11 06:26:13 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
  * @author Max Rydahl Andersen
  * @author Janek Bogucki
+ * @author Neil O'Toole
  */
 public class TestMapUtils extends BulkTest {
 
@@ -769,5 +770,37 @@ public class TestMapUtils extends BulkTest {
     
         assertEquals(EXPECTED_OUT, out.toString());
     }
+    
+	public void testUnmodifiableMapCopy() {
+		Map map = new HashMap();
+		map.put("key", "value");
+
+		Map copy = MapUtils.unmodifiableMapCopy(map);
+		assertTrue(copy instanceof Unmodifiable);
+		assertEquals(map, copy);
+		map.clear();
+		assertFalse(map.equals(copy));
+
+		try
+		{
+			copy.clear();
+			fail("should be unmodifiable.");
+		}
+		catch (UnsupportedOperationException uoe)
+		{
+			// this is what we want
+		}
+		
+		try
+		{
+			map = MapUtils.unmodifiableMapCopy(null);
+			fail("expecting IllegalArgumentException");
+		}
+		catch (IllegalArgumentException iae)
+		{
+			// this is what we want
+		}
+
+	}
     
 }

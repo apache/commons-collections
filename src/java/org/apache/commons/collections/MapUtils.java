@@ -67,7 +67,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.49 $ $Date: 2004/09/22 23:09:54 $
+ * @version $Revision: 1.50 $ $Date: 2004/12/11 06:26:13 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -79,6 +79,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  * @author Janek Bogucki
  * @author Max Rydahl Andersen
  * @author <a href="mailto:equinus100@hotmail.com">Ashwin S</a>
+ * @author Neil O'Toole
  */
 public class MapUtils {
     
@@ -1144,7 +1145,7 @@ public class MapUtils {
      * @throws NullPointerException  if map is null
      * @throws IllegalArgumentException  if sub-array or entry matching used and an
      *  entry is invalid
-     * @throws ClassCaseException if the array contents is mixed
+     * @throws ClassCastException if the array contents is mixed
      * @since Commons Collections 3.2
      */
     public static Map putAll(Map map, Object[] array) {
@@ -1220,6 +1221,20 @@ public class MapUtils {
     public static Map unmodifiableMap(Map map) {
         return UnmodifiableMap.decorate(map);
     }
+    
+	/**
+	 * Returns an unmodifiable copy of the map.
+     * @param map  the map to make an unmodifiable copy of, must not be null
+     * @return an unmodifiable map backed by the given map
+     * @throws IllegalArgumentException  if the map is null
+	 */
+	public static Map unmodifiableMapCopy(final Map map) {
+		if (map == null) throw new IllegalArgumentException("null not permitted.");
+		
+		final Map copy = new HashMap(map.size(), 1.0f);
+		copy.putAll(map);
+		return MapUtils.unmodifiableMap(copy);
+	}
 
     /**
      * Returns a predicated (validating) map backed by the given map.
