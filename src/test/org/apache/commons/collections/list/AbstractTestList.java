@@ -45,7 +45,7 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:34 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/12 22:20:54 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -771,12 +771,45 @@ public abstract class AbstractTestList extends AbstractTestCollection {
      */
     public void testListListIteratorByIndex() {
         resetFull();
-        for (int i = 0; i < confirmed.size(); i++) {
+        try {
+            getList().listIterator(-1);
+        } catch (IndexOutOfBoundsException ex) {}
+        resetFull();
+        try {
+            getList().listIterator(getList().size() + 1);
+        } catch (IndexOutOfBoundsException ex) {}
+        resetFull();
+        for (int i = 0; i <= confirmed.size(); i++) {
             forwardTest(getList().listIterator(i), i);
+            backwardTest(getList().listIterator(i), i);
+        }
+        resetFull();
+        for (int i = 0; i <= confirmed.size(); i++) {
             backwardTest(getList().listIterator(i), i);
         }
     }
 
+    /**
+     * Tests remove on list iterator is correct.
+     */
+    public void testListListIteratorPreviousRemove() {
+        if (isRemoveSupported() == false) return;
+        resetFull();
+        ListIterator it = getList().listIterator();
+        Object zero = it.next();
+        Object one = it.next();
+        Object two = it.next();
+        Object two2 = it.previous();
+        Object one2 = it.previous();
+        assertSame(one, one2);
+        assertSame(two, two2);
+        assertSame(zero, getList().get(0));
+        assertSame(one, getList().get(1));
+        assertSame(two, getList().get(2));
+        it.remove();
+        assertSame(zero, getList().get(0));
+        assertSame(two, getList().get(1));
+    }
 
     /**
      *  Traverses to the end of the given iterator.
