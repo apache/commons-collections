@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.11 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.11 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.12 2002/08/17 11:38:35 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/08/17 11:38:35 $
  *
  * ====================================================================
  *
@@ -72,13 +72,16 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.iterators.ArrayIterator;
+import org.apache.commons.collections.iterators.EnumerationIterator;
+
 /**
  * A set of {@link Collection} related utility methods.
  *
  * @author Rodney Waldhoff
  *
  * @since 1.0
- * @version $Id: CollectionUtils.java,v 1.11 2002/08/15 20:04:31 pjack Exp $
+ * @version $Id: CollectionUtils.java,v 1.12 2002/08/17 11:38:35 scolebourne Exp $
  */
 public class CollectionUtils {
 
@@ -510,8 +513,12 @@ public class CollectionUtils {
         return iterator;
     }
 
-    /** Returns an Iterator for the given object. Currently this method can handle
-     * Iterator, Enumeration, Collection, Map, Object[] or array */
+    /** 
+     * Returns an Iterator for the given object. Currently this method can handle
+     * Iterator, Enumeration, Collection, Map, Object[] or array.
+     * 
+     * @deprecated use IteratorUtils version instead
+     */
     public static Iterator getIterator(Object obj) {
         if(obj instanceof Iterator) {
             return (Iterator)obj;
