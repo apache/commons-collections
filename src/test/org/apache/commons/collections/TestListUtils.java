@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.2 2002/08/13 01:19:00 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/13 01:19:00 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.3 2002/08/15 20:09:38 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/15 20:09:38 $
  *
  * ====================================================================
  *
@@ -136,7 +136,7 @@ public class TestListUtils extends BulkTest {
 
             private int index;
 
-            public Object createObject() {
+            public Object create() {
                 index++;
                 return new Integer(index);
             }

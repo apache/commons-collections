@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.1 2002/08/13 01:19:00 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/13 01:19:00 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.2 2002/08/15 20:09:37 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/15 20:09:37 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.lang.reflect.*;
  * to create an object.
  *
  * @author Arron Bates
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @since 2.1
  */
 public interface Factory {
@@ -77,6 +77,6 @@ public interface Factory {
    *
    * @return Object reference to the new object.
    */
-  public Object createObject();
+  public Object create();
   
 }

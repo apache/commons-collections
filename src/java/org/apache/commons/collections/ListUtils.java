@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.7 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.7 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.8 2002/08/15 20:09:37 pjack Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/08/15 20:09:37 $
  *
  * ====================================================================
  *
@@ -463,7 +463,7 @@ public class ListUtils
                 obj = getList().get(index);
                 if (obj == null) {
                     /* item is a place holder, create new one, set and return */
-                    obj = this.factory.createObject();
+                    obj = this.factory.create();
                     this.getList().set(index, obj);
                     return obj;
                 } else {
@@ -476,7 +476,7 @@ public class ListUtils
                     getList().add(null);
                 }
                 /* create our last object, set and return */
-                obj = this.factory.createObject();
+                obj = this.factory.create();
                 getList().add(obj);
                 return obj;
             }
@@ -554,7 +554,7 @@ public class ListUtils
      *
      *  <Pre>
      *  Factory factory = new Factory() {
-     *      public Object createObject() {
+     *      public Object create() {
      *          return new Date();
      *      }
      *  }

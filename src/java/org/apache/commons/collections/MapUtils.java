@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.8 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.8 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.9 2002/08/15 20:09:37 pjack Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/08/15 20:09:37 $
  *
  * ====================================================================
  *
@@ -922,7 +922,7 @@ public class MapUtils {
 
         public Object get(Object key) {
             if (!map.containsKey(key)) {
-                Object value = factory.createObject();
+                Object value = factory.create();
                 map.put(key, value);
                 return value;
             }
@@ -1114,7 +1114,7 @@ public class MapUtils {
      *
      *  <Pre>
      *  Factory factory = new Factory() {
-     *      public Object createObject() {
+     *      public Object create() {
      *          return new Date();
      *      }
      *  }
@@ -1177,7 +1177,7 @@ public class MapUtils {
      *
      *  <Pre>
      *  Factory factory = new Factory() {
-     *      public Object createObject() {
+     *      public Object create() {
      *          return new Date();
      *      }
      *  }

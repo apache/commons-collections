@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.5 2002/08/15 20:09:37 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:09:37 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.lang.reflect.*;
  * objects.
  *
  * @author Arron Bates
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @since 2.1
  */
 public class FactoryUtils {
@@ -135,7 +135,7 @@ public class FactoryUtils {
      * Thinly disguising the error as a null pointer, with a modified message for
      * debugging.
      */
-    public Object createObject() {
+    public Object create() {
       
       Object obj = null;
       /* for catching error specifics */
