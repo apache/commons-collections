@@ -34,7 +34,7 @@ import org.apache.commons.collections.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/05/03 21:48:49 $
+ * @version $Revision: 1.11 $ $Date: 2004/05/07 23:11:04 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -89,22 +89,6 @@ public class PredicatedMap
         }
     }
 
-    /**
-     * Validates a key value pair.
-     * 
-     * @param key  the key to validate
-     * @param value  the value to validate
-     * @throws IllegalArgumentException if invalid
-     */
-    protected void validate(Object key, Object value) {
-        if (keyPredicate != null && keyPredicate.evaluate(key) == false) {
-            throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
-        }
-        if (valuePredicate != null && valuePredicate.evaluate(value) == false) {
-            throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
-        }
-    }
-
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
@@ -135,6 +119,21 @@ public class PredicatedMap
     // The validate method exists for backwards compatability - in an ideal
     // world, it wouldn't and the superclass methods checkPutKey/checkPutValue
     // would be overridden instead
+    /**
+     * Validates a key value pair.
+     * 
+     * @param key  the key to validate
+     * @param value  the value to validate
+     * @throws IllegalArgumentException if invalid
+     */
+    protected void validate(Object key, Object value) {
+        if (keyPredicate != null && keyPredicate.evaluate(key) == false) {
+            throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
+        }
+        if (valuePredicate != null && valuePredicate.evaluate(value) == false) {
+            throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
+        }
+    }
 
     /**
      * Override to validate an object set into the map via <code>setValue</code>.
