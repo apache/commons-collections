@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * Entry point for tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.15 $ $Date: 2004/04/09 14:46:35 $
+ * @version $Revision: 1.16 $ $Date: 2004/04/10 21:24:21 $
  * 
  * @author Stephen Colebourne
  */
@@ -50,17 +50,17 @@ public class TestAll extends TestCase {
         suite.addTest(TestLRUMap.suite());
         suite.addTest(TestReferenceMap.suite());
         suite.addTest(TestStaticBucketMap.suite());
+        suite.addTest(TestSingletonMap.suite());
         
         suite.addTest(TestFixedSizeMap.suite());
         suite.addTest(TestFixedSizeSortedMap.suite());
         suite.addTest(TestLazyMap.suite());
         suite.addTest(TestLazySortedMap.suite());
         suite.addTest(TestListOrderedMap.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
         suite.addTest(TestPredicatedMap.suite());
         suite.addTest(TestPredicatedSortedMap.suite());
-        suite.addTest(TestSingletonMap.suite());
+        suite.addTest(TestTransformedMap.suite());
+        suite.addTest(TestTransformedSortedMap.suite());
         suite.addTest(TestUnmodifiableMap.suite());
         suite.addTest(TestUnmodifiableOrderedMap.suite());
         suite.addTest(TestUnmodifiableSortedMap.suite());
