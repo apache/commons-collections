@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.4 2002/07/03 02:09:06 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/07/03 02:09:06 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.5 2002/08/17 12:07:24 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/17 12:07:24 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * Tests the BinaryHeap.
  * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestBinaryHeap.java,v 1.4 2002/07/03 02:09:06 mas Exp $
+ * @version $Id: TestBinaryHeap.java,v 1.5 2002/08/17 12:07:24 scolebourne Exp $
  */
 public class TestBinaryHeap extends TestCollection {
     
@@ -274,8 +274,8 @@ public class TestBinaryHeap extends TestCollection {
       BinaryHeap heap = (BinaryHeap)collection;
 
       Comparator c = heap.comparator();
-      if (c == null) c = ComparatorUtils.NATURAL;
-      if (!heap.m_isMinHeap) c = ComparatorUtils.reverse(c);
+      if (c == null) c = ComparatorUtils.naturalComparator();
+      if (!heap.m_isMinHeap) c = ComparatorUtils.reversedComparator(c);
 
       Object[] tree = heap.m_elements;
       for (int i = 1; i <= heap.m_size; i++) {
