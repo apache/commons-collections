@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.24 2002/03/28 05:23:37 morgand Exp $ -->
+<!-- $Id: build.xml,v 1.25 2002/03/28 06:50:15 morgand Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -75,6 +75,20 @@
       <property name="dest.bin.tar.gz" value="${dest}/${bin.name}.tar.gz"/>
       <property name="dest.bin.zip" value="${dest}/${bin.name}.zip"/>
       
+      <property name="src.name" value="${bin.name}-src"/>
+      <property name="dest.src.tar"    value="${dest}/${src.name}.tar"/>
+      <property name="dest.src.tar.gz"    value="${dest}/${src.name}.tar.gz"/>
+      <property name="dest.src.zip" value="${dest}/${src.name}.zip"/>
+      
+      <patternset id="patternset-exclude-distros">
+        <exclude name="**/${bin.name}.tar.gz"/>
+        <exclude name="**/${bin.name}.zip"/>
+        <exclude name="**/${src.name}.tar.gz"/>
+        <exclude name="**/${src.name}.zip"/>
+      </patternset>
+      
+      <!-- set the cvs.root property in the build.properties file -->
+      <property name="cvs.tag" value="COLLECTIONS_2_0"/>      
       
       <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
       <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->
@@ -256,8 +270,7 @@
       <mkdir dir="${workdir}/${bin.name}"/>
       <copy todir="${workdir}/${bin.name}">
          <fileset dir="${dest}">         
-           <exclude name="${bin.name}.zip"/>
-           <exclude name="${bin.name}.tar.gz"/>    
+            <patternset refid="patternset-exclude-distros"/>
          </fileset>
       </copy>
       
@@ -280,8 +293,7 @@
       <mkdir dir="${workdir}/${bin.name}"/>
       <copy todir="${workdir}/${bin.name}">
          <fileset dir="${dest}">         
-           <exclude name="${bin.name}.zip"/>
-           <exclude name="${bin.name}.tar.gz"/>    
+            <patternset refid="patternset-exclude-distros"/>
          </fileset>
       </copy>
             
@@ -292,8 +304,39 @@
       
       <delete dir="${workdir}"/>
    
-   </target>     
+   </target>
 
    <!-- ######################################################### -->
+
+   <target name="dist-src" depends="init">
+   
+      <!-- not executed in default dist, because it is configuration-rich
+        and requires an active network connection -->
+                       
+      <mkdir dir="${workdir}"/>
+      <mkdir dir="${dest.jardir}"/>
+
+      <cvs dest="${workdir}" cvsRoot="${cvs.root}" 
+          package="jakarta-commons" tag="${cvs.tag}"/>
+      <copy file="../LICENSE" toDir="${workdir}/jakarta-commons"/>
+      
+      <!-- create tar.gz -->
+      <tar longfile="gnu" tarfile="${dest.src.tar}">
+        <tarfileset dir="${workdir}"/>
+      </tar>
+      
+      <gzip zipfile="${dest.src.tar.gz}"
+      	    src="${dest.src.tar}">
+      </gzip>
+      <delete file="${dest.src.tar}" />
+      
+      <!-- create a zip file -->
+      <zip zipfile="${dest.src.zip}" >
+        <zipfileset dir="${workdir}" />
+      </zip>
+             
+      <delete dir="${workdir}"/>
+   
+   </target>
 
 </project>
