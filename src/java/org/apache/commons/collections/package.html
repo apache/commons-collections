@@ -1,4 +1,4 @@
-<!-- $Id: package.html,v 1.6 2002/06/11 02:40:52 mas Exp $ -->
+<!-- $Id: package.html,v 1.7 2002/08/16 00:00:23 pjack Exp $ -->
 <html>
    <head>
       <title>Package Documentation for org.apache.commons.collections</title>
@@ -29,7 +29,6 @@
         <td valign="top">Map Implementations</td>
         <td>
           {@link org.apache.commons.collections.BeanMap}<br>
-          {@link org.apache.commons.collections.DefaultMapEntry}<br>
           {@link org.apache.commons.collections.DoubleOrderedMap}<br>
           {@link org.apache.commons.collections.ExtendedProperties}<br>
           {@link org.apache.commons.collections.FastHashMap}<br>
@@ -37,8 +36,10 @@
           {@link org.apache.commons.collections.LRUMap}<br>
           {@link org.apache.commons.collections.MultiHashMap}<br>
           {@link org.apache.commons.collections.ProxyMap}<br>
+          {@link org.apache.commons.collections.ReferenceMap}<br>
           {@link org.apache.commons.collections.SequencedHashMap}<br>
           {@link org.apache.commons.collections.SoftRefHashMap}<br>
+          {@link org.apache.commons.collections.StaticBucketMap}<br>
         </td>
         <td valign="top">
           Special-purpose implementations of the {@link
@@ -46,23 +47,25 @@
         </td>
       </tr>
       <tr>
-        <td valign="top">Stack and Queue Implementations</td>
+        <td valign="top">Buffer Interface and Implementations</td>
         <td>
           {@link org.apache.commons.collections.ArrayStack}<br>
           {@link org.apache.commons.collections.BinaryHeap}<br>
+          {@link org.apache.commons.collections.BoundedFifoBuffer}<br>
+          {@link org.apache.commons.collections.Buffer}<br>
           {@link org.apache.commons.collections.PriorityQueue}<br>
           {@link org.apache.commons.collections.SynchronizedPriorityQueue}
+          {@link org.apache.commons.collections.UnboundedFifoBuffer}
         </td>
         <td valign="top">
-          Special-purpose implementations of the {@link
-          java.util.Stack} interface, as well as similar {@link
-          org.apache.commons.collections.PriorityQueue}
-          interface.
+          New collection interface that specifies a removal order for
+          the collection, used to implement queues and queue-like things.
         </td>
       </tr>
         <td valign="top">Bag Interface and Implementations</td>
         <td>
           {@link org.apache.commons.collections.Bag}<br>
+          {@link org.apache.commons.collections.DefaultMapBag}<br>
           {@link org.apache.commons.collections.HashBag}<br>
           {@link org.apache.commons.collections.SortedBag}<br>
           {@link org.apache.commons.collections.TreeBag}
@@ -72,44 +75,44 @@
         </td>
       </tr>
       <tr>
-      <tr>
-        <td valign="top">Adapters</td>
-        <td>
-          {@link org.apache.commons.collections.ArrayEnumeration}<br>
-          {@link org.apache.commons.collections.ArrayIterator}<br>
-          {@link org.apache.commons.collections.EnumerationIterator}<br>
-          {@link org.apache.commons.collections.IteratorEnumeration}
-        </td>
-        <td valign="top">
-          Access Java1-style containers as though they were
-          Java2-style Collections and vice-versa.
-        </td>
-      </tr>
-      <tr>
         <td valign="top">Utilities</td>
         <td valign="top">
-          {@link org.apache.commons.collections.Closure}<br>
+          {@link org.apache.commons.collections.BagUtils}<br>
+          {@link org.apache.commons.collections.BufferUtils}<br>
           {@link org.apache.commons.collections.CollectionUtils}<br>
-          {@link org.apache.commons.collections.MapUtils}
+          {@link org.apache.commons.collections.ComparatorUtils}<br>
+          {@link org.apache.commons.collections.ListUtils}<br>
+          {@link org.apache.commons.collections.MapUtils}<br>
+          {@link org.apache.commons.collections.SetUtils}
         </td>
         <td valign="top">
           Manipulate collection objects, determine set theoretic
-          properties, ensure type-safety, etc.
+          properties, ensure type-safety, provide decorators, etc.
         </td>
       </tr>
       <tr>
-        <td valign="top">Transformation Tools</td>
+        <td valign="top">Functor Interfaces</td>
         <td valign="top">
-          {@link org.apache.commons.collections.FilterIterator}<br>
+          {@link org.apache.commons.collections.Factory}<br>
           {@link org.apache.commons.collections.Predicate}<br>
-          {@link org.apache.commons.collections.ProxyIterator}<br>
+          {@link org.apache.commons.collections.Closure}<br>
           {@link org.apache.commons.collections.Transformer}<br>
-          {@link org.apache.commons.collections.TransformIterator}
         </td>
         <td valign="top">
           Create views or functors on a collection. If your collection
           represents <i>X</i>, these allow you to define and look at
           <i>f(X)</i>.
+        </td>
+      </tr>
+      <tr>
+        <td valign="top">Miscellaneous</td>
+        <td valign="top">
+          {@link org.apache.commons.collections.StringStack}<br>
+          {@link org.apache.commons.collections.DefaultMapEntry}<br>
+        </td>
+        <td valign="top">
+          A stack of strings; and the trivial implementation of 
+            {@link java.util.Map.Entry}.
         </td>
       </tr>
       </table>
