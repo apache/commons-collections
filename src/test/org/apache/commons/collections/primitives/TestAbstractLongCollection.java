@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.3 2003/04/08 18:24:35 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongCollection.java,v 1.1 2003/04/08 18:24:34 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,48 +55,59 @@
  *
  */
 
-package org.apache.commons.collections.primitives.adapters;
+package org.apache.commons.collections.primitives;
+
+import java.util.Collections;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.adapters.IteratorLongIterator;
+
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/08 18:24:35 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:34 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestAbstractLongCollection extends TestCase {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestAbstractLongCollection(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static Test suite() {
+        return new TestSuite(TestAbstractLongCollection.class);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
+    // tests
+    // ------------------------------------------------------------------------
+    
+    public void testAddIsUnsupportedByDefault() {
+        LongCollection col = new LongCollectionImpl();
+        try {
+            col.add((long)1);
+            fail("Expected UnsupportedOperationException");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }        
+    }
+    // inner classes
+    // ------------------------------------------------------------------------
 
-        return suite;
+
+    static class LongCollectionImpl extends AbstractLongCollection {
+        public LongCollectionImpl() {
+        }
+        
+        public LongIterator iterator() {
+            return new IteratorLongIterator(Collections.EMPTY_LIST.iterator());
+        }
+
+        public int size() {
+            return 0;
+        }
     }
 }
-

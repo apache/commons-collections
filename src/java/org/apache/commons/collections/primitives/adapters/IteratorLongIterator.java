@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.3 2003/04/08 18:24:35 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IteratorLongIterator.java,v 1.1 2003/04/08 18:24:35 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,46 +57,63 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.util.Iterator;
+
+import org.apache.commons.collections.primitives.LongIterator;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/08 18:24:35 $
- * @author Rodney Waldhoff
+ * Adapts a {@link java.lang.Number Number}-valued 
+ * {@link Iterator Iterator} 
+ * to the {@link LongIterator LongIterator} 
+ * interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link Iterator Iterator} 
+ * implementation in the "obvious" way.
+ *
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:35 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+public class IteratorLongIterator implements LongIterator {
+    
+    /**
+     * Create an {@link LongIterator LongIterator} wrapping
+     * the specified {@link Iterator Iterator}.  When
+     * the given <i>iterator</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param iterator the (possibly <code>null</code>) 
+     *        {@link Iterator Iterator} to wrap
+     * @return an {@link LongIterator LongIterator} wrapping the given 
+     *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+     *         <code>null</code>.
+     */
+    public static LongIterator wrap(Iterator iterator) {
+        return null == iterator ? null : new IteratorLongIterator(iterator);
     }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+   
+    /**
+     * Creates an {@link LongIterator LongIterator} wrapping
+     * the specified {@link Iterator Iterator}.
+     * @see #wrap
+     */
+    public IteratorLongIterator(Iterator iterator) {
+        _iterator = iterator;
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        return suite;
+    
+    public boolean hasNext() {
+        return _iterator.hasNext();
     }
+    
+    public long next() {
+        return ((Number)(_iterator.next())).longValue();
+    }
+    
+    public void remove() {
+        _iterator.remove();
+    }
+    
+    private Iterator _iterator = null;
+
 }
-

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.3 2003/04/08 18:24:35 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestListIteratorLongListIterator.java,v 1.1 2003/04/08 18:24:35 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,46 +57,62 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.primitives.LongListIterator;
+import org.apache.commons.collections.primitives.TestLongListIterator;
+
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/08 18:24:35 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:35 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestListIteratorLongListIterator extends TestLongListIterator {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestListIteratorLongListIterator(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        return suite;
+        return new TestSuite(TestListIteratorLongListIterator.class);
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    public LongListIterator makeEmptyLongListIterator() {
+        return ListIteratorLongListIterator.wrap(makeEmptyList().listIterator());
+    }
+    
+    public LongListIterator makeFullLongListIterator() {
+        return ListIteratorLongListIterator.wrap(makeFullList().listIterator());
+    }
+
+    protected List makeEmptyList() {
+        return new ArrayList();
+    }
+    
+    protected List makeFullList() {
+        List list = makeEmptyList();
+        long[] elts = getFullElements();
+        for(int i=0;i<elts.length;i++) {
+            list.add(new Long(elts[i]));
+        }
+        return list;
+    }
+    
+    public long[] getFullElements() {
+        return new long[] { (long)0, (long)1, (long)2, (long)3, (long)4, (long)5, (long)6, (long)7, (long)8, (long)9 };
+    }
+    
+    // tests
+    // ------------------------------------------------------------------------
+
+
+}

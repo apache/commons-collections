@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.3 2003/04/08 18:24:35 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/CollectionLongCollection.java,v 1.1 2003/04/08 18:24:35 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,46 +57,58 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.Serializable;
+import java.util.Collection;
+
+import org.apache.commons.collections.primitives.LongCollection;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/08 18:24:35 $
- * @author Rodney Waldhoff
+ * Adapts a {@link java.lang.Number Number}-valued
+ * {@link java.util.Collection Collection} to the
+ * {@link LongCollection LongCollection} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link Collection Collection} 
+ * implementation in the "obvious" way.
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:35 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+final public class CollectionLongCollection extends AbstractCollectionLongCollection implements Serializable {
+    /**
+     * Create an {@link LongCollection LongCollection} wrapping
+     * the specified {@link Collection Collection}.  When
+     * the given <i>collection</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param collection the (possibly <code>null</code>) {@link Collection} to wrap
+     * @return an {@link LongCollection LongCollection} wrapping the given 
+     *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
+     *         <code>null</code>.
+     */
+    public static LongCollection wrap(Collection collection) {
+        if(null == collection) {
+            return null;
+        } else if(collection instanceof Serializable) {
+            return new CollectionLongCollection(collection);
+        } else {
+            return new NonSerializableCollectionLongCollection(collection);
+        }
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Creates an {@link LongCollection LongCollection} wrapping
+     * the specified {@link Collection Collection}.
+     * @see #wrap
+     */
+    public CollectionLongCollection(Collection collection) {
+        _collection = collection;
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        return suite;
+    
+    protected Collection getCollection() {
+        return _collection;
     }
+ 
+    private Collection _collection = null;         
 }
-

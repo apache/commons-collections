@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.3 2003/04/08 18:24:35 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestLongCollectionCollection.java,v 1.1 2003/04/08 18:24:35 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -57,46 +57,80 @@
 
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.Serializable;
+import java.util.Collection;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestObject;
+import org.apache.commons.collections.primitives.AbstractRandomAccessLongList;
+import org.apache.commons.collections.primitives.ArrayLongList;
+import org.apache.commons.collections.primitives.LongList;
+
 /**
- * @version $Revision: 1.3 $ $Date: 2003/04/08 18:24:35 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/08 18:24:35 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestLongCollectionCollection extends TestObject {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestLongCollectionCollection(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
-
-        return suite;
+        return new TestSuite(TestLongCollectionCollection.class);
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    protected Object makeObject() {
+        LongList list = new ArrayLongList();
+        for(int i=0;i<10;i++) {
+            list.add(i);
+        }
+        return new LongCollectionCollection(list);
+    }
+
+    public void testSerializeDeserializeThenCompare() {
+        // Collection.equal contract doesn't work that way
+    }
+
+    /** @TODO need to add serialized form to cvs */
+    public void testCanonicalEmptyCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    public void testCanonicalFullCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+    
+    // tests
+    // ------------------------------------------------------------------------
+
+    public void testWrapNull() {
+        assertNull(LongCollectionCollection.wrap(null));
+    }
+    
+    public void testWrapSerializable() {
+        Collection collection = LongCollectionCollection.wrap(new ArrayLongList());
+        assertNotNull(collection);
+        assertTrue(collection instanceof Serializable);
+    }
+    
+    public void testWrapNonSerializable() {
+        Collection collection = LongCollectionCollection.wrap(new AbstractRandomAccessLongList() { 
+            public long get(int i) { throw new IndexOutOfBoundsException(); } 
+            public int size() { return 0; } 
+        });
+        assertNotNull(collection);
+        assertTrue(!(collection instanceof Serializable));
+    }
+
+}

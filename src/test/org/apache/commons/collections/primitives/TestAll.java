@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.9 2003/03/03 23:23:40 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.10 2003/04/08 18:24:34 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,7 +62,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.9 $ $Date: 2003/03/03 23:23:40 $
+ * @version $Revision: 1.10 $ $Date: 2003/04/08 18:24:34 $
  * @author Rodney Waldhoff
  */
 public class TestAll extends TestCase {
@@ -80,9 +80,12 @@ public class TestAll extends TestCase {
 
         suite.addTest(TestAbstractIntCollection.suite());
         suite.addTest(TestAbstractRandomAccessIntList.suite());
-        
         suite.addTest(TestArrayIntList.suite());
         suite.addTest(TestArrayUnsignedShortList.suite());
+
+		suite.addTest(TestAbstractLongCollection.suite());
+		suite.addTest(TestAbstractRandomAccessLongList.suite());
+		suite.addTest(TestArrayLongList.suite());
 
         suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
         
