@@ -53,7 +53,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.10 $ $Date: 2005/01/15 22:47:40 $
+ * @version $Revision: 1.11 $ $Date: 2005/01/22 00:48:22 $
  * 
  * @author Avalon
  * @author Berin Loritsch
@@ -355,15 +355,21 @@ public class BoundedFifoBuffer extends AbstractCollection
                     return;
                 }
 
-                // Other elements require us to shift the subsequent elements
-                int i = lastReturnedIndex + 1;
-                while (i != end) {
-                    if (i >= maxElements) {
-                        elements[i - 1] = elements[0];
-                        i = 0;
-                    } else {
-                        elements[decrement(i)] = elements[i];
-                        i = increment(i);
+                int pos = lastReturnedIndex + 1;
+                if (start < lastReturnedIndex && pos < end) {
+                    // shift in one part
+                    System.arraycopy(elements, pos, elements,
+                            lastReturnedIndex, end - pos);
+                } else {
+                    // Other elements require us to shift the subsequent elements
+                    while (pos != end) {
+                        if (pos >= maxElements) {
+                            elements[pos - 1] = elements[0];
+                            pos = 0;
+                        } else {
+                            elements[decrement(pos)] = elements[pos];
+                            pos = increment(pos);
+                        }
                     }
                 }
 
