@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.2 2002/08/17 11:28:36 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/17 11:28:36 $
  *
  * ====================================================================
  *
@@ -61,10 +61,11 @@
 package org.apache.commons.collections.iterators;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-
 /**
  * <p>An IteratorChain is an Iterator that wraps one or
  * more Iterators.  When any method from the
@@ -81,16 +82,17 @@ import java.util.NoSuchElementException;
  * <p>Calling a method that adds new Iterator<i>after
  * a method in the Iterator interface
  * has been called</i> will result in an
- * UnsupportedOperationException.  However, <i>take care</i>
+ * UnsupportedOperationException.  Subclasses should <i>take care</i>
  * to not alter the underlying List of Iterators.</p>
  * 
- * @author Morgan Delagrange
- * @version $Id: IteratorChain.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
  * @since 2.1
+ * @author Morgan Delagrange
+ * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
+ * @version $Id: IteratorChain.java,v 1.2 2002/08/17 11:28:36 scolebourne Exp $
  */
 public class IteratorChain implements Iterator {
 
-    protected List iteratorChain = null;
+    protected final List iteratorChain = new ArrayList();
     protected int currentIteratorIndex = 0;
     protected Iterator currentIterator = null;
     // the "last used" Iterator is the Iterator upon which
@@ -102,6 +104,9 @@ public class IteratorChain implements Iterator {
     // compare(Object,Object) is called
     protected boolean isLocked = false;
 
+    // Constructors
+    // -------------------------------------------------------------------
+    
     /**
      * Construct an IteratorChain with no Iterators.
      * You must add at least Iterator before calling
@@ -109,53 +114,106 @@ public class IteratorChain implements Iterator {
      * UnsupportedOperationException is thrown
      */
     public IteratorChain() {
-        this(new ArrayList());
+        super();
     }
 
     /**
      * Construct an IteratorChain with a single Iterator.
      * 
      * @param iterator first Iterator in the IteratorChain
+     * @throws NullPointerException if the iterator is null
      */
     public IteratorChain(Iterator iterator) {
-        iteratorChain = new ArrayList();
-        iteratorChain.add(iterator);
+        super();
+        addIterator(iterator);
     }
 
     /**
-     * Construct an IteratorChain from the Iterators in the
-     * List.
-     * 
-     * @param list   List of Iterators
+     * Constructs a new <Code>IteratorChain</Code> over the two
+     * given iterators.
+     *
+     * @param a  the first child iterator
+     * @param b  the second child iterator
+     * @throws NullPointerException if either iterator is null
      */
-    public IteratorChain(List list) {
-        iteratorChain = list;
+    public IteratorChain(Iterator a, Iterator b) {
+        super();
+        addIterator(a);
+        addIterator(b);
     }
+
+    /**
+     * Constructs a new <Code>IteratorChain</Code> over the array
+     * of iterators.
+     *
+     * @param iterators  the array of iterators
+     * @throws NullPointerException if iterators array is or contains null
+     */
+    public IteratorChain(Iterator[] iterators) {
+        super();
+        for (int i = 0; i < iterators.length; i++) {
+            addIterator(iterators[i]);
+        }
+    }
+
+    /**
+     * Constructs a new <Code>IteratorChain</Code> over the collection
+     * of iterators.
+     *
+     * @param iterators  the collection of iterators
+     * @throws NullPointerException if iterators collection is or contains null
+     * @throws ClassCastException if iterators collection doesn't contain an iterator
+     */
+    public IteratorChain(Collection iterators) {
+        super();
+        for (Iterator it = iterators.iterator(); it.hasNext();) {
+            Iterator item = (Iterator) it.next();
+            addIterator(item);
+        }
+    }
+    
+    // Public Methods
+    // -------------------------------------------------------------------
 
     /**
      * Add an Iterator to the end of the chain 
      * 
      * @param iterator Iterator to add
+     * @throws IllegalStateException if I've already started iterating
+     * @throws NullPointerException if the iterator is null
      */
     public void addIterator(Iterator iterator) {
         checkLocked();
-
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
         iteratorChain.add(iterator);
     }
 
     /**
-     * Replace the Iterator at the given index     
+     * Set the Iterator at the given index     
      * 
      * @param index      index of the Iterator to replace
      * @param iterator   Iterator to place at the given index
-     * @exception IndexOutOfBoundsException
-     *                   if index < 0 or index > size()
+     * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt; size()
+     * @throws IllegalStateException if I've already started iterating
+     * @throws NullPointerException if the iterator is null
      */
-    public void setIterator(int index, Iterator iterator) 
-    throws IndexOutOfBoundsException {
+    public void setIterator(int index, Iterator iterator) throws IndexOutOfBoundsException {
         checkLocked();
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        iteratorChain.set(index, iterator);
+    }
 
-        iteratorChain.set(index,iterator);
+    /**
+     * Get the list of Iterators (unmodifiable)
+     * 
+     * @return the unmodifiable list of iterators added
+     */
+    public List getIterators() {
+        return Collections.unmodifiableList(iteratorChain);
     }
 
     /**
