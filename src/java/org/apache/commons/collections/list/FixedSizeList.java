@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/FixedSizeList.java,v 1.1 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/FixedSizeList.java,v 1.2 2003/12/11 23:00:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,6 +62,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.commons.collections.BoundedCollection;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
 
@@ -72,12 +73,12 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  * The set method is allowed (as it doesn't change the list size).
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/11 23:00:32 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeList extends AbstractListDecorator {
+public class FixedSizeList extends AbstractListDecorator implements BoundedCollection {
 
     /**
      * Factory method to create a fixed size list.
@@ -186,6 +187,14 @@ public class FixedSizeList extends AbstractListDecorator {
         public void remove(Object object) {
             throw new UnsupportedOperationException("List is fixed size");
         }
+    }
+
+    public boolean isFull() {
+        return true;
+    }
+
+    public int maxSize() {
+        return size();
     }
 
 }
