@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.2 2003/01/07 01:29:28 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2003/01/07 01:29:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.3 2003/01/07 13:24:52 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/01/07 13:24:52 $
  *
  * ====================================================================
  *
@@ -61,6 +61,7 @@
 
 package org.apache.commons.collections.primitives;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Test;
@@ -70,7 +71,7 @@ import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.TestList;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/01/07 01:29:28 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/07 13:24:52 $
  * @author Rodney Waldhoff
  */
 public class TestArrayIntList extends TestList {
@@ -131,16 +132,111 @@ public class TestArrayIntList extends TestList {
 
     //------------------------------------------------------------------- Tests
 
+    public void testEqualsWithTwoIntLists() {
+        IntList one = new ArrayIntList();
+        assertEquals("Equals is reflexive on empty list",one,one);
+        IntList two = new ArrayIntList();
+        assertEquals("Empty lists are equal",one,two);
+        assertEquals("Equals is symmetric on empty lists",two,one);
+        
+        one.add(1);
+        assertEquals("Equals is reflexive on non empty list",one,one);
+        assertTrue(!one.equals(two));
+        assertTrue(!two.equals(one));
+
+        two.add(1);
+        assertEquals("Non empty lists are equal",one,two);
+        assertEquals("Equals is symmetric on non empty list",one,two);
+        
+        one.add(1); one.add(2); one.add(3); one.add(5); one.add(8);
+        assertEquals("Equals is reflexive on larger non empty list",one,one);
+        assertTrue(!one.equals(two));
+        assertTrue(!two.equals(one));
+        
+        two.add(1); two.add(2); two.add(3); two.add(5); two.add(8);
+        assertEquals("Larger non empty lists are equal",one,two);
+        assertEquals("Equals is symmetric on larger non empty list",two,one);
+    }
+
+    public void testIntSubListEquals() {
+        IntList one = new ArrayIntList();
+        assertEquals(one,one.subList(0,0));
+        assertEquals(one.subList(0,0),one);
+        
+        one.add(1);
+        assertEquals(one,one.subList(0,1));
+        assertEquals(one.subList(0,1),one);
+
+        one.add(1); one.add(2); one.add(3); one.add(5); one.add(8);
+        assertEquals(one.subList(0,4),one.subList(0,4));
+        assertEquals(one.subList(3,5),one.subList(3,5));
+    }
+    
+    public void testEqualsWithIntListAndList() {
+        IntList ilist = new ArrayIntList();
+        List list = new ArrayList();
+        
+        assertTrue("Unwrapped, empty List is not equal to empty IntList.",!ilist.equals(list));
+        assertTrue("Unwrapped, empty IntList is not equal to empty List.",!list.equals(ilist));
+        
+        assertEquals(new ListIntList(list),ilist);
+        assertEquals(ilist,new ListIntList(list));
+        assertEquals(new IntListList(ilist),list);
+        assertEquals(list,new IntListList(ilist));
+        
+        ilist.add(1);
+        list.add(new Integer(1));
+
+        assertTrue("Unwrapped, non-empty List is not equal to non-empty IntList.",!ilist.equals(list));
+        assertTrue("Unwrapped, non-empty IntList is not equal to non-empty List.",!list.equals(ilist));
+        
+        assertEquals(new ListIntList(list),ilist);
+        assertEquals(ilist,new ListIntList(list));
+        assertEquals(new IntListList(ilist),list);
+        assertEquals(list,new IntListList(ilist));
+                
+        ilist.add(1); ilist.add(2); ilist.add(3); ilist.add(5); ilist.add(8);
+        list.add(new Integer(1)); list.add(new Integer(2)); list.add(new Integer(3)); list.add(new Integer(5)); list.add(new Integer(8));
+
+        assertTrue("Unwrapped, non-empty List is not equal to non-empty IntList.",!ilist.equals(list));
+        assertTrue("Unwrapped, non-empty IntList is not equal to non-empty List.",!list.equals(ilist));
+        
+        assertEquals(new ListIntList(list),ilist);
+        assertEquals(ilist,new ListIntList(list));
+        assertEquals(new IntListList(ilist),list);
+        assertEquals(list,new IntListList(ilist));
+        
+    }
+
     public void testClearAndSize() {
         IntList list = new ArrayIntList();
         assertEquals(0, list.size());
-        for (int i = 0; i < 100; i++) {
+        for(int i = 0; i < 100; i++) {
             list.add(i);
         }
         assertEquals(100, list.size());
         list.clear();
         assertEquals(0, list.size());
     }
+
+    public void testRemoveViaSubList() {
+        IntList list = new ArrayIntList();
+        for(int i = 0; i < 100; i++) {
+            list.add(i);
+        }
+        IntList sub = list.subList(25,75);
+        assertEquals(50,sub.size());
+        for(int i = 0; i < 50; i++) {
+            assertEquals(100-i,list.size());
+            assertEquals(50-i,sub.size());
+            assertEquals(25+i,sub.removeElementAt(0));
+            assertEquals(50-i-1,sub.size());
+            assertEquals(100-i-1,list.size());
+        }
+        assertEquals(0,sub.size());
+        assertEquals(50,list.size());        
+    }
+    
 
     public void testAddGet() {
         IntList list = new ArrayIntList();

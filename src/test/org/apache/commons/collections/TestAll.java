@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.37 2002/11/18 23:58:46 scolebourne Exp $
- * $Revision: 1.37 $
- * $Date: 2002/11/18 23:58:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.38 2003/01/07 13:24:52 rwaldhoff Exp $
+ * $Revision: 1.38 $
+ * $Date: 2003/01/07 13:24:52 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import junit.framework.*;
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.37 2002/11/18 23:58:46 scolebourne Exp $
+ * @version $Id: TestAll.java,v 1.38 2003/01/07 13:24:52 rwaldhoff Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -106,7 +106,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestIteratorUtils.suite());
         suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
         suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-//        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
         return suite;
     }
         

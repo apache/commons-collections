@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ListIntList.java,v 1.1 2003/01/07 00:59:51 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/07 00:59:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ListIntList.java,v 1.2 2003/01/07 13:24:52 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/07 13:24:52 $
  *
  * ====================================================================
  *
@@ -67,7 +67,7 @@ import java.util.List;
  * Adapts a {@link Number}-valued {@link java.util.List List} 
  * to the {@link IntList} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/07 00:59:51 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/07 13:24:52 $
  * @author Rodney Waldhoff 
  */
 public class ListIntList extends CollectionIntCollection implements IntList {
@@ -118,14 +118,8 @@ public class ListIntList extends CollectionIntCollection implements IntList {
     }
 
     public boolean equals(Object that) {
-        if(that instanceof List) {
-            try {
-                return _list.equals(ListIntList.wrap((List)that));
-            } catch(ClassCastException e) {
-                return false;
-            } catch(NullPointerException e) {
-                return false;
-            }
+        if(that instanceof IntList) {
+            return _list.equals(IntListList.wrap((IntList)that));
         } else {
             return super.equals(that);
         }

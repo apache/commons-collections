@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.3 2003/01/07 01:29:28 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2003/01/07 01:29:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.4 2003/01/07 13:24:52 rwaldhoff Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/01/07 13:24:52 $
  *
  * ====================================================================
  *
@@ -331,7 +331,7 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
     protected static class RandomAccessIntSubList extends AbstractRandomAccessIntList implements IntList {
         RandomAccessIntSubList(AbstractRandomAccessIntList list, int fromIndex, int toIndex) {
             if(fromIndex < 0 || toIndex > list.size() || fromIndex > toIndex) {
-                throw new IllegalArgumentException();
+                throw new IndexOutOfBoundsException();
             } else {
                 _list = list;
                 _offset = fromIndex;
@@ -382,13 +382,13 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
     
         private void checkRange(int index) {
             if(index < 0 || index >= size()) {
-                throw new IllegalArgumentException("index " + index + " not in [0," + size() + ")");
+                throw new IndexOutOfBoundsException("index " + index + " not in [0," + size() + ")");
             }
         }
           
         private void checkRangeIncludingEndpoint(int index) {
             if(index < 0 || index > size()) {
-                throw new IllegalArgumentException("index " + index + " not in [0," + size() + "]");
+                throw new IndexOutOfBoundsException("index " + index + " not in [0," + size() + "]");
             }
         }
           
