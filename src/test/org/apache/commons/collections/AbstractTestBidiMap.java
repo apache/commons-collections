@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.2 2003/10/29 00:06:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.3 2003/10/31 01:25:24 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,13 +58,14 @@
 package org.apache.commons.collections;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/10/29 00:06:25 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/31 01:25:24 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -287,6 +288,20 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         final Object key = map.removeKey(value);
         assertTrue("Key was not removed.", !map.containsKey(key));
         assertNull("Value was not removed.", map.getKey(value));
+    }
+
+    //-----------------------------------------------------------------------
+    public void testBidiKeySetValuesOrder() {
+        resetFull();
+        Iterator keys = map.keySet().iterator();
+        Iterator values = map.values().iterator();
+        for (; keys.hasNext() && values.hasNext();) {
+            Object key = keys.next();
+            Object value = values.next();
+            assertSame(map.get(key), value);
+        }
+        assertEquals(false, keys.hasNext());
+        assertEquals(false, values.hasNext());
     }
 
     //-----------------------------------------------------------------------
