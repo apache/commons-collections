@@ -34,6 +34,7 @@ import org.apache.commons.collections.functors.NullIsTruePredicate;
 import org.apache.commons.collections.functors.NullPredicate;
 import org.apache.commons.collections.functors.OnePredicate;
 import org.apache.commons.collections.functors.OrPredicate;
+import org.apache.commons.collections.functors.TransformedPredicate;
 import org.apache.commons.collections.functors.TransformerPredicate;
 import org.apache.commons.collections.functors.TruePredicate;
 import org.apache.commons.collections.functors.UniquePredicate;
@@ -63,7 +64,7 @@ import org.apache.commons.collections.functors.UniquePredicate;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.16 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.17 $ $Date: 2004/03/13 16:34:46 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg
@@ -451,6 +452,22 @@ public class PredicateUtils {
      */
     public static Predicate nullIsTruePredicate(Predicate predicate){
         return NullIsTruePredicate.getInstance(predicate);
+    }
+
+    // Transformed
+    //-----------------------------------------------------------------------
+    /**
+     * Creates a predicate that transforms the input object before passing it
+     * to the predicate.
+     * 
+     * @param transformer  the transformer to call first
+     * @param predicate  the predicate to call with the result of the transform
+     * @return the predicate
+     * @throws IllegalArgumentException if the transformer or the predicate is null
+	 * @since Commons Collections 3.1
+     */
+    public static Predicate transformedPredicate(Transformer transformer, Predicate predicate) {
+        return TransformedPredicate.getInstance(transformer, predicate);
     }
 
 }

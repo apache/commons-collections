@@ -18,7 +18,9 @@ package org.apache.commons.collections;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 import junit.framework.Test;
@@ -29,7 +31,7 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.PredicateUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.8 $ $Date: 2004/03/13 16:34:46 $
  *
  * @author Stephen Colebourne
  */
@@ -813,4 +815,24 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
+    // transformed
+    //------------------------------------------------------------------
+
+    public void testTransformedPredicate() {
+        assertEquals(true, PredicateUtils.transformedPredicate(
+                TransformerUtils.nopTransformer(),
+                PredicateUtils.truePredicate()).evaluate(new Object()));
+                
+        Map map = new HashMap();
+        map.put(Boolean.TRUE, "Hello");
+        Transformer t = TransformerUtils.mapTransformer(map);
+        Predicate p = PredicateUtils.equalPredicate("Hello");
+        assertEquals(false, PredicateUtils.transformedPredicate(t, p).evaluate(null));
+        assertEquals(true, PredicateUtils.transformedPredicate(t, p).evaluate(Boolean.TRUE));
+        try {
+            PredicateUtils.transformedPredicate(null, null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+    }
+
 }
