@@ -22,13 +22,12 @@ import java.util.List;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections.list.AbstractTestList;
 import org.apache.commons.collections.list.PredicatedList;
 
 /**
  * Tests for ListUtils.
  * 
- * @version $Revision: 1.18 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.19 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Stephen Colebourne
  * @author Neil O'Toole
@@ -72,34 +71,6 @@ public class TestListUtils extends BulkTest {
             // expected
         }
     }
-
-    public BulkTest bulkTestTypedList() {
-        return new TestTypedCollection("") {
-
-            public Collection typedCollection() {
-                Class type = getType();
-                return ListUtils.typedList(new ArrayList(), type);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new AbstractTestList("") {
-                    public List makeEmptyList() {
-                        return (List)typedCollection();
-                    }
-
-                    public Object[] getFullElements() {
-                        return getFullNonNullStringElements();
-                    }
-
-                    public Object[] getOtherElements() {
-                        return getOtherNonNullStringElements();
-                    }
-
-                };
-            }
-        };
-    }
-
 
     public void testLazyList() {
         List list = ListUtils.lazyList(new ArrayList(), new Factory() {

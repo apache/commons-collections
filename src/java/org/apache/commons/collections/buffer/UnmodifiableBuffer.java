@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.buffer;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -24,13 +28,20 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
  * Decorates another <code>Buffer</code> to ensure it can't be altered.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/05/15 12:33:23 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/02 21:57:03 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableBuffer extends AbstractBufferDecorator implements Unmodifiable {
+public final class UnmodifiableBuffer
+        extends AbstractBufferDecorator
+        implements Unmodifiable, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 1832948656215393357L;
 
     /**
      * Factory method to create an unmodifiable buffer.
@@ -57,6 +68,30 @@ public final class UnmodifiableBuffer extends AbstractBufferDecorator implements
      */
     private UnmodifiableBuffer(Buffer buffer) {
         super(buffer);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the collection out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(collection);
+    }
+
+    /**
+     * Read the collection in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        collection = (Collection) in.readObject();
     }
 
     //-----------------------------------------------------------------------

@@ -31,7 +31,7 @@ import org.apache.commons.collections.PredicateUtils;
  * {@link PredicatedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:40 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 22:06:33 $
  * 
  * @author Phil Steitz
  */
@@ -50,7 +50,7 @@ public class TestPredicatedCollection extends AbstractTestCollection {
         junit.textui.TestRunner.main(testCaseName);
     }
  
- //------------------------------------------------------------------------
+   //------------------------------------------------------------------------
         
     protected Predicate truePredicate = PredicateUtils.truePredicate();
     
@@ -130,5 +130,16 @@ public class TestPredicatedCollection extends AbstractTestCollection {
         assertTrue("Collection shouldn't contain illegal element", 
          !c.contains("four"));   
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/PredicatedCollection.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/PredicatedCollection.fullCollection.version3.1.obj");
+//    }
 
 }

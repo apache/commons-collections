@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  * {@link UnmodifiableSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.4 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Phil Steitz
  */
@@ -65,5 +65,16 @@ public class TestUnmodifiableSet extends AbstractTestSet{
     public boolean isRemoveSupported() {
         return false;
     }
-           
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnmodifiableSet.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnmodifiableSet.fullCollection.version3.1.obj");
+//    }
+
 }

@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
  * {@link UnmodifiableCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:40 $
+ * @version $Revision: 1.4 $ $Date: 2004/06/02 22:06:33 $
  * 
  * @author Phil Steitz
  * @author Stephen Colebourne
@@ -77,5 +77,16 @@ public class TestUnmodifiableCollection extends AbstractTestCollection {
     public boolean isRemoveSupported() {
         return false;
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnmodifiableCollection.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnmodifiableCollection.fullCollection.version3.1.obj");
+//    }
 
 }

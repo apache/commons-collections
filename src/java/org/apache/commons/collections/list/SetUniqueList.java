@@ -39,14 +39,16 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * The {@link org.apache.commons.collections.set.ListOrderedSet ListOrderedSet}
  * class provides an alternative approach, by wrapping an existing Set and
  * retaining insertion order in the iterator.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:12:26 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/02 21:59:49 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class SetUniqueList extends AbstractListDecorator {
+public class SetUniqueList extends AbstractSerializableListDecorator {
 
     /**
      * Internal Set to maintain uniqueness.

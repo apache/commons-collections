@@ -31,7 +31,7 @@ import org.apache.commons.collections.TransformerUtils;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/10 22:22:57 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/02 22:06:33 $
  * 
  * @author Stephen Colebourne
  */
@@ -103,5 +103,16 @@ public class TestTransformedCollection extends AbstractTestCollection {
         
         assertEquals(true, coll.remove(new Integer((String) els[0])));
     }
-    
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedCollection.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedCollection.fullCollection.version3.1.obj");
+//    }
+
 }

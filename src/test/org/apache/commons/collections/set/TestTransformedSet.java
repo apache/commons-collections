@@ -30,7 +30,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -84,4 +84,16 @@ public class TestTransformedSet extends AbstractTestSet {
         assertEquals(true, set.remove(new Integer((String) els[0])));
         
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedSet.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedSet.fullCollection.version3.1.obj");
+//    }
+
 }

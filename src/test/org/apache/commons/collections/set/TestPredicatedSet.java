@@ -29,7 +29,7 @@ import org.apache.commons.collections.PredicateUtils;
  * {@link PredicatedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Phil Steitz
  */
@@ -118,5 +118,16 @@ public class TestPredicatedSet extends AbstractTestSet{
         assertTrue("Set shouldn't contain illegal element", 
          !set.contains("four"));   
     }
-        
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/PredicatedSet.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/PredicatedSet.fullCollection.version3.1.obj");
+//    }
+
 }

@@ -30,7 +30,7 @@ import org.apache.commons.collections.SortedBag;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.8 $ $Date: 2004/06/02 22:05:03 $
  * 
  * @author Phil Steitz
  */
@@ -103,4 +103,21 @@ public class TestPredicatedSortedBag extends AbstractTestSortedBag {
         Comparator c = bag.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        Bag bag = makeBag();
+//        writeExternalFormToDisk((java.io.Serializable) bag, "D:/dev/collections/data/test/PredicatedSortedBag.emptyCollection.version3.1.obj");
+//        bag = makeBag();
+//        bag.add("A");
+//        bag.add("A");
+//        bag.add("B");
+//        bag.add("B");
+//        bag.add("C");
+//        writeExternalFormToDisk((java.io.Serializable) bag, "D:/dev/collections/data/test/PredicatedSortedBag.fullCollection.version3.1.obj");
+//    }
+
 }

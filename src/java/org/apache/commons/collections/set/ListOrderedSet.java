@@ -40,14 +40,16 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * <p>
  * This class cannot implement the <code>List</code> interface directly as
  * various interface methods (notably equals/hashCode) are incompatable with a set.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:14:27 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/02 22:02:34 $
  * 
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen
  */
-public class ListOrderedSet extends AbstractSetDecorator implements Set {
+public class ListOrderedSet extends AbstractSerializableSetDecorator implements Set {
 
     /** Internal list to hold the sequence of objects */
     protected final List setOrder;

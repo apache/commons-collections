@@ -15,18 +15,14 @@
  */
 package org.apache.commons.collections;
 
-import java.util.Arrays;
-import java.util.Collection;
-
 import junit.framework.Test;
 
 import org.apache.commons.collections.buffer.PredicatedBuffer;
-import org.apache.commons.collections.collection.AbstractTestCollection;
 
 /**
  * Tests for BufferUtils.
  * 
- * @version $Revision: 1.12 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.13 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Unknown
  */
@@ -67,38 +63,4 @@ public class TestBufferUtils extends BulkTest {
         }
     }
 
-
-    public BulkTest bulkTestUnmodifiableBuffer() {
-        return new AbstractTestCollection("") {
-            public boolean isAddSupported() {
-                return false;
-            }
-
-            public boolean isRemoveSupported() {
-                return false;
-            }
-
-            public Collection makeCollection() {
-                return BufferUtils.unmodifiableBuffer(new ArrayStack());
-            }
-
-            public Collection makeFullCollection() {
-                ArrayStack a = new ArrayStack();
-                a.addAll(Arrays.asList(getFullElements()));
-                return BufferUtils.unmodifiableBuffer(a);
-            }
-
-
-            public Collection makeConfirmedCollection() {
-                return new ArrayStack();
-            }
-
-            public Collection makeConfirmedFullCollection() {
-                ArrayStack a = new ArrayStack();
-                a.addAll(Arrays.asList(getFullElements()));
-                return a;
-            }
-
-        };
-    }
 }

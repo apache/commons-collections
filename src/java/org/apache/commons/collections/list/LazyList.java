@@ -45,15 +45,17 @@ import org.apache.commons.collections.Factory;
  * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
  * instance is the fourth element in the list.  The first, second, 
  * and third element are all set to <code>null</code>.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:12:26 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/02 21:59:49 $
  * 
  * @author Stephen Colebourne
  * @author Arron Bates
  * @author Paul Jack
  */
-public class LazyList extends AbstractListDecorator {
+public class LazyList extends AbstractSerializableListDecorator {
     
     /** The factory to use to lazily instantiate the objects */
     protected final Factory factory;

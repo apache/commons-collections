@@ -30,7 +30,7 @@ import org.apache.commons.collections.BulkTest;
  * {@link TypedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Phil Steitz
  */
@@ -101,4 +101,9 @@ public class TestTypedSortedSet extends AbstractTestSortedSet{
         assertTrue("Collection shouldn't convert long to int", 
          !set.contains(getNextAsInt()));  
     }       
+
+    public boolean skipSerializedCanonicalTests() {
+        return true;  // Typed and Predicated get confused
+    }
+
 }

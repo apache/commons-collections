@@ -28,7 +28,7 @@ import org.apache.commons.collections.SortedBag;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.8 $ $Date: 2004/06/02 22:05:03 $
  * 
  * @author Phil Steitz
  */
@@ -93,4 +93,9 @@ public class TestTypedSortedBag extends AbstractTestSortedBag {
         Comparator c = bag.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
+
+    protected boolean skipSerializedCanonicalTests() {
+        return true;
+    }
+
 }

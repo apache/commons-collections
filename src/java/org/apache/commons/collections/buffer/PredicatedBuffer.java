@@ -29,9 +29,11 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * <p>
  * One usage would be to ensure that no null entries are added to the buffer.
  * <pre>Buffer buffer = PredicatedBuffer.decorate(new UnboundedFifoBuffer(), NotNullPredicate.INSTANCE);</pre>
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/21 21:38:48 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 21:57:03 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

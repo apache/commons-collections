@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:34 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 22:07:53 $
  * 
  * @author Stephen Colebourne
  */
@@ -63,5 +63,16 @@ public class TestFixedSizeList extends AbstractTestList {
     public boolean isRemoveSupported() {
         return false;
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/FixedSizeList.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/FixedSizeList.fullCollection.version3.1.obj");
+//    }
 
 }

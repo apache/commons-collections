@@ -33,7 +33,7 @@ import org.apache.commons.collections.map.TestPredicatedSortedMap;
  * {@link PredicatedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Phil Steitz
  */
@@ -127,5 +127,16 @@ public class TestPredicatedSortedSet extends AbstractTestSortedSet{
         Comparator c = set.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
-        
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/PredicatedSortedSet.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/PredicatedSortedSet.fullCollection.version3.1.obj");
+//    }
+
 }

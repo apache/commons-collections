@@ -26,12 +26,20 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/02 21:53:02 $
  * 
  * @author Stephen Colebourne
  */
 public abstract class AbstractBagDecorator
         extends AbstractCollectionDecorator implements Bag {
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     * @since Commons Collections 3.1
+     */
+    protected AbstractBagDecorator() {
+        super();
+    }
 
     /**
      * Constructor that wraps (not copies).

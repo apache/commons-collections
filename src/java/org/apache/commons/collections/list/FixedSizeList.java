@@ -29,14 +29,18 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * <p>
  * The add, remove, clear and retain operations are unsupported.
  * The set method is allowed (as it doesn't change the list size).
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:12:26 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/02 21:59:49 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeList extends AbstractListDecorator implements BoundedCollection {
+public class FixedSizeList
+        extends AbstractSerializableListDecorator
+        implements BoundedCollection {
 
     /**
      * Factory method to create a fixed size list.

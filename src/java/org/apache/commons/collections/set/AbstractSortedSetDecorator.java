@@ -25,11 +25,19 @@ import java.util.SortedSet;
  * Methods are forwarded directly to the decorated set.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:14:27 $
+ * @version $Revision: 1.4 $ $Date: 2004/06/02 21:53:03 $
  * 
  * @author Stephen Colebourne
  */
 public abstract class AbstractSortedSetDecorator extends AbstractSetDecorator implements SortedSet {
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     * @since Commons Collections 3.1
+     */
+    protected AbstractSortedSetDecorator() {
+        super();
+    }
 
     /**
      * Constructor that wraps (not copies).

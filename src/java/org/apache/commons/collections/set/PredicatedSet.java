@@ -30,9 +30,11 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * <p>
  * One usage would be to ensure that no null entries are added to the set.
  * <pre>Set set = PredicatedSet.decorate(new HashSet(), NotNullPredicate.INSTANCE);</pre>
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/21 21:38:42 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/02 22:02:34 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

@@ -24,11 +24,19 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated buffer.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.4 $ $Date: 2004/06/02 21:53:02 $
  * 
  * @author Stephen Colebourne
  */
 public abstract class AbstractBufferDecorator extends AbstractCollectionDecorator implements Buffer {
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     * @since Commons Collections 3.1
+     */
+    protected AbstractBufferDecorator() {
+        super();
+    }
 
     /**
      * Constructor that wraps (not copies).

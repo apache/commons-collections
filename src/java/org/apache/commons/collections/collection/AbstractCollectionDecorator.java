@@ -34,7 +34,7 @@ import java.util.Iterator;
  * to write an unmodifiable implementation it might provide a loophole.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:53 $
+ * @version $Revision: 1.4 $ $Date: 2004/06/02 21:53:03 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -42,7 +42,15 @@ import java.util.Iterator;
 public abstract class AbstractCollectionDecorator implements Collection {
 
     /** The collection being decorated */
-    protected final Collection collection;
+    protected Collection collection;
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     * @since Commons Collections 3.1
+     */
+    protected AbstractCollectionDecorator() {
+        super();
+    }
 
     /**
      * Constructor that wraps (not copies).

@@ -26,7 +26,7 @@ import org.apache.commons.collections.map.HashedMap;
  * JUnit test.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/04/20 23:51:31 $
+ * @version $Revision: 1.2 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -48,5 +48,16 @@ public class TestMapBackedSet extends AbstractTestSet {
     public Set makeEmptySet() {
         return MapBackedSet.decorate(new HashedMap());
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/MapBackedSet.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/MapBackedSet.fullCollection.version3.1.obj");
+//    }
 
 }

@@ -34,9 +34,11 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  * <p>
  * One usage would be to ensure that no null entries are added to the list.
  * <pre>List list = PredicatedList.decorate(new ArrayList(), NotNullPredicate.INSTANCE);</pre>
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/21 21:38:40 $
+ * @version $Revision: 1.5 $ $Date: 2004/06/02 21:59:49 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

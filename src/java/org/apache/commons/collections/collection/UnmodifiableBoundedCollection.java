@@ -30,13 +30,17 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * longer accessible.
  * The factory on this class will attempt to retrieve the bounded nature by
  * examining the package scope variables.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/05/15 12:39:13 $
+ * @version $Revision: 1.9 $ $Date: 2004/06/02 21:58:06 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableBoundedCollection extends AbstractCollectionDecorator implements BoundedCollection {
+public final class UnmodifiableBoundedCollection
+        extends AbstractSerializableCollectionDecorator
+        implements BoundedCollection {
     
     /**
      * Factory method to create an unmodifiable bounded collection.
@@ -130,5 +134,5 @@ public final class UnmodifiableBoundedCollection extends AbstractCollectionDecor
     public int maxSize() {
         return ((BoundedCollection) collection).maxSize();
     }
-    
+
 }

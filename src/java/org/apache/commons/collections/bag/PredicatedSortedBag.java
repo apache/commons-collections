@@ -30,9 +30,11 @@ import org.apache.commons.collections.SortedBag;
  * <p>
  * One usage would be to ensure that no null entries are added to the bag.
  * <pre>SortedBag bag = PredicatedSortedBag.decorate(new TreeBag(), NotNullPredicate.INSTANCE);</pre>
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/05/21 21:38:40 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/02 21:56:19 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

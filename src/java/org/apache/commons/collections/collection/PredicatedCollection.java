@@ -30,14 +30,16 @@ import org.apache.commons.collections.Predicate;
  * <p>
  * One usage would be to ensure that no null entries are added to the collection.
  * <pre>Collection coll = PredicatedCollection.decorate(new ArrayList(), NotNullPredicate.INSTANCE);</pre>
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/21 21:38:40 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 21:58:06 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedCollection extends AbstractCollectionDecorator {
+public class PredicatedCollection extends AbstractSerializableCollectionDecorator {
 
     /** The predicate to use */
     protected final Predicate predicate;

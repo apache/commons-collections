@@ -31,7 +31,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:34 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 22:07:53 $
  * 
  * @author Stephen Colebourne
  */
@@ -116,4 +116,16 @@ public class TestTransformedList extends AbstractTestList {
         assertEquals(new Integer(3), list.get(1));
         assertEquals(new Integer(2), list.get(2));
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedList.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedList.fullCollection.version3.1.obj");
+//    }
+
 }

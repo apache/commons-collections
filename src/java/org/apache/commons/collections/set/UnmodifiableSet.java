@@ -24,13 +24,17 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
  * Decorates another <code>Set</code> to ensure it can't be altered.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:14:27 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 22:02:34 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableSet extends AbstractSetDecorator implements Unmodifiable {
+public final class UnmodifiableSet
+        extends AbstractSerializableSetDecorator
+        implements Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable set.

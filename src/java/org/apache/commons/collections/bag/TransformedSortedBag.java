@@ -27,9 +27,11 @@ import org.apache.commons.collections.Transformer;
  * Thus objects must be removed or searched for using their transformed form.
  * For example, if the transformation converts Strings to Integers, you must
  * use the Integer form to remove objects.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/15 12:27:04 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 21:56:19 $
  * 
  * @author Stephen Colebourne
  */

@@ -29,7 +29,7 @@ import junit.textui.TestRunner;
  * JUnit tests.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:34 $
+ * @version $Revision: 1.6 $ $Date: 2004/06/02 22:07:53 $
  * 
  * @author Matthew Hawthorne
  */
@@ -274,5 +274,16 @@ public class TestSetUniqueList extends AbstractTestList {
 
         assertEquals("Duplicate element was added", 2, lset.size());
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SetUniqueList.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SetUniqueList.fullCollection.version3.1.obj");
+//    }
 
 }

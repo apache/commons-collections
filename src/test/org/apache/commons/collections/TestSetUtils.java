@@ -22,13 +22,12 @@ import java.util.Set;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections.set.AbstractTestSet;
 import org.apache.commons.collections.set.PredicatedSet;
 
 /**
  * Tests for SetUtils.
  * 
- * @version $Revision: 1.15 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.16 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Stephen Colebourne
  * @author Neil O'Toole
@@ -70,33 +69,6 @@ public class TestSetUtils extends BulkTest {
         }
     }
 
-
-    public BulkTest bulkTestTypedSet() {
-        return new TestTypedCollection("") {
-
-            public Collection typedCollection() {
-                Class type = getType();
-                return SetUtils.typedSet(new HashSet(), type);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new AbstractTestSet("") {
-                    public Set makeEmptySet() {
-                        return (Set)typedCollection();
-                    }
-
-                    public Object[] getFullElements() {
-                        return getFullNonNullStringElements();
-                    }
-
-                    public Object[] getOtherElements() {
-                        return getOtherNonNullStringElements();
-                    }
-                };
-            }
-        };
-    }
-     
     public void testEquals() {
         Collection data = Arrays.asList( new String[] { "a", "b", "c" });
         

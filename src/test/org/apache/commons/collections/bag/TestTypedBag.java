@@ -27,7 +27,7 @@ import org.apache.commons.collections.Bag;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:39 $
+ * @version $Revision: 1.7 $ $Date: 2004/06/02 22:05:03 $
  * 
  * @author Phil Steitz
  */
@@ -115,4 +115,9 @@ public class TestTypedBag extends AbstractTestBag {
             // expected
         }              
     }
+
+    protected boolean skipSerializedCanonicalTests() {
+        return true;
+    }
+
 }

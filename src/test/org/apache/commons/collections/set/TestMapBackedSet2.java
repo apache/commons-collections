@@ -27,7 +27,7 @@ import org.apache.commons.collections.map.LinkedMap;
  * JUnit test.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/04/20 23:51:31 $
+ * @version $Revision: 1.2 $ $Date: 2004/06/02 22:12:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -90,5 +90,11 @@ public class TestMapBackedSet2 extends AbstractTestSet {
             assertEquals("Sequence is wrong", Integer.toString(i), it.next());
         }
     }
-    
+
+    public void testCanonicalEmptyCollectionExists() {
+    }
+
+    public void testCanonicalFullCollectionExists() {
+    }
+
 }
