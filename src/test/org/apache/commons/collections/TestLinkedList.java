@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLinkedList.java,v 1.3 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLinkedList.java,v 1.4 2003/10/02 22:14:29 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/10/02 22:14:29 $
  *
  * ====================================================================
  *
@@ -79,9 +79,9 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link List} fails.
  *
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
- * @version $Id: TestLinkedList.java,v 1.3 2003/08/31 17:28:43 scolebourne Exp $
+ * @version $Id: TestLinkedList.java,v 1.4 2003/10/02 22:14:29 scolebourne Exp $
  */
-public abstract class TestLinkedList extends TestList {
+public abstract class TestLinkedList extends AbstractTestList {
 
     public TestLinkedList(String testName) {
         super(testName);

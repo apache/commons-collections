@@ -63,18 +63,18 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
-import org.apache.commons.collections.TestCollection;
+import org.apache.commons.collections.AbstractTestCollection;
 
 /**
  * Extension of {@link TestCollection} for exercising the 
  * {@link PredicatedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/20 17:05:36 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/02 22:14:34 $
  * 
  * @author Phil Steitz
  */
-public class TestPredicatedCollection extends TestCollection {
+public class TestPredicatedCollection extends AbstractTestCollection {
 
     public TestPredicatedCollection(String name) {
         super(name);

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableBuffer.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableBuffer.java,v 1.2 2003/10/02 22:14:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,18 +65,18 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.ArrayStack;
-import org.apache.commons.collections.TestCollection;
+import org.apache.commons.collections.AbstractTestCollection;
 
 /**
  * Extension of {@link TestCollection} for exercising the
  * {@link ObservableBuffer} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/02 22:14:35 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservableBuffer extends TestCollection implements ObservedTestHelper.ObservedFactory {
+public class TestObservableBuffer extends AbstractTestCollection implements ObservedTestHelper.ObservedFactory {
     
     public TestObservableBuffer(String testName) {
         super(testName);

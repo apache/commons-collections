@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.22 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/AbstractTestObject.java,v 1.1 2003/10/02 22:14:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -55,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.io.ByteArrayInputStream;
@@ -71,7 +70,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 /**
- * Tests base {@link java.lang.Object} methods and contracts.
+ * Abstract test class for {@link java.lang.Object} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeObject()} method.
@@ -80,70 +79,102 @@ import java.io.Serializable;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  *
- * @author Rodney Waldhoff
- * @author Anonymous
+ * @version $Revision: 1.1 $ $Date: 2003/10/02 22:14:29 $
  * 
- * @version $Revision: 1.22 $ $Date: 2003/08/31 17:28:43 $
+ * @author Rodney Waldhoff
+ * @author Stephen Colebourne
+ * @author Anonymous
  */
-public abstract class TestObject extends BulkTest {
+public abstract class AbstractTestObject extends BulkTest {
 
-    // constructor
-    // ------------------------------------------------------------------------
+    /** Current major release for Collections */
+    public static final int COLLECTIONS_MAJOR_VERSION = 3;
     
-    public TestObject(String testName) {
+    /**
+     * JUnit constructor.
+     * 
+     * @param testName  the test class name
+     */
+    public AbstractTestObject(String testName) {
         super(testName);
     }
 
-    // abstract
-    // ------------------------------------------------------------------------
-    
+    //-----------------------------------------------------------------------
     /**
-     * Return a new, empty {@link Object} to used for testing.
+     * Implement this method to return the object to test.
+     * 
+     * @return the object to test
      */
     protected abstract Object makeObject();
 
-    // tests
-    // ------------------------------------------------------------------------
-    
+    /**
+     * Override this method if a subclass is testing an object
+     * that cannot serialize an "empty" Collection.
+     * (e.g. Comparators have no contents)
+     * 
+     * @return true
+     */
+    protected boolean supportsEmptyCollections() {
+        return true;
+    }
+
+    /**
+     * Override this method if a subclass is testing an object
+     * that cannot serialize a "full" Collection.
+     * (e.g. Comparators have no contents)
+     * 
+     * @return true
+     */
+    protected boolean supportsFullCollections() {
+        return true;
+    }
+
+    //-----------------------------------------------------------------------
     public void testObjectEqualsSelf() {
         Object obj = makeObject();
-        assertEquals("A Object should equal itself",obj,obj);
+        assertEquals("A Object should equal itself", obj, obj);
     }
 
     public void testEqualsNull() {
         Object obj = makeObject();
-        assertTrue(! obj.equals(null) ); // make sure this doesn't throw NPE either
+        assertEquals(false, obj.equals(null)); // make sure this doesn't throw NPE either
     }
 
     public void testObjectHashCodeEqualsSelfHashCode() {
         Object obj = makeObject();
-        assertEquals("hashCode should be repeatable",obj.hashCode(),obj.hashCode());
+        assertEquals("hashCode should be repeatable", obj.hashCode(), obj.hashCode());
     }
 
     public void testObjectHashCodeEqualsContract() {
         Object obj1 = makeObject();
-        if(obj1.equals(obj1)) {
-            assertEquals("[1] When two objects are equal, their hashCodes should be also.",obj1.hashCode(),obj1.hashCode());
+        if (obj1.equals(obj1)) {
+            assertEquals(
+                "[1] When two objects are equal, their hashCodes should be also.",
+                obj1.hashCode(), obj1.hashCode());
         }
         Object obj2 = makeObject();
-        if(obj1.equals(obj2)) {
-            assertEquals("[2] When two objects are equal, their hashCodes should be also.",obj1.hashCode(),obj2.hashCode());
-            assertTrue("When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true", obj2.equals(obj1));
+        if (obj1.equals(obj2)) {
+            assertEquals(
+                "[2] When two objects are equal, their hashCodes should be also.",
+                obj1.hashCode(), obj2.hashCode());
+            assertTrue(
+                "When obj1.equals(obj2) is true, then obj2.equals(obj1) should also be true",
+                obj2.equals(obj1));
         }
     }
 
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();
-        if(obj instanceof Serializable) {
+        if (obj instanceof Serializable) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(buffer);
             out.writeObject(obj);
             out.close();
-            
+
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
             Object dest = in.readObject();
             in.close();
-            assertEquals("obj != deserialize(serialize(obj))",obj,dest);
+            assertEquals("obj != deserialize(serialize(obj))", obj, dest);
         }
     }
 
@@ -152,8 +183,8 @@ public abstract class TestObject extends BulkTest {
      * class can be serialized and de-serialized in memory, 
      * using the handy makeObject() method
      * 
-     * @exception IOException
-     * @exception ClassNotFoundException
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     public void testSimpleSerialization() throws IOException, ClassNotFoundException {
         Object o = makeObject();
@@ -164,40 +195,39 @@ public abstract class TestObject extends BulkTest {
     }
 
     /**
-     * If the test object is serializable, confirm that 
-     * a canonical form exists in CVS
-     * 
+     * Tests serialization by comparing against a previously stored version in CVS.
+     * If the test object is serializable, confirm that a canonical form exists.
      */
     public void testCanonicalEmptyCollectionExists() {
-        if(supportsEmptyCollections()) {    
+        if (supportsEmptyCollections()) {
             Object object = makeObject();
-            if(object instanceof Serializable) {
+            if (object instanceof Serializable) {
                 String name = getCanonicalEmptyCollectionName(object);
-                assertTrue("Canonical empty collection (" + name + ") is not in CVS",
-                           new File(name).exists());
+                assertTrue(
+                    "Canonical empty collection (" + name + ") is not in CVS",
+                    new File(name).exists());
             }
         }
     }
 
     /**
-     * If the test object is serializable, confirm that 
-     * a canonical form exists in CVS
-     * 
+     * Tests serialization by comparing against a previously stored version in CVS.
+     * If the test object is serializable, confirm that a canonical form exists.
      */
     public void testCanonicalFullCollectionExists() {
-        if(supportsFullCollections()) {
+        if (supportsFullCollections()) {
             Object object = makeObject();
-            if(object instanceof Serializable) {
+            if (object instanceof Serializable) {
                 String name = getCanonicalFullCollectionName(object);
-                assertTrue("Canonical full collection (" + name + ") is not in CVS",
-                           new File(name).exists());
+                assertTrue(
+                    "Canonical full collection (" + name + ") is not in CVS",
+                    new File(name).exists());
             }
         }
     }
 
-    // protected
-    // ------------------------------------------------------------------------
-    
+    // protected implementation
+    //-----------------------------------------------------------------------
     /**
      * Get the version of Collections that this object tries to
      * maintain serialization compatibility with. Defaults to 1, the
@@ -218,33 +248,11 @@ public abstract class TestObject extends BulkTest {
         return "1";
     }
 
-    /**
-     * Override this method if a subclass is testing a 
-     * Collections that cannot serialize an "empty" Collection
-     * (e.g. Comparators have no contents)
-     * 
-     * @return true
-     */
-    protected boolean supportsEmptyCollections() {
-        return true;
-    }
-
-    /**
-     * Override this method if a subclass is testing a 
-     * Collections that cannot serialize a "full" Collection
-     * (e.g. Comparators have no contents)
-     * 
-     * @return true
-     */
-    protected boolean supportsFullCollections() {
-        return true;
-    }
-
     protected String getCanonicalEmptyCollectionName(Object object) {
         StringBuffer retval = new StringBuffer();
         retval.append("data/test/");
         String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
+        colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
         retval.append(colName);
         retval.append(".emptyCollection.version");
         retval.append(getCompatibilityVersion());
@@ -256,7 +264,7 @@ public abstract class TestObject extends BulkTest {
         StringBuffer retval = new StringBuffer();
         retval.append("data/test/");
         String colName = object.getClass().getName();
-        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
+        colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
         retval.append(colName);
         retval.append(".fullCollection.version");
         retval.append(getCompatibilityVersion());
@@ -276,10 +284,9 @@ public abstract class TestObject extends BulkTest {
      * @param path path to write the serialized Object
      * @exception IOException
      */
-    protected void writeExternalFormToDisk(Serializable o, String path) 
-    throws IOException {
+    protected void writeExternalFormToDisk(Serializable o, String path) throws IOException {
         FileOutputStream fileStream = new FileOutputStream(path);
-        writeExternalFormToStream(o,fileStream);
+        writeExternalFormToStream(o, fileStream);
     }
 
     /**
@@ -290,17 +297,10 @@ public abstract class TestObject extends BulkTest {
      * @return serialized form of the Object
      * @exception IOException
      */
-    protected byte[] writeExternalFormToBytes(Serializable o) 
-    throws IOException {
+    protected byte[] writeExternalFormToBytes(Serializable o) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-        writeExternalFormToStream(o,byteStream);
+        writeExternalFormToStream(o, byteStream);
         return byteStream.toByteArray();
-    }
-
-    private Object readExternalFormFromStream(InputStream stream) 
-    throws IOException, ClassNotFoundException {
-        ObjectInputStream oStream = new ObjectInputStream(stream);
-        return oStream.readObject();
     }
 
     /**
@@ -313,8 +313,7 @@ public abstract class TestObject extends BulkTest {
      * @exception IOException
      * @exception ClassNotFoundException
      */
-    protected Object readExternalFormFromDisk(String path) 
-    throws IOException, ClassNotFoundException {
+    protected Object readExternalFormFromDisk(String path) throws IOException, ClassNotFoundException {
         FileInputStream stream = new FileInputStream(path);
         return readExternalFormFromStream(stream);
     }
@@ -328,8 +327,7 @@ public abstract class TestObject extends BulkTest {
      * @exception IOException
      * @exception ClassNotFoundException
      */
-    protected Object readExternalFormFromBytes(byte[] b) 
-    throws IOException, ClassNotFoundException {
+    protected Object readExternalFormFromBytes(byte[] b) throws IOException, ClassNotFoundException {
         ByteArrayInputStream stream = new ByteArrayInputStream(b);
         return readExternalFormFromStream(stream);
     }
@@ -338,19 +336,16 @@ public abstract class TestObject extends BulkTest {
         return Boolean.getBoolean("org.apache.commons.collections:with-clover");
     }
 
-    // private
-    // ------------------------------------------------------------------------
+    // private implementation
+    //-----------------------------------------------------------------------
+    private Object readExternalFormFromStream(InputStream stream) throws IOException, ClassNotFoundException {
+        ObjectInputStream oStream = new ObjectInputStream(stream);
+        return oStream.readObject();
+    }
 
-    private void writeExternalFormToStream(Serializable o, OutputStream stream) 
-    throws IOException {
+    private void writeExternalFormToStream(Serializable o, OutputStream stream) throws IOException {
         ObjectOutputStream oStream = new ObjectOutputStream(stream);
         oStream.writeObject(o);
     }
-
-    // attributes
-    // ------------------------------------------------------------------------
-
-    // current major release for Collections
-    public static final int COLLECTIONS_MAJOR_VERSION = 2;
 
 }

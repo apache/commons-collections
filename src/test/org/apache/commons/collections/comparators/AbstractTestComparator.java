@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/AbstractTestComparator.java,v 1.1 2003/10/01 22:14:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/AbstractTestComparator.java,v 1.2 2003/10/02 22:14:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.collections.TestObject;
+import org.apache.commons.collections.AbstractTestObject;
 
 /**
  * Abstract test class for testing the Comparator interface.
@@ -75,7 +75,7 @@ import org.apache.commons.collections.TestObject;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestComparator extends TestObject {
+public abstract class AbstractTestComparator extends AbstractTestObject {
 
     /**
      * JUnit constructor.

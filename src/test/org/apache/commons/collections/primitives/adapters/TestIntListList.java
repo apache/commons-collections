@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListList.java,v 1.5 2003/08/31 17:28:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListList.java,v 1.6 2003/10/02 22:14:31 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,15 +64,15 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.TestList;
+import org.apache.commons.collections.AbstractTestList;
 import org.apache.commons.collections.primitives.RandomAccessIntList;
 import org.apache.commons.collections.primitives.ArrayIntList;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:28:38 $
+ * @version $Revision: 1.6 $ $Date: 2003/10/02 22:14:31 $
  * @author Rodney Waldhoff
  */
-public class TestIntListList extends TestList {
+public class TestIntListList extends AbstractTestList {
 
     // conventional
     // ------------------------------------------------------------------------

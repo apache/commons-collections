@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.7 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.8 2003/10/02 22:14:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import junit.framework.Test;
  * 
  * @author Paul Jack
  */
-public class TestBoundedFifoBuffer extends TestCollection {
+public class TestBoundedFifoBuffer extends AbstractTestCollection {
 
     public TestBoundedFifoBuffer(String n) {
         super(n);

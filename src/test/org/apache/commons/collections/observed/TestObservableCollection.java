@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableCollection.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableCollection.java,v 1.2 2003/10/02 22:14:35 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,18 +65,18 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestCollection;
+import org.apache.commons.collections.AbstractTestCollection;
 
 /**
  * Extension of {@link TestCollection} for exercising the
  * {@link ObservedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/02 22:14:35 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservableCollection extends TestCollection implements ObservedTestHelper.ObservedFactory {
+public class TestObservableCollection extends AbstractTestCollection implements ObservedTestHelper.ObservedFactory {
     
     public TestObservableCollection(String testName) {
         super(testName);

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.6 2003/09/20 17:02:03 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2003/09/20 17:02:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.7 2003/10/02 22:14:28 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2003/10/02 22:14:28 $
  *
  * ====================================================================
  *
@@ -109,7 +109,7 @@ public class TestBufferUtils extends BulkTest {
 
 
     public BulkTest bulkTestUnmodifiableBuffer() {
-        return new TestCollection("") {
+        return new AbstractTestCollection("") {
             public boolean isAddSupported() {
                 return false;
             }

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.20 2003/09/20 17:00:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestList.java,v 1.1 2003/10/02 22:14:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,29 +73,31 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
- * Tests base {@link java.util.List} methods and contracts.
+ * Abstract test class for {@link java.util.List} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
  * the {@link #makeList} method.
  * <p>
  * If your {@link List} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
- * test case (method) your {@link List} fails.
+ * test case (method) your {@link List} fails or override one of the
+ * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.20 $ $Date: 2003/09/20 17:00:32 $
+ * @version $Revision: 1.1 $ $Date: 2003/10/02 22:14:29 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Neil O'Toole
  */
-public abstract class TestList extends TestCollection {
+public abstract class AbstractTestList extends AbstractTestCollection {
 
     /**
-     * Constructor.
-     * @param testName
+     * JUnit constructor.
+     * 
+     * @param testName  the test class name
      */
-    public TestList(String testName) {
+    public AbstractTestList(String testName) {
         super(testName);
     }
 
@@ -103,7 +105,7 @@ public abstract class TestList extends TestCollection {
     /**
      *  Returns true if the collections produced by 
      *  {@link #makeCollection()} and {@link #makeFullCollection()}
-     *  support the <code>set</code> operation.<p>
+     *  support the <code>set operation.<p>
      *  Default implementation returns true.  Override if your collection
      *  class does not support set.
      */
@@ -125,8 +127,7 @@ public abstract class TestList extends TestCollection {
         assertEquals("List should equal confirmed", list1, list2);
         assertEquals("Confirmed should equal list", list2, list1);
 
-        assertEquals("Hash codes should be equal", 
-          list1.hashCode(), list2.hashCode());
+        assertEquals("Hash codes should be equal", list1.hashCode(), list2.hashCode());
 
         int i = 0;
         Iterator iterator1 = list1.iterator();
@@ -147,7 +148,7 @@ public abstract class TestList extends TestCollection {
 
     //-----------------------------------------------------------------------
     /**
-     *  Returns an empty {@link ArrayList}.
+     * Returns an empty {@link ArrayList}.
      */
     protected Collection makeConfirmedCollection() {
         ArrayList list = new ArrayList();
@@ -155,7 +156,7 @@ public abstract class TestList extends TestCollection {
     }
 
     /**
-     *  Returns a full {@link ArrayList}.
+     * Returns a full {@link ArrayList}.
      */
     protected Collection makeConfirmedFullCollection() {
         ArrayList list = new ArrayList();
@@ -164,16 +165,16 @@ public abstract class TestList extends TestCollection {
     }
 
     /**
-     *  Return a new, empty {@link List} to be used for testing.
+     * Return a new, empty {@link List} to be used for testing.
      *
-     *  @return an empty list for testing.
+     * @return an empty list for testing.
      */
     protected abstract List makeEmptyList();
 
     /**
-     *  Return a new, full {@link List} to be used for testing.
+     * Return a new, full {@link List} to be used for testing.
      *
-     *  @return a full list for testing
+     * @return a full list for testing
      */
     protected List makeFullList() {
         // only works if list supports optional "addAll(Collection)" 
@@ -183,40 +184,40 @@ public abstract class TestList extends TestCollection {
     }
 
     /**
-     *  Returns {@link makeEmptyList()}.
+     * Returns {@link makeEmptyList()}.
      *
-     *  @return an empty list to be used for testing
+     * @return an empty list to be used for testing
      */
-    final protected Collection makeCollection() {
+    protected final Collection makeCollection() {
         return makeEmptyList();
     }
 
     /**
-     *  Returns {@link makeFullList()}.
+     * Returns {@link makeFullList()}.
      *
-     *  @return a full list to be used for testing
+     * @return a full list to be used for testing
      */
-    final protected Collection makeFullCollection() {
+    protected final Collection makeFullCollection() {
         return makeFullList();
     }
 
     //-----------------------------------------------------------------------
     /**
-     *  Returns the {@link collection} field cast to a {@link List}.
+     * Returns the {@link collection} field cast to a {@link List}.
      *
-     *  @return the collection field as a List
+     * @return the collection field as a List
      */
     protected List getList() {
-        return (List)collection;
-    } 
+        return (List) collection;
+    }
 
     /**
-     *  Returns the {@link confirmed} field cast to a {@link List}.
+     * Returns the {@link confirmed} field cast to a {@link List}.
      *
-     *  @return the confirmed field as a List
+     * @return the confirmed field as a List
      */
     protected List getConfirmedList() {
-        return (List)confirmed;
+        return (List) confirmed;
     }
 
     //-----------------------------------------------------------------------
@@ -225,7 +226,9 @@ public abstract class TestList extends TestCollection {
      *  empty list.
      */
     public void testListAddByIndexBoundsChecking() {
-        if (!isAddSupported()) return;
+        if (!isAddSupported()) {
+            return;
+        }
 
         List list;
         Object element = getOtherElements()[0];
@@ -233,9 +236,8 @@ public abstract class TestList extends TestCollection {
         try {
             list = makeEmptyList();
             list.add(Integer.MIN_VALUE, element);
-            fail("List.add should throw IndexOutOfBoundsException " +
-              "[Integer.MIN_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
@@ -243,7 +245,7 @@ public abstract class TestList extends TestCollection {
             list = makeEmptyList();
             list.add(-1, element);
             fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
@@ -251,27 +253,27 @@ public abstract class TestList extends TestCollection {
             list = makeEmptyList();
             list.add(1, element);
             fail("List.add should throw IndexOutOfBoundsException [1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list = makeEmptyList();
             list.add(Integer.MAX_VALUE, element);
-            fail("List.add should throw IndexOutOfBoundsException " + 
-              "[Integer.MAX_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
     }
-
 
     /**
      *  Tests bounds checking for {@link List#add(int, Object)} on a
      *  full list.
      */
     public void testListAddByIndexBoundsChecking2() {
-        if (!isAddSupported()) return;
+        if (!isAddSupported()) {
+            return;
+        }
 
         List list;
         Object element = getOtherElements()[0];
@@ -279,9 +281,8 @@ public abstract class TestList extends TestCollection {
         try {
             list = makeFullList();
             list.add(Integer.MIN_VALUE, element);
-            fail("List.add should throw IndexOutOfBoundsException " +
-              "[Integer.MIN_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.add should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
@@ -289,7 +290,7 @@ public abstract class TestList extends TestCollection {
             list = makeFullList();
             list.add(-1, element);
             fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
@@ -297,39 +298,37 @@ public abstract class TestList extends TestCollection {
             list = makeFullList();
             list.add(list.size() + 1, element);
             fail("List.add should throw IndexOutOfBoundsException [size + 1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list = makeFullList();
             list.add(Integer.MAX_VALUE, element);
-            fail("List.add should throw IndexOutOfBoundsException " + 
-              "[Integer.MAX_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.add should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
-
     }
-
 
     /**
      *  Tests {@link List#add(int,Object)}.
      */
     public void testListAddByIndex() {
-        if (!isAddSupported()) return;
+        if (!isAddSupported()) {
+            return;
+        }
 
         Object element = getOtherElements()[0];
         int max = getFullElements().length;
 
         for (int i = 0; i <= max; i++) {
             resetFull();
-            ((List)collection).add(i, element);
-            ((List)confirmed).add(i, element);
+            ((List) collection).add(i, element);
+            ((List) confirmed).add(i, element);
             verify();
         }
     }
-
 
     /**
      *  Tests {@link List#equals(Object)}.
@@ -337,41 +336,42 @@ public abstract class TestList extends TestCollection {
     public void testListEquals() {
         resetEmpty();
         List list = getList();
-        assertTrue("Empty lists should be equal", list.equals(confirmed));
+        assertEquals("Empty lists should be equal", true, list.equals(confirmed));
         verify();
-        assertTrue("Empty list should equal self", list.equals(list));
+        assertEquals("Empty list should equal self", true, list.equals(list));
         verify();
 
         List list2 = Arrays.asList(getFullElements());
-        assertTrue("Empty list shouldn't equal full", !list.equals(list2));
+        assertEquals("Empty list shouldn't equal full", false, list.equals(list2));
         verify();
 
         list2 = Arrays.asList(getOtherElements());
-        assertTrue("Empty list shouldn't equal other", !list.equals(list2));
+        assertEquals("Empty list shouldn't equal other", false, list.equals(list2));
         verify();
 
         resetFull();
         list = getList();
-        assertTrue("Full lists should be equal", list.equals(confirmed));
+        assertEquals("Full lists should be equal", true, list.equals(confirmed));
         verify();
-        assertTrue("Full list should equal self", list.equals(list));
+        assertEquals("Full list should equal self", true, list.equals(list));
         verify();
 
         list2 = makeEmptyList();
-        assertTrue("Full list shouldn't equal empty", !list.equals(list2));
+        assertEquals("Full list shouldn't equal empty", false, list.equals(list2));
         verify();
 
         list2 = Arrays.asList(getOtherElements());
-        assertTrue("Full list shouldn't equal other", !list.equals(list2));
+        assertEquals("Full list shouldn't equal other", false, list.equals(list2));
         verify();
 
         list2 = Arrays.asList(getFullElements());
         Collections.reverse(list2);
-        assertTrue("Full list shouldn't equal full list with same elements" +
-          " but different order", !list.equals(list2));
+        assertEquals(
+            "Full list shouldn't equal full list with same elements but different order",
+            false, list.equals(list2));
         verify();
 
-        assertTrue("List shouldn't equal String", !list.equals(""));
+        assertEquals("List shouldn't equal String", false, list.equals(""));
         verify();
 
         final List listForC = Arrays.asList(getFullElements());
@@ -385,11 +385,9 @@ public abstract class TestList extends TestCollection {
             }
         };
 
-        assertTrue("List shouldn't equal nonlist with same elements " +
-          " in same order", !list.equals(c));
+        assertEquals("List shouldn't equal nonlist with same elements in same order", false, list.equals(c));
         verify();
     }
-
 
     /**
      *  Tests {@link List#hashCode()}.
@@ -408,7 +406,6 @@ public abstract class TestList extends TestCollection {
         verify();
     }
 
-
     /**
      *  Tests {@link List#get(int)}.
      */
@@ -417,12 +414,10 @@ public abstract class TestList extends TestCollection {
         List list = getList();
         Object[] elements = getFullElements();
         for (int i = 0; i < elements.length; i++) {
-            assertEquals("List should contain correct elements", 
-              elements[i], list.get(i));
+            assertEquals("List should contain correct elements", elements[i], list.get(i));
             verify();
         }
     }
-
 
     /**
      *  Tests bounds checking for {@link List#get(int)} on an
@@ -433,42 +428,39 @@ public abstract class TestList extends TestCollection {
 
         try {
             list.get(Integer.MIN_VALUE);
-            fail("List.get should throw IndexOutOfBoundsException " +
-              "[Integer.MIN_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.get should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list.get(-1);
             fail("List.get should throw IndexOutOfBoundsException [-1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list.get(0);
             fail("List.get should throw IndexOutOfBoundsException [0]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list.get(1);
             fail("List.get should throw IndexOutOfBoundsException [1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list.get(Integer.MAX_VALUE);
-            fail("List.get should throw IndexOutOfBoundsException " +
-              "[Integer.MAX_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.get should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
     }
-
 
     /**
      *  Tests bounds checking for {@link List#get(int)} on a
@@ -479,35 +471,32 @@ public abstract class TestList extends TestCollection {
 
         try {
             list.get(Integer.MIN_VALUE);
-            fail("List.get should throw IndexOutOfBoundsException " + 
-              "[Integer.MIN_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.get should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list.get(-1);
             fail("List.get should throw IndexOutOfBoundsException [-1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list.get(getFullElements().length);
             fail("List.get should throw IndexOutOfBoundsException [size]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
 
         try {
             list.get(Integer.MAX_VALUE);
-            fail("List.get should throw IndexOutOfBoundsException " + 
-              "[Integer.MAX_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.get should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
     }
-
 
     /**
      *  Tests {@link List#indexOf()}.
@@ -520,19 +509,18 @@ public abstract class TestList extends TestCollection {
         Iterator iterator = list2.iterator();
         while (iterator.hasNext()) {
             Object element = iterator.next();
-            assertEquals("indexOf should return correct result", 
-              list1.indexOf(element), list2.indexOf(element));            
+            assertEquals("indexOf should return correct result",
+                list1.indexOf(element), list2.indexOf(element));
             verify();
         }
 
         Object[] other = getOtherElements();
         for (int i = 0; i < other.length; i++) {
             assertEquals("indexOf should return -1 for nonexistent element",
-              list1.indexOf(other[i]), -1);
+                list1.indexOf(other[i]), -1);
             verify();
         }
     }
-
 
     /**
      *  Tests {@link List#lastIndexOf()}.
@@ -558,51 +546,50 @@ public abstract class TestList extends TestCollection {
         }
     }
 
-
     /**
      *  Tests bounds checking for {@link List#set(int,Object)} on an
      *  empty list.
      */
     public void testListSetByIndexBoundsChecking() {
-        if (!isSetSupported()) return;
+        if (!isSetSupported()) {
+            return;
+        }
 
         List list = makeEmptyList();
         Object element = getOtherElements()[0];
 
         try {
             list.set(Integer.MIN_VALUE, element);
-            fail("List.set should throw IndexOutOfBoundsException " +
-              "[Integer.MIN_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.set should throw IndexOutOfBoundsException [Integer.MIN_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
-        } 
+        }
 
         try {
             list.set(-1, element);
             fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
-        } 
+        }
 
         try {
             list.set(0, element);
             fail("List.set should throw IndexOutOfBoundsException [0]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
-        } 
+        }
 
         try {
             list.set(1, element);
             fail("List.set should throw IndexOutOfBoundsException [1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             // expected
-        } 
+        }
 
         try {
             list.set(Integer.MAX_VALUE, element);
-            fail("List.set should throw IndexOutOfBoundsException " +
-              "[Integer.MAX_VALUE]");
-        } catch(IndexOutOfBoundsException e) {
+            fail("List.set should throw IndexOutOfBoundsException [Integer.MAX_VALUE]");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
     }
@@ -1013,8 +1000,8 @@ public abstract class TestList extends TestCollection {
     //-----------------------------------------------------------------------
     /**
      *  Returns a {@link BulkTest} for testing {@link List#subList(int,int)}.
-     *  The returned bulk test will run through every <Code>TestList</Code>
-     *  method, <I>including</I> another <Code>bulkTestSubList</Code>.
+     *  The returned bulk test will run through every <code>TestList</code>
+     *  method, <i>including</i> another <code>bulkTestSubList</code>.
      *  Sublists are tested until the size of the sublist is less than 10.
      *  Each sublist is 6 elements smaller than its parent list.
      *  (By default this means that two rounds of sublists will be tested).
@@ -1027,12 +1014,12 @@ public abstract class TestList extends TestCollection {
     }
 
 
-   static class BulkTestSubList extends TestList {
+   static class BulkTestSubList extends AbstractTestList {
 
-       private TestList outer;
+       private AbstractTestList outer;
 
 
-       BulkTestSubList(TestList outer) {
+       BulkTestSubList(AbstractTestList outer) {
            super("");
            this.outer = outer;
        }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBag.java,v 1.6 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBag.java,v 1.7 2003/10/02 22:14:29 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2003/10/02 22:14:29 $
  *
  * ====================================================================
  *
@@ -77,13 +77,13 @@ import java.util.List;
  * test case (method) your {@link Bag} fails.
  *
  * @author Chuck Burdick
- * @version $Id: TestBag.java,v 1.6 2003/08/31 17:28:43 scolebourne Exp $
+ * @version $Id: TestBag.java,v 1.7 2003/10/02 22:14:29 scolebourne Exp $
  */
 // TODO: this class should really extend from TestCollection, but the bag
 // implementations currently do not conform to the Collection interface.  Once
 // those are fixed or at least a strategy is made for resolving the issue, this
 // can be changed back to extend TestCollection instead.
-public abstract class TestBag extends TestObject {
+public abstract class TestBag extends AbstractTestObject {
     public TestBag(String testName) {
         super(testName);
     }

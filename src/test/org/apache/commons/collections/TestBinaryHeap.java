@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.10 2003/10/02 22:14:29 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2003/10/02 22:14:29 $
  *
  * ====================================================================
  *
@@ -76,9 +76,9 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * Tests the BinaryHeap.
  * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestBinaryHeap.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
+ * @version $Id: TestBinaryHeap.java,v 1.10 2003/10/02 22:14:29 scolebourne Exp $
  */
-public class TestBinaryHeap extends TestCollection {
+public class TestBinaryHeap extends AbstractTestCollection {
 
     public static Test suite() {
         return new TestSuite(TestBinaryHeap.class);

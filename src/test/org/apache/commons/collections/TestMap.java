@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.28 2003/10/02 04:04:22 bayard Exp $
- * $Revision: 1.28 $
- * $Date: 2003/10/02 04:04:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.29 2003/10/02 22:14:28 scolebourne Exp $
+ * $Revision: 1.29 $
+ * $Date: 2003/10/02 22:14:28 $
  *
  * ====================================================================
  *
@@ -152,9 +152,9 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.28 $ $Date: 2003/10/02 04:04:22 $
+ * @version $Revision: 1.29 $ $Date: 2003/10/02 22:14:28 $
  */
-public abstract class TestMap extends TestObject {
+public abstract class TestMap extends AbstractTestObject {
 
     // These instance variables are initialized with the reset method.
     // Tests for map methods that alter the map (put, putAll, remove) 
@@ -1002,7 +1002,7 @@ public abstract class TestMap extends TestObject {
         return new TestMapValues();
     }
 
-    class TestMapValues extends TestCollection {
+    class TestMapValues extends AbstractTestCollection {
         public TestMapValues() {
             super("");
         }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.7 2003/08/31 17:28:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.8 2003/10/02 22:14:33 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -59,13 +59,13 @@ package org.apache.commons.collections.primitives;
 
 import java.util.List;
 
-import org.apache.commons.collections.TestList;
+import org.apache.commons.collections.AbstractTestList;
 
 /**
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:28:41 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/02 22:14:33 $
  * @author Rodney Waldhoff
  */
-public abstract class TestAbstractLongArrayList extends TestList {
+public abstract class TestAbstractLongArrayList extends AbstractTestList {
 
     //------------------------------------------------------------ Conventional
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.11 2003/09/27 10:07:14 scolebourne Exp $
- * $Revision: 1.11 $
- * $Date: 2003/09/27 10:07:14 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.12 2003/10/02 22:14:29 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2003/10/02 22:14:29 $
  *
  * ====================================================================
  *
@@ -74,9 +74,9 @@ import junit.framework.Test;
  * 
  * @author Rodney Waldhoff
  * @author Simon Kitching
- * @version $Id: TestCursorableLinkedList.java,v 1.11 2003/09/27 10:07:14 scolebourne Exp $
+ * @version $Id: TestCursorableLinkedList.java,v 1.12 2003/10/02 22:14:29 scolebourne Exp $
  */
-public class TestCursorableLinkedList extends TestList {
+public class TestCursorableLinkedList extends AbstractTestList {
     public TestCursorableLinkedList(String testName) {
         super(testName);
     }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.12 2003/09/20 17:02:03 scolebourne Exp $
- * $Revision: 1.12 $
- * $Date: 2003/09/20 17:02:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.13 2003/10/02 22:14:29 scolebourne Exp $
+ * $Revision: 1.13 $
+ * $Date: 2003/10/02 22:14:29 $
  *
  * ====================================================================
  *
@@ -124,7 +124,7 @@ public class TestListUtils extends BulkTest {
             }
 
             public BulkTest bulkTestAll() {
-                return new TestList("") {
+                return new AbstractTestList("") {
                     public List makeEmptyList() {
                         return (List)typedCollection();
                     }

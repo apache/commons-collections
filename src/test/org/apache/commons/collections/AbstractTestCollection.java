@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.15 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.15 $
- * $Date: 2003/08/31 17:28:43 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.1 2003/10/02 22:14:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -73,45 +70,45 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 /**
- * Tests base {@link java.util.Collection} methods and contracts.
+ * Abstract test class for the  {@link java.util.Collection} methods and contracts.
  * <p>
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to 
  * implement the {@link #makeCollection()} method.  You might want to 
  * override some of the additional protected methods as well:
  * <p>
- * <B>Element Population Methods</B>
+ * <b>Element Population Methods</b>
  * <p>
  * Override these if your collection restricts what kind of elements are
- * allowed (for instance, if <Code>null</Code> is not permitted):
- * <UL>
- * <Li>{@link #getFullElements()}
- * <Li>{@link #getOtherElements()}
- * </UL>
+ * allowed (for instance, if <code>null</code> is not permitted):
+ * <ul>
+ * <li>{@link #getFullElements()}
+ * <li>{@link #getOtherElements()}
+ * </ul>
  * <p>
- * <B>Supported Operation Methods</B>
+ * <b>Supported Operation Methods</b>
  * <p>
  * Override these if your collection doesn't support certain operations:
- * <UL>
- * <LI>{@link #isAddSupported()}
- * <LI>{@link #isRemoveSupported()}
+ * <ul>
+ * <li>{@link #isAddSupported()}
+ * <li>{@link #isRemoveSupported()}
  * <li>{@link #areEqualElementsDistinguishable()}
- * <LI>{@link #isNullSupported()}
- * <LI>{@link #isFailFastSupported()}
- * </UL>
+ * <li>{@link #isNullSupported()}
+ * <li>{@link #isFailFastSupported()}
+ * </ul>
  * <p>
- * <B>Fixture Methods</B>
+ * <b>Fixture Methods</b>
  * <p>
  * Fixtures are used to verify that the the operation results in correct state
  * for the collection.  Basically, the operation is performed against your
  * collection implementation, and an identical operation is performed against a
- * <I>confirmed</I> collection implementation.  A confirmed collection
- * implementation is something like <Code>java.util.ArrayList</Code>, which is
+ * <i>confirmed</i> collection implementation.  A confirmed collection
+ * implementation is something like <code>java.util.ArrayList</code>, which is
  * known to conform exactly to its collection interface's contract.  After the
  * operation takes place on both your collection implementation and the
  * confirmed collection implementation, the two collections are compared to see
  * if their state is identical.  The comparison is usually much more involved
- * than a simple <Code>equals</Code> test.  This verification is used to ensure
+ * than a simple <code>equals</code> test.  This verification is used to ensure
  * proper modifications are made along with ensuring that the collection does
  * not change when read-only modifications are made.
  * <p>
@@ -130,10 +127,10 @@ import java.util.NoSuchElementException;
  * <p>
  * If you're extending this class directly, you will have to provide 
  * implementations for the following:
- * <UL>
- * <LI>{@link #makeConfirmedCollection()}
- * <LI>{@link #makeConfirmedFullCollection()}
- * </UL>
+ * <ul>
+ * <li>{@link #makeConfirmedCollection()}
+ * <li>{@link #makeConfirmedFullCollection()}
+ * </ul>
  * <p>
  * Those methods should provide a confirmed collection implementation 
  * that's compatible with your collection implementation.
@@ -143,20 +140,21 @@ import java.util.NoSuchElementException;
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.<P>
  * <p>
- * <B>Other notes</B>
+ * <b>Other notes</b>
  * <p>
  * If your {@link Collection} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
+ * @version $Revision: 1.1 $ $Date: 2003/10/02 22:14:29 $
+ * 
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @author Michael A. Smith
  * @author Neil O'Toole
  * @author Stephen Colebourne
- * @version $Id: TestCollection.java,v 1.15 2003/08/31 17:28:43 scolebourne Exp $
  */
-public abstract class TestCollection extends TestObject {
+public abstract class AbstractTestCollection extends AbstractTestObject {
 
     //
     // NOTE: 
@@ -188,11 +186,11 @@ public abstract class TestCollection extends TestObject {
     protected Collection confirmed;
 
     /**
-     * Constructor.
+     * JUnit constructor.
      * 
-     * @param testName  the test name
+     * @param testName  the test class name
      */
-    public TestCollection(String testName) {
+    public AbstractTestCollection(String testName) {
         super(testName);
     }
 
@@ -226,7 +224,7 @@ public abstract class TestCollection extends TestObject {
     /**
      *  Returns true if the collections produced by 
      *  {@link #makeCollection()} and {@link #makeFullCollection()}
-     *  support the <Code>add</Code> and <Code>addAll</Code>
+     *  support the <code>add</code> and <code>addAll</code>
      *  operations.<P>
      *  Default implementation returns true.  Override if your collection
      *  class does not support add or addAll.
@@ -238,9 +236,9 @@ public abstract class TestCollection extends TestObject {
     /**
      *  Returns true if the collections produced by 
      *  {@link #makeCollection()} and {@link #makeFullCollection()}
-     *  support the <Code>remove</Code>, <Code>removeAll</Code>,
-     *  <Code>retainAll</Code>, <Code>clear</Code> and
-     *  <Code>iterator().remove()</Code> methods.
+     *  support the <code>remove</code>, <code>removeAll</code>,
+     *  <code>retainAll</code>, <code>clear</code> and
+     *  <code>iterator().remove()</code> methods.
      *  Default implementation returns true.  Override if your collection
      *  class does not support removal operations.
      */
@@ -387,7 +385,7 @@ public abstract class TestCollection extends TestObject {
      *  Returns a full collection to be used for testing.  The collection
      *  returned by this method should contain every element returned by
      *  {@link #getFullElements()}.  The default implementation, in fact,
-     *  simply invokes <Code>addAll</Code> on an empty collection with
+     *  simply invokes <code>addAll</code> on an empty collection with
      *  the results of {@link #getFullElements()}.  Override this default
      *  if your collection doesn't support addAll.
      */
@@ -598,7 +596,7 @@ public abstract class TestCollection extends TestObject {
 
     /**
      *  If {@link #isAddSupported()} returns false, tests that add operations
-     *  raise <Code>UnsupportedOperationException.
+     *  raise <code>UnsupportedOperationException.
      */
     public void testUnsupportedAdd() {
         if (isAddSupported()) return;
@@ -1158,7 +1156,7 @@ public abstract class TestCollection extends TestObject {
 
 
     /**
-     *  Tests <Code>toString</Code> on a collection.
+     *  Tests <code>toString</code> on a collection.
      */
     public void testCollectionToString() {
         resetEmpty();

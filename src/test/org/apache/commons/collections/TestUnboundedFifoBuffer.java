@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestUnboundedFifoBuffer.java,v 1.6 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestUnboundedFifoBuffer.java,v 1.7 2003/10/02 22:14:29 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2003/10/02 22:14:29 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import junit.framework.Test;
 /**
  * Test cases for UnboundedFifoBuffer.
  */
-public class TestUnboundedFifoBuffer extends TestCollection {
+public class TestUnboundedFifoBuffer extends AbstractTestCollection {
 
     public TestUnboundedFifoBuffer(String n) {
         super(n);

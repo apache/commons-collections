@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.5 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.6 2003/10/02 22:14:29 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/10/02 22:14:29 $
  *
  * ====================================================================
  *
@@ -81,9 +81,9 @@ import java.util.Set;
  *  elements may be added; see {@link TestCollection} for more details.<P>
  *
  *  @author Paul Jack
- *  @version $Id: TestSet.java,v 1.5 2003/08/31 17:28:43 scolebourne Exp $
+ *  @version $Id: TestSet.java,v 1.6 2003/10/02 22:14:29 scolebourne Exp $
  */
-public abstract class TestSet extends TestCollection {
+public abstract class TestSet extends AbstractTestCollection {
 
     /**
      *  Constructor.

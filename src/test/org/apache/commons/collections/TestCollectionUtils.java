@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.22 2003/09/25 07:19:42 psteitz Exp $
- * $Revision: 1.22 $
- * $Date: 2003/09/25 07:19:42 $
+ * $Id: TestCollectionUtils.java,v 1.23 2003/10/02 22:14:29 scolebourne Exp $
+ * $Revision: 1.23 $
+ * $Date: 2003/10/02 22:14:29 $
  *
  * ====================================================================
  *
@@ -93,7 +93,7 @@ import org.apache.commons.collections.decorators.UnmodifiableCollection;
  * @author Stephen Colebourne
  * @author Phil Steitz
  * 
- * @version $Revision: 1.22 $ $Date: 2003/09/25 07:19:42 $
+ * @version $Revision: 1.23 $ $Date: 2003/10/02 22:14:29 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -797,7 +797,7 @@ public class TestCollectionUtils extends TestCase {
             }
  
             public BulkTest bulkTestAll() {
-                return new TestCollection("") {
+                return new AbstractTestCollection("") {
                     public Collection makeCollection() {
                         return typedCollection();
                     }

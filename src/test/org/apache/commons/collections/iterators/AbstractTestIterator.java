@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.1 2003/10/01 21:54:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.2 2003/10/02 22:14:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,7 +60,7 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.TestObject;
+import org.apache.commons.collections.AbstractTestObject;
 
 /**
  * Abstract class for testing the Iterator interface.
@@ -71,12 +71,12 @@ import org.apache.commons.collections.TestObject;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/01 21:54:54 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/02 22:14:34 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestIterator extends TestObject {
+public abstract class AbstractTestIterator extends AbstractTestObject {
 
     /**
      * JUnit constructor.

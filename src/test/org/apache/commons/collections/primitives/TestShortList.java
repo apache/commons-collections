@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestShortList.java,v 1.3 2003/08/31 17:28:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestShortList.java,v 1.4 2003/10/02 22:14:33 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -61,15 +61,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.collections.TestList;
+import org.apache.commons.collections.AbstractTestList;
 import org.apache.commons.collections.primitives.adapters.ShortListList;
 import org.apache.commons.collections.primitives.adapters.ListShortList;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:28:41 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/02 22:14:33 $
  * @author Rodney Waldhoff
  */
-public abstract class TestShortList extends TestList {
+public abstract class TestShortList extends AbstractTestList {
 
     // conventional
     // ------------------------------------------------------------------------
