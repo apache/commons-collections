@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.6 2003/10/09 20:20:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.7 2003/10/10 21:08:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.6 $ $Date: 2003/10/09 20:20:23 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/10 21:08:26 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -1159,6 +1159,10 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             return makeFullMap().keySet();
         }
         
+        protected boolean isNullSupported() {
+            return AbstractTestMap.this.isAllowNullKey();
+        }
+        
         protected boolean isAddSupported() {
             return false;
         }
@@ -1218,6 +1222,10 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         
         protected Collection makeFullCollection() {
             return makeFullMap().values();
+        }
+        
+        protected boolean isNullSupported() {
+            return AbstractTestMap.this.isAllowNullKey();
         }
         
         protected boolean isAddSupported() {
