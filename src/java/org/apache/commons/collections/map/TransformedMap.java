@@ -35,7 +35,7 @@ import org.apache.commons.collections.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2004/05/21 22:01:04 $
+ * @version $Revision: 1.11 $ $Date: 2004/06/07 22:14:42 $
  * 
  * @author Stephen Colebourne
  */
@@ -163,6 +163,7 @@ public class TransformedMap
      * 
      * @param value  the value to transform
      * @return the transformed value
+     * @since Commons Collections 3.1
      */
     protected Object checkSetValue(Object value) {
         return valueTransformer.transform(value);
@@ -172,6 +173,7 @@ public class TransformedMap
      * Override to only return true when there is a value transformer.
      * 
      * @return true if a value transformer is in use
+     * @since Commons Collections 3.1
      */
     protected boolean isSetValueChecking() {
         return (valueTransformer != null);

@@ -38,7 +38,7 @@ import org.apache.commons.collections.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.13 $ $Date: 2004/05/21 22:01:04 $
+ * @version $Revision: 1.14 $ $Date: 2004/06/07 22:14:42 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -141,6 +141,7 @@ public class PredicatedMap
      * 
      * @param value  the value to validate
      * @throws IllegalArgumentException if invalid
+     * @since Commons Collections 3.1
      */
     protected Object checkSetValue(Object value) {
         if (valuePredicate.evaluate(value) == false) {
@@ -153,6 +154,7 @@ public class PredicatedMap
      * Override to only return true when there is a value transformer.
      * 
      * @return true if a value predicate is in use
+     * @since Commons Collections 3.1
      */
     protected boolean isSetValueChecking() {
         return (valuePredicate != null);

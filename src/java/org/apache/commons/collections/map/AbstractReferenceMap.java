@@ -76,7 +76,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  *
  * @see java.lang.ref.Reference
  * @since Commons Collections 3.1 (extracted from ReferenceMap in 3.0)
- * @version $Revision: 1.2 $ $Date: 2004/04/27 21:32:52 $
+ * @version $Revision: 1.3 $ $Date: 2004/06/07 22:14:42 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -553,6 +553,8 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * <p>
      * If getKey() or getValue() returns null, it means
      * the mapping is stale and should be removed.
+     * 
+     * @since Commons Collections 3.1
      */
     protected static class ReferenceEntry extends HashEntry {
         /** The parent map */
