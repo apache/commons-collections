@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonIterator.java,v 1.6 2003/09/29 22:02:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonIterator.java,v 1.7 2003/10/09 11:05:27 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,14 +64,16 @@ import java.util.NoSuchElementException;
  * object instance.</p>
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.6 $ $Date: 2003/09/29 22:02:33 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/09 11:05:27 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author Stephen Colebourne
+ * @author Rodney Waldhoff
  */
 public class SingletonIterator implements ResetableIterator {
 
-    private boolean first = true;
+    private boolean beforeFirst = true;
+    private boolean removed = false;
     private Object object;
 
     /**
@@ -85,14 +87,14 @@ public class SingletonIterator implements ResetableIterator {
     }
 
     /**
-     * Is another object available from the iterator.
+     * Is another object available from the iterator?
      * <p>
      * This returns true if the single object hasn't been returned yet.
      * 
      * @return true if the single object hasn't been returned yet
      */
     public boolean hasNext() {
-        return first;
+        return (beforeFirst && !removed);
     }
 
     /**
@@ -105,28 +107,34 @@ public class SingletonIterator implements ResetableIterator {
      *    been returned
      */
     public Object next() {
-        if (!first) {
+        if (!beforeFirst || removed) {
             throw new NoSuchElementException();
         }
-        Object answer = object;
-        first = false;
-        return answer;
+        beforeFirst = false;
+        return object;
     }
 
     /**
-     * Remove always throws {@link UnsupportedOperationException}.
-     *
-     * @throws UnsupportedOperationException always
+     * Remove the object from this iterator.
+     * @throws IllegalStateException if the <tt>next</tt> method has not
+     *        yet been called, or the <tt>remove</tt> method has already
+     *        been called after the last call to the <tt>next</tt>
+     *        method.
      */
-    public void remove() {
-        throw new UnsupportedOperationException("remove() is not supported by this iterator");
+    public void remove() {       
+        if(removed || beforeFirst) {
+            throw new IllegalStateException();
+        } else {
+            object = null;
+            removed = true;
+        }
     }
     
     /**
      * Reset the iterator to the start.
      */
     public void reset() {
-        first = true;
+        beforeFirst = true;
     }
     
 }

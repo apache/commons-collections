@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.6 2003/10/01 21:54:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.7 2003/10/09 11:05:27 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import junit.framework.TestSuite;
 /**
  * Tests the SingletonListIterator.
  *
- * @version $Revision: 1.6 $ $Date: 2003/10/01 21:54:55 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/09 11:05:27 $
  * 
  * @author Stephen Colebourne
  */
@@ -83,13 +83,15 @@ public class TestSingletonListIterator extends AbstractTestListIterator {
     }
     
     /**
-     * Returns null. SingletonListIterator can never be empty;
-     * they always have exactly one element.
-     * 
-     * @return null
+     * Returns a SingletonListIterator from which 
+     * the element has already been removed.
      */
     public ListIterator makeEmptyListIterator() {
-        return null;
+        SingletonListIterator iter = (SingletonListIterator)makeFullIterator();
+        iter.next();
+        iter.remove();
+        iter.reset();        
+        return iter;
     }
 
     public ListIterator makeFullListIterator() {
@@ -101,17 +103,11 @@ public class TestSingletonListIterator extends AbstractTestListIterator {
     }
 
     public boolean supportsRemove() {
-        return false;
+        return true;
     }
 
-    /**
-     * Whether or not we are testing an iterator that can be
-     * empty.  SingletonIterators are never empty;
-     * 
-     * @return false
-     */
     public boolean supportsEmptyIterator() {
-        return false;
+        return true;
     }
 
     public void testIterator() {
