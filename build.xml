@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.29 2002/07/25 18:08:05 costin Exp $ -->
+<!-- $Id: build.xml,v 1.30 2002/10/16 23:25:44 bayard Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -49,7 +49,7 @@
       <property name="Name-Long" value="Jakarta Commons Collections Package"/>
 
       <!-- The current version number of this component -->
-      <property name="component.version"       value="2.0"/>
+      <property name="component.version"       value="2.1"/>
       <property name="doc.release.notes" value="RELEASE-NOTES-${component.version}.html"/>
       <property name="doc.status" value="STATUS.html"/>
 
