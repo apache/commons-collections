@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.7 2003/08/24 09:47:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.8 2003/08/25 20:38:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import junit.framework.Test;
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/08/24 09:47:19 $
+ * @version $Revision: 1.8 $ $Date: 2003/08/25 20:38:40 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -362,10 +362,12 @@ public class TestMapUtils extends BulkTest {
         final Map map = new TreeMap();  // treeMap guarantees order across JDKs for test
         map.put( new Integer(2) , "B" );
         map.put( new Integer(3) , "C" );
+        map.put( new Integer(4) , null );
         
         outPrint.println("{");
         outPrint.println(INDENT + "2 = B");
         outPrint.println(INDENT + "3 = C");
+        outPrint.println(INDENT + "4 = null");
         outPrint.println("}");
         final String EXPECTED_OUT = out.toString();
         out.reset();
@@ -414,19 +416,81 @@ public class TestMapUtils extends BulkTest {
     public void testVerbosePrintNullStream() {
         try {
             MapUtils.verbosePrint(null, "Map", new HashMap());
-            fail();
-        } catch (NullPointerException ex) {
+            fail("Should generate NullPointerException");
+        } catch (NullPointerException expected) {
         }
     }
     
     public void testDebugPrintNullStream() {
         try {
             MapUtils.debugPrint(null, "Map", new HashMap());
-            fail();
-        } catch (NullPointerException ex) {
+            fail("Should generate NullPointerException");
+        } catch (NullPointerException expected) {
         }
     }
     
+    public void testDebugPrintNullKey() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map map = new HashMap();
+        map.put( null , "A" );
+    
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = A " + String.class.getName());
+        outPrint.println("} " + HashMap.class.getName());
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+        
+        MapUtils.debugPrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    public void testDebugPrintNullKeyToMap1() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map map = new HashMap();
+        map.put( null , map );
+    
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = (this Map) " + HashMap.class.getName());
+        outPrint.println("} " + HashMap.class.getName());
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+        
+        MapUtils.debugPrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
+    public void testDebugPrintNullKeyToMap2() {
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+
+        final String INDENT = "    ";
+
+        final Map map = new HashMap();
+        final Map map2= new HashMap();
+        map.put( null , map2 );
+        map2.put( "2", "B" );
+    
+        outPrint.println("{");
+        outPrint.println(INDENT + "null = ");
+        outPrint.println(INDENT + "{");
+        outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
+        outPrint.println(INDENT + "} " + HashMap.class.getName());
+        outPrint.println("} " + HashMap.class.getName());
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+        
+        MapUtils.debugPrint(outPrint, null, map);
+        assertEquals(EXPECTED_OUT, out.toString());
+    }
+
     public void testVerbosePrint() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -442,7 +506,7 @@ public class TestMapUtils extends BulkTest {
         outPrint.println(INDENT + INDENT + "2 = B");
         outPrint.println(INDENT + INDENT + "3 = C");
         outPrint.println(INDENT + "}");
-        outPrint.println(INDENT + "7 = this Map");
+        outPrint.println(INDENT + "7 = (this Map)");
         outPrint.println("}");
         
         final String EXPECTED_OUT = out.toString();
@@ -477,7 +541,7 @@ public class TestMapUtils extends BulkTest {
         outPrint.println(INDENT + INDENT + "2 = B " + String.class.getName());
         outPrint.println(INDENT + INDENT + "3 = C " + String.class.getName());
         outPrint.println(INDENT + "} " + TreeMap.class.getName());
-        outPrint.println(INDENT + "7 = this Map");
+        outPrint.println(INDENT + "7 = (this Map) " + TreeMap.class.getName());
         outPrint.println("} " + TreeMap.class.getName());
         
         final String EXPECTED_OUT = out.toString();

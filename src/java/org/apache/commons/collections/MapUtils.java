@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.27 2003/08/24 09:47:19 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.28 2003/08/25 20:38:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.27 $ $Date: 2003/08/24 09:47:19 $
+ * @version $Revision: 1.28 $ $Date: 2003/08/25 20:38:40 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -689,9 +689,10 @@ public class MapUtils {
      * @param out  the stream to print to, must not be null
      * @param label  the label to be applied to the output generated.  This 
      *              may well be the key associated with this map within a 
-     *              surrounding map in which this is nested.   
-     * @param map  the map to print, may be null
-     * @throws NullPointerException if the stream is null
+     *              surrounding map in which this is nested.  If the label is 
+     *              <code>null</code> then no label is output.
+     * @param map  the map to print, may be <code>null</code>
+     * @throws NullPointerException if the stream is <code>null</code>
      */
     public static synchronized void verbosePrint(
         final PrintStream out,
@@ -712,9 +713,10 @@ public class MapUtils {
      * @param out  the stream to print to, must not be null
      * @param label  the label to be applied to the output generated.  This 
      *              may well be the key associated with this map within a 
-     *              surrounding map in which this is nested.   
-     * @param map  the map to print, may be null
-     * @throws NullPointerException if the stream is null
+     *              surrounding map in which this is nested.  If the label is 
+     *              <code>null</code> then no label is output.
+     * @param map  the map to print, may be <code>null</code>
+     * @throws NullPointerException if the stream is <code>null</code>
      */
     public static synchronized void debugPrint(
         final PrintStream out,
@@ -757,9 +759,11 @@ public class MapUtils {
      * @param out  the stream to print to
      * @param label  the label to be applied to the output generated.  This 
      *              may well be the key associated with this map within a 
-     *              surrounding map in which this is nested.   
-     * @param map  the map to print, may be null
+     *              surrounding map in which this is nested.  If the label is 
+     *              <code>null</code>, then it is not output.
+     * @param map  the map to print, may be <code>null</code>
      * @param debug flag indicating whether type names should be output.
+     * @throws NullPointerException if the stream is <code>null</code>
      */
     private static void verbosePrintInternal(  // externally synchronized
         final PrintStream out,
@@ -770,13 +774,9 @@ public class MapUtils {
         printIndent(out);
 
         if (label != null) {
-            if (map == null) {
-                // Guard against null map.
-                out.println(label + " = null");
-                return;
-            } else {
-                out.println(label + " = ");
-            }            
+            out.print(label);
+            out.print(" = ");
+            out.println(map == null ? "null" : "");
         }
         if (map == null) {
             return;
@@ -790,29 +790,22 @@ public class MapUtils {
             Map.Entry entry = (Map.Entry) it.next();
             Object childKey = entry.getKey();
             Object childValue = entry.getValue();
-            if (childValue instanceof Map) {
-                if (childValue == map) {
-                    printIndent(out);
-                    out.println(childKey + " = this Map");  // should have stack really...
-                } else {
-                    verbosePrintInternal(out, childKey, (Map) childValue, debug);
-                }
+            if (childValue instanceof Map && childValue != map) {
+                verbosePrintInternal(out, (childKey == null ? "null" : childKey), (Map) childValue, debug);
             } else {
                 printIndent(out);
-
+                out.print(childKey);
+                out.print(" = ");
+                out.print(childValue == map ? "(this Map)" : childValue);
                 if (debug && childValue != null) {
-                    out.println(
-                        childKey 
-                        + " = " 
-                        + childValue 
-                        + " " 
-                        + childValue.getClass().getName()
-                    );
+                    out.print(' ');
+                    out.println(childValue.getClass().getName());
                 } else {
-                    out.println(childKey + " = " + childValue);
+                    out.println();
                 }
             }
         }
+        
         indentDepth--;
         printIndent(out);
         out.println(debug ? "} " + map.getClass().getName() : "}");
