@@ -25,14 +25,27 @@ import java.util.Arrays;
  * maps of maps. An example might be the need to lookup a filename by 
  * key and locale. The typical solution might be nested maps. This class
  * can be used instead by creating an instance passing in the key and locale.
+ * <p>
+ * Example usage:
+ * <pre>
+ * // populate map with data mapping key+locale to localizedText
+ * Map map = new HashMap();
+ * MultiKey multiKey = new MultiKey(key, locale);
+ * map.put(multiKey, localizedText);
+ *
+ * // later retireve the localized text
+ * MultiKey multiKey = new MultiKey(key, locale);
+ * String localizedText = (String) map.get(multiKey);
+ * </pre>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:00:08 $
+ * @version $Revision: 1.5 $ $Date: 2004/03/13 12:43:43 $
  * 
  * @author Howard Lewis Ship
  * @author Stephen Colebourne
  */
 public class MultiKey implements Serializable {
+    // This class could implement List, but that would confuse it's purpose
 
     /** Serialisation version */
     private static final long serialVersionUID = 4465448607415788805L;
@@ -44,6 +57,9 @@ public class MultiKey implements Serializable {
     
     /**
      * Constructor taking two keys.
+     * <p>
+     * The keys should be immutable
+     * If they are not then they must not be changed after adding to the MultiKey.
      * 
      * @param key1  the first key
      * @param key2  the second key
@@ -54,6 +70,9 @@ public class MultiKey implements Serializable {
     
     /**
      * Constructor taking three keys.
+     * <p>
+     * The keys should be immutable
+     * If they are not then they must not be changed after adding to the MultiKey.
      * 
      * @param key1  the first key
      * @param key2  the second key
@@ -65,6 +84,9 @@ public class MultiKey implements Serializable {
     
     /**
      * Constructor taking four keys.
+     * <p>
+     * The keys should be immutable
+     * If they are not then they must not be changed after adding to the MultiKey.
      * 
      * @param key1  the first key
      * @param key2  the second key
@@ -77,6 +99,9 @@ public class MultiKey implements Serializable {
     
     /**
      * Constructor taking five keys.
+     * <p>
+     * The keys should be immutable
+     * If they are not then they must not be changed after adding to the MultiKey.
      * 
      * @param key1  the first key
      * @param key2  the second key
@@ -89,9 +114,14 @@ public class MultiKey implements Serializable {
     }
     
     /**
-     * Constructor taking an array of keys.
+     * Constructor taking an array of keys which is cloned.
+     * <p>
+     * The keys should be immutable
+     * If they are not then they must not be changed after adding to the MultiKey.
+     * <p>
+     * This is equivalent to <code>new MultiKey(keys, true)</code>.
      *
-     * @param keys  the array of keys
+     * @param keys  the array of keys, not null
      * @throws IllegalArgumentException if the key array is null
      */
     public MultiKey(Object[] keys) {
@@ -99,20 +129,35 @@ public class MultiKey implements Serializable {
     }
     
     /**
-     * Constructor taking an array of keys.
+     * Constructor taking an array of keys, optionally choosing whether to clone.
      * <p>
-     * If the array is not copied, then it must not be modified.
+     * <b>If the array is not cloned, then it must not be modified.</b>
+     * <p>
+     * This method is public for performance reasons only, to avoid a clone.
+     * The hashcode is calculated once here in this method.
+     * Therefore, changing the array passed in would not change the hashcode but
+     * would change the equals method, which is a bug.
+     * <p>
+     * This is the only fully safe usage of this constructor, as the object array
+     * is never made available in a variable:
+     * <pre>
+     * new MultiKey(new Object[] {...}, false);
+     * </pre>
+     * <p>
+     * The keys should be immutable
+     * If they are not then they must not be changed after adding to the MultiKey.
      *
-     * @param keys  the array of keys
-     * @param makeCopy  true to copy the array, false to assign it
+     * @param keys  the array of keys, not null
+     * @param makeClone  true to clone the array, false to assign it
      * @throws IllegalArgumentException if the key array is null
+     * @since Commons Collections 3.1
      */
-    protected MultiKey(Object[] keys, boolean makeCopy) {
+    public MultiKey(Object[] keys, boolean makeClone) {
         super();
         if (keys == null) {
             throw new IllegalArgumentException("The array of keys must not be null");
         }
-        if (makeCopy) {
+        if (makeClone) {
             this.keys = (Object[]) keys.clone();
         } else {
             this.keys = keys;
@@ -121,18 +166,18 @@ public class MultiKey implements Serializable {
         int total = 0;
         for (int i = 0; i < keys.length; i++) {
             if (keys[i] != null) {
-                if (i == 0) {
-                    total = keys[i].hashCode();
-                } else {
-                    total ^= keys[i].hashCode();
-                }
+                total ^= keys[i].hashCode();
             }
         }
         hashCode = total;
     }
     
+    //-----------------------------------------------------------------------
     /**
-     * Gets a copy of the individual keys.
+     * Gets a clone of the array of keys.
+     * <p>
+     * The keys should be immutable
+     * If they are not then they must not be changed.
      * 
      * @return the individual keys
      */
@@ -140,6 +185,32 @@ public class MultiKey implements Serializable {
         return (Object[]) keys.clone();
     }
     
+    /**
+     * Gets the key at the specified index.
+     * <p>
+     * The key should be immutable.
+     * If it is not then it must not be changed.
+     * 
+     * @param index  the index to retrieve
+     * @return the key at the index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     * @since Commons Collections 3.1
+     */
+    public Object getKey(int index) {
+        return keys[index];
+    }
+    
+    /**
+     * Gets the size of the list of keys.
+     * 
+     * @return the size of the list of keys
+     * @since Commons Collections 3.1
+     */
+    public int size() {
+        return keys.length;
+    }
+    
+    //-----------------------------------------------------------------------
     /**
      * Compares this object to another.
      * <p>

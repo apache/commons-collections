@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 /**
  * Unit tests for {@link org.apache.commons.collections.MultiKey}.
  * 
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:40 $
+ * @version $Revision: 1.4 $ $Date: 2004/03/13 12:43:43 $
  * 
  * @author Stephen Colebourne
  */
@@ -58,8 +58,8 @@ public class TestMultiKey extends TestCase {
         super.tearDown();
     }
     
-
-    public void testConstructorsAndGet() throws Exception {
+    //-----------------------------------------------------------------------
+    public void testConstructors() throws Exception {
         MultiKey mk = null;
         mk = new MultiKey(ONE, TWO);
         Assert.assertTrue(Arrays.equals(new Object[] {ONE, TWO}, mk.getKeys()));
@@ -75,13 +75,109 @@ public class TestMultiKey extends TestCase {
 
         mk = new MultiKey(new Object[] {THREE, FOUR, ONE, TWO}, false);
         Assert.assertTrue(Arrays.equals(new Object[] {THREE, FOUR, ONE, TWO}, mk.getKeys()));
-
-        // don't do this!
+    }
+    
+    public void testConstructorsByArray() throws Exception {
+        MultiKey mk = null;
         Object[] keys = new Object[] {THREE, FOUR, ONE, TWO};
         mk = new MultiKey(keys);
         Assert.assertTrue(Arrays.equals(new Object[] {THREE, FOUR, ONE, TWO}, mk.getKeys()));
         keys[3] = FIVE;  // no effect
         Assert.assertTrue(Arrays.equals(new Object[] {THREE, FOUR, ONE, TWO}, mk.getKeys()));
+
+        keys = new Object[] {};
+        mk = new MultiKey(keys);
+        Assert.assertTrue(Arrays.equals(new Object[] {}, mk.getKeys()));
+
+        keys = new Object[] {THREE, FOUR, ONE, TWO};
+        mk = new MultiKey(keys, true);
+        Assert.assertTrue(Arrays.equals(new Object[] {THREE, FOUR, ONE, TWO}, mk.getKeys()));
+        keys[3] = FIVE;  // no effect
+        Assert.assertTrue(Arrays.equals(new Object[] {THREE, FOUR, ONE, TWO}, mk.getKeys()));
+
+        keys = new Object[] {THREE, FOUR, ONE, TWO};
+        mk = new MultiKey(keys, false);
+        Assert.assertTrue(Arrays.equals(new Object[] {THREE, FOUR, ONE, TWO}, mk.getKeys()));
+        // change key - don't do this!
+        // the hashcode of the MultiKey is now broken
+        keys[3] = FIVE;
+        Assert.assertTrue(Arrays.equals(new Object[] {THREE, FOUR, ONE, FIVE}, mk.getKeys()));
+    }        
+    
+    public void testConstructorsByArrayNull() throws Exception {
+        Object[] keys = null;
+        try {
+            new MultiKey(keys);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            new MultiKey(keys, true);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            new MultiKey(keys, false);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+    }
+    
+    public void testSize() {
+        Assert.assertEquals(2, new MultiKey(ONE, TWO).size());
+        Assert.assertEquals(2, new MultiKey(null, null).size());
+        Assert.assertEquals(3, new MultiKey(ONE, TWO, THREE).size());
+        Assert.assertEquals(3, new MultiKey(null, null, null).size());
+        Assert.assertEquals(4, new MultiKey(ONE, TWO, THREE, FOUR).size());
+        Assert.assertEquals(4, new MultiKey(null, null, null, null).size());
+        Assert.assertEquals(5, new MultiKey(ONE, TWO, THREE, FOUR, FIVE).size());
+        Assert.assertEquals(5, new MultiKey(null, null, null, null, null).size());
+        
+        Assert.assertEquals(0, new MultiKey(new Object[] {}).size());
+        Assert.assertEquals(1, new MultiKey(new Object[] {ONE}).size());
+        Assert.assertEquals(2, new MultiKey(new Object[] {ONE, TWO}).size());
+        Assert.assertEquals(7, new MultiKey(new Object[] {ONE, TWO, ONE, TWO, ONE, TWO, ONE}).size());
+    }
+    
+    public void testGetIndexed() {
+        MultiKey mk = new MultiKey(ONE, TWO);
+        Assert.assertSame(ONE, mk.getKey(0));
+        Assert.assertSame(TWO, mk.getKey(1));
+        try {
+            mk.getKey(-1);
+            fail();
+        } catch (IndexOutOfBoundsException ex) {}
+        try {
+            mk.getKey(2);
+            fail();
+        } catch (IndexOutOfBoundsException ex) {}
+    }
+    
+    public void testGetKeysSimpleConstructor() {
+        MultiKey mk = new MultiKey(ONE, TWO);
+        Object[] array = mk.getKeys();
+        Assert.assertSame(ONE, array[0]);
+        Assert.assertSame(TWO, array[1]);
+        Assert.assertEquals(2, array.length);
+    }
+    
+    public void testGetKeysArrayConstructorCloned() {
+        Object[] keys = new Object[] {ONE, TWO};
+        MultiKey mk = new MultiKey(keys, true);
+        Object[] array = mk.getKeys();
+        Assert.assertTrue(array != keys);
+        Assert.assertTrue(Arrays.equals(array, keys));
+        Assert.assertSame(ONE, array[0]);
+        Assert.assertSame(TWO, array[1]);
+        Assert.assertEquals(2, array.length);
+    }
+    
+    public void testGetKeysArrayConstructorNonCloned() {
+        Object[] keys = new Object[] {ONE, TWO};
+        MultiKey mk = new MultiKey(keys, false);
+        Object[] array = mk.getKeys();
+        Assert.assertTrue(array != keys);  // still not equal
+        Assert.assertTrue(Arrays.equals(array, keys));
+        Assert.assertSame(ONE, array[0]);
+        Assert.assertSame(TWO, array[1]);
+        Assert.assertEquals(2, array.length);
     }
     
     public void testHashCode() {
@@ -92,6 +188,9 @@ public class TestMultiKey extends TestCase {
         Assert.assertTrue(mk1.hashCode() == mk1.hashCode());
         Assert.assertTrue(mk1.hashCode() == mk2.hashCode());
         Assert.assertTrue(mk1.hashCode() != mk3.hashCode());
+        
+        int total = (0 ^ ONE.hashCode()) ^ TWO.hashCode();
+        Assert.assertEquals(total, mk1.hashCode());
     }
     
     public void testEquals() {
