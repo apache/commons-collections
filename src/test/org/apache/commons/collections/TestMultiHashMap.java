@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Unit Tests for <code>MultiHashMap</code>.
  * 
- * @version $Revision: 1.20 $ $Date: 2004/06/09 22:11:54 $
+ * @version $Revision: 1.21 $ $Date: 2005/01/04 00:13:25 $
  *
  * @author Unknown
  */
@@ -415,6 +415,19 @@ public class TestMultiHashMap extends AbstractTestMap {
         assertEquals(3, map.size());
         assertEquals(2, newMap.size());
         assertEquals(1, newColl.size());
+    }
+
+    public void testRemove_KeyItem() {
+        MultiHashMap map = new MultiHashMap();
+        map.put("A", "AA");
+        map.put("A", "AB");
+        map.put("A", "AC");
+        assertEquals(null, map.remove("C", "CA"));
+        assertEquals(null, map.remove("A", "AD"));
+        assertEquals("AC", map.remove("A", "AC"));
+        assertEquals("AB", map.remove("A", "AB"));
+        assertEquals("AA", map.remove("A", "AA"));
+        assertEquals(new MultiHashMap(), map);
     }
 
 }

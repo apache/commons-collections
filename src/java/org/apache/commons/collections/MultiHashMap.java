@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -52,7 +52,7 @@ import org.apache.commons.collections.iterators.EmptyIterator;
  * <code>list</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.20 $ $Date: 2004/06/09 22:11:54 $
+ * @version $Revision: 1.21 $ $Date: 2005/01/04 00:13:25 $
  * 
  * @author Christopher Berry
  * @author James Strachan
@@ -314,8 +314,10 @@ public class MultiHashMap extends HashMap implements MultiMap {
         if (valuesForKey == null) {
             return null;
         }
-        valuesForKey.remove(item);
-
+        boolean removed = valuesForKey.remove(item);
+        if (removed == false) {
+            return null;
+        }
         // remove the list if it is now empty
         // (saves space, and allows equals to work)
         if (valuesForKey.isEmpty()){
