@@ -31,10 +31,13 @@ import java.util.Set;
  * {@link org.apache.commons.collections.MultiMap MultiMap} interface.
  * <p>
  * A <code>MultiMap</code> is a Map with slightly different semantics.
- * Putting a value into the map will add the value to a Collection at that
- * key. Getting a value will always return a Collection, holding all the
- * values put to that key. This implementation uses an ArrayList as the 
- * collection.
+ * Putting a value into the map will add the value to a Collection at that key.
+ * Getting a value will return a Collection, holding all the values put to that key.
+ * <p>
+ * This implementation uses an <code>ArrayList</code> as the collection.
+ * The internal storage list is made available without cloning via the
+ * <code>get(Object)</code> and <code>entrySet()</code> methods.
+ * The implementation returns <code>null</code> when there are no values mapped to a key.
  * <p>
  * For example:
  * <pre>
@@ -42,12 +45,12 @@ import java.util.Set;
  * mhm.put(key, "A");
  * mhm.put(key, "B");
  * mhm.put(key, "C");
- * Collection coll = mhm.get(key);</pre>
+ * List list = (List) mhm.get(key);</pre>
  * <p>
- * <code>coll</code> will be a list containing "A", "B", "C".
+ * <code>list</code> will be a list containing "A", "B", "C".
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.15 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.16 $ $Date: 2004/03/14 15:33:57 $
  * 
  * @author Christopher Berry
  * @author James Strachan
@@ -58,7 +61,7 @@ import java.util.Set;
  */
 public class MultiHashMap extends HashMap implements MultiMap {
     
-    //backed values collection
+    // backed values collection
     private transient Collection values = null;
     
     // compatibility with commons-collection releases 2.0/2.1
@@ -125,16 +128,17 @@ public class MultiHashMap extends HashMap implements MultiMap {
             }
         }
     }
-    
+
+    //-----------------------------------------------------------------------
     /**
-     * Put a key and value into the map.
+     * Adds the value to the collection associated with the specified key.
      * <p>
-     * The value is added to a collection mapped to the key instead of 
-     * replacing the previous value.
-     * 
-     * @param key  the key to set
-     * @param value  the value to set the key to
-     * @return the value added if the add is successful, <code>null</code> otherwise
+     * Unlike a normal <code>Map</code> the previous value is not replaced.
+     * Instead the new value is added to the collection stored against the key.
+     *
+     * @param key  the key to store against
+     * @param value  the value to add to the collection at the key
+     * @return the value added if the map changed and null if the map did not change
      */    
     public Object put(Object key, Object value) {
         // NOTE:: put is called during deserialization in JDK < 1.4 !!!!!!
@@ -148,14 +152,14 @@ public class MultiHashMap extends HashMap implements MultiMap {
 
         return (results ? value : null);
     }
-    
+
     /**
-     * Does the map contain a specific value.
+     * Checks whether the map contains the value specified.
      * <p>
-     * This searches the collection mapped to each key, and thus could be slow.
+     * This checks all collections against all keys for the value, and thus could be slow.
      * 
      * @param value  the value to search for
-     * @return true if the list contains the value
+     * @return true if the map contains the value
      */
     public boolean containsValue(Object value) {
         Set pairs = super.entrySet();
@@ -178,10 +182,14 @@ public class MultiHashMap extends HashMap implements MultiMap {
      * Removes a specific value from map.
      * <p>
      * The item is removed from the collection mapped to the specified key.
+     * Other values attached to that key are unaffected.
+     * <p>
+     * If the last value for a key is removed, <code>null</code> will be returned
+     * from a subsequant <code>get(key)</code>.
      * 
      * @param key  the key to remove from
      * @param item  the value to remove
-     * @return the value removed (which was passed in)
+     * @return the value removed (which was passed in), null if nothing removed
      */
     public Object remove(Object key, Object item) {
         Collection valuesForKey = (Collection) super.get(key);
@@ -215,18 +223,19 @@ public class MultiHashMap extends HashMap implements MultiMap {
         super.clear();
     }
 
-    /** 
-     * Gets a view over all the values in the map.
+    /**
+     * Gets a collection containing all the values in the map.
      * <p>
-     * The values view includes all the entries in the collections at each map key.
-     * 
-     * @return the collection view of all the values in the map
+     * This returns a collection containing the combination of values from all keys.
+     *
+     * @return a collection view of the values contained in this map
      */
     public Collection values() {
         Collection vs = values;
         return (vs != null ? vs : (values = new Values()));
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Inner class to view the elements.
      */
@@ -293,6 +302,7 @@ public class MultiHashMap extends HashMap implements MultiMap {
 
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Clone the map.
      * <p>
