@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/decorators/Attic/TestAll.java,v 1.1 2003/05/04 12:58:48 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/decorators/Attic/TestAll.java,v 1.2 2003/05/06 00:04:30 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,7 +62,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/05/04 12:58:48 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/06 00:04:30 $
  * @author Rodney Waldhoff
  */
 public class TestAll extends TestCase {
@@ -79,7 +79,7 @@ public class TestAll extends TestCase {
         TestSuite suite = new TestSuite();
 
         suite.addTest(TestBaseProxyIntCollection.suite());
-        // TODO: suite.addTest(TestBaseProxyIntList.suite());
+        suite.addTest(TestBaseProxyIntList.suite());
 
         return suite;
     }
