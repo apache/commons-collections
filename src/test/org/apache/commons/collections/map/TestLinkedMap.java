@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestAll.java,v 1.9 2003/12/03 19:04:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestLinkedMap.java,v 1.1 2003/12/03 19:04:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,53 +57,66 @@
  */
 package org.apache.commons.collections.map;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.textui.TestRunner;
+
+import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.OrderedMap;
+import org.apache.commons.collections.ResettableIterator;
 
 /**
- * Entry point for tests.
+ * JUnit tests.
  * 
- * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2003/12/03 19:04:41 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/03 19:04:41 $
  * 
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestLinkedMap extends AbstractTestOrderedMap {
+
+    public TestLinkedMap(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static void main(String[] args) {
+        TestRunner.run(suite());
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestFlat3Map.suite());
-        suite.addTest(TestHashedMap.suite());
-        suite.addTest(TestIdentityMap.suite());
-        suite.addTest(TestLinkedMap.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        suite.addTest(TestLazyMap.suite());
-        suite.addTest(TestLazySortedMap.suite());
-        suite.addTest(TestListOrderedMap.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestPredicatedMap.suite());
-        suite.addTest(TestPredicatedSortedMap.suite());
-        suite.addTest(TestUnmodifiableMap.suite());
-        suite.addTest(TestUnmodifiableOrderedMap.suite());
-        suite.addTest(TestUnmodifiableSortedMap.suite());
-        
-        return suite;
+        return BulkTest.makeSuite(TestLinkedMap.class);
     }
+
+    public Map makeEmptyMap() {
+        return new LinkedMap();
+    }
+
+    public String getCompatibilityVersion() {
+        return "3";
+    }
+
+    //-----------------------------------------------------------------------    
+    public void testReset() {
+        resetEmpty();
+        OrderedMap ordered = (OrderedMap) map;
+        ((ResettableIterator) ordered.mapIterator()).reset();
         
+        resetFull();
+        ordered = (OrderedMap) map;
+        List list = new ArrayList(ordered.keySet());
+        ResettableIterator it = (ResettableIterator) ordered.mapIterator();
+        assertSame(list.get(0), it.next());
+        assertSame(list.get(1), it.next());
+        it.reset();
+        assertSame(list.get(0), it.next());
+    }
+    
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/LinkedMap.emptyCollection.version3.obj");
+//        resetFull();
+//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/LinkedMap.fullCollection.version3.obj");
+//    }
 }

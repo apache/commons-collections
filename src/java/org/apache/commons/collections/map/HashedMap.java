@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.4 2003/12/02 23:51:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.5 2003/12/03 19:04:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import org.apache.commons.collections.MapIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/02 23:51:50 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/03 19:04:41 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -105,21 +105,21 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
     protected static final Object NULL = new Object();
     
     /** Load factor, normally 0.75 */
-    private final float loadFactor;
+    protected final float loadFactor;
     /** The size of the map */
-    private transient int size;
+    protected transient int size;
     /** Map entries */
-    private transient HashEntry[] data;
+    protected transient HashEntry[] data;
     /** Size at which to rehash */
-    private transient int threshold;
+    protected transient int threshold;
     /** Modification count for iterators */
-    private transient int modCount;
+    protected transient int modCount;
     /** Entry set */
-    private transient EntrySet entrySet;
+    protected transient EntrySet entrySet;
     /** Key set */
-    private transient KeySet keySet;
+    protected transient KeySet keySet;
     /** Values */
-    private transient Values values;
+    protected transient Values values;
 
     /**
      * Constructs a new empty map with default size and load factor.
@@ -129,6 +129,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         this.loadFactor = DEFAULT_LOAD_FACTOR;
         this.threshold = calculateThreshold(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR);
         this.data = new HashEntry[DEFAULT_CAPACITY];
+        init();
     }
 
     /**
@@ -162,6 +163,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         this.threshold = calculateThreshold(initialCapacity, loadFactor);
         initialCapacity = calculateNewCapacity(initialCapacity);
         this.data = new HashEntry[initialCapacity];
+        init();
     }
 
     /**
@@ -173,6 +175,12 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
     public HashedMap(Map map) {
         this(Math.max(2 * map.size(), DEFAULT_CAPACITY), DEFAULT_LOAD_FACTOR);
         putAll(map);
+    }
+
+    /**
+     * Initialise subclasses during construction.
+     */
+    protected void init() {
     }
 
     //-----------------------------------------------------------------------
@@ -352,6 +360,25 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
     }
 
     //-----------------------------------------------------------------------
+    /**
+     * Gets the entry mapped to the key specified.
+     * 
+     * @param key  the key
+     * @return the entry, null if no match
+     */
+    protected HashEntry getEntry(Object key) {
+        key = convertKey(key);
+        int hashCode = hash(key);
+        HashEntry entry = data[hashIndex(hashCode, data.length)]; // no local for hash index
+        while (entry != null) {
+            if (entry.hashCode == hashCode && isEqualKey(key, entry.key)) {
+                return entry;
+            }
+            entry = entry.next;
+        }
+        return null;
+    }
+
     /**
      * Converts input keys to another object for storage in the map.
      * This implementation masks nulls.
@@ -875,11 +902,11 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
      * Base Iterator
      */
     protected static abstract class HashIterator implements Iterator {
-        private final HashedMap map;
-        private int hashIndex;
-        private HashEntry current;
-        private HashEntry next;
-        private int expectedModCount;
+        protected final HashedMap map;
+        protected int hashIndex;
+        protected HashEntry current;
+        protected HashEntry next;
+        protected int expectedModCount;
         
         protected HashIterator(HashedMap map) {
             super();
@@ -966,6 +993,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
         int capacity = in.readInt();
         int size = in.readInt();
         data = new HashEntry[capacity];
+        init();
         for (int i = 0; i < size; i++) {
             Object key = in.readObject();
             Object value = in.readObject();
@@ -987,6 +1015,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
             cloned.values = null;
             cloned.modCount = 0;
             cloned.size = 0;
+            init();
             cloned.putAll(this);
             return cloned;
             
