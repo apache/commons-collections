@@ -123,7 +123,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.22 $ $Date: 2004/03/17 21:09:08 $
+ * @version $Revision: 1.23 $ $Date: 2004/06/21 23:39:25 $
  * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
@@ -639,78 +639,24 @@ public class ExtendedProperties extends Hashtable {
      * <code>["file", "classpath"]</code>
      *
      * @param key  the key to add
-     * @param token  the value to add
+     * @param value  the value to add
      */
-    public void addProperty(String key, Object token) {
-        Object obj = this.get(key);
-
-        /*
-         *  $$$ GMJ
-         *  FIXME : post 1.0 release, we need to not assume
-         *  that a scalar is a String - it can be an Object
-         *  so we should make a little vector-like class
-         *  say, Foo that wraps (not extends Vector),
-         *  so we can do things like
-         *  if ( !( o instanceof Foo) )
-         *  so we know it's our 'vector' container
-         *
-         *  This applies throughout
-         */
-
-        if (obj instanceof String) {
-            Vector v = new Vector(2);
-            v.addElement(obj);
-            v.addElement(token);
-            put(key, v);
-            
-        } else if (obj instanceof Vector) {
-            ((Vector) obj).addElement(token);
-            
-        } else {
-            /*
-             * This is the first time that we have seen
-             * request to place an object in the 
-             * configuration with the key 'key'. So
-             * we just want to place it directly into
-             * the configuration ... but we are going to
-             * make a special exception for String objects
-             * that contain "," characters. We will take
-             * CSV lists and turn the list into a vector of
-             * Strings before placing it in the configuration.
-             * This is a concession for Properties and the
-             * like that cannot parse multiple same key
-             * values.
-             */
-            if (token instanceof String &&
-                ((String) token).indexOf(PropertiesTokenizer.DELIMITER) > 0) {
-                    
-                PropertiesTokenizer tokenizer = new PropertiesTokenizer((String) token);
-
+    public void addProperty(String key, Object value) {
+        if (value instanceof String) {
+            String str = (String) value;
+            if (str.indexOf(PropertiesTokenizer.DELIMITER) > 0) {
+                // token contains commas, so must be split apart then added
+                PropertiesTokenizer tokenizer = new PropertiesTokenizer(str);
                 while (tokenizer.hasMoreTokens()) {
-                    String value = tokenizer.nextToken();
-
-                    /*
-                     * We know this is a string, so make sure it
-                     * just goes in rather than risking vectorization
-                     * if it contains an escaped comma
-                     */
-                    addStringProperty(key, unescape(value));
+                    String token = tokenizer.nextToken();
+                    addPropertyInternal(key, unescape(token));
                 }
             } else {
-                /*
-                 * We want to keep track of the order the keys
-                 * are parsed, or dynamically entered into
-                 * the configuration. So when we see a key
-                 * for the first time we will place it in
-                 * an ArrayList so that if a client class needs
-                 * to perform operations with configuration
-                 * in a definite order it will be possible.
-                 */
-                if (token instanceof String) {
-                    token = unescape((String) token);
-                }
-                addPropertyDirect(key, token);
+                // token contains no commas, so can be simply added
+                addPropertyInternal(key, unescape(str));
             }
+        } else {
+            addPropertyInternal(key, value);
         }
 
         // Adding a property connotes initialization
@@ -721,56 +667,48 @@ public class ExtendedProperties extends Hashtable {
      * Adds a key/value pair to the map.  This routine does
      * no magic morphing.  It ensures the keylist is maintained
      *
-     * @param key key to use for mapping
-     * @param obj object to store
+     * @param key  the key to store at
+     * @param value  the decoded object to store
      */
-    private void addPropertyDirect(String key, Object obj) {
+    private void addPropertyDirect(String key, Object value) {
         // safety check
         if (!containsKey(key)) {
             keysAsListed.add(key);
         }
-        put(key, obj);
+        put(key, value);
     }
 
     /**
-     * Sets a string property w/o checking for commas - used
+     * Adds a decoded property to the map w/o checking for commas - used
      * internally when a property has been broken up into
      * strings that could contain escaped commas to prevent
      * the inadvertent vectorization.
      * <p>
      * Thanks to Leon Messerschmidt for this one.
      *
+     * @param key  the key to store at
+     * @param value  the decoded object to store
      */
-    private void addStringProperty(String key, String token) {
-        Object obj = this.get(key);
+    private void addPropertyInternal(String key, Object value) {
+        Object current = this.get(key);
 
-        /*
-         *  $$$ GMJ
-         *  FIXME : post 1.0 release, we need to not assume
-         *  that a scalar is a String - it can be an Object
-         *  so we should make a little vector-like class
-         *  say, Foo that wraps (not extends Vector),
-         *  so we can do things like
-         *  if ( !( o instanceof Foo) )
-         *  so we know it's our 'vector' container
-         *
-         *  This applies throughout
-         */
-
-        // do the usual thing - if we have a value and 
-        // it's scalar, make a vector, otherwise add
-        // to the vector
-        if (obj instanceof String) {
+        if (current instanceof String) {
+            // one object already in map - convert it to a vector
             Vector v = new Vector(2);
-            v.addElement(obj);
-            v.addElement(token);
+            v.addElement(current);
+            v.addElement(value);
             put(key, v);
             
-        } else if (obj instanceof Vector) {
-            ((Vector) obj).addElement(token);
+        } else if (current instanceof Vector) {
+            // already a vector - just add the new token
+            ((Vector) current).addElement(value);
             
         } else {
-            addPropertyDirect(key, token);
+            // brand new key - store in keysAsListed to retain order
+            if (!containsKey(key)) {
+                keysAsListed.add(key);
+            }
+            put(key, value);
         }
     }
 

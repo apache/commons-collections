@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 /**
  * Tests some basic functions of the ExtendedProperties class.
  * 
- * @version $Revision: 1.12 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.13 $ $Date: 2004/06/21 23:39:25 $
  * 
  * @author Geir Magnusson Jr.
  * @author Mohan Kishore
@@ -169,6 +169,87 @@ public class TestExtendedProperties extends TestCase {
         } catch (IOException ioe) {
             fail("There was an exception loading the EP");
         }
+    }
+    
+    public void testMultipleSameKey1() throws Exception {
+        ExtendedProperties ep1 = new ExtendedProperties();
+
+        /*
+        initialize using:
+        one=a
+        one=b,c
+        */
+        String s1 = "one=a\none=b,c\n";
+        byte[] bytes = s1.getBytes();
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        ep1.load(bais);
+        assertEquals(1, ep1.size());
+        assertEquals(3, ep1.getVector("one").size());
+        assertEquals("a", ep1.getVector("one").get(0));
+        assertEquals("b", ep1.getVector("one").get(1));
+        assertEquals("c", ep1.getVector("one").get(2));
+    }
+    
+    public void testMultipleSameKey2() throws Exception {
+        ExtendedProperties ep1 = new ExtendedProperties();
+
+        /*
+        initialize using:
+        one=a,b
+        one=c,d
+        */
+        String s1 = "one=a,b\none=c,d\n";
+        byte[] bytes = s1.getBytes();
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        ep1.load(bais);
+        assertEquals(1, ep1.size());
+        assertEquals(4, ep1.getVector("one").size());
+        assertEquals("a", ep1.getVector("one").get(0));
+        assertEquals("b", ep1.getVector("one").get(1));
+        assertEquals("c", ep1.getVector("one").get(2));
+        assertEquals("d", ep1.getVector("one").get(3));
+    }
+    
+    public void testMultipleSameKey3() throws Exception {
+        ExtendedProperties ep1 = new ExtendedProperties();
+
+        /*
+        initialize using:
+        one=a,b
+        one=c
+        */
+        String s1 = "one=a,b\none=c\n";
+        byte[] bytes = s1.getBytes();
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        ep1.load(bais);
+        assertEquals(1, ep1.size());
+        assertEquals(3, ep1.getVector("one").size());
+        assertEquals("a", ep1.getVector("one").get(0));
+        assertEquals("b", ep1.getVector("one").get(1));
+        assertEquals("c", ep1.getVector("one").get(2));
+    }
+    
+    public void testMultipleSameKeyByCode() throws Exception {
+        ExtendedProperties ep1 = new ExtendedProperties();
+
+        ep1.addProperty("one", "a");
+        assertEquals(1, ep1.size());
+        assertEquals(1, ep1.getVector("one").size());
+        assertEquals("a", ep1.getVector("one").get(0));
+        
+        ep1.addProperty("one", Boolean.TRUE);
+        assertEquals(1, ep1.size());
+        assertEquals(2, ep1.getVector("one").size());
+        assertEquals("a", ep1.getVector("one").get(0));
+        assertEquals(Boolean.TRUE, ep1.getVector("one").get(1));
+        
+        ep1.addProperty("one", "c,d");
+        assertEquals(1, ep1.size());
+        assertEquals(4, ep1.getVector("one").size());
+        assertEquals("a", ep1.getVector("one").get(0));
+        assertEquals(Boolean.TRUE, ep1.getVector("one").get(1));
+        assertEquals("c", ep1.getVector("one").get(2));
+        assertEquals("d", ep1.getVector("one").get(3));
     }
     
 }
