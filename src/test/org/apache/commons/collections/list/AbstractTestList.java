@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/AbstractTestList.java,v 1.2 2003/11/18 22:37:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/AbstractTestList.java,v 1.3 2003/12/11 00:16:02 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:14 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/11 00:16:02 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -987,6 +987,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         if(list instanceof Serializable && !skipSerializedCanonicalTests()) {
             List list2 = (List) readExternalFormFromDisk(getCanonicalEmptyCollectionName(list));
             assertTrue("List is empty",list2.size()  == 0);
+            assertEquals(list, list2);
         }
     }
 
@@ -1007,7 +1008,12 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         List list = makeFullList();
         if(list instanceof Serializable && !skipSerializedCanonicalTests()) {
             List list2 = (List) readExternalFormFromDisk(getCanonicalFullCollectionName(list));
-            assertEquals("List is the right size",list2.size(), 4);
+            if (list2.size() == 4) {
+                // old serialized tests
+                return;
+            }
+            assertEquals("List is the right size",list.size(), list2.size());
+            assertEquals(list, list2);
         }
     }
 
