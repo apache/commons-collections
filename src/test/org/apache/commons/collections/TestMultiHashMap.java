@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.4 2002/05/28 06:51:03 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/05/28 06:51:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.5 2002/06/18 03:28:35 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/06/18 03:28:35 $
  *
  * ====================================================================
  *
@@ -243,8 +243,8 @@ public class TestMultiHashMap extends TestMap
         return;
     }
 
-    // Next four are overriden 
-    // because MultiHashMap values are always a collection
+    // Next methods are overriden because MultiHashMap values are always a
+    // collection, and deviate from the Map contract because of this.
 
     // TODO: implement the tests to ensure that Map.get(Object) returns the
     // appropriate collection of values
@@ -261,7 +261,32 @@ public class TestMultiHashMap extends TestMap
     public void testMapRemove() {
     }
 
-    public void testMapValues() {
+    public void testMapEquals() {
     }
 
+    public void testMapHashCode() {
+    }
+
+    // The verification for the map and its entry set must also be overridden
+    // because the values are not going to be the same as the values in the
+    // confirmed map (they're going to be collections of values instead).
+    public void verifyMap() {
+        // TODO: implement test to ensure that map is the same as confirmed if
+        // its values were converted into collections.
+    }
+
+    public void verifyEntrySet() {
+        // TODO: implement test to ensure that each entry is the same as one in
+        // the confirmed map, but with the value wrapped in a collection.
+    }
+
+    // The verification method must be overridden because MultiHashMap's
+    // values() is not properly backed by the map (Bug 9573).
+
+    public void verifyValues() {
+        // update the values view to the latest version, then proceed to verify
+        // as usual.  
+        values = map.values();
+        super.verifyValues();
+    }
 }
