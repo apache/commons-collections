@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.3 $
- * $Date: 2001/04/21 12:22:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.3.2.1 2002/02/26 06:17:51 morgand Exp $
+ * $Revision: 1.3.2.1 $
+ * $Date: 2002/02/26 06:17:51 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.TreeMap;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestFastTreeMap.java,v 1.3.2.1 2002/02/26 06:17:51 morgand Exp $
  */
 public class TestFastTreeMap extends TestTreeMap
 {
@@ -89,15 +89,22 @@ public class TestFastTreeMap extends TestTreeMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         FastTreeMap ftm = new FastTreeMap();
         ftm.setFast(false);
         return (ftm);
     }
+  
+    /**
+     *  The comparator for the fast tree map does not support null keys.
+     **/
+    public boolean useNullKey() {
+      return false;
+    }
 
     public void setUp()
     {
-        map = (TreeMap) makeMap();
+        map = (TreeMap) makeEmptyMap();
     }
 
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.11.2.1 2002/02/26 00:51:21 morgand Exp $
- * $Revision: 1.11.2.1 $
- * $Date: 2002/02/26 00:51:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.11.2.2 2002/02/26 06:17:51 morgand Exp $
+ * $Revision: 1.11.2.2 $
+ * $Date: 2002/02/26 06:17:51 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.11.2.1 2002/02/26 00:51:21 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.11.2.2 2002/02/26 06:17:51 morgand Exp $
  */
 public class TestLRUMap extends TestMap
 {
@@ -188,27 +188,6 @@ public class TestLRUMap extends TestMap
 
         assertTrue("map should have size = 3, but actually = " + map.size(), 
                    map.size() == 3);
-    }
-
-
-    public void testExternalizable() throws IOException, ClassNotFoundException {
-        /*
-         * Test object created with this code
-         * Object created from CVS version 1.3 of the LRUMap class
-         *
-        LRUMap map2 = new LRUMap(3);
-        map2.put(new Integer(1),"foo");
-        map2.put(new Integer(4),"bar");
-        map2.put(new Integer(6),"yeah");
-        map2.writeExternal(new ObjectOutputStream(new FileOutputStream("data/test/LRUMapVersion1.obj")));
-         */
-
-        // purposely start me out with a smaller capacity
-        LRUMap map2 = new LRUMap(1);
-        map2.readExternal(new ObjectInputStream(new FileInputStream("data/test/LRUMapVersion1.obj")));
-        assertTrue("Integer(1) equals foo",map2.get(new Integer(1)).equals("foo"));
-        assertTrue("Integer(4) equals bar",map2.get(new Integer(4)).equals("bar"));
-        assertTrue("Integer(6) equals yeah",map2.get(new Integer(6)).equals("yeah"));
     }
 
     /**

@@ -1,7 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.2.2.1 2002/02/26 00:51:21 morgand Exp $
- * $Revision: 1.2.2.1 $
- * $Date: 2002/02/26 00:51:21 $
+<<<<<<< TestTreeMap.java
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.2.2.2 2002/02/26 06:17:51 morgand Exp $
+ * $Revision: 1.2.2.2 $
+ * $Date: 2002/02/26 06:17:51 $
+=======
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.2.2.2 2002/02/26 06:17:51 morgand Exp $
+ * $Revision: 1.2.2.2 $
+ * $Date: 2002/02/26 06:17:51 $
+>>>>>>> 1.5
  *
  * ====================================================================
  *
@@ -69,18 +75,13 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestTreeMap.java,v 1.2.2.1 2002/02/26 00:51:21 morgand Exp $
+ * @version $Id: TestTreeMap.java,v 1.2.2.2 2002/02/26 06:17:51 morgand Exp $
  */
-public class TestTreeMap extends TestMap
+public abstract class TestTreeMap extends TestMap
 {
     public TestTreeMap(String testName)
     {
         super(testName);
-    }
-
-    public static Test suite()
-    {
-        return new TestSuite(TestTreeMap.class);
     }
 
     public static void main(String args[])
@@ -89,9 +90,8 @@ public class TestTreeMap extends TestMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeEmptyMap() {
-        TreeMap tm = new TreeMap();
-        return (tm);
+    public boolean useNullKey() {
+      return false;
     }
 
     protected TreeMap map = null;

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.3.2.1 2002/02/26 00:51:21 morgand Exp $
- * $Revision: 1.3.2.1 $
- * $Date: 2002/02/26 00:51:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.3.2.2 2002/02/26 06:17:51 morgand Exp $
+ * $Revision: 1.3.2.2 $
+ * $Date: 2002/02/26 06:17:51 $
  *
  * ====================================================================
  *
@@ -87,7 +87,7 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.3.2.1 2002/02/26 00:51:21 morgand Exp $
+ * @version $Id: TestMap.java,v 1.3.2.2 2002/02/26 06:17:51 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
 
@@ -959,17 +959,14 @@ public abstract class TestMap extends TestObject {
      * against the canonical version in CVS.
      */
     public void testEmptyMapCompatibility() throws IOException, ClassNotFoundException {
-        /**
-         * Create canonical objects with this code
         Map map = makeEmptyMap();
         if (!(map instanceof Serializable)) return;
         
         writeExternalFormToDisk((Serializable) map, getCanonicalEmptyMapName(map));
-        */
 
         // test to make sure the canonical form has been preserved
         if (!(makeEmptyMap() instanceof Serializable)) return;
-        Map map = (Map) readExternalFormFromDisk(getCanonicalEmptyMapName(makeEmptyMap()));
+        map = (Map) readExternalFormFromDisk(getCanonicalEmptyMapName(makeEmptyMap()));
         assertTrue("Map is empty",map.isEmpty()  == true);
     }
 
@@ -978,17 +975,14 @@ public abstract class TestMap extends TestObject {
      * against the canonical version in CVS.
      */
     public void testFullMapCompatibility() throws IOException, ClassNotFoundException {
-        /**
-         * Create canonical objects with this code
         Map map = makeFullMap();
         if (!(map instanceof Serializable)) return;
         
         writeExternalFormToDisk((Serializable) map, getCanonicalFullMapName(map));
-        */
 
         // test to make sure the canonical form has been preserved
         if (!(makeFullMap() instanceof Serializable)) return;
-        Map map = (Map) readExternalFormFromDisk(getCanonicalFullMapName(makeFullMap()));
+        map = (Map) readExternalFormFromDisk(getCanonicalFullMapName(makeFullMap()));
         assertEquals("Map is the right size",map.size(), getSampleKeys().length);
     }
 

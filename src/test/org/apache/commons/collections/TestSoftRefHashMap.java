@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSoftRefHashMap.java,v 1.1 2001/05/06 11:10:36 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2001/05/06 11:10:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSoftRefHashMap.java,v 1.1.2.1 2002/02/26 06:17:51 morgand Exp $
+ * $Revision: 1.1.2.1 $
+ * $Date: 2002/02/26 06:17:51 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.HashMap;
 
 /**
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @version $Id: TestSoftRefHashMap.java,v 1.1 2001/05/06 11:10:36 jstrachan Exp $
+ * @version $Id: TestSoftRefHashMap.java,v 1.1.2.1 2002/02/26 06:17:51 morgand Exp $
  */
 public class TestSoftRefHashMap extends TestHashMap
 {
@@ -86,13 +86,13 @@ public class TestSoftRefHashMap extends TestHashMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         SoftRefHashMap map = new SoftRefHashMap();
         return map;
     }
 
     public void setUp() {
-        map = (HashMap) makeMap();
+        map = (HashMap) makeEmptyMap();
     }
 
 }
