@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedCollection.java,v 1.5 2003/11/18 22:50:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/Attic/BoundedCollection.java,v 1.1 2003/11/18 22:50:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,9 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.collection;
+
+import java.util.Collection;
 
 /**
  * A BoundedCollection is a collection that is bounded in size.
@@ -64,13 +66,26 @@ package org.apache.commons.collections;
  * maximum number of elements. This interface allows the querying of details
  * associated with the maximum number of elements.
  *
- * @deprecated TO BE DELETED BEFORE v3.0, moved to collection subpackage
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/11/18 22:50:44 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/18 22:50:44 $
  * 
  * @author Herve Quiroz
  * @author Stephen Colebourne
  */
-public interface BoundedCollection extends org.apache.commons.collections.collection.BoundedCollection {
+public interface BoundedCollection extends Collection {
 
+    /**
+     * Returns true if this collection is full and no new elements can be added.
+     *
+     * @return <code>true</code> if the collection is full
+     */
+    boolean isFull();
+    
+    /**
+     * Gets the maximum size of the collection (the bound).
+     *
+     * @return the maximum number of elements the collection can hold
+     */
+    int maxSize();
+    
 }
