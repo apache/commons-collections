@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestInputStreamByteIterator.java,v 1.1 2003/04/15 03:07:49 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/io/Attic/TestInputStreamByteIterator.java,v 1.2 2003/04/15 16:26:15 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,6 +58,8 @@
 package org.apache.commons.collections.primitives.adapters.io;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -66,7 +68,7 @@ import org.apache.commons.collections.primitives.ByteIterator;
 import org.apache.commons.collections.primitives.TestByteIterator;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/15 03:07:49 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/15 16:26:15 $
  * @author Rodney Waldhoff
  */
 public class TestInputStreamByteIterator extends TestByteIterator {
@@ -107,4 +109,33 @@ public class TestInputStreamByteIterator extends TestByteIterator {
 
     // ------------------------------------------------------------------------
     
+    public void testErrorThrowingStream() {
+        InputStream errStream = new InputStream() {
+            public int read() throws IOException {
+                throw new IOException();
+            }
+        };
+        
+        ByteIterator iter = new InputStreamByteIterator(errStream);
+        try {
+            iter.hasNext();
+            fail("Expected RuntimeException");
+        } catch(RuntimeException e) {
+            // expected
+        } 
+        try {
+            iter.next();
+            fail("Expected RuntimeException");
+        } catch(RuntimeException e) {
+            // expected
+        } 
+    }
+    
+    public void testAdaptNull() {
+        assertNull(InputStreamByteIterator.adapt(null));
+    }
+
+    public void testAdaptNonNull() {
+        assertNotNull(InputStreamByteIterator.adapt(new ByteArrayInputStream(new byte[0])));
+    }
 }
