@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.6 2002/02/25 23:51:24 morgand Exp $
- * $Revision: 1.6 $
- * $Date: 2002/02/25 23:51:24 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.7 2002/02/26 17:32:20 morgand Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/02/26 17:32:20 $
  *
  * ====================================================================
  *
@@ -62,6 +62,8 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Collection;
 import java.util.Arrays;
@@ -80,7 +82,7 @@ import java.util.ListIterator;
  * test case (method) your {@link List} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestList.java,v 1.6 2002/02/25 23:51:24 morgand Exp $
+ * @version $Id: TestList.java,v 1.7 2002/02/26 17:32:20 morgand Exp $
  */
 public abstract class TestList extends TestCollection {
     public TestList(String testName) {
@@ -91,6 +93,22 @@ public abstract class TestList extends TestCollection {
      * Return a new, empty {@link List} to used for testing.
      */
     public abstract List makeEmptyList();
+
+    public List makeFullList() {
+        // only works if list supports optional "add(Object)" 
+        // and "add(int,Object)" operations
+        List list = makeEmptyList();
+        list.add("1");
+        // must be able to add to the end this way
+        list.add(list.size(),"4");
+        // must support duplicates
+        list.add("1");
+        // must support insertions
+        list.add(1,"3");
+
+        // resultant list: 1, 3, 4, 1
+        return list;
+    }
 
     public Collection makeCollection() {
         return makeEmptyList();
@@ -780,6 +798,30 @@ public abstract class TestList extends TestCollection {
             fail("List.add should only throw UnsupportedOperationException, ClassCastException, IllegalArgumentException, or IndexOutOfBoundsException. Found " + t.toString());
             return false; // never get here, since fail throws exception
         }
+    }
+
+    public void testEmptyListSerialization() 
+    throws IOException, ClassNotFoundException {
+        List list = makeEmptyList();
+        if (!(list instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) list);
+        List list2 = (List) readExternalFormFromBytes(objekt);
+
+        assertTrue("Both lists are empty",list.size()  == 0);
+        assertTrue("Both lists are empty",list2.size() == 0);
+    }
+
+    public void testFullListSerialization() 
+    throws IOException, ClassNotFoundException {
+        List list = makeFullList();
+        if (!(list instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) list);
+        List list2 = (List) readExternalFormFromBytes(objekt);
+
+        assertEquals("Both lists are same size",list.size(), 4);
+        assertEquals("Both lists are same size",list2.size(),4);
     }
 
 }
