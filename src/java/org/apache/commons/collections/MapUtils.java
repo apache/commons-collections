@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.17 2003/04/04 22:22:29 scolebourne Exp $
- * $Revision: 1.17 $
- * $Date: 2003/04/04 22:22:29 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.18 2003/04/06 19:32:18 scolebourne Exp $
+ * $Revision: 1.18 $
+ * $Date: 2003/04/06 19:32:18 $
  *
  * ====================================================================
  *
@@ -755,6 +755,9 @@ public class MapUtils {
     }
 
     //-----------------------------------------------------------------------
+    /**
+     * Implementation of a map that checks (predicates) additions.
+     */
     static class PredicatedMap 
             extends ProxyMap {
 
@@ -814,7 +817,9 @@ public class MapUtils {
         }
     }
 
-
+    /**
+     * Implementation of an entry set that checks (predicates) additions.
+     */
     static class PredicatedMapEntrySet 
             extends CollectionUtils.CollectionWrapper
             implements Set {
@@ -845,7 +850,9 @@ public class MapUtils {
         }
     }
 
-
+    /**
+     * Implementation of a map entry that checks (predicates) additions.
+     */
     static class PredicatedMapEntry 
             implements Map.Entry {
 
@@ -892,7 +899,9 @@ public class MapUtils {
         }
     }
 
-
+    /**
+     * Implementation of a map that is fixed in size.
+     */
     static class FixedSizeMap 
             extends ProxyMap {
 
@@ -923,7 +932,9 @@ public class MapUtils {
 
     }
 
-
+    /**
+     * Implementation of a map that creates objects on demand.
+     */
     static class LazyMap 
             extends ProxyMap {
 
@@ -952,8 +963,9 @@ public class MapUtils {
 
     }
 
-
-
+    /**
+     * Implementation of a sorted map that checks additions.
+     */
     static class PredicatedSortedMap 
             extends PredicatedMap 
             implements SortedMap {
@@ -998,7 +1010,9 @@ public class MapUtils {
 
     }
 
-
+    /**
+     * Implementation of a sorted map that is fixed in size.
+     */
     static class FixedSizeSortedMap 
             extends FixedSizeMap 
             implements SortedMap {
@@ -1040,7 +1054,9 @@ public class MapUtils {
 
     }
 
-
+    /**
+     * Implementation of a sorted map that creates objects on demand.
+     */
     static class LazySortedMap 
             extends LazyMap 
             implements SortedMap {
