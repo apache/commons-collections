@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.20 2003/10/13 02:48:16 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTypedSortedSet.java,v 1.1 2003/10/13 02:48:16 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,75 +57,92 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Entry point for all collections decorators tests.
- * 
- * @since Commons Collections 3.0
- * @version $Revision: 1.20 $ $Date: 2003/10/13 02:48:16 $
- * 
- * @author Stephen Colebourne
- */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
-        super(testName);
-    }
+import org.apache.commons.collections.AbstractTestSortedSet;
+import org.apache.commons.collections.BulkTest;
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+/**
+ * Extension of {@link AbstractTestSortedSet} for exercising the 
+ * {@link TypedSortedSet} implementation.
+ *
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/10/13 02:48:16 $
+ * 
+ * @author Phil Steitz
+ */
+public class TestTypedSortedSet extends AbstractTestSortedSet{
+    
+    public TestTypedSortedSet(String testName) {
+        super(testName);
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestBlockingBuffer.suite());
-        
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestLazyMap.suite());
-        suite.addTest(TestLazySortedMap.suite());
-        
-        suite.addTest(TestOrderedSet.suite());
-        suite.addTest(TestOrderedMap.suite());
-
-        suite.addTest(TestSetList.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestPredicatedCollection.suite());
-        suite.addTest(TestPredicatedBuffer.suite());
-        suite.addTest(TestPredicatedList.suite());
-        suite.addTest(TestPredicatedSet.suite());
-        suite.addTest(TestPredicatedSortedSet.suite());
-        suite.addTest(TestPredicatedMap.suite());
-        suite.addTest(TestPredicatedSortedMap.suite());
-        
-        suite.addTest(TestTypedBag.suite());
-        suite.addTest(TestTypedSortedBag.suite());
-        suite.addTest(TestTypedSortedSet.suite());
-        
-        suite.addTest(TestUnmodifiableMap.suite());
-        suite.addTest(TestUnmodifiableList.suite());
-        suite.addTest(TestUnmodifiableSortedSet.suite());
-        
-        return suite;
+        return BulkTest.makeSuite(TestTypedSortedSet.class);
     }
-        
+    
+    public static void main(String args[]) {
+        String[] testCaseName = { TestTypedSortedSet.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+    
+ //-------------------------------------------------------------------      
+    protected Class integerType = new Integer(0).getClass();
+    
+    public Set makeEmptySet() {
+        return TypedSortedSet.decorate(new TreeSet(), integerType);
+    }
+    
+    public Set makeFullSet() {
+        TreeSet set = new TreeSet();
+        set.addAll(Arrays.asList(getFullElements()));
+        return TypedSortedSet.decorate(set, integerType);
+    }
+   
+    
+//--------------------------------------------------------------------            
+    protected Long getNextAsLong() {
+        SortedSet set = (SortedSet) makeFullSet();
+        int nextValue = ((Integer)set.last()).intValue() + 1;
+        return new Long(nextValue);
+    }
+    
+    protected Integer getNextAsInt() {
+        SortedSet set = (SortedSet) makeFullSet();
+        int nextValue = ((Integer)set.last()).intValue() + 1;
+        return new Integer(nextValue);
+    }
+           
+    public void testIllegalAdd() {
+        Set set = makeFullSet();
+        try {
+            set.add(getNextAsLong());
+            fail("Should fail type test.");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        assertTrue("Collection shouldn't convert long to int", 
+         !set.contains(getNextAsInt()));   
+    }
+
+    public void testIllegalAddAll() {
+        Set set = makeFullSet();
+        Set elements = new TreeSet();
+        elements.add(getNextAsLong());
+        try {
+            set.addAll(elements);
+            fail("Should fail type test.");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        assertTrue("Collection shouldn't convert long to int", 
+         !set.contains(getNextAsInt()));  
+    }       
 }
