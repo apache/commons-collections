@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.13 2004/01/05 22:46:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.14 2004/01/12 21:41:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,7 +62,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * A {@link Collection} that counts the number of times an object appears in
+ * Defines a collection that counts the number of times an object appears in
  * the collection.
  * <p>
  * Suppose you have a Bag that contains <code>{a, a, b, c}</code>.
@@ -70,14 +70,14 @@ import java.util.Set;
  * calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
  * <p>
  * <i>Note that this interface violates the {@link Collection} contract.</i> 
- * The behavior specified in many of these methods is <I>not</I> the same
- * as the behavior specified by {@link Collection}.  The noncompliant methods
+ * The behavior specified in many of these methods is <i>not</i> the same
+ * as the behavior specified by <code>Collection</code>.  The noncompliant methods
  * are clearly marked with "(Violation)".  A future
- * version of this class will specify the same behavior as {@link Collection},
+ * version of this class will specify the same behavior as <code>Collection</code>,
  * which unfortunately will break backwards compatibility with this version.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.13 $ $Date: 2004/01/05 22:46:33 $
+ * @version $Revision: 1.14 $ $Date: 2004/01/12 21:41:41 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
