@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableList.java,v 1.4 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableList.java,v 1.5 2003/10/13 02:49:40 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import org.apache.commons.collections.IteratorUtils;
  * ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/13 02:49:40 $
  * 
  * @author Stephen Colebourne
  */
@@ -97,7 +97,7 @@ public class UnmodifiableList extends UnmodifiableCollection implements List {
     /**
      * Gets the list being decorated.
      * 
-     * @return the decorated list
+     * @return the list being decorated
      */
     protected List getList() {
         return (List) getCollection();
