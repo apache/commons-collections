@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
@@ -27,14 +31,20 @@ import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>SortedMap</code> to ensure it can't be altered.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/09 10:46:32 $
  * 
  * @author Stephen Colebourne
  */
 public final class UnmodifiableSortedMap
-        extends AbstractSortedMapDecorator implements Unmodifiable {
+        extends AbstractSortedMapDecorator
+        implements Unmodifiable, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 5805344239827376360L;
 
     /**
      * Factory method to create an unmodifiable sorted map.
@@ -58,6 +68,32 @@ public final class UnmodifiableSortedMap
      */
     private UnmodifiableSortedMap(SortedMap map) {
         super(map);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     * @since Commons Collections 3.1
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @since Commons Collections 3.1
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
