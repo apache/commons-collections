@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.13 2002/02/20 20:51:38 morgand Exp $
- * $Revision: 1.13 $
- * $Date: 2002/02/20 20:51:38 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.14 2002/02/20 22:38:46 morgand Exp $
+ * $Revision: 1.14 $
+ * $Date: 2002/02/20 22:38:46 $
  *
  * ====================================================================
  *
@@ -77,7 +77,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.13 2002/02/20 20:51:38 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.14 2002/02/20 22:38:46 morgand Exp $
  */
 public class TestLRUMap extends TestSequencedHashMap
 {
@@ -110,26 +110,6 @@ public class TestLRUMap extends TestSequencedHashMap
         assertTrue("LRU should not exist", map2.get(new Integer(1)) == null);
     }
 
-    public void testMultiplePuts() {
-        LRUMap map2 = new LRUMap(2);
-        map2.put(new Integer(4),"foo");
-        map2.put(new Integer(4),"bar");
-        map2.put(new Integer(4),"foo");
-        map2.put(new Integer(4),"bar");
-
-        assertTrue("same key different value",map2.get(new Integer(4)).equals("bar"));
-    }
-
-    public void testCapacity() {
-        LRUMap map2 = new LRUMap(3);
-        map2.put(new Integer(1),"foo");
-        map2.put(new Integer(2),"foo");
-        map2.put(new Integer(3),"foo");
-        map2.put(new Integer(1),"foo");
-        
-        assertTrue("size of Map should be 3, but was " + map2.size(), map2.size() == 3);
-    }
-
     /**
      * Confirm that putAll(Map) does not cause the LRUMap
      * to exceed its maxiumum size.
@@ -149,19 +129,6 @@ public class TestLRUMap extends TestSequencedHashMap
                    map2.size() == 3);
         assertTrue("map should contain the Integer(4) object",
                    map2.containsKey(new Integer(4)));
-    }
-
-
-    public void testMapSupportsNullValues() {
-        Map map = makeMap();
-        map.put(new Integer(1),"foo");
-        
-        assertTrue("no null values in Map",map.containsValue(null) == false);
-
-        map.put(new Integer(2),null);
-
-        assertTrue("null value in Map",map.containsValue(null));
-        assertTrue("key to a null value",map.containsKey(new Integer(2)));
     }
 
     /**

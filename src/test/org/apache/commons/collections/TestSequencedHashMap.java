@@ -73,7 +73,7 @@ import junit.framework.TestSuite;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */
-public class TestSequencedHashMap extends TestMap
+public class TestSequencedHashMap extends TestMap implements TestMap.SupportsPut
 {
     /**
      * The instance to experiment on.

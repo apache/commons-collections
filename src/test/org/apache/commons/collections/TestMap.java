@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.3 2002/02/15 20:48:18 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/15 20:48:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.4 2002/02/20 22:38:46 morgand Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/20 22:38:46 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.Collection;
  * test case (method) your {@link Map} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.3 2002/02/15 20:48:18 morgand Exp $
+ * @version $Id: TestMap.java,v 1.4 2002/02/20 22:38:46 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
     public TestMap(String testName) {
@@ -92,12 +92,32 @@ public abstract class TestMap extends TestObject {
         return makeMap();
     }
 
-    /*
-
-    // optional operation
-    public void testMapClear() {
-        // XXX finish me
+        /**
+     * Try to put the given pair into the given Collection.
+     *
+     * Fails any Throwable except UnsupportedOperationException,
+     * ClassCastException, or IllegalArgumentException
+     * or NullPointerException is thrown.
+     */
+    protected Object tryToPut(Map map, Object key, Object val) {
+        try {
+            return map.put(key,val);
+        } catch(UnsupportedOperationException e) {
+            return null;
+        } catch(ClassCastException e) {
+            return null;
+        } catch(IllegalArgumentException e) {
+            return null;
+        } catch(NullPointerException e) {
+            return null;
+        } catch(Throwable t) {
+            t.printStackTrace();
+            fail("Map.put should only throw UnsupportedOperationException, ClassCastException, IllegalArgumentException or NullPointerException. Found " + t.toString());
+            return null; // never get here, since fail throws exception
+        }
     }
+
+    /*
 
     public void testMapContainsKey() {
         // XXX finish me
@@ -130,6 +150,64 @@ public abstract class TestMap extends TestObject {
     public void testMapKeySet() {
         // XXX finish me
     }
+    
+    */
+    
+    //-------TEST AGAINST OPTIONAL OPERATIONS, ENABLE IN TEST SUBCLASSES
+
+    public void testMapSupportsNullValues() {
+
+        if ((this instanceof TestMap.SupportsPut) == false) {
+            return;
+        }
+
+        Map map = makeMap();
+        map.put(new Integer(1),"foo");
+        
+        assertTrue("no null values in Map",map.containsValue(null) == false);
+
+        map.put(new Integer(2),null);
+
+        assertTrue("null value in Map",map.containsValue(null));
+        assertTrue("key to a null value",map.containsKey(new Integer(2)));
+    }
+
+    public void testMultiplePuts() {
+
+        if ((this instanceof TestMap.SupportsPut) == false) {
+            return;
+        }
+
+        Map map = makeMap();
+        map.put(new Integer(4),"foo");
+        map.put(new Integer(4),"bar");
+        map.put(new Integer(4),"foo");
+        map.put(new Integer(4),"bar");
+
+        assertTrue("same key different value",map.get(new Integer(4)).equals("bar"));
+    }
+
+
+    public void testCapacity() {
+
+        if ((this instanceof TestMap.SupportsPut) == false) {
+            return;
+        }
+
+        Map map = makeMap();
+        map.put(new Integer(1),"foo");
+        map.put(new Integer(2),"foo");
+        map.put(new Integer(3),"foo");
+        map.put(new Integer(1),"foo");
+        
+        assertTrue("size of Map should be 3, but was " + map.size(), map.size() == 3);
+    }
+
+    /*
+        // optional operation
+public void testMapClear() {
+    // XXX finish me
+}
 
     // optional operation
     public void testMapPut() {
@@ -157,27 +235,11 @@ public abstract class TestMap extends TestObject {
     */
 
     /**
-     * Try to put the given pair into the given Collection.
-     *
-     * Fails any Throwable except UnsupportedOperationException,
-     * ClassCastException, or IllegalArgumentException
-     * or NullPointerException is thrown.
+     * Marker interface, indicating that a TestMap subclass
+     * can test put(Object,Object) operations.
      */
-    protected Object tryToPut(Map map, Object key, Object val) {
-        try {
-            return map.put(key,val);
-        } catch(UnsupportedOperationException e) {
-            return null;
-        } catch(ClassCastException e) {
-            return null;
-        } catch(IllegalArgumentException e) {
-            return null;
-        } catch(NullPointerException e) {
-            return null;
-        } catch(Throwable t) {
-            t.printStackTrace();
-            fail("Map.put should only throw UnsupportedOperationException, ClassCastException, IllegalArgumentException or NullPointerException. Found " + t.toString());
-            return null; // never get here, since fail throws exception
-        }
+    public interface SupportsPut {
+
     }
+
 }
