@@ -67,7 +67,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.51 $ $Date: 2004/12/19 16:56:30 $
+ * @version $Revision: 1.52 $ $Date: 2004/12/24 11:03:44 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -1220,20 +1220,6 @@ public class MapUtils {
      */
     public static Map unmodifiableMap(Map map) {
         return UnmodifiableMap.decorate(map);
-    }
-    
-    /**
-     * Returns an unmodifiable copy of the map.
-     * @param map  the map to make an unmodifiable copy of, must not be null
-     * @return an unmodifiable map backed by the given map
-     * @throws IllegalArgumentException  if the map is null
-     */
-    public static Map unmodifiableMapCopy(Map map) {
-        if (map == null) throw new IllegalArgumentException("null not permitted.");
-        
-        Map copy = new HashMap(map.size(), 1.0f);
-        copy.putAll(map);
-        return MapUtils.unmodifiableMap(copy);
     }
 
     /**

@@ -27,7 +27,7 @@ import org.apache.commons.collections.list.PredicatedList;
 /**
  * Tests for ListUtils.
  * 
- * @version $Revision: 1.21 $ $Date: 2004/12/19 16:56:31 $
+ * @version $Revision: 1.22 $ $Date: 2004/12/24 11:03:45 $
  * 
  * @author Stephen Colebourne
  * @author Neil O'Toole
@@ -134,31 +134,6 @@ public class TestListUtils extends BulkTest {
         a.clear();
         assertEquals(false, ListUtils.hashCodeForList(a) == ListUtils.hashCodeForList(b));
         assertEquals(0, ListUtils.hashCodeForList(null));
-    }
-    
-    public void testUnmodifiableListCopy() {
-        List list = new ArrayList();
-        list.add("a");
-        List copy = ListUtils.unmodifiableListCopy(list);
-
-        assertTrue(copy instanceof Unmodifiable);
-        assertTrue(list.equals(copy));
-        list.clear();
-        assertTrue(copy.isEmpty() == false);
-
-        try {
-            copy.clear();
-            fail("should be unmodifiable.");
-        } catch (UnsupportedOperationException uoe) {
-            // this is what we want
-        }
-        
-        try {
-            list = ListUtils.unmodifiableListCopy(null);
-            fail("expecting IllegalArgumentException");
-        } catch (IllegalArgumentException iae) {
-            // this is what we want
-        }
     }
     
     public void testRetainAll() {

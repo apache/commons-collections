@@ -38,7 +38,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.64 $ $Date: 2004/12/19 16:56:30 $
+ * @version $Revision: 1.65 $ $Date: 2004/12/24 11:03:45 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -1047,23 +1047,6 @@ public class CollectionUtils {
      */
     public static Collection unmodifiableCollection(Collection collection) {
         return UnmodifiableCollection.decorate(collection);
-    }
-
-    /**
-     * Returns an unmodifiable copy of the collection.
-     * <p>
-     * This method uses the implementation in the decorators subpackage.
-     * 
-     * @param collection the <code>Collection</code> to copy.
-     * @return an unmodifiable <code>Collection</code>.
-     * @throws IllegalArgumentException if collection is null
-     */
-    public static Collection unmodifiableCollectionCopy(final Collection collection){
-        if (collection == null) throw new IllegalArgumentException("null not permitted.");
-        
-        final Collection copy = new ArrayList(collection.size());
-        copy.addAll(collection);
-        return UnmodifiableCollection.decorate(copy);
     }
 
     /**

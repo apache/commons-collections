@@ -33,7 +33,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.30 $ $Date: 2004/12/19 16:56:30 $
+ * @version $Revision: 1.31 $ $Date: 2004/12/24 11:03:45 $
  * 
  * @author Federico Barbieri
  * @author Peter Donald
@@ -258,23 +258,6 @@ public class ListUtils {
         return UnmodifiableList.decorate(list);
     }
 
-    
-    /**
-     * Returns an unmodifiable list copy of the collection.
-     * <p>
-     * This method uses the unmodifiable list implementation in the decorators subpackage.
-     * @param collection the <code>Collection</code> to copy.
-     * @return an unmodifiable <code>List</code>.
-     * @throws IllegalArgumentException if collection is null.
-     */
-    public static List unmodifiableListCopy(final Collection collection) {
-        if (collection == null) throw new IllegalArgumentException("null not permitted.");
-        
-        final List copy = new ArrayList(collection.size());
-        copy.addAll(collection);
-        return UnmodifiableList.decorate(copy);
-    }
-    
     /**
      * Returns a predicated (validating) list backed by the given list.
      * <p>

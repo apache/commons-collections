@@ -51,7 +51,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Steven Melzer
  * @author Neil O'Toole
  * 
- * @version $Revision: 1.43 $ $Date: 2004/12/19 16:56:31 $
+ * @version $Revision: 1.44 $ $Date: 2004/12/24 11:03:45 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -1194,29 +1194,6 @@ public class TestCollectionUtils extends TestCase {
         } catch (IllegalArgumentException ex) {
             // expected
         }  
-    }
-    
-    public void testUnmodifiableCollectionCopy() {
-        Collection collection = new ArrayList();
-        collection.add("a");
-        Collection copy = CollectionUtils.unmodifiableCollectionCopy(collection);
-
-        assertTrue(copy instanceof Unmodifiable);
-        assertTrue(CollectionUtils.isEqualCollection(collection, copy));
-        collection.clear();
-        assertTrue(copy.isEmpty() == false);
-
-        try {
-			copy.clear();
-			fail("should be unmodifiable.");
-		} catch (UnsupportedOperationException uoe) {
-		} // this is what we want
-
-		try {
-			copy = CollectionUtils.unmodifiableCollectionCopy(null);
-			fail("should throw IllegalArgumentException");
-		} catch (IllegalArgumentException iae) {
-		}
     }
     
 }
