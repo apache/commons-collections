@@ -12,6 +12,10 @@ import java.util.NoSuchElementException;
 
 /** A Proxy {@link Iterator Iterator} which takes a {@link Predicate Predicate} instance to filter
   * out objects from an underlying {@link Iterator Iterator} instance.
+  * out objects from an underlying {@link Iterator Iterator} instance.
+  * Only objects for which the
+  * specified <code>Predicate</code> evaluates to <code>true</code> are
+  * returned.
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Jan Sorensen
@@ -41,6 +45,8 @@ public class FilterIterator extends ProxyIterator {
 
     // Iterator interface
     //-------------------------------------------------------------------------
+    
+    /** @return true if there is another object that matches the given predicate */
     public boolean hasNext() {
         if ( nextObjectSet ) {
             return true;
@@ -49,6 +55,7 @@ public class FilterIterator extends ProxyIterator {
         }
     }
 
+    /** @return the next object which matches the given predicate */
     public Object next() {
         if ( !nextObjectSet ) {
             if (!setNextObject()) {
