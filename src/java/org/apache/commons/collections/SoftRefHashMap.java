@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SoftRefHashMap.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SoftRefHashMap.java,v 1.5 2002/08/12 18:24:33 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/12 18:24:33 $
  *
  * ====================================================================
  *
@@ -86,6 +86,9 @@ import java.util.*;
   * @since 1.0
   * @author  James.Dodd
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+  * @deprecated  This class is all kinds of wonky; use ReferenceMap instead.
+  * @see <A HREF="http://issues.apache.org/bugzilla/show_bug.cgi?id=9571">
+  *  Bug#9571</A>
   */
 public class SoftRefHashMap implements Map {
     
