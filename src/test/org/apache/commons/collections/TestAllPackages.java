@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAllPackages.java,v 1.2 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAllPackages.java,v 1.3 2003/09/07 16:49:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections project tests.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/07 16:49:41 $
  * 
  * @author Stephen Colebourne
  */
@@ -79,6 +79,7 @@ public class TestAllPackages extends TestCase {
         suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
         suite.addTest(org.apache.commons.collections.decorators.TestAll.suite());
         suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.observed.TestAll.suite());
         suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
         return suite;
     }
