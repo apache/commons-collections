@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.9 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.10 2003/10/29 23:21:39 ggregory Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import java.util.Set;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.9 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.10 $ $Date: 2003/10/29 23:21:39 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg
@@ -919,7 +919,7 @@ public class PredicateUtils {
             }
             return iPredicate.evaluate(object);
         }
-    };
+    }
 
     // NullIsFalsePredicate
     //----------------------------------------------------------------------------------
@@ -948,7 +948,7 @@ public class PredicateUtils {
             }
             return iPredicate.evaluate(object);
         }
-    };
+    }
 
     // NullIsTruePredicate
     //----------------------------------------------------------------------------------
@@ -977,6 +977,6 @@ public class PredicateUtils {
             }
             return iPredicate.evaluate(object);
         }
-    };
+    }
 
 }
