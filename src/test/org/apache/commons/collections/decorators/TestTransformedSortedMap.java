@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedMap.java,v 1.4 2003/10/06 23:44:23 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedSortedMap.java,v 1.5 2003/10/31 01:26:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,16 +62,16 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import junit.framework.Test;
-import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestSortedMap;
+import org.apache.commons.collections.BulkTest;
 
 /**
  * Extension of {@link AbstractTestSortedMap} for exercising the {@link TransformedSortedMap}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/10/06 23:44:23 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/31 01:26:25 $
  * 
  * @author Stephen Colebourne
  */
@@ -82,7 +82,7 @@ public class TestTransformedSortedMap extends AbstractTestSortedMap {
     }
 
     public static Test suite() {
-        return new TestSuite(TestTransformedSortedMap.class);
+        return BulkTest.makeSuite(TestTransformedSortedMap.class);
     }
 
     public static void main(String args[]) {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.52 2003/10/31 01:26:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestDualTreeBidiMap.java,v 1.1 2003/10/31 01:26:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,70 +58,39 @@
 package org.apache.commons.collections;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.textui.TestRunner;
 
 /**
- * Entry point for all Collections package tests.
+ * JUnit tests.
  * 
- * @version $Revision: 1.52 $ $Date: 2003/10/31 01:26:25 $
+ * @version $Revision: 1.1 $ $Date: 2003/10/31 01:26:25 $
  * 
- * @author Rodney Waldhoff
+ * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestDualTreeBidiMap extends AbstractTestSortedBidiMap {
+
+    public static void main(String[] args) {
+        TestRunner.run(suite());
+    }
+    
+    public static Test suite() {
+        return BulkTest.makeSuite(TestDualTreeBidiMap.class);
+    }
+
+    public TestDualTreeBidiMap(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestBagUtils.suite());
-        suite.addTest(TestClosureUtils.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestBufferUtils.suite());
-        suite.addTest(TestFactoryUtils.suite());
-        suite.addTest(TestListUtils.suite());
-        suite.addTest(TestMapUtils.suite());
-        suite.addTest(TestPredicateUtils.suite());
-        suite.addTest(TestSetUtils.suite());
-        suite.addTest(TestTransformerUtils.suite());
-        
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestBinaryHeap.suite());
-        suite.addTest(TestBoundedFifoBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCircularFifoBuffer.suite());
-        suite.addTest(TestCommonsLinkedList.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestDualHashBidiMap.suite());
-        suite.addTest(TestDualTreeBidiMap.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestIteratorUtils.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestMultiKey.suite());
-        suite.addTest(TestNodeCachingLinkedList.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
-        suite.addTest(TestEnumerationUtils.suite());
-        return suite;
+    protected BidiMap makeEmptyBidiMap() {
+        return new DualTreeBidiMap();
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    /**
+     * Override to prevent infinite recursion of tests.
+     */
+    protected String[] ignoredTests() {
+        return new String[] {"TestDualTreeBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }
+    
 }

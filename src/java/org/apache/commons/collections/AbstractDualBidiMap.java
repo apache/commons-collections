@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.4 2003/10/29 00:06:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.5 2003/10/31 01:26:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.4 2003/10/29 00:06:25 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.5 2003/10/31 01:26:25 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -93,6 +93,10 @@ public abstract class AbstractDualBidiMap implements BidiMap {
      * View of the keys.
      */
     protected transient Set keySet = null;
+    /**
+     * View of the values.
+     */
+    protected transient Collection values = null;
     /**
      * View of the entries.
      */
@@ -248,7 +252,10 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     }
 
     public Collection values() {
-        return inverseBidiMap().keySet();
+        if (values == null) {
+            values = new Values(this);
+        }
+        return values;
     }
 
     public Set entrySet() {
@@ -304,12 +311,13 @@ public abstract class AbstractDualBidiMap implements BidiMap {
             }
             return modified;
         }
-
+        
         public void clear() {
             map.clear();
         }
     }
     
+    //-----------------------------------------------------------------------
     /**
      * Inner class KeySet.
      */
@@ -323,8 +331,12 @@ public abstract class AbstractDualBidiMap implements BidiMap {
             return new KeySetIterator(super.iterator(), map);
         }
         
+        public boolean contains(Object key) {
+            return map.maps[0].containsKey(key);
+        }
+
         public boolean remove(Object key) {
-            if (contains(key)) {
+            if (map.maps[0].containsKey(key)) {
                 Object value = map.maps[0].remove(key);
                 map.maps[1].remove(value);
                 return true;
@@ -339,7 +351,7 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     protected static class KeySetIterator extends AbstractIteratorDecorator {
         
         private final AbstractDualBidiMap map;
-        private Object last = null;
+        private Object lastKey = null;
         private boolean canRemove = false;
         
         protected KeySetIterator(Iterator iterator, AbstractDualBidiMap map) {
@@ -348,23 +360,83 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         }
         
         public Object next() {
-            last = super.next();
+            lastKey = super.next();
             canRemove = true;
-            return last;
+            return lastKey;
         }
         
         public void remove() {
             if (canRemove == false) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
-            Object value = map.maps[0].get(last);
+            Object value = map.maps[0].get(lastKey);
             super.remove();
             map.maps[1].remove(value);
-            last = null;
+            lastKey = null;
             canRemove = false;
         }
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Inner class Values.
+     */
+    protected static class Values extends View implements Set {
+        
+        protected Values(AbstractDualBidiMap map) {
+            super(map.maps[0].values(), map);
+        }
+
+        public Iterator iterator() {
+            return new ValuesIterator(super.iterator(), map);
+        }
+        
+        public boolean contains(Object value) {
+            return map.maps[1].containsKey(value);
+        }
+
+        public boolean remove(Object value) {
+            if (map.maps[1].containsKey(value)) {
+                Object key = map.maps[1].remove(value);
+                map.maps[0].remove(key);
+                return true;
+            }
+            return false;
+        }
+    }
+    
+    /**
+     * Inner class ValuesIterator.
+     */
+    protected static class ValuesIterator extends AbstractIteratorDecorator {
+        
+        private final AbstractDualBidiMap map;
+        private Object lastValue = null;
+        private boolean canRemove = false;
+        
+        protected ValuesIterator(Iterator iterator, AbstractDualBidiMap map) {
+            super(iterator);
+            this.map = map;
+        }
+        
+        public Object next() {
+            lastValue = super.next();
+            canRemove = true;
+            return lastValue;
+        }
+        
+        public void remove() {
+            if (canRemove == false) {
+                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+            }
+            super.remove(); // removes from maps[0]
+            map.maps[1].remove(lastValue);
+            lastValue = null;
+            canRemove = false;
+        }
+    }
+
+    //-----------------------------------------------------------------------
     /**
      * Inner class EntrySet.
      */
