@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestShortArrayList.java,v 1.6 2003/01/12 15:23:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestShortArrayList.java,v 1.7 2003/04/11 22:01:25 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,8 +63,9 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.6 $ $Date: 2003/01/12 15:23:20 $
+ * @version $Revision: 1.7 $ $Date: 2003/04/11 22:01:25 $
  * @author Rodney Waldhoff
+ * @deprecated since the tested class is also.
  */
 public class TestShortArrayList extends TestAbstractShortArrayList {
 

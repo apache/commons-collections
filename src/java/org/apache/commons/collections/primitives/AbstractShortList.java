@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortList.java,v 1.5 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortList.java,v 1.6 2003/04/11 22:01:25 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -81,8 +81,9 @@ import java.util.AbstractList;
  * {@link #removeShortAt(int)} and {@link #clear()} methods.  You may want 
  * to override the other methods to increase performance.<P>
  *
- * @version $Revision: 1.5 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.6 $ $Date: 2003/04/11 22:01:25 $
  * @author Rodney Waldhoff 
+ * @deprecated See {@link ShortList}.
  */
 public abstract class AbstractShortList extends AbstractList {
 
