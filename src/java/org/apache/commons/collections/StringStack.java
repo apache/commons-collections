@@ -57,14 +57,20 @@ package org.apache.commons.collections;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Stack;
-
 /**
  * This class implements a stack for String objects.
- *
+ * <p>
+ * This class provides a way to collect a list of unique strings and join
+ * them with an optional separator.
+ * 
+ * @deprecated This class is not a Stack, it is a String utility. As such
+ * it is deprecated in favour of the <code>StringUtils</code> class in 
+ * the <code>[lang]</code> project.
  * @since 2.0
  * @author <a href="mailto:jmcnally@collab.net">John D. McNally</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
- * @version $Id: StringStack.java,v 1.2 2002/06/12 03:59:15 mas Exp $
+ * @author Stephen Colebourne
+ * @version $Id: StringStack.java,v 1.3 2002/10/13 11:17:57 scolebourne Exp $
  */
 public class StringStack implements Serializable
 {
