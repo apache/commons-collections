@@ -23,14 +23,14 @@ import java.util.Comparator;
  * to its {@link #compare(Object, Object) compare} method.
  * 
  * @since Commons Collections 2.0
- * @version $Revision: 1.19 $ $Date: 2004/05/15 13:24:11 $
+ * @version $Revision: 1.20 $ $Date: 2004/05/16 11:49:24 $
  *
  * @author Henri Yandell
  * @author Michael A. Smith
  * 
  * @see java.util.Collections#reverseOrder()
  */
-public class ReverseComparator implements Comparator,Serializable {
+public class ReverseComparator implements Comparator, Serializable {
 
     /** Serialization version from Collections 2.0. */
     private static final long serialVersionUID = 2858887242028539265L;

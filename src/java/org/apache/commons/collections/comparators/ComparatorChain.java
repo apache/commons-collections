@@ -51,9 +51,9 @@ import java.util.List;
  * 
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision: 1.17 $ $Date: 2004/05/15 13:24:11 $
+ * @version $Revision: 1.18 $ $Date: 2004/05/16 11:48:49 $
  */
-public class ComparatorChain implements Comparator,Serializable {
+public class ComparatorChain implements Comparator, Serializable {
 
     /** Serialization version from Collections 2.0. */
     private static final long serialVersionUID = -721644942746081630L;
