@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.52 2003/11/22 12:06:34 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.53 2003/11/26 02:26:42 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -35,8 +35,8 @@
 
    <!-- patternset describing test framework classes -->
    <patternset id="patternset-testframework-source">
-      <include name="**/AbstractTest*.class"/>
-      <include name="**/BulkTest*.class"/>
+      <include name="**/AbstractTest*.java"/>
+      <include name="**/BulkTest*.java"/>
    </patternset>
 
    <!-- patternset describing test framework source not dependent on collections jar -->
@@ -244,14 +244,10 @@
       <!-- copy all the relevant sources out to the work directory and javadoc that -->
       <mkdir dir="${workdir}"/>
       <copy todir="${workdir}">
-        <fileset dir="${source.src}">
+        <fileset dir="${source.src}/test">
           <patternset refid="patternset-testframework-source"/>
         </fileset>
       </copy>
-      <copy todir="${workdir}"><fileset dir="${workdir}/java" /></copy>
-      <copy todir="${workdir}"><fileset dir="${workdir}/test" /></copy>
-      <delete dir="${workdir}/java"/>
-      <delete dir="${workdir}/test"/>
       <mkdir dir="${dest.doc.testframework}"/>
       <javadoc packagenames="org.*"
                sourcepath="${workdir}"
