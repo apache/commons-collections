@@ -35,7 +35,7 @@
   <property name="component.title.full"    value="Apache Jakarta Commons Collections"/>
 
   <!-- The current version number of this component -->
-  <property name="component.version"       value="3.1-dev"/>
+  <property name="component.version"       value="3.1-RC1"/>
 
   <!-- The base directory for component configuration files -->
   <property name="source.conf"               value="src/conf"/>
@@ -583,7 +583,7 @@
 
   <target name="clirr">
     <property name="jar.baseline" value="commons-collections-2.1.1.jar" />
-    <property name="jar.current" value="commons-collections-3.1-dev.jar" />
+    <property name="jar.current" value="commons-collections-3.1.jar" />
 
     <taskdef resource="clirrtask.properties">
       <classpath path="/clirr/clirr-0.3.jar;/clirr/bcel-5.1.jar;" />
