@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.8 2003/12/07 23:59:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ListOrderedMap.java,v 1.9 2003/12/28 22:45:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,6 +74,7 @@ import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.ResettableIterator;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections.keyvalue.AbstractMapEntry;
+import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
  * Decorates a <code>Map</code> to ensure that the order of addition is retained.
@@ -82,12 +83,13 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntry;
  * The order is also returned by the <code>MapIterator</code>.
  * The <code>orderedMapIterator()</code> method accesses an iterator that can
  * iterate both forwards and backwards through the map.
+ * In addition, non-interface methods are provided to access the map by index.
  * <p>
  * If an object is added to the Map for a second time, it will remain in the
  * original position in the iteration.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/12/07 23:59:13 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/28 22:45:47 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -260,6 +262,70 @@ public class ListOrderedMap extends AbstractMapDecorator implements OrderedMap {
         }
         buf.append('}');
         return buf.toString();
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the key at the specified index.
+     * 
+     * @param index  the index to retrieve
+     * @return the key at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    public Object get(int index) {
+        return insertOrder.get(index);
+    }
+    
+    /**
+     * Gets the value at the specified index.
+     * 
+     * @param index  the index to retrieve
+     * @return the key at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    public Object getValue(int index) {
+        return get(insertOrder.get(index));
+    }
+    
+    /**
+     * Gets the index of the specified key.
+     * 
+     * @param key  the key to find the index of
+     * @return the index, or -1 if not found
+     */
+    public int indexOf(Object key) {
+        return insertOrder.indexOf(key);
+    }
+
+    /**
+     * Removes the element at the specified index.
+     *
+     * @param index  the index of the object to remove
+     * @return the previous value corresponding the <code>key</code>,
+     *  or <code>null</code> if none existed
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    public Object remove(int index) {
+        return remove(get(index));
+    }
+
+    /**
+     * Gets an unmodifiable List view of the keys which changes as the map changes.
+     * <p>
+     * The returned list is unmodifiable because changes to the values of
+     * the list (using {@link java.util.ListIterator#set(Object)}) will
+     * effectively remove the value from the list and reinsert that value at
+     * the end of the list, which is an unexpected side effect of changing the
+     * value of a list.  This occurs because changing the key, changes when the
+     * mapping is added to the map and thus where it appears in the list.
+     * <p>
+     * An alternative to this method is to use {@link #keySet()}.
+     *
+     * @see #keySet()
+     * @return The ordered list of keys.  
+     */
+    public List asList() {
+        return UnmodifiableList.decorate(insertOrder);
     }
 
     //-----------------------------------------------------------------------

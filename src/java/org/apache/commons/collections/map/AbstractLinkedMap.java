@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractLinkedMap.java,v 1.2 2003/12/25 01:09:01 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractLinkedMap.java,v 1.3 2003/12/28 22:45:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -98,7 +98,7 @@ import org.apache.commons.collections.ResettableIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/25 01:09:01 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/28 22:45:47 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -251,6 +251,37 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
 
     //-----------------------------------------------------------------------    
     /**
+     * Gets the key at the specified index.
+     * 
+     * @param index  the index to retrieve
+     * @return the key at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    protected LinkEntry getEntry(int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index " + index + " is less than zero");
+        }
+        if (index >= size) {
+            throw new IndexOutOfBoundsException("Index " + index + " is invalid for size " + size);
+        }
+        LinkEntry entry;
+        if (index < (size / 2)) {
+            // Search forwards
+            entry = header.after;
+            for (int currentIndex = 0; currentIndex < index; currentIndex++) {
+                entry = entry.after;
+            }
+        } else {
+            // Search backwards
+            entry = header;
+            for (int currentIndex = size; currentIndex > index; currentIndex--) {
+                entry = entry.before;
+            }
+        }
+        return entry;
+    }
+    
+    /**
      * Adds an entry into this map, maintaining insertion order.
      * <p>
      * This implementation adds the entry to the data storage table and
@@ -342,7 +373,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     /**
      * MapIterator implementation.
      */
-    protected static class LinkMapIterator extends LinkIterator implements OrderedMapIterator {
+    static class LinkMapIterator extends LinkIterator implements OrderedMapIterator {
         
         LinkMapIterator(AbstractLinkedMap map) {
             super(map);
@@ -398,7 +429,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     /**
      * EntrySet iterator.
      */
-    protected static class EntrySetIterator extends LinkIterator {
+    static class EntrySetIterator extends LinkIterator {
         
         EntrySetIterator(AbstractLinkedMap map) {
             super(map);
@@ -430,7 +461,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     /**
      * KeySet iterator.
      */
-    protected static class KeySetIterator extends EntrySetIterator {
+    static class KeySetIterator extends EntrySetIterator {
         
         KeySetIterator(AbstractLinkedMap map) {
             super(map);
@@ -462,7 +493,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     /**
      * Values iterator.
      */
-    protected static class ValuesIterator extends LinkIterator {
+    static class ValuesIterator extends LinkIterator {
         
         ValuesIterator(AbstractLinkedMap map) {
             super(map);
@@ -479,27 +510,41 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     
     //-----------------------------------------------------------------------
     /**
-     * LinkEntry
+     * LinkEntry that stores the data.
      */
     protected static class LinkEntry extends HashEntry {
         
+        /** The entry before this one in the order */
         protected LinkEntry before;
+        /** The entry after this one in the order */
         protected LinkEntry after;
         
+        /**
+         * Constructs a new entry.
+         * 
+         * @param next  the next entry in the hash bucket sequence
+         * @param hashCode  the hash code
+         * @param key  the key
+         * @param value  the value
+         */
         protected LinkEntry(HashEntry next, int hashCode, Object key, Object value) {
             super(next, hashCode, key, value);
         }
     }
     
     /**
-     * Base Iterator
+     * Base Iterator that iterates in link order.
      */
     protected static abstract class LinkIterator
             implements OrderedIterator, ResettableIterator {
                 
+        /** The parent map */
         protected final AbstractLinkedMap map;
+        /** The current (last returned) entry */
         protected LinkEntry current;
+        /** The next entry */
         protected LinkEntry next;
+        /** The modification count expected */
         protected int expectedModCount;
         
         protected LinkIterator(AbstractLinkedMap map) {
@@ -512,7 +557,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
         public boolean hasNext() {
             return (next != map.header);
         }
-
+        
         public boolean hasPrevious() {
             return (next.before != map.header);
         }

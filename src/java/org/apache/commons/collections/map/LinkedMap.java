@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.5 2003/12/28 17:58:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.6 2003/12/28 22:45:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,16 +61,26 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
+import org.apache.commons.collections.iterators.UnmodifiableListIterator;
+import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
  * A <code>Map</code> implementation that maintains the order of the entries.
- * In this implementation order is maintained is by original insertion.
+ * In this implementation order is maintained by original insertion.
  * <p>
  * This implementation improves on the JDK1.4 LinkedHashMap by adding the 
  * {@link org.apache.commons.collections.MapIterator MapIterator}
  * functionality, additional convenience methods and allowing
  * bidirectional iteration. It also implements <code>OrderedMap</code>.
+ * In addition, non-interface methods are provided to access the map by index.
  * <p>
  * The <code>orderedMapIterator()</code> method provides direct access to a
  * bidirectional iterator. The iterators from the other views can also be cast
@@ -83,7 +93,7 @@ import java.util.Map;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/28 17:58:54 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/28 22:45:47 $
  *
  * @author Stephen Colebourne
  */
@@ -156,6 +166,157 @@ public class LinkedMap extends AbstractLinkedMap implements Serializable, Clonea
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the key at the specified index.
+     * 
+     * @param index  the index to retrieve
+     * @return the key at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    public Object get(int index) {
+        return getEntry(index).getKey();
+    }
+    
+    /**
+     * Gets the value at the specified index.
+     * 
+     * @param index  the index to retrieve
+     * @return the key at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    public Object getValue(int index) {
+        return getEntry(index).getValue();
+    }
+    
+    /**
+     * Gets the index of the specified key.
+     * 
+     * @param key  the key to find the index of
+     * @return the index, or -1 if not found
+     */
+    public int indexOf(Object key) {
+        key = convertKey(key);
+        int i = 0;
+        for (LinkEntry entry = header.after; entry != header; entry = entry.after, i++) {
+            if (isEqualKey(key, entry.key)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Removes the element at the specified index.
+     *
+     * @param index  the index of the object to remove
+     * @return the previous value corresponding the <code>key</code>,
+     *  or <code>null</code> if none existed
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    public Object remove(int index) {
+        return remove(get(index));
+    }
+
+    /**
+     * Gets an unmodifiable List view of the keys.
+     * <p>
+     * The returned list is unmodifiable because changes to the values of
+     * the list (using {@link java.util.ListIterator#set(Object)}) will
+     * effectively remove the value from the list and reinsert that value at
+     * the end of the list, which is an unexpected side effect of changing the
+     * value of a list.  This occurs because changing the key, changes when the
+     * mapping is added to the map and thus where it appears in the list.
+     * <p>
+     * An alternative to this method is to use {@link #keySet()}.
+     *
+     * @see #keySet()
+     * @return The ordered list of keys.  
+     */
+    public List asList() {
+        return new LinkedMapList(this);
+    }
+
+    /**
+     * List view of map.
+     */
+    static class LinkedMapList extends AbstractList {
+        
+        final LinkedMap parent;
+        
+        LinkedMapList(LinkedMap parent) {
+            this.parent = parent;
+        }
+        
+        public int size() {
+            return parent.size();
+        }
+    
+        public Object get(int index) {
+            return parent.get(index);
+        }
+        
+        public boolean contains(Object obj) {
+            return parent.containsKey(obj);
+        }
+
+        public int indexOf(Object obj) {
+            return parent.indexOf(obj);
+        }
+        
+        public int lastIndexOf(Object obj) {
+            return parent.indexOf(obj);
+        }
+        
+        public boolean containsAll(Collection coll) {
+            return parent.keySet().containsAll(coll);
+        }
+        
+        public Object remove(int index) {
+            throw new UnsupportedOperationException();
+        }
+        
+        public boolean remove(Object obj) {
+            throw new UnsupportedOperationException();
+        }
+        
+        public boolean removeAll(Collection coll) {
+            throw new UnsupportedOperationException();
+        }
+        
+        public boolean retainAll(Collection coll) {
+            throw new UnsupportedOperationException();
+        }
+        
+        public void clear() {
+            throw new UnsupportedOperationException();
+        }
+        
+        public Object[] toArray() {
+            return parent.keySet().toArray();
+        }
+
+        public Object[] toArray(Object[] array) {
+            return parent.keySet().toArray(array);
+        }
+        
+        public Iterator iterator() {
+            return UnmodifiableIterator.decorate(parent.keySet().iterator());
+        }
+        
+        public ListIterator listIterator() {
+            return UnmodifiableListIterator.decorate(super.listIterator());
+        }
+        
+        public ListIterator listIterator(int fromIndex) {
+            return UnmodifiableListIterator.decorate(super.listIterator(fromIndex));
+        }
+        
+        public List subList(int fromIndexInclusive, int toIndexExclusive) {
+            return UnmodifiableList.decorate(super.subList(fromIndexInclusive, toIndexExclusive));
+        }
     }
     
 }
