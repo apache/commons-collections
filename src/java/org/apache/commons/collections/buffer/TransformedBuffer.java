@@ -28,7 +28,7 @@ import org.apache.commons.collections.collection.TransformedCollection;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/15 12:33:23 $
  * 
  * @author Stephen Colebourne
  */
@@ -42,6 +42,7 @@ public class TransformedBuffer extends TransformedCollection implements Buffer {
      * 
      * @param buffer  the buffer to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed Buffer
      * @throws IllegalArgumentException if buffer or transformer is null
      */
     public static Buffer decorate(Buffer buffer, Transformer transformer) {

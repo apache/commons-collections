@@ -27,7 +27,7 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/15 12:33:23 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -42,6 +42,7 @@ public class PredicatedBuffer extends PredicatedCollection implements Buffer {
      * 
      * @param buffer  the buffer to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
+     * @return a new predicated Buffer
      * @throws IllegalArgumentException if buffer or predicate is null
      * @throws IllegalArgumentException if the buffer contains invalid elements
      */

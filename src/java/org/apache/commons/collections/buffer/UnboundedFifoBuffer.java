@@ -44,7 +44,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This buffer prevents null objects from being added.
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.7 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.8 $ $Date: 2004/05/15 12:33:23 $
  *
  * @author Avalon
  * @author Federico Barbieri
@@ -54,8 +54,11 @@ import org.apache.commons.collections.BufferUnderflowException;
  */
 public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
     
+    /** The array of objects in the buffer. */
     protected Object[] buffer;
+    /** The current head index. */
     protected int head;
+    /** The current tail index. */
     protected int tail;
 
     /**

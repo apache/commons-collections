@@ -27,7 +27,7 @@ import org.apache.commons.collections.functors.InstanceofPredicate;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/07 23:28:38 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/15 12:33:23 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -42,6 +42,7 @@ public class TypedBuffer {
      * 
      * @param buffer  the buffer to decorate, must not be null
      * @param type  the type to allow into the buffer, must not be null
+     * @return a new typed Buffer
      * @throws IllegalArgumentException if buffer or type is null
      * @throws IllegalArgumentException if the buffer contains invalid elements
      */
@@ -53,6 +54,7 @@ public class TypedBuffer {
      * Restrictive constructor.
      */
     protected TypedBuffer() {
+        super();
     }
 
 }

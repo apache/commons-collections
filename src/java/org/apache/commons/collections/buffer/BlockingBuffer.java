@@ -35,7 +35,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * order that they arrive.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/15 12:33:23 $
  * 
  * @author Stephen Colebourne
  * @author Janek Bogucki
@@ -47,6 +47,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
      * Factory method to create a blocking buffer.
      * 
      * @param buffer  the buffer to decorate, must not be null
+     * @return a new blocking Buffer
      * @throws IllegalArgumentException if buffer is null
      */
     public static Buffer decorate(Buffer buffer) {

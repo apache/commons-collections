@@ -26,7 +26,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * Decorates another <code>Buffer</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/15 12:33:23 $
  * 
  * @author Stephen Colebourne
  */
@@ -34,8 +34,11 @@ public final class UnmodifiableBuffer extends AbstractBufferDecorator implements
 
     /**
      * Factory method to create an unmodifiable buffer.
+     * <p>
+     * If the buffer passed in is already unmodifiable, it is returned.
      * 
      * @param buffer  the buffer to decorate, must not be null
+     * @return an unmodifiable Buffer
      * @throws IllegalArgumentException if buffer is null
      */
     public static Buffer decorate(Buffer buffer) {

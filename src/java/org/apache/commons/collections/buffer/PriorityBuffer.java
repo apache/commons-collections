@@ -50,7 +50,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * </pre>
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/15 12:33:23 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
@@ -230,6 +230,7 @@ public class PriorityBuffer extends AbstractCollection implements Buffer {
      * The element added will be sorted according to the comparator in use.
      *
      * @param element  the element to be added
+     * @return true always
      */
     public boolean add(Object element) {
         if (isAtCapacity()) {
