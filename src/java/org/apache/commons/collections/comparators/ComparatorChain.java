@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.3 2002/03/01 23:48:59 morgand Exp $
- * $Revision: 1.3 $
- * $Date: 2002/03/01 23:48:59 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.4 2002/03/04 19:18:56 morgand Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/03/04 19:18:56 $
  *
  * ====================================================================
  *
@@ -87,7 +87,10 @@ import java.util.List;
  * Object) has been called</i> will result in an
  * UnsupportedOperationException.</p>
  * 
- * <p>Instances of ComparatorChain are not synchronized.</p>
+ * <p>Instances of ComparatorChain are not synchronized.
+ * The class is not thread-safe at construction time, but
+ * it <i>is</i> thread-safe to perform multiple comparisons
+ * after all the setup operations are complete.</p>
  * 
  * @author Morgan Delagrange
  */
@@ -101,10 +104,23 @@ public class ComparatorChain implements Comparator,Serializable {
     // compare(Object,Object) is called)
     protected boolean isLocked = false;
 
+    /**
+     * Construct a ComparatorChain with a single Comparator,
+     * sorting in the forward order
+     * 
+     * @param comparator First comparator in the Comparator chain
+     */
     public ComparatorChain(Comparator comparator) {
         this(comparator,false);
     }
 
+    /**
+     * Construct a Comparator chain with a single Comparator,
+     * sorting in the given order
+     * 
+     * @param comparator First Comparator in the ComparatorChain
+     * @param reverse    false = forward sort; true = reverse sort
+     */
     public ComparatorChain(Comparator comparator, boolean reverse) {
         comparatorChain = new ArrayList();
         comparatorChain.add(comparator);
@@ -115,8 +131,11 @@ public class ComparatorChain implements Comparator,Serializable {
     }
 
     /**
+     * Construct a ComparatorChain from the Comparators in the
+     * List.  All Comparators will default to the forward 
+     * sort order.
      * 
-     * @param list
+     * @param list   List of Comparators
      * @see #ComparatorChain(List,BitSet)
      */
     public ComparatorChain(List list) {
@@ -124,11 +143,20 @@ public class ComparatorChain implements Comparator,Serializable {
     }
 
     /**
+     * Construct a ComparatorChain from the Comparators in the
+     * given List.  The sort order of each column will be
+     * drawn from the given BitSet.  When determining the sort
+     * order for Comparator at index <i>i</i> in the List,
+     * the ComparatorChain will call BitSet.get(<i>i</i>).
+     * If that method returns <i>false</i>, the forward
+     * sort order is used; a return value of <i>true</i>
+     * indicates reverse sort order.
      * 
-     * @param list   NOTE: This constructor performs a defensive
-     *                     copy of the list elements into a new
-     *                     List. 
-     * @param bits
+     * @param list   List of Comparators.  NOTE: This constructor performs a
+     *               defensive copy of the list elements into a new
+     *               List.
+     * @param bits   Sort order for each Comparator.  Extra bits are ignored,
+     *               unless extra Comparators are added by another method.
      */
     public ComparatorChain(List list, BitSet bits) {
         comparatorChain = new ArrayList();
@@ -136,10 +164,23 @@ public class ComparatorChain implements Comparator,Serializable {
         orderingBits = bits;
     }
 
+    /**
+     * Add a Comparator to the end of the chain using the
+     * forward sort order
+     * 
+     * @param comparator Comparator with the forward sort order
+     */
     public void addComparator(Comparator comparator) {
         addComparator(comparator,false);
     }
 
+    /**
+     * Add a Comparator to the end of the chain using the
+     * given sort order
+     * 
+     * @param comparator Comparator to add to the end of the chain
+     * @param reverse    false = forward sort order; true = reverse sort order
+     */
     public void addComparator(Comparator comparator, boolean reverse) {
         checkLocked();
         
@@ -149,10 +190,28 @@ public class ComparatorChain implements Comparator,Serializable {
         }
     }
 
-    public void setComparator(int index, Comparator comparator) {
+    /**
+     * Replace the Comparator at the given index, maintaining
+     * the existing sort order.
+     * 
+     * @param index      index of the Comparator to replace
+     * @param comparator Comparator to place at the given index
+     * @exception IndexOutOfBoundsException
+     *                   if index < 0 or index > size()
+     */
+    public void setComparator(int index, Comparator comparator) 
+    throws IndexOutOfBoundsException {
         setComparator(index,comparator,false);
     }
 
+    /**
+     * Replace the Comparator at the given index in the
+     * ComparatorChain, using the given sort order
+     * 
+     * @param index      index of the Comparator to replace
+     * @param comparator Comparator to set
+     * @param reverse    false = forward sort order; true = reverse sort order
+     */
     public void setComparator(int index, Comparator comparator, boolean reverse) {
         checkLocked();
 
@@ -164,17 +223,52 @@ public class ComparatorChain implements Comparator,Serializable {
         }
     }
 
+
+    /**
+     * Change the sort order at the given index in the
+     * ComparatorChain to a forward sort.
+     * 
+     * @param index  Index of the ComparatorChain
+     */
     public void setForwardSort(int index) {
         checkLocked();
         orderingBits.clear(index);
     }
 
+    /**
+     * Change the sort order at the given index in the
+     * ComparatorChain to a reverse sort.
+     * 
+     * @param index  Index of the ComparatorChain
+     */
     public void setReverseSort(int index) {
         checkLocked();
         orderingBits.set(index);
     }
 
-    public void checkLocked() {
+    /**
+     * Number of Comparators in the current ComparatorChain.
+     * 
+     * @return Comparator count
+     */
+    public int size() {
+        return comparatorChain.size();
+    }
+
+    /**
+     * Determine if modifications can still be made to the
+     * ComparatorChain.  ComparatorChains cannot be modified
+     * once they have performed a comparison.
+     * 
+     * @return true = ComparatorChain cannot be modified; false = 
+     *         ComparatorChain can still be modified.
+     */
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    // throw an exception if the ComparatorChain is locked
+    private void checkLocked() {
         if (isLocked == true) {
             throw new UnsupportedOperationException("Comparator ordering cannot be changed after the first comparison is performed");
         }
