@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/ObservedTestHelper.java,v 1.6 2003/09/07 16:50:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/ObservedTestHelper.java,v 1.7 2003/09/20 12:13:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.observed.standard.StandardPreModificationL
  * {@link ObservedCollection} implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/09/07 16:50:59 $
+ * @version $Revision: 1.7 $ $Date: 2003/09/20 12:13:59 $
  * 
  * @author Stephen Colebourne
  */
@@ -922,7 +922,7 @@ public class ObservedTestHelper {
         Assert.assertEquals(2, coll.size());
         Iterator it = coll.iterator();
         it.next();
-        it.next();
+        Object removed = it.next();  // store remove as iterator order may vary
         it.remove();
         Assert.assertEquals(1, coll.size());
         // pre
@@ -930,22 +930,22 @@ public class ObservedTestHelper {
         Assert.assertSame(coll.getHandler(), LISTENER.preEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE_ITERATED, LISTENER.preEvent.getType());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeIndex());
-        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeObject());
+        Assert.assertSame(removed, LISTENER.preEvent.getChangeObject());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeCollection().size());
-        Assert.assertSame(SEVEN, LISTENER.preEvent.getChangeCollection().iterator().next());
+        Assert.assertSame(removed, LISTENER.preEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.preEvent.getChangeRepeat());
-        Assert.assertSame(SEVEN, LISTENER.preEvent.getPrevious());
+        Assert.assertSame(removed, LISTENER.preEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.preEvent.getPreSize());
         // post
         Assert.assertSame(coll, LISTENER.postEvent.getObservedCollection());
         Assert.assertSame(coll.getHandler(), LISTENER.postEvent.getHandler());
         Assert.assertEquals(ModificationEventType.REMOVE_ITERATED, LISTENER.postEvent.getType());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeIndex());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeObject());
+        Assert.assertSame(removed, LISTENER.postEvent.getChangeObject());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeCollection().size());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getChangeCollection().iterator().next());
+        Assert.assertSame(removed, LISTENER.postEvent.getChangeCollection().iterator().next());
         Assert.assertEquals(1, LISTENER.postEvent.getChangeRepeat());
-        Assert.assertSame(SEVEN, LISTENER.postEvent.getPrevious());
+        Assert.assertSame(removed, LISTENER.postEvent.getPrevious());
         Assert.assertEquals(2, LISTENER.postEvent.getPreSize());
         Assert.assertEquals(1, LISTENER.postEvent.getPostSize());
         Assert.assertEquals(-1, LISTENER.postEvent.getSizeChange());
@@ -962,7 +962,7 @@ public class ObservedTestHelper {
         LISTENER.preEvent = null;
         LISTENER.postEvent = null;
         Assert.assertEquals(1, coll.size());
-        coll.remove(SEVEN);  // already removed
+        coll.remove(removed);  // already removed
         Assert.assertEquals(1, coll.size());
         Assert.assertTrue(LISTENER.preEvent != null);
         Assert.assertTrue(LISTENER.postEvent == null);
