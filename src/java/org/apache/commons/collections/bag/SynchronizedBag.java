@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/SynchronizedBag.java,v 1.1 2003/11/16 00:05:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/SynchronizedBag.java,v 1.2 2003/12/28 14:55:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,9 +68,10 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
+ * Iterators must be separately synchronized around the loop.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:43 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/28 14:55:46 $
  * 
  * @author Stephen Colebourne
  */

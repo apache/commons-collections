@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/TreeBag.java,v 1.2 2003/12/03 00:49:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/TreeBag.java,v 1.3 2003/12/28 14:55:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,9 +74,15 @@ import org.apache.commons.collections.SortedBag;
  * <p>
  * Order will be maintained among the bag members and can be viewed through the
  * iterator.
+ * <p>
+ * A <code>Bag</code> stores each object in the collection together with a
+ * count of occurances. Extra methods on the interface allow multiple copies
+ * of an object to be added or removed at once. It is important to read the
+ * interface javadoc carefully as several methods violate the
+ * <code>Collection</code> interface specification.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/03 00:49:38 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/28 14:55:46 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
