@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.12 2003/10/02 22:14:29 scolebourne Exp $
- * $Revision: 1.12 $
- * $Date: 2003/10/02 22:14:29 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.13 2003/10/05 20:46:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
@@ -72,9 +68,10 @@ import junit.framework.Test;
 /**
  * Test class.
  * 
+ * @version $Revision: 1.13 $ $Date: 2003/10/05 20:46:40 $
+ * 
  * @author Rodney Waldhoff
  * @author Simon Kitching
- * @version $Id: TestCursorableLinkedList.java,v 1.12 2003/10/02 22:14:29 scolebourne Exp $
  */
 public class TestCursorableLinkedList extends AbstractTestList {
     public TestCursorableLinkedList(String testName) {
@@ -1059,7 +1056,7 @@ public class TestCursorableLinkedList extends AbstractTestList {
      *
      *  @return an array of sublist serialization test names 
      */
-    public String[] ignoredSimpleTests() {
+    protected String[] ignoredTests() {
         ArrayList list = new ArrayList();
         String prefix = "TestCursorableLinkedList";
         String bulk = ".bulkTestSubList";
