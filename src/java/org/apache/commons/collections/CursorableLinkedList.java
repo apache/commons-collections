@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.19 2003/12/24 01:19:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.20 2004/01/04 18:04:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -84,10 +84,10 @@ import java.lang.ref.WeakReference;
  * <b>Note that this implementation is not synchronized.</b>
  *
  * @deprecated Use new version in list subpackage, which has been rewritten
- *  and now returns the cursor from the listIterator method
+ *  and now returns the cursor from the listIterator method. Will be removed in v4.0
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.19 $ $Date: 2003/12/24 01:19:38 $
+ * @version $Revision: 1.20 $ $Date: 2004/01/04 18:04:15 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki

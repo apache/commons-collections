@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.55 2003/12/28 18:00:23 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.56 2004/01/04 18:04:16 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -117,8 +117,6 @@
       <property name="dest.jardir" value="${dest}"/>
       <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
       <property name="dest.jardir.testframework.jar" value="${dest.jardir}/${name}-testframework.jar"/>
-      <property name="dest.jardir.object-jar" value="${dest.jardir}/${name}-object.jar"/>
-      <property name="dest.jardir.primitive-jar" value="${dest.jardir}/${name}-primitive.jar"/>
       
       <property name="bin.name" value="${name}-${component.version}"/>
       <property name="dest.bin.tar" value="${dest}/${bin.name}.tar"/>
@@ -358,19 +356,6 @@
       
       <jar jarfile="${dest.jardir.jar}" manifest="${source.src}/conf/MANIFEST.MF">
          <fileset dir="${workdir}"/>
-      </jar>
-      
-      <jar jarfile="${dest.jardir.object-jar}" manifest="${source.src}/conf/MANIFEST.MF">
-         <fileset dir="${workdir}">
-            <exclude name="org/apache/commons/collections/primitives/**"/>
-         </fileset>
-      </jar>
-
-      <jar jarfile="${dest.jardir.primitive-jar}" manifest="${source.src}/conf/MANIFEST.MF">
-         <fileset dir="${workdir}">
-            <include name="META-INF/**"/>
-            <include name="org/apache/commons/collections/primitives/**"/>
-         </fileset>
       </jar>
       
       <delete dir="${workdir}"/>

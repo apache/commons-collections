@@ -8,3 +8,4 @@ target
 eclipse
 bin
 junit*.properties
+*.bat
