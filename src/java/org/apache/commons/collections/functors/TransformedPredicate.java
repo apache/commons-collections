@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * another <code>Predicate</code>.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/03/13 16:34:46 $
+ * @version $Revision: 1.2 $ $Date: 2004/03/13 17:15:17 $
  * @author Alban Peignier
  * @author Stephen Colebourne
  */
@@ -35,9 +35,9 @@ public final class TransformedPredicate implements Predicate, Serializable {
     static final long serialVersionUID = -5596090919668315834L;
     
     /** The transformer to call */
-    private final Transformer transformer;
+    private final Transformer iTransformer;
     /** The predicate to call */
-    private final Predicate predicate;
+    private final Predicate iPredicate;
 
     /**
      * Factory to create the predicate.
@@ -62,16 +62,16 @@ public final class TransformedPredicate implements Predicate, Serializable {
      * Use <code>getInstance</code> if you want that.
      */
     public TransformedPredicate(Transformer transformer, Predicate predicate) {
-        this.transformer = transformer;
-        this.predicate = predicate;
+        iTransformer = transformer;
+        iPredicate = predicate;
     }
     
     /**
      * Return the predicate result.
      */
     public boolean evaluate(Object object) {
-        Object result = transformer.transform(object);
-        return predicate.evaluate(result);
+        Object result = iTransformer.transform(object);
+        return iPredicate.evaluate(result);
     }
 
     /**
@@ -79,7 +79,7 @@ public final class TransformedPredicate implements Predicate, Serializable {
      * @return the predicate
      */
     public Predicate getPredicate() {
-        return predicate;
+        return iPredicate;
     }
 
     /**
@@ -87,7 +87,7 @@ public final class TransformedPredicate implements Predicate, Serializable {
      * @return the transformer
      */
     public Transformer getTransformer() {
-        return transformer;
+        return iTransformer;
     }
 
 }
