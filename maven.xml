@@ -219,4 +219,18 @@
     
   </postGoal>
   
+  <postGoal name="dist:build-bin">
+    <j:set var="distDir" value="${pom.getPluginContext('maven-dist-plugin').getVariable('maven.dist.dir')}"/>
+    <j:set var="finalName" value="${pom.getPluginContext('maven-dist-plugin').getVariable('maven.final.name')}"/>
+    <ant:checksum file="${distDir}/${finalName}.tar.gz"/>
+    <ant:checksum file="${distDir}/${finalName}.zip"/>
+  </postGoal>
+  
+  <postGoal name="dist:build-src">
+    <j:set var="distDir" value="${pom.getPluginContext('maven-dist-plugin').getVariable('maven.dist.dir')}"/>
+    <j:set var="finalName" value="${pom.getPluginContext('maven-dist-plugin').getVariable('maven.final.name')}"/>
+    <ant:checksum file="${distDir}/${finalName}-src.tar.gz"/>
+    <ant:checksum file="${distDir}/${finalName}-src.zip"/>
+  </postGoal>
+  
 </project>
