@@ -41,7 +41,7 @@ import org.apache.commons.collections.BoundedMap;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision: 1.10 $ $Date: 2004/04/16 23:53:59 $
+ * @version $Revision: 1.11 $ $Date: 2004/04/25 23:27:43 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
@@ -128,6 +128,7 @@ public class LRUMap
     //-----------------------------------------------------------------------
     /**
      * Moves an entry to the MRU position at the end of the list.
+     * <p>
      * This implementation moves the updated entry to the end of the list.
      * 
      * @param entry  the entry to update
@@ -148,7 +149,9 @@ public class LRUMap
     
     /**
      * Updates an existing key-value mapping.
-     * This implementation moves the updated entry to the top of the list.
+     * <p>
+     * This implementation moves the updated entry to the top of the list
+     * using {@link #moveToMRU(LinkEntry)}.
      * 
      * @param entry  the entry to update
      * @param newValue  the new value to store
@@ -160,8 +163,9 @@ public class LRUMap
     
     /**
      * Adds a new key-value mapping into this map.
+     * <p>
      * This implementation checks the LRU size and determines whether to
-     * discard an entry or not.
+     * discard an entry or not using {@link #removeLRU(LinkEntry)}.
      * 
      * @param hashIndex  the index into the data array to store at
      * @param hashCode  the hash code of the key to add
@@ -178,6 +182,8 @@ public class LRUMap
     
     /**
      * Reuses an entry by removing it and moving it to a new place in the map.
+     * <p>
+     * This method uses {@link #removeEntry}, {@link #reuseEntry} and {@link #addEntry}.
      * 
      * @param entry  the entry to reuse
      * @param hashIndex  the index into the data array to store at
@@ -228,6 +234,9 @@ public class LRUMap
      * }
      * </pre>
      * Note that the effect of not removing an LRU is for the Map to exceed the maximum size.
+     * <p>
+     * NOTE: Commons Collections 3.0 passed the wrong entry to this method.
+     * This is fixed in version 3.1 onwards.
      * 
      * @param entry  the entry to be removed
      */
