@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.7 2003/10/09 20:21:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.8 2003/10/10 21:09:27 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,25 +63,23 @@ import java.util.Map;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/10/09 20:21:32 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/10 21:09:27 $
  * 
  * @author Matthew Hawthorne
+ * @author Stephen Colebourne
  */
 public abstract class TestBidiMap extends AbstractTestMap {
 
     // Test data.
-    private static final Object KEY = "key1";
-    private static final Object VALUE = "value1";
-
     private static final Object[][] entriesKV =
         new Object[][] {
-            new Object[] { KEY, VALUE },
+            new Object[] { "key1", "value1" },
             new Object[] { "key2", "value2" },
             new Object[] { "key3", "value3" }
     };
     private static final Object[][] entriesVK =
         new Object[][] {
-            new Object[] { VALUE, KEY },
+            new Object[] { "value1", "key1" },
             new Object[] { "value2", "key2" },
             new Object[] { "value3", "key3" }
     };
@@ -178,11 +176,12 @@ public abstract class TestBidiMap extends AbstractTestMap {
      * This implementation checks the inverse map as well.
      */
     protected void verify() {
-        // verify inverse
-        assertEquals(map.size(), ((BidiMap) map).inverseBidiMap().size());
-        
-        // verify fully
+        verifyInverse();
         super.verify();
+    }
+
+    protected void verifyInverse() {
+        assertEquals(map.size(), ((BidiMap) map).inverseBidiMap().size());
     }
     
     // testGetKey
@@ -270,11 +269,11 @@ public abstract class TestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiRemove() {
-        remove(makeFullBidiMap(), KEY);
-        remove(makeFullBidiMap().inverseBidiMap(), VALUE);
+        remove(makeFullBidiMap(), entries[0][0]);
+        remove(makeFullBidiMap().inverseBidiMap(), entries[0][1]);
 
-        removeKey(makeFullBidiMap(), VALUE);
-        removeKey(makeFullBidiMap().inverseBidiMap(), KEY);
+        removeKey(makeFullBidiMap(), entries[0][1]);
+        removeKey(makeFullBidiMap().inverseBidiMap(), entries[0][0]);
     }
 
     private final void remove(BidiMap map, Object key) {
@@ -291,8 +290,8 @@ public abstract class TestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByKeySet() {
-        removeByKeySet(makeFullBidiMap(), KEY, VALUE);
-        removeByKeySet(makeFullBidiMap().inverseBidiMap(), VALUE, KEY);
+        removeByKeySet(makeFullBidiMap(), entries[0][0], entries[0][1]);
+        removeByKeySet(makeFullBidiMap().inverseBidiMap(), entries[0][1], entries[0][0]);
     }
 
     private final void removeByKeySet(BidiMap map, Object key, Object value) {
@@ -311,8 +310,8 @@ public abstract class TestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByEntrySet() {
-        removeByEntrySet(makeFullBidiMap(), KEY, VALUE);
-        removeByEntrySet(makeFullBidiMap().inverseBidiMap(), VALUE, KEY);
+        removeByEntrySet(makeFullBidiMap(), entries[0][0], entries[0][1]);
+        removeByEntrySet(makeFullBidiMap().inverseBidiMap(), entries[0][1], entries[0][0]);
     }
 
     private final void removeByEntrySet(BidiMap map, Object key, Object value) {
@@ -347,6 +346,12 @@ public abstract class TestBidiMap extends AbstractTestMap {
         }
         protected BidiMap makeFullBidiMap() {
             return main.makeFullBidiMap().inverseBidiMap();
+        }
+        protected Object[] getSampleKeys() {
+            return main.getSampleValues();
+        }
+        protected Object[] getSampleValues() {
+            return main.getSampleKeys();
         }
         
         protected String getCompatibilityVersion() {
