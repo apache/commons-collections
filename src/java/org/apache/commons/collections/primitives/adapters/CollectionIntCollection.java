@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/CollectionIntCollection.java,v 1.8 2003/08/31 17:21:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/CollectionIntCollection.java,v 1.9 2003/11/07 20:09:15 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -71,8 +71,10 @@ import org.apache.commons.collections.primitives.IntCollection;
  * to the provided {@link Collection Collection} 
  * implementation in the "obvious" way.
  * 
+ * @deprecated This code has been moved to Jakarta Commons Primitives (http://jakarta.apache.org/commons/primitives/)
+ *
  * @since Commons Collections 2.2
- * @version $Revision: 1.8 $ $Date: 2003/08/31 17:21:16 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/07 20:09:15 $
  * @author Rodney Waldhoff 
  */
 final public class CollectionIntCollection extends AbstractCollectionIntCollection implements Serializable {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.8 2003/08/31 17:21:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.9 2003/11/07 20:08:15 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -69,9 +69,11 @@ import org.apache.commons.collections.primitives.IntList;
  * This implementation delegates most methods
  * to the provided {@link List List} 
  * implementation in the "obvious" way.
+ * 
+ * @deprecated This code has been moved to Jakarta Commons Primitives (http://jakarta.apache.org/commons/primitives/)
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.8 $ $Date: 2003/08/31 17:21:17 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/07 20:08:15 $
  * @author Rodney Waldhoff 
  */
 public class ListIntList extends AbstractListIntList implements Serializable {

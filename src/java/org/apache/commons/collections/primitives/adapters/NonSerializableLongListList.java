@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/NonSerializableLongListList.java,v 1.2 2003/08/31 17:21:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/NonSerializableLongListList.java,v 1.3 2003/11/07 20:07:50 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -60,8 +60,11 @@ package org.apache.commons.collections.primitives.adapters;
 import org.apache.commons.collections.primitives.LongList;
 
 /**
+ * 
+ * @deprecated This code has been moved to Jakarta Commons Primitives (http://jakarta.apache.org/commons/primitives/)
+ *
  * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:21:17 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/07 20:07:50 $
  * @author Rodney Waldhoff 
  */
 final class NonSerializableLongListList extends AbstractLongListList {

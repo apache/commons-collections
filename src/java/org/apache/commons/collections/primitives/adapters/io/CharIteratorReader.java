@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/CharIteratorReader.java,v 1.2 2003/08/31 17:21:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/io/Attic/CharIteratorReader.java,v 1.3 2003/11/07 20:13:05 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,7 +64,9 @@ import org.apache.commons.collections.primitives.CharIterator;
 /**
  * Adapts a {@link CharIterator} to the {@link Reader} interface.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:21:21 $
+ * @deprecated This code has been moved to Jakarta Commons Primitives (http://jakarta.apache.org/commons/primitives/)
+ *
+ * @version $Revision: 1.3 $ $Date: 2003/11/07 20:13:05 $
  * @author Rodney Waldhoff
  */
 public class CharIteratorReader extends Reader {
