@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.8 2003/04/09 23:38:26 scolebourne Exp $
- * $Revision: 1.8 $
- * $Date: 2003/04/09 23:38:26 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.9 2003/05/05 23:25:22 rwaldhoff Exp $
+ * $Revision: 1.9 $
+ * $Date: 2003/05/05 23:25:22 $
  *
  * ====================================================================
  *
@@ -153,10 +153,10 @@ public class TestListUtils extends BulkTest {
             }
         });
 
-        Integer I = (Integer)list.get(5);
+        assertNotNull((Integer)list.get(5));
         assertEquals(6, list.size());
 
-        I = (Integer)list.get(5);
+        assertNotNull((Integer)list.get(5));
         assertEquals(6, list.size());
     }
 

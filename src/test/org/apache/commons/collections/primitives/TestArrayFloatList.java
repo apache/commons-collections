@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayFloatList.java,v 1.1 2003/04/13 22:08:09 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayFloatList.java,v 1.2 2003/05/05 23:25:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/13 22:08:09 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:19 $
  * @author Rodney Waldhoff
  */
 public class TestArrayFloatList extends TestFloatList {
@@ -140,12 +140,12 @@ public class TestArrayFloatList extends TestFloatList {
     }
 
     public void testZeroInitialCapacityIsValid() {
-        ArrayFloatList list = new ArrayFloatList(0);
+        assertNotNull(new ArrayFloatList(0));
     }
 
     public void testNegativeInitialCapacityIsInvalid() {
         try {
-            ArrayFloatList list = new ArrayFloatList(-1);
+            new ArrayFloatList(-1);
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
@@ -164,7 +164,7 @@ public class TestArrayFloatList extends TestFloatList {
 
     public void testCopyConstructorWithNull() {
         try {
-            ArrayFloatList list = new ArrayFloatList(null);
+            new ArrayFloatList(null);
             fail("Expected NullPointerException");
         } catch(NullPointerException e) {
             // expected

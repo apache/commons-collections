@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedByteList.java,v 1.1 2003/04/11 21:50:15 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedByteList.java,v 1.2 2003/05/05 23:25:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/11 21:50:15 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:19 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedByteList extends TestShortList {
@@ -134,7 +134,7 @@ public class TestArrayUnsignedByteList extends TestShortList {
     }
 
     public void testZeroInitialCapacityIsValid() {
-        ArrayUnsignedByteList list = new ArrayUnsignedByteList(0);
+        assertNotNull(new ArrayUnsignedByteList(0));
     }
     
     public void testIllegalArgumentExceptionWhenElementOutOfRange() {
@@ -157,7 +157,7 @@ public class TestArrayUnsignedByteList extends TestShortList {
 
     public void testNegativeInitialCapacityIsInvalid() {
         try {
-            ArrayUnsignedByteList list = new ArrayUnsignedByteList(-1);
+            new ArrayUnsignedByteList(-1);
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
@@ -176,7 +176,7 @@ public class TestArrayUnsignedByteList extends TestShortList {
 
     public void testCopyConstructorWithNull() {
         try {
-            ArrayUnsignedByteList list = new ArrayUnsignedByteList(null);
+            new ArrayUnsignedByteList(null);
             fail("Expected NullPointerException");
         } catch(NullPointerException e) {
             // expected

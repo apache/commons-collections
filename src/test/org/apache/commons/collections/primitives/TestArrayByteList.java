@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayByteList.java,v 1.2 2003/04/16 18:38:09 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayByteList.java,v 1.3 2003/05/05 23:25:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/04/16 18:38:09 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/05 23:25:19 $
  * @author Rodney Waldhoff
  */
 public class TestArrayByteList extends TestByteList {
@@ -140,12 +140,12 @@ public class TestArrayByteList extends TestByteList {
     }
 
     public void testZeroInitialCapacityIsValid() {
-        ArrayByteList list = new ArrayByteList(0);
+        assertNotNull(new ArrayByteList(0));
     }
 
     public void testNegativeInitialCapacityIsInvalid() {
         try {
-            ArrayByteList list = new ArrayByteList(-1);
+            new ArrayByteList(-1);
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
@@ -164,7 +164,7 @@ public class TestArrayByteList extends TestByteList {
 
     public void testCopyConstructorWithNull() {
         try {
-            ArrayByteList list = new ArrayByteList(null);
+            new ArrayByteList(null);
             fail("Expected NullPointerException");
         } catch(NullPointerException e) {
             // expected

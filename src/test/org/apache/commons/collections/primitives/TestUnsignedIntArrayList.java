@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestUnsignedIntArrayList.java,v 1.7 2003/04/09 06:44:34 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestUnsignedIntArrayList.java,v 1.8 2003/05/05 23:25:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.7 $ $Date: 2003/04/09 06:44:34 $
+ * @version $Revision: 1.8 $ $Date: 2003/05/05 23:25:19 $
  * @author Rodney Waldhoff
  * @deprecated as the tested classes are deprecated also
  */
@@ -89,7 +89,7 @@ public class TestUnsignedIntArrayList extends TestAbstractLongArrayList {
     //---------------------------------------------------------------- Tests
 
     public void testZeroInitialCapacityIsValid() {
-        UnsignedIntArrayList list = new UnsignedIntArrayList(0);
+        assertNotNull(new UnsignedIntArrayList(0));
     }
 
 }

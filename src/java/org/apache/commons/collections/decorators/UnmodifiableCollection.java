@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableCollection.java,v 1.1 2003/04/29 18:43:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableCollection.java,v 1.2 2003/05/05 23:25:22 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,7 +61,6 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.collections.IteratorUtils;
-import org.apache.commons.collections.Predicate;
 
 /**
  * <code>PredicatedCollection</code> decorates another <code>Collection</code>
@@ -71,7 +70,7 @@ import org.apache.commons.collections.Predicate;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/04/29 18:43:47 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:22 $
  * 
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.11 2003/03/05 19:10:50 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.12 2003/05/05 23:25:21 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.11 $ $Date: 2003/03/05 19:10:50 $
+ * @version $Revision: 1.12 $ $Date: 2003/05/05 23:25:21 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedShortList extends TestIntList {
@@ -126,7 +126,7 @@ public class TestArrayUnsignedShortList extends TestIntList {
     }
 
     public void testZeroInitialCapacityIsValid() {
-        ArrayUnsignedShortList list = new ArrayUnsignedShortList(0);
+        assertNotNull(new ArrayUnsignedShortList(0));
     }
     
     public void testIllegalArgumentExceptionWhenElementOutOfRange() {
@@ -149,7 +149,7 @@ public class TestArrayUnsignedShortList extends TestIntList {
 
     public void testNegativeInitialCapacityIsInvalid() {
         try {
-            ArrayUnsignedShortList list = new ArrayUnsignedShortList(-1);
+            new ArrayUnsignedShortList(-1);
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
@@ -168,7 +168,7 @@ public class TestArrayUnsignedShortList extends TestIntList {
 
     public void testCopyConstructorWithNull() {
         try {
-            ArrayUnsignedShortList list = new ArrayUnsignedShortList(null);
+            new ArrayUnsignedShortList(null);
             fail("Expected NullPointerException");
         } catch(NullPointerException e) {
             // expected

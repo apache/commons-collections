@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayShortList.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayShortList.java,v 1.2 2003/05/05 23:25:21 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:21 $
  * @author Rodney Waldhoff
  */
 public class TestArrayShortList extends TestShortList {
@@ -140,12 +140,12 @@ public class TestArrayShortList extends TestShortList {
     }
 
     public void testZeroInitialCapacityIsValid() {
-        ArrayShortList list = new ArrayShortList(0);
+        assertNotNull(new ArrayShortList(0));
     }
 
     public void testNegativeInitialCapacityIsInvalid() {
         try {
-            ArrayShortList list = new ArrayShortList(-1);
+            new ArrayShortList(-1);
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
@@ -164,7 +164,7 @@ public class TestArrayShortList extends TestShortList {
 
     public void testCopyConstructorWithNull() {
         try {
-            ArrayShortList list = new ArrayShortList(null);
+            new ArrayShortList(null);
             fail("Expected NullPointerException");
         } catch(NullPointerException e) {
             // expected

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.11 2003/03/05 19:10:50 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayIntList.java,v 1.12 2003/05/05 23:25:21 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.11 $ $Date: 2003/03/05 19:10:50 $
+ * @version $Revision: 1.12 $ $Date: 2003/05/05 23:25:21 $
  * @author Rodney Waldhoff
  */
 public class TestArrayIntList extends TestIntList {
@@ -140,12 +140,12 @@ public class TestArrayIntList extends TestIntList {
     }
 
     public void testZeroInitialCapacityIsValid() {
-        ArrayIntList list = new ArrayIntList(0);
+        assertNotNull(new ArrayIntList(0));
     }
 
     public void testNegativeInitialCapacityIsInvalid() {
         try {
-            ArrayIntList list = new ArrayIntList(-1);
+            new ArrayIntList(-1);
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
@@ -164,7 +164,7 @@ public class TestArrayIntList extends TestIntList {
 
     public void testCopyConstructorWithNull() {
         try {
-            ArrayIntList list = new ArrayIntList(null);
+            new ArrayIntList(null);
             fail("Expected NullPointerException");
         } catch(NullPointerException e) {
             // expected

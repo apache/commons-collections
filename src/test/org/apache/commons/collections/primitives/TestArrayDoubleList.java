@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayDoubleList.java,v 1.1 2003/04/15 00:11:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayDoubleList.java,v 1.2 2003/05/05 23:25:21 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/15 00:11:20 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:21 $
  * @author Rodney Waldhoff
  */
 public class TestArrayDoubleList extends TestDoubleList {
@@ -140,12 +140,12 @@ public class TestArrayDoubleList extends TestDoubleList {
     }
 
     public void testZeroInitialCapacityIsValid() {
-        ArrayDoubleList list = new ArrayDoubleList(0);
+        assertNotNull(new ArrayDoubleList(0));
     }
 
     public void testNegativeInitialCapacityIsInvalid() {
         try {
-            ArrayDoubleList list = new ArrayDoubleList(-1);
+            new ArrayDoubleList(-1);
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
@@ -164,7 +164,7 @@ public class TestArrayDoubleList extends TestDoubleList {
 
     public void testCopyConstructorWithNull() {
         try {
-            ArrayDoubleList list = new ArrayDoubleList(null);
+            new ArrayDoubleList(null);
             fail("Expected NullPointerException");
         } catch(NullPointerException e) {
             // expected

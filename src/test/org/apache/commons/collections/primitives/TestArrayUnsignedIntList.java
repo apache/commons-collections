@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedIntList.java,v 1.1 2003/04/09 06:44:34 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedIntList.java,v 1.2 2003/05/05 23:25:21 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/09 06:44:34 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/05 23:25:21 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedIntList extends TestLongList {
@@ -134,7 +134,7 @@ public class TestArrayUnsignedIntList extends TestLongList {
     }
 
     public void testZeroInitialCapacityIsValid() {
-        ArrayUnsignedIntList list = new ArrayUnsignedIntList(0);
+        assertNotNull(new ArrayUnsignedIntList(0));
     }
     
     public void testIllegalArgumentExceptionWhenElementOutOfRange() {
@@ -157,7 +157,7 @@ public class TestArrayUnsignedIntList extends TestLongList {
 
     public void testNegativeInitialCapacityIsInvalid() {
         try {
-            ArrayUnsignedIntList list = new ArrayUnsignedIntList(-1);
+            new ArrayUnsignedIntList(-1);
             fail("Expected IllegalArgumentException");
         } catch(IllegalArgumentException e) {
             // expected
@@ -176,7 +176,7 @@ public class TestArrayUnsignedIntList extends TestLongList {
 
     public void testCopyConstructorWithNull() {
         try {
-            ArrayUnsignedIntList list = new ArrayUnsignedIntList(null);
+            new ArrayUnsignedIntList(null);
             fail("Expected NullPointerException");
         } catch(NullPointerException e) {
             // expected
