@@ -40,6 +40,7 @@ import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.LoopingIterator;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.iterators.ObjectArrayListIterator;
+import org.apache.commons.collections.iterators.ObjectGraphIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -52,7 +53,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * instances. The implementations are provided in the iterators subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.22 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.23 $ $Date: 2004/03/20 00:21:08 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -502,7 +503,65 @@ public class IteratorUtils {
     public static Iterator collatedIterator(Comparator comparator, Collection iterators) {
         return new CollatingIterator(comparator, iterators);
     }
-
+    
+    // Object Graph
+    //-----------------------------------------------------------------------
+    /**
+     * Gets an iterator that operates over an object graph.
+     * <p>
+     * This iterator can extract multiple objects from a complex tree-like object graph.
+     * The iteration starts from a single root object.
+     * It uses a <code>Transformer</code> to extract the iterators and elements.
+     * Its main benefit is that no intermediate <code>List</code> is created.
+     * <p>
+     * For example, consider an object graph:
+     * <pre>
+     *                 |- Branch -- Leaf
+     *                 |         \- Leaf
+     *         |- Tree |         /- Leaf
+     *         |       |- Branch -- Leaf
+     *  Forest |                 \- Leaf
+     *         |       |- Branch -- Leaf
+     *         |       |         \- Leaf
+     *         |- Tree |         /- Leaf
+     *                 |- Branch -- Leaf
+     *                 |- Branch -- Leaf</pre>
+     * The following <code>Transformer</code>, used in this class, will extract all
+     * the Leaf objects without creating a combined intermediate list:
+     * <pre>
+     * public Object transform(Object input) {
+     *   if (input instanceof Forest) {
+     *     return ((Forest) input).treeIterator();
+     *   }
+     *   if (input instanceof Tree) {
+     *     return ((Tree) input).branchIterator();
+     *   }
+     *   if (input instanceof Branch) {
+     *     return ((Branch) input).leafIterator();
+     *   }
+     *   if (input instanceof Leaf) {
+     *     return input;
+     *   }
+     *   throw new ClassCastException();
+     * }</pre>
+     * <p>
+     * Internally, iteration starts from the root object. When next is called,
+     * the transformer is called to examine the object. The transformer will return
+     * either an iterator or an object. If the object is an Iterator, the next element
+     * from that iterator is obtained and the process repeats. If the element is an object
+     * it is returned.
+     * <p>
+     * Under many circumstances, linking Iterators together in this manner is
+     * more efficient (and convenient) than using nested for loops to extract a list.
+     * 
+     * @param root  the root object to start iterating from, null results in an empty iterator
+     * @param transformer  the transformer to use, see above, null uses no effect transformer
+     * @return
+     */
+    public static Iterator objectGraphIterator(Object root, Transformer transformer) {
+        return new ObjectGraphIterator(root, transformer);
+    }
+    
     // Transformed
     //-----------------------------------------------------------------------
     /**

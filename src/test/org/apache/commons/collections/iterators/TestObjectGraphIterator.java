@@ -30,11 +30,11 @@ import org.apache.commons.collections.Transformer;
 /**
  * Testcase.
  * 
- * @version $Revision: 1.1 $ $Date: 2004/03/14 23:27:22 $
+ * @version $Revision: 1.1 $ $Date: 2004/03/20 00:21:08 $
  * 
  * @author Stephen Colebourne
  */
-public class TestTreeIterator extends AbstractTestIterator {
+public class TestObjectGraphIterator extends AbstractTestIterator {
 
     protected String[] testArray = { "One", "Two", "Three", "Four", "Five", "Six" };
 
@@ -43,7 +43,7 @@ public class TestTreeIterator extends AbstractTestIterator {
     protected List list3 = null;
     protected List iteratorList = null;
 
-    public TestTreeIterator(String testName) {
+    public TestObjectGraphIterator(String testName) {
         super(testName);
     }
 
@@ -52,7 +52,7 @@ public class TestTreeIterator extends AbstractTestIterator {
     }
 
     public static Test suite() {
-        return new TestSuite(TestTreeIterator.class);
+        return new TestSuite(TestObjectGraphIterator.class);
     }
 
     public void setUp() {
@@ -74,16 +74,16 @@ public class TestTreeIterator extends AbstractTestIterator {
     //-----------------------------------------------------------------------
     public Iterator makeEmptyIterator() {
         ArrayList list = new ArrayList();
-        return new TreeIterator(list.iterator(), null);
+        return new ObjectGraphIterator(list.iterator(), null);
     }
 
     public Iterator makeFullIterator() {
-        return new TreeIterator(iteratorList.iterator(), null);
+        return new ObjectGraphIterator(iteratorList.iterator(), null);
     }
 
     //-----------------------------------------------------------------------
     public void testIteratorConstructor_null1() {
-        Iterator it = new TreeIterator(null);
+        Iterator it = new ObjectGraphIterator(null);
 
         assertEquals(false, it.hasNext());
         try {
@@ -99,7 +99,7 @@ public class TestTreeIterator extends AbstractTestIterator {
     }
 
     public void testIteratorConstructor_null_next() {
-        Iterator it = new TreeIterator(null);
+        Iterator it = new ObjectGraphIterator(null);
         try {
             it.next();
             fail();
@@ -108,7 +108,7 @@ public class TestTreeIterator extends AbstractTestIterator {
     }
 
     public void testIteratorConstructor_null_remove() {
-        Iterator it = new TreeIterator(null);
+        Iterator it = new ObjectGraphIterator(null);
         try {
             it.remove();
             fail();
@@ -119,7 +119,7 @@ public class TestTreeIterator extends AbstractTestIterator {
     //-----------------------------------------------------------------------
     public void testIteratorConstructorIteration_Empty() {
         List iteratorList = new ArrayList();
-        Iterator it = new TreeIterator(iteratorList.iterator());
+        Iterator it = new ObjectGraphIterator(iteratorList.iterator());
 
         assertEquals(false, it.hasNext());
         try {
@@ -139,7 +139,7 @@ public class TestTreeIterator extends AbstractTestIterator {
         iteratorList.add(list1.iterator());
         iteratorList.add(list2.iterator());
         iteratorList.add(list3.iterator());
-        Iterator it = new TreeIterator(iteratorList.iterator());
+        Iterator it = new ObjectGraphIterator(iteratorList.iterator());
 
         for (int i = 0; i < 6; i++) {
             assertEquals(true, it.hasNext());
@@ -158,7 +158,7 @@ public class TestTreeIterator extends AbstractTestIterator {
         iteratorList.add(list1.iterator());
         iteratorList.add(list2.iterator());
         iteratorList.add(list3.iterator());
-        Iterator it = new TreeIterator(iteratorList.iterator());
+        Iterator it = new ObjectGraphIterator(iteratorList.iterator());
 
         for (int i = 0; i < 6; i++) {
             assertEquals(testArray[i], it.next());
@@ -179,7 +179,7 @@ public class TestTreeIterator extends AbstractTestIterator {
         iteratorList.add(IteratorUtils.EMPTY_ITERATOR);
         iteratorList.add(list3.iterator());
         iteratorList.add(IteratorUtils.EMPTY_ITERATOR);
-        Iterator it = new TreeIterator(iteratorList.iterator());
+        Iterator it = new ObjectGraphIterator(iteratorList.iterator());
 
         for (int i = 0; i < 6; i++) {
             assertEquals(true, it.hasNext());
@@ -198,7 +198,7 @@ public class TestTreeIterator extends AbstractTestIterator {
         iteratorList.add(list1.iterator());
         iteratorList.add(list2.iterator());
         iteratorList.add(list3.iterator());
-        Iterator it = new TreeIterator(iteratorList.iterator());
+        Iterator it = new ObjectGraphIterator(iteratorList.iterator());
 
         for (int i = 0; i < 6; i++) {
             assertEquals(testArray[i], it.next());
@@ -216,7 +216,7 @@ public class TestTreeIterator extends AbstractTestIterator {
         iteratorList.add(list1.iterator());
         iteratorList.add(list2.iterator());
         iteratorList.add(list3.iterator());
-        Iterator it = new TreeIterator(iteratorList.iterator(), null);
+        Iterator it = new ObjectGraphIterator(iteratorList.iterator(), null);
 
         for (int i = 0; i < 6; i++) {
             assertEquals(true, it.hasNext());
@@ -234,7 +234,7 @@ public class TestTreeIterator extends AbstractTestIterator {
         iteratorList.add(IteratorUtils.EMPTY_ITERATOR);
         iteratorList.add(list3.iterator());
         iteratorList.add(IteratorUtils.EMPTY_ITERATOR);
-        Iterator it = new TreeIterator(iteratorList.iterator(), null);
+        Iterator it = new ObjectGraphIterator(iteratorList.iterator(), null);
 
         for (int i = 0; i < 6; i++) {
             assertEquals(true, it.hasNext());
@@ -245,7 +245,7 @@ public class TestTreeIterator extends AbstractTestIterator {
 
     //-----------------------------------------------------------------------
     public void testIteration_RootNull() {
-        Iterator it = new TreeIterator(null, null);
+        Iterator it = new ObjectGraphIterator(null, null);
 
         assertEquals(false, it.hasNext());
         try {
@@ -262,7 +262,7 @@ public class TestTreeIterator extends AbstractTestIterator {
 
     public void testIteration_RootNoTransformer() {
         Forest forest = new Forest();
-        Iterator it = new TreeIterator(forest, null);
+        Iterator it = new ObjectGraphIterator(forest, null);
 
         assertEquals(true, it.hasNext());
         assertSame(forest, it.next());
@@ -277,7 +277,7 @@ public class TestTreeIterator extends AbstractTestIterator {
     public void testIteration_Transformed1() {
         Forest forest = new Forest();
         Leaf l1 = forest.addTree().addBranch().addLeaf();
-        Iterator it = new TreeIterator(forest, new LeafFinder());
+        Iterator it = new ObjectGraphIterator(forest, new LeafFinder());
 
         assertEquals(true, it.hasNext());
         assertSame(l1, it.next());
@@ -305,7 +305,7 @@ public class TestTreeIterator extends AbstractTestIterator {
         Leaf l4 = b3.addLeaf();
         Leaf l5 = b5.addLeaf();
 
-        Iterator it = new TreeIterator(forest, new LeafFinder());
+        Iterator it = new ObjectGraphIterator(forest, new LeafFinder());
 
         assertEquals(true, it.hasNext());
         assertSame(l1, it.next());
@@ -341,7 +341,7 @@ public class TestTreeIterator extends AbstractTestIterator {
         Leaf l4 = b3.addLeaf();
         Leaf l5 = b4.addLeaf();
 
-        Iterator it = new TreeIterator(forest, new LeafFinder());
+        Iterator it = new ObjectGraphIterator(forest, new LeafFinder());
 
         assertEquals(true, it.hasNext());
         assertSame(l1, it.next());

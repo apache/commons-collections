@@ -71,11 +71,11 @@ import org.apache.commons.collections.TransformerUtils;
  * more efficient (and convenient) than using nested for loops to extract a list.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/03/14 23:27:22 $
+ * @version $Revision: 1.1 $ $Date: 2004/03/20 00:21:08 $
  * 
  * @author Stephen Colebourne
  */
-public class TreeIterator implements Iterator {
+public class ObjectGraphIterator implements Iterator {
 
     /** The stack of iterators */
     protected final ArrayStack stack = new ArrayStack(8);
@@ -95,7 +95,7 @@ public class TreeIterator implements Iterator {
 
     //-----------------------------------------------------------------------
     /**
-     * Constructs a TreeIterator using a root object and transformer.
+     * Constructs an ObjectGraphIterator using a root object and transformer.
      * <p>
      * The root object can be an iterator, in which case it will be immediately
      * looped around.
@@ -103,7 +103,7 @@ public class TreeIterator implements Iterator {
      * @param root  the root object, null will result in an empty iterator
      * @param transformer  the transformer to use, null will use a no effect transformer
      */
-    public TreeIterator(Object root, Transformer transformer) {
+    public ObjectGraphIterator(Object root, Transformer transformer) {
         super();
         if (root instanceof Iterator) {
             this.currentIterator = (Iterator) root;
@@ -114,7 +114,7 @@ public class TreeIterator implements Iterator {
     }
 
     /**
-     * Constructs a TreeIterator that will handle an iterator of iterators.
+     * Constructs a ObjectGraphIterator that will handle an iterator of iterators.
      * <p>
      * This constructor exists for convenience to emphasise that this class can
      * be used to iterate over nested iterators. That is to say that the iterator
@@ -123,7 +123,7 @@ public class TreeIterator implements Iterator {
      * 
      * @param rootIterator  the root iterator, null will result in an empty iterator
      */
-    public TreeIterator(Iterator rootIterator) {
+    public ObjectGraphIterator(Iterator rootIterator) {
         super();
         this.currentIterator = rootIterator;
         this.transformer = TransformerUtils.nopTransformer();
@@ -189,7 +189,7 @@ public class TreeIterator implements Iterator {
     
     //-----------------------------------------------------------------------
     /**
-     * Checks whether there are any more elements in the tree to obtain.
+     * Checks whether there are any more elements in the iteration to obtain.
      * 
      * @return true if elements remain in the iteration
      */
