@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -39,13 +43,14 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * is not always unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/02 23:12:34 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class FixedSizeSortedMap
-        extends AbstractSortedMapDecorator implements SortedMap, BoundedMap {
+        extends AbstractSortedMapDecorator
+        implements SortedMap, BoundedMap, Serializable {
 
     /**
      * Factory method to create a fixed size sorted map.
@@ -68,13 +73,21 @@ public class FixedSizeSortedMap
         super(map);
     }
 
+    //-----------------------------------------------------------------------
     /**
-     * Gets the map being decorated.
-     * 
-     * @return the decorated map
+     * Write the map out using a custom routine.
      */
-    protected SortedMap getSortedMap() {
-        return (SortedMap) map;
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------

@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/02 23:12:34 $
  * 
  * @author Stephen Colebourne
  */
@@ -65,4 +65,33 @@ public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
         return false;
     }
 
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+    
+    public String[] ignoredTests() {
+        // TreeMap has a bug (it doesn't deserialize SubMaps properly), thus ignore...
+        return new String [] {
+            "TestFixedSizeSortedMap.bulkTestHeadMap.testEmptyMapCompatibility",
+            "TestFixedSizeSortedMap.bulkTestHeadMap.testFullMapCompatibility",
+            "TestFixedSizeSortedMap.bulkTestHeadMap.testSerializeDeserializeThenCompare",
+            "TestFixedSizeSortedMap.bulkTestTailMap.testEmptyMapCompatibility",
+            "TestFixedSizeSortedMap.bulkTestTailMap.testFullMapCompatibility",
+            "TestFixedSizeSortedMap.bulkTestTailMap.testSerializeDeserializeThenCompare",
+            "TestFixedSizeSortedMap.bulkTestSubMap.testEmptyMapCompatibility",
+            "TestFixedSizeSortedMap.bulkTestSubMap.testFullMapCompatibility",
+            "TestFixedSizeSortedMap.bulkTestSubMap.testSerializeDeserializeThenCompare",
+        };
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/FixedSizeSortedMap.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/FixedSizeSortedMap.fullCollection.version3.1.obj");
+//    }
 }
