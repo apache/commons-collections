@@ -14,19 +14,59 @@
    See the License for the specific language governing permissions and
    limitations under the License.
   -->
-
 <project>
-  <extend>${common.project.xml.file}</extend>
-  
-  <name>Collections</name>
+  <pomVersion>3</pomVersion>
   <id>commons-collections</id>
   <currentVersion>3.1-dev</currentVersion>
-
   <inceptionYear>2001</inceptionYear>
-  <logo>/images/logo.png</logo>
+  <name>Collections</name>
   <shortDescription>Commons Collections</shortDescription>
   <description>Types that extend and augment the Java Collections Framework.</description>
+  <logo>/images/logo.png</logo>
+   
+  <url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
+  <package>org.apache.commons.${pom.artifactId.substring(8)}</package>
+
+  <organization>
+    <name>The Apache Software Foundation</name>
+    <url>http://jakarta.apache.org</url>
+    <logo>http://jakarta.apache.org/images/original-jakarta-logo.gif</logo>
+  </organization>
+
+  <licenses>
+	<license>
+    	<name>The Apache Software License, Version 2.0</name>
+    	<url>/LICENSE.txt</url>
+    	<distribution>repo</distribution>
+	</license>
+  </licenses>
   
+  <gumpRepositoryId>jakarta</gumpRepositoryId>
+  <issueTrackingUrl>http://issues.apache.org/bugzilla/</issueTrackingUrl>
+  <siteAddress>jakarta.apache.org</siteAddress>
+  <siteDirectory>/www/jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</siteDirectory>
+  <distributionDirectory>/www/jakarta.apache.org/builds/jakarta-commons/${pom.artifactId.substring(8)}/</distributionDirectory>
+  
+  <repository>
+    <connection>scm:cvs:pserver:anoncvs@cvs.apache.org:/home/cvspublic:jakarta-commons/${pom.artifactId.substring(8)}</connection>
+    <url>http://cvs.apache.org/viewcvs/jakarta-commons/${pom.artifactId.substring(8)}/</url>
+  </repository>
+  
+  <mailingLists>
+    <mailingList>
+      <name>Commons Dev List</name>
+      <subscribe>commons-dev-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
+    </mailingList>
+    <mailingList>
+      <name>Commons User List</name>
+      <subscribe>commons-user-subscribe@jakarta.apache.org</subscribe>
+      <unsubscribe>commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
+      <archive>http://nagoya.apache.org/eyebrowse/SummarizeList?listName=commons-user@jakarta.apache.org</archive>
+    </mailingList>
+  </mailingLists>
+
   <developers>
     <developer>
       <name>Stephen Colebourne</name>
@@ -260,12 +300,29 @@
   </dependencies>
 
   <build>
-    <unitTest>
-      <includes>
-        <include>org/apache/commons/collections/TestAllPackages.java</include>
-      </includes>
-    </unitTest>
-  </build>
+    	<nagEmailAddress>commons-dev@jakarta.apache.org</nagEmailAddress>
+    	<sourceDirectory>src/java</sourceDirectory>
+    	<unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+    	<integrationUnitTestSourceDirectory/>
+    	<aspectSourceDirectory/>
+
+    	<!-- Unit test classes -->
+    	<unitTest>
+      		<includes>
+        		<include>org/apache/commons/collections/TestAllPackages.java</include>
+      		</includes>
+   		</unitTest>
+
+    	<!-- Integration unit test classes -->
+    	<integrationUnitTestPatterns></integrationUnitTestPatterns>
+    
+    	<resources>
+      		<includes>
+       			<include>**/*.properties</include>
+      		</includes>
+    	</resources>
+    	<jars/>
+  	</build>
 
   <reports>
      <report>maven-changelog-plugin</report>
