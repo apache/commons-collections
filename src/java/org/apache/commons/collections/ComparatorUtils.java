@@ -72,7 +72,7 @@ import org.apache.commons.collections.comparators.TransformingComparator;
  * <p>
  * Note that <i>every</i> method in this class allows you to specify
  * <code>null</code> instead of a comparator, in which case 
- * {@link #NATURAL} will be used.
+ * {@link #NATURAL_COMPARATOR} will be used.
  *
  * @since 2.1
  * @author Paul Jack
@@ -92,7 +92,7 @@ public class ComparatorUtils {
      *
      * @see ComparableComparator#getInstance
      */
-    final public static Comparator NATURAL = ComparableComparator.getInstance();
+    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.getInstance();
 
     /**
      * Gets a comparator that uses the natural order of the objects.
@@ -100,7 +100,7 @@ public class ComparatorUtils {
      * @return  a comparator which uses natural order
      */
     public static Comparator naturalComparator() {
-        return NATURAL;
+        return NATURAL_COMPARATOR;
     }
 
     /**
@@ -166,7 +166,7 @@ public class ComparatorUtils {
      */
     public static Comparator reversedComparator(Comparator comparator) {
         if (comparator == null) {
-            comparator = NATURAL;
+            comparator = NATURAL_COMPARATOR;
         }
         return new ReverseComparator(comparator);
     }
@@ -184,7 +184,7 @@ public class ComparatorUtils {
      */
     public static Comparator nullLowComparator(Comparator comparator) {
         if (comparator == null) {
-            comparator = NATURAL;
+            comparator = NATURAL_COMPARATOR;
         }
         return new NullComparator(comparator, false);
     }
@@ -202,7 +202,7 @@ public class ComparatorUtils {
      */
     public static Comparator nullHighComparator(Comparator comparator) {
         if (comparator == null) {
-            comparator = NATURAL;
+            comparator = NATURAL_COMPARATOR;
         }
         return new NullComparator(comparator, true);
     }
@@ -221,7 +221,7 @@ public class ComparatorUtils {
      */
     public static Comparator transformedComparator(Comparator comparator, Transformer transformer) {
         if (comparator == null) {
-            comparator = NATURAL;
+            comparator = NATURAL_COMPARATOR;
         }
         return new TransformingComparator(transformer, comparator);
     }
@@ -237,7 +237,7 @@ public class ComparatorUtils {
      */
     public static Object min(Object o1, Object o2, Comparator comparator) {
         if (comparator == null) {
-            comparator = NATURAL;
+            comparator = NATURAL_COMPARATOR;
         }
         int c = comparator.compare(o1, o2);
         return (c < 0) ? o1 : o2;
@@ -254,7 +254,7 @@ public class ComparatorUtils {
      */
     public static Object max(Object o1, Object o2, Comparator comparator) {
         if (comparator == null) {
-            comparator = NATURAL;
+            comparator = NATURAL_COMPARATOR;
         }
         int c = comparator.compare(o1, o2);
         return (c > 0) ? o1 : o2;
