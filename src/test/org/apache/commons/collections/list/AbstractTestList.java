@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/AbstractTestList.java,v 1.3 2003/12/11 00:16:02 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/AbstractTestList.java,v 1.4 2003/12/24 01:13:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,6 +74,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.iterators.AbstractTestListIterator;
 
 /**
  * Abstract test class for {@link java.util.List} methods and contracts.
@@ -86,7 +87,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.3 $ $Date: 2003/12/11 00:16:02 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/24 01:13:13 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -1225,4 +1226,41 @@ public abstract class AbstractTestList extends AbstractTestCollection {
        }
    }
 
+   //-----------------------------------------------------------------------
+   public BulkTest bulkTestListIterator() {
+       return new TestListIterator();
+   }
+    
+   public class TestListIterator extends AbstractTestListIterator {
+       public TestListIterator() {
+           super("TestListIterator");
+       }
+        
+       public Object addSetValue() {
+           return AbstractTestList.this.getOtherElements()[0];
+       }
+        
+       public boolean supportsRemove() {
+           return AbstractTestList.this.isRemoveSupported();
+       }
+
+       public boolean supportsAdd() {
+           return AbstractTestList.this.isAddSupported();
+       }
+
+       public boolean supportsSet() {
+           return AbstractTestList.this.isSetSupported();
+       }
+
+       public ListIterator makeEmptyListIterator() {
+           resetEmpty();
+           return ((List) AbstractTestList.this.collection).listIterator();
+       }
+
+       public ListIterator makeFullListIterator() {
+           resetFull();
+           return ((List) AbstractTestList.this.collection).listIterator();
+       }
+   }
+    
 }
