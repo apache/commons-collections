@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.16 2002/02/20 23:33:23 morgand Exp $
- * $Revision: 1.16 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.1 2002/02/20 23:33:23 morgand Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/02/20 23:33:23 $
  *
  * ====================================================================
@@ -58,51 +58,29 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
+
+import java.util.Map;
 
 import junit.framework.*;
 
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.16 2002/02/20 23:33:23 morgand Exp $
+ * Test cases for BeanMap
+ * 
+ * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestBeanMap extends TestMap {
+
+    public TestBeanMap(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
-        suite.addTest(TestArrayList.suite());
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestHashMap.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestSingletonIterator.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTreeMap.suite());
-        return suite;
+        return new TestSuite(TestBeanMap.class);
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    public Map makeMap() {
+        return new BeanMap();
     }
+
 }
