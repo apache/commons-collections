@@ -85,7 +85,6 @@
     </contributor>
     <contributor>
       <name>Federico Barbieri</name>
-      <email>nospam@abc.fede@apache.org@</email>
     </contributor>
     <contributor>
       <name>Arron Bates</name>
@@ -104,30 +103,24 @@
     </contributor>
     <contributor>
       <name>Dave Bryson</name>
-      <email>nospam@abc.daveb@miceda-data.com@</email>
     </contributor>
     <contributor>
       <name>Julien Buret</name>
-      <email>nospam@abc.jburet@yahoo.com@</email>
     </contributor>
     <contributor>
       <name>Jonathan Carlson</name>
-      <email>nospam@abc.joncrlsn@users.sf.net@</email>
     </contributor>
     <contributor>
       <name>Ram Chidambaram</name>
-      <email>nospam@abc.ram.chidambaram@telus.com@</email>
     </contributor>
     <contributor>
       <name>Peter Donald</name>
-      <email>nospam@abc.donaldp@apache.org@</email>
     </contributor>
     <contributor>
       <name>Steve Downey</name>
     </contributor>
     <contributor>
       <name>Rich Dougherty</name>
-      <email>nospam@abc.rich@rd.gen.nz@</email>
     </contributor>
     <contributor>
       <name>Stefano Fornari</name>
@@ -137,25 +130,24 @@
     </contributor>
     <contributor>
       <name>Gerhard Froehlich</name>
-      <email>nospam@abc.g-froehlich@gmx.de@</email>
     </contributor>
     <contributor>
       <name>Paul Jack</name>
     </contributor>
     <contributor>
       <name>Kent Johnson</name>
-      <email>nospam@abc.kjohnson@transparent.com@</email>
     </contributor>
     <contributor>
       <name>Marc Johnson</name>
-      <email>nospam@abc.marcj@users.sourceforge.net@</email>
     </contributor>
     <contributor>
       <name>Nissim Karpenstein</name>
-      <email>nospam@abc.nissim@nksystems.com@</email>
     </contributor>
     <contributor>
       <name>Mohan Kishore</name>
+    </contributor>
+    <contributor>
+      <name>Simon Kitching</name>
     </contributor>
     <contributor>
       <name>Peter KoBek</name>
@@ -165,37 +157,30 @@
     </contributor>
     <contributor>
       <name>Berin Loritsch</name>
-      <email>nospam@abc.bloritsch@apache.org@</email>
     </contributor>
     <contributor>
       <name>Stefano Mazzocchi</name>
-      <email>nospam@abc.stefano@apache.org@</email>
     </contributor>
     <contributor>
       <name>Leon Messerschmidt</name>
-      <email>nospam@abc.leon@opticode.co.za@</email>
     </contributor>
     <contributor>
       <name>Mauricio S. Moura</name>
     </contributor>
     <contributor>
       <name>Kasper Nielsen</name>
-      <email>nospam@abc.knielsen@apache.org@</email>
     </contributor>
     <contributor>
       <name>Ilkka Priha</name>
-      <email>nospam@abc.ipriha@surfeu.fi@</email>
     </contributor>
     <contributor>
       <name>Herve Quiroz</name>
     </contributor>
     <contributor>
       <name>Daniel Rall</name>
-      <email>nospam@abc.dlr@finemaltcoding.com@</email>
     </contributor>
     <contributor>
       <name>Henning P. Schmiedehausen</name>
-      <email>nospam@abc.hps@intermeta.de@</email>
     </contributor>
     <contributor>
       <name>Howard Lewis Ship</name>
@@ -205,11 +190,9 @@
     </contributor>
     <contributor>
       <name>Jon S. Stevens </name>
-      <email>nospam@abc.jon@latchkey.com@</email>
     </contributor>
     <contributor>
       <name>James Strachan</name>
-      <email>nospam@abc.jstrachan@apache.org@</email>
     </contributor>
     <contributor>
       <name>Leo Sutic</name>
@@ -219,7 +202,6 @@
     </contributor>
     <contributor>
       <name>Neil O'Toole</name>
-      <email>nospam@abc.neilotoole@users.sourceforge.net@</email>
     </contributor>
     <contributor>
       <name>Jeff Turner</name>
@@ -238,7 +220,6 @@
     </contributor>
     <contributor>
       <name>Jason van Zyl</name>
-      <email>nospam@abc.jvanzyl@apache.org@</email>
     </contributor>
   </contributors>
 

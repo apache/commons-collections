@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.21 2003/08/31 17:28:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.22 2003/09/27 10:54:06 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,7 +62,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.21 $ $Date: 2003/08/31 17:28:41 $
+ * @version $Revision: 1.22 $ $Date: 2003/09/27 10:54:06 $
  * @author Rodney Waldhoff
  */
 public class TestAll extends TestCase {
@@ -113,13 +113,6 @@ public class TestAll extends TestCase {
         suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
         suite.addTest(org.apache.commons.collections.primitives.decorators.TestAll.suite());
         
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
         return suite;
     }
 }
