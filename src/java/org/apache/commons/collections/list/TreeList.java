@@ -17,6 +17,12 @@ package org.apache.commons.collections.list;
 
 import java.util.AbstractList;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
+
+import org.apache.commons.collections.OrderedIterator;
 
 /**
  * A <code>List</code> implementation that is optimised for fast insertions and
@@ -27,33 +33,33 @@ import java.util.Collection;
  * than both an <code>ArrayList</code> and a <code>LinkedList</code> where elements
  * are inserted and removed repeatedly from anywhere in the list.
  * <p>
- * The trade-off versus <code>ArrayList</code> is memory usage. <code>TreeList</code>
- * stores each entry in an object which uses up more memory. Also, <code>ArrayList</code>
- * is faster if additions and removals only occur at the end of the list, not in the middle.
- * <p>
- * The trade-off versus <code>LinkedList</code> is based on how you use the list.
- * If additions and removals only occur at the start or end of the list, not in the
- * middle then <code>LinkedList</code> is faster.
- * <p>
- * The following performance statistics are indicative of this class:
+ * The following relative performance statistics are indicative of this class:
  * <pre>
- *           add   insert      get
- * TreeList  300      501      110
- * ArrayList  70    20390       20
- * LinkedList 50   226636   279742
+ *              get  add  insert  iterate  remove
+ * TreeList       3    5       1       2       1
+ * ArrayList      1    1      40       1      40
+ * LinkedList  5800    1     350       2     325
  * </pre>
+ * <code>ArrayList</code> is a good general purpose list implementation.
+ * It is faster than <code>TreeList</code> for most operations except inserting
+ * and removing in the middle of the list. <code>ArrayList</code> also uses less
+ * memory as <code>TreeList</code> uses one object per entry.
+ * <p>
+ * <code>LinkedList</code> is rarely a good choice of implementation.
+ * <code>TreeList</code> is almost always a good replacement for it, although it
+ * does use sligtly more memory.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/05/10 19:59:03 $
+ * @version $Revision: 1.2 $ $Date: 2004/05/12 23:24:45 $
  *
  * @author Joerg Schmuecker
  * @author Stephen Colebourne
  */
 public class TreeList extends AbstractList {
-//    Add; insert; get
-//    tree   = 980;170;50;
-//    array  = 280;6920;0;
-//    linked = 380;55480;55800;
+//    add; toArray; iterator; insert; get; indexOf; remove
+//    TreeList = 1260;7360;3080;  160;   170;3400;  170;
+//   ArrayList =  220;1480;1760; 6870;    50;1540; 7200;
+//  LinkedList =  270;7360;3350;55860;290720;2910;55200;
 
     /** The root node in the AVL tree */
     private AVLNode root;
@@ -106,13 +112,33 @@ public class TreeList extends AbstractList {
      * 
      * @return an iterator over the list
      */
-//    public Iterator iterator() {
-//        // override to go 65% faster
-//        if (size() == 0) {
-//            return IteratorUtils.EMPTY_ITERATOR;
-//        }
-//        return new TreeIterator(this);
-//    }
+    public Iterator iterator() {
+        // override to go 75% faster
+        return listIterator(0);
+    }
+
+    /**
+     * Gets a ListIterator over the list.
+     * 
+     * @return the new iterator
+     */
+    public ListIterator listIterator() {
+        // override to go 75% faster
+        return listIterator(0);
+    }
+
+    /**
+     * Gets a ListIterator over the list.
+     * 
+     * @param fromIndex  the index to start from
+     * @return the new iterator
+     */
+    public ListIterator listIterator(int fromIndex) {
+        // override to go 75% faster
+        // cannot use IteratorUtils.EMPTY_ITERATOR as iterator.add() must work
+        checkInterval(fromIndex, 0, size());
+        return new TreeListIterator(this, fromIndex);
+    }
 
     /**
      * Searches for the index of an object in the list.
@@ -142,7 +168,7 @@ public class TreeList extends AbstractList {
      * @return the list as an array
      */
     public Object[] toArray() {
-        // override to go 40% faster
+        // override to go 20% faster
         Object[] array = new Object[size()];
         if (root != null) {
             root.toArray(array, root.relativePosition);
@@ -158,9 +184,10 @@ public class TreeList extends AbstractList {
      * @param obj  the element to add
      */
     public void add(int index, Object obj) {
+        modCount++;
         checkInterval(index, 0, size());
         if (root == null) {
-            root = new AVLNode(index, obj);
+            root = new AVLNode(index, obj, null, null);
         } else {
             root = root.insert(index, obj);
         }
@@ -190,6 +217,7 @@ public class TreeList extends AbstractList {
      * @return the previous object at that index
      */
     public Object remove(int index) {
+        modCount++;
         checkInterval(index, 0, size() - 1);
         Object result = get(index);
         root = root.remove(index);
@@ -201,6 +229,7 @@ public class TreeList extends AbstractList {
      * Clears the list, removing all entries.
      */
     public void clear() {
+        modCount++;
         root = null;
         size = 0;
     }
@@ -226,29 +255,44 @@ public class TreeList extends AbstractList {
      * <p>
      * This node contains the real work.
      * TreeList is just there to implement {@link java.util.List}.
+     * The nodes don't know the index of the object they are holding.  They
+     * do know however their position relative to their parent node.
+     * This allows to calculate the index of a node while traversing the tree.
+     * <p>
+     * The Faedelung calculation stores a flag for both the left and right child
+     * to indicate if they are a child (false) or a link as in linked list (true).
      */
     static class AVLNode {
-        /** The left child node */
+        /** The left child node or the predecessor if {@link #leftIsPrevious}.*/
         private AVLNode left;
-        /** The right child node */
+        /** Flag indicating that left reference is not a subtree but the predecessor. */
+        private boolean leftIsPrevious;
+        /** The right child node or the successor if {@link #rightIsNext}. */
         private AVLNode right;
-        /** How many levels of left/right are below this one */
+        /** Flag indicating that right reference is not a subtree but the successor. */
+        private boolean rightIsNext;
+        /** How many levels of left/right are below this one. */
         private int height;
-        /** The relative position, root holds absolute position */
+        /** The relative position, root holds absolute position. */
         private int relativePosition;
-        /** The stored element */
+        /** The stored element. */
         private Object value;
 
         /**
          * Constructs a new node with a relative position.
          * 
          * @param relativePosition  the relative position of the node
-         * @param obj  the element
+         * @param obj  the value for the ndoe
+         * @param rightFollower the node with the value following this one
+         * @param leftFollower the node with the value leading this one
          */
-        public AVLNode(int relativePosition, Object obj) {
-            super();
+        private AVLNode(int relativePosition, Object obj, AVLNode rightFollower, AVLNode leftFollower) {
             this.relativePosition = relativePosition;
-            this.value = obj;
+            value = obj;
+            rightIsNext = true;
+            leftIsPrevious = true;
+            right = rightFollower;
+            left = leftFollower;
         }
 
         /**
@@ -280,9 +324,9 @@ public class TreeList extends AbstractList {
                 return this;
             }
 
-            AVLNode nextNode = ((indexRelativeToMe < 0) ? left : right);
+            AVLNode nextNode = ((indexRelativeToMe < 0) ? getLeftSubTree() : getRightSubTree());
             if (nextNode == null) {
-                int i = 1;
+                return null;
             }
             return nextNode.get(indexRelativeToMe);
         }
@@ -291,7 +335,7 @@ public class TreeList extends AbstractList {
          * Locate the index that contains the specified object.
          */
         int indexOf(Object object, int index) {
-            if (left != null) {
+            if (getLeftSubTree() != null) {
                 int result = left.indexOf(object, index + left.relativePosition);
                 if (result != -1) {
                     return result;
@@ -300,7 +344,7 @@ public class TreeList extends AbstractList {
             if (value == null ? value == object : value.equals(object)) {
                 return index;
             }
-            if (right != null) {
+            if (getRightSubTree() != null) {
                 return right.indexOf(object, index + right.relativePosition);
             }
             return -1;
@@ -308,64 +352,50 @@ public class TreeList extends AbstractList {
 
         /**
          * Stores the node and its children into the array specified.
+         * 
+         * @param array the array to be filled
+         * @param index the index of this node
          */
         void toArray(Object[] array, int index) {
             array[index] = value;
-            if (left != null) {
+            if (getLeftSubTree() != null) {
                 left.toArray(array, index + left.relativePosition);
             }
-            if (right != null) {
+            if (getRightSubTree() != null) {
                 right.toArray(array, index + right.relativePosition);
             }
         }
 
-        //-----------------------------------------------------------------------
         /**
-         * Balances according to the AVL algorithm.
+         * Gets the next node in the list after this one.
+         * 
+         * @return the next node
          */
-        private AVLNode balance() {
-            switch (heightRightMinusLeft()) {
-                case 1 :
-                case 0 :
-                case -1 :
-                    return this;
-                case -2 :
-                    if (left.heightRightMinusLeft() > 0) {
-                        setLeft(left.rotateLeft());
-                    }
-                    return rotateRight();
-                case 2 :
-                    if (right.heightRightMinusLeft() < 0) {
-                        setRight(right.rotateRight());
-                    }
-                    return rotateLeft();
-                default :
-                    throw new RuntimeException("tree inconsistent!");
+        AVLNode next() {
+            if (rightIsNext || right == null) {
+                return right;
             }
+            return right.min();
         }
 
         /**
-         * Returns the height of the node or -1 if the node is null.
+         * Gets the node in the list before this one.
          * 
-         * Convenience method.
+         * @return the previous node
          */
-        private int getHeight(AVLNode n) {
-            return (n == null ? -1 : n.height);
+        AVLNode previous() {
+            if (leftIsPrevious || left == null) {
+                return left;
+            }
+            return left.max();
         }
 
         /**
-         * Returns the height difference
-         */
-        private int heightRightMinusLeft() {
-            return getHeight(right) - getHeight(left);
-        }
-
-        /**
-         * Inserts a node at the position index.
+         * Inserts a node at the position index.  
          * 
-         * @param index  is the index of the position relative to the position of 
-         *  the parent node.
-         * @param obj  is the object to be stored in the position.
+         * @param index is the index of the position relative to the position of 
+         * the parent node.
+         * @param obj is the object to be stored in the position.
          */
         AVLNode insert(int index, Object obj) {
             int indexRelativeToMe = index - relativePosition;
@@ -380,12 +410,12 @@ public class TreeList extends AbstractList {
         private AVLNode insertOnLeft(int indexRelativeToMe, Object obj) {
             AVLNode ret = this;
 
-            if (left == null) {
-                left = new AVLNode(-1, obj);
+            if (getLeftSubTree() == null) {
+                setLeft(new AVLNode(-1, obj, this, left), null);
             } else {
-                left = left.insert(indexRelativeToMe, obj);
-
+                setLeft(left.insert(indexRelativeToMe, obj), null);
             }
+
             if (relativePosition >= 0) {
                 relativePosition++;
             }
@@ -397,11 +427,10 @@ public class TreeList extends AbstractList {
         private AVLNode insertOnRight(int indexRelativeToMe, Object obj) {
             AVLNode ret = this;
 
-            if (right == null) {
-                right = new AVLNode(+1, obj);
+            if (getRightSubTree() == null) {
+                setRight(new AVLNode(+1, obj, right, this), null);
             } else {
-                right = right.insert(indexRelativeToMe, obj);
-
+                setRight(right.insert(indexRelativeToMe, obj), null);
             }
             if (relativePosition < 0) {
                 relativePosition--;
@@ -411,77 +440,44 @@ public class TreeList extends AbstractList {
             return ret;
         }
 
-        private void recalcHeight() {
-            height = Math.max(left == null ? -1 : left.height, right == null ? -1 : right.height) + 1;
+        //-----------------------------------------------------------------------
+        /**
+         * Gets the left node, returning null if its a faedelung.
+         */
+        private AVLNode getLeftSubTree() {
+            return (leftIsPrevious ? null : left);
         }
 
-        private AVLNode rotateLeft() {
-            AVLNode newTop = right;
-            AVLNode movedNode = right.left;
-
-            int newTopPosition = relativePosition + getOffset(right);
-            int myNewPosition = -right.relativePosition;
-            int movedPosition = getOffset(right) + getOffset(movedNode);
-
-            setRight(right.left);
-            newTop.setLeft(this);
-
-            setOffset(newTop, newTopPosition);
-            setOffset(this, myNewPosition);
-            setOffset(movedNode, movedPosition);
-            return newTop;
+        /**
+         * Gets the right node, returning null if its a faedelung.
+         */
+        private AVLNode getRightSubTree() {
+            return (rightIsNext ? null : right);
         }
 
-        private int getOffset(AVLNode node) {
-            if (node == null) {
-                return 0;
-            }
-            return node.relativePosition;
+        /**
+         * Gets the rightmost child of this node.
+         * 
+         * @return the rightmost child (greatest index)
+         */
+        private AVLNode max() {
+            return (getRightSubTree() == null) ? this : right.max();
         }
 
-        private AVLNode rotateRight() {
-            AVLNode newTop = left;
-            AVLNode movedNode = left.right;
-
-            int newTopPosition = relativePosition + getOffset(left);
-            int myNewPosition = -left.relativePosition;
-            int movedPosition = getOffset(left) + getOffset(movedNode);
-
-            setLeft(left.right);
-            newTop.setRight(this);
-
-            setOffset(newTop, newTopPosition);
-            setOffset(this, myNewPosition);
-            setOffset(movedNode, movedPosition);
-            return newTop;
-
-        }
-
-        private void setLeft(AVLNode node) {
-            left = node;
-            recalcHeight();
-        }
-
-        private int setOffset(AVLNode node, int newOffest) {
-            if (node == null) {
-                return 0;
-            }
-            int oldOffset = getOffset(node);
-            node.relativePosition = newOffest;
-            return oldOffset;
-        }
-
-        private void setRight(AVLNode node) {
-            right = node;
-            recalcHeight();
+        /**
+         * Gets the leftmost child of this node.
+         * 
+         * @return the leftmost child (smallest index)
+         */
+        private AVLNode min() {
+            return (getLeftSubTree() == null) ? this : left.min();
         }
 
         /**
          * Removes the node at a given position.
          * 
-         * @param index  is the index of the element to be removed relative to
-         *  the position of the parent node of the current node.
-         * @return the new root of the tree
+         * @param index is the index of the element to be removed relative to the position of 
+         * the parent node of the current node.
          */
         AVLNode remove(int index) {
             int indexRelativeToMe = index - relativePosition;
@@ -490,12 +486,12 @@ public class TreeList extends AbstractList {
                 return removeSelf();
             }
             if (indexRelativeToMe > 0) {
-                right = right.remove(indexRelativeToMe);
+                setRight(right.remove(indexRelativeToMe), right.right);
                 if (relativePosition < 0) {
                     relativePosition++;
                 }
             } else {
-                left = left.remove(indexRelativeToMe);
+                setLeft(left.remove(indexRelativeToMe), left.left);
                 if (relativePosition > 0) {
                     relativePosition--;
                 }
@@ -504,28 +500,62 @@ public class TreeList extends AbstractList {
             return balance();
         }
 
+        private AVLNode removeMax() {
+            if (getRightSubTree() == null) {
+                return removeSelf();
+            }
+            setRight(right.removeMax(), right.right);
+            if (relativePosition < 0) {
+                relativePosition++;
+            }
+            recalcHeight();
+            return balance();
+        }
+
+        private AVLNode removeMin() {
+            if (getLeftSubTree() == null) {
+                return removeSelf();
+            }
+            setLeft(left.removeMin(), left.left);
+            if (relativePosition > 0) {
+                relativePosition--;
+            }
+            recalcHeight();
+            return balance();
+        }
+
         private AVLNode removeSelf() {
-            if (right == null && left == null)
+            if (getRightSubTree() == null && getLeftSubTree() == null)
                 return null;
-            if (right == null) {
+            if (getRightSubTree() == null) {
                 if (relativePosition > 0) {
                     left.relativePosition += relativePosition + (relativePosition > 0 ? 0 : 1);
                 }
+                left.max().setRight(null, right);
                 return left;
             }
-            if (left == null) {
+            if (getLeftSubTree() == null) {
                 right.relativePosition += relativePosition - (relativePosition < 0 ? 0 : 1);
+                right.min().setLeft(null, left);
                 return right;
             }
 
             if (heightRightMinusLeft() > 0) {
-                value = right.min().value;
+                AVLNode rightMin = right.min();
+                value = rightMin.value;
+                if (leftIsPrevious) {
+                    left = rightMin.left;
+                }
                 right = right.removeMin();
                 if (relativePosition < 0) {
                     relativePosition++;
                 }
             } else {
-                value = left.max().value;
+                AVLNode leftMax = left.max();
+                value = leftMax.value;
+                if (rightIsNext) {
+                    right = leftMax.right;
+                }
                 left = left.removeMax();
                 if (relativePosition > 0) {
                     relativePosition--;
@@ -535,179 +565,321 @@ public class TreeList extends AbstractList {
             return this;
         }
 
-        private AVLNode removeMin() {
-            if (left == null) {
-                return removeSelf();
+        //-----------------------------------------------------------------------
+        /**
+         * Balances according to the AVL algorithm.
+         */
+        private AVLNode balance() {
+            switch (heightRightMinusLeft()) {
+                case 1 :
+                case 0 :
+                case -1 :
+                    return this;
+                case -2 :
+                    if (left.heightRightMinusLeft() > 0) {
+                        setLeft(left.rotateLeft(), null);
+                    }
+                    return rotateRight();
+                case 2 :
+                    if (right.heightRightMinusLeft() < 0) {
+                        setRight(right.rotateRight(), null);
+                    }
+                    return rotateLeft();
+                default :
+                    throw new RuntimeException("tree inconsistent!");
             }
-            left = left.removeMin();
-            adjustOffsetForRemovalLeft();
+        }
+
+        /**
+         * Gets the relative position.
+         */
+        private int getOffset(AVLNode node) {
+            if (node == null) {
+                return 0;
+            }
+            return node.relativePosition;
+        }
+
+        /**
+         * Sets the relative position.
+         */
+        private int setOffset(AVLNode node, int newOffest) {
+            if (node == null) {
+                return 0;
+            }
+            int oldOffset = getOffset(node);
+            node.relativePosition = newOffest;
+            return oldOffset;
+        }
+
+        /**
+         * Sets the height by calculation.
+         */
+        private void recalcHeight() {
+            height = Math.max(
+                getLeftSubTree() == null ? -1 : getLeftSubTree().height,
+                getRightSubTree() == null ? -1 : getRightSubTree().height) + 1;
+        }
+
+        /**
+         * Returns the height of the node or -1 if the node is null.
+         */
+        private int getHeight(AVLNode node) {
+            return (node == null ? -1 : node.height);
+        }
+
+        /**
+         * Returns the height difference right - left
+         */
+        private int heightRightMinusLeft() {
+            return getHeight(getRightSubTree()) - getHeight(getLeftSubTree());
+        }
+
+        private AVLNode rotateLeft() {
+            AVLNode newTop = right; // can't be faedelung!
+            AVLNode movedNode = getRightSubTree().getLeftSubTree();
+
+            int newTopPosition = relativePosition + getOffset(newTop);
+            int myNewPosition = -newTop.relativePosition;
+            int movedPosition = getOffset(newTop) + getOffset(movedNode);
+
+            setRight(movedNode, newTop);
+            newTop.setLeft(this, null);
+
+            setOffset(newTop, newTopPosition);
+            setOffset(this, myNewPosition);
+            setOffset(movedNode, movedPosition);
+            return newTop;
+        }
+
+        private AVLNode rotateRight() {
+            AVLNode newTop = left; // can't be faedelung
+            AVLNode movedNode = getLeftSubTree().getRightSubTree();
+
+            int newTopPosition = relativePosition + getOffset(newTop);
+            int myNewPosition = -newTop.relativePosition;
+            int movedPosition = getOffset(newTop) + getOffset(movedNode);
+
+            setLeft(movedNode, newTop);
+            newTop.setRight(this, null);
+
+            setOffset(newTop, newTopPosition);
+            setOffset(this, myNewPosition);
+            setOffset(movedNode, movedPosition);
+            return newTop;
+        }
+
+        private void setLeft(AVLNode node, AVLNode previous) {
+            leftIsPrevious = (node == null);
+            left = (leftIsPrevious ? previous : node);
             recalcHeight();
-            return balance();
         }
 
-        private void adjustOffsetForRemovalLeft() {
-            if (relativePosition > 0) {
-                relativePosition--;
-            }
-        }
-
-        private void adjustOffsetForRemovalRight() {
-            if (relativePosition < 0) {
-                relativePosition++;
-            }
-        }
-
-        private AVLNode min() {
-            return (left == null) ? this : left.min();
-        }
-
-        private AVLNode removeMax() {
-            if (right == null) {
-                return removeSelf();
-            }
-            right = right.removeMax();
-            adjustOffsetForRemovalRight();
+        private void setRight(AVLNode node, AVLNode next) {
+            rightIsNext = (node == null);
+            right = (rightIsNext ? next : node);
             recalcHeight();
-            return balance();
         }
 
-        private AVLNode max() {
-            return (right == null) ? this : right.max();
-        }
+//      private void checkFaedelung() {
+//          AVLNode maxNode = left.max();
+//          if (!maxNode.rightIsFaedelung || maxNode.right != this) {
+//              throw new RuntimeException(maxNode + " should right-faedel to " + this);
+//          }
+//          AVLNode minNode = right.min();
+//          if (!minNode.leftIsFaedelung || minNode.left != this) {
+//              throw new RuntimeException(maxNode + " should left-faedel to " + this);
+//          }
+//      }
+//
+//        private int checkTreeDepth() {
+//            int hright = (getRightSubTree() == null ? -1 : getRightSubTree().checkTreeDepth());
+//            //          System.out.print("checkTreeDepth");
+//            //          System.out.print(this);
+//            //          System.out.print(" left: ");
+//            //          System.out.print(_left);
+//            //          System.out.print(" right: ");
+//            //          System.out.println(_right);
+//
+//            int hleft = (left == null ? -1 : left.checkTreeDepth());
+//            if (height != Math.max(hright, hleft) + 1) {
+//                throw new RuntimeException(
+//                    "height should be max" + hleft + "," + hright + " but is " + height);
+//            }
+//            return height;
+//        }
+//
+//        private int checkLeftSubNode() {
+//            if (getLeftSubTree() == null) {
+//                return 0;
+//            }
+//            int count = 1 + left.checkRightSubNode();
+//            if (left.relativePosition != -count) {
+//                throw new RuntimeException();
+//            }
+//            return count + left.checkLeftSubNode();
+//        }
+//        
+//        private int checkRightSubNode() {
+//            AVLNode right = getRightSubTree();
+//            if (right == null) {
+//                return 0;
+//            }
+//            int count = 1;
+//            count += right.checkLeftSubNode();
+//            if (right.relativePosition != count) {
+//                throw new RuntimeException();
+//            }
+//            return count + right.checkRightSubNode();
+//        }
 
         /**
          * Used for debugging.
          */
         public String toString() {
-            return "AVLNode(" + relativePosition + "," + (left != null) + "," + value + "," + (right != null) + ")";
+            return "AVLNode(" + relativePosition + "," + (left != null) + "," + value +
+                "," + (getRightSubTree() != null) + ", faedelung " + rightIsNext + " )";
         }
-
     }
 
-    //-----------------------------------------------------------------------
-//    /**
-//     * Iterator over the TreeList.
-//     * <p>
-//     * This iterator is good at iteration, but bad at removal.
-//     * Implementing ListIterator would be even more complex, so has been avoided.
-//     */
-//    static class TreeIterator implements Iterator {
-//        /** The parent list */
-//        private final TreeList parent;
-//        /** A stack built up during iteration to avoid each node referencing its parent */
-//        private ArrayStack stack = new ArrayStack();
-//        /** Whether remove is currently allowed */
-//        private boolean canRemoveOrSet;
-//        /** The last node returned */
-//        private AVLNode lastNode;
-//        /** The next index */
-//        private int nextIndex;
-//        
-//        /**
-//         * Constructor.
-//         * 
-//         * @param parent  the parent list
-//         */
-//        TreeIterator(TreeList parent) {
-//            this.parent = parent;
-//        }
-//
-//        private AVLNode findNext() {
-//            AVLNode node = lastNode;
-//            if (node == null) {
-//                node = parent.root;
-//                while (node.left != null) {
-//                    stack.add(node);
-//                    node = node.left;
-//                }
-//                return node;
-//            }
-//            if (node.right != null) {
-//                node = node.right;
-//                while (node.left != null) {
-//                    stack.add(node);
-//                    node = node.left;
-//                }
-//                return node;
-//            }
-//            if (stack.isEmpty()) {
-//                throw new NoSuchElementException();
-//            }
-//            return (AVLNode) stack.pop();
-//        }
-//
-//        public boolean hasNext() {
-//            return (nextIndex < parent.size());
-//        }
-//
-//        public Object next() {
-//            if (hasNext() == false) {
-//                throw new NoSuchElementException();
-//            }
-//            lastNode = findNext();
-//            nextIndex++;
-//            canRemoveOrSet = true;
-//            return lastNode.getValue();
-//        }
-//
-//        public int nextIndex() {
-//            return nextIndex;
-//        }
-//
-////        public boolean hasPrevious() {
-////            return (nextIndex > 0);
-////        }
-////
-////        public Object previous() {
-////            if (hasPrevious() == false) {
-////                throw new NoSuchElementException();
-////            }
-////            return parent.get(nextIndex--);
-////        }
-////
-////        public int previousIndex() {
-////            return nextIndex() - 1;
-////        }
-//
-//        public void remove() {
-//            if (canRemoveOrSet == false) {
-//                throw new IllegalStateException();
-//            }
-//            if (nextIndex == 1) {
-//                parent.remove(--nextIndex);
-//                this.lastNode = null;
-//                this.stack.clear();
-//            } else if (hasNext()) {
-//                AVLNode nextNode = findNext();
-//                parent.remove(--nextIndex);
-//                TreeIterator it = new TreeIterator(parent);
-//                AVLNode node = null;
-//                while (it.hasNext()) {
-//                    it.next();
-//                    if (it.lastNode == nextNode) {
-//                        this.stack = it.stack;
-//                        break;
-//                    }
-//                    node = it.lastNode;
-//                }
-//                this.lastNode = node;
-//            } else {
-//                parent.remove(--nextIndex);
-//                this.lastNode = parent.root.get(parent.size() - 1);
-//                this.stack.clear();
-//            }
-//            canRemoveOrSet = false;
-//        }
-//
-////        public void set(Object obj) {
-////            if (canRemoveOrSet == false) {
-////                throw new IllegalStateException();
-////            }
-////            lastNode.setValue(obj);
-////        }
-////
-////        public void add(Object obj) {
-////        }
-//    }
+    /**
+     * A list iterator over the linked list.
+     */
+    static class TreeListIterator implements ListIterator, OrderedIterator {
+        /** The parent list */
+        protected final TreeList parent;
+        /**
+         * The node that will be returned by {@link #next()}. If this is equal
+         * to {@link AbstractLinkedList#header} then there are no more values to return.
+         */
+        protected AVLNode next;
+        /**
+         * The index of {@link #next}.
+         */
+        protected int nextIndex;
+        /**
+         * The last node that was returned by {@link #next()} or {@link
+         * #previous()}. Set to <code>null</code> if {@link #next()} or {@link
+         * #previous()} haven't been called, or if the node has been removed
+         * with {@link #remove()} or a new node added with {@link #add(Object)}.
+         * Should be accessed through {@link #getLastNodeReturned()} to enforce
+         * this behaviour.
+         */
+        protected AVLNode current;
+        /**
+         * The index of {@link #current}.
+         */
+        protected int currentIndex;
+        /**
+         * The modification count that the list is expected to have. If the list
+         * doesn't have this count, then a
+         * {@link java.util.ConcurrentModificationException} may be thrown by
+         * the operations.
+         */
+        protected int expectedModCount;
+
+        /**
+         * Create a ListIterator for a list.
+         * 
+         * @param parent  the parent list
+         * @param fromIndex  the index to start at
+         */
+        protected TreeListIterator(TreeList parent, int fromIndex) throws IndexOutOfBoundsException {
+            super();
+            this.parent = parent;
+            this.expectedModCount = parent.modCount;
+            this.next = (parent.root == null ? null : parent.root.get(fromIndex));
+            this.nextIndex = fromIndex;
+        }
+
+        /**
+         * Checks the modification count of the list is the value that this
+         * object expects.
+         * 
+         * @throws ConcurrentModificationException If the list's modification
+         * count isn't the value that was expected.
+         */
+        protected void checkModCount() {
+            if (parent.modCount != expectedModCount) {
+                throw new ConcurrentModificationException();
+            }
+        }
+
+        public boolean hasNext() {
+            return (nextIndex < parent.size());
+        }
+
+        public Object next() {
+            checkModCount();
+            if (!hasNext()) {
+                throw new NoSuchElementException("No element at index " + nextIndex + ".");
+            }
+            if (next == null) {
+                next = parent.root.get(nextIndex);
+            }
+            Object value = next.getValue();
+            current = next;
+            currentIndex = nextIndex++;
+            next = next.next();
+            return value;
+        }
+
+        public boolean hasPrevious() {
+            return (nextIndex > 0);
+        }
+
+        public Object previous() {
+            checkModCount();
+            if (!hasPrevious()) {
+                throw new NoSuchElementException("Already at start of list.");
+            }
+            if (next == null) {
+                next = parent.root.get(nextIndex - 1);
+            } else {
+                next = next.previous();
+            }
+            Object value = next.getValue();
+            current = next;
+            currentIndex = --nextIndex;
+            return value;
+        }
+
+        public int nextIndex() {
+            return nextIndex;
+        }
+
+        public int previousIndex() {
+            return nextIndex() - 1;
+        }
+
+        public void remove() {
+            checkModCount();
+            if (current == null) {
+                throw new IllegalStateException();
+            }
+            parent.remove(currentIndex);
+            current = null;
+            currentIndex = -1;
+            nextIndex--;
+            expectedModCount++;
+        }
+
+        public void set(Object obj) {
+            checkModCount();
+            if (current == null) {
+                throw new IllegalStateException();
+            }
+            current.setValue(obj);
+        }
+
+        public void add(Object obj) {
+            checkModCount();
+            parent.add(nextIndex, obj);
+            current = null;
+            currentIndex = -1;
+            nextIndex++;
+            expectedModCount++;
+        }
+    }
 
 }

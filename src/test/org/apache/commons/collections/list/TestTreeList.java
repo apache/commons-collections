@@ -25,7 +25,7 @@ import org.apache.commons.collections.BulkTest;
  * JUnit tests
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/05/10 19:59:03 $
+ * @version $Revision: 1.2 $ $Date: 2004/05/12 23:24:44 $
  *
  * @author Joerg Schmuecker
  */
@@ -37,15 +37,14 @@ public class TestTreeList extends AbstractTestList {
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(suite());
-//        System.out.println("              add; insert; get; indexOf; remove");
+//        System.out.println("         add; toArray; iterator; insert; get; indexOf; remove");
 //        System.out.print("   TreeList = ");
 //        benchmark(new TreeList());
 //        System.out.print("\n  ArrayList = ");
 //        benchmark(new java.util.ArrayList());
 //        System.out.print("\n LinkedList = ");
-//        benchmark(new NodeCachingLinkedList());
-
 //        benchmark(new java.util.LinkedList());
+//        benchmark(new NodeCachingLinkedList());
     }
 
     public static Test suite() {
@@ -83,7 +82,7 @@ public class TestTreeList extends AbstractTestList {
         System.out.print(System.currentTimeMillis() - start + ";");
         
         start = System.currentTimeMillis();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 50000; i++) {
             int j = (int) (Math.random() * 110000);
             l.get(j);
         }
