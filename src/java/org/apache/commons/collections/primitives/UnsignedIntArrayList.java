@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedIntArrayList.java,v 1.8 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedIntArrayList.java,v 1.9 2003/04/09 06:44:34 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -71,8 +71,9 @@ import java.io.Serializable;
  * than a {@link java.util.ArrayList} and offers better compile-time type
  * checking.
  *
- * @version $Revision: 1.8 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.9 $ $Date: 2003/04/09 06:44:34 $
  * @author Rodney Waldhoff 
+ * @deprecated use ArrayUnsignedIntList or another LongList implementation instead.
  */
 public class UnsignedIntArrayList extends AbstractLongArrayList implements Serializable {
 
