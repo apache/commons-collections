@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SingletonIterator.java,v 1.5 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SingletonIterator.java,v 1.6 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -68,21 +68,38 @@ import java.util.NoSuchElementException;
   *
   * @since 2.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @version $Revision: 1.5 $
+  * @version $Revision: 1.6 $
   */
 public class SingletonIterator implements Iterator {
 
     private boolean first = true;
     private Object object;
     
+    /**
+     *  Constructs a new <Code>SingletonIterator</Code>.
+     *
+     *  @param object  the single object to return from the iterator
+     */
     public SingletonIterator(Object object) {
         this.object = object;
     }
 
+    /**
+     *  Returns true if the single object hasn't been returned yet.
+     * 
+     *  @return true if the single object hasn't been returned yet
+     */
     public boolean hasNext() {
         return first;
     }
 
+    /**
+     *  Returns the single object if it hasn't been returned yet.
+     *
+     *  @return the single object
+     *  @throws NoSuchElementException if the single object has already been
+     *    returned
+     */
     public Object next() {
         if (! first ) {
             throw new NoSuchElementException();
@@ -93,6 +110,11 @@ public class SingletonIterator implements Iterator {
         return answer;
     }
 
+    /**
+     *  Throws {@link UnsupportedOperationException}.
+     *
+     *  @throws UnsupportedOperationException always
+     */
     public void remove() {
         throw new UnsupportedOperationException( "remove() is not supported by this iterator" );
     }

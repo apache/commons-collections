@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.14 2002/06/20 02:51:18 bayard Exp $
- * $Revision: 1.14 $
- * $Date: 2002/06/20 02:51:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.15 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.15 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import java.util.NoSuchElementException;
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
   * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
-  * @version $Revision: 1.14 $
+  * @version $Revision: 1.15 $
   */
 public class ArrayIterator implements Iterator {
     
@@ -166,10 +166,23 @@ public class ArrayIterator implements Iterator {
 
     // Iterator interface
     //-------------------------------------------------------------------------
+
+    /**
+     *  Returns true if there are more elements to return from the array.
+     *
+     *  @return true if there is a next element to return
+     */
     public boolean hasNext() {
         return index < length;
     }
 
+    /**
+     *  Returns the next element in the array.
+     *
+     *  @return the next element in the array
+     *  @throws NoSuchElementException if all the elements in the array
+     *    have already been returned
+     */
     public Object next() {
         if(!hasNext()) {
             throw new NoSuchElementException();
@@ -177,6 +190,11 @@ public class ArrayIterator implements Iterator {
         return Array.get( array, index++ );
     }
 
+    /**
+     *  Throws {@link UnsupportedOperationException}.
+     *
+     *  @throws UnsupportedOperationException always
+     */
     public void remove() {
         throw new UnsupportedOperationException( "remove() method is not supported" );
     }

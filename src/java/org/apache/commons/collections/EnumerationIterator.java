@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/EnumerationIterator.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/EnumerationIterator.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -79,14 +79,31 @@ public class EnumerationIterator implements Iterator {
 
     private Object last;
     
+    /**
+     *  Constructs a new <Code>EnumerationIterator</Code> that will not
+     *  function until {@link #setEnumeration(Enumeration)} is called.
+     */
     public EnumerationIterator() {
         this(null, null);
     }
-    
+
+    /**
+     *  Constructs a new <Code>EnumerationIterator</Code> that provides
+     *  an iterator view of the given enumeration.
+     *
+     *  @param enumeration  the enumeration to use
+     */
     public EnumerationIterator( Enumeration enumeration ) {
         this(enumeration, null);
     }
 
+    /**
+     *  Constructs a new <Code>EnumerationIterator</Code> that will remove
+     *  elements from the specified collection.
+     *
+     *  @param enum  the enumeration to use
+     *  @param collection  the collection to remove elements form
+     */
     public EnumerationIterator( Enumeration enum, Collection collection ) {
         this.enumeration = enum;
         this.collection = collection;
@@ -95,10 +112,23 @@ public class EnumerationIterator implements Iterator {
 
     // Iterator interface
     //-------------------------------------------------------------------------
+
+    /**
+     *  Returns true if the underlying enumeration has more elements.
+     *
+     *  @return true if the underlying enumeration has more elements
+     *  @throws NullPointerException  if the underlying enumeration is null
+     */
     public boolean hasNext() {
         return enumeration.hasMoreElements();
     }
 
+    /**
+     *  Returns the next object from the enumeration.
+     *
+     *  @return the next object from the enumeration
+     *  @throws NullPointerException if the enumeration is null
+     */
     public Object next() {
         last = enumeration.nextElement();
         return last;
@@ -106,6 +136,8 @@ public class EnumerationIterator implements Iterator {
 
     /**
      * Functions if an associated <code>Collection</code> is known.
+     * If so, the first occurrence of the last returned object from this
+     * iterator will be removed from the collection.
      *
      * @exception IllegalStateException <code>next()</code> not called.
      * @exception UnsupportedOperationException No associated
@@ -129,10 +161,21 @@ public class EnumerationIterator implements Iterator {
 
     // Properties
     //-------------------------------------------------------------------------
+
+    /**
+     *  Returns the underlying enumeration.
+     *
+     *  @return the underlying enumeration
+     */
     public Enumeration getEnumeration() {
         return enumeration;
     }
-    
+
+    /**
+     *  Sets the underlying enumeration.
+     *
+     *  @param enumeration  the new underlying enumeration
+     */
     public void setEnumeration( Enumeration enumeration ) {
         this.enumeration = enumeration;
     }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorEnumeration.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/IteratorEnumeration.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -73,29 +73,64 @@ public class IteratorEnumeration implements Enumeration {
     
     private Iterator iterator;
     
+    /**
+     *  Constructs a new <Code>IteratorEnumeration</Code> that will not 
+     *  function until {@link #setIterator(Iterator) setIterator} is  
+     *  invoked.
+     */
     public IteratorEnumeration() {
     }
 
+    /**
+     *  Constructs a new <Code>IteratorEnumeration</Code> that will use
+     *  the given iterator. 
+     * 
+     *  @param iterator  the iterator to use
+     */
     public IteratorEnumeration( Iterator iterator ) {
         this.iterator = iterator;
     }
 
     // Iterator interface
     //-------------------------------------------------------------------------
+
+    /**
+     *  Returns true if the underlying iterator has more elements.
+     *
+     *  @return true if the underlying iterator has more elements
+     */
     public boolean hasMoreElements() {
         return iterator.hasNext();
     }
 
+    /**
+     *  Returns the next element from the underlying iterator.
+     *
+     *  @return the next element from the underlying iterator.
+     *  @throws NoSuchElementException  if the underlying iterator has no
+     *    more elements
+     */
     public Object nextElement() {
         return iterator.next();
     }
 
     // Properties
     //-------------------------------------------------------------------------
+
+    /**
+     *  Returns the underlying iterator.
+     * 
+     *  @return the underlying iterator
+     */
     public Iterator getIterator() {
         return iterator;
     }
-    
+
+    /**
+     *  Sets the underlying iterator.
+     *
+     *  @param iterator  the new underlying iterator
+     */
     public void setIterator( Iterator iterator ) {
         this.iterator = iterator;
     }

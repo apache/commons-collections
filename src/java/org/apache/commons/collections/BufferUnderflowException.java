@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUnderflowException.java,v 1.3 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUnderflowException.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ package org.apache.commons.collections;
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
  * @since Avalon 4.0
- * @version $Id: BufferUnderflowException.java,v 1.3 2002/08/13 00:46:25 pjack Exp $
+ * @version $Id: BufferUnderflowException.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
  */
 public class BufferUnderflowException extends RuntimeException
 {
@@ -90,7 +90,9 @@ public class BufferUnderflowException extends RuntimeException
         m_throwable = exception;
     }
 
-
+    /**
+     *  Constructs a new <Code>BufferUnderflowException</Code>.
+     */
     public BufferUnderflowException() {
         super();
         m_throwable = null;

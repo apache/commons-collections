@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.4 2002/06/16 18:56:19 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/16 18:56:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -76,7 +76,10 @@ import java.util.Set;
  * interface to minimize the effort required for target implementations.
  * Subclasses need only to call {@link #setMap(Map)} in their constructor 
  * specifying a map instance that will be used to store the contents of 
- * the bag. 
+ * the bag.<P>
+ *
+ * The map will be used to map bag elements to a number; the number represents
+ * the number of occurrences of that element in the bag.<P>
  *
  * @since 2.0
  * @author Chuck Burdick
@@ -87,10 +90,29 @@ public abstract class DefaultMapBag implements Bag {
    private int _total = 0;
    private int _mods = 0;
 
+
+   /**
+    *  Constructor.  Subclasses should invoke {@link #setMap(Map)} in
+    *  their constructors.
+    */
+   public DefaultMapBag() {
+   }
+
+   /**
+    *  Adds a new element to the bag by incrementing its count in the 
+    *  underlying map.
+    *
+    *  @see Bag#add(Object) 
+    */
    public boolean add(Object o) {
       return add(o, 1);
    }
 
+   /**
+    *  Adds a new element to the bag by incrementing its count in the map.
+    *
+    *  @see Bag#add(Object, int)
+    */
    public boolean add(Object o, int i) {
       _mods++;
       if (i > 0) {
@@ -103,6 +125,11 @@ public abstract class DefaultMapBag implements Bag {
       }
    }
 
+   /**
+    *  Invokes {@link #add(Object)} for each element in the given collection.
+    *
+    *  @see Bag#addAll(Collection)
+    */
    public boolean addAll(Collection c) {
       boolean changed = false;
       Iterator i = c.iterator();
@@ -113,12 +140,22 @@ public abstract class DefaultMapBag implements Bag {
       return changed;
    }
 
+
+   /**
+    *  Clears the bag by clearing the underlying map.
+    */
    public void clear() {
       _mods++;
       _map.clear();
       _total = 0;
    }
 
+   /**
+    *  Determines if the bag contains the given element by checking if the
+    *  underlying map contains the element as a key.
+    *
+    *  @return true if the bag contains the given element
+    */
    public boolean contains(Object o) {
       return _map.containsKey(o);
    }
@@ -144,16 +181,34 @@ public abstract class DefaultMapBag implements Bag {
       return result;
    }
 
+   /**
+    * Returns true if the given object is not null, has the precise type 
+    * of this bag, and contains the same number of occurrences of all the
+    * same elements.
+    *
+    * @param o the object to test for equality
+    * @return true if that object equals this bag
+    */
    public boolean equals(Object o) {
       return (o == this || 
               (o != null && o.getClass().equals(this.getClass()) &&
                ((DefaultMapBag)o)._map.equals(this._map)));
    }
 
+   /**
+    * Returns the hash code of the underlying map.
+    *
+    * @return the hash code of the underlying map
+    */
    public int hashCode() {
       return _map.hashCode();
    }
 
+   /**
+    * Returns true if the underlying map is empty.
+    *
+    * @return true if there are no elements in this bag
+    */
    public boolean isEmpty() {
       return _map.isEmpty();
    }
@@ -231,6 +286,12 @@ public abstract class DefaultMapBag implements Bag {
       return result;
    }
 
+   /**
+    * Remove any members of the bag that are not in the given
+    * bag, respecting cardinality.
+    *
+    * @return true if this call changed the collection
+    */
    public boolean retainAll(Collection c) {
       return retainAll(new HashBag(c));
    }
@@ -261,14 +322,31 @@ public abstract class DefaultMapBag implements Bag {
       return result;
    }
 
+   /**
+    *  Returns an array of all of this bag's elements.
+    *
+    *  @return an array of all of this bag's elements
+    */
    public Object[] toArray() {
       return extractList().toArray();
    }
 
+   /**
+    *  Returns an array of all of this bag's elements.
+    *
+    *  @param a  the array to populate
+    *  @return an array of all of this bag's elements
+    */
    public Object[] toArray(Object[] a) {
       return extractList().toArray(a);
    }
 
+   /**
+    *  Returns the number of occurrence of the given element in this bag
+    *  by looking up its count in the underlying map.
+    *
+    *  @see Bag#getCount(Object)
+    */
    public int getCount(Object o) {
       int result = 0;
       Integer count = MapUtils.getInteger(_map, o);
@@ -278,10 +356,20 @@ public abstract class DefaultMapBag implements Bag {
       return result;
    }
 
+   /**
+    *  Returns an unmodifiable view of the underlying map's key set.
+    *
+    *  @return the set of unique elements in this bag
+    */
    public Set uniqueSet() {
       return Collections.unmodifiableSet(_map.keySet());
    }
 
+   /**
+    *  Returns the number of elements in this bag.
+    *
+    *  @return the number of elements in this bag
+    */
    public int size() {
       return _total;
    }

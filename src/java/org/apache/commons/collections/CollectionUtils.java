@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.10 2002/08/13 00:26:51 pjack Exp $
- * $Revision: 1.10 $
- * $Date: 2002/08/13 00:26:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.11 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  *
  * @since 1.0
- * @version $Id: CollectionUtils.java,v 1.10 2002/08/13 00:26:51 pjack Exp $
+ * @version $Id: CollectionUtils.java,v 1.11 2002/08/15 20:04:31 pjack Exp $
  */
 public class CollectionUtils {
 
@@ -104,6 +104,12 @@ public class CollectionUtils {
         public void remove() {
             throw new UnsupportedOperationException();
         }
+    }
+
+    /**
+     *  Please don't ever instantiate a <Code>CollectionUtils</Code>.
+     */
+    public CollectionUtils() {
     }
 
     /**

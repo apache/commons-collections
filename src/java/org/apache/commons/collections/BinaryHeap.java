@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.9 2002/07/03 02:16:48 mas Exp $
- * $Revision: 1.9 $
- * $Date: 2002/07/03 02:16:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.10 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -98,10 +98,27 @@ import java.util.Comparator;
 public final class BinaryHeap extends AbstractCollection
     implements PriorityQueue, Buffer
 {
+
+    /**
+     *  The default capacity for a binary heap.
+     */
     protected final static int      DEFAULT_CAPACITY   = 13;
 
+    /**
+     *  The number of elements currently in this heap.
+     */
     protected int                   m_size;
+
+    /**
+     *  The elements in this heap.
+     */
     protected Object[]              m_elements;
+
+    /**
+     *  If true, the first element as determined by the sort order will 
+     *  be returned.  If false, the last element as determiend by the
+     *  sort order will be returned.
+     */
     protected boolean               m_isMinHeap;
     private Comparator              m_comparator;
 
@@ -113,6 +130,10 @@ public final class BinaryHeap extends AbstractCollection
         this( DEFAULT_CAPACITY, true );
     }
 
+    /**
+     *  Constructs a new <Code>BinaryHeap</Code> that will use the given
+     *  comparator to order its elements.
+     */
     public BinaryHeap( Comparator comparator )
     {
         this();
@@ -133,6 +154,14 @@ public final class BinaryHeap extends AbstractCollection
         this( capacity, true );
     }
 
+    /**
+     *  Constructs a new <Code>BinaryHeap</Code>.
+     *
+     *  @param capacity  the initial capacity for the heap
+     *  @param comparator  the comparator to use to order elements
+     *  @exception IllegalArgumentException 
+     *   if <code>capacity</code> is <code>&lt;= 0</code>
+     */
     public BinaryHeap( final int capacity, Comparator comparator )
     {
         this( capacity );
@@ -150,6 +179,13 @@ public final class BinaryHeap extends AbstractCollection
         this( DEFAULT_CAPACITY, isMinHeap );
     }
 
+    /**
+     *  Constructs a new <Code>BinaryHeap</Code>.
+     *
+     *  @param isMinHeap  true to use the order imposed by the given 
+     *    comparator; false to reverse that order
+     *  @param comparator  the comparator to use to order elements
+     */
     public BinaryHeap( final boolean isMinHeap, Comparator comparator )
     {
         this( isMinHeap );
@@ -180,6 +216,16 @@ public final class BinaryHeap extends AbstractCollection
         m_elements = new Object[ capacity + 1 ];
     }
 
+    /**
+     *  Constructs a new <Code>BinaryHeap</Code>.
+     *
+     *  @param capacity  the initial capacity for the heap
+     *  @param isMinHeap  true to use the order imposed by the given 
+     *    comparator; false to reverse that order
+     *  @param comparator  the comparator to use to order elements
+     *  @exception IllegalArgumentException 
+     *   if <code>capacity</code> is <code>&lt;= 0</code>
+     */
     public BinaryHeap( final int capacity, final boolean isMinHeap,
                        Comparator comparator ) 
     {
@@ -409,6 +455,12 @@ public final class BinaryHeap extends AbstractCollection
         m_elements = elements;
     }
 
+    /**
+     *  Returns a string representation of this heap.  The returned string
+     *  is similar to those produced by standard JDK collections.
+     *
+     *  @return  a string representation of this heap
+     */
     public String toString()
     {
         final StringBuffer sb = new StringBuffer();
@@ -519,7 +571,11 @@ public final class BinaryHeap extends AbstractCollection
         return m_size;
     }
 
-
+    /**
+     *  Used by testing code.
+     *
+     *  @return  the otherwise private comparator
+     */
     Comparator comparator() {
         return m_comparator;
     }

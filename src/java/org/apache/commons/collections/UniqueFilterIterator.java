@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/UniqueFilterIterator.java,v 1.2 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/UniqueFilterIterator.java,v 1.3 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.NoSuchElementException;
   * and duplicate Objects are skipped.
   *
   * @author Morgan Delagrange
-  * @version $Id: UniqueFilterIterator.java,v 1.2 2002/08/13 00:46:25 pjack Exp $
+  * @version $Id: UniqueFilterIterator.java,v 1.3 2002/08/15 20:04:31 pjack Exp $
   * @since 2.1
   */
 
@@ -77,6 +77,11 @@ public class UniqueFilterIterator extends FilterIterator {
        
     //-------------------------------------------------------------------------
     
+    /**
+     *  Constructs a new <Code>UniqueFilterIterator</Code>.
+     *
+     *  @param iterator  the iterator to use
+     */
     public UniqueFilterIterator( Iterator iterator ) {
         super( iterator, new UniquePredicate() );
     }

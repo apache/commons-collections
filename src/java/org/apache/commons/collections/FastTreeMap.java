@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.8 2002/08/13 04:34:08 pjack Exp $
- * $Revision: 1.8 $
- * $Date: 2002/08/13 04:34:08 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.9 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -111,7 +111,7 @@ import java.util.TreeMap;
  *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.8 $ $Date: 2002/08/13 04:34:08 $
+ * @version $Revision: 1.9 $ $Date: 2002/08/15 20:04:31 $
  */
 
 public class FastTreeMap extends TreeMap {
@@ -189,10 +189,21 @@ public class FastTreeMap extends TreeMap {
      */
     protected boolean fast = false;
 
+
+    /**
+     *  Returns true if this map is operating in fast mode.
+     *
+     *  @return true if this map is operating in fast mode
+     */
     public boolean getFast() {
         return (this.fast);
     }
 
+    /**
+     *  Sets whether this map is operating in fast mode.
+     *
+     *  @param fast true if this map should operate in fast mode
+     */
     public void setFast(boolean fast) {
         this.fast = fast;
     }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Predicate.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Predicate.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -68,7 +68,10 @@ package org.apache.commons.collections;
   */
 public interface Predicate {
 
-    /** @return true if the input object matches this predicate, else returns false
+    /**
+      *  Returns true if the input object matches this predicate. 
+      *
+      * @return true if the input object matches this predicate, else returns false
       */
     public boolean evaluate(Object input);
 }

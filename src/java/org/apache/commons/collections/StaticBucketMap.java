@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.3 2002/08/15 03:22:29 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/15 03:22:29 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -137,7 +137,7 @@ import java.util.NoSuchElementException;
  * @author  <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
  * @author  <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author  Paul Jack
- * @version CVS $Revision: 1.3 $ $Date: 2002/08/15 03:22:29 $
+ * @version CVS $Revision: 1.4 $ $Date: 2002/08/15 20:04:31 $
  * @since Avalon 4.0
  */
 public final class StaticBucketMap implements Map
@@ -211,7 +211,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     *  Returns a set view of this map's keys.
+     *  Implements {@link Map#keySet()}.
      */
     public Set keySet()
     {
@@ -219,7 +219,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Returns the current number of key, value pairs.
+     *  Implements {@link Map#size()}.
      */
     public int size()
     {
@@ -234,7 +234,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Put a reference in the Map.
+     *  Implements {@link Map#put(Object, Object)}.
      */
     public Object put( final Object key, final Object value )
     {
@@ -282,7 +282,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Get an object from the Map by the key
+     *  Implements {@link Map#get(Object)}.
      */
     public Object get( final Object key )
     {
@@ -307,7 +307,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Checks to see if the provided key exists in the Map.
+     * Implements {@link Map#containsKey(Object)}.
      */
     public boolean containsKey( final Object key )
     {
@@ -332,9 +332,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Checks to see if a value exists.  This operation crosses bucket
-     * boundaries, so it is less efficient, and greatly increases the chance
-     * for thread contention.
+     * Implements {@link Map#containsValue(Object)}.
      */
     public boolean containsValue( final Object value )
     {
@@ -361,9 +359,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Obtain a Set for the values.  This operation crosses bucket boundaries,
-     * so it is less efficient, and greatly increases the chance for thread
-     * contention.
+     *  Implements {@link Map#values()}.
      */
     public Collection values()
     {
@@ -371,9 +367,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Obtain a Set for the entries.  This operation crosses bucket boundaries,
-     * so it is less efficient, and greatly increases the chance for thread
-     * contention.
+     *  Implements {@link Map#entrySet()}.
      */
     public Set entrySet()
     {
@@ -381,7 +375,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Add all the contents of one Map into this one.
+     *  Implements {@link Map#putAll(Map)}.
      */
     public void putAll( Map other )
     {
@@ -395,7 +389,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Removes the object from the Map based on the key.
+     *  Implements {@link Map#remove(Object)}.
      */
     public Object remove( Object key )
     {
@@ -434,7 +428,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Tests if the Map is empty.
+     *  Implements {@link Map#isEmpty()}.
      */
     public final boolean isEmpty()
     {
@@ -442,7 +436,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     * Removes all the entries from the Map.
+     *  Implements {@link Map#clear()}.
      */
     public final void clear()
     {
@@ -457,11 +451,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     *  Returns true if the given object is a map with the same mappings
-     *  as this map.
-     *
-     *  @return true if the given object is the a map with same mappings
-     *   as this map
+     *  Implements {@link Map#equals(Object)}.
      */
     public final boolean equals( Object obj )
     {
@@ -476,9 +466,7 @@ public final class StaticBucketMap implements Map
     }
 
     /**
-     *  Returns a hash code for this map.
-     *
-     *  @return a hash code for this map
+     *  Implements {@link Map#hashCode()}.
      */
     public final int hashCode() 
     {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.3 2002/08/13 01:19:00 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/13 01:19:00 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/15 20:04:31 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,10 +69,13 @@ import java.lang.reflect.*;
  * objects.
  *
  * @author Arron Bates
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since 2.1
  */
 public class FactoryUtils {
+
+  private FactoryUtils() {
+  }
   
   /** Creates a Factory whith a class definition, which will be
    * used to create a new object from an empty constructor.

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.7 2002/08/13 01:19:00 pjack Exp $
- * $Revision: 1.7 $
- * $Date: 2002/08/13 01:19:00 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.8 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -62,12 +62,25 @@ package org.apache.commons.collections;
 
 import java.io.*;
 import java.text.*;
+import java.text.NumberFormat;
 import java.util.*;
 
-/** A helper class for using {@link Map Map} instances.
+/** A helper class for using {@link Map Map} instances.<P>
   *
   * It contains various typesafe methods
-  * as well as other useful features like deep copying
+  * as well as other useful features like deep copying.<P>
+  *
+  * It also provides the following decorators:
+  *
+  *  <UL>
+  *  <LI>{@link #boundedMap(Map,int)}
+  *  <LI>{@link #fixedSizeMap(Map)}
+  *  <LI>{@link #fixedSizeSortedMap(SortedMap)}
+  *  <LI>{@link #lazyMap(Map,Factory)}
+  *  <LI>{@link #lazySortedMap(SortedMap,Factory)}
+  *  <LI>{@link #predicatedMap(Map,Predicate,Predicate)}
+  *  <LI>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
+  *  </UL>
   *
   * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
@@ -78,11 +91,24 @@ import java.util.*;
 public class MapUtils {
 
     private static int debugIndent = 0;
-    
-    
+
+    /**
+     *  Please don't instantiate a <Code>MapUtils</Code>.
+     */
+    public MapUtils() {
+    }    
     
     // Type safe getters
     //-------------------------------------------------------------------------
+
+    /**
+     *  Synonym for {@link Map#get(Object)}.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return null if the map is null; or the result of 
+     *     <Code>map.get(key)</Code>
+     */
     public static Object getObject( Map map, Object key ) {
         if ( map != null ) {
             return map.get( key );
@@ -90,6 +116,16 @@ public class MapUtils {
         return null;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a string.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  null if the map is null; null if the value mapped by that
+     *    key is null; or the <Code>toString()</Code> 
+     *     result of the value for that key
+     */
     public static String getString( Map map, Object key ) {
         if ( map != null ) {
             Object answer = map.get( key );
@@ -100,6 +136,25 @@ public class MapUtils {
         return null;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a {@link Boolean}.  If the map is null, this method returns null.
+     *  If the value mapped by the given key is a 
+     *  {@link Boolean}, then it is returned as-is.  Otherwise, if the value
+     *  is a string, then if that string ignoring case equals "true", then
+     *  a true {@link Boolean} is returned.  Any other string value will
+     *  result in a false {@link Boolean} being returned.  OR, if the value
+     *  is a {@link Number}, and that {@link Number} is 0, then a false
+     *  {@link Boolean} is returned.  Any other {@link Number} value results
+     *  in a true {@link Boolean} being returned.<P>
+     *
+     *  Any value that is not a {@link Boolean}, {@link String} or 
+     *  {@link Number} results in null being returned.<P>
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  a {@link Boolean} or null
+     */
     public static Boolean getBoolean( Map map, Object key ) {
         if ( map != null ) {
             Object answer = map.get( key );
@@ -121,6 +176,22 @@ public class MapUtils {
         return null;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a {@link Number}.  If the map is null, this method returns null.
+     *  Otherwise, if the key maps to a {@link Number}, then that number
+     *  is returned as-is.  Otherwise, if the key maps to a {@link String},
+     *  that string is parsed into a number using the system default
+     *  {@link NumberFormat}.<P>
+     *
+     *  If the value is not a {@link Number} or a {@link String}, or if
+     *  the value is a {@link String} that cannot be parsed into a 
+     *  {@link Number}, then null is returned.<P>
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  a {@link Number} or null
+     */
     public static Number getNumber( Map map, Object key ) {
         if ( map != null ) {
             Object answer = map.get( key );
@@ -143,6 +214,16 @@ public class MapUtils {
         return null;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a {@link Byte}.  First, {@link #getNumber(Map,Object)} is invoked.
+     *  If the result is null, then null is returned.  Otherwise, the 
+     *  byte value of the resulting {@link Number} is returned.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  a {@link Byte} or null
+     */
     public static Byte getByte( Map map, Object key ) {
         Number answer = getNumber( map, key );
         if ( answer == null ) {
@@ -155,6 +236,16 @@ public class MapUtils {
         return new Byte( answer.byteValue() );
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a {@link Short}.  First, {@link #getNumber(Map,Object)} is invoked.
+     *  If the result is null, then null is returned.  Otherwise, the 
+     *  short value of the resulting {@link Number} is returned.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  a {@link Short} or null
+     */
     public static Short getShort( Map map, Object key ) {
         Number answer = getNumber( map, key );
         if ( answer == null ) {
@@ -167,6 +258,16 @@ public class MapUtils {
         return new Short( answer.shortValue() );
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  an {@link Integer}.  First, {@link #getNumber(Map,Object)} is invoked.
+     *  If the result is null, then null is returned.  Otherwise, the 
+     *  integer value of the resulting {@link Number} is returned.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  an {@link Integer} or null
+     */
     public static Integer getInteger( Map map, Object key ) {
         Number answer = getNumber( map, key );
         if ( answer == null ) {
@@ -179,6 +280,16 @@ public class MapUtils {
         return new Integer( answer.intValue() );
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a {@link Long}.  First, {@link #getNumber(Map,Object)} is invoked.
+     *  If the result is null, then null is returned.  Otherwise, the 
+     *  long value of the resulting {@link Number} is returned.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  a {@link Long} or null
+     */
     public static Long getLong( Map map, Object key ) {
         Number answer = getNumber( map, key );
         if ( answer == null ) {
@@ -191,6 +302,16 @@ public class MapUtils {
         return new Long( answer.longValue() );
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a {@link Float}.  First, {@link #getNumber(Map,Object)} is invoked.
+     *  If the result is null, then null is returned.  Otherwise, the 
+     *  float value of the resulting {@link Number} is returned.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  a {@link Float} or null
+     */
     public static Float getFloat( Map map, Object key ) {
         Number answer = getNumber( map, key );
         if ( answer == null ) {
@@ -203,6 +324,16 @@ public class MapUtils {
         return new Float( answer.floatValue() );
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a {@link Double}.  First, {@link #getNumber(Map,Object)} is invoked.
+     *  If the result is null, then null is returned.  Otherwise, the 
+     *  double value of the resulting {@link Number} is returned.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  a {@link Double} or null
+     */
     public static Double getDouble( Map map, Object key ) {
         Number answer = getNumber( map, key );
         if ( answer == null ) {
@@ -215,6 +346,16 @@ public class MapUtils {
         return new Double( answer.doubleValue() );
     }
 
+    /**
+     *  Looks up the given key in the given map, returning another map.
+     *  If the given map is null or if the given key doesn't map to another
+     *  map, then this method returns null.  Otherwise the mapped map is
+     *  returned.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key whose value to look up in that map
+     *  @return  a {@link Map} or null
+     */
     public static Map getMap( Map map, Object key ) {
         if ( map != null ) {
             Object answer = map.get( key );
@@ -227,6 +368,17 @@ public class MapUtils {
 
     // Type safe getters with default values
     //-------------------------------------------------------------------------
+
+    /**
+     *  Looks up the given key in the given map, converting null into the
+     *  given default value.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null
+     *  @return  the value in the map, or defaultValue if the original value
+     *    is null or the map is null
+     */
     public static Object getObject( Map map, Object key, Object defaultValue ) {
         if ( map != null ) {
             Object answer = map.get( key );
@@ -237,6 +389,18 @@ public class MapUtils {
         return defaultValue;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a string, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a string, or defaultValue if the 
+     *    original value is null, the map is null or the string conversion
+     *    fails
+     */
     public static String getString( Map map, Object key, String defaultValue ) {
         String answer = getString( map, key );
         if ( answer == null ) {
@@ -245,6 +409,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a boolean, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a boolean, or defaultValue if the 
+     *    original value is null, the map is null or the boolean conversion
+     *    fails
+     */
     public static Boolean getBoolean( Map map, Object key, Boolean defaultValue ) {
         Boolean answer = getBoolean( map, key );
         if ( answer == null ) {
@@ -253,6 +429,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a number, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a number, or defaultValue if the 
+     *    original value is null, the map is null or the number conversion
+     *    fails
+     */
     public static Number getNumber( Map map, Object key, Number defaultValue ) {
         Number answer = getNumber( map, key );
         if ( answer == null ) {
@@ -261,6 +449,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a byte, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a number, or defaultValue if the 
+     *    original value is null, the map is null or the number conversion
+     *    fails
+     */
     public static Byte getByte( Map map, Object key, Byte defaultValue ) {
         Byte answer = getByte( map, key );
         if ( answer == null ) {
@@ -269,6 +469,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a short, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a number, or defaultValue if the 
+     *    original value is null, the map is null or the number conversion
+     *    fails
+     */
     public static Short getShort( Map map, Object key, Short defaultValue ) {
         Short answer = getShort( map, key );
         if ( answer == null ) {
@@ -277,6 +489,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  an integer, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a number, or defaultValue if the 
+     *    original value is null, the map is null or the number conversion
+     *    fails
+     */
     public static Integer getInteger( Map map, Object key, Integer defaultValue ) {
         Integer answer = getInteger( map, key );
         if ( answer == null ) {
@@ -285,6 +509,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a long, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a number, or defaultValue if the 
+     *    original value is null, the map is null or the number conversion
+     *    fails
+     */
     public static Long getLong( Map map, Object key, Long defaultValue ) {
         Long answer = getLong( map, key );
         if ( answer == null ) {
@@ -293,6 +529,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a float, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a number, or defaultValue if the 
+     *    original value is null, the map is null or the number conversion
+     *    fails
+     */
     public static Float getFloat( Map map, Object key, Float defaultValue ) {
         Float answer = getFloat( map, key );
         if ( answer == null ) {
@@ -301,6 +549,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a double, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a number, or defaultValue if the 
+     *    original value is null, the map is null or the number conversion
+     *    fails
+     */
     public static Double getDouble( Map map, Object key, Double defaultValue ) {
         Double answer = getDouble( map, key );
         if ( answer == null ) {
@@ -309,6 +569,18 @@ public class MapUtils {
         return answer;
     }
 
+    /**
+     *  Looks up the given key in the given map, converting the result into
+     *  a map, using the default value if the the conversion fails.
+     *
+     *  @param map  the map whose value to look up
+     *  @param key  the key of the value to look up in that map
+     *  @param defaultValue  what to return if the value is null or if the
+     *     conversion fails
+     *  @return  the value in the map as a number, or defaultValue if the 
+     *    original value is null, the map is null or the map conversion
+     *    fails
+     */
     public static Map getMap( Map map, Object key, Map defaultValue ) {
         Map answer = getMap( map, key );
         if ( answer == null ) {
@@ -319,6 +591,10 @@ public class MapUtils {
 
     // Conversion methods
     //-------------------------------------------------------------------------
+
+    /**
+     *  Synonym for <Code>new Properties(input)</COde>.
+     */
     public static Properties toProperties(Map input) {
         Properties answer = new Properties();
         if ( input != null ) {
@@ -334,6 +610,14 @@ public class MapUtils {
 
     // Printing methods
     //-------------------------------------------------------------------------
+
+    /**
+     *  Prints the given map with nice line breaks.
+     *
+     *  @param out  the stream to print to
+     *  @param key  the key that maps to the map in some other map
+     *  @param map  the map to print
+     */
     public static synchronized void verbosePrint( PrintStream out, Object key, Map map ) {
         debugPrintIndent( out );
         out.println( key + " = " );
@@ -359,6 +643,13 @@ public class MapUtils {
         out.println( "}" );
     }
 
+    /**
+     *  Prints the given map with nice line breaks.
+     *
+     *  @param out  the stream to print to
+     *  @param key  the key that maps to the map in some other map
+     *  @param map  the map to print
+     */
     public static synchronized void debugPrint( PrintStream out, Object key, Map map ) {
         debugPrintIndent( out );
         out.println( key + " = " );
@@ -391,12 +682,23 @@ public class MapUtils {
 
     // Implementation methods
     //-------------------------------------------------------------------------
+
+    /**
+     *  Writes indentation to the given stream.
+     *
+     *  @param out   the stream to indent
+     */
     protected static void debugPrintIndent( PrintStream out ) {
         for ( int i = 0; i < debugIndent; i++ ) {
             out.print( "    " );
         }
     }
     
+    /**
+     *  Logs the given exception to <Code>System.out</Code>.
+     *
+     *  @param e  the exception to log
+     */
     protected static void logInfo(Exception e) {
         // mapX: should probably use log4j here instead...
         System.out.println( "INFO: Exception: " + e );

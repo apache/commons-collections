@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -73,8 +73,18 @@ import java.util.NoSuchElementException;
 public final class SynchronizedPriorityQueue 
     implements PriorityQueue
 {
+
+    /**
+     *  The underlying priority queue.
+     */
     protected final PriorityQueue   m_priorityQueue;
 
+
+    /**
+     *  Constructs a new synchronized priority queue.
+     *
+     *  @param priorityQueue the priority queue to synchronize
+     */
     public SynchronizedPriorityQueue( final PriorityQueue priorityQueue )
     {
         m_priorityQueue = priorityQueue;
@@ -130,6 +140,11 @@ public final class SynchronizedPriorityQueue
         return m_priorityQueue.pop();
     }
 
+    /**
+     *  Returns a string representation of the underlying queue.
+     *
+     *  @return a string representation of the underlying queue
+     */
     public synchronized String toString()
     {
         return m_priorityQueue.toString();

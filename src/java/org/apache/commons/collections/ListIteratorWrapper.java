@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ListIteratorWrapper.java,v 1.2 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ListIteratorWrapper.java,v 1.3 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.NoSuchElementException;
  * operations of ListIterator.
  * 
  * @author Morgan Delagrange
- * @version $Revision: 1.2 $ $Date: 2002/08/13 00:46:25 $
+ * @version $Revision: 1.3 $ $Date: 2002/08/15 20:04:31 $
  * @since 2.1
  */
 public class ListIteratorWrapper implements ListIterator {
@@ -79,6 +79,12 @@ public class ListIteratorWrapper implements ListIterator {
     // Constructor
     //-------------------------------------------------------------------------
 
+    /**
+     *  Constructs a new <Code>ListIteratorWrapper</Code> that will wrap
+     *  the given iterator.
+     *
+     *  @param iterator  the iterator to wrap
+     */
     public ListIteratorWrapper(Iterator iterator) {
         this.iterator = iterator;
     }
@@ -86,10 +92,22 @@ public class ListIteratorWrapper implements ListIterator {
     // ListIterator interface
     //-------------------------------------------------------------------------
 
+    /**
+     *  Throws {@link UnsupportedOperationException}.
+     *
+     *  @param o  ignored
+     *  @throws UnsupportedOperationException always
+     */
     public void add(Object o) throws UnsupportedOperationException {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }
 
+
+    /**
+     *  Returns true if there are more elements in the iterator.
+     *
+     *  @return true if there are more elements
+     */
     public boolean hasNext() {
         if (currentIndex == wrappedIteratorIndex) {
             return iterator.hasNext();
@@ -98,6 +116,11 @@ public class ListIteratorWrapper implements ListIterator {
         return true;
     }
 
+    /**
+     *  Returns true if there are previous elements in the iterator.
+     *
+     *  @return true if there are previous elements
+     */
     public boolean hasPrevious() {
         if (currentIndex == 0) {
             return false;
@@ -106,6 +129,12 @@ public class ListIteratorWrapper implements ListIterator {
         return true;
     }
 
+    /**
+     *  Returns the next element from the iterator.
+     *
+     *  @return the next element from the iterator
+     *  @throws NoSuchElementException if there are no more elements
+     */
     public Object next() throws NoSuchElementException {
         if (currentIndex < wrappedIteratorIndex) {
             ++currentIndex;
@@ -119,10 +148,21 @@ public class ListIteratorWrapper implements ListIterator {
         return retval;
     }
 
+    /**
+     *  Returns in the index of the next element.
+     *
+     *  @return the index of the next element
+     */
     public int nextIndex() {
         return currentIndex;
     }
 
+    /**
+     *  Returns the the previous element.
+     *
+     *  @return the previous element
+     *  @throws NoSuchElementException  if there are no previous elements
+     */
     public Object previous() throws NoSuchElementException {
         if (currentIndex == 0) {
             throw new NoSuchElementException();
@@ -132,14 +172,30 @@ public class ListIteratorWrapper implements ListIterator {
         return list.get(currentIndex);    
     }
 
+    /**
+     *  Returns the index of the previous element.
+     *
+     *  @return  the index of the previous element
+     */
     public int previousIndex() {
         return currentIndex - 1;
     }
 
+    /**
+     *  Throws {@link UnsupportedOperationException}.
+     *
+     *  @throws UnsupportedOperationException always
+     */
     public void remove() throws UnsupportedOperationException {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }
 
+    /**
+     *  Throws {@link UnsupportedOperationException}.
+     *
+     *  @param o  ignored
+     *  @throws UnsupportedOperationException always
+     */
     public void set(Object o) throws UnsupportedOperationException {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.12 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.12 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.13 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.13 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -269,25 +269,35 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
   }
 
   // per Map.size()
+
+  /**
+   *  Implements {@link Map#size()}.
+   */
   public int size() {
     // use the underlying Map's size since size is not maintained here.
     return entries.size();
   }
 
-  // per Map.isEmpty()
+  /**
+   *  Implements {@link Map#isEmpty()}.
+   */
   public boolean isEmpty() {
     // for quick check whether the map is entry, we can check the linked list
     // and see if there's anything in it.
     return sentinel.next == sentinel;
   }
 
-  // per Map.containsKey(Object)
+  /**
+   *  Implements {@link Map#containsKey(Object)}.
+   */
   public boolean containsKey(Object key) {
     // pass on to underlying map implementation
     return entries.containsKey(key);
   }
 
-  // per Map.containsValue(Object)
+  /**
+   *  Implements {@link Map#containsValue(Object)}.
+   */
   public boolean containsValue(Object value) {
     // unfortunately, we cannot just pass this call to the underlying map
     // because we are mapping keys to entries, not keys to values.  The
@@ -309,7 +319,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     return false;      
   }
 
-  // per Map.get(Object)
+  /**
+   *  Implements {@link Map#get(Object)}.
+   */
   public Object get(Object o) {
     // find entry for the specified key object
     Entry entry = (Entry)entries.get(o);
@@ -442,7 +454,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     return sentinel.prev.getValue();
   }
 
-  // per Map.put(Object,Object)
+  /**
+   *  Implements {@link Map#put(Object, Object)}.
+   */
   public Object put(Object key, Object value) {
     modCount++;
 
@@ -477,7 +491,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     return oldValue;
   }
 
-  // per Map.remove(Object)
+  /**
+   *  Implements {@link Map#remove(Object)}.
+   */
   public Object remove(Object key) {
     Entry e = removeImpl(key);
     return (e == null) ? null : e.getValue();
@@ -513,7 +529,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     }
   }
 
-  // per Map.clear()
+  /**
+   *  Implements {@link Map#clear()}.
+   */
   public void clear() {
     modCount++;
 
@@ -525,7 +543,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     sentinel.prev = sentinel;
   }
 
-  // per Map.equals(Object)
+  /**
+   *  Implements {@link Map#equals(Object)}.
+   */
   public boolean equals(Object obj) {
     if(obj == null) return false;
     if(obj == this) return true;
@@ -535,7 +555,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     return entrySet().equals(((Map)obj).entrySet());
   }
 
-  // per Map.hashCode()
+  /**
+   *  Implements {@link Map#hashCode()}.
+   */
   public int hashCode() {
     return entrySet().hashCode();
   }
@@ -563,7 +585,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     return buf.toString();
   }
 
-  // per Map.keySet()
+  /**
+   *  Implements {@link Map#keySet()}.
+   */
   public Set keySet() {
     return new AbstractSet() {
 
@@ -591,7 +615,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     };
   }
 
-  // per Map.values()
+  /**
+   *  Implements {@link Map#values()}.
+   */
   public Collection values() {
     return new AbstractCollection() {
       // required impl
@@ -635,7 +661,9 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     };
   }
 
-  // per Map.entrySet()
+  /**
+   *  Implements {@link Map#entrySet()}.
+   */
   public Set entrySet() {
     return new AbstractSet() {
       // helper
@@ -968,6 +996,14 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
   }
 
   // per Externalizable.readExternal(ObjectInput)
+
+  /**
+   *  Deserializes this map from the given stream.
+   *
+   *  @param in the stream to deserialize from
+   *  @throws IOException if the stream raises it
+   *  @throws ClassNotFoundException if the stream raises it
+   */
   public void readExternal( ObjectInput in ) 
     throws IOException, ClassNotFoundException 
   {
@@ -979,7 +1015,12 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     }
   }
   
-  // per Externalizable.writeExternal(ObjectOutput)
+  /**
+   *  Serializes this map to the given stream.
+   *
+   *  @param out  the stream to serialize to
+   *  @throws IOException  if the stream raises it
+   */
   public void writeExternal( ObjectOutput out ) throws IOException {
     out.writeInt(size());
     for(Entry pos = sentinel.next; pos != sentinel; pos = pos.next) {

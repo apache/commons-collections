@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.5 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.6 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Iterator;
  *  Contains static utility methods for operating on {@link Buffer} objects.
  *
  *  @author Paul Jack
- *  @version $Id: BufferUtils.java,v 1.5 2002/08/13 00:46:25 pjack Exp $
+ *  @version $Id: BufferUtils.java,v 1.6 2002/08/15 20:04:31 pjack Exp $
  *  @since 2.1
  */
 public class BufferUtils {
@@ -181,6 +181,16 @@ public class BufferUtils {
     }
 
 
+    /**
+     *  Returns a bounded buffer backed by the given buffer.  New elements
+     *  may only be added to the returned buffer if its size is less than
+     *  the specified maximum; otherwise, an {@link IllegalStateException}
+     *  will be thrown.
+     *
+     *  @param buf  the buffer whose size to bind
+     *  @param maxSize  the maximum size of the returned buffer
+     *  @return  a bounded buffer
+     */
     public static Buffer boundedBuffer(Buffer buf, int maxSize) {
         return new BoundedBuffer(buf, maxSize);
     }

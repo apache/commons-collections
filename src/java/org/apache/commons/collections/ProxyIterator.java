@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyIterator.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyIterator.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.Iterator;
   *
   * @since 1.0
   * @see ProxyListIterator
-  * @version $Revision: 1.4 $ $Date: 2002/06/12 03:59:15 $
+  * @version $Revision: 1.5 $ $Date: 2002/08/15 20:04:31 $
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   */
@@ -76,24 +76,50 @@ public class ProxyIterator implements Iterator {
     /** Holds value of property iterator. */
     private Iterator iterator;
     
-    
+    /**
+     *  Constructs a new <Code>ProxyIterator</Code> that will not function
+     *  until {@link #setIterator(Iterator)} is called.
+     */
     public ProxyIterator() {
     }
     
+    /**
+     *  Constructs a new <Code>ProxyIterator</Code> that will use the
+     *  given iterator.
+     *
+     *  @param iterator  the underyling iterator
+     */
     public ProxyIterator( Iterator iterator ) {
         this.iterator = iterator;
     }
 
     // Iterator interface
     //-------------------------------------------------------------------------
+
+    /**
+     *  Returns true if the underlying iterator has more elements.
+     *
+     *  @return true if the underlying iterator has more elements
+     */
     public boolean hasNext() {
         return getIterator().hasNext();
     }
 
+    /**
+     *  Returns the next element from the underlying iterator.
+     *
+     *  @return the next element from the underlying iterator
+     *  @throws NoSuchElementException  if the underlying iterator 
+     *    raises it because it has no more elements
+     */
     public Object next() {
         return getIterator().next();
     }
 
+    /**
+     *  Removes the last returned element from the collection that spawned
+     *  the underlying iterator.
+     */
     public void remove() {
         getIterator().remove();
     }

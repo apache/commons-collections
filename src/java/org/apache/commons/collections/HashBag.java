@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/HashBag.java,v 1.5 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/HashBag.java,v 1.6 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -72,6 +72,10 @@ import java.util.HashMap;
  * @author Chuck Burdick
  **/
 public class HashBag extends DefaultMapBag implements Bag {
+
+   /**
+    *  Constructs a new empty <Code>HashBag</Code>.
+    */
    public HashBag() {
       setMap(new HashMap());
    }

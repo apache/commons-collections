@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterIterator.java,v 1.5 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterIterator.java,v 1.6 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -84,13 +84,31 @@ public class FilterIterator extends ProxyIterator {
     
     
     //-------------------------------------------------------------------------
+
+    /**
+     *  Constructs a new <Code>FilterIterator</Code> that will not function
+     *  until {@link #setIterator(Iterator) setIterator} is invoked.
+     */
     public FilterIterator() {
     }
     
+    /**
+     *  Constructs a new <Code>FilterIterator</Code> that will not function
+     *  until {@link #setPredicate(Predicate) setPredicate} is invoked.
+     *
+     *  @param iterator  the iterator to use
+     */
     public FilterIterator( Iterator iterator ) {
         super( iterator );
     }
 
+    /**
+     *  Constructs a new <Code>FilterIterator</Code> that will use the
+     *  given iterator and predicate.
+     *
+     *  @param iterator  the iterator to use
+     *  @param predicate  the predicate to use
+     */
     public FilterIterator( Iterator iterator, Predicate predicate ) {
         super( iterator );
         this.predicate = predicate;
@@ -99,7 +117,12 @@ public class FilterIterator extends ProxyIterator {
     // Iterator interface
     //-------------------------------------------------------------------------
     
-    /** @return true if there is another object that matches the given predicate */
+    /** 
+     *  Returns true if the underlying iterator contains an object that 
+     *  matches the predicate.
+     *
+     *  @return true if there is another object that matches the predicate 
+     */
     public boolean hasNext() {
         if ( nextObjectSet ) {
             return true;
@@ -108,7 +131,13 @@ public class FilterIterator extends ProxyIterator {
         }
     }
 
-    /** @return the next object which matches the given predicate */
+    /** 
+     *  Returns the next object that matches the predicate.
+     * 
+     *  @return the next object which matches the given predicate
+     *  @throws NoSuchElementException if there are no more elements that
+     *   match the predicate 
+     */
     public Object next() {
         if ( !nextObjectSet ) {
             if (!setNextObject()) {
@@ -122,6 +151,8 @@ public class FilterIterator extends ProxyIterator {
     /**
      * Always throws UnsupportedOperationException as this class 
      * does look-ahead with its internal iterator.
+     *
+     * @throws UnsupportedOperationException  always
      */
     public void remove() {
         throw new UnsupportedOperationException();

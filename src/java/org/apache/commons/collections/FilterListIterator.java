@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterListIterator.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterListIterator.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -72,7 +72,7 @@ import java.util.NoSuchElementException;
   * returned by the iterator.
   * 
   * @since 2.0
-  * @version $Revision: 1.4 $ $Date: 2002/06/12 03:59:15 $
+  * @version $Revision: 1.5 $ $Date: 2002/08/15 20:04:31 $
   * @author Rodney Waldhoff
   */
 public class FilterListIterator extends ProxyListIterator {
@@ -80,18 +80,44 @@ public class FilterListIterator extends ProxyListIterator {
     // Constructors    
     //-------------------------------------------------------------------------
     
+    /**
+     *  Constructs a new <Code>FilterListIterator</Code> that will not 
+     *  function until 
+     *  {@link ProxyListIterator#setListIterator(ListIterator) setListIterator}
+     *  and {@link #setPredicate(Predicate) setPredicate} are invoked.
+     */
     public FilterListIterator() {
     }
 
+    /**
+     *  Constructs a new <Code>FilterListIterator</Code> that will not 
+     *  function until {@link #setPredicate(Predicate) setPredicate} is invoked.
+     *
+     *  @param iterator  the iterator to use
+     */
     public FilterListIterator(ListIterator iterator ) {
         super(iterator);
     }
 
+    /**
+     *  Constructs a new <Code>FilterListIterator</Code>.
+     *
+     *  @param iterator  the iterator to use
+     *  @param predicate  the predicate to use
+     */
     public FilterListIterator(ListIterator iterator, Predicate predicate) {
         super(iterator);
         this.predicate = predicate;
     }
 
+    /**
+     *  Constructs a new <Code>FilterListIterator</Code> that will not 
+     *  function until 
+     *  {@link ProxyListIterator#setListIterator(ListIterator) setListIterator}
+     *  is invoked.
+     *
+     *  @param predicate  the predicate to use.
+     */
     public FilterListIterator(Predicate predicate) {
         this.predicate = predicate;
     }

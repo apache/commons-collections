@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.7 2002/07/03 02:16:48 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/07/03 02:16:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.8 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -82,7 +82,7 @@ import java.util.Stack; // only used in javadoc comments, javadoc won't find it 
  *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.7 $ $Date: 2002/07/03 02:16:48 $
+ * @version $Revision: 1.8 $ $Date: 2002/08/15 20:04:31 $
  * @see java.util.Stack
  */
 
@@ -91,6 +91,13 @@ public class ArrayStack extends ArrayList implements Buffer {
 
     final private static long serialVersionUID = 2130079159931574599L;
 //, local class serialVersionUID = -3491241305852305742
+
+    /**
+     *  Constructs a new empty <Code>ArrayStack</Code>.
+     */
+    public ArrayStack() {
+        super();
+    }
 
     // --------------------------------------------------------- Public Methods
 

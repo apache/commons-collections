@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.6 2002/08/13 01:19:00 pjack Exp $
- * $Revision: 1.6 $
- * $Date: 2002/08/13 01:19:00 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.7 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -77,6 +77,22 @@ import java.util.ListIterator;
  */
 public class ListUtils
 {
+
+    /**
+     *  Please don't ever instantiate a <Code>ListUtils</Code>.
+     */
+    public ListUtils() {
+    }
+
+    /**
+     *  Returns a new list containing all elements that are contained in
+     *  both given lists.
+     *
+     *  @param list1  the first list
+     *  @param list2  the second list
+     *  @return  the intersection of those two lists
+     *  @throws NullPointerException if either list is null
+     */
     public static List intersection( final List list1, final List list2 )
     {
         final ArrayList result = new ArrayList();
@@ -95,6 +111,21 @@ public class ListUtils
         return result;
     }
 
+
+    /**
+     *  Subtracts all elements in the second list from the first list,
+     *  placing the results in a new list.
+     *  This differs from {@link List#removeAll(Collection)} in that
+     *  cardinality is respected; if <Code>list1</Code> contains two
+     *  occurrences of <Code>null</Code> and <Code>list2</Code> only
+     *  contains one occurrence, then the returned list will still contain
+     *  one occurrence.
+     *
+     *  @param list1  the list to subtract from
+     *  @param list2  the lsit to subtract
+     *  @return  a new list containing the results
+     *  @throws NullPointerException if either list is null
+     */
     public static List subtract( final List list1, final List list2 )
     {
         final ArrayList result = new ArrayList( list1 );
@@ -108,12 +139,32 @@ public class ListUtils
         return result;
     }
 
+    /**
+     *  Returns the sum of the given lists.  This is their intersection
+     *  subtracted from their union.
+     *
+     *  @param list1  the first list 
+     *  @param list2  the second list
+     *  @return  a new list containing the sum of those lists
+     *  @throws NullPointerException if either list is null
+     */ 
     public static List sum( final List list1, final List list2 )
     {
         return subtract( union( list1, list2 ),
                          intersection( list1, list2 ) );
     }
 
+
+    /**
+     *  Returns a new list containing the second list appended to the
+     *  first list.  The {@link List#addAll(Collection)} operation is
+     *  used to append the two given lists into a new list.
+     *
+     *  @param list1  the first list 
+     *  @param list2  the second list
+     *  @return  a new list containing the union of those lists
+     *  @throws NullPointerException if either list is null
+     */
     public static List union( final List list1, final List list2 )
     {
         final ArrayList result = new ArrayList( list1 );

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CollatingIterator.java,v 1.3 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CollatingIterator.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -73,7 +73,7 @@ import java.util.BitSet;
  * my {@link #next} method will return the lesser of 
  * <code>A.next()</code> and <code>B.next()</code>.
  *
- * @version $Revision: 1.3 $ $Date: 2002/08/13 00:46:25 $
+ * @version $Revision: 1.4 $ $Date: 2002/08/15 20:04:31 $
  * @author Rodney Waldhoff
  * @since 2.1
  */
@@ -81,19 +81,53 @@ public class CollatingIterator implements Iterator {
 
     //------------------------------------------------------------ Constructors
     
+    /**
+     *  Constructs a new <Code>CollatingIterator</Code>.  Natural sort order
+     *  will be used, and child iterators will have to be manually added 
+     *  using the {@link #addIterator(Iterator)} method.
+     */
     public CollatingIterator() {
         this(null,2);
     }
     
+    /**
+     *  Constructs a new <Code>CollatingIterator</Code> that will used the
+     *  specified comparator for ordering.  Child iterators will have to be 
+     *  manually added using the {@link #addIterator(Iterator)} method.
+     *
+     *  @param comp  the comparator to use for ordering, or <Code>null</Code>
+     *    to use natural sort order
+     */
     public CollatingIterator(Comparator comp) {
         this(comp,2);
     }
     
+    /**
+     *  Constructs a new <Code>CollatingIterator</Code> that will used the
+     *  specified comparator for ordering and have the specified initial
+     *  capacity.  Child iterators will have to be 
+     *  manually added using the {@link #addIterator(Iterator)} method.
+     *
+     *  @param comp  the comparator to use for ordering, or <Code>null</Code>
+     *    to use natural sort order
+     *  @param initIterCapacity  the initial capacity for the internal list
+     *    of child iterators
+     */
     public CollatingIterator(Comparator comp, int initIterCapacity) {
         iterators = new ArrayList(initIterCapacity);
         setComparator(comp);
     }
-    
+
+    /**
+     *  Constructs a new <Code>CollatingIterator</Code> that will use the
+     *  specified comparator to provide ordered iteration over the two
+     *  given iterators.
+     *
+     *  @param comp  the comparator to use to sort, or null to use natural
+     *    sort order
+     *  @param a  the first child ordered iterator
+     *  @param b  the second child ordered iterator
+     */
     public CollatingIterator(Comparator comp, Iterator a, Iterator b) {
         this(comp,2);
         addIterator(a);
@@ -129,11 +163,23 @@ public class CollatingIterator implements Iterator {
 
     //------------------------------------------------------- Iterator Methods
 
+    /**
+     *  Returns <Code>true</Code> if any child iterator has remaining elements.
+     *
+     *  @return true if this iterator has remaining elements
+     */
     public boolean hasNext() {
         start();
         return anyValueSet(valueSet) || anyHasNext(iterators);
     }
 
+    /**
+     *  Returns the next ordered element from a child iterator.
+     *
+     *  @return the next ordered element
+     *  @throws NoSuchElementException  if no child iterator has any more
+     *    elements
+     */
     public Object next() throws NoSuchElementException {
         if(!hasNext()) {
             throw new NoSuchElementException();
@@ -150,6 +196,13 @@ public class CollatingIterator implements Iterator {
         }        
     }
 
+    /**
+     *  Removes the last returned element from the child iterator that 
+     *  produced it.
+     *
+     *  @throws IllegalStateException  if there is no last returned element,
+     *    or if the last returned element has already been removed
+     */
     public void remove() {
         if(-1 == lastReturned) {
             throw new NoSuchElementException("No value has been returned yet.");

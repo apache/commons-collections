@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyListIterator.java,v 1.2 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ProxyListIterator.java,v 1.3 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import java.util.ListIterator;
  *
  * @since 2.0
  * @see ProxyIterator
- * @version $Revision: 1.2 $ $Date: 2002/06/12 03:59:15 $
+ * @version $Revision: 1.3 $ $Date: 2002/08/15 20:04:31 $
  * @author Rodney Waldhoff
  */
 public class ProxyListIterator implements ListIterator {
@@ -76,9 +76,20 @@ public class ProxyListIterator implements ListIterator {
     // Constructor
     //-------------------------------------------------------------------------
 
+    /**
+     *  Constructs a new <Code>ProxyListIterator</Code> that will not 
+     *  function until {@link #setListIterator(ListIterator) setListIterator}
+     *  is invoked.
+     */
     public ProxyListIterator() {
     }
 
+    /**
+     *  Constructs a new <Code>ProxyListIterator</Code> that will use the
+     *  given list iterator.
+     *
+     *  @param iterator  the list iterator to use
+     */
     public ProxyListIterator(ListIterator iterator) {
         this.iterator = iterator;
     }
@@ -86,38 +97,83 @@ public class ProxyListIterator implements ListIterator {
     // ListIterator interface
     //-------------------------------------------------------------------------
 
+    /**
+     *  Invokes the underlying {@link ListIterator#add(Object)} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public void add(Object o) {
         getListIterator().add(o);
     }
 
+    /**
+     *  Invokes the underlying {@link ListIterator#hasNext()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public boolean hasNext() {
         return getListIterator().hasNext();
     }
 
+    /**
+     *  Invokes the underlying {@link ListIterator#hasPrevious()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public boolean hasPrevious() {
         return getListIterator().hasPrevious();
     }
 
+    /**
+     *  Invokes the underlying {@link ListIterator#next()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public Object next() {
         return getListIterator().next();
     }
 
+    /**
+     *  Invokes the underlying {@link ListIterator#nextIndex()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public int nextIndex() {
         return getListIterator().nextIndex();
     }
 
+    /**
+     *  Invokes the underlying {@link ListIterator#previous()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public Object previous() {
         return getListIterator().previous();
     }
 
+    /**
+     *  Invokes the underlying {@link ListIterator#previousIndex()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public int previousIndex() {
         return getListIterator().previousIndex();
     }
 
+    /**
+     *  Invokes the underlying {@link ListIterator#remove()} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public void remove() {
         getListIterator().remove();
     }
 
+    /**
+     *  Invokes the underlying {@link ListIterator#set(Object)} method.
+     *
+     *  @throws NullPointerException  if the underyling iterator is null
+     */
     public void set(Object o) {
         getListIterator().set(o);
     }

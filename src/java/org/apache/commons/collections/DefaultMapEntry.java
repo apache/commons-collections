@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.7 2002/06/16 03:39:40 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/16 03:39:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.8 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -74,9 +74,20 @@ public class DefaultMapEntry implements Map.Entry {
     private Object key;
     private Object value;
     
+    /**
+     *  Constructs a new <Code>DefaultMapEntry</Code> with a null key
+     *  and null value.
+     */
     public DefaultMapEntry() {
     }
 
+    /**
+     *  Constructs a new <Code>DefaultMapEntry</Code> with the given
+     *  key and given value.
+     *
+     *  @param key  the key for the entry, may be null
+     *  @param value  the value for the entyr, may be null
+     */
     public DefaultMapEntry(Object key, Object value) {
         this.key = key;
         this.value = value;
@@ -113,16 +124,34 @@ public class DefaultMapEntry implements Map.Entry {
 
     // Map.Entry interface
     //-------------------------------------------------------------------------
+
+    /**
+     *  Returns the key.
+     *
+     *  @return the key 
+     */
     public Object getKey() {
         return key;
     }
 
+
+    /**
+     *  Returns the value.
+     *
+     *  @return the value
+     */
     public Object getValue() {
         return value;
     }
 
     // Properties
     //-------------------------------------------------------------------------    
+
+    /**
+     *  Sets the key.  This method does not modify any map.
+     *
+     *  @param key  the new key
+     */
     public void setKey(Object key) {
         this.key = key;
     }

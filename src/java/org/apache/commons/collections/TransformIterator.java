@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/TransformIterator.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/TransformIterator.java,v 1.5 2002/08/15 20:04:31 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/15 20:04:31 $
  *
  * ====================================================================
  *
@@ -76,13 +76,32 @@ public class TransformIterator extends ProxyIterator {
     private Transformer transformer;
     
     
+    /**
+     *  Constructs a new <Code>TransformIterator</Code> that will not function
+     *  until the {@link #setIterator(Iterator) setIterator} method is 
+     *  invoked.
+     */
     public TransformIterator() {
     }
     
+    /**
+     *  Constructs a new <Code>TransformIterator</Code> that won't transform
+     *  elements from the given iterator.
+     *
+     *  @param iterator  the iterator to use
+     */
     public TransformIterator( Iterator iterator ) {
         super( iterator );
     }
 
+    /**
+     *  Constructs a new <Code>TransformIterator</Code> that will use the
+     *  given iterator and transformer.  If the given transformer is null,
+     *  then objects will not be transformed.
+     *
+     *  @param iterator  the iterator to use
+     *  @param transformer  the transformer to use
+     */
     public TransformIterator( Iterator iterator, Transformer transformer ) {
         super( iterator );
         this.transformer = transformer;
@@ -111,6 +130,14 @@ public class TransformIterator extends ProxyIterator {
     
     // Implementation methods
     //-------------------------------------------------------------------------
+
+    /**
+     *  Transforms the given object using the transformer.  If the 
+     *  transformer is null, the original object is returned as-is.
+     *
+     *  @param source  the object to transform
+     *  @return  the transformed object
+     */
     protected Object transform( Object source ) {
         Transformer transformer = getTransformer();
         if ( transformer != null ) {
