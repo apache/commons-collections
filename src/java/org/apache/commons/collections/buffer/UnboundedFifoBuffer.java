@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/UnboundedFifoBuffer.java,v 1.2 2003/12/28 16:36:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/UnboundedFifoBuffer.java,v 1.3 2004/01/01 19:24:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This buffer prevents null objects from being added.
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.2 $ $Date: 2003/12/28 16:36:48 $
+ * @version $Revision: 1.3 $ $Date: 2004/01/01 19:24:46 $
  *
  * @author Avalon
  * @author Federico Barbieri
@@ -96,9 +96,9 @@ import org.apache.commons.collections.BufferUnderflowException;
  */
 public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
     
-    protected Object[] m_buffer;
-    protected int m_head;
-    protected int m_tail;
+    protected Object[] buffer;
+    protected int head;
+    protected int tail;
 
     /**
      * Constructs an UnboundedFifoBuffer with the default number of elements.
@@ -123,9 +123,9 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
         if (initialSize <= 0) {
             throw new IllegalArgumentException("The size must be greater than 0");
         }
-        m_buffer = new Object[initialSize + 1];
-        m_head = 0;
-        m_tail = 0;
+        buffer = new Object[initialSize + 1];
+        head = 0;
+        tail = 0;
     }
 
     /**
@@ -136,10 +136,10 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
     public int size() {
         int size = 0;
 
-        if (m_tail < m_head) {
-            size = m_buffer.length - m_head + m_tail;
+        if (tail < head) {
+            size = buffer.length - head + tail;
         } else {
-            size = m_tail - m_head;
+            size = tail - head;
         }
 
         return size;
@@ -167,30 +167,30 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
             throw new NullPointerException("Attempted to add null object to buffer");
         }
 
-        if (size() + 1 >= m_buffer.length) {
-            Object[] tmp = new Object[((m_buffer.length - 1) * 2) + 1];
+        if (size() + 1 >= buffer.length) {
+            Object[] tmp = new Object[((buffer.length - 1) * 2) + 1];
 
             int j = 0;
-            for (int i = m_head; i != m_tail;) {
-                tmp[j] = m_buffer[i];
-                m_buffer[i] = null;
+            for (int i = head; i != tail;) {
+                tmp[j] = buffer[i];
+                buffer[i] = null;
 
                 j++;
                 i++;
-                if (i == m_buffer.length) {
+                if (i == buffer.length) {
                     i = 0;
                 }
             }
 
-            m_buffer = tmp;
-            m_head = 0;
-            m_tail = j;
+            buffer = tmp;
+            head = 0;
+            tail = j;
         }
 
-        m_buffer[m_tail] = obj;
-        m_tail++;
-        if (m_tail >= m_buffer.length) {
-            m_tail = 0;
+        buffer[tail] = obj;
+        tail++;
+        if (tail >= buffer.length) {
+            tail = 0;
         }
         return true;
     }
@@ -206,7 +206,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
             throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        return m_buffer[m_head];
+        return buffer[head];
     }
 
     /**
@@ -220,14 +220,14 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
             throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        Object element = m_buffer[m_head];
+        Object element = buffer[head];
 
         if (null != element) {
-            m_buffer[m_head] = null;
+            buffer[head] = null;
 
-            m_head++;
-            if (m_head >= m_buffer.length) {
-                m_head = 0;
+            head++;
+            if (head >= buffer.length) {
+                head = 0;
             }
         }
 
@@ -242,7 +242,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
      */
     private int increment(int index) {
         index++;
-        if (index >= m_buffer.length) {
+        if (index >= buffer.length) {
             index = 0;
         }
         return index;
@@ -257,7 +257,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
     private int decrement(int index) {
         index--;
         if (index < 0) {
-            index = m_buffer.length - 1;
+            index = buffer.length - 1;
         }
         return index;
     }
@@ -270,28 +270,30 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
     public Iterator iterator() {
         return new Iterator() {
 
-            private int index = m_head;
+            private int index = head;
             private int lastReturnedIndex = -1;
 
             public boolean hasNext() {
-                return index != m_tail;
+                return index != tail;
 
             }
 
             public Object next() {
-                if (!hasNext())
+                if (!hasNext()) {
                     throw new NoSuchElementException();
+                }
                 lastReturnedIndex = index;
                 index = increment(index);
-                return m_buffer[lastReturnedIndex];
+                return buffer[lastReturnedIndex];
             }
 
             public void remove() {
-                if (lastReturnedIndex == -1)
+                if (lastReturnedIndex == -1) {
                     throw new IllegalStateException();
+                }
 
                 // First element can be removed quickly
-                if (lastReturnedIndex == m_head) {
+                if (lastReturnedIndex == head) {
                     UnboundedFifoBuffer.this.remove();
                     lastReturnedIndex = -1;
                     return;
@@ -299,19 +301,19 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
 
                 // Other elements require us to shift the subsequent elements
                 int i = lastReturnedIndex + 1;
-                while (i != m_tail) {
-                    if (i >= m_buffer.length) {
-                        m_buffer[i - 1] = m_buffer[0];
+                while (i != tail) {
+                    if (i >= buffer.length) {
+                        buffer[i - 1] = buffer[0];
                         i = 0;
                     } else {
-                        m_buffer[i - 1] = m_buffer[i];
+                        buffer[i - 1] = buffer[i];
                         i++;
                     }
                 }
 
                 lastReturnedIndex = -1;
-                m_tail = decrement(m_tail);
-                m_buffer[m_tail] = null;
+                tail = decrement(tail);
+                buffer[tail] = null;
                 index = decrement(index);
             }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/BoundedFifoBuffer.java,v 1.3 2003/12/28 16:36:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/BoundedFifoBuffer.java,v 1.4 2004/01/01 19:24:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -89,7 +89,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This buffer prevents null objects from being added.
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.3 $ $Date: 2003/12/28 16:36:48 $
+ * @version $Revision: 1.4 $ $Date: 2004/01/01 19:24:46 $
  * 
  * @author Avalon
  * @author Berin Loritsch
@@ -100,10 +100,10 @@ import org.apache.commons.collections.BufferUnderflowException;
 public class BoundedFifoBuffer extends AbstractCollection
         implements Buffer, BoundedCollection {
             
-    private final Object[] m_elements;
-    private int m_start = 0;
-    private int m_end = 0;
-    private boolean m_full = false;
+    private final Object[] elements;
+    private int start = 0;
+    private int end = 0;
+    private boolean full = false;
     private final int maxElements;
 
     /**
@@ -125,8 +125,8 @@ public class BoundedFifoBuffer extends AbstractCollection
         if (size <= 0) {
             throw new IllegalArgumentException("The size must be greater than 0");
         }
-        m_elements = new Object[size];
-        maxElements = m_elements.length;
+        elements = new Object[size];
+        maxElements = elements.length;
     }
 
     /**
@@ -150,12 +150,12 @@ public class BoundedFifoBuffer extends AbstractCollection
     public int size() {
         int size = 0;
 
-        if (m_end < m_start) {
-            size = maxElements - m_start + m_end;
-        } else if (m_end == m_start) {
-            size = (m_full ? maxElements : 0);
+        if (end < start) {
+            size = maxElements - start + end;
+        } else if (end == start) {
+            size = (full ? maxElements : 0);
         } else {
-            size = m_end - m_start;
+            size = end - start;
         }
 
         return size;
@@ -192,10 +192,10 @@ public class BoundedFifoBuffer extends AbstractCollection
      * Clears this buffer.
      */
     public void clear() {
-        m_full = false;
-        m_start = 0;
-        m_end = 0;
-        Arrays.fill(m_elements, null);
+        full = false;
+        start = 0;
+        end = 0;
+        Arrays.fill(elements, null);
     }
 
     /**
@@ -211,18 +211,18 @@ public class BoundedFifoBuffer extends AbstractCollection
             throw new NullPointerException("Attempted to add null object to buffer");
         }
 
-        if (m_full) {
+        if (full) {
             throw new BufferOverflowException("The buffer cannot hold more than " + maxElements + " objects.");
         }
 
-        m_elements[m_end++] = element;
+        elements[end++] = element;
 
-        if (m_end >= maxElements) {
-            m_end = 0;
+        if (end >= maxElements) {
+            end = 0;
         }
 
-        if (m_end == m_start) {
-            m_full = true;
+        if (end == start) {
+            full = true;
         }
 
         return true;
@@ -239,7 +239,7 @@ public class BoundedFifoBuffer extends AbstractCollection
             throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        return m_elements[m_start];
+        return elements[start];
     }
 
     /**
@@ -253,16 +253,16 @@ public class BoundedFifoBuffer extends AbstractCollection
             throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        Object element = m_elements[m_start];
+        Object element = elements[start];
 
         if (null != element) {
-            m_elements[m_start++] = null;
+            elements[start++] = null;
 
-            if (m_start >= maxElements) {
-                m_start = 0;
+            if (start >= maxElements) {
+                start = 0;
             }
 
-            m_full = false;
+            full = false;
         }
 
         return element;
@@ -304,28 +304,32 @@ public class BoundedFifoBuffer extends AbstractCollection
     public Iterator iterator() {
         return new Iterator() {
 
-            private int index = m_start;
+            private int index = start;
             private int lastReturnedIndex = -1;
-            private boolean isFirst = m_full;
+            private boolean isFirst = full;
 
             public boolean hasNext() {
-                return isFirst || (index != m_end);
+                return isFirst || (index != end);
                 
             }
 
             public Object next() {
-                if (!hasNext()) throw new NoSuchElementException();
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 isFirst = false;
                 lastReturnedIndex = index;
                 index = increment(index);
-                return m_elements[lastReturnedIndex];
+                return elements[lastReturnedIndex];
             }
 
             public void remove() {
-                if (lastReturnedIndex == -1) throw new IllegalStateException();
+                if (lastReturnedIndex == -1) {
+                    throw new IllegalStateException();
+                }
 
                 // First element can be removed quickly
-                if (lastReturnedIndex == m_start) {
+                if (lastReturnedIndex == start) {
                     BoundedFifoBuffer.this.remove();
                     lastReturnedIndex = -1;
                     return;
@@ -333,20 +337,20 @@ public class BoundedFifoBuffer extends AbstractCollection
 
                 // Other elements require us to shift the subsequent elements
                 int i = lastReturnedIndex + 1;
-                while (i != m_end) {
+                while (i != end) {
                     if (i >= maxElements) {
-                        m_elements[i - 1] = m_elements[0];
+                        elements[i - 1] = elements[0];
                         i = 0;
                     } else {
-                        m_elements[i - 1] = m_elements[i];
+                        elements[i - 1] = elements[i];
                         i++;
                     }
                 }
 
                 lastReturnedIndex = -1;
-                m_end = decrement(m_end);
-                m_elements[m_end] = null;
-                m_full = false;
+                end = decrement(end);
+                elements[end] = null;
+                full = false;
                 index = decrement(index);
             }
 
