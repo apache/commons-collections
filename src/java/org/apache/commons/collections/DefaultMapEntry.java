@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.17 2004/01/04 18:04:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.18 2004/01/04 18:37:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import java.util.Map;
  *
  * @deprecated Use the version in the keyvalue subpackage. Will be removed in v4.0
  * @since Commons Collections 1.0
- * @version $Revision: 1.17 $ $Date: 2004/01/04 18:04:16 $
+ * @version $Revision: 1.18 $ $Date: 2004/01/04 18:37:42 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
@@ -167,7 +167,7 @@ public class DefaultMapEntry implements Map.Entry, KeyValue {
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
-    public final boolean equals(Object obj) {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -187,7 +187,7 @@ public class DefaultMapEntry implements Map.Entry, KeyValue {
      * 
      * @return a suitable hashcode
      */
-    public final int hashCode() {
+    public int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^
                (getValue() == null ? 0 : getValue().hashCode()); 
     }
