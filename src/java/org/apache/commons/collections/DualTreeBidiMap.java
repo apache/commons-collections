@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/DualTreeBidiMap.java,v 1.2 2003/11/01 18:47:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/DualTreeBidiMap.java,v 1.3 2003/11/16 00:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,13 +63,13 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.commons.collections.decorators.AbstractSortedMapDecorator;
+import org.apache.commons.collections.map.AbstractSortedMapDecorator;
 
 /**
  * Implementation of <code>BidiMap</code> that uses two <code>TreeMap</code> instances.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.2 2003/11/01 18:47:18 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.3 2003/11/16 00:05:44 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

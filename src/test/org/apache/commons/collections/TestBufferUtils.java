@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.8 2003/10/05 21:03:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.9 2003/11/16 00:05:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,12 +62,12 @@ import java.util.Collection;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections.decorators.PredicatedBuffer;
+import org.apache.commons.collections.buffer.PredicatedBuffer;
 
 /**
  * Tests for BufferUtils.
  * 
- * @version $Revision: 1.8 $ $Date: 2003/10/05 21:03:44 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/16 00:05:47 $
  * 
  * @author Unknown
  */

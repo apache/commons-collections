@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.18 2003/09/28 21:54:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.19 2003/11/16 00:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,27 +64,27 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.collections.decorators.OrderedSet;
-import org.apache.commons.collections.decorators.PredicatedSet;
-import org.apache.commons.collections.decorators.PredicatedSortedSet;
-import org.apache.commons.collections.decorators.SynchronizedSet;
-import org.apache.commons.collections.decorators.SynchronizedSortedSet;
-import org.apache.commons.collections.decorators.TransformedSet;
-import org.apache.commons.collections.decorators.TransformedSortedSet;
-import org.apache.commons.collections.decorators.TypedSet;
-import org.apache.commons.collections.decorators.TypedSortedSet;
-import org.apache.commons.collections.decorators.UnmodifiableSet;
-import org.apache.commons.collections.decorators.UnmodifiableSortedSet;
 import org.apache.commons.collections.observed.ModificationListener;
 import org.apache.commons.collections.observed.ObservableSet;
 import org.apache.commons.collections.observed.ObservableSortedSet;
+import org.apache.commons.collections.set.ListOrderedSet;
+import org.apache.commons.collections.set.PredicatedSet;
+import org.apache.commons.collections.set.PredicatedSortedSet;
+import org.apache.commons.collections.set.SynchronizedSet;
+import org.apache.commons.collections.set.SynchronizedSortedSet;
+import org.apache.commons.collections.set.TransformedSet;
+import org.apache.commons.collections.set.TransformedSortedSet;
+import org.apache.commons.collections.set.TypedSet;
+import org.apache.commons.collections.set.TypedSortedSet;
+import org.apache.commons.collections.set.UnmodifiableSet;
+import org.apache.commons.collections.set.UnmodifiableSortedSet;
 
 /**
  * Provides utility methods and decorators for
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.18 $ $Date: 2003/09/28 21:54:35 $
+ * @version $Revision: 1.19 $ $Date: 2003/11/16 00:05:44 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -296,7 +296,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the Set is null
      */
     public static Set orderedSet(Set set) {
-        return OrderedSet.decorate(set);
+        return ListOrderedSet.decorate(set);
     }
     
     //-----------------------------------------------------------------------

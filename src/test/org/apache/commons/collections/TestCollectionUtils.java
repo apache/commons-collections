@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.29 2003/10/09 11:03:55 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.30 2003/11/16 00:05:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,11 +75,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.decorators.PredicatedCollection;
-import org.apache.commons.collections.decorators.SynchronizedCollection;
-import org.apache.commons.collections.decorators.TransformedCollection;
-import org.apache.commons.collections.decorators.UnmodifiableCollection;
- 
+import org.apache.commons.collections.collection.PredicatedCollection;
+import org.apache.commons.collections.collection.SynchronizedCollection;
+import org.apache.commons.collections.collection.TransformedCollection;
+import org.apache.commons.collections.collection.UnmodifiableCollection;
 
 /**
  * Tests for CollectionUtils.
@@ -89,7 +88,7 @@ import org.apache.commons.collections.decorators.UnmodifiableCollection;
  * @author Stephen Colebourne
  * @author Phil Steitz
  * 
- * @version $Revision: 1.29 $ $Date: 2003/10/09 11:03:55 $
+ * @version $Revision: 1.30 $ $Date: 2003/11/16 00:05:47 $
  */
 public class TestCollectionUtils extends TestCase {
     

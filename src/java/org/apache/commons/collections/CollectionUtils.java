@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.45 2003/10/05 19:48:00 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.46 2003/11/16 00:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,12 +69,12 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.decorators.PredicatedCollection;
-import org.apache.commons.collections.decorators.SynchronizedCollection;
-import org.apache.commons.collections.decorators.TransformedCollection;
-import org.apache.commons.collections.decorators.TypedCollection;
-import org.apache.commons.collections.decorators.UnmodifiableBoundedCollection;
-import org.apache.commons.collections.decorators.UnmodifiableCollection;
+import org.apache.commons.collections.collection.PredicatedCollection;
+import org.apache.commons.collections.collection.SynchronizedCollection;
+import org.apache.commons.collections.collection.TransformedCollection;
+import org.apache.commons.collections.collection.TypedCollection;
+import org.apache.commons.collections.collection.UnmodifiableBoundedCollection;
+import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
 import org.apache.commons.collections.observed.ModificationListener;
@@ -84,7 +84,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.45 $ $Date: 2003/10/05 19:48:00 $
+ * @version $Revision: 1.46 $ $Date: 2003/11/16 00:05:44 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.38 2003/10/03 06:24:13 bayard Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.39 2003/11/16 00:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,19 +70,19 @@ import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import org.apache.commons.collections.decorators.FixedSizeMap;
-import org.apache.commons.collections.decorators.FixedSizeSortedMap;
-import org.apache.commons.collections.decorators.LazyMap;
-import org.apache.commons.collections.decorators.LazySortedMap;
-import org.apache.commons.collections.decorators.OrderedMap;
-import org.apache.commons.collections.decorators.PredicatedMap;
-import org.apache.commons.collections.decorators.PredicatedSortedMap;
-import org.apache.commons.collections.decorators.TransformedMap;
-import org.apache.commons.collections.decorators.TransformedSortedMap;
-import org.apache.commons.collections.decorators.TypedMap;
-import org.apache.commons.collections.decorators.TypedSortedMap;
-import org.apache.commons.collections.decorators.UnmodifiableMap;
-import org.apache.commons.collections.decorators.UnmodifiableSortedMap;
+import org.apache.commons.collections.map.FixedSizeMap;
+import org.apache.commons.collections.map.FixedSizeSortedMap;
+import org.apache.commons.collections.map.LazyMap;
+import org.apache.commons.collections.map.LazySortedMap;
+import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections.map.PredicatedMap;
+import org.apache.commons.collections.map.PredicatedSortedMap;
+import org.apache.commons.collections.map.TransformedMap;
+import org.apache.commons.collections.map.TransformedSortedMap;
+import org.apache.commons.collections.map.TypedMap;
+import org.apache.commons.collections.map.TypedSortedMap;
+import org.apache.commons.collections.map.UnmodifiableMap;
+import org.apache.commons.collections.map.UnmodifiableSortedMap;
 
 /** 
  * Provides utility methods and decorators for
@@ -109,7 +109,7 @@ import org.apache.commons.collections.decorators.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.38 $ $Date: 2003/10/03 06:24:13 $
+ * @version $Revision: 1.39 $ $Date: 2003/11/16 00:05:44 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -1049,7 +1049,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map is null
      */
     public static Map orderedMap(Map map) {
-        return OrderedMap.decorate(map);
+        return ListOrderedMap.decorate(map);
     }
     
     // SortedMap decorators

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.14 2003/09/21 16:26:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.15 2003/11/16 00:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,12 +57,12 @@
  */
 package org.apache.commons.collections;
 
-import org.apache.commons.collections.decorators.BlockingBuffer;
-import org.apache.commons.collections.decorators.PredicatedBuffer;
-import org.apache.commons.collections.decorators.SynchronizedBuffer;
-import org.apache.commons.collections.decorators.TransformedBuffer;
-import org.apache.commons.collections.decorators.TypedBuffer;
-import org.apache.commons.collections.decorators.UnmodifiableBuffer;
+import org.apache.commons.collections.buffer.BlockingBuffer;
+import org.apache.commons.collections.buffer.PredicatedBuffer;
+import org.apache.commons.collections.buffer.SynchronizedBuffer;
+import org.apache.commons.collections.buffer.TransformedBuffer;
+import org.apache.commons.collections.buffer.TypedBuffer;
+import org.apache.commons.collections.buffer.UnmodifiableBuffer;
 import org.apache.commons.collections.observed.ModificationListener;
 import org.apache.commons.collections.observed.ObservableBuffer;
 
@@ -70,7 +70,7 @@ import org.apache.commons.collections.observed.ObservableBuffer;
  * Provides utility methods and decorators for {@link Buffer} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.14 $ $Date: 2003/09/21 16:26:08 $
+ * @version $Revision: 1.15 $ $Date: 2003/11/16 00:05:44 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAllPackages.java,v 1.5 2003/10/05 21:03:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAllPackages.java,v 1.6 2003/11/16 00:05:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections project tests.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/10/05 21:03:44 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/16 00:05:47 $
  * 
  * @author Stephen Colebourne
  */
@@ -76,12 +76,16 @@ public class TestAllPackages extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite();
         suite.addTest(org.apache.commons.collections.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.bag.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.buffer.TestAll.suite());
         suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.decorators.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.collection.TestAll.suite());
         suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.list.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.map.TestAll.suite());
         suite.addTest(org.apache.commons.collections.observed.TestAll.suite());
         suite.addTest(org.apache.commons.collections.pairs.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.set.TestAll.suite());
         return suite;
     }
         

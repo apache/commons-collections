@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.10 2003/11/14 22:58:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.11 2003/11/16 00:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,11 +62,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.decorators.AbstractCollectionDecorator;
-import org.apache.commons.collections.decorators.AbstractIteratorDecorator;
-import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
+import org.apache.commons.collections.collection.AbstractCollectionDecorator;
+import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.ResettableIterator;
+import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
 
 /**
  * Abstract <code>BidiMap</code> implemented using two maps.
@@ -75,7 +75,7 @@ import org.apache.commons.collections.iterators.ResettableIterator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.10 2003/11/14 22:58:27 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.11 2003/11/16 00:05:44 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

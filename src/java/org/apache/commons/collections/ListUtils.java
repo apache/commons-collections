@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.21 2003/09/21 16:26:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.22 2003/11/16 00:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,13 +63,13 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections.decorators.FixedSizeList;
-import org.apache.commons.collections.decorators.LazyList;
-import org.apache.commons.collections.decorators.PredicatedList;
-import org.apache.commons.collections.decorators.SynchronizedList;
-import org.apache.commons.collections.decorators.TransformedList;
-import org.apache.commons.collections.decorators.TypedList;
-import org.apache.commons.collections.decorators.UnmodifiableList;
+import org.apache.commons.collections.list.FixedSizeList;
+import org.apache.commons.collections.list.LazyList;
+import org.apache.commons.collections.list.PredicatedList;
+import org.apache.commons.collections.list.SynchronizedList;
+import org.apache.commons.collections.list.TransformedList;
+import org.apache.commons.collections.list.TypedList;
+import org.apache.commons.collections.list.UnmodifiableList;
 import org.apache.commons.collections.observed.ModificationListener;
 import org.apache.commons.collections.observed.ObservableList;
 
@@ -77,7 +77,7 @@ import org.apache.commons.collections.observed.ObservableList;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.21 $ $Date: 2003/09/21 16:26:08 $
+ * @version $Revision: 1.22 $ $Date: 2003/11/16 00:05:44 $
  * 
  * @author Federico Barbieri
  * @author Peter Donald

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.14 2003/09/28 21:54:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.15 2003/11/16 00:05:44 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,16 +57,16 @@
  */
 package org.apache.commons.collections;
 
-import org.apache.commons.collections.decorators.PredicatedBag;
-import org.apache.commons.collections.decorators.PredicatedSortedBag;
-import org.apache.commons.collections.decorators.SynchronizedBag;
-import org.apache.commons.collections.decorators.SynchronizedSortedBag;
-import org.apache.commons.collections.decorators.TransformedBag;
-import org.apache.commons.collections.decorators.TransformedSortedBag;
-import org.apache.commons.collections.decorators.TypedBag;
-import org.apache.commons.collections.decorators.TypedSortedBag;
-import org.apache.commons.collections.decorators.UnmodifiableBag;
-import org.apache.commons.collections.decorators.UnmodifiableSortedBag;
+import org.apache.commons.collections.bag.PredicatedBag;
+import org.apache.commons.collections.bag.PredicatedSortedBag;
+import org.apache.commons.collections.bag.SynchronizedBag;
+import org.apache.commons.collections.bag.SynchronizedSortedBag;
+import org.apache.commons.collections.bag.TransformedBag;
+import org.apache.commons.collections.bag.TransformedSortedBag;
+import org.apache.commons.collections.bag.TypedBag;
+import org.apache.commons.collections.bag.TypedSortedBag;
+import org.apache.commons.collections.bag.UnmodifiableBag;
+import org.apache.commons.collections.bag.UnmodifiableSortedBag;
 import org.apache.commons.collections.observed.ModificationListener;
 import org.apache.commons.collections.observed.ObservableBag;
 import org.apache.commons.collections.observed.ObservableSortedBag;
@@ -76,7 +76,7 @@ import org.apache.commons.collections.observed.ObservableSortedBag;
  * {@link Bag} and {@link SortedBag} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.14 $ $Date: 2003/09/28 21:54:35 $
+ * @version $Revision: 1.15 $ $Date: 2003/11/16 00:05:44 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
