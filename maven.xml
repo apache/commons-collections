@@ -1,23 +1,80 @@
-<project default="java:jar" xmlns:j="jelly:core" xmlns:ant="jelly:ant">
+<project
+    default="java:jar"
+    xmlns:j="jelly:core"
+    xmlns:license="license"
+    xmlns:maven="jelly:maven"
+    xmlns:util="jelly:util"
+    xmlns:ant="jelly:ant">
 
   <postGoal name="clover:on">
     <j:set var="maven.junit.sysproperties" value="${maven.junit.sysproperties} org.apache.commons.collections:with-clover"/>
     <j:set var="org.apache.commons.collections:with-clover" value="true"/>
   </postGoal>
 
-  <postGoal name="jar:jar">      
-      <ant:tstamp/>
-      <ant:property name="workdir" value="${java.io.tmpdir}/buildtemp_${DSTAMP}${TSTAMP}"/>
-      <ant:unjar dest="${workdir}" src="${maven.build.dir}/${maven.final.name}.jar"/>
+  <!-- ============== JAR ================== -->
+  <postGoal name="jar:jar">
+    <j:set var="finalName" value="${pom.getPluginContext('maven-jar-plugin').getVariable('maven.final.name')}"/>
+    <j:set var="finalVersion" value="${finalName.substring(20)}" />
+    <j:set var="testfwkBase" value="${pom.artifactId}-testframework" />
+    <j:set var="testfwkName" value="${testfwkBase}-${finalVersion}" />
+    
+    <ant:jar 
+        jarfile="${maven.build.dir}/${testfwkName}.jar">
+      <j:set var="licenseFileName"><license:fileName/></j:set>
+      <util:file name="${licenseFileName}" var="licenseFile"/>
+      <ant:metainf dir="${licenseFile.canonicalFile.parent}">
+        <ant:include name="${licenseFile.canonicalFile.name}"/>
+      </ant:metainf>
+      <ant:manifest>
+        <ant:attribute name="Built-By" value="${user.name}"/>
+        <ant:attribute name="Created-By" value="Apache Jakarta Maven"/>
+        <ant:attribute name="Package" value="${pom.package}"/>
+        <ant:attribute name="Build-Jdk" value="${java.version}"/>
+        <!-- added supplementary entries -->
+        <ant:attribute name="Extension-Name" value="Commons Collections Test Framework"/>
+        <ant:attribute name="Specification-Version" value="${pom.specificationVersion}"/>
+        <ant:attribute name="Specification-Vendor" value="${pom.organization.name}"/>
+        <ant:attribute name="Specification-Title" value="Commons Collections Test Framework"/>
+        <ant:attribute name="Implementation-Version" value="${pom.currentVersion}"/>
+        <ant:attribute name="Implementation-Vendor" value="${pom.organization.name}"/>
+        <ant:attribute name="Implementation-Vendor-Id" value="${pom.organization.identifier}"/>
+      </ant:manifest>
+      <ant:fileset dir="${maven.build.dir}/test-classes">
+        <ant:include name="**/AbstractTest*.class"/>
+        <ant:include name="**/BulkTest*.class"/>
+      </ant:fileset>
+    </ant:jar>
+  </postGoal>
+  
+  <postGoal name="jar:install">
+    <j:set var="finalName" value="${pom.getPluginContext('maven-jar-plugin').getVariable('maven.final.name')}"/>
+    <j:set var="finalVersion" value="${finalName.substring(20)}" />
+    <j:set var="testfwkBase" value="${pom.artifactId}-testframework" />
+    <j:set var="testfwkName" value="${testfwkBase}-${finalVersion}" />
+    
+    <ant:property name="jardir__" value="${maven.repo.local}/${pom.artifactDirectory}/jars"/>
+    <ant:mkdir dir="${jardir__}"/>    
+    <ant:copy 
+        file="${maven.build.dir}/${testfwkName}.jar"
+        todir="${jardir__}"
+        overwrite="true" />
+  </postGoal>
 
-      <ant:jar jarfile="${maven.build.dir}/${pom.artifactId}-testframework-${pom.currentVersion}.jar" manifest="${workdir}/META-INF/MANIFEST.MF">
-         <ant:fileset dir="${maven.build.dir}/test-classes">
-            <ant:include name="**/AbstractTest*.class"/>
-            <ant:include name="**/BulkTest*.class"/>
-         </ant:fileset>
-      </ant:jar>
-      
-      <delete dir="${workdir}"/>
+  <postGoal name="jar:install-snapshot">
+    <j:set var="finalName" value="${pom.getPluginContext('maven-jar-plugin').getVariable('maven.final.name')}"/>
+    <j:set var="finalVersion" value="${finalName.substring(20)}" />
+    <j:set var="testfwkBase" value="${pom.artifactId}-testframework" />
+    <j:set var="testfwkName" value="${testfwkBase}-${finalVersion}" />
+
+    <ant:property name="jardir__" value="${maven.repo.local}/${pom.artifactDirectory}/jars"/>
+    <ant:mkdir dir="${jardir__}"/>
+    <ant:copy
+        file="${maven.build.dir}/${testfwkName}.jar"
+        tofile="${jardir__}/${testfwkBase}-SNAPSHOT.jar"
+        overwrite="true" />
+    <ant:copy
+        file="${maven.build.dir}/${testfwkName}.jar"
+        tofile="${jardir__}/${testfwkName}.jar" />
   </postGoal>
 
 </project>
