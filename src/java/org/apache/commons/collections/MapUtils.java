@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.25 2003/06/20 07:50:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.26 2003/08/20 21:03:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.25 $ $Date: 2003/06/20 07:50:21 $
+ * @version $Revision: 1.26 $ $Date: 2003/08/20 21:03:16 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -115,6 +115,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  * @author Matthew Hawthorne
  * @author Arun Mammen Thomas
  * @author Janek Bogucki
+ * @author Max Rydahl Andersen
  */
 public class MapUtils {
     
@@ -679,69 +680,34 @@ public class MapUtils {
      *  Prints the given map with nice line breaks.
      *
      *  @param out  the stream to print to
-     *  @param key  the key that maps to the map in some other map
+     *  @param label  the label to be applied to the output generated.  This 
+     *                 may well be the key associated with this map within a 
+     *                 surrounding map in which this is nested.   
      *  @param map  the map to print
      */
-    public static synchronized void verbosePrint( PrintStream out, Object key, Map map ) {
-        debugPrintIndent( out );
-        out.println( key + " = " );
+    public static synchronized void verbosePrint(
+        final PrintStream out,
+        final Object label,
+        final Map map) {
 
-        debugPrintIndent( out );
-        out.println( "{" );
-        ++debugIndent;
-
-        for ( Iterator iter = map.entrySet().iterator(); iter.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            String childKey = (String) entry.getKey();
-            Object childValue = entry.getValue();
-            if ( childValue instanceof Map ) {
-                verbosePrint( out, childKey, (Map) childValue );
-            }
-            else {
-                debugPrintIndent( out );
-                out.println( childKey + " = " + childValue);
-            }
-        }
-        --debugIndent;
-        debugPrintIndent( out );
-        out.println( "}" );
+        verbosePrintInternal(out, label, map, false);
     }
 
     /**
      *  Prints the given map with nice line breaks.
      *
      *  @param out  the stream to print to
-     *  @param key  the key that maps to the map in some other map
+     *  @param label  the label to be applied to the output generated.  This 
+     *                 may well be the key associated with this map within a 
+     *                 surrounding map in which this is nested.   
      *  @param map  the map to print
      */
-    public static synchronized void debugPrint( PrintStream out, Object key, Map map ) {
-        debugPrintIndent( out );
-        out.println( key + " = " );
+    public static synchronized void debugPrint(
+        final PrintStream out,
+        final Object label,
+        final Map map) {
 
-        debugPrintIndent( out );
-        out.println( "{" );
-        ++debugIndent;
-
-        for ( Iterator iter = map.entrySet().iterator(); iter.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            String childKey = (String) entry.getKey();
-            Object childValue = entry.getValue();
-            if ( childValue instanceof Map ) {
-                verbosePrint( out, childKey, (Map) childValue );
-            }
-            else {
-                debugPrintIndent( out );
-
-                String typeName = ( childValue != null )
-                    ? childValue.getClass().getName()
-                    : null;
-
-                out.println( childKey + " = " + childValue + " class: " + typeName );
-            }
-        }
-        --debugIndent;
-        debugPrintIndent( out );
-        out.println( "}" );
+        verbosePrintInternal(out, label, map, true);
     }
 
     // Implementation methods
@@ -765,6 +731,59 @@ public class MapUtils {
      */
     protected static void logInfo(Exception ex) {
         System.out.println("INFO: Exception: " + ex);
+    }
+
+    /**
+     * Implementation providing functionality for {@link #debugPrint} and for 
+     * {@link #verbosePrint}.  This prints the given map with nice line breaks.
+     * If the debug flag is true, it additionally prints the type of the object 
+     * value.  .
+     *
+     * @param out  the stream to print to
+     * @param label  the label to be applied to the output generated.  This 
+     *                may well be the key associated with this map within a 
+     *                surrounding map in which this is nested.   
+     * @param map  the map to print
+     * @param debug flag indicating whether type names should be output.
+     */
+    private static void verbosePrintInternal(
+        final PrintStream out,
+        final Object label,
+        final Map map,
+        final boolean debug) {
+
+        debugPrintIndent(out);
+        out.println(label + " = ");
+
+        debugPrintIndent(out);
+        out.println("{");
+        ++debugIndent;
+
+        for (Iterator iter = map.entrySet().iterator(); iter.hasNext();) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Object childKey = entry.getKey();
+            Object childValue = entry.getValue();
+            if (childValue instanceof Map) {
+                verbosePrintInternal(out, childKey, (Map) childValue, false);
+            } else {
+                debugPrintIndent(out);
+
+                if (debug) {
+                    String typeName =
+                        (childValue != null)
+                            ? childValue.getClass().getName()
+                            : null;
+
+                    out.println(
+                        childKey + " = " + childValue + " class: " + typeName);
+                } else {
+                    out.println(childKey + " = " + childValue);
+                }
+            }
+        }
+        --debugIndent;
+        debugPrintIndent(out);
+        out.println("}");
     }
 
     // Misc

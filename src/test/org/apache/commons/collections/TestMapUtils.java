@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.5 2003/04/26 14:27:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.6 2003/08/20 21:03:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,8 @@
  */
 package org.apache.commons.collections;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -67,14 +69,14 @@ import java.util.Set;
 
 import junit.framework.Test;
 
-
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/04/26 14:27:46 $
+ * @version $Revision: 1.6 $ $Date: 2003/08/20 21:03:16 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
+ * @author Max Rydahl Andersen
  */
 public class TestMapUtils extends BulkTest {
 
@@ -309,5 +311,25 @@ public class TestMapUtils extends BulkTest {
         final Map out = MapUtils.toMap(b); 
 
         assertTrue( in.equals(out));
+    }
+
+    public void testDebugAndVerbosePrintCasting() {
+        final Map inner = new HashMap(2, 1);
+        inner.put( new Integer(2) , "B" );
+        inner.put( new Integer(3) , "C" );
+
+        final Map outer = new HashMap(2, 1);
+        outer.put( new Integer(0) , inner );
+        outer.put( new Integer(1) , "A");
+
+ 
+        final ByteArrayOutputStream out = new ByteArrayOutputStream();
+        final PrintStream outPrint = new PrintStream(out);
+        
+        try {
+            MapUtils.debugPrint(outPrint, "Print Map", outer);
+        } catch (final ClassCastException e) {
+            fail("No Casting should be occurring!");
+        }
     }
 }
