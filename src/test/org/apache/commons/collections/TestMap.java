@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.6 2002/02/21 20:08:15 morgand Exp $
- * $Revision: 1.6 $
- * $Date: 2002/02/21 20:08:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.7 2002/02/21 20:14:37 morgand Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/02/21 20:14:37 $
  *
  * ====================================================================
  *
@@ -77,7 +77,7 @@ import java.util.Set;
  * test case (method) your {@link Map} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.6 2002/02/21 20:08:15 morgand Exp $
+ * @version $Id: TestMap.java,v 1.7 2002/02/21 20:14:37 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
     public TestMap(String testName) {
@@ -244,10 +244,15 @@ public abstract class TestMap extends TestObject {
         Object o = set.iterator().next();
         assertTrue("entry set should contain valid element",set.contains(o));
 
+        // create a fresh entry mapped to existing values
+        DefaultMapEntry goodEntry  = new DefaultMapEntry("2","2");
+        assertTrue("entry set should recognize externally constructed MapEntry objects",
+                   set.contains(goodEntry));
+
         // make a bogus entry
-        DefaultMapEntry entry = new DefaultMapEntry("4","4");
+        DefaultMapEntry badEntry = new DefaultMapEntry("4","4");
         assertTrue("entry set should not contain a bogus element",
-                   set.contains(entry) == false);
+                   set.contains(badEntry) == false);
         
 
     }
