@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/TreeBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/TreeBag.java,v 1.2 2003/12/03 00:49:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,10 @@
  */
 package org.apache.commons.collections.bag;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.SortedMap;
@@ -72,13 +76,16 @@ import org.apache.commons.collections.SortedBag;
  * iterator.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 00:49:38 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */
-public class TreeBag extends AbstractMapBag implements SortedBag {
+public class TreeBag extends AbstractMapBag implements SortedBag, Serializable {
 
+    /** Serial version lock */
+    static final long serialVersionUID = -7740146511091606676L;
+    
     /**
      * Constructs an empty <code>TreeBag</code>.
      */
@@ -107,6 +114,7 @@ public class TreeBag extends AbstractMapBag implements SortedBag {
         addAll(coll);
     }
 
+    //-----------------------------------------------------------------------
     public Object first() {
         return ((SortedMap) getMap()).firstKey();
     }
@@ -117,6 +125,25 @@ public class TreeBag extends AbstractMapBag implements SortedBag {
 
     public Comparator comparator() {
         return ((SortedMap) getMap()).comparator();
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the bag out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(comparator());
+        super.doWriteObject(out);
+    }
+
+    /**
+     * Read the bag in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        Comparator comp = (Comparator) in.readObject();
+        super.doReadObject(new TreeMap(comp), in);
     }
     
 }

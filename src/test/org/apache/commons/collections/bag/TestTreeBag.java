@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestTreeBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestTreeBag.java,v 1.2 2003/12/03 00:49:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import org.apache.commons.collections.SortedBag;
  * Extension of {@link TestBag} for exercising the {@link TreeBag}
  * implementation.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 00:49:38 $
  *
  * @author Chuck Burdick
  */
@@ -112,4 +112,20 @@ public class TestTreeBag extends AbstractTestBag {
       assertEquals("Should get last key",
                    "D", ((SortedBag)bag).last());
    }
+   
+   public String getCompatibilityVersion() {
+       return "3";
+   }
+    
+//   public void testCreate() throws Exception {
+//       Bag bag = makeBag();
+//       writeExternalFormToDisk((Serializable) bag, "D:/dev/collections/data/test/TreeBag.emptyCollection.version3.obj");
+//       bag = makeBag();
+//       bag.add("A");
+//       bag.add("A");
+//       bag.add("B");
+//       bag.add("B");
+//       bag.add("C");
+//       writeExternalFormToDisk((Serializable) bag, "D:/dev/collections/data/test/TreeBag.fullCollection.version3.obj");
+//   }
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.2 2003/12/03 00:49:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,9 @@
  */
 package org.apache.commons.collections.bag;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Collections;
@@ -76,7 +79,7 @@ import org.apache.commons.collections.Bag;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 00:49:38 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -86,7 +89,7 @@ import org.apache.commons.collections.Bag;
 public abstract class AbstractMapBag implements Bag {
     
     /** The map to use to store the data */
-    private final Map map;
+    private transient Map map;
     /** The current total size of the bag */
     private int size;
     /** The modification count for fail fast iterators */
@@ -95,8 +98,17 @@ public abstract class AbstractMapBag implements Bag {
     private transient Set uniqueSet;
 
     /**
+     * Constructor needed for subclass serialisation.
+     * 
+     * @param map  the map to assign
+     */
+    protected AbstractMapBag() {
+        super();
+    }
+
+    /**
      * Constructor that assigns the specified Map as the backing store.
-     * The map must be empty.
+     * The map must be empty and non-null.
      * 
      * @param map  the map to assign
      */
@@ -530,6 +542,32 @@ public abstract class AbstractMapBag implements Bag {
         return uniqueSet;
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     */
+    protected void doWriteObject(ObjectOutputStream out) throws IOException {
+        out.writeInt(map.size());
+        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            out.writeObject(entry.getKey());
+            out.writeInt(((MutableInteger) entry.getValue()).value);
+        }
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    protected void doReadObject(Map map, ObjectInputStream in) throws IOException, ClassNotFoundException {
+        this.map = map;
+        int entrySize = in.readInt();
+        for (int i = 0; i < entrySize; i++) {
+            Object key = in.readObject();
+            int value = in.readInt();
+            map.put(key, new MutableInteger(value));
+        }
+    }
+    
     //-----------------------------------------------------------------------
     /**
      * Returns true if the given object is not null, has the precise type 

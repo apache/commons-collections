@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestHashBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestHashBag.java,v 1.2 2003/12/03 00:49:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import org.apache.commons.collections.Bag;
  * Extension of {@link TestBag} for exercising the {@link HashBag}
  * implementation.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 00:49:38 $
  *
  * @author Chuck Burdick
  */
@@ -89,4 +89,19 @@ public class TestHashBag extends AbstractTestBag {
         return new HashBag();
     }
     
+    public String getCompatibilityVersion() {
+        return "3";
+    }
+    
+//    public void testCreate() throws Exception {
+//        Bag bag = makeBag();
+//        writeExternalFormToDisk((Serializable) bag, "D:/dev/collections/data/test/HashBag.emptyCollection.version3.obj");
+//        bag = makeBag();
+//        bag.add("A");
+//        bag.add("A");
+//        bag.add("B");
+//        bag.add("B");
+//        bag.add("C");
+//        writeExternalFormToDisk((Serializable) bag, "D:/dev/collections/data/test/HashBag.fullCollection.version3.obj");
+//    }
 }

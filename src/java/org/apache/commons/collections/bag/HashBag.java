@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/HashBag.java,v 1.1 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/HashBag.java,v 1.2 2003/12/03 00:49:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,10 @@
  */
 package org.apache.commons.collections.bag;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -67,22 +71,25 @@ import org.apache.commons.collections.Bag;
  * data storage. This is the standard implementation of a bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/03 00:49:38 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */
-public class HashBag extends AbstractMapBag implements Bag {
+public class HashBag extends AbstractMapBag implements Bag, Serializable {
 
+    /** Serial version lock */
+    static final long serialVersionUID = -6561115435802554013L;
+    
     /**
-     * Constructs an empty <Code>HashBag</Code>.
+     * Constructs an empty <code>HashBag</code>.
      */
     public HashBag() {
         super(new HashMap());
     }
 
     /**
-     * Constructs a {@link Bag} containing all the members of the given collection.
+     * Constructs a bag containing all the members of the given collection.
      * 
      * @param coll  a collection to copy into this bag
      */
@@ -91,4 +98,21 @@ public class HashBag extends AbstractMapBag implements Bag {
         addAll(coll);
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Write the bag out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        super.doWriteObject(out);
+    }
+
+    /**
+     * Read the bag in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        super.doReadObject(new HashMap(), in);
+    }
+    
 }
