@@ -26,52 +26,54 @@ import java.util.Comparator;
  * @see #getBooleanComparator
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2004/02/18 00:59:06 $
+ * @version $Revision: 1.12 $ $Date: 2004/04/27 22:57:00 $
  * 
  * @author Rodney Waldhoff
  */
 public final class BooleanComparator implements Comparator, Serializable {
 
     /**
-     * Creates a <code>BooleanComparator</code>
-     * that sorts <code>false</code> values before 
-     * <code>true</code> values.
-     * 
+     * Creates a <code>BooleanComparator</code> that sorts
+     * <code>false</code> values before <code>true</code> values.
+     * <p>
      * Equivalent to {@link #BooleanComparator(boolean) BooleanComparator(false)}.
+     * <p>
+     * Please use the static factory instead whenever possible.
      */
     public BooleanComparator() {
         this(false);
     }
 
     /**
-     * Creates a <code>BooleanComparator</code>
-     * that sorts <code><i>trueFirst</i></code> values before 
+     * Creates a <code>BooleanComparator</code> that sorts
+     * <code><i>trueFirst</i></code> values before 
      * <code>&#x21;<i>trueFirst</i></code> values.
+     * <p>
+     * Please use the static factories instead whenever possible.
      * 
      * @param trueFirst when <code>true</code>, sort 
-     *        <code>true</code> {@link Boolean}s before
-     *        <code>false</code> {@link Boolean}s.
+     *  <code>true</code> boolean values before <code>false</code>
      */
     public BooleanComparator(boolean trueFirst) {
         this.trueFirst = trueFirst;
     }
 
+    //-----------------------------------------------------------------------
     /**
-     * Compares two arbitrary Objects. When both arguments
-     * are {@link Boolean}, this method is equivalent to 
+     * Compares two arbitrary Objects.
+     * When both arguments are <code>Boolean</code>, this method is equivalent to 
      * {@link #compare(Boolean,Boolean) compare((Boolean)<i>o1</i>,(Boolean)<i>o2</i>)}.
-     * When either argument is not a {@link Boolean}, this methods throws
+     * When either argument is not a <code>Boolean</code>, this methods throws
      * a {@link ClassCastException}.
      * 
-     * @throws ClassCastException when either argument is not 
-     *         a {@link Boolean}
+     * @throws ClassCastException when either argument is not <code>Boolean</code>
      */
     public int compare(Object o1, Object o2) {
         return compare((Boolean)o1,(Boolean)o2);
     }
     
     /**
-     * Compares two non-<code>null</code> {@link Boolean}s
+     * Compares two non-<code>null</code> <code>Boolean</code> objects
      * according to the value of {@link #sortsTrueFirst}.
      * 
      * @throws NullPointerException when either argument <code>null</code>
@@ -121,6 +123,7 @@ public final class BooleanComparator implements Comparator, Serializable {
         return trueFirst;
     }
     
+    //-----------------------------------------------------------------------
     /**
      * Returns a BooleanComparator instance that sorts 
      * <code>true</code> values before <code>false</code> values.
@@ -161,8 +164,7 @@ public final class BooleanComparator implements Comparator, Serializable {
      * virtual machine.
      * 
      * @param trueFirst when <code>true</code>, sort 
-     *        <code>true</code> {@link Boolean}s before
-     *        <code>false</code> {@link Boolean}s.
+     * <code>true</code> <code>Boolean</code>s before <code>false</code>
      * @return a cached BooleanComparator instance
      */
     public static BooleanComparator getBooleanComparator(boolean trueFirst) {
