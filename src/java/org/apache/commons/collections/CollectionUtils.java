@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.17 2002/10/12 21:59:45 scolebourne Exp $
- * $Revision: 1.17 $
- * $Date: 2002/10/12 21:59:45 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.18 2002/10/13 00:38:36 scolebourne Exp $
+ * $Revision: 1.18 $
+ * $Date: 2002/10/13 00:38:36 $
  *
  * ====================================================================
  *
@@ -75,7 +75,6 @@ import java.util.Set;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
-
 /**
  * A set of {@link Collection} related utility methods.
  *
@@ -84,7 +83,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Steve Downey
- * @version $Revision: 1.17 $ $Date: 2002/10/12 21:59:45 $
+ * @version $Revision: 1.18 $ $Date: 2002/10/13 00:38:36 $
  */
 public class CollectionUtils {
 
@@ -727,33 +726,37 @@ public class CollectionUtils {
     }
 
     /**
-     *  Base class for collection decorators.  I decided to do it this way
-     *  because it seemed to result in the most reuse.  
-     *
-     *  Inner class tree looks like:
+     * Base class for collection decorators.  I decided to do it this way
+     * because it seemed to result in the most reuse.  
+     * 
+     * Inner class tree looks like:
+     * <pre>
      *       CollectionWrapper
      *          PredicatedCollection
      *             PredicatedSet
      *             PredicatedList
      *             PredicatedBag
-     *          BoundedCollection
-     *             BoundedSet
-     *             BoundedList
-     *             BoundedBag
+     *             PredicatedBuffer
+     *          UnmodifiableCollection
+     *             UnmodifiableBag
+     *             UnmodifiableBuffer
      *          LazyCollection
      *             LazyList
      *             LazyBag
      *       SynchronizedCollection
      *          SynchronizedBuffer
      *          SynchronizedBag
+     *          SynchronizedBuffer
+     * </pre>
      */
-    static class CollectionWrapper implements Collection {
+    static class CollectionWrapper 
+            implements Collection {
 
-        final protected Collection collection;
+        protected final Collection collection;
 
         public CollectionWrapper(Collection collection) {
             if (collection == null) {
-                throw new IllegalArgumentException("Collection must not be null.");
+                throw new IllegalArgumentException("Collection must not be null");
             }
             this.collection = collection;
         }
@@ -826,14 +829,15 @@ public class CollectionUtils {
     }
 
 
-    static class PredicatedCollection extends CollectionWrapper {
+    static class PredicatedCollection 
+            extends CollectionWrapper {
 
-        final protected Predicate predicate;
+        protected final Predicate predicate;
 
         public PredicatedCollection(Collection c, Predicate p) {
             super(c);
             if (p == null) {
-                throw new IllegalArgumentException("Predicate must not be null.");
+                throw new IllegalArgumentException("Predicate must not be null");
             }
             this.predicate = p;
             for (Iterator iter = c.iterator(); iter.hasNext(); ) {
@@ -846,7 +850,6 @@ public class CollectionUtils {
             return collection.add(o);
         }
 
-
         public boolean addAll(Collection c2) {
             for (Iterator iter = c2.iterator(); iter.hasNext(); ) {
                 validate(iter.next());
@@ -854,18 +857,17 @@ public class CollectionUtils {
             return collection.addAll(c2);
         }
 
-
         protected void validate(Object o) {
             if (!predicate.evaluate(o)) {
-                throw new IllegalArgumentException("Object failed predicate.");
+                throw new IllegalArgumentException("Cannot add Object - Predicate rejected it");
             }
         }
 
     }
 
 
-    static class UnmodifiableCollection extends CollectionWrapper {
-
+    static class UnmodifiableCollection 
+            extends CollectionWrapper {
 
         public UnmodifiableCollection(Collection c) {
             super(c);
@@ -904,11 +906,11 @@ public class CollectionUtils {
 
     static class SynchronizedCollection {
 
-        final protected Collection collection;
+        protected final Collection collection;
 
         public SynchronizedCollection(Collection collection) {
             if (collection == null) {
-                throw new IllegalArgumentException("Collection must not be null.");
+                throw new IllegalArgumentException("Collection must not be null");
             }
             this.collection = collection;
         }
@@ -980,11 +982,15 @@ public class CollectionUtils {
     }
 
 
-    static class UnmodifiableIterator implements Iterator {
+    static class UnmodifiableIterator 
+            implements Iterator {
 
-        final protected Iterator iterator;
+        protected final Iterator iterator;
 
         public UnmodifiableIterator(Iterator iterator) {
+            if (iterator == null) {
+                throw new IllegalArgumentException("Iterator must not be null");
+            }
             this.iterator = iterator;
         }
 
@@ -1003,19 +1009,19 @@ public class CollectionUtils {
 
 
     /**
-     *  Returns a predicated collection backed by the given collection.
-     *  Only objects that pass the test in the given predicate can be 
-     *  added to the collection.
-     *  It is important not to use the original collection after invoking this 
-     *  method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated collection backed by the given collection.
+     * Only objects that pass the test in the given predicate can be 
+     * added to the collection.
+     * It is important not to use the original collection after invoking this 
+     * method, as it is a backdoor for adding unvalidated objects.
      *
-     *  @param b  the collection to predicate
-     *  @param p  the predicate for the collection
-     *  @return  a predicated collection backed by the given collection
+     * @param collection  the collection to predicate, must not be null
+     * @param predicate  the predicate for the collection, must not be null
+     * @return a predicated collection backed by the given collection
+     * @throws IllegalArgumentException  if the Collection is null
      */
-    public static Collection predicatedCollection(Collection c, Predicate p) {
-        return new PredicatedCollection(c, p);
+    public static Collection predicatedCollection(Collection collection, Predicate predicate) {
+        return new PredicatedCollection(collection, predicate);
     }
-
 
 }

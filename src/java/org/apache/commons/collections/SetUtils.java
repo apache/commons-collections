@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.6 2002/10/12 22:15:19 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2002/10/12 22:15:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.7 2002/10/13 00:38:36 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/10/13 00:38:36 $
  *
  * ====================================================================
  *
@@ -60,45 +60,44 @@
  */
 package org.apache.commons.collections;
 
-
 import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedSet;
-
-
 /**
- *  Provides static utility methods and decorators for {@link Set} 
- *  and {@link SortedSet} instances.
+ * Provides static utility methods and decorators for {@link Set} 
+ * and {@link SortedSet} instances.
  *
- *  @author Paul Jack
- *  @version $Id: SetUtils.java,v 1.6 2002/10/12 22:15:19 scolebourne Exp $
- *  @since 2.1
+ * @author Paul Jack
+ * @author Stephen Colebourne
+ * @version $Id: SetUtils.java,v 1.7 2002/10/13 00:38:36 scolebourne Exp $
+ * @since 2.1
  */
 public class SetUtils {
 
-
     /**
-     *  Prevents instantiation.
+     * Prevents instantiation.
      */
     private SetUtils() {
     }
 
 
-    static class PredicatedSet extends CollectionUtils.PredicatedCollection
-    implements Set {
+    static class PredicatedSet 
+            extends CollectionUtils.PredicatedCollection
+            implements Set {
 
-        public PredicatedSet(Set set, Predicate p) {
-            super(set, p);
+        public PredicatedSet(Set set, Predicate predicate) {
+            super(set, predicate);
         }
 
     }
 
 
-    static class PredicatedSortedSet extends PredicatedSet 
-    implements SortedSet {
+    static class PredicatedSortedSet 
+            extends PredicatedSet 
+            implements SortedSet {
 
-        public PredicatedSortedSet(SortedSet s, Predicate p) {
-            super(s, p);
+        public PredicatedSortedSet(SortedSet set, Predicate predicate) {
+            super(set, predicate);
         }
 
         public SortedSet subSet(Object o1, Object o2) {
@@ -135,34 +134,34 @@ public class SetUtils {
     }
 
     /**
-     *  Returns a predicated set backed by the given set.  Only objects
-     *  that pass the test in the given predicate can be added to the set.
-     *  It is important not to use the original set after invoking this 
-     *  method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated set backed by the given set.  Only objects
+     * that pass the test in the given predicate can be added to the set.
+     * It is important not to use the original set after invoking this 
+     * method, as it is a backdoor for adding unvalidated objects.
      *
-     *  @param set  the set to predicate
-     *  @param p  the predicate for the set
-     *  @return  a predicated set backed by the given set
+     * @param set  the set to predicate, must not be null
+     * @param predicate  the predicate for the set, must not be null
+     * @return a predicated set backed by the given set
+     * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static Set predicatedSet(Set set, Predicate p) {
-        return new PredicatedSet(set, p);
+    public static Set predicatedSet(Set set, Predicate predicate) {
+        return new PredicatedSet(set, predicate);
     }
 
-
-
     /**
-     *  Returns a predicated sorted set backed by the given sorted set.  
-     *  Only objects that pass the test in the given predicate can be added
-     *  to the sorted set.
-     *  It is important not to use the original sorted set after invoking this 
-     *  method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated sorted set backed by the given sorted set.  
+     * Only objects that pass the test in the given predicate can be added
+     * to the sorted set.
+     * It is important not to use the original sorted set after invoking this 
+     * method, as it is a backdoor for adding unvalidated objects.
      *
-     *  @param set  the sorted set to predicate
-     *  @param p  the predicate for the sorted set
-     *  @return  a predicated sorted set backed by the given sorted set
+     * @param set  the sorted set to predicate, must not be null
+     * @param predicate  the predicate for the sorted set, must not be null
+     * @return a predicated sorted set backed by the given sorted set
+     * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static SortedSet predicatedSortedSet(SortedSet set, Predicate p) {
-        return new PredicatedSortedSet(set, p);
+    public static SortedSet predicatedSortedSet(SortedSet set, Predicate predicate) {
+        return new PredicatedSortedSet(set, predicate);
     }
 
 }

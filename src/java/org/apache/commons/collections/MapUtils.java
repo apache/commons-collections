@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.12 2002/08/19 21:56:18 pjack Exp $
- * $Revision: 1.12 $
- * $Date: 2002/08/19 21:56:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.13 2002/10/13 00:38:36 scolebourne Exp $
+ * $Revision: 1.13 $
+ * $Date: 2002/10/13 00:38:36 $
  *
  * ====================================================================
  *
@@ -64,29 +64,30 @@ import java.io.*;
 import java.text.*;
 import java.text.NumberFormat;
 import java.util.*;
-
-/** A helper class for using {@link Map Map} instances.<P>
-  *
-  * It contains various typesafe methods
-  * as well as other useful features like deep copying.<P>
-  *
-  * It also provides the following decorators:
-  *
-  *  <UL>
-  *  <LI>{@link #fixedSizeMap(Map)}
-  *  <LI>{@link #fixedSizeSortedMap(SortedMap)}
-  *  <LI>{@link #lazyMap(Map,Factory)}
-  *  <LI>{@link #lazySortedMap(SortedMap,Factory)}
-  *  <LI>{@link #predicatedMap(Map,Predicate,Predicate)}
-  *  <LI>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
-  *  </UL>
-  *
-  * @since 1.0
-  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
-  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
-  * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>
-  * @author Paul Jack
-  */
+/** 
+ * A helper class for using {@link Map Map} instances.<P>
+ *
+ * It contains various typesafe methods
+ * as well as other useful features like deep copying.<P>
+ *
+ * It also provides the following decorators:
+ *
+ *  <UL>
+ *  <LI>{@link #fixedSizeMap(Map)}
+ *  <LI>{@link #fixedSizeSortedMap(SortedMap)}
+ *  <LI>{@link #lazyMap(Map,Factory)}
+ *  <LI>{@link #lazySortedMap(SortedMap,Factory)}
+ *  <LI>{@link #predicatedMap(Map,Predicate,Predicate)}
+ *  <LI>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
+ *  </UL>
+ *
+ * @since 1.0
+ * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
+ * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>
+ * @author Paul Jack
+ * @author Stephen Colebourne
+ */
 public class MapUtils {
 
     private static int debugIndent = 0;
@@ -727,22 +728,22 @@ public class MapUtils {
     }
 
 
-    static class PredicatedMap extends ProxyMap {
+    static class PredicatedMap 
+            extends ProxyMap {
 
-        final protected Predicate keyPredicate;
-        final protected Predicate valuePredicate;
-
+        protected final Predicate keyPredicate;
+        protected final Predicate valuePredicate;
 
         public PredicatedMap(Map map, Predicate keyPred, Predicate valuePred) {
             super(map);
             if (map == null) {
-                throw new IllegalArgumentException("map may not be null.");
+                throw new IllegalArgumentException("Map must not be null");
             }
             if (keyPred == null) {
-                throw new IllegalArgumentException("keyPred may not be null.");
+                throw new IllegalArgumentException("Key Predicate must not be null");
             }
             if (valuePred == null) {
-                throw new IllegalArgumentException("valuePred may not be null.");
+                throw new IllegalArgumentException("Value Predicate must not be null");
             }
             this.keyPredicate = keyPred;
             this.valuePredicate = valuePred;
@@ -778,20 +779,20 @@ public class MapUtils {
 
         private void validate(Object key, Object value) {
             if (!keyPredicate.evaluate(key)) {
-                throw new IllegalArgumentException("Invalid key.");
+                throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
             }
             if (!valuePredicate.evaluate(value)) {
-                throw new IllegalArgumentException("Invalid value.");
+                throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
             }
         }
     }
 
 
     static class PredicatedMapEntrySet 
-    extends CollectionUtils.CollectionWrapper
-    implements Set {
+            extends CollectionUtils.CollectionWrapper
+            implements Set {
 
-        final private Predicate predicate;
+        private final Predicate predicate;
 
         public PredicatedMapEntrySet(Set set, Predicate p) {
             super(set);
@@ -818,13 +819,20 @@ public class MapUtils {
     }
 
 
-    static class PredicatedMapEntry implements Map.Entry {
+    static class PredicatedMapEntry 
+            implements Map.Entry {
 
-        final private Map.Entry entry;
-        final private Predicate predicate;
+        private final Map.Entry entry;
+        private final Predicate predicate;
 
 
         public PredicatedMapEntry(Map.Entry entry, Predicate p) {
+            if (entry == null) {
+                throw new IllegalArgumentException("Map.Entry must not be null");
+            }
+            if (p == null) {
+                throw new IllegalArgumentException("Predicate must not be null");
+            }
             this.entry = entry;
             this.predicate = p;
         }
@@ -851,26 +859,27 @@ public class MapUtils {
 
         public Object setValue(Object o) {
             if (!predicate.evaluate(o)) {
-                throw new IllegalArgumentException("Invalid value.");
+                throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
             }
             return entry.setValue(o);
         }
     }
 
 
-    static class FixedSizeMap extends ProxyMap {
+    static class FixedSizeMap 
+            extends ProxyMap {
 
         public FixedSizeMap(Map map) {
             super(map);
             if (map == null) {
-                throw new IllegalArgumentException("map may not be null.");
+                throw new IllegalArgumentException("Map must not be null");
             }
         }
 
 
         public Object put(Object key, Object value) {
             if (!map.containsKey(key)) {
-                throw new IllegalArgumentException("Can't add new keys.");
+                throw new IllegalArgumentException("Cannot put new key/value pair - List is fixed size");
             }
             return map.put(key, value);
         }
@@ -879,7 +888,7 @@ public class MapUtils {
         public void putAll(Map m) {
             for (Iterator iter = m.keySet().iterator(); iter.hasNext(); ) {
                 if (!map.containsKey(iter.next())) {
-                    throw new IllegalArgumentException("Can't add new keys.");
+                    throw new IllegalArgumentException("Cannot put new key/value pair - List is fixed size");
                 }
             }
             map.putAll(m);
@@ -888,18 +897,18 @@ public class MapUtils {
     }
 
 
-    static class LazyMap extends ProxyMap {
+    static class LazyMap 
+            extends ProxyMap {
 
-        final protected Factory factory;
-
+        protected final Factory factory;
 
         public LazyMap(Map map, Factory factory) {
             super(map);
             if (map == null) {
-                throw new IllegalArgumentException("map may not be null.");
+                throw new IllegalArgumentException("Map must not be null");
             }
             if (factory == null) {
-                throw new IllegalArgumentException("factory may not be null.");
+                throw new IllegalArgumentException("Factory must not be null");
             }
             this.factory = factory;
         }
@@ -918,8 +927,9 @@ public class MapUtils {
 
 
 
-    static class PredicatedSortedMap extends PredicatedMap 
-    implements SortedMap {
+    static class PredicatedSortedMap 
+            extends PredicatedMap 
+            implements SortedMap {
 
         public PredicatedSortedMap(SortedMap map, Predicate k, Predicate v) {
             super(map, k, v);
@@ -962,7 +972,9 @@ public class MapUtils {
     }
 
 
-    static class FixedSizeSortedMap extends FixedSizeMap implements SortedMap {
+    static class FixedSizeSortedMap 
+            extends FixedSizeMap 
+            implements SortedMap {
 
         public FixedSizeSortedMap(SortedMap m) {
             super(m);
@@ -1002,7 +1014,9 @@ public class MapUtils {
     }
 
 
-    static class LazySortedMap extends LazyMap implements SortedMap {
+    static class LazySortedMap 
+            extends LazyMap 
+            implements SortedMap {
 
         public LazySortedMap(SortedMap m, Factory factory) {
             super(m, factory);
@@ -1043,127 +1057,129 @@ public class MapUtils {
 
 
     /**
-     *  Returns a predicated map backed by the given map.  Only keys and
-     *  values that pass the given predicates can be added to the map.
-     *  It is important not to use the original map after invoking this 
-     *  method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated map backed by the given map.  Only keys and
+     * values that pass the given predicates can be added to the map.
+     * It is important not to use the original map after invoking this 
+     * method, as it is a backdoor for adding unvalidated objects.
      *
-     *  @param map  the map to predicate
-     *  @param keyPred  the predicate for keys
-     *  @param valuePred  the predicate for values
-     *  @return  a predicated map backed by the given map
+     * @param map  the map to predicate, must not be null
+     * @param keyPred  the predicate for keys, must not be null
+     * @param valuePred  the predicate for values, must not be null
+     * @return a predicated map backed by the given map
+     * @throws IllegalArgumentException  if the Map or Predicates are null
      */
     public static Map predicatedMap(Map map, Predicate keyPred, Predicate valuePred) {
         return new PredicatedMap(map, keyPred, valuePred);
     }
 
-
     /**
-     *  Returns a fixed-sized map backed by the given map.
-     *  Elements may not be added or removed from the returned map, but 
-     *  existing elements can be changed (for instance, via the 
-     *  {@link Map#put(Object,Object)} method).
+     * Returns a fixed-sized map backed by the given map.
+     * Elements may not be added or removed from the returned map, but 
+     * existing elements can be changed (for instance, via the 
+     * {@link Map#put(Object,Object)} method).
      *
-     *  @param map  the map whose size to fix
-     *  @return  a fixed-size map backed by that map
+     * @param map  the map whose size to fix, must not be null
+     * @return a fixed-size map backed by that map
+     * @throws IllegalArgumentException  if the Map is null
      */
     public static Map fixedSizeMap(Map map) {
         return new FixedSizeMap(map);
     }
 
-
     /**
-     *  Returns a "lazy" map whose values will be created on demand.<P>
-     *  <P>
-     *  When the key passed to the returned map's {@link Map#get(Object)}
-     *  method is not present in the map, then the factory will be used
-     *  to create a new object and that object will become the value
-     *  associated with that key.
-     *  <P>
-     *  For instance:
+     * Returns a "lazy" map whose values will be created on demand.<P>
+     * <p>
+     * When the key passed to the returned map's {@link Map#get(Object)}
+     * method is not present in the map, then the factory will be used
+     * to create a new object and that object will become the value
+     * associated with that key.
+     * <p>
+     * For instance:
      *
-     *  <Pre>
-     *  Factory factory = new Factory() {
-     *      public Object create() {
-     *          return new Date();
-     *      }
-     *  }
-     *  Map lazy = MapUtils.lazyMap(new HashMap(), factory);
-     *  Object obj = lazy.get("test");
-     *  </Pre>
+     * <pre>
+     * Factory factory = new Factory() {
+     *     public Object create() {
+     *         return new Date();
+     *     }
+     * }
+     * Map lazy = MapUtils.lazyMap(new HashMap(), factory);
+     * Object obj = lazy.get("test");
+     * </pre>
      *
-     *  After the above code is executed, <Code>obj</Code> will contain
-     *  a new <Code>Date</Code> instance.  Furthermore, that <Code>Date</Code>
-     *  instance is the value for the <Code>test</Code> key.<P>
+     * After the above code is executed, <code>obj</code> will contain
+     * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
+     * instance is the value for the <code>test</code> key.
      *
-     *  @param map  the map to make lazy
-     *  @param factory  the factory for creating new objects
-     *  @return a lazy map backed by the given map
+     * @param map  the map to make lazy, must not be null
+     * @param factory  the factory for creating new objects, must not be null
+     * @return a lazy map backed by the given map
+     * @throws IllegalArgumentException  if the Map or Factory is null
      */
     public static Map lazyMap(Map map, Factory factory) {
         return new LazyMap(map, factory);
     }
 
-
     /**
-     *  Returns a predicated sorted map backed by the given map.  Only keys and
-     *  values that pass the given predicates can be added to the map.
-     *  It is important not to use the original map after invoking this 
-     *  method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated sorted map backed by the given map.  Only keys and
+     * values that pass the given predicates can be added to the map.
+     * It is important not to use the original map after invoking this 
+     * method, as it is a backdoor for adding unvalidated objects.
      *
-     *  @param map  the map to predicate
-     *  @param keyPred  the predicate for keys
-     *  @param valuePred  the predicate for values
-     *  @return  a predicated map backed by the given map
+     * @param map  the map to predicate, must not be null
+     * @param keyPred  the predicate for keys, must not be null
+     * @param valuePred  the predicate for values, must not be null
+     * @return a predicated map backed by the given map
+     * @throws IllegalArgumentException  if the SortedMap or Predicates are null
      */
     public static SortedMap predicatedSortedMap(SortedMap map, Predicate keyPred, Predicate valuePred) {
         return new PredicatedSortedMap(map, keyPred, valuePred);
     }
 
-
     /**
-     *  Returns a fixed-sized sorted map backed by the given sorted map.
-     *  Elements may not be added or removed from the returned map, but 
-     *  existing elements can be changed (for instance, via the 
-     *  {@link Map#put(Object,Object)} method).
+     * Returns a fixed-sized sorted map backed by the given sorted map.
+     * Elements may not be added or removed from the returned map, but 
+     * existing elements can be changed (for instance, via the 
+     * {@link Map#put(Object,Object)} method).
      *
-     *  @param map  the map whose size to fix
-     *  @return  a fixed-size map backed by that map
+     * @param map  the map whose size to fix, must not be null
+     * @return a fixed-size map backed by that map
+     * @throws IllegalArgumentException  if the SortedMap is null
      */
     public static SortedMap fixedSizeSortedMap(SortedMap map) {
         return new FixedSizeSortedMap(map);
     }
 
-
     /**
-     *  Returns a "lazy" sorted map whose values will be created on demand.
-     *  <P>
-     *  When the key passed to the returned map's {@link Map#get(Object)}
-     *  method is not present in the map, then the factory will be used
-     *  to create a new object and that object will become the value
-     *  associated with that key.
-     *  <P>
-     *  For instance:
+     * Returns a "lazy" sorted map whose values will be created on demand.
+     * <p>
+     * When the key passed to the returned map's {@link Map#get(Object)}
+     * method is not present in the map, then the factory will be used
+     * to create a new object and that object will become the value
+     * associated with that key.
+     * <p>
+     * For instance:
      *
-     *  <Pre>
-     *  Factory factory = new Factory() {
-     *      public Object create() {
-     *          return new Date();
-     *      }
-     *  }
-     *  SortedMap lazy = MapUtils.lazySortedMap(new TreeMap(), factory);
-     *  Object obj = lazy.get("test");
-     *  </Pre>
+     * <pre>
+     * Factory factory = new Factory() {
+     *     public Object create() {
+     *         return new Date();
+     *     }
+     * }
+     * SortedMap lazy = MapUtils.lazySortedMap(new TreeMap(), factory);
+     * Object obj = lazy.get("test");
+     * </pre>
      *
-     *  After the above code is executed, <Code>obj</Code> will contain
-     *  a new <Code>Date</Code> instance.  Furthermore, that <Code>Date</Code>
-     *  instance is the value for the <Code>test</Code> key.<P>
+     * After the above code is executed, <code>obj</code> will contain
+     * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
+     * instance is the value for the <code>test</code> key.
      *
-     *  @param map  the map to make lazy
-     *  @param factory  the factory for creating new objects
-     *  @return a lazy map backed by the given map
+     * @param map  the map to make lazy, must not be null
+     * @param factory  the factory for creating new objects, must not be null
+     * @return a lazy map backed by the given map
+     * @throws IllegalArgumentException  if the SortedMap or Factory is null
      */
     public static SortedMap lazySortedMap(SortedMap map, Factory factory) {
         return new LazySortedMap(map, factory);
     }
+    
 }

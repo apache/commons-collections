@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.10 2002/08/18 20:11:37 pjack Exp $
- * $Revision: 1.10 $
- * $Date: 2002/08/18 20:11:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.11 2002/10/13 00:38:36 scolebourne Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/10/13 00:38:36 $
  *
  * ====================================================================
  *
@@ -65,7 +65,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
 /**
  * Contains static utility methods and decorators for {@link List} 
  * instances.
@@ -74,9 +73,9 @@ import java.util.ListIterator;
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  * @author Paul Jack
+ * @author Stephen Colebourne
  */
-public class ListUtils
-{
+public class ListUtils {
 
     /**
      *  Please don't ever instantiate a <Code>ListUtils</Code>.
@@ -85,95 +84,86 @@ public class ListUtils
     }
 
     /**
-     *  Returns a new list containing all elements that are contained in
-     *  both given lists.
+     * Returns a new list containing all elements that are contained in
+     * both given lists.
      *
-     *  @param list1  the first list
-     *  @param list2  the second list
-     *  @return  the intersection of those two lists
-     *  @throws NullPointerException if either list is null
+     * @param list1  the first list
+     * @param list2  the second list
+     * @return  the intersection of those two lists
+     * @throws NullPointerException if either list is null
      */
-    public static List intersection( final List list1, final List list2 )
-    {
+    public static List intersection(final List list1, final List list2) {
         final ArrayList result = new ArrayList();
         final Iterator iterator = list2.iterator();
 
-        while( iterator.hasNext() )
-        {
+        while (iterator.hasNext()) {
             final Object o = iterator.next();
 
-            if ( list1.contains( o ) )
-            {
-                result.add( o );
+            if (list1.contains(o)) {
+                result.add(o);
             }
         }
 
         return result;
     }
 
-
     /**
-     *  Subtracts all elements in the second list from the first list,
-     *  placing the results in a new list.
-     *  This differs from {@link List#removeAll(Collection)} in that
-     *  cardinality is respected; if <Code>list1</Code> contains two
-     *  occurrences of <Code>null</Code> and <Code>list2</Code> only
-     *  contains one occurrence, then the returned list will still contain
-     *  one occurrence.
+     * Subtracts all elements in the second list from the first list,
+     * placing the results in a new list.
+     * This differs from {@link List#removeAll(Collection)} in that
+     * cardinality is respected; if <Code>list1</Code> contains two
+     * occurrences of <Code>null</Code> and <Code>list2</Code> only
+     * contains one occurrence, then the returned list will still contain
+     * one occurrence.
      *
-     *  @param list1  the list to subtract from
-     *  @param list2  the lsit to subtract
-     *  @return  a new list containing the results
-     *  @throws NullPointerException if either list is null
+     * @param list1  the list to subtract from
+     * @param list2  the lsit to subtract
+     * @return  a new list containing the results
+     * @throws NullPointerException if either list is null
      */
-    public static List subtract( final List list1, final List list2 )
-    {
-        final ArrayList result = new ArrayList( list1 );
+    public static List subtract(final List list1, final List list2) {
+        final ArrayList result = new ArrayList(list1);
         final Iterator iterator = list2.iterator();
 
-        while( iterator.hasNext() )
-        {
-            result.remove( iterator.next() );
+        while (iterator.hasNext()) {
+            result.remove(iterator.next());
         }
 
         return result;
     }
 
     /**
-     *  Returns the sum of the given lists.  This is their intersection
-     *  subtracted from their union.
+     * Returns the sum of the given lists.  This is their intersection
+     * subtracted from their union.
      *
-     *  @param list1  the first list 
-     *  @param list2  the second list
-     *  @return  a new list containing the sum of those lists
-     *  @throws NullPointerException if either list is null
+     * @param list1  the first list 
+     * @param list2  the second list
+     * @return  a new list containing the sum of those lists
+     * @throws NullPointerException if either list is null
      */ 
-    public static List sum( final List list1, final List list2 )
-    {
-        return subtract( union( list1, list2 ),
-                         intersection( list1, list2 ) );
+    public static List sum(final List list1, final List list2) {
+        return subtract(union(list1, list2), intersection(list1, list2));
     }
 
-
     /**
-     *  Returns a new list containing the second list appended to the
-     *  first list.  The {@link List#addAll(Collection)} operation is
-     *  used to append the two given lists into a new list.
+     * Returns a new list containing the second list appended to the
+     * first list.  The {@link List#addAll(Collection)} operation is
+     * used to append the two given lists into a new list.
      *
-     *  @param list1  the first list 
-     *  @param list2  the second list
-     *  @return  a new list containing the union of those lists
-     *  @throws NullPointerException if either list is null
+     * @param list1  the first list 
+     * @param list2  the second list
+     * @return  a new list containing the union of those lists
+     * @throws NullPointerException if either list is null
      */
-    public static List union( final List list1, final List list2 )
-    {
-        final ArrayList result = new ArrayList( list1 );
-        result.addAll( list2 );
+    public static List union(final List list1, final List list2) {
+        final ArrayList result = new ArrayList(list1);
+        result.addAll(list2);
         return result;
     }
 
 
-    static class ListIteratorWrapper implements ListIterator {
+    static class ListIteratorWrapper 
+            implements ListIterator {
 
         final protected ListIterator iterator;
 
@@ -220,8 +210,9 @@ public class ListUtils
     }
 
 
-    static class PredicatedList extends CollectionUtils.PredicatedCollection
-    implements List {
+    static class PredicatedList 
+            extends CollectionUtils.PredicatedCollection
+            implements List {
 
         public PredicatedList(List list, Predicate p) {
             super(list, p);
@@ -290,8 +281,9 @@ public class ListUtils
     }
 
 
-    static class FixedSizeList extends CollectionUtils.UnmodifiableCollection
-    implements List {
+    static class FixedSizeList 
+            extends CollectionUtils.UnmodifiableCollection
+            implements List {
 
         public FixedSizeList(List list) {
             super(list);
@@ -357,15 +349,16 @@ public class ListUtils
     }
 
 
-    static class LazyList extends CollectionUtils.CollectionWrapper 
-    implements List {
+    static class LazyList 
+            extends CollectionUtils.CollectionWrapper 
+            implements List {
 
-        final protected Factory factory;
+        protected final Factory factory;
 
         public LazyList(List list, Factory factory) {
             super(list);
             if (factory == null) {
-                throw new IllegalArgumentException("factory may not be null");
+                throw new IllegalArgumentException("Factory must not be null");
             }
             this.factory = factory;
         }
@@ -452,65 +445,65 @@ public class ListUtils
 
 
     /**
-     *  Returns a predicated list backed by the given list.  Only objects
-     *  that pass the test in the given predicate can be added to the list.
-     *  It is important not to use the original list after invoking this 
-     *  method, as it is a backdoor for adding unvalidated objects.
+     * Returns a predicated list backed by the given list.  Only objects
+     * that pass the test in the given predicate can be added to the list.
+     * It is important not to use the original list after invoking this 
+     * method, as it is a backdoor for adding unvalidated objects.
      *
-     *  @param list  the list to predicate
-     *  @param p  the predicate for the list
-     *  @return  a predicated list backed by the given list
+     * @param list  the list to predicate, must not be null
+     * @param predicate  the predicate for the list, must not be null
+     * @return a predicated list backed by the given list
+     * @throws IllegalArgumentException  if the List or Predicate is null
      */
-    public static List predicatedList(List list, Predicate p) {
-        return new PredicatedList(list, p);
+    public static List predicatedList(List list, Predicate predicate) {
+        return new PredicatedList(list, predicate);
     }
 
-
     /**
-     *  Returns a "lazy" list whose elements will be created on demand.<P>
-     *  <P>
-     *  When the index passed to the returned list's {@link List#get(int) get}
-     *  method is greater than the list's size, then the factory will be used
-     *  to create a new object and that object will be inserted at that index.
-     *  <P>
-     *  For instance:
+     * Returns a "lazy" list whose elements will be created on demand.<P>
+     * <p>
+     * When the index passed to the returned list's {@link List#get(int) get}
+     * method is greater than the list's size, then the factory will be used
+     * to create a new object and that object will be inserted at that index.
+     * <p>
+     * For instance:
      *
-     *  <Pre>
-     *  Factory factory = new Factory() {
-     *      public Object create() {
-     *          return new Date();
-     *      }
-     *  }
-     *  List lazy = ListUtils.lazyList(new ArrayList(), factory);
-     *  Object obj = lazy.get(3);
-     *  </Pre>
+     * <pre>
+     * Factory factory = new Factory() {
+     *     public Object create() {
+     *         return new Date();
+     *     }
+     * }
+     * List lazy = ListUtils.lazyList(new ArrayList(), factory);
+     * Object obj = lazy.get(3);
+     * </pre>
      *
-     *  After the above code is executed, <Code>obj</Code> will contain
-     *  a new <Code>Date</Code> instance.  Furthermore, that <Code>Date</Code>
-     *  instance is the fourth element in the list.  The first, second, 
-     *  and third element are all set to <Code>null</Code>.<P>
+     * After the above code is executed, <code>obj</code> will contain
+     * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
+     * instance is the fourth element in the list.  The first, second, 
+     * and third element are all set to <code>null</code>.
      *
-     *  @param list  the list to make lazy
-     *  @param factory  the factory for creating new objects
-     *  @return a lazy list backed by the given list
+     * @param list  the list to make lazy, must not be null
+     * @param factory  the factory for creating new objects, must not be null
+     * @return a lazy list backed by the given list
+     * @throws IllegalArgumentException  if the List or Factory is null
      */
     public static List lazyList(List list, Factory factory) {
         return new LazyList(list, factory);
     }
 
-
     /**
-     *  Returns a fixed-sized list backed by the given list.
-     *  Elements may not be added or removed from the returned list, but 
-     *  existing elements can be changed (for instance, via the 
-     *  {@link List#set(int,Object)} method).
+     * Returns a fixed-sized list backed by the given list.
+     * Elements may not be added or removed from the returned list, but 
+     * existing elements can be changed (for instance, via the 
+     * {@link List#set(int,Object)} method).
      *
-     *  @param list  the list whose size to fix
-     *  @return  a fixed-size list backed by that list
+     * @param list  the list whose size to fix, must not be null
+     * @return a fixed-size list backed by that list
+     * @throws IllegalArgumentException  if the List is null
      */
     public static List fixedSizeList(List list) {
         return new FixedSizeList(list);
     }
-
 
 }

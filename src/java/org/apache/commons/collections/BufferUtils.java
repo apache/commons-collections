@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.8 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.8 $
- * $Date: 2002/10/12 22:15:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.9 2002/10/13 00:38:36 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/10/13 00:38:36 $
  *
  * ====================================================================
  *
@@ -60,61 +60,62 @@
  */
 package org.apache.commons.collections;
 
-
 import java.util.Collection;
-
-
 /**
- *  Contains static utility methods for operating on {@link Buffer} objects.
+ * Contains static utility methods for operating on {@link Buffer} objects.
  *
- *  @author Paul Jack
- *  @version $Id: BufferUtils.java,v 1.8 2002/10/12 22:15:18 scolebourne Exp $
- *  @since 2.1
+ * @author Paul Jack
+ * @author Stephen Colebourne
+ * @version $Id: BufferUtils.java,v 1.9 2002/10/13 00:38:36 scolebourne Exp $
+ * @since 2.1
  */
 public class BufferUtils {
 
-
+    /**
+     * Restrictive constructor
+     */
     private BufferUtils() {
     }
 
 
     /**
-     *  Returns a synchronized buffer backed by the given buffer.
-     *  Much like the synchronized collections returned by 
-     *  {@link java.util.Collections}, you must manually synchronize on 
-     *  the returned buffer's iterator to avoid non-deterministic behavior:
+     * Returns a synchronized buffer backed by the given buffer.
+     * Much like the synchronized collections returned by 
+     * {@link java.util.Collections}, you must manually synchronize on 
+     * the returned buffer's iterator to avoid non-deterministic behavior:
      *  
-     *  <Pre>
-     *  Buffer b = BufferUtils.synchronizedBuffer(myBuffer);
-     *  synchronized (b) {
-     *      Iterator i = b.iterator();
-     *      while (i.hasNext()) {
-     *          process (i.next());
-     *      }
-     *  }
-     *  </Pre>
+     * <pre>
+     * Buffer b = BufferUtils.synchronizedBuffer(myBuffer);
+     * synchronized (b) {
+     *     Iterator i = b.iterator();
+     *     while (i.hasNext()) {
+     *         process (i.next());
+     *     }
+     * }
+     * </pre>
      *
-     *  @param b  the buffer to synchronize
-     *  @return  a synchronized buffer backed by that buffer
+     * @param buffer  the buffer to synchronize, must not be null
+     * @return a synchronized buffer backed by that buffer
+     * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static Buffer synchronizedBuffer(final Buffer b) {
-        return new SynchronizedBuffer(b);
+    public static Buffer synchronizedBuffer(final Buffer buffer) {
+        return new SynchronizedBuffer(buffer);
     }
 
-
     /**
-     *  Returns a synchronized buffer backed by the given buffer that will
-     *  block on {@link Buffer#get()} and {@link Buffer#remove()} operations.
-     *  If the buffer is empty, then the {@link Buffer#get()} and 
-     *  {@link Buffer#remove()} operations will block until new elements
-     *  are added to the buffer, rather than immediately throwing a 
-     *  <Code>BufferUnderflowException</Code>.
+     * Returns a synchronized buffer backed by the given buffer that will
+     * block on {@link Buffer#get()} and {@link Buffer#remove()} operations.
+     * If the buffer is empty, then the {@link Buffer#get()} and 
+     * {@link Buffer#remove()} operations will block until new elements
+     * are added to the buffer, rather than immediately throwing a 
+     * <code>BufferUnderflowException</code>.
      *
-     *  @param buf  the buffer to synchronize
-     *  @return  a blocking buffer backed by that buffer
+     * @param buffer  the buffer to synchronize, must not be null
+     * @return a blocking buffer backed by that buffer
+     * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static Buffer blockingBuffer(Buffer buf) {
-        return new SynchronizedBuffer(buf) {
+    public static Buffer blockingBuffer(Buffer buffer) {
+        return new SynchronizedBuffer(buffer) {
 
             public synchronized boolean add(Object o) {
                 boolean r = collection.add(o);
@@ -152,38 +153,38 @@ public class BufferUtils {
         };
     }
 
+    /**
+     * Returns an unmodifiable buffer backed by the given buffer.
+     *
+     * @param buffer  the buffer to make unmodifiable, must not be null
+     * @return an unmodifiable buffer backed by that buffer
+     * @throws IllegalArgumentException  if the Buffer is null
+     */
+    public static Buffer unmodifiableBuffer(Buffer buffer) {
+        return new UnmodifiableBuffer(buffer);
+    }
 
     /**
-     *  Returns an unmodifiable buffer backed by the given buffer.
+     * Returns a predicated buffer backed by the given buffer.  Elements are
+     * evaluated with the given predicate before being added to the buffer.
+     * If the predicate evaluation returns false, then an 
+     * IllegalArgumentException is raised and the element is not added to
+     * the buffer.
      *
-     *  @param b  the buffer to make unmodifiable
-     *  @return  an unmodifiable buffer backed by that buffer
+     * @param buffer  the buffer to predicate, must not be null
+     * @param predicate  the predicate used to evaluate new elements, must not be null
+     * @return a predicated buffer
+     * @throws IllegalArgumentException  if the Buffer or Predicate is null
      */
-    public static Buffer unmodifiableBuffer(Buffer b) {
-        return new UnmodifiableBuffer(b);
+    public static Buffer predicatedBuffer(Buffer buffer, final Predicate predicate) {
+        return new PredicatedBuffer(buffer, predicate);
     }
 
 
-    /**
-     *  Returns a predicated buffer backed by the given buffer.  Elements are
-     *  evaluated with the given predicate before being added to the buffer.
-     *  If the predicate evaluation returns false, then an 
-     *  IllegalArgumentException is raised and the element is not added to
-     *  the buffer.
-     *
-     *  @param buf  the buffer to predicate
-     *  @param p  the predicate used to evaluate new elements
-     *  @return  a predicated buffer
-     */
-    public static Buffer predicatedBuffer(Buffer buf, final Predicate p) {
-        return new PredicatedBuffer(buf, p);
-    }
 
-
-
-    private static class SynchronizedBuffer 
-    extends CollectionUtils.SynchronizedCollection
-    implements Buffer {
+    static class SynchronizedBuffer 
+            extends CollectionUtils.SynchronizedCollection
+            implements Buffer {
 
         public SynchronizedBuffer(Buffer b) {
             super(b);
@@ -199,9 +200,9 @@ public class BufferUtils {
     }
 
 
-    private static class UnmodifiableBuffer 
-    extends CollectionUtils.UnmodifiableCollection
-    implements Buffer {
+    static class UnmodifiableBuffer 
+            extends CollectionUtils.UnmodifiableCollection
+            implements Buffer {
 
         public UnmodifiableBuffer(Buffer b) {
             super(b);
@@ -218,9 +219,9 @@ public class BufferUtils {
     }
 
 
-    private static class PredicatedBuffer 
-    extends CollectionUtils.PredicatedCollection
-    implements Buffer {
+    static class PredicatedBuffer 
+            extends CollectionUtils.PredicatedCollection
+            implements Buffer {
 
         public PredicatedBuffer(Buffer b, Predicate p) {
             super(b, p);
