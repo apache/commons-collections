@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.2 2002/07/03 01:45:47 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/07/03 01:45:47 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Buffer.java,v 1.3 2002/10/13 12:58:04 scolebourne Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/10/13 12:58:04 $
  *
  * ====================================================================
  *
@@ -60,10 +60,7 @@
  */
 package org.apache.commons.collections;
 
-
 import java.util.Collection;
-
-
 /**
  * A Buffer is a collection that allows objects to be removed in some
  * well-defined order.  The removal order can be based on insertion order
@@ -81,12 +78,14 @@ import java.util.Collection;
  * also implement {@link java.util.List}, {@link java.util.Set} or 
  * {@link Bag}.
  *
- * @author  <a href="bloritsch@apache.org">Berin Loritsch</a>
- * @version CVS $Revision: 1.2 $ $Date: 2002/07/03 01:45:47 $
- * @since Avalon 4.0
+ * @author Avalon
+ * @author <a href="bloritsch@apache.org">Berin Loritsch</a>
+ * @author Paul Jack
+ * @author Stephen Colebourne
+ * @version $Id: Buffer.java,v 1.3 2002/10/13 12:58:04 scolebourne Exp $
+ * @since 2.1
  */
-public interface Buffer extends Collection
-{
+public interface Buffer extends Collection {
 
     /**
      * Removes the next object from the buffer.
@@ -96,13 +95,11 @@ public interface Buffer extends Collection
      */
     Object remove();
 
-
-
     /**
-     *  Returns the next object in the buffer without removing it.
+     * Returns the next object in the buffer without removing it.
      *
-     *  @return  the next object in the buffer
-     *  @throws BufferUnderflowException if the buffer is empty
+     * @return  the next object in the buffer
+     * @throws BufferUnderflowException if the buffer is empty
      */
     Object get();
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUnderflowException.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUnderflowException.java,v 1.5 2002/10/13 12:57:38 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/10/13 12:57:38 $
  *
  * ====================================================================
  *
@@ -63,48 +63,51 @@ package org.apache.commons.collections;
 /**
  * The BufferUnderflowException is used when the buffer is already empty
  *
+ * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
- * @since Avalon 4.0
- * @version $Id: BufferUnderflowException.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
+ * @author Paul Jack
+ * @author Stephen Colebourne
+ * @since 2.1
+ * @version $Id: BufferUnderflowException.java,v 1.5 2002/10/13 12:57:38 scolebourne Exp $
  */
-public class BufferUnderflowException extends RuntimeException
-{
+public class BufferUnderflowException extends RuntimeException {
     private final Throwable m_throwable;
 
-    /** Construct a new BufferUnderflowException.
-     * @param message The detail message for this exception.
-     */
-    public BufferUnderflowException( String message )
-    {
-        this( message, null );
-    }
-
-    /** Construct a new BufferUnderflowException.
-     * @param message The detail message for this exception.
-     * @param throwable the root cause of the exception
-     */
-    public BufferUnderflowException( String message, Throwable exception )
-    {
-        super( message );
-        m_throwable = exception;
-    }
-
     /**
-     *  Constructs a new <Code>BufferUnderflowException</Code>.
+     * Constructs a new <code>BufferUnderflowException</code>.
      */
     public BufferUnderflowException() {
         super();
         m_throwable = null;
     }
 
+    /** 
+     * Construct a new <code>BufferUnderflowException</code>.
+     * 
+     * @param message  the detail message for this exception
+     */
+    public BufferUnderflowException(String message) {
+        this(message, null);
+    }
+
+    /** 
+     * Construct a new <code>BufferUnderflowException</code>.
+     * 
+     * @param message  the detail message for this exception
+     * @param throwable  the root cause of the exception
+     */
+    public BufferUnderflowException(String message, Throwable exception) {
+        super(message);
+        m_throwable = exception;
+    }
+
     /**
-     * Retrieve root cause of the exception.
+     * Gets the root cause of the exception.
      *
      * @return the root cause
      */
-    public final Throwable getCause()
-    {
+    public final Throwable getCause() {
         return m_throwable;
     }
 }

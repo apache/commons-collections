@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.5 2002/10/13 12:59:04 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/10/13 12:59:04 $
  *
  * ====================================================================
  *
@@ -60,192 +60,177 @@
  */
 package org.apache.commons.collections;
 
-
 import java.util.AbstractCollection;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-
 /**
  * The BoundedFifoBuffer is a <strong>very</strong> efficient implementation of
- * Buffer that does not alter the size of the buffer at runtime.<P>
- *
- * The removal order of a <Code>BoundedFifoBuffer</Code> is based on the 
+ * Buffer that does not alter the size of the buffer at runtime.
+ * <p>
+ * The removal order of a <code>BoundedFifoBuffer</code> is based on the 
  * insertion order; elements are removed in the same order in which they
- * were added.  The iteration order is the same as the removal order.<P>
- *
+ * were added.  The iteration order is the same as the removal order.
+ * <p>
  * The {@link #add(Object)}, {@link #remove()} and {@link #get()} operations
  * all perform in constant time.  All other operations perform in linear
  * time or worse.
- *
+ * <p>
  * Note that this implementation is not synchronized.  The following can be
- * used to provide synchronized access to your <COde>BoundedFifoBuffer</Code>:
- *
- * <Pre>
+ * used to provide synchronized access to your <code>BoundedFifoBuffer</code>:
+ * <pre>
  *   Buffer fifo = BufferUtils.synchronizedBuffer(new BoundedFifoBuffer());
- * </Pre>
+ * </pre>
+ * <p>
+ * This buffer prevents null objects from being added.
  *
+ * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author Paul Jack
- * @version $Id: BoundedFifoBuffer.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
- * @since Avalon 4.0
+ * @author Stephen Colebourne
+ * @since 2.1
+ * @version $Id: BoundedFifoBuffer.java,v 1.5 2002/10/13 12:59:04 scolebourne Exp $
  */
-public class BoundedFifoBuffer extends AbstractCollection implements Buffer
-{
+public class BoundedFifoBuffer extends AbstractCollection implements Buffer {
     private final Object[] m_elements;
     private int m_start = 0;
     private int m_end = 0;
     private boolean m_full = false;
 
-
     /**
-     *  Constructs a new <Code>BoundedFifoBuffer</Code> big enough to hold
-     *  the specified number of elements.
-     *
-     *  @param size  the maximum number of elements for this fifo
+     * Constructs a new <code>BoundedFifoBuffer</code> big enough to hold
+     * 32 elements.
      */
-    public BoundedFifoBuffer( int size )
-    {
-        m_elements = new Object[ size ];
+    public BoundedFifoBuffer() {
+        this(32);
     }
 
-
     /**
-     *  Constructs a new <Code>BoundedFifoBuffer</Code> big enough to hold
-     *  32 elements.
+     * Constructs a new <code>BoundedFifoBuffer</code> big enough to hold
+     * the specified number of elements.
+     *
+     * @param size  the maximum number of elements for this fifo
+     * @throws IllegalArgumentException  if the size is less than 1
      */
-    public BoundedFifoBuffer()
-    {
-        this( 32 );
+    public BoundedFifoBuffer(int size) {
+        if (size <= 0) {
+            throw new IllegalArgumentException("The size must be greater than 0");
+        }
+        m_elements = new Object[size];
     }
 
-
     /**
-     *  Constructs a new <Code>BoundedFifoBuffer</Code> big enough to hold all
-     *  of the elements in the specified collection.  That collection's
-     *  elements will also be added to the fifo.
+     * Constructs a new <code>BoundedFifoBuffer</code> big enough to hold all
+     * of the elements in the specified collection. That collection's
+     * elements will also be added to the buffer.
      *
-     *  @param c  the collection whose elements to add
+     * @param coll  the collection whose elements to add
      */
-    public BoundedFifoBuffer(Collection c) {
-        this(c.size());
-        addAll(c);
+    public BoundedFifoBuffer(Collection coll) {
+        this(coll.size());
+        addAll(coll);
     }
 
-
     /**
-     *  Returns this fifo's size.
+     * Returns the number of elements stored in the buffer.
      *
-     *  @return this fifo's size
+     * @return this buffer's size
      */
-    public int size()
-    {
+    public int size() {
         int size = 0;
 
-        if( m_end < m_start )
-        {
+        if (m_end < m_start) {
             size = m_elements.length - m_start + m_end;
-        }
-        else if( m_end == m_start )
-        {
-            size = ( m_full ? m_elements.length : 0 );
-        }
-        else
-        {
+        } else if (m_end == m_start) {
+            size = (m_full ? m_elements.length : 0);
+        } else {
             size = m_end - m_start;
         }
 
         return size;
     }
 
-
     /**
-     *  Returns true if this fifo is empty; false otherwise.
+     * Returns true if this buffer is empty; false otherwise.
      *
-     *  @return true if this fifo is empty
+     * @return true if this buffer is empty
      */
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return size() == 0;
     }
 
+    /**
+     * Clears this buffer.
+     */
+    public void clear() {
+        m_full = false;
+        m_start = 0;
+        m_end = 0;
+        Arrays.fill(m_elements, null);
+    }
 
     /**
-     *  Adds the given element to this fifo.
+     * Adds the given element to this buffer.
      *
-     *  @param element  the element to add
-     *  @return true, always
-     *  @throws NullPointerException if the given element is null
-     *  @throws BufferOverflowException if this fifo is full
+     * @param element  the element to add
+     * @return true, always
+     * @throws NullPointerException  if the given element is null
+     * @throws BufferOverflowException  if this buffer is full
      */
-    public boolean add( Object element )
-    {
-        if( null == element )
-        {
-            throw new NullPointerException( "Attempted to add null object to buffer" );
+    public boolean add(Object element) {
+        if (null == element) {
+            throw new NullPointerException("Attempted to add null object to buffer");
         }
 
-        if( m_full )
-        {
-            throw new BufferOverflowException( "The buffer cannot hold more than "
-                                               + m_elements.length + " objects." );
+        if (m_full) {
+            throw new BufferOverflowException("The buffer cannot hold more than " + m_elements.length + " objects.");
         }
 
-        m_elements[ m_end++ ] = element;
+        m_elements[m_end++] = element;
 
-        if( m_end >= m_elements.length )
-        {
+        if (m_end >= m_elements.length) {
             m_end = 0;
         }
 
-        if( m_end == m_start )
-        {
+        if (m_end == m_start) {
             m_full = true;
         }
 
         return true;
     }
 
-
     /**
-     *  Returns the least recently inserted element in this fifo.
+     * Returns the least recently inserted element in this buffer.
      *
-     *  @return the least recently inserted element
-     *  @throws BufferUnderflowException if the fifo is empty
+     * @return the least recently inserted element
+     * @throws BufferUnderflowException  if the buffer is empty
      */
     public Object get() {
-        if( isEmpty() )
-        {
-            throw new BufferUnderflowException( "The buffer is already empty" );
+        if (isEmpty()) {
+            throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        return m_elements[ m_start ];
+        return m_elements[m_start];
     }
 
-
     /**
-     *  Removes the least recently inserted element from this fifo.
+     * Removes the least recently inserted element from this buffer.
      *
-     *  @return the least recently inserted element
-     *  @throws BufferUnderflowException if the fifo is empty
+     * @return the least recently inserted element
+     * @throws BufferUnderflowException  if the buffer is empty
      */
-    public Object remove()
-    {
-        if( isEmpty() )
-        {
-            throw new BufferUnderflowException( "The buffer is already empty" );
+    public Object remove() {
+        if (isEmpty()) {
+            throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        Object element = m_elements[ m_start ];
+        Object element = m_elements[m_start];
 
-        if( null != element )
-        {
-            m_elements[ m_start++ ] = null;
+        if (null != element) {
+            m_elements[m_start++] = null;
 
-            if( m_start >= m_elements.length )
-            {
+            if (m_start >= m_elements.length) {
                 m_start = 0;
             }
 
@@ -255,25 +240,38 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer
         return element;
     }
 
-
+    /**
+     * Increments the internal index.
+     * 
+     * @param index  the index to increment
+     * @return the updated index
+     */
     private int increment(int index) {
         index++; 
-        if (index >= m_elements.length) index = 0;
+        if (index >= m_elements.length) {
+            index = 0;
+        }
         return index;
     }
-
-
-    private int decrement(int index) {
-        index--;
-        if (index < 0) index = m_elements.length - 1;
-        return index;
-    }
-
 
     /**
-     *  Returns an iterator over this fifo's elements.
+     * Decrements the internal index.
+     * 
+     * @param index  the index to decrement
+     * @return the updated index
+     */
+    private int decrement(int index) {
+        index--;
+        if (index < 0) {
+            index = m_elements.length - 1;
+        }
+        return index;
+    }
+
+    /**
+     * Returns an iterator over this buffer's elements.
      *
-     *  @return an iterator over this fifo's elements
+     * @return an iterator over this buffer's elements
      */
     public Iterator iterator() {
         return new Iterator() {
@@ -325,17 +323,6 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer
             }
 
         };
-    }
-
-
-    /**
-     *  Clears this fifo.
-     */
-    public void clear() {
-        m_full = false;
-        m_start = 0;
-        m_end = 0;
-        Arrays.fill(m_elements, null);
     }
 
 }
