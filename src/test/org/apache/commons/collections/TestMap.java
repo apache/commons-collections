@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.26 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.26 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.27 2003/10/02 03:42:03 bayard Exp $
+ * $Revision: 1.27 $
+ * $Date: 2003/10/02 03:42:03 $
  *
  * ====================================================================
  *
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.26 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.27 $ $Date: 2003/10/02 03:42:03 $
  */
 public abstract class TestMap extends TestObject {
 
@@ -518,7 +518,7 @@ public abstract class TestMap extends TestObject {
         resetFull();
         for(int i = 0; i < keys.length; i++) {
             assertTrue("Map must contain key for a mapping in the map. " +
-		       "Missing: " + keys[i], map.containsKey(keys[i]));
+                       "Missing: " + keys[i], map.containsKey(keys[i]));
         }
         verify();
     }
@@ -560,8 +560,8 @@ public abstract class TestMap extends TestObject {
         verify();
 
         resetFull();
-	// modify the HashMap created from the full map and make sure this
-	// change results in map.equals() to return false.
+        // modify the HashMap created from the full map and make sure this
+        // change results in map.equals() to return false.
         Iterator iter = confirmed.keySet().iterator();
         iter.next();
         iter.remove();
@@ -570,7 +570,7 @@ public abstract class TestMap extends TestObject {
         resetFull();
         assertTrue("equals(null) returned true.", !map.equals(null));
         assertTrue("equals(new Object()) returned true.", 
-		   !map.equals(new Object()));
+                   !map.equals(new Object()));
         verify();
     }
 
@@ -586,14 +586,14 @@ public abstract class TestMap extends TestObject {
 
         for (int i = 0; i < keys.length; i++) {
             assertTrue("Empty map.get() should return null.", 
-		       map.get(keys[i]) == null);
+                       map.get(keys[i]) == null);
         }
         verify();
 
         resetFull();
         for (int i = 0; i < keys.length; i++) {
-	    assertEquals("Full map.get() should return value from mapping.", 
-			 values[i], map.get(keys[i]));
+            assertEquals("Full map.get() should return value from mapping.", 
+                         values[i], map.get(keys[i]));
         }
     }
 
@@ -603,11 +603,11 @@ public abstract class TestMap extends TestObject {
     public void testMapHashCode() {
         resetEmpty();
         assertTrue("Empty maps have different hashCodes.", 
-		   map.hashCode() == confirmed.hashCode());
+                   map.hashCode() == confirmed.hashCode());
 
         resetFull();
         assertTrue("Equal maps have different hashCodes.", 
-		   map.hashCode() == confirmed.hashCode());
+                   map.hashCode() == confirmed.hashCode());
     }
 
     /**
@@ -682,39 +682,39 @@ public abstract class TestMap extends TestObject {
 
         resetEmpty();
 
-	Object[] keys = getSampleKeys();
-	Object[] values = getSampleValues();
-	Object[] newValues = getNewSampleValues();
+        Object[] keys = getSampleKeys();
+        Object[] values = getSampleValues();
+        Object[] newValues = getNewSampleValues();
 
         for(int i = 0; i < keys.length; i++) {
             Object o = map.put(keys[i], values[i]);
             confirmed.put(keys[i], values[i]);
             verify();
-	    assertTrue("First map.put should return null", o == null);
-	    assertTrue("Map should contain key after put", 
-		       map.containsKey(keys[i]));
-	    assertTrue("Map should contain value after put", 
-		       map.containsValue(values[i]));
-	}
-	
-	for(int i = 0; i < keys.length; i++) {
-	    Object o = map.put(keys[i], newValues[i]);
+            assertTrue("First map.put should return null", o == null);
+            assertTrue("Map should contain key after put", 
+                       map.containsKey(keys[i]));
+            assertTrue("Map should contain value after put", 
+                       map.containsValue(values[i]));
+        }
+        
+        for(int i = 0; i < keys.length; i++) {
+            Object o = map.put(keys[i], newValues[i]);
             confirmed.put(keys[i], newValues[i]);
             verify();
-	    assertEquals("Second map.put should return previous value",
-			 values[i], o);
-	    assertTrue("Map should still contain key after put",
-		       map.containsKey(keys[i]));
-	    assertTrue("Map should contain new value after put",
-		       map.containsValue(newValues[i]));
+            assertEquals("Second map.put should return previous value",
+                         values[i], o);
+            assertTrue("Map should still contain key after put",
+                       map.containsKey(keys[i]));
+            assertTrue("Map should contain new value after put",
+                       map.containsValue(newValues[i]));
 
-	    // if duplicates are allowed, we're not guaranteed that the value
-	    // no longer exists, so don't try checking that.
-	    if(!useDuplicateValues()) {
-		assertTrue("Map should not contain old value after second put",
-			   !map.containsValue(values[i]));
-	    }
-	}
+            // if duplicates are allowed, we're not guaranteed that the value
+            // no longer exists, so don't try checking that.
+            if(!useDuplicateValues()) {
+                assertTrue("Map should not contain old value after second put",
+                           !map.containsValue(values[i]));
+            }
+        }
     }
 
     /**
@@ -733,14 +733,14 @@ public abstract class TestMap extends TestObject {
 
         resetEmpty();
 
-	m2 = new HashMap();
-	Object[] keys = getSampleKeys();
-	Object[] values = getSampleValues();
-	for(int i = 0; i < keys.length; i++) {
-	    m2.put(keys[i], values[i]);
-	}
+        m2 = new HashMap();
+        Object[] keys = getSampleKeys();
+        Object[] values = getSampleValues();
+        for(int i = 0; i < keys.length; i++) {
+            m2.put(keys[i], values[i]);
+        }
 
-	map.putAll(m2);
+        map.putAll(m2);
         confirmed.putAll(m2);
         verify();
     }
@@ -753,24 +753,24 @@ public abstract class TestMap extends TestObject {
 
         resetEmpty();
 
-	Object[] keys = getSampleKeys();
-	Object[] values = getSampleValues();
-	for(int i = 0; i < keys.length; i++) {
-	    Object o = map.remove(keys[i]);
-	    assertTrue("First map.remove should return null", o == null);
-	}
+        Object[] keys = getSampleKeys();
+        Object[] values = getSampleValues();
+        for(int i = 0; i < keys.length; i++) {
+            Object o = map.remove(keys[i]);
+            assertTrue("First map.remove should return null", o == null);
+        }
         verify();
 
         resetFull();
 
-	for(int i = 0; i < keys.length; i++) {
-	    Object o = map.remove(keys[i]);
+        for(int i = 0; i < keys.length; i++) {
+            Object o = map.remove(keys[i]);
             confirmed.remove(keys[i]);
             verify();
 
-	    assertEquals("map.remove with valid key should return value",
-			 values[i], o);
-	}
+            assertEquals("map.remove with valid key should return value",
+                         values[i], o);
+        }
 
         Object[] other = getOtherKeys();
 
