@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonListIterator.java,v 1.2 2002/08/19 21:56:18 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/19 21:56:18 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonListIterator.java,v 1.3 2003/01/15 21:51:05 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -66,11 +63,12 @@ import java.util.NoSuchElementException;
  * <p><code>SingletonIterator</code> is an {@link ListIterator} over a single 
  * object instance.</p>
  *
- * @since 2.1
- * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: SingletonListIterator.java,v 1.2 2002/08/19 21:56:18 pjack Exp $
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.3 $ $Date: 2003/01/15 21:51:05 $
+ * 
+ * @author Stephen Colebourne
  */
-public class SingletonListIterator implements ListIterator {
+public class SingletonListIterator implements ResetableListIterator {
 
     private boolean first = true;
     private boolean nextCalled = false;
@@ -193,6 +191,14 @@ public class SingletonListIterator implements ListIterator {
             throw new IllegalStateException();
         }
         this.object = obj;
+    }
+    
+    /**
+     * Reset the iterator back to the start.
+     */
+    public void reset() {
+        first = true;
+        nextCalled = false;
     }
     
 }
