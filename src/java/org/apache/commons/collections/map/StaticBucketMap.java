@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.5 2003/12/29 15:08:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.6 2003/12/29 15:26:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -132,7 +132,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.5 $ $Date: 2003/12/29 15:08:15 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/29 15:26:39 $
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich
@@ -415,13 +415,15 @@ public final class StaticBucketMap implements Map {
     /**
      * Puts all the entries from the specified map into this map.
      * This operation is <b>not atomic</b> and may have undesired effects.
+     * 
+     * @param map  the map of entries to add
      */
-    public void putAll(Map other) {
-        Iterator i = other.keySet().iterator();
+    public void putAll(Map map) {
+        Iterator i = map.keySet().iterator();
 
         while (i.hasNext()) {
             Object key = i.next();
-            put(key, other.get(key));
+            put(key, map.get(key));
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/CompositeMap.java,v 1.2 2003/12/29 01:04:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/CompositeMap.java,v 1.3 2003/12/29 15:26:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,28 +74,30 @@ import org.apache.commons.collections.set.CompositeSet;
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/29 01:04:43 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/29 15:26:39 $
  *
  * @author Brian McCallister
  */
 public class CompositeMap implements Map {
+    
     /** Array of all maps in the composite */
-    private Map[] composite = null;
+    private Map[] composite;
     
     /** Handle mutation operations */
-    private MapMutator mutator = null;
+    private MapMutator mutator;
     
     /**
-     * Create a new, empty, CompositeMap
+     * Create a new, empty, CompositeMap.
      */
     public CompositeMap() {
         this(new Map[]{}, null);
     }
     
     /**
-     * Create a new CompositeMap with two composited Map instances
-     * @param one First Map to be composited
-     * @param two Second Map to be composited
+     * Create a new CompositeMap with two composited Map instances.
+     * 
+     * @param one  the first Map to be composited
+     * @param two  the second Map to be composited
      * @throws IllegalArgumentException if there is a key collision
      */
     public CompositeMap(Map one, Map two) {
@@ -103,10 +105,11 @@ public class CompositeMap implements Map {
     }
     
     /**
-     * Create a new CompositeMap with two composited Map instances
-     * @param one First Map to be composited
-     * @param two Second Map to be composited
-     * @param mutator MapMutator to be used for mutation operations
+     * Create a new CompositeMap with two composited Map instances.
+     * 
+     * @param one  the first Map to be composited
+     * @param two  the second Map to be composited
+     * @param mutator  MapMutator to be used for mutation operations
      */
     public CompositeMap(Map one, Map two, MapMutator mutator) {
         this(new Map[]{one, two}, mutator);
@@ -115,7 +118,8 @@ public class CompositeMap implements Map {
     /**
      * Create a new CompositeMap which composites all of the Map instances in the
      * argument. It copies the argument array, it does not use it directly.
-     * @param composite Maps to be composited
+     * 
+     * @param composite  the Maps to be composited
      * @throws IllegalArgumentException if there is a key collision
      */
     public CompositeMap(Map[] composite) {
@@ -125,8 +129,9 @@ public class CompositeMap implements Map {
     /**
      * Create a new CompositeMap which composites all of the Map instances in the
      * argument. It copies the argument array, it does not use it directly.
-     * @param composite Maps to be composited
-     * @param mutator MapMutator to be used for mutation operations
+     * 
+     * @param composite  Maps to be composited
+     * @param mutator  MapMutator to be used for mutation operations
      */
     public CompositeMap(Map[] composite, MapMutator mutator) {
         this.mutator = mutator;
@@ -136,18 +141,20 @@ public class CompositeMap implements Map {
         }
     }
     
+    //-----------------------------------------------------------------------
     /**
-     * Specify the MapMutator to be used by mutation operations
-     * @param mutator The MapMutator to be used for mutation delegation
+     * Specify the MapMutator to be used by mutation operations.
+     * 
+     * @param mutator  the MapMutator to be used for mutation delegation
      */
     public void setMutator(MapMutator mutator) {
         this.mutator = mutator;
     }
     
     /**
-     * Add an additional Map to the composite
+     * Add an additional Map to the composite.
      *
-     * @param map Map to be added to the composite
+     * @param map  the Map to be added to the composite
      * @throws IllegalArgumentException if there is a key collision and there is no
      *         MapMutator set to handle it.
      */
@@ -170,9 +177,9 @@ public class CompositeMap implements Map {
     }
     
     /**
-     * Remove a Map from the composite
+     * Remove a Map from the composite.
      *
-     * @param map The Map to be removed from the composite
+     * @param map  the Map to be removed from the composite
      * @return The removed Map or <code>null</code> if map is not in the composite
      */
     public synchronized Map removeComposited(Map map) {
@@ -188,11 +195,10 @@ public class CompositeMap implements Map {
         }
         return null;
     }
-    
-    /* Map Implementation */
-    
+
+    //-----------------------------------------------------------------------    
     /**
-     * Calls <code>clear()</code> on all composited Maps
+     * Calls <code>clear()</code> on all composited Maps.
      *
      * @throws UnsupportedOperationException if any of the composited Maps do not support clear()
      */
@@ -209,7 +215,7 @@ public class CompositeMap implements Map {
      * <tt>(key==null ? k==null : key.equals(k))</tt>.  (There can be
      * at most one such mapping.)
      *
-     * @param key key whose presence in this map is to be tested.
+     * @param key  key whose presence in this map is to be tested.
      * @return <tt>true</tt> if this map contains a mapping for the specified
      *         key.
      *
@@ -220,7 +226,9 @@ public class CompositeMap implements Map {
      */
     public boolean containsKey(Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
-            if (this.composite[i].containsKey(key)) return true;
+            if (this.composite[i].containsKey(key)) {
+                return true;
+            }
         }
         return false;
     }
@@ -243,7 +251,9 @@ public class CompositeMap implements Map {
      */
     public boolean containsValue(Object value) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
-            if (this.composite[i].containsValue(value)) return true;
+            if (this.composite[i].containsValue(value)) {
+                return true;
+            }
         }
         return false;
     }
@@ -299,7 +309,9 @@ public class CompositeMap implements Map {
      */
     public Object get(Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
-            if (this.composite[i].containsKey(key)) return this.composite[i].get(key);
+            if (this.composite[i].containsKey(key)) {
+                return this.composite[i].get(key);
+            }
         }
         return null;
     }
@@ -311,7 +323,9 @@ public class CompositeMap implements Map {
      */
     public boolean isEmpty() {
         for (int i = this.composite.length - 1; i >= 0; --i) {
-            if (!this.composite[i].isEmpty()) return false;
+            if (!this.composite[i].isEmpty()) {
+                return false;
+            }
         }
         return true;
     }
@@ -365,7 +379,9 @@ public class CompositeMap implements Map {
      *            <tt>null</tt>.
      */
     public Object put(Object key, Object value) {
-        if (this.mutator == null) throw new UnsupportedOperationException("No mutator specified");
+        if (this.mutator == null) {
+            throw new UnsupportedOperationException("No mutator specified");
+        }
         return this.mutator.put(this, this.composite, key, value);
     }
     
@@ -377,7 +393,7 @@ public class CompositeMap implements Map {
      * specified map.  The behavior of this operation is unspecified if the
      * specified map is modified while the operation is in progress.
      *
-     * @param t Mappings to be stored in this map.
+     * @param map Mappings to be stored in this map.
      *
      * @throws UnsupportedOperationException if the <tt>putAll</tt> method is
      * 		  not supported by this map.
@@ -391,9 +407,11 @@ public class CompositeMap implements Map {
      *         this map does not permit <tt>null</tt> keys or values, and the
      *         specified map contains <tt>null</tt> keys or values.
      */
-    public void putAll(Map t) {
-        if (this.mutator == null) throw new UnsupportedOperationException("No mutator specified");
-        this.mutator.putAll(this, this.composite, t);
+    public void putAll(Map map) {
+        if (this.mutator == null) {
+            throw new UnsupportedOperationException("No mutator specified");
+        }
+        this.mutator.putAll(this, this.composite, map);
     }
     
     /**
@@ -423,7 +441,9 @@ public class CompositeMap implements Map {
      */
     public Object remove(Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
-            if (this.composite[i].containsKey(key)) return this.composite[i].remove(key);
+            if (this.composite[i].containsKey(key)) {
+                return this.composite[i].remove(key);
+            }
         }
         return null;
     }
@@ -465,18 +485,10 @@ public class CompositeMap implements Map {
     }
     
     /**
-     * @see Map#hashCode
-     */
-    public int hashCode() {
-        int code = 0;
-        for (Iterator i = this.entrySet().iterator(); i.hasNext();) {
-            code += i.next().hashCode();
-        }
-        return code;
-    }
-    
-    /**
-     * @see Map#equals
+     * Checks if this Map equals another as per the Map specification.
+     * 
+     * @param obj  the object to compare to
+     * @return true if the maps are equal
      */
     public boolean equals(Object obj) {
         if (obj instanceof Map) {
@@ -484,6 +496,17 @@ public class CompositeMap implements Map {
             return (this.entrySet().equals(map.entrySet()));
         }
         return false;
+    }
+    
+    /**
+     * Gets a hash code for the Map as per the Map specification.
+     */
+    public int hashCode() {
+        int code = 0;
+        for (Iterator i = this.entrySet().iterator(); i.hasNext();) {
+            code += i.next().hashCode();
+        }
+        return code;
     }
     
     /**
@@ -496,24 +519,22 @@ public class CompositeMap implements Map {
          * Called when adding a new Composited Map results in a
          * key collision.
          *
-         * @param composite the CompositeMap withthe collision
-         * @param existing the Map already in the composite which contains the
+         * @param composite  the CompositeMap withthe collision
+         * @param existing  the Map already in the composite which contains the
          *        offending key
-         * @param added the Map being added
-         * @param intersect the intersection of the keysets of the existing and added maps
+         * @param added  the Map being added
+         * @param intersect  the intersection of the keysets of the existing and added maps
          */
-        public void resolveCollision(CompositeMap composite,
-        Map existing,
-        Map added,
-        Collection intersect);
+        public void resolveCollision(
+            CompositeMap composite, Map existing, Map added, Collection intersect);
         
         /**
          * Called when the CompositeMap.put() method is invoked.
          *
-         * @param map the CompositeMap which is being modified
-         * @param composited array of Maps in the CompositeMap being modified
-         * @param key key with which the specified value is to be associated.
-         * @param value value to be associated with the specified key.
+         * @param map  the CompositeMap which is being modified
+         * @param composited  array of Maps in the CompositeMap being modified
+         * @param key  key with which the specified value is to be associated.
+         * @param value  value to be associated with the specified key.
          * @return previous value associated with specified key, or <tt>null</tt>
          *	       if there was no mapping for key.  A <tt>null</tt> return can
          *	       also indicate that the map previously associated <tt>null</tt>
@@ -534,9 +555,9 @@ public class CompositeMap implements Map {
         /**
          * Called when the CompositeMap.putAll() method is invoked.
          *
-         * @param map the CompositeMap which is being modified
-         * @param composited array of Maps in the CompositeMap being modified
-         * @param t Mappings to be stored in this CompositeMap
+         * @param map  the CompositeMap which is being modified
+         * @param composited  array of Maps in the CompositeMap being modified
+         * @param mapToAdd  Mappings to be stored in this CompositeMap
          *
          * @throws UnsupportedOperationException if not defined
          * @throws ClassCastException if the class of the specified key or value
@@ -547,6 +568,6 @@ public class CompositeMap implements Map {
          *            keys or values, and the specified key or value is
          *            <tt>null</tt>.
          */
-        public void putAll(CompositeMap map, Map[] composited, Map t);
+        public void putAll(CompositeMap map, Map[] composited, Map mapToAdd);
     }
 }
