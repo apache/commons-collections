@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestHashedMap.java,v 1.2 2003/12/02 23:51:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestHashedMap.java,v 1.3 2003/12/07 01:22:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/12/02 23:51:49 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/07 01:22:50 $
  * 
  * @author Stephen Colebourne
  */
@@ -93,4 +93,10 @@ public class TestHashedMap extends AbstractTestIterableMap {
         return "3";
     }
 
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/HashedMap.emptyCollection.version3.obj");
+//        resetFull();
+//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/HashedMap.fullCollection.version3.obj");
+//    }
 }

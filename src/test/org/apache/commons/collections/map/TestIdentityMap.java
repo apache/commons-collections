@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestIdentityMap.java,v 1.2 2003/12/02 23:51:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestIdentityMap.java,v 1.3 2003/12/07 01:22:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,13 +64,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
-import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.IterableMap;
 
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/12/02 23:51:49 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/07 01:22:50 $
  * 
  * @author Stephen Colebourne
  */
@@ -152,4 +152,13 @@ public class TestIdentityMap extends AbstractTestObject {
         assertEquals(false, entry1.equals(entry3));
     }
     
+//    public void testCreate() throws Exception {
+//        Map map = new IdentityMap();
+//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/IdentityMap.emptyCollection.version3.obj");
+//        map = new IdentityMap();
+//        map.put(I1A, I2A);
+//        map.put(I1B, I2A);
+//        map.put(I2A, I2B);
+//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/IdentityMap.fullCollection.version3.obj");
+//    }
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestLinkedMap.java,v 1.1 2003/12/03 19:04:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestLinkedMap.java,v 1.2 2003/12/07 01:22:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,6 +58,7 @@
 package org.apache.commons.collections.map;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +72,7 @@ import org.apache.commons.collections.ResettableIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/12/03 19:04:41 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/07 01:22:50 $
  * 
  * @author Stephen Colebourne
  */
@@ -111,6 +112,51 @@ public class TestLinkedMap extends AbstractTestOrderedMap {
         assertSame(list.get(1), it.next());
         it.reset();
         assertSame(list.get(0), it.next());
+    }
+    
+    //-----------------------------------------------------------------------
+    public void testInsertionOrder() {
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        Object[] keys = getSampleKeys();
+        Object[] values = getSampleValues();
+        Iterator it = null;
+        
+        resetEmpty();
+        map.put(keys[0], values[0]);
+        map.put(keys[1], values[1]);
+        it = map.keySet().iterator();
+        assertSame(keys[0], it.next());
+        assertSame(keys[1], it.next());
+        it = map.values().iterator();
+        assertSame(values[0], it.next());
+        assertSame(values[1], it.next());
+
+        // no change to order
+        map.put(keys[1], values[1]);
+        it = map.keySet().iterator();
+        assertSame(keys[0], it.next());
+        assertSame(keys[1], it.next());
+        it = map.values().iterator();
+        assertSame(values[0], it.next());
+        assertSame(values[1], it.next());
+
+        // no change to order
+        map.put(keys[1], values[2]);
+        it = map.keySet().iterator();
+        assertSame(keys[0], it.next());
+        assertSame(keys[1], it.next());
+        it = map.values().iterator();
+        assertSame(values[0], it.next());
+        assertSame(values[2], it.next());
+
+        // no change to order
+        map.put(keys[0], values[3]);
+        it = map.keySet().iterator();
+        assertSame(keys[0], it.next());
+        assertSame(keys[1], it.next());
+        it = map.values().iterator();
+        assertSame(values[3], it.next());
+        assertSame(values[2], it.next());
     }
     
 //    public void testCreate() throws Exception {
