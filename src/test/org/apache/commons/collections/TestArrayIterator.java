@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.3 2001/07/14 23:33:26 craigmcc Exp $
- * $Revision: 1.3 $
- * $Date: 2001/07/14 23:33:26 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestArrayIterator.java,v 1.4 2001/08/23 10:50:01 jstrachan Exp $
+ * $Revision: 1.4 $
+ * $Date: 2001/08/23 10:50:01 $
  *
  * ====================================================================
  *
@@ -72,7 +72,7 @@ import java.util.NoSuchElementException;
  *
  * @author James Strachan
  * @author Mauricio S. Moura
- * @version $Id: TestArrayIterator.java,v 1.3 2001/07/14 23:33:26 craigmcc Exp $
+ * @version $Id: TestArrayIterator.java,v 1.4 2001/08/23 10:50:01 jstrachan Exp $
  */
 public class TestArrayIterator extends TestObject {
     
@@ -92,7 +92,7 @@ public class TestArrayIterator extends TestObject {
      * Return a new, empty {@link Object} to used for testing.
      */
     public Object makeObject() {
-        return new ArrayIterator(testArray);
+        return new ArrayIterator( (Object[]) testArray );
     }
     
     public void testIterator() {

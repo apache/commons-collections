@@ -7,7 +7,6 @@
  */
 package org.apache.commons.collections;
 
-import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -16,32 +15,32 @@ import java.util.NoSuchElementException;
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
   * @
-  * @version $Revision: 1.4 $
+  * @version $Revision: 1.5 $
   */
 public class ArrayIterator implements Iterator {
     
-    private Object array;
+    private Object[] array;
     private int index = 0;
   
     
     public ArrayIterator() {
     }
     
-    public ArrayIterator(Object array) {
+    public ArrayIterator(Object[] array) {
         this.array = array;
     }
 
     // Iterator interface
     //-------------------------------------------------------------------------
     public boolean hasNext() {
-        return  index < Array.getLength( array );
+        return  index < array.length;
     }
 
     public Object next() {
         if(!hasNext()) {
             throw new NoSuchElementException();
         }
-        return Array.get( array, index++ );
+        return array[ index++ ];
     }
 
     public void remove() {
@@ -50,11 +49,11 @@ public class ArrayIterator implements Iterator {
 
     // Properties
     //-------------------------------------------------------------------------
-    public Object getArray() {
+    public Object[] getArray() {
         return array;
     }
     
-    public void setArray( Object array ) {
+    public void setArray( Object[] array ) {
         this.array = array;
         this.index = -1;
     }
