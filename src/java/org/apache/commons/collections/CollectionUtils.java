@@ -1,7 +1,7 @@
 /*
- * $Id: CollectionUtils.java,v 1.19 2002/11/01 19:54:26 rwaldhoff Exp $
- * $Revision: 1.19 $
- * $Date: 2002/11/01 19:54:26 $
+ * $Id: CollectionUtils.java,v 1.20 2002/11/24 16:23:21 scolebourne Exp $
+ * $Revision: 1.20 $
+ * $Date: 2002/11/24 16:23:21 $
  *
  * ====================================================================
  *
@@ -58,7 +58,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
@@ -75,7 +74,6 @@ import java.util.Set;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
-
 /**
  * A set of {@link Collection} related utility methods.
  *
@@ -84,7 +82,8 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Steve Downey
- * @version $Revision: 1.19 $ $Date: 2002/11/01 19:54:26 $
+ * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
+ * @version $Revision: 1.20 $ $Date: 2002/11/24 16:23:21 $
  */
 public class CollectionUtils {
 
@@ -706,13 +705,17 @@ public class CollectionUtils {
     }
 
 
-    /** Reverses the order of the given array */
+    /** 
+     * Reverses the order of the given array 
+     * 
+     * @param array  the array to reverse
+     */
     public static void reverseArray(Object[] array) {
         int i = 0;
         int j = array.length - 1;
         Object tmp;
-        
-        while(j>i) {
+
+        while (j > i) {
             tmp = array[j];
             array[j] = array[i];
             array[i] = tmp;
@@ -730,6 +733,80 @@ public class CollectionUtils {
             // ignored
         }
         return 0;
+    }
+
+    /**
+     * Returns true if no more elements can be added to the Collection.
+     * <p>
+     * This method uses the {@link BoundedCollection} class to determine the
+     * full status. If the collection does not implement this interface then
+     * false is returned.
+     * <p>
+     * This method handles the synchronized, blocking, unmodifiable 
+     * and predicated decorators.
+     *
+     * @return  true if the Collection is full
+     * @throws NullPointerException if the collection is null
+     */
+    public static boolean isFull(Collection coll) {
+        if (coll == null) {
+            throw new NullPointerException("The collection must not be null");
+        }
+        Collection unwrappedCollection = coll;
+        
+        // handle decorators
+        while (true) {
+            if (unwrappedCollection instanceof CollectionUtils.CollectionWrapper) {
+                unwrappedCollection = ((CollectionUtils.CollectionWrapper) unwrappedCollection).collection;
+            } else if (unwrappedCollection instanceof CollectionUtils.SynchronizedCollection) {
+                unwrappedCollection = ((CollectionUtils.SynchronizedCollection) unwrappedCollection).collection;
+            } else {
+                break;
+            }
+        }
+        
+        // is it full
+        if (unwrappedCollection instanceof BoundedCollection) {
+            return ((BoundedCollection) unwrappedCollection).isFull();
+        }
+        return false;
+    }
+
+    /**
+     * Get the maximum number of elements that the Collection can contain.
+     * <p>
+     * This method uses the {@link BoundedCollection} class to determine the
+     * maximum size. If the collection does not implement this interface then
+     * -1 is returned.
+     * <p>
+     * This method handles the synchronized, blocking, unmodifiable 
+     * and predicated decorators.
+     *
+     * @return the maximum size of the Collection, -1 if no maximum size
+     * @throws NullPointerException if the collection is null
+     */
+    public static int maxSize(Collection coll) {
+        if (coll == null) {
+            throw new NullPointerException("The collection must not be null");
+        }
+        Collection unwrappedCollection = coll;
+        
+        // handle decorators
+        while (true) {
+            if (unwrappedCollection instanceof CollectionUtils.CollectionWrapper) {
+                unwrappedCollection = ((CollectionUtils.CollectionWrapper) unwrappedCollection).collection;
+            } else if (unwrappedCollection instanceof CollectionUtils.SynchronizedCollection) {
+                unwrappedCollection = ((CollectionUtils.SynchronizedCollection) unwrappedCollection).collection;
+            } else {
+                break;
+            }
+        }
+        
+        // get max size
+        if (unwrappedCollection instanceof BoundedCollection) {
+            return ((BoundedCollection) unwrappedCollection).maxSize();
+        }
+        return -1;
     }
 
     /**

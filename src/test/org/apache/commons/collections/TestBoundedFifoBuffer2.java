@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer2.java,v 1.3 2002/10/12 22:36:21 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2002/10/12 22:36:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer2.java,v 1.4 2002/11/24 16:23:21 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/11/24 16:23:21 $
  *
  * ====================================================================
  *
@@ -132,6 +132,30 @@ public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
             // expected
         }
         verify();
+    }
+
+    /**
+     * Tests is full
+     */
+    public void testIsFull() {
+        resetFull();
+        assertEquals(true, ((BoundedCollection) collection).isFull());
+        ((BoundedFifoBuffer) collection).remove();
+        assertEquals(false, ((BoundedCollection) collection).isFull());
+        ((BoundedFifoBuffer) collection).add("jj");
+        assertEquals(true, ((BoundedCollection) collection).isFull());
+    }
+
+    /**
+     * Tests max size
+     */
+    public void testMaxSize() {
+        resetFull();
+        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
+        ((BoundedFifoBuffer) collection).remove();
+        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
+        ((BoundedFifoBuffer) collection).add("jj");
+        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
     }
 
 }

@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.7 2002/11/01 19:54:27 rwaldhoff Exp $
- * $Revision: 1.7 $
- * $Date: 2002/11/01 19:54:27 $
+ * $Id: TestCollectionUtils.java,v 1.8 2002/11/24 16:23:21 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/11/24 16:23:21 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Revision: 1.7 $ $Date: 2002/11/01 19:54:27 $
+ * @version $Revision: 1.8 $ $Date: 2002/11/24 16:23:21 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -496,6 +496,58 @@ public class TestCollectionUtils extends TestCase {
                 };
             }
         };
+    }
+
+    public void testIsFull() {
+        Set set = new HashSet();
+        set.add("1");
+        set.add("2");
+        set.add("3");
+        try {
+            CollectionUtils.isFull(null);
+            fail();
+        } catch (NullPointerException ex) {}
+        assertEquals(false, CollectionUtils.isFull(set));
+        
+        BoundedFifoBuffer buf = new BoundedFifoBuffer(set);
+        assertEquals(true, CollectionUtils.isFull(buf));
+        buf.remove("2");
+        assertEquals(false, CollectionUtils.isFull(buf));
+        buf.add("2");
+        assertEquals(true, CollectionUtils.isFull(buf));
+        
+        Buffer buf2 = BufferUtils.synchronizedBuffer(buf);
+        assertEquals(true, CollectionUtils.isFull(buf2));
+        buf2.remove("2");
+        assertEquals(false, CollectionUtils.isFull(buf2));
+        buf2.add("2");
+        assertEquals(true, CollectionUtils.isFull(buf2));
+    }
+
+    public void testMaxSize() {
+        Set set = new HashSet();
+        set.add("1");
+        set.add("2");
+        set.add("3");
+        try {
+            CollectionUtils.maxSize(null);
+            fail();
+        } catch (NullPointerException ex) {}
+        assertEquals(-1, CollectionUtils.maxSize(set));
+        
+        BoundedFifoBuffer buf = new BoundedFifoBuffer(set);
+        assertEquals(3, CollectionUtils.maxSize(buf));
+        buf.remove("2");
+        assertEquals(3, CollectionUtils.maxSize(buf));
+        buf.add("2");
+        assertEquals(3, CollectionUtils.maxSize(buf));
+        
+        Buffer buf2 = BufferUtils.synchronizedBuffer(buf);
+        assertEquals(3, CollectionUtils.maxSize(buf2));
+        buf2.remove("2");
+        assertEquals(3, CollectionUtils.maxSize(buf2));
+        buf2.add("2");
+        assertEquals(3, CollectionUtils.maxSize(buf2));
     }
 
 }

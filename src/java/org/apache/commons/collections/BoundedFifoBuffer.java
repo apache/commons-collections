@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.5 2002/10/13 12:59:04 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/10/13 12:59:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedFifoBuffer.java,v 1.6 2002/11/24 16:23:21 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/11/24 16:23:21 $
  *
  * ====================================================================
  *
@@ -85,14 +85,15 @@ import java.util.NoSuchElementException;
  * <p>
  * This buffer prevents null objects from being added.
  *
+ * @since 2.1
  * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author Paul Jack
  * @author Stephen Colebourne
- * @since 2.1
- * @version $Id: BoundedFifoBuffer.java,v 1.5 2002/10/13 12:59:04 scolebourne Exp $
+ * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
+ * @version $Id: BoundedFifoBuffer.java,v 1.6 2002/11/24 16:23:21 scolebourne Exp $
  */
-public class BoundedFifoBuffer extends AbstractCollection implements Buffer {
+public class BoundedFifoBuffer extends AbstractCollection implements Buffer, BoundedCollection {
     private final Object[] m_elements;
     private int m_start = 0;
     private int m_end = 0;
@@ -160,6 +161,24 @@ public class BoundedFifoBuffer extends AbstractCollection implements Buffer {
         return size() == 0;
     }
 
+    /**
+     * Returns true if this collection is full and no new elements can be added.
+     *
+     * @return <code>true</code> if the collection is full
+     */
+    public boolean isFull() {
+        return size() == m_elements.length;
+    }
+    
+    /**
+     * Gets the maximum size of the collection (the bound).
+     *
+     * @return the maximum number of elements the collection can hold
+     */
+    public int maxSize() {
+        return m_elements.length;
+    }
+    
     /**
      * Clears this buffer.
      */
