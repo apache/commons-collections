@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestByteList.java,v 1.1 2003/04/15 01:55:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestByteList.java,v 1.2 2003/04/16 18:38:09 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.adapters.ByteListList;
 import org.apache.commons.collections.primitives.adapters.ListByteList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/15 01:55:22 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/16 18:38:09 $
  * @author Rodney Waldhoff
  */
 public abstract class TestByteList extends TestList {
@@ -146,7 +146,7 @@ public abstract class TestByteList extends TestList {
         assertSame(dest,list.toArray(dest));
         int i=0;
         for(ByteIterator iter = list.iterator(); iter.hasNext();i++) {
-            assertEquals(iter.next(),dest[i], 0f);
+            assertEquals(iter.next(),dest[i]);
         }
     }
     
@@ -159,10 +159,10 @@ public abstract class TestByteList extends TestList {
         assertSame(dest,list.toArray(dest));
         int i=0;
         for(ByteIterator iter = list.iterator(); iter.hasNext();i++) {
-            assertEquals(iter.next(),dest[i], 0f);
+            assertEquals(iter.next(),dest[i]);
         }
         for(;i<dest.length;i++) {
-            assertEquals(Byte.MAX_VALUE,dest[i], 0f);
+            assertEquals(Byte.MAX_VALUE,dest[i]);
         }
     }
     
@@ -173,7 +173,7 @@ public abstract class TestByteList extends TestList {
         assertTrue(dest != dest2);
         int i=0;
         for(ByteIterator iter = list.iterator(); iter.hasNext();i++) {
-            assertEquals(iter.next(),dest2[i], 0f);
+            assertEquals(iter.next(),dest2[i]);
         }
     }
     
@@ -289,7 +289,7 @@ public abstract class TestByteList extends TestList {
         for(int i = 0; i < 50; i++) {
             assertEquals(100-i,list.size());
             assertEquals(50-i,sub.size());
-            assertEquals((byte)(25+i),sub.removeElementAt(0), 0f);
+            assertEquals((byte)(25+i),sub.removeElementAt(0));
             assertEquals(50-i-1,sub.size());
             assertEquals(100-i-1,list.size());
         }
@@ -303,7 +303,7 @@ public abstract class TestByteList extends TestList {
             list.add((byte)i);
         }
         for (int i = 0; i < 255; i++) {
-            assertEquals((byte)i, list.get(i), 0f);
+            assertEquals((byte)i, list.get(i));
         }
     }
 
@@ -315,11 +315,11 @@ public abstract class TestByteList extends TestList {
         list.add((byte)4);
         list.add(1, (byte)2);
         for(int i = 0; i < 4; i++) {
-            assertEquals("Should get entry back", (byte)(i + 1), list.get(i), 0f);
+            assertEquals("Should get entry back", (byte)(i + 1), list.get(i));
         }
         list.add(0, (byte)0);
         for (int i = 0; i < 5; i++) {
-            assertEquals("Should get entry back", (byte)i, list.get(i), 0f);
+            assertEquals("Should get entry back", (byte)i, list.get(i));
         }
     }
 

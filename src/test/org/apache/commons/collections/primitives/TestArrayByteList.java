@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayByteList.java,v 1.1 2003/04/15 01:55:22 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayByteList.java,v 1.2 2003/04/16 18:38:09 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -63,7 +63,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/15 01:55:22 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/16 18:38:09 $
  * @author Rodney Waldhoff
  */
 public class TestArrayByteList extends TestByteList {
@@ -135,7 +135,7 @@ public class TestArrayByteList extends TestByteList {
         for (int i = 0; i < 1000; i++) {
             byte value = ((byte) (Byte.MAX_VALUE));
             value -= i;
-            assertEquals(value, list.get(i), 0f);
+            assertEquals(value, list.get(i));
         }
     }
 
@@ -186,13 +186,13 @@ public class TestArrayByteList extends TestByteList {
             }
             
             for(int i=0;i<10;i++) {
-                assertEquals((byte)i,list.get(i), 0f);
+                assertEquals((byte)i,list.get(i));
             }
             
             list.trimToSize();
     
             for(int i=0;i<10;i++) {
-                assertEquals((byte)i,list.get(i), 0f);
+                assertEquals((byte)i,list.get(i));
             }
     
             for(int i=0;i<10;i+=2) {
@@ -200,19 +200,19 @@ public class TestArrayByteList extends TestByteList {
             }
             
             for(int i=0;i<5;i++) {
-                assertEquals((byte)(2*i)+1,list.get(i), 0f);
+                assertEquals((byte)(2*i)+1,list.get(i));
             }
     
             list.trimToSize();
                     
             for(int i=0;i<5;i++) {
-                assertEquals((byte)(2*i)+1,list.get(i), 0f);
+                assertEquals((byte)(2*i)+1,list.get(i));
             }
 
             list.trimToSize();
                     
             for(int i=0;i<5;i++) {
-                assertEquals((byte)(2*i)+1,list.get(i), 0f);
+                assertEquals((byte)(2*i)+1,list.get(i));
             }
     
             list.clear();
