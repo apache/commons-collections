@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.2 2002/02/22 02:18:50 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/22 02:18:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.3 2002/02/26 00:13:37 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/26 00:13:37 $
  *
  * ====================================================================
  *
@@ -88,6 +88,11 @@ public class TestMultiHashMap extends TestMap
     {
         String[] testCaseName = { TestMultiHashMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
+    }
+
+    // MutltiHashMap was introduced in Collections 2.x
+    public int getCompatibilityVersion() {
+        return 2;
     }
 
     public Map makeEmptyMap() {
