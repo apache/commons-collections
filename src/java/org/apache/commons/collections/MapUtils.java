@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.34 2003/09/17 19:59:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.35 2003/09/20 11:26:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,7 +82,7 @@ import org.apache.commons.collections.decorators.TypedMap;
 import org.apache.commons.collections.decorators.TypedSortedMap;
 
 /** 
- * A helper class for using {@link Map Map} instances.
+ * Provides useful utility methods for {@link Map Map} instances.
  * <p>
  * It contains various typesafe methods
  * as well as other useful features like deep copying.
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.34 $ $Date: 2003/09/17 19:59:45 $
+ * @version $Revision: 1.35 $ $Date: 2003/09/20 11:26:32 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -129,9 +129,9 @@ public class MapUtils {
      * This is not provided in the JDK.
      */
     public static final SortedMap EMPTY_SORTED_MAP = Collections.unmodifiableSortedMap(new TreeMap());
-
-    private static int indentDepth = 0;  // must be synchronized
-
+    /**
+     * String used to indent the verbose and debug Map prints.
+     */
     private static final String INDENT_STRING = "    ";
 
     /**
@@ -142,7 +142,6 @@ public class MapUtils {
     
     // Type safe getters
     //-------------------------------------------------------------------------
-
     /**
      *  Synonym for {@link Map#get(Object)}.
      *
@@ -410,7 +409,6 @@ public class MapUtils {
 
     // Type safe getters with default values
     //-------------------------------------------------------------------------
-
     /**
      *  Looks up the given key in the given map, converting null into the
      *  given default value.
@@ -633,7 +631,6 @@ public class MapUtils {
 
     // Conversion methods
     //-------------------------------------------------------------------------
-
     /**
      * Gets a new Properties object initialised with the values from a Map.
      * A null input will return an empty properties object.
@@ -676,13 +673,15 @@ public class MapUtils {
  
     // Printing methods
     //-------------------------------------------------------------------------
-
     /**
      * Prints the given map with nice line breaks.
      * <p>
      * This method prints a nicely formatted String describing the Map.
      * Each map entry will be printed with key and value.
      * When the value is a Map, recursive behaviour occurs.
+     * <p>
+     * This method is NOT thread-safe in any special way. You must manually
+     * synchronize on either this class or the stream as required.
      *
      * @param out  the stream to print to, must not be null
      * @param label  The label to be used, may be <code>null</code>.
@@ -692,12 +691,11 @@ public class MapUtils {
      *  If <code>null</code>, the text 'null' is output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
-    public static synchronized void verbosePrint(
+    public static void verbosePrint(
         final PrintStream out,
         final Object label,
         final Map map) {
 
-        indentDepth = 0;
         verbosePrintInternal(out, label, map, new ArrayStack(), false);
     }
 
@@ -707,6 +705,9 @@ public class MapUtils {
      * This method prints a nicely formatted String describing the Map.
      * Each map entry will be printed with key, value and value classname.
      * When the value is a Map, recursive behaviour occurs.
+     * <p>
+     * This method is NOT thread-safe in any special way. You must manually
+     * synchronize on either this class or the stream as required.
      *
      * @param out  the stream to print to, must not be null
      * @param label  The label to be used, may be <code>null</code>.
@@ -716,31 +717,20 @@ public class MapUtils {
      *  If <code>null</code>, the text 'null' is output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
-    public static synchronized void debugPrint(
+    public static void debugPrint(
         final PrintStream out,
         final Object label,
         final Map map) {
 
-        indentDepth = 0;
         verbosePrintInternal(out, label, map, new ArrayStack(), true);
     }
 
     // Implementation methods
     //-------------------------------------------------------------------------
-
-    /**
-     * Writes indentation to the given stream.
-     *
-     * @param out  the stream to indent
-     */
-    protected static void printIndent(final PrintStream out) {
-        for (int i = 0; i < indentDepth; i++) {
-            out.print(INDENT_STRING);
-        }
-    }
-    
     /**
      * Logs the given exception to <code>System.out</code>.
+     * <p>
+     * This method exists as Jakarta Collections does not depend on logging.
      *
      * @param ex  the exception to log
      */
@@ -768,18 +758,17 @@ public class MapUtils {
      * @param lineage  a stack consisting of any maps in which the previous 
      *  argument is contained. This is checked to avoid infinite recursion when
      *  printing the output
-     *                   
-     * @param debug flag indicating whether type names should be output.
+     * @param debug  flag indicating whether type names should be output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
-    private static void verbosePrintInternal(  // externally synchronized
+    private static void verbosePrintInternal(
         final PrintStream out,
         final Object label,
         final Map map,
         final ArrayStack lineage,
         final boolean debug) {
         
-        printIndent(out);
+        printIndent(out, lineage.size());
 
         if (map == null) {
             if (label != null) {
@@ -794,10 +783,9 @@ public class MapUtils {
             out.println(" = ");
         }
 
-        printIndent(out);
+        printIndent(out, lineage.size());
         out.println("{");
 
-        indentDepth++;
         lineage.push(map);
 
         for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
@@ -812,7 +800,7 @@ public class MapUtils {
                     lineage,
                     debug);
             } else {
-                printIndent(out);
+                printIndent(out, lineage.size());
                 out.print(childKey);
                 out.print(" = ");
                 
@@ -838,12 +826,22 @@ public class MapUtils {
         }
         
         lineage.pop();
-        indentDepth--;
 
-        printIndent(out);
+        printIndent(out, lineage.size());
         out.println(debug ? "} " + map.getClass().getName() : "}");
     }
 
+    /**
+     * Writes indentation to the given stream.
+     *
+     * @param out  the stream to indent
+     */
+    private static void printIndent(final PrintStream out, final int indent) {
+        for (int i = 0; i < indent; i++) {
+            out.print(INDENT_STRING);
+        }
+    }
+    
     // Misc
     //-----------------------------------------------------------------------
     /**
@@ -891,6 +889,7 @@ public class MapUtils {
         }
     }
 
+    // Map decorators
     //-----------------------------------------------------------------------
     /**
      * Returns a synchronized map backed by the given map.
@@ -1065,6 +1064,7 @@ public class MapUtils {
         return LazyMap.decorate(map, transformerFactory);
     }
 
+    // SortedMap decorators
     //-----------------------------------------------------------------------
     /**
      * Returns a synchronized sorted map backed by the given sorted map.
