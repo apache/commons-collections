@@ -17,7 +17,7 @@ package org.apache.commons.collections.collection;
 
 import java.util.Collection;
 
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.InstanceofPredicate;
 
 /**
  * Decorates a <code>Collection</code> to validate that elements added are of a specific type.
@@ -27,7 +27,7 @@ import org.apache.commons.collections.PredicateUtils;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:53 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/07 23:28:38 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -46,7 +46,7 @@ public class TypedCollection {
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
     public static Collection decorate(Collection coll, Class type) {
-        return new PredicatedCollection(coll, PredicateUtils.instanceofPredicate(type));
+        return new PredicatedCollection(coll, InstanceofPredicate.getInstance(type));
     }
     
     /**

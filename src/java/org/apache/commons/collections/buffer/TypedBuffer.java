@@ -16,7 +16,7 @@
 package org.apache.commons.collections.buffer;
 
 import org.apache.commons.collections.Buffer;
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.InstanceofPredicate;
 
 /**
  * Decorates another <code>Buffer</code> to validate that elements added
@@ -27,7 +27,7 @@ import org.apache.commons.collections.PredicateUtils;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/07 23:28:38 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -46,7 +46,7 @@ public class TypedBuffer {
      * @throws IllegalArgumentException if the buffer contains invalid elements
      */
     public static Buffer decorate(Buffer buffer, Class type) {
-        return new PredicatedBuffer(buffer, PredicateUtils.instanceofPredicate(type));
+        return new PredicatedBuffer(buffer, InstanceofPredicate.getInstance(type));
     }
     
     /**

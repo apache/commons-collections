@@ -17,7 +17,7 @@ package org.apache.commons.collections.set;
 
 import java.util.Set;
 
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.InstanceofPredicate;
 
 /**
  * Decorates another <code>Set</code> to validate that elements
@@ -28,7 +28,7 @@ import org.apache.commons.collections.PredicateUtils;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:14:27 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/07 23:28:38 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -47,7 +47,7 @@ public class TypedSet {
      * @throws IllegalArgumentException if the set contains invalid elements
      */
     public static Set decorate(Set set, Class type) {
-        return new PredicatedSet(set, PredicateUtils.instanceofPredicate(type));
+        return new PredicatedSet(set, InstanceofPredicate.getInstance(type));
     }
     
     /**

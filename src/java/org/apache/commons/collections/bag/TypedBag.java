@@ -16,7 +16,7 @@
 package org.apache.commons.collections.bag;
 
 import org.apache.commons.collections.Bag;
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.InstanceofPredicate;
 
 /**
  * Decorates another <code>Bag</code> to validate that elements added
@@ -27,7 +27,7 @@ import org.apache.commons.collections.PredicateUtils;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/07 23:28:38 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -46,7 +46,7 @@ public class TypedBag {
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
     public static Bag decorate(Bag bag, Class type) {
-        return new PredicatedBag(bag, PredicateUtils.instanceofPredicate(type));
+        return new PredicatedBag(bag, InstanceofPredicate.getInstance(type));
     }
 
     /**
