@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.41 2003/12/11 23:45:02 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.42 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -88,7 +88,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  * Provides utility methods and decorators for
  * {@link Map} and {@link SortedMap} instances.
  * <p>
- * It contains various typesafe methods
+ * It contains various type safe methods
  * as well as other useful features like deep copying.
  * <p>
  * It also provides the following decorators:
@@ -109,7 +109,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.41 $ $Date: 2003/12/11 23:45:02 $
+ * @version $Revision: 1.42 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -994,7 +994,7 @@ public class MapUtils {
      * <em>(this Map)</em> is printed out.  If the contents include a 
      * parent container of the map, the the text <em>(ancestor[i] Map)</em> is 
      * printed, where i actually indicates the number of levels which must be 
-     * traversed in the sequential list of ancesters (e.g. father, grandfather, 
+     * traversed in the sequential list of ancestors (e.g. father, grandfather, 
      * great-grandfather, etc).  
      *
      * @param out  the stream to print to

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.25 2003/12/28 22:50:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.26 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -93,7 +93,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * @see org.apache.commons.collections.map.LinkedMap
  * @see org.apache.commons.collections.map.ListOrderedMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.25 $ $Date: 2003/12/28 22:50:42 $
+ * @version $Revision: 1.26 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Michael A. Smith
  * @author Daniel Rall
@@ -733,7 +733,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
          *  should be either {@link #KEY}, {@link #VALUE}, or {@link #ENTRY}.  To
          *  save a tiny bit of memory, this field is also used as a marker for when
          *  remove has been called on the current object to prevent a second remove
-         *  on the same element.  Essientially, if this value is negative (i.e. the
+         *  on the same element.  Essentially, if this value is negative (i.e. the
          *  bit specified by {@link #REMOVED_MASK} is set), the current position
          *  has been removed.  If positive, remove can still be called.
          */

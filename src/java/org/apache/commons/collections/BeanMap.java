@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.26 2004/01/05 21:37:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.27 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -84,7 +84,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * property is considered non existent in the Map
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.26 $ $Date: 2004/01/05 21:37:13 $
+ * @version $Revision: 1.27 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
@@ -277,7 +277,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
     }
 
     /**
-     * Puts all of the writeable properties from the given BeanMap into this
+     * Puts all of the writable properties from the given BeanMap into this
      * BeanMap. Read-only and Write-only properties will be ignored.
      *
      * @param map  the BeanMap whose properties to put
@@ -765,7 +765,7 @@ public class BeanMap extends AbstractMap implements Cloneable {
      * If no such constructor exists, and the given type is a primitive
      * type, then the given value is converted to a string using its 
      * {@link Object#toString() toString()} method, and that string is
-     * parsed into the correct primitve type using, for instance, 
+     * parsed into the correct primitive type using, for instance, 
      * {@link Integer#valueOf(String)} to convert the string into an
      * <code>int</code>.<P>
      *

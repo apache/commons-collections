@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.24 2004/01/04 18:03:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.25 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,7 +75,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.24 $ $Date: 2004/01/04 18:03:41 $
+ * @version $Revision: 1.25 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Federico Barbieri
  * @author Peter Donald
@@ -234,7 +234,7 @@ public class ListUtils {
     }
     
     /**
-     * Generates a hashcode using the algorithm specified in 
+     * Generates a hash code using the algorithm specified in 
      * {@link java.util.List#hashCode()}.
      * <p>
      * This method is useful for implementing <code>List</code> when you cannot

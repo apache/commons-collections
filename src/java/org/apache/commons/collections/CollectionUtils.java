@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.52 2004/01/04 18:03:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.53 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.52 $ $Date: 2004/01/04 18:03:41 $
+ * @version $Revision: 1.53 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -255,7 +255,7 @@ public class CollectionUtils {
     /**
      * Returns a {@link Map} mapping each unique element in the given
      * {@link Collection} to an {@link Integer} representing the number
-     * of occurences of that element in the {@link Collection}.
+     * of occurrences of that element in the {@link Collection}.
      * <p>
      * Only those elements present in the collection will appear as
      * keys in the map.

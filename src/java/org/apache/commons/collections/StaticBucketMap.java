@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.15 2003/12/14 16:10:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.16 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -74,7 +74,7 @@ import java.util.Set;
  * {@link #remove(Object) remove} and {@link #containsKey(Object) containsKey}
  * operations, assuming (approximate) uniform hashing and
  * that the number of entries does not exceed the number of buckets.  If the
- * number of entries exceeds the number of buckets or if the hashcodes of the
+ * number of entries exceeds the number of buckets or if the hash codes of the
  * objects are not uniformly distributed, these operations have a worst case
  * scenario that is proportional to the number of elements in the map
  * (<i>O(n)</i>).<p>
@@ -131,7 +131,7 @@ import java.util.Set;
  *
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
- * @version $Revision: 1.15 $ $Date: 2003/12/14 16:10:38 $
+ * @version $Revision: 1.16 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.22 2004/01/04 18:03:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.23 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.22 $ $Date: 2004/01/04 18:03:41 $
+ * @version $Revision: 1.23 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -149,7 +149,7 @@ public class SetUtils {
     }
 
     /**
-     * Generates a hashcode using the algorithm specified in 
+     * Generates a hash code using the algorithm specified in 
      * {@link java.util.Set#hashCode()}.
      * <p>
      * This method is useful for implementing <code>Set</code> when you cannot
@@ -157,7 +157,7 @@ public class SetUtils {
      * collection types to use the Set implementation algorithm.
      * 
      * @see java.util.Set#hashCode()
-     * @param set  the set to calculate the hashcode for, may be null
+     * @param set  the set to calculate the hash code for, may be null
      * @return the hash code
      */
     public static int hashCodeForSet(final Collection set) {

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.12 2003/12/28 18:08:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.13 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,7 +77,7 @@ import java.util.Set;
  * which unfortunately will break backwards compatibility with this version.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.12 $ $Date: 2003/12/28 18:08:54 $
+ * @version $Revision: 1.13 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -243,9 +243,9 @@ public interface Bag extends Collection {
     // Bag implementations should follow these comments.
 //    /**
 //     * Compares this Bag to another.
-//     * This Bag equals another Bag if it contains the same number of occurances of
+//     * This Bag equals another Bag if it contains the same number of occurrences of
 //     * the same elements.
-//     * This equals definition is compatable with the Set interface.
+//     * This equals definition is compatible with the Set interface.
 //     * 
 //     * @param obj  the Bag to compare to
 //     * @return true if equal
@@ -253,11 +253,11 @@ public interface Bag extends Collection {
 //    boolean equals(Object obj);
 //
 //    /**
-//     * Gets a hash code for the Bag compatable with the definition of equals.
+//     * Gets a hash code for the Bag compatible with the definition of equals.
 //     * The hash code is defined as the sum total of a hash code for each element.
 //     * The per element hash code is defined as
 //     * <code>(e==null ? 0 : e.hashCode()) ^ noOccurances)</code>.
-//     * This hash code definition is compatable with the Set interface.
+//     * This hash code definition is compatible with the Set interface.
 //     * 
 //     * @return the hash code of the Bag
 //     */

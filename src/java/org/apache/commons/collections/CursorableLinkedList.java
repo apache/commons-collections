@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.20 2004/01/04 18:04:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.21 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -87,14 +87,14 @@ import java.lang.ref.WeakReference;
  *  and now returns the cursor from the listIterator method. Will be removed in v4.0
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.20 $ $Date: 2004/01/04 18:04:15 $
+ * @version $Revision: 1.21 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki
  * @author Simon Kitching
  */
 public class CursorableLinkedList implements List, Serializable {
-    /** Ensure serialization compatability */    
+    /** Ensure serialization compatibility */    
     private static final long serialVersionUID = 8836393098519411393L;
 
     //--- public methods ---------------------------------------------

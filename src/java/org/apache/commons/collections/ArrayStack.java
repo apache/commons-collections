@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.14 2003/09/20 14:01:17 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.15 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,7 +77,7 @@ import java.util.EmptyStackException;
  *
  * @see java.util.Stack
  * @since Commons Collections 1.0
- * @version $Revision: 1.14 $ $Date: 2003/09/20 14:01:17 $
+ * @version $Revision: 1.15 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Craig R. McClanahan
  * @author Paul Jack
@@ -85,7 +85,7 @@ import java.util.EmptyStackException;
  */
 public class ArrayStack extends ArrayList implements Buffer {
 
-    /** Ensure serialization compatability */    
+    /** Ensure serialization compatibility */    
     private static final long serialVersionUID = 2130079159931574599L;
 
     /**

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.18 2004/01/04 18:37:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapEntry.java,v 1.19 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import java.util.Map;
  *
  * @deprecated Use the version in the keyvalue subpackage. Will be removed in v4.0
  * @since Commons Collections 1.0
- * @version $Revision: 1.18 $ $Date: 2004/01/04 18:37:42 $
+ * @version $Revision: 1.19 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author James Strachan
  * @author Michael A. Smith
@@ -185,7 +185,7 @@ public class DefaultMapEntry implements Map.Entry, KeyValue {
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
      * 
-     * @return a suitable hashcode
+     * @return a suitable hash code
      */
     public int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.13 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.14 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -98,10 +98,10 @@ import java.util.TreeMap;
  * before the internal collection is fully formed.
  * For more information on the double-checked locking idiom, see the
  * <a href="http://www.cs.umd.edu/~pugh/java/memoryModel/DoubleCheckedLocking.html">
- * Double-Checked Locking Idiom Is Broken Declartion</a>.</p>
+ * Double-Checked Locking Idiom Is Broken Declaration</a>.</p>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.13 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.14 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Craig R. McClanahan
  * @author Stephen Colebourne
@@ -480,7 +480,7 @@ public class FastTreeMap extends TreeMap {
      * exactly the code that is used to define the list hash function in the
      * documentation for the <code>Map.hashCode</code> method.
      * 
-     * @return a suitable integer hashcode
+     * @return a suitable integer hash code
      */
     public int hashCode() {
         if (fast) {
@@ -607,7 +607,7 @@ public class FastTreeMap extends TreeMap {
     // ----------------------------------------------------------------------
 
     /**
-     * Abstract collection implementation shared by ketSet(), values() and entrySet().
+     * Abstract collection implementation shared by keySet(), values() and entrySet().
      */
     private abstract class CollectionView implements Collection {
 

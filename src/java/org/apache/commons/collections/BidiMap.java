@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.11 2004/01/05 22:27:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.12 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ package org.apache.commons.collections;
  * a key to be looked up from a value with equal performance.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2004/01/05 22:27:08 $
+ * @version $Revision: 1.12 $ $Date: 2004/01/05 22:46:33 $
  *
  * @author Stephen Colebourne
  */
@@ -118,7 +118,7 @@ public interface BidiMap extends IterableMap {
      * 
      * @throws UnsupportedOperationException if the <code>put</code> method is not supported
      * @throws ClassCastException (optional) if the map limits the type of the 
-     *  value and the specifed value is inappropriate
+     *  value and the specified value is inappropriate
      * @throws IllegalArgumentException (optional) if the map limits the values
      *  in some way and the value was invalid
      * @throws NullPointerException (optional) if the map limits the values to
@@ -138,7 +138,7 @@ public interface BidiMap extends IterableMap {
      * @return the mapped key, or <code>null</code> if not found
      * 
      * @throws ClassCastException (optional) if the map limits the type of the 
-     *  value and the specifed value is inappropriate
+     *  value and the specified value is inappropriate
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
      */
@@ -157,7 +157,7 @@ public interface BidiMap extends IterableMap {
      * @return the key that was removed, <code>null</code> if nothing removed
      * 
      * @throws ClassCastException (optional) if the map limits the type of the 
-     *  value and the specifed value is inappropriate
+     *  value and the specified value is inappropriate
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
      * @throws UnsupportedOperationException if this method is not supported

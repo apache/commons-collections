@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.19 2004/01/02 02:14:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.20 2004/01/05 22:46:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import java.util.NoSuchElementException;
  * <p>
  * The <code>PriorityQueue</code> interface has now been replaced for most uses
  * by the <code>Buffer</code> interface. This class and the interface are
- * retained for backwards compatability. The intended replacement is
+ * retained for backwards compatibility. The intended replacement is
  * {@link org.apache.commons.collections.buffer.PriorityBuffer PriorityBuffer}.
  * <p>
  * The removal order of a binary heap is based on either the natural sort
@@ -92,7 +92,7 @@ import java.util.NoSuchElementException;
  * </pre>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.19 $ $Date: 2004/01/02 02:14:28 $
+ * @version $Revision: 1.20 $ $Date: 2004/01/05 22:46:33 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
@@ -321,7 +321,7 @@ public final class BinaryHeap extends AbstractCollection
     /**
      * Percolates element down heap from the position given by the index.
      * <p>
-     * Assumes it is a mimimum heap.
+     * Assumes it is a minimum heap.
      *
      * @param index the index for the element
      */
