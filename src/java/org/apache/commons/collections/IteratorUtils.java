@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2002/10/12 22:15:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.4.2.1 2004/05/22 11:32:06 scolebourne Exp $
+ * $Revision: 1.4.2.1 $
+ * $Date: 2004/05/22 11:32:06 $
  *
  * ====================================================================
  *
@@ -90,7 +90,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * <code>org.apache.commons.collections.iterators</code> subpackage.
  *
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorUtils.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
+ * @version $Id: IteratorUtils.java,v 1.4.2.1 2004/05/22 11:32:06 scolebourne Exp $
  * @since 2.1
  */
 public class IteratorUtils {
@@ -98,11 +98,13 @@ public class IteratorUtils {
     // public classes allow invalid states
 
     /**
-     * An iterator over no elements
+     * An iterator over no elements.
+     * @deprecated Use <code>EmptyIterator.INSTANCE</code>
      */    
     public static final Iterator EMPTY_ITERATOR = new EmptyIterator();
     /**
      * A list iterator over no elements
+     * @deprecated Use <code>EmptyListIterator.INSTANCE</code>
      */    
     public static final ListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
 
@@ -119,6 +121,7 @@ public class IteratorUtils {
      * nothing.
      *
      * @return  an iterator over nothing
+     * @deprecated Use <code>EmptyIterator.INSTANCE</code>
      */
     public static Iterator emptyIterator() {
         return EMPTY_ITERATOR;
@@ -131,6 +134,7 @@ public class IteratorUtils {
      * over nothing.
      *
      * @return  a list iterator over nothing
+     * @deprecated Use <code>EmptyListIterator.INSTANCE</code>
      */
     public static ListIterator emptyListIterator() {
         return EMPTY_LIST_ITERATOR;
@@ -144,6 +148,7 @@ public class IteratorUtils {
      *
      * @param object  the single object over which to iterate
      * @return  a singleton iterator over the object
+     * @deprecated Use <code>new SingletonIterator(object)</code>
      */
     public static Iterator singletonIterator(Object object) {
         return new SingletonIterator(object);
@@ -168,6 +173,7 @@ public class IteratorUtils {
      * @param array  the array over which to iterate
      * @return  an iterator over the array
      * @throws NullPointerException if array is null
+     * @deprecated Use <code>new ArrayIterator(array)</code>
      */
     public static Iterator arrayIterator(Object[] array) {
         return new ArrayIterator(array);
@@ -181,6 +187,7 @@ public class IteratorUtils {
      * @return an iterator over part of the array
      * @throws IllegalArgumentException if array bounds are invalid
      * @throws NullPointerException if array is null
+     * @deprecated Use <code>new ArrayIterator(array,start)</code>
      */
     public static Iterator arrayIterator(Object[] array, int start) {
         return new ArrayIterator(array, start);
@@ -195,6 +202,7 @@ public class IteratorUtils {
      * @return an iterator over part of the array
      * @throws IllegalArgumentException if array bounds are invalid
      * @throws NullPointerException if array is null
+     * @deprecated Use <code>new ArrayIterator(array,start,end)</code>
      */
     public static Iterator arrayIterator(Object[] array, int start, int end) {
         return new ArrayIterator(array, start, end);
