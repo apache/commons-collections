@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.2 2003/01/10 20:21:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/BooleanComparator.java,v 1.3 2003/01/11 01:07:13 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.util.Comparator;
  * 
  * @since Commons Collections 2.2
  * 
- * @version $Revision: 1.2 $ $Date: 2003/01/10 20:21:23 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/11 01:07:13 $
  * 
  * @author Rodney Waldhoff
  */
@@ -89,7 +89,7 @@ public final class BooleanComparator implements Comparator, Serializable {
     /**
      * Creates a <code>BooleanComparator</code>
      * that sorts <code><i>trueFirst</i></code> values before 
-     * <code>!<i>trueFirst</i></code> values.
+     * <code>&#x21;<i>trueFirst</i></code> values.
      * 
      * @param trueFirst when <code>true</code>, sort 
      *        <code>true</code> {@link Boolean}s before
@@ -195,7 +195,7 @@ public final class BooleanComparator implements Comparator, Serializable {
     /**
      * Returns a BooleanComparator instance that sorts 
      * <code><i>trueFirst</i></code> values before 
-     * <code>!<i>trueFirst</i></code> values.
+     * <code>&#x21;<i>trueFirst</i></code> values.
      * <p />
      * Clients are encouraged to use the value returned from 
      * this method instead of constructing a new instance 

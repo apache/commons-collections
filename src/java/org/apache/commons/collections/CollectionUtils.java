@@ -1,13 +1,10 @@
 /*
- * $Id: CollectionUtils.java,v 1.24 2002/12/15 13:05:03 scolebourne Exp $
- * $Revision: 1.24 $
- * $Date: 2002/12/15 13:05:03 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.25 2003/01/11 01:07:13 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -75,18 +72,19 @@ import java.util.Set;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
+
 /**
  * A set of {@link Collection} related utility methods.
  *
- * @since 1.0
+ * @since Commons Collections 1.0
+ * @version $Revision: 1.25 $ $Date: 2003/01/11 01:07:13 $
+ * 
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Steve Downey
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
  * @author BluePhelix@web.de (Peter)
- * @author Stephen Colebourne
- * @version $Revision: 1.24 $ $Date: 2002/12/15 13:05:03 $
  */
 public class CollectionUtils {
 
@@ -491,7 +489,7 @@ public class CollectionUtils {
     
     /**
      * Selects all elements from inputCollection which don't match the given predicate
-     * into an output collection
+     * into an output collection.
      * <p>
      * A <code>null</code> predicate matches no elements.
      * 
@@ -508,7 +506,7 @@ public class CollectionUtils {
     
     /** 
      * Selects all elements from inputCollection which don't match the given predicate
-     * and adds them to outputCollection
+     * and adds them to outputCollection.
      * 
      * @param inputCollection  the collection to get the input from, may be null
      * @param predicate  the predicate to use, may be null
