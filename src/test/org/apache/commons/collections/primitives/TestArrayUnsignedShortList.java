@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.6 2003/01/07 18:04:52 rwaldhoff Exp $
- * $Revision: 1.6 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.1 2003/01/07 18:04:52 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2003/01/07 18:04:52 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,38 +61,77 @@
 
 package org.apache.commons.collections.primitives;
 
+import java.util.List;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.TestList;
+
 /**
- * @version $Revision: 1.6 $ $Date: 2003/01/07 18:04:52 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/07 18:04:52 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestArrayUnsignedShortList extends TestList {
+
+    //------------------------------------------------------------ Conventional
+
+    public TestArrayUnsignedShortList(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-        
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
+        TestSuite suite = BulkTest.makeSuite(TestArrayUnsignedShortList.class);
         return suite;
     }
-}
 
+
+    //------------------------------------------------------- TestList interface
+
+    public List makeEmptyList() {
+        return new IntListList(new ArrayUnsignedShortList());
+    }
+
+    /**
+     *  Returns small Integer objects for testing.
+     */
+    protected Object[] getFullElements() {
+        Integer[] result = new Integer[19];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = new Integer(i + 19);
+        }
+        return result;
+    }
+
+    /**
+     *  Returns small Integer objects for testing.
+     */
+    protected Object[] getOtherElements() {
+        Integer[] result = new Integer[16];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = new Integer(i + 48);
+        }
+        return result;
+    }
+
+    // TODO:  Create canonical collections in CVS
+
+    public void testCanonicalEmptyCollectionExists() {
+    }
+
+    public void testCanonicalFullCollectionExists() {
+    }
+
+    public void testEmptyListCompatibility() {
+    }
+
+    public void testFullListCompatibility() {
+    }
+
+    //------------------------------------------------------------------- Tests
+
+    public void testZeroInitialCapacityIsValid() {
+        ArrayUnsignedShortList list = new ArrayUnsignedShortList(0);
+    }
+}
