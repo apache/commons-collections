@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.8 2002/11/24 19:36:48 scolebourne Exp $
- * $Revision: 1.8 $
- * $Date: 2002/11/24 19:36:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.9 2002/11/24 20:25:55 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/11/24 20:25:55 $
  *
  * ====================================================================
  *
@@ -96,6 +96,7 @@ import java.util.Set;
  * @author Steve Downey
  * @author Stephen Colebourne
  * @author <a href="mailto:jburet@yahoo.com">Julien Buret</a>
+ * @author Serhiy Yevtushenko
  */
 public class MultiHashMap extends HashMap implements MultiMap {
     // deprecated name concept
@@ -254,6 +255,12 @@ public class MultiHashMap extends HashMap implements MultiMap {
             return null;
         }
         valuesForKey.remove(item);
+
+        // remove the list if it is now empty
+        // (saves space, and allows equals to work)
+        if (valuesForKey.isEmpty()){
+            remove(key);
+        }
         return item;
     }
 
