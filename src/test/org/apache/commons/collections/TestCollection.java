@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.3 2001/04/24 23:35:13 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2001/04/24 23:35:13 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.4 2001/04/24 23:48:04 rwaldhoff Exp $
+ * $Revision: 1.4 $
+ * $Date: 2001/04/24 23:48:04 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Collection} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestCollection.java,v 1.3 2001/04/24 23:35:13 rwaldhoff Exp $
+ * @version $Id: TestCollection.java,v 1.4 2001/04/24 23:48:04 rwaldhoff Exp $
  */
 public abstract class TestCollection extends TestObject {
     public TestCollection(String testName) {
@@ -386,7 +386,51 @@ public abstract class TestCollection extends TestObject {
 
     // optional operation
     public void testCollectionRetainAll() {
-        // XXX finish me
+        Collection a = makeCollection();
+        Collection b = makeCollection();
+        try {
+            assert(!a.retainAll(b));
+            assert(!a.retainAll(a));
+        } catch(UnsupportedOperationException e) {
+            // expected
+        } catch(Throwable t) {
+            t.printStackTrace();
+            fail("Collection.retainAll should only throw UnsupportedOperationException. Found " + t.toString());
+        }
+
+        boolean added_b = b.add("element1");
+        try {
+            assert(!a.retainAll(b));
+            assert(added_b == b.retainAll(a));
+            assert(b.isEmpty());
+        } catch(UnsupportedOperationException e) {
+            // expected
+        } catch(Throwable t) {
+            t.printStackTrace();
+            fail("Collection.retainAll should only throw UnsupportedOperationException. Found " + t.toString());
+        }
+
+        boolean added_b1 = b.add("element1");
+        boolean added_b2 = b.add("element2");
+        boolean added_a1 = a.add("element1");
+        if(added_b1 && added_b2 && added_a1) {
+            try {
+                assert(!b.retainAll(b));
+                assert(b.contains("element1"));
+                assert(b.contains("element2"));
+
+                assert(!a.retainAll(b));
+
+                assert(b.retainAll(a));
+                assert(b.contains("element1"));
+                assert(!b.contains("element2"));
+            } catch(UnsupportedOperationException e) {
+                // expected
+            } catch(Throwable t) {
+                t.printStackTrace();
+                fail("Collection.retainAll should only throw UnsupportedOperationException. Found " + t.toString());
+            }
+        }
     }
 
     public void testCollectionSize() {
@@ -419,7 +463,16 @@ public abstract class TestCollection extends TestObject {
     }
 
     public void testCollectionToArray2() {
-        // XXX finish me
+        Collection c = makeCollection();
+        assertEquals(10,c.toArray(new String[10]).length);
+        assertEquals(7,c.toArray(new Object[7]).length);
+        boolean added1 = tryToAdd(c,"element1");
+        if(added1) {
+            String[] fits = new String[1];
+            String[] small = new String[0];
+            assertSame(fits,c.toArray(fits));
+            assert(small != c.toArray(small));
+        }
     }
 
     /**
