@@ -64,8 +64,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit tests {@link org.apache.commons.collections.SequencedHashMap}.
- *
+ * Unit tests 
+ * {@link org.apache.commons.collections.SequencedHashMap}.
+ * Be sure to use the "labRat" instance whenever possible,
+ * so that subclasses will be tested correctly.
+ * 
+ * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
@@ -92,7 +96,9 @@ public class TestSequencedHashMap extends TestHashMap
 
     public void setUp() {
         super.setUp();
-        labRat = new SequencedHashMap();
+        // use makeMap and cast the result to a SeqHashMap
+        // so that subclasses of SeqHashMap can share these tests
+        labRat = (SequencedHashMap) makeMap();
     }
 
     public Map makeMap() {
