@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.13 2003/11/23 19:11:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.14 2003/11/23 22:05:24 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,25 +57,28 @@
  */
 package org.apache.commons.collections;
 
-import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
+import org.apache.commons.collections.functors.AllPredicate;
+import org.apache.commons.collections.functors.AndPredicate;
+import org.apache.commons.collections.functors.AnyPredicate;
 import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.ExceptionPredicate;
 import org.apache.commons.collections.functors.FalsePredicate;
-import org.apache.commons.collections.functors.FunctorException;
 import org.apache.commons.collections.functors.IdentityPredicate;
 import org.apache.commons.collections.functors.InstanceofPredicate;
+import org.apache.commons.collections.functors.NonePredicate;
 import org.apache.commons.collections.functors.NotNullPredicate;
 import org.apache.commons.collections.functors.NotPredicate;
 import org.apache.commons.collections.functors.NullIsExceptionPredicate;
 import org.apache.commons.collections.functors.NullIsFalsePredicate;
 import org.apache.commons.collections.functors.NullIsTruePredicate;
 import org.apache.commons.collections.functors.NullPredicate;
+import org.apache.commons.collections.functors.OnePredicate;
+import org.apache.commons.collections.functors.OrPredicate;
+import org.apache.commons.collections.functors.TransformerPredicate;
 import org.apache.commons.collections.functors.TruePredicate;
+import org.apache.commons.collections.functors.UniquePredicate;
 
 /**
  * <code>PredicateUtils</code> provides reference implementations and utilities
@@ -102,7 +105,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.13 $ $Date: 2003/11/23 19:11:21 $
+ * @version $Revision: 1.14 $ $Date: 2003/11/23 22:05:24 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg
@@ -211,7 +214,7 @@ public class PredicateUtils {
      */
     public static Predicate uniquePredicate() {
         // must return new instance each time
-        return new UniquePredicate();
+        return UniquePredicate.getInstance();
     }
 
     /**
@@ -268,7 +271,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if either predicate is null
      */
     public static Predicate andPredicate(Predicate predicate1, Predicate predicate2) {
-        return allPredicate(new Predicate[] { predicate1, predicate2 });
+        return AndPredicate.getInstance(predicate1, predicate2);
     }
 
     /**
@@ -282,7 +285,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate allPredicate(Predicate[] predicates) {
-        return new AllPredicate(validate(predicates));
+        return AllPredicate.getInstance(predicates);
     }
 
     /**
@@ -296,7 +299,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
     public static Predicate allPredicate(Collection predicates) {
-        return new AllPredicate(validate(predicates));
+        return AllPredicate.getInstance(predicates);
     }
 
     /**
@@ -309,7 +312,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if either predicate is null
      */
     public static Predicate orPredicate(Predicate predicate1, Predicate predicate2) {
-        return anyPredicate(new Predicate[] { predicate1, predicate2 });
+        return OrPredicate.getInstance(predicate1, predicate2);
     }
 
     /**
@@ -323,7 +326,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate anyPredicate(Predicate[] predicates) {
-        return new AnyPredicate(validate(predicates));
+        return AnyPredicate.getInstance(predicates);
     }
 
     /**
@@ -337,7 +340,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
     public static Predicate anyPredicate(Collection predicates) {
-        return new AnyPredicate(validate(predicates));
+        return AnyPredicate.getInstance(predicates);
     }
 
     /**
@@ -364,7 +367,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate onePredicate(Predicate[] predicates) {
-        return new OnePredicate(validate(predicates));
+        return OnePredicate.getInstance(predicates);
     }
 
     /**
@@ -378,7 +381,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
     public static Predicate onePredicate(Collection predicates) {
-        return new OnePredicate(validate(predicates));
+        return OnePredicate.getInstance(predicates);
     }
 
     /**
@@ -405,11 +408,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate nonePredicate(Predicate[] predicates) {
-        Predicate[] preds = validate(predicates);
-        for (int i = 0; i < preds.length; i++) {
-            preds[i] = notPredicate(preds[i]);
-        }
-        return new AllPredicate(preds);
+        return NonePredicate.getInstance(predicates);
     }
 
     /**
@@ -423,11 +422,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
     public static Predicate nonePredicate(Collection predicates) {
-        Predicate[] preds = validate(predicates);
-        for (int i = 0; i < preds.length; i++) {
-            preds[i] = notPredicate(preds[i]);
-        }
-        return new AllPredicate(preds);
+        return NonePredicate.getInstance(predicates);
     }
 
     /**
@@ -455,10 +450,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the transformer is null
      */
     public static Predicate asPredicate(Transformer transformer) {
-        if (transformer == null) {
-            throw new IllegalArgumentException("The transformer to call must not be null");
-        }
-        return new TransformerPredicate(transformer);
+        return TransformerPredicate.getInstance(transformer);
     }
 
     // Null handlers
@@ -501,214 +493,6 @@ public class PredicateUtils {
      */
     public static Predicate nullIsTruePredicate(Predicate predicate){
         return NullIsTruePredicate.getInstance(predicate);
-    }
-
-    /**
-     * Convert a collection to an array using the iterator.
-     * 
-     * @param predicates  the predicates to validate
-     * @return predicate array
-     */
-    private static Predicate[] validate(Collection predicates) {
-        if (predicates == null) {
-            throw new IllegalArgumentException("The predicate collection must not be null");
-        }
-        if (predicates.size() < 2) {
-            throw new IllegalArgumentException(
-                "At least 2 predicates must be specified in the predicate collection, size was " + predicates.size());
-        }
-        // convert to array like this to guarantee iterator() ordering
-        Predicate[] preds = new Predicate[predicates.size()];
-        int i = 0;
-        for (Iterator it = predicates.iterator(); it.hasNext();) {
-            preds[i] = (Predicate) it.next();
-            if (preds[i] == null) {
-                throw new IllegalArgumentException("The predicate collection must not contain a null predicate, index " + i + " was null");
-            }
-            i++;
-        }
-        return preds;
-    }
-    
-    /**
-     * Validate method shared amongst predicate implementations.
-     * 
-     * @param predicates  the predicates to validate
-     * @return predicate array (copy)
-     */
-    private static Predicate[] validate(Predicate[] predicates) {
-        if (predicates == null) {
-            throw new IllegalArgumentException("The predicate array must not be null");
-        }
-        if (predicates.length < 2) {
-            throw new IllegalArgumentException(
-                "At least 2 predicates must be specified in the predicate array, size was " + predicates.length);
-        }
-        Predicate[] preds = new Predicate[predicates.length];
-        for (int i = 0; i < predicates.length; i++) {
-            if (predicates[i] == null) {
-                throw new IllegalArgumentException("The predicate array must not contain a null predicate, index " + i + " was null");
-            }
-            preds[i] = predicates[i];
-        }
-        return preds;
-    }
-
-    // AllPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * AllPredicate returns true if all predicates return true
-     */
-    private static class AllPredicate implements Predicate, Serializable {
-        /** The array of predicates to call */
-        private final Predicate[] iPredicates;
-
-        /**
-         * Constructor
-         */
-        private AllPredicate(Predicate[] predicates) {
-            super();
-            iPredicates = predicates;
-        }
-
-        /**
-         * Return true if all predicates return true
-         */
-        public boolean evaluate(Object object) {
-            for (int i = 0; i < iPredicates.length; i++) {
-                if (iPredicates[i].evaluate(object) == false) {
-                    return false;
-                }
-            }
-            return true;
-        }
-    }
-
-    // AnyPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * AnyPredicate returns true if one of the predicates return true
-     */
-    private static class AnyPredicate implements Predicate, Serializable {
-        /** The array of predicates to call */
-        private final Predicate[] iPredicates;
-
-        /**
-         * Constructor
-         */
-        private AnyPredicate(Predicate[] predicates) {
-            super();
-            iPredicates = predicates;
-        }
-
-        /**
-         * Return true if one of the predicates returns true
-         */
-        public boolean evaluate(Object object) {
-            for (int i = 0; i < iPredicates.length; i++) {
-                if (iPredicates[i].evaluate(object)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
-
-    // OnePredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * OnePredicate returns true if only one of the predicates return true
-     */
-    private static class OnePredicate implements Predicate, Serializable {
-        /** The array of predicates to call */
-        private final Predicate[] iPredicates;
-
-        /**
-         * Constructor
-         */
-        private OnePredicate(Predicate[] predicates) {
-            super();
-            iPredicates = predicates;
-        }
-
-        /**
-         * Return true if only one of the predicates returns true
-         */
-        public boolean evaluate(Object object) {
-            boolean match = false;
-            for (int i = 0; i < iPredicates.length; i++) {
-                if (iPredicates[i].evaluate(object)) {
-                    if (match) {
-                        return false;
-                    }
-                    match = true;
-                }
-            }
-            return match;
-        }
-    }
-
-    // UniquePredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * UniquePredicate returns true the first time an object is
-     * encountered, and false if the same object is received 
-     * again using equals().
-     */
-    private static class UniquePredicate implements Predicate, Serializable {
-        /** The set of previously seen objects */
-        private final Set iSet = new HashSet();
-
-        /**
-         * Constructor
-         */
-        public UniquePredicate() {
-            super();
-        }
-
-        /**
-         * Return true the first time, and false subsequent times
-         * that an object is encountered, using equals().
-         */
-        public boolean evaluate(Object object) {
-            return iSet.add(object);
-        }
-    }
-
-    // TransformerPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * TransformerPredicate returns the result of the Transformer as a boolean.
-     */
-    private static class TransformerPredicate implements Predicate, Serializable {
-        /** The transformer to call */
-        private final Transformer iTransformer;
-
-        /**
-         * Constructor
-         */
-        public TransformerPredicate(Transformer transformer) {
-            super();
-            iTransformer = transformer;
-        }
-
-        /**
-         * Return the boolean result of a Transformer
-         */
-        public boolean evaluate(Object object) {
-            Object result = iTransformer.transform(object);
-            if (result instanceof Boolean == false) {
-                throw new FunctorException(
-                    "TransformerPredicate: Transformer must return an instanceof Boolean, it was a "
-                        + (result == null ? "null object" : result.getClass().getName()));
-            }
-            return ((Boolean) result).booleanValue();
-        }
     }
 
 }
