@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.20 2003/09/21 20:56:51 psteitz Exp $
- * $Revision: 1.20 $
- * $Date: 2003/09/21 20:56:51 $
+ * $Id: TestCollectionUtils.java,v 1.21 2003/09/22 08:22:53 psteitz Exp $
+ * $Revision: 1.21 $
+ * $Date: 2003/09/22 08:22:53 $
  *
  * ====================================================================
  *
@@ -78,7 +78,10 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.decorators.PredicatedCollection;
+import org.apache.commons.collections.decorators.SynchronizedCollection;
 import org.apache.commons.collections.decorators.TransformedCollection;
+import org.apache.commons.collections.decorators.UnmodifiableCollection;
+ 
 
 /**
  * Tests for CollectionUtils.
@@ -88,7 +91,7 @@ import org.apache.commons.collections.decorators.TransformedCollection;
  * @author Stephen Colebourne
  * @author Phil Steitz
  * 
- * @version $Revision: 1.20 $ $Date: 2003/09/21 20:56:51 $
+ * @version $Revision: 1.21 $ $Date: 2003/09/22 08:22:53 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -658,6 +661,44 @@ public class TestCollectionUtils extends TestCase {
         assertTrue(output.contains("Three"));
         assertTrue(output.contains("Four"));
     }
+    
+    public void testCollect() {
+        Transformer transformer = TransformerUtils.constantTransformer("z");
+        Collection collection = CollectionUtils.collect(_a, transformer);
+        assertTrue(collection.size() == _a.size());
+        assertTrue(_a.contains("a") && ! _a.contains("z"));
+        assertTrue(collection.contains("z") && !collection.contains("a"));
+        
+        collection = new ArrayList();
+        CollectionUtils.collect(_a, transformer, collection);
+        assertTrue(collection.size() == _a.size());
+        assertTrue(_a.contains("a") && ! _a.contains("z"));
+        assertTrue(collection.contains("z") && !collection.contains("a"));
+        
+        Iterator iterator = null;
+        collection = new ArrayList();
+        CollectionUtils.collect(iterator, transformer, collection);
+        
+        iterator = _a.iterator();
+        CollectionUtils.collect(iterator, transformer, collection);
+        assertTrue(collection.size() == _a.size());
+        assertTrue(_a.contains("a") && ! _a.contains("z"));
+        assertTrue(collection.contains("z") && !collection.contains("a")); 
+        
+        iterator = _a.iterator();
+        collection = CollectionUtils.collect(iterator, transformer);
+        assertTrue(collection.size() == _a.size());
+        assertTrue(collection.contains("z") && !collection.contains("a")); 
+        collection = CollectionUtils.collect((Iterator) null, (Transformer) null);
+        assertTrue(collection.size() == 0);
+           
+        int size = _a.size();
+        CollectionUtils.collect((Collection) null, transformer, _a);
+        assertTrue(_a.size() == size && _a.contains("a"));
+        CollectionUtils.collect(_b, null, _a);
+        assertTrue(_a.size() == size && _a.contains("a"));
+        
+    }
 
     Transformer TRANSFORM_TO_INTEGER = new Transformer() {
         public Object transform(Object input) {
@@ -880,4 +921,29 @@ public class TestCollectionUtils extends TestCase {
             // expected
         }             
     }
+     
+    public void testSynchronizedCollection() {
+        Collection col = CollectionUtils.synchronizedCollection(new ArrayList());
+        assertTrue("Returned object should be a SynchronizedCollection.",
+            col instanceof SynchronizedCollection);
+        try {
+            col = CollectionUtils.synchronizedCollection(null);
+            fail("Expecting IllegalArgumentException for null collection.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }  
+    }
+    
+    public void testUnmodifiableCollection() {
+        Collection col = CollectionUtils.unmodifiableCollection(new ArrayList());
+        assertTrue("Returned object should be a UnmodifiableCollection.",
+            col instanceof UnmodifiableCollection);
+        try {
+            col = CollectionUtils.unmodifiableCollection(null);
+            fail("Expecting IllegalArgumentException for null collection.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }  
+    }
+
 }
