@@ -52,6 +52,7 @@ There are no new deprecations.
 <ul>
 <li>FastArrayList - Fix iterators and views to work better in multithreaded environments</li>
 <li>BoundedFifoBuffer/CircularFifoBuffer - Fix serialization to work in case where buffer serialized when full [31433]</li>
+<li>BoundedFifoBuffer - Fix iterator remove bug causing ArrayIndexOutOfBounds error [33071]
 <li>MultiHashMap.remove(key, item) - Was returning the item even when nothing was removed [32366]</li>
 </ul>
 

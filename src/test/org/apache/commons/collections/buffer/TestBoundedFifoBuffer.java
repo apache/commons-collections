@@ -28,7 +28,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for BoundedFifoBuffer.
  * 
- * @version $Revision: 1.4 $ $Date: 2004/06/02 23:12:45 $
+ * @version $Revision: 1.5 $ $Date: 2005/01/15 22:47:40 $
  * 
  * @author Paul Jack
  */
@@ -167,6 +167,17 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
 
     public String getCompatibilityVersion() {
         return "3.1";
+    }
+    
+    // BZ 33071 -- gets start=end=1 before removal of interior element
+    public void testShift() {
+        BoundedFifoBuffer fifo = new BoundedFifoBuffer(3);
+        fifo.add("a");
+        fifo.add("b");
+        fifo.add("c");
+        fifo.remove();
+        fifo.add("e");
+        fifo.remove("c");
     }
 
 //    public void testCreate() throws Exception {

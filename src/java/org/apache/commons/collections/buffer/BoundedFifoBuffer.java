@@ -53,7 +53,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.9 $ $Date: 2004/10/16 22:23:40 $
+ * @version $Revision: 1.10 $ $Date: 2005/01/15 22:47:40 $
  * 
  * @author Avalon
  * @author Berin Loritsch
@@ -67,10 +67,24 @@ public class BoundedFifoBuffer extends AbstractCollection
     /** Serialization version */
     private static final long serialVersionUID = 5603722811189451017L;
 
+    /** Underlying storage array */
     private transient Object[] elements;
+    
+    /** Array index of first (oldest) buffer element */
     private transient int start = 0;
+    
+    /** 
+     * Index mod maxElements of the array position following the last buffer
+     * element.  Buffer elements start at elements[start] and "wrap around"
+     * elements[maxElements-1], ending at elements[decrement(end)].  
+     * For example, elements = {c,a,b}, start=1, end=1 corresponds to 
+     * the buffer [a,b,c].
+     */
     private transient int end = 0;
+    
     private transient boolean full = false;
+    
+    /** Capacity of the buffer */
     private final int maxElements;
 
     /**
@@ -348,8 +362,8 @@ public class BoundedFifoBuffer extends AbstractCollection
                         elements[i - 1] = elements[0];
                         i = 0;
                     } else {
-                        elements[i - 1] = elements[i];
-                        i++;
+                        elements[decrement(i)] = elements[i];
+                        i = increment(i);
                     }
                 }
 
