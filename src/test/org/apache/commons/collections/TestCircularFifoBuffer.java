@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCircularFifoBuffer.java,v 1.1 2003/04/26 15:13:22 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCircularFifoBuffer.java,v 1.2 2003/07/12 15:11:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import junit.framework.Test;
 /**
  * Test cases for CircularFifoBuffer.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/04/26 15:13:22 $
+ * @version $Revision: 1.2 $ $Date: 2003/07/12 15:11:25 $
  * 
  * @author Stephen Colebourne
  */
@@ -81,56 +81,13 @@ public class TestCircularFifoBuffer extends TestCollection {
         return BulkTest.makeSuite(TestCircularFifoBuffer.class);
     }
 
-    /**
-     * Returns an empty BoundedFifoBuffer that won't overflow.  
-     *  
-     * @return an empty BoundedFifoBuffer
-     */
-    public Collection makeCollection() {
-        return new CircularFifoBuffer(100);
-    }
-
-    /**
-     * Returns an empty ArrayList.
-     *
-     * @return an empty ArrayList
-     */
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
-    }
-
-    /**
-     * Returns a full ArrayList.
-     *
-     * @return a full ArrayList
-     */
-    public Collection makeConfirmedFullCollection() {
-        Collection c = makeConfirmedCollection();
-        c.addAll(java.util.Arrays.asList(getFullElements()));
-        return c;
-    }
-
-    /**
-     *  Overridden because CircularFifoBuffer doesn't support null elements.
-     *
-     *  @return an array of random objects without a null element
-     */
-    public Object[] getFullElements() {
-        return getFullNonNullElements();
-    }
-
-    /**
-     *  Overridden, because CircularFifoBuffer's iterators aren't fail-fast.
-     */
-    public void testCollectionIteratorFailFast() {
-    }
-
+    //-----------------------------------------------------------------------
     /**
      *  Runs through the regular verifications, but also verifies that 
      *  the buffer contains the same elements in the same sequence as the
      *  list.
      */
-    public void verify() {
+    protected void verify() {
         super.verify();
         Iterator iterator1 = collection.iterator();
         Iterator iterator2 = confirmed.iterator();
@@ -142,6 +99,54 @@ public class TestCircularFifoBuffer extends TestCollection {
         }
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Overridden because UnboundedFifoBuffer doesn't allow null elements.
+     * @return false
+     */
+    protected boolean isNullSupported() {
+        return false;
+    }
+
+    /**
+     * Overridden because UnboundedFifoBuffer isn't fail fast.
+     * @return false
+     */
+    protected boolean isFailFastSupported() {
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an empty ArrayList.
+     *
+     * @return an empty ArrayList
+     */
+    protected Collection makeConfirmedCollection() {
+        return new ArrayList();
+    }
+
+    /**
+     * Returns a full ArrayList.
+     *
+     * @return a full ArrayList
+     */
+    protected Collection makeConfirmedFullCollection() {
+        Collection c = makeConfirmedCollection();
+        c.addAll(java.util.Arrays.asList(getFullElements()));
+        return c;
+    }
+
+    /**
+     * Returns an empty BoundedFifoBuffer that won't overflow.  
+     *  
+     * @return an empty BoundedFifoBuffer
+     */
+    protected Collection makeCollection() {
+        return new CircularFifoBuffer(100);
+    }
+
+    //-----------------------------------------------------------------------
     /**
      * Tests that the removal operation actually removes the first element.
      */

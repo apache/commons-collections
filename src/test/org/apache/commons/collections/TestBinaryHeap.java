@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.7 2002/10/13 12:59:52 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2002/10/13 12:59:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.8 2003/07/12 15:11:25 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/07/12 15:11:25 $
  *
  * ====================================================================
  *
@@ -58,7 +58,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
@@ -77,219 +76,218 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * Tests the BinaryHeap.
  * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: TestBinaryHeap.java,v 1.7 2002/10/13 12:59:52 scolebourne Exp $
+ * @version $Id: TestBinaryHeap.java,v 1.8 2003/07/12 15:11:25 scolebourne Exp $
  */
 public class TestBinaryHeap extends TestCollection {
-    
-  public static Test suite() {
-    return new TestSuite(TestBinaryHeap.class);
-  }
-  
-  public TestBinaryHeap(String testName) {
-    super(testName);
-  }
-  
-  /**
-   * Return a new, empty {@link Object} to used for testing.
-   */
-  public Collection makeCollection() {
-    return new BinaryHeap();
-  }
-  
 
-  public Collection makeConfirmedCollection() {
-    return new ArrayList();
-  }
-
-  public Collection makeConfirmedFullCollection() {
-    ArrayList list = new ArrayList();
-    list.addAll(Arrays.asList(getFullElements()));
-    return list;
-  }
-
-  public Object[] getFullElements() {
-      return getFullNonNullStringElements();
-  }
-
-  public Object[] getOtherElements() {
-      return getOtherNonNullStringElements();
-  }
-
-  public void testCollectionIteratorFailFast() {
-  }
-
-  public void testBasicOps() {
-    BinaryHeap heap = new BinaryHeap();
-    
-    assertTrue("heap should be empty after create", heap.isEmpty());
-    
-    try {
-      heap.peek();
-      fail("NoSuchElementException should be thrown if peek is called " +
-           "before any elements are inserted");
-    } catch (NoSuchElementException e) {
-      // expected
-    }
-    
-    try {
-      heap.pop();
-      fail("NoSuchElementException should be thrown if pop is called " +
-           "before any elements are inserted");
-    } catch (NoSuchElementException e) {
-      // expected
-    }
-    
-    heap.insert("a");
-    heap.insert("c");
-    heap.insert("e");
-    heap.insert("b");
-    heap.insert("d");
-    heap.insert("n");
-    heap.insert("m");
-    heap.insert("l");
-    heap.insert("k");
-    heap.insert("j");
-    heap.insert("i");
-    heap.insert("h");
-    heap.insert("g");
-    heap.insert("f");
-    
-    assertTrue("heap should not be empty after inserts", !heap.isEmpty());
-    
-    for(int i = 0; i < 14; i++) {
-      assertEquals("peek using default constructor should return " +
-                   "minimum value in the binary heap", 
-                   String.valueOf((char)('a' + i)), heap.peek());
-      
-      assertEquals("pop using default constructor should return minimum " +
-                   "value in the binary heap", 
-                   String.valueOf((char)('a' + i)), heap.pop());
-      
-      if(i + 1 < 14) {
-        assertTrue("heap should not be empty before all elements are popped",
-                   !heap.isEmpty());
-      } else {
-        assertTrue("heap should be empty after all elements are popped", 
-                   heap.isEmpty());
-      }
+    public static Test suite() {
+        return new TestSuite(TestBinaryHeap.class);
     }
 
-    try {
-      heap.peek();
-      fail("NoSuchElementException should be thrown if peek is called " +
-           "after all elements are popped");
-    } catch (NoSuchElementException e) {
-      // expected
-    }
-    
-    try {
-      heap.pop();
-      fail("NoSuchElementException should be thrown if pop is called " +
-           "after all elements are popped");
-    } catch (NoSuchElementException e) {
-      // expected
-    }     
-  }
-  
-  public void testBasicComparatorOps() {
-    BinaryHeap heap = 
-      new BinaryHeap(new ReverseComparator(new ComparableComparator()));
-    
-    assertTrue("heap should be empty after create", heap.isEmpty());
-    
-    try {
-      heap.peek();
-      fail("NoSuchElementException should be thrown if peek is called " +
-           "before any elements are inserted");
-    } catch (NoSuchElementException e) {
-      // expected
-    }
-    
-    try {
-      heap.pop();
-      fail("NoSuchElementException should be thrown if pop is called " +
-           "before any elements are inserted");
-    } catch (NoSuchElementException e) {
-      // expected
-    }
-    
-    heap.insert("a");
-    heap.insert("c");
-    heap.insert("e");
-    heap.insert("b");
-    heap.insert("d");
-    heap.insert("n");
-    heap.insert("m");
-    heap.insert("l");
-    heap.insert("k");
-    heap.insert("j");
-    heap.insert("i");
-    heap.insert("h");
-    heap.insert("g");
-    heap.insert("f");
-    
-    assertTrue("heap should not be empty after inserts", !heap.isEmpty());
-    
-    for(int i = 0; i < 14; i++) {
-
-      // note: since we're using a comparator that reverses items, the
-      // "minimum" item is "n", and the "maximum" item is "a".
-
-      assertEquals("peek using default constructor should return " +
-                   "minimum value in the binary heap", 
-                   String.valueOf((char)('n' - i)), heap.peek());
-      
-      assertEquals("pop using default constructor should return minimum " +
-                   "value in the binary heap", 
-                   String.valueOf((char)('n' - i)), heap.pop());
-      
-      if(i + 1 < 14) {
-        assertTrue("heap should not be empty before all elements are popped",
-                   !heap.isEmpty());
-      } else {
-        assertTrue("heap should be empty after all elements are popped", 
-                   heap.isEmpty());
-      }
+    public TestBinaryHeap(String testName) {
+        super(testName);
     }
 
-    try {
-      heap.peek();
-      fail("NoSuchElementException should be thrown if peek is called " +
-           "after all elements are popped");
-    } catch (NoSuchElementException e) {
-      // expected
+    //-----------------------------------------------------------------------  
+    protected void verify() {
+        super.verify();
+        BinaryHeap heap = (BinaryHeap) collection;
+
+        Comparator c = heap.m_comparator;
+        if (c == null)
+            c = ComparatorUtils.naturalComparator();
+        if (!heap.m_isMinHeap)
+            c = ComparatorUtils.reversedComparator(c);
+
+        Object[] tree = heap.m_elements;
+        for (int i = 1; i <= heap.m_size; i++) {
+            Object parent = tree[i];
+            if (i * 2 <= heap.m_size) {
+                assertTrue("Parent is less than or equal to its left child", c.compare(parent, tree[i * 2]) <= 0);
+            }
+            if (i * 2 + 1 < heap.m_size) {
+                assertTrue("Parent is less than or equal to its right child", c.compare(parent, tree[i * 2 + 1]) <= 0);
+            }
+        }
     }
-    
-    try {
-      heap.pop();
-      fail("NoSuchElementException should be thrown if pop is called " +
-           "after all elements are popped");
-    } catch (NoSuchElementException e) {
-      // expected
-    }     
-  }
 
+    //-----------------------------------------------------------------------  
+    /**
+     * Overridden because UnboundedFifoBuffer isn't fail fast.
+     * @return false
+     */
+    protected boolean isFailFastSupported() {
+        return false;
+    }
 
-  public void verify() {
-      super.verify();
-      BinaryHeap heap = (BinaryHeap)collection;
+    //-----------------------------------------------------------------------  
+    protected Collection makeConfirmedCollection() {
+        return new ArrayList();
+    }
 
-      Comparator c = heap.m_comparator;
-      if (c == null) c = ComparatorUtils.naturalComparator();
-      if (!heap.m_isMinHeap) c = ComparatorUtils.reversedComparator(c);
+    protected Collection makeConfirmedFullCollection() {
+        ArrayList list = new ArrayList();
+        list.addAll(Arrays.asList(getFullElements()));
+        return list;
+    }
 
-      Object[] tree = heap.m_elements;
-      for (int i = 1; i <= heap.m_size; i++) {
-          Object parent = tree[i];
-          if (i * 2 <= heap.m_size) {
-              assertTrue("Parent is less than or equal to its left child", 
-                c.compare(parent, tree[i * 2]) <= 0);
-          }
-          if (i * 2 + 1 < heap.m_size) {
-              assertTrue("Parent is less than or equal to its right child", 
-                c.compare(parent, tree[i * 2 + 1]) <= 0);
-          }
-      }
-  }
+    /**
+     * Return a new, empty {@link Object} to used for testing.
+     */
+    protected Collection makeCollection() {
+        return new BinaryHeap();
+    }
+
+    //-----------------------------------------------------------------------  
+    protected Object[] getFullElements() {
+        return getFullNonNullStringElements();
+    }
+
+    protected Object[] getOtherElements() {
+        return getOtherNonNullStringElements();
+    }
+
+    //-----------------------------------------------------------------------  
+    public void testBasicOps() {
+        BinaryHeap heap = new BinaryHeap();
+
+        assertTrue("heap should be empty after create", heap.isEmpty());
+
+        try {
+            heap.peek();
+            fail("NoSuchElementException should be thrown if peek is called before any elements are inserted");
+        } catch (NoSuchElementException e) {
+            // expected
+        }
+
+        try {
+            heap.pop();
+            fail("NoSuchElementException should be thrown if pop is called before any elements are inserted");
+        } catch (NoSuchElementException e) {
+            // expected
+        }
+
+        heap.insert("a");
+        heap.insert("c");
+        heap.insert("e");
+        heap.insert("b");
+        heap.insert("d");
+        heap.insert("n");
+        heap.insert("m");
+        heap.insert("l");
+        heap.insert("k");
+        heap.insert("j");
+        heap.insert("i");
+        heap.insert("h");
+        heap.insert("g");
+        heap.insert("f");
+
+        assertTrue("heap should not be empty after inserts", !heap.isEmpty());
+
+        for (int i = 0; i < 14; i++) {
+            assertEquals(
+                "peek using default constructor should return minimum value in the binary heap",
+                String.valueOf((char) ('a' + i)),
+                heap.peek());
+
+            assertEquals(
+                "pop using default constructor should return minimum value in the binary heap",
+                String.valueOf((char) ('a' + i)),
+                heap.pop());
+
+            if (i + 1 < 14) {
+                assertTrue("heap should not be empty before all elements are popped", !heap.isEmpty());
+            } else {
+                assertTrue("heap should be empty after all elements are popped", heap.isEmpty());
+            }
+        }
+
+        try {
+            heap.peek();
+            fail("NoSuchElementException should be thrown if peek is called after all elements are popped");
+        } catch (NoSuchElementException e) {
+            // expected
+        }
+
+        try {
+            heap.pop();
+            fail("NoSuchElementException should be thrown if pop is called after all elements are popped");
+        } catch (NoSuchElementException e) {
+            // expected
+        }
+    }
+
+    public void testBasicComparatorOps() {
+        BinaryHeap heap = new BinaryHeap(new ReverseComparator(new ComparableComparator()));
+
+        assertTrue("heap should be empty after create", heap.isEmpty());
+
+        try {
+            heap.peek();
+            fail("NoSuchElementException should be thrown if peek is called before any elements are inserted");
+        } catch (NoSuchElementException e) {
+            // expected
+        }
+
+        try {
+            heap.pop();
+            fail("NoSuchElementException should be thrown if pop is called before any elements are inserted");
+        } catch (NoSuchElementException e) {
+            // expected
+        }
+
+        heap.insert("a");
+        heap.insert("c");
+        heap.insert("e");
+        heap.insert("b");
+        heap.insert("d");
+        heap.insert("n");
+        heap.insert("m");
+        heap.insert("l");
+        heap.insert("k");
+        heap.insert("j");
+        heap.insert("i");
+        heap.insert("h");
+        heap.insert("g");
+        heap.insert("f");
+
+        assertTrue("heap should not be empty after inserts", !heap.isEmpty());
+
+        for (int i = 0; i < 14; i++) {
+
+            // note: since we're using a comparator that reverses items, the
+            // "minimum" item is "n", and the "maximum" item is "a".
+
+            assertEquals(
+                "peek using default constructor should return minimum value in the binary heap",
+                String.valueOf((char) ('n' - i)),
+                heap.peek());
+
+            assertEquals(
+                "pop using default constructor should return minimum value in the binary heap",
+                String.valueOf((char) ('n' - i)),
+                heap.pop());
+
+            if (i + 1 < 14) {
+                assertTrue("heap should not be empty before all elements are popped", !heap.isEmpty());
+            } else {
+                assertTrue("heap should be empty after all elements are popped", heap.isEmpty());
+            }
+        }
+
+        try {
+            heap.peek();
+            fail("NoSuchElementException should be thrown if peek is called after all elements are popped");
+        } catch (NoSuchElementException e) {
+            // expected
+        }
+
+        try {
+            heap.pop();
+            fail("NoSuchElementException should be thrown if pop is called after all elements are popped");
+        } catch (NoSuchElementException e) {
+            // expected
+        }
+    }
+
 }
-

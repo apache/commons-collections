@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestUnboundedFifoBuffer.java,v 1.4 2003/02/19 20:33:11 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/02/19 20:33:11 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestUnboundedFifoBuffer.java,v 1.5 2003/07/12 15:11:25 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/07/12 15:11:25 $
  *
  * ====================================================================
  *
@@ -78,60 +78,12 @@ public class TestUnboundedFifoBuffer extends TestCollection {
         return BulkTest.makeSuite(TestUnboundedFifoBuffer.class);
     }
 
-    /**
-     *  Returns an empty UnboundedFifoBuffer with a small capacity.
-     *
-     *  @return an empty UnboundedFifoBuffer
-     */
-    public Collection makeCollection() {
-        return new UnboundedFifoBuffer(5);
-    }
-
-
-    /**
-     *  Returns an empty ArrayList.
-     *
-     *  @return an empty ArrayList
-     */
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
-    }
-
-
-    /**
-     *  Returns a full ArrayList.
-     *
-     *  @return a full ArrayList
-     */
-    public Collection makeConfirmedFullCollection() {
-        Collection c = makeConfirmedCollection();
-        c.addAll(java.util.Arrays.asList(getFullElements()));
-        return c;
-    }
-
-
-    /**
-     *  Overridden because UnboundedFifoBuffer doesn't allow null elements.
-     *
-     *  @return an array of random elements without the null element
-     */
-    public Object[] getFullElements() {
-        return getFullNonNullElements();
-    }
-
-
-    /**
-     *  Overridden because UnboundedFifoBuffer's iterators aren't fail-fast.
-     */
-    public void testCollectionIteratorFailFast() {
-    }
-
-
+    //-----------------------------------------------------------------------
     /**
      *  Verifies that the ArrayList has the same elements in the same 
      *  sequence as the UnboundedFifoBuffer.
      */
-    public void verify() {
+    protected void verify() {
         super.verify();
         Iterator iterator1 = collection.iterator();
         Iterator iterator2 = confirmed.iterator();
@@ -143,7 +95,54 @@ public class TestUnboundedFifoBuffer extends TestCollection {
         }
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Overridden because UnboundedFifoBuffer doesn't allow null elements.
+     * @return false
+     */
+    protected boolean isNullSupported() {
+        return false;
+    }
 
+    /**
+     * Overridden because UnboundedFifoBuffer isn't fail fast.
+     * @return false
+     */
+    protected boolean isFailFastSupported() {
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     *  Returns an empty ArrayList.
+     *
+     *  @return an empty ArrayList
+     */
+    protected Collection makeConfirmedCollection() {
+        return new ArrayList();
+    }
+
+    /**
+     *  Returns a full ArrayList.
+     *
+     *  @return a full ArrayList
+     */
+    protected Collection makeConfirmedFullCollection() {
+        Collection c = makeConfirmedCollection();
+        c.addAll(java.util.Arrays.asList(getFullElements()));
+        return c;
+    }
+
+    /**
+     *  Returns an empty UnboundedFifoBuffer with a small capacity.
+     *
+     *  @return an empty UnboundedFifoBuffer
+     */
+    protected Collection makeCollection() {
+        return new UnboundedFifoBuffer(5);
+    }
+
+    //-----------------------------------------------------------------------
     /**
      *  Tests that UnboundedFifoBuffer removes elements in the right order.
      */

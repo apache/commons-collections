@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedCollection.java,v 1.1 2003/05/11 13:18:27 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedCollection.java,v 1.2 2003/07/12 15:11:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.Transformer;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/11 13:18:27 $
+ * @version $Revision: 1.2 $ $Date: 2003/07/12 15:11:26 $
  * 
  * @author Stephen Colebourne
  */
@@ -108,6 +108,7 @@ public class TestTransformedCollection extends TestCollection {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    //-----------------------------------------------------------------------
     public Collection makeConfirmedCollection() {
         return new ArrayList();
     }
@@ -128,6 +129,7 @@ public class TestTransformedCollection extends TestCollection {
         return TransformedCollection.decorate(list, NOOP_TRANSFORMER);
     }
     
+    //-----------------------------------------------------------------------
     protected Object[] getFullElements() {
         return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
@@ -136,6 +138,7 @@ public class TestTransformedCollection extends TestCollection {
         return new Object[] {"9", "88", "678", "87", "98", "78", "99"};
     }
 
+    //-----------------------------------------------------------------------
     public void testTransformedCollection() {
         Collection coll = TransformedCollection.decorate(new ArrayList(), STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, coll.size());

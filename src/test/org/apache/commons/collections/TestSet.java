@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.2 2002/06/18 03:06:45 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/18 03:06:45 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSet.java,v 1.3 2003/07/12 15:11:25 scolebourne Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/07/12 15:11:25 $
  *
  * ====================================================================
  *
@@ -81,10 +81,9 @@ import java.util.Set;
  *  elements may be added; see {@link TestCollection} for more details.<P>
  *
  *  @author Paul Jack
- *  @version $Id: TestSet.java,v 1.2 2002/06/18 03:06:45 mas Exp $
+ *  @version $Id: TestSet.java,v 1.3 2003/07/12 15:11:25 scolebourne Exp $
  */
 public abstract class TestSet extends TestCollection {
-
 
     /**
      *  Constructor.
@@ -95,34 +94,24 @@ public abstract class TestSet extends TestCollection {
         super(name);
     }
 
-
+    //-----------------------------------------------------------------------
     /**
-     *  Makes an empty collection by invoking {@link #makeEmptySet()}.  
-     *
-     *  @return an empty collection
+     *  Provides additional verifications for sets.
      */
-    protected final Collection makeCollection() {
-        return makeEmptySet();
+    protected void verify() {
+        super.verify();
+        assertEquals("Sets should be equal", confirmed, collection);
+        assertEquals("Sets should have equal hashCodes", 
+                     confirmed.hashCode(), collection.hashCode());
+        HashSet set = new HashSet();
+        Iterator iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            assertTrue("Set.iterator should only return unique elements", 
+                       set.add(iterator.next()));
+        }
     }
 
-
-    /**
-     *  Makes a full collection by invoking {@link #makeFullSet()}.
-     *
-     *  @return a full collection
-     */
-    protected final Collection makeFullCollection() {
-        return makeFullSet();
-    }
-
-    /**
-     *  Return the {@link TestCollection#collection} fixture, but cast as a
-     *  Set.  
-     */
-    protected Set getSet() {
-        return (Set)collection;
-    }
-
+    //-----------------------------------------------------------------------
     /**
      *  Returns an empty {@link HashSet} for use in modification testing.
      *
@@ -131,7 +120,6 @@ public abstract class TestSet extends TestCollection {
     protected Collection makeConfirmedCollection() {
         return new HashSet();
     }
-
 
     /**
      *  Returns a full {@link HashSet} for use in modification testing.
@@ -145,20 +133,11 @@ public abstract class TestSet extends TestCollection {
     }
 
     /**
-     *  Return the {@link TestCollection#confirmed} fixture, but cast as a 
-     *  Set.
-     **/
-    protected Set getConfirmedSet() {
-        return (Set)confirmed;
-    }
-
-    /**
      *  Makes an empty set.  The returned set should have no elements.
      *
      *  @return an empty set
      */
     protected abstract Set makeEmptySet();
-
 
     /**
      *  Makes a full set by first creating an empty set and then adding
@@ -174,7 +153,42 @@ public abstract class TestSet extends TestCollection {
         return set;
     }
 
+    /**
+     *  Makes an empty collection by invoking {@link #makeEmptySet()}.  
+     *
+     *  @return an empty collection
+     */
+    protected final Collection makeCollection() {
+        return makeEmptySet();
+    }
 
+    /**
+     *  Makes a full collection by invoking {@link #makeFullSet()}.
+     *
+     *  @return a full collection
+     */
+    protected final Collection makeFullCollection() {
+        return makeFullSet();
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     *  Return the {@link TestCollection#collection} fixture, but cast as a
+     *  Set.  
+     */
+    protected Set getSet() {
+        return (Set)collection;
+    }
+
+    /**
+     *  Return the {@link TestCollection#confirmed} fixture, but cast as a 
+     *  Set.
+     **/
+    protected Set getConfirmedSet() {
+        return (Set)confirmed;
+    }
+
+    //-----------------------------------------------------------------------
     /**
      *  Tests {@link Set#equals(Object)}.
      */
@@ -213,21 +227,5 @@ public abstract class TestSet extends TestCollection {
                      getSet().hashCode(), getConfirmedSet().hashCode());
     }
 
-
-    /**
-     *  Provides additional verifications for sets.
-     */
-    protected void verify() {
-        super.verify();
-        assertEquals("Sets should be equal", confirmed, collection);
-        assertEquals("Sets should have equal hashCodes", 
-                     confirmed.hashCode(), collection.hashCode());
-        HashSet set = new HashSet();
-        Iterator iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            assertTrue("Set.iterator should only return unique elements", 
-                       set.add(iterator.next()));
-        }
-    }
 
 }

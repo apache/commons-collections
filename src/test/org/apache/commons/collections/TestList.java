@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.17 2003/04/26 10:27:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.18 2003/07/12 15:11:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -82,7 +82,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
  *
- * @version $Revision: 1.17 $ $Date: 2003/04/26 10:27:59 $
+ * @version $Revision: 1.18 $ $Date: 2003/07/12 15:11:25 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -91,11 +91,77 @@ import java.util.NoSuchElementException;
  */
 public abstract class TestList extends TestCollection {
 
-
+    /**
+     * Constructor.
+     * @param testName
+     */
     public TestList(String testName) {
         super(testName);
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     *  Returns true if the collections produced by 
+     *  {@link #makeCollection()} and {@link #makeFullCollection()}
+     *  support the <code>set</code> operation.<p>
+     *  Default implementation returns true.  Override if your collection
+     *  class does not support set.
+     */
+    protected boolean isSetSupported() {
+        return true;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     *  Verifies that the test list implementation matches the confirmed list
+     *  implementation.
+     */
+    protected void verify() {
+        super.verify();
+
+        List list1 = getList();
+        List list2 = getConfirmedList();
+
+        assertEquals("List should equal confirmed", list1, list2);
+        assertEquals("Confirmed should equal list", list2, list1);
+
+        assertEquals("Hash codes should be equal", 
+          list1.hashCode(), list2.hashCode());
+
+        int i = 0;
+        Iterator iterator1 = list1.iterator();
+        Iterator iterator2 = list2.iterator();
+        Object[] array = list1.toArray();
+        while (iterator2.hasNext()) {
+            assertTrue("List iterator should have next", iterator1.hasNext());
+            Object o1 = iterator1.next();
+            Object o2 = iterator2.next();
+            assertEquals("Iterator elements should be equal", o1, o2);
+            o2 = list1.get(i);
+            assertEquals("get should return correct element", o1, o2);
+            o2 = array[i];
+            assertEquals("toArray should have correct element", o1, o2);
+            i++;
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     *  Returns an empty {@link ArrayList}.
+     */
+    protected Collection makeConfirmedCollection() {
+        ArrayList list = new ArrayList();
+        return list;
+    }
+
+    /**
+     *  Returns a full {@link ArrayList}.
+     */
+    protected Collection makeConfirmedFullCollection() {
+        ArrayList list = new ArrayList();
+        list.addAll(Arrays.asList(getFullElements()));
+        return list;
+    }
 
     /**
      *  Return a new, empty {@link List} to be used for testing.
@@ -103,7 +169,6 @@ public abstract class TestList extends TestCollection {
      *  @return an empty list for testing.
      */
     protected abstract List makeEmptyList();
-
 
     /**
      *  Return a new, full {@link List} to be used for testing.
@@ -117,7 +182,6 @@ public abstract class TestList extends TestCollection {
         return list;
     }
 
-
     /**
      *  Returns {@link makeEmptyList()}.
      *
@@ -126,7 +190,6 @@ public abstract class TestList extends TestCollection {
     final protected Collection makeCollection() {
         return makeEmptyList();
     }
-
 
     /**
      *  Returns {@link makeFullList()}.
@@ -137,19 +200,7 @@ public abstract class TestList extends TestCollection {
         return makeFullList();
     }
 
-
-    /**
-     *  Returns true if the collections produced by 
-     *  {@link #makeCollection()} and {@link #makeFullCollection()}
-     *  support the <code>set</code> operation.<p>
-     *  Default implementation returns true.  Override if your collection
-     *  class does not support set.
-     */
-    protected boolean isSetSupported() {
-        return true;
-    }
-
-
+    //-----------------------------------------------------------------------
     /**
      *  Returns the {@link collection} field cast to a {@link List}.
      *
@@ -158,7 +209,6 @@ public abstract class TestList extends TestCollection {
     protected List getList() {
         return (List)collection;
     } 
-
 
     /**
      *  Returns the {@link confirmed} field cast to a {@link List}.
@@ -169,7 +219,7 @@ public abstract class TestList extends TestCollection {
         return (List)confirmed;
     }
 
-
+    //-----------------------------------------------------------------------
     /**
      *  Tests bounds checking for {@link List#add(int, Object)} on an
      *  empty list.
@@ -952,60 +1002,7 @@ public abstract class TestList extends TestCollection {
         }
     }
 
-
-    /**
-     *  Returns an empty {@link ArrayList}.
-     */
-    protected Collection makeConfirmedCollection() {
-        ArrayList list = new ArrayList();
-        return list;
-    }
-
-
-    /**
-     *  Returns a full {@link ArrayList}.
-     */
-    protected Collection makeConfirmedFullCollection() {
-        ArrayList list = new ArrayList();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
-    }
-
-
-    /**
-     *  Verifies that the test list implementation matches the confirmed list
-     *  implementation.
-     */
-    protected void verify() {
-        super.verify();
-
-        List list1 = getList();
-        List list2 = getConfirmedList();
-
-        assertEquals("List should equal confirmed", list1, list2);
-        assertEquals("Confirmed should equal list", list2, list1);
-
-        assertEquals("Hash codes should be equal", 
-          list1.hashCode(), list2.hashCode());
-
-        int i = 0;
-        Iterator iterator1 = list1.iterator();
-        Iterator iterator2 = list2.iterator();
-        Object[] array = list1.toArray();
-        while (iterator2.hasNext()) {
-            assertTrue("List iterator should have next", iterator1.hasNext());
-            Object o1 = iterator1.next();
-            Object o2 = iterator2.next();
-            assertEquals("Iterator elements should be equal", o1, o2);
-            o2 = list1.get(i);
-            assertEquals("get should return correct element", o1, o2);
-            o2 = array[i];
-            assertEquals("toArray should have correct element", o1, o2);
-            i++;
-        }
-    }
-
-
+    //-----------------------------------------------------------------------
     /**
      *  Returns a {@link BulkTest} for testing {@link List#subList(int,int)}.
      *  The returned bulk test will run through every <Code>TestList</Code>
@@ -1095,6 +1092,7 @@ public abstract class TestList extends TestCollection {
     *  if elements are added to the original list.
     */
    public void testListSubListFailFastOnAdd() {
+       if (!isFailFastSupported()) return;
        if (!isAddSupported()) return;
 
        resetFull();
@@ -1126,6 +1124,7 @@ public abstract class TestList extends TestCollection {
     *  if elements are removed from the original list.
     */
    public void testListSubListFailFastOnRemove() {
+       if (!isFailFastSupported()) return;
        if (!isRemoveSupported()) return;
 
        resetFull();

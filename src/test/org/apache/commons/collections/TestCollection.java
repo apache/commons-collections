@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.11 2003/05/09 18:34:19 scolebourne Exp $
- * $Revision: 1.11 $
- * $Date: 2003/05/09 18:34:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.12 2003/07/12 15:11:25 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2003/07/12 15:11:25 $
  *
  * ====================================================================
  *
@@ -58,7 +58,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.lang.reflect.Array;
@@ -73,35 +72,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-
 /**
  * Tests base {@link java.util.Collection} methods and contracts.
  * <p>
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to 
  * implement the {@link #makeCollection()} method.  You might want to 
- * override some of the additional protected methods as well:<P>
- *
- * <B>Element Population Methods</B><P>
- * 
+ * override some of the additional protected methods as well:
+ * <p>
+ * <B>Element Population Methods</B>
+ * <p>
  * Override these if your collection restricts what kind of elements are
  * allowed (for instance, if <Code>null</Code> is not permitted):
  * <UL>
  * <Li>{@link #getFullElements()}
  * <Li>{@link #getOtherElements()}
  * </UL>
- *
- * <B>Supported Operation Methods</B><P>
- *
+ * <p>
+ * <B>Supported Operation Methods</B>
+ * <p>
  * Override these if your collection doesn't support certain operations:
  * <UL>
  * <LI>{@link #isAddSuppoted()}
  * <LI>{@link #isRemoveSupported()}
  * <li>{@link #areEqualElementsDistinguishable()}
+ * <LI>{@link #isNullSupported()}
  * </UL>
- *
- * <B>Fixture Methods</B><P>
- *
+ * <p>
+ * <B>Fixture Methods</B>
+ * <p>
  * Fixtures are used to verify that the the operation results in correct state
  * for the collection.  Basically, the operation is performed against your
  * collection implementation, and an identical operation is performed against a
@@ -113,51 +112,52 @@ import java.util.NoSuchElementException;
  * if their state is identical.  The comparison is usually much more involved
  * than a simple <Code>equals</Code> test.  This verification is used to ensure
  * proper modifications are made along with ensuring that the collection does
- * not change when read-only modifications are made.<P>
- *
+ * not change when read-only modifications are made.
+ * <p>
  * The {@link #collection} field holds an instance of your collection
  * implementation; the {@link #confirmed} field holds an instance of the
  * confirmed collection implementation.  The {@link #resetEmpty()} and 
  * {@link #resetFull()} methods set these fields to empty or full collections,
- * so that tests can proceed from a known state.<P>
- *
+ * so that tests can proceed from a known state.
+ * <p>
  * After a modification operation to both {@link #collection} and
  * {@link #confirmed}, the {@link #verify()} method is invoked to compare
  * the results.  You may want to override {@link #verify()} to perform
  * additional verifications.  For instance, when testing the collection
  * views of a map, {@link TestMap} would override {@link #verify()} to make
  * sure the map is changed after the collection view is changed.
- *
+ * <p>
  * If you're extending this class directly, you will have to provide 
  * implementations for the following:
  * <UL>
  * <LI>{@link #makeConfirmedCollection()}
  * <LI>{@link #makeConfirmedFullCollection()}
  * </UL>
- *
+ * <p>
  * Those methods should provide a confirmed collection implementation 
- * that's compatible with your collection implementation.<P>
- *
+ * that's compatible with your collection implementation.
+ * <p>
  * If you're extending {@link TestList}, {@link TestSet},
  * or {@link TestBag}, you probably don't have to worry about the
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.<P>
- *
- * <B>Other notes</B><P>
- *
+ * <p>
+ * <B>Other notes</B>
+ * <p>
  * If your {@link Collection} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.  For instance, the
  * {@link #testIteratorFailFast()} method is provided since most collections
  * have fail-fast iterators; however, that's not strictly required by the
  * collection contract, so you may want to override that method to do 
- * nothing.<P>
+ * nothing.
  *
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author Neil O'Toole
- * @version $Id: TestCollection.java,v 1.11 2003/05/09 18:34:19 scolebourne Exp $
+ * @author Stephen Colebourne
+ * @version $Id: TestCollection.java,v 1.12 2003/07/12 15:11:25 scolebourne Exp $
  */
 public abstract class TestCollection extends TestObject {
 
@@ -190,33 +190,16 @@ public abstract class TestCollection extends TestObject {
      */
     protected Collection confirmed;
 
-
+    /**
+     * Constructor.
+     * 
+     * @param testName  the test name
+     */
     public TestCollection(String testName) {
         super(testName);
     }
 
-
-    /**
-     *  Resets the {@link #collection} and {@link #confirmed} fields to empty
-     *  collections.  Invoke this method before performing a modification
-     *  test.
-     */
-    protected void resetEmpty() {
-        this.collection = makeCollection();
-        this.confirmed = makeConfirmedCollection();
-    }
-
-
-    /**
-     *  Resets the {@link #collection} and {@link #confirmed} fields to full
-     *  collections.  Invoke this method before performing a modification
-     *  test.
-     */
-    protected void resetFull() {
-        this.collection = makeFullCollection();
-        this.confirmed = makeConfirmedFullCollection();
-    }
-
+    //-----------------------------------------------------------------------
     /**
      *  Specifies whether equal elements in the collection are, in fact,
      *  distinguishable with information not readily available.  That is, if a
@@ -243,6 +226,48 @@ public abstract class TestCollection extends TestObject {
         return false;
     }
 
+    /**
+     *  Returns true if the collections produced by 
+     *  {@link #makeCollection()} and {@link #makeFullCollection()}
+     *  support the <Code>add</Code> and <Code>addAll</Code>
+     *  operations.<P>
+     *  Default implementation returns true.  Override if your collection
+     *  class does not support add or addAll.
+     */
+    protected boolean isAddSupported() {
+        return true;
+    }
+
+    /**
+     *  Returns true if the collections produced by 
+     *  {@link #makeCollection()} and {@link #makeFullCollection()}
+     *  support the <Code>remove</Code>, <Code>removeAll</Code>,
+     *  <Code>retainAll</Code>, <Code>clear</Code> and
+     *  <Code>iterator().remove()</Code> methods.
+     *  Default implementation returns true.  Override if your collection
+     *  class does not support removal operations.
+     */
+    protected boolean isRemoveSupported() {
+        return true;
+    }
+
+    /**
+     * Returns true to indicate that the collection supports holding null.
+     * The default implementation returns true;
+     */
+    protected boolean isNullSupported() {
+        return true;
+    }
+
+    /**
+     * Returns true to indicate that the collection supports fail fast iterators.
+     * The default implementation returns true;
+     */
+    protected boolean isFailFastSupported() {
+        return false;
+    }
+
+    //-----------------------------------------------------------------------
     /**
      *  Verifies that {@link #collection} and {@link #confirmed} have 
      *  identical state.
@@ -315,7 +340,28 @@ public abstract class TestCollection extends TestObject {
         }
     }
     
-    
+    //-----------------------------------------------------------------------
+    /**
+     *  Resets the {@link #collection} and {@link #confirmed} fields to empty
+     *  collections.  Invoke this method before performing a modification
+     *  test.
+     */
+    protected void resetEmpty() {
+        this.collection = makeCollection();
+        this.confirmed = makeConfirmedCollection();
+    }
+
+    /**
+     *  Resets the {@link #collection} and {@link #confirmed} fields to full
+     *  collections.  Invoke this method before performing a modification
+     *  test.
+     */
+    protected void resetFull() {
+        this.collection = makeFullCollection();
+        this.confirmed = makeConfirmedFullCollection();
+    }
+
+    //-----------------------------------------------------------------------
     /**
      *  Returns a confirmed empty collection.
      *  For instance, an {@link java.util.ArrayList} for lists or a
@@ -324,8 +370,6 @@ public abstract class TestCollection extends TestObject {
      *  @return a confirmed empty collection
      */
     protected abstract Collection makeConfirmedCollection();
-
-
 
     /**
      *  Returns a confirmed full collection.
@@ -337,71 +381,10 @@ public abstract class TestCollection extends TestObject {
      */
     protected abstract Collection makeConfirmedFullCollection();
 
-
-    /**
-     *  Returns true if the collections produced by 
-     *  {@link #makeCollection()} and {@link #makeFullCollection()}
-     *  support the <Code>add</Code> and <Code>addAll</Code>
-     *  operations.<P>
-     *  Default implementation returns true.  Override if your collection
-     *  class does not support add or addAll.
-     */
-    protected boolean isAddSupported() {
-        return true;
-    }
-
-
-    /**
-     *  Returns true if the collections produced by 
-     *  {@link #makeCollection()} and {@link #makeFullCollection()}
-     *  support the <Code>remove</Code>, <Code>removeAll</Code>,
-     *  <Code>retainAll</Code>, <Code>clear</Code> and
-     *  <Code>iterator().remove()</Code> methods.
-     *  Default implementation returns true.  Override if your collection
-     *  class does not support removal operations.
-     */
-    protected boolean isRemoveSupported() {
-        return true;
-    }
-
-
-    /**
-     *  Returns an array of objects that are contained in a collection
-     *  produced by {@link #makeFullCollection()}.  Every element in the
-     *  returned array <I>must</I> be an element in a full collection.<P>
-     *  The default implementation returns a heterogenous array of 
-     *  objects with some duplicates and with the null element.  
-     *  Override if you require specific testing elements.  Note that if you
-     *  override {@link #makeFullCollection()}, you <I>must</I> override
-     *  this method to reflect the contents of a full collection.
-     */
-    protected Object[] getFullElements() {
-        ArrayList list = new ArrayList();
-        list.addAll(Arrays.asList(getFullNonNullElements()));
-        list.add(4, null);
-        return list.toArray();
-    }
-
-
-    /**
-     *  Returns an array of elements that are <I>not</I> contained in a
-     *  full collection.  Every element in the returned array must 
-     *  not exist in a collection returned by {@link #makeFullCollection()}.
-     *  The default implementation returns a heterogenous array of elements
-     *  without null.  Note that some of the tests add these elements
-     *  to an empty or full collection, so if your collection restricts
-     *  certain kinds of elements, you should override this method.
-     */
-    protected Object[] getOtherElements() {
-        return getOtherNonNullElements();
-    }
-    
-
     /**
      * Return a new, empty {@link Collection} to be used for testing.
      */
     protected abstract Collection makeCollection();
-
 
     /**
      *  Returns a full collection to be used for testing.  The collection
@@ -417,15 +400,49 @@ public abstract class TestCollection extends TestObject {
         return c;
     }
 
-
     /**
      *  Returns an empty collection for Object tests.
      */
-    public Object makeObject() {
+    protected Object makeObject() {
         return makeCollection();
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     *  Returns an array of objects that are contained in a collection
+     *  produced by {@link #makeFullCollection()}.  Every element in the
+     *  returned array <I>must</I> be an element in a full collection.<P>
+     *  The default implementation returns a heterogenous array of 
+     *  objects with some duplicates. null is added if allowed.
+     *  Override if you require specific testing elements.  Note that if you
+     *  override {@link #makeFullCollection()}, you <I>must</I> override
+     *  this method to reflect the contents of a full collection.
+     */
+    protected Object[] getFullElements() {
+        if (isNullSupported()) {
+            ArrayList list = new ArrayList();
+            list.addAll(Arrays.asList(getFullNonNullElements()));
+            list.add(4, null);
+            return list.toArray();
+        } else {
+            return (Object[]) getFullNonNullElements().clone();
+        }
+    }
 
+    /**
+     *  Returns an array of elements that are <I>not</I> contained in a
+     *  full collection.  Every element in the returned array must 
+     *  not exist in a collection returned by {@link #makeFullCollection()}.
+     *  The default implementation returns a heterogenous array of elements
+     *  without null.  Note that some of the tests add these elements
+     *  to an empty or full collection, so if your collection restricts
+     *  certain kinds of elements, you should override this method.
+     */
+    protected Object[] getOtherElements() {
+        return getOtherNonNullElements();
+    }
+    
+    //-----------------------------------------------------------------------
     /**
      *  Tests {@link Collection#add(Object)}.
      */
@@ -1137,6 +1154,8 @@ public abstract class TestCollection extends TestObject {
      *  Tests that the collection's iterator is fail-fast.  
      */
     public void testCollectionIteratorFailFast() {
+        if (!isFailFastSupported()) return;
+        
         if (isAddSupported()) {
             resetFull();
             try {
