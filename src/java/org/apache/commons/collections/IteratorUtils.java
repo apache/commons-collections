@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.18 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.19 2004/01/05 22:19:51 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -95,7 +95,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.18 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.19 $ $Date: 2004/01/05 22:19:51 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -126,9 +126,9 @@ public class IteratorUtils {
     public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = new EmptyOrderedMapIterator();
 
     /**
-     * Prevents instantiation.
+     * IteratorUtils is not normally instantiated.
      */
-    private IteratorUtils() {
+    public IteratorUtils() {
     }
 
     // Empty
