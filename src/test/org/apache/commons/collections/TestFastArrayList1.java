@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.2 2002/06/21 03:33:28 mas Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/21 03:33:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList1.java,v 1.3 2002/08/13 04:34:09 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/13 04:34:09 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.List;
  * Test FastArrayList implementation in <strong>fast</strong> mode.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList1.java,v 1.2 2002/06/21 03:33:28 mas Exp $
+ * @version $Id: TestFastArrayList1.java,v 1.3 2002/08/13 04:34:09 pjack Exp $
  */
 public class TestFastArrayList1 extends TestFastArrayList
 {
@@ -93,14 +93,15 @@ public class TestFastArrayList1 extends TestFastArrayList
 
     public void setUp()
     {
-        list = (ArrayList) makeList();
+        list = (ArrayList) makeEmptyList();
     }
 
-    public List makeList()
+    public List makeEmptyList()
     {
         FastArrayList fal = new FastArrayList();
         fal.setFast(true);
         return (fal);
     }
+
 
 }

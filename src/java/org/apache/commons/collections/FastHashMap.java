@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.7 2002/08/10 00:49:45 pjack Exp $
- * $Revision: 1.7 $
- * $Date: 2002/08/10 00:49:45 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.8 2002/08/13 04:34:08 pjack Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/08/13 04:34:08 $
  *
  * ====================================================================
  *
@@ -65,6 +65,7 @@ package org.apache.commons.collections;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -108,7 +109,7 @@ import java.util.Set;
  *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.7 $ $Date: 2002/08/10 00:49:45 $
+ * @version $Revision: 1.8 $ $Date: 2002/08/13 04:34:08 $
  */
 
 public class FastHashMap extends HashMap {
@@ -280,15 +281,7 @@ public class FastHashMap extends HashMap {
      * element in the returned collection is a <code>Map.Entry</code>.
      */
     public Set entrySet() {
-
-        if (fast) {
-            return (map.entrySet());
-        } else {
-            synchronized (map) {
-                return (map.entrySet());
-            }
-        }
-
+        return new EntrySet();
     }
 
 
@@ -418,15 +411,7 @@ public class FastHashMap extends HashMap {
      * Return a set view of the keys contained in this map.
      */
     public Set keySet() {
-
-        if (fast) {
-            return (map.keySet());
-        } else {
-            synchronized (map) {
-                return (map.keySet());
-            }
-        }
-
+        return new KeySet();
     }
 
 
@@ -523,16 +508,257 @@ public class FastHashMap extends HashMap {
      * Return a collection view of the values contained in this map.
      */
     public Collection values() {
+        return new Values();
+    }
 
-        if (fast) {
-            return (map.values());
-        } else {
-            synchronized (map) {
-                return (map.values());
+
+    private abstract class CollectionView implements Collection {
+
+        public CollectionView() {
+        }
+
+        protected abstract Collection get(Map map);
+        protected abstract Object iteratorNext(Map.Entry entry);
+
+
+        public void clear() {
+            if (fast) {
+                synchronized (FastHashMap.this) {
+                    HashMap temp = (HashMap) map.clone();
+                    get(temp).clear();
+                    map = temp;
+                }
+            } else {
+                synchronized (map) {
+                    get(map).clear();
+                }
             }
         }
 
-    }
+        public boolean remove(Object o) {
+            if (fast) {
+                synchronized (FastHashMap.this) {
+                    HashMap temp = (HashMap) map.clone();
+                    boolean r = get(temp).remove(o);
+                    map = temp;
+                    return r;
+                }
+            } else {
+                synchronized (map) {
+                    return get(map).remove(o);
+                }
+            }
+        }
 
+        public boolean removeAll(Collection o) {
+            if (fast) {
+                synchronized (FastHashMap.this) {
+                    HashMap temp = (HashMap) map.clone();
+                    boolean r = get(temp).removeAll(o);
+                    map = temp;
+                    return r;
+                }
+            } else {
+                synchronized (map) {
+                    return get(map).removeAll(o);
+                }
+            }
+        }
+
+        public boolean retainAll(Collection o) {
+            if (fast) {
+                synchronized (FastHashMap.this) {
+                    HashMap temp = (HashMap) map.clone();
+                    boolean r = get(temp).retainAll(o);
+                    map = temp;
+                    return r;
+                }
+            } else {
+                synchronized (map) {
+                    return get(map).retainAll(o);
+                }
+            }
+        }
+
+        public int size() {
+            if (fast) {
+                return get(map).size();
+            } else {
+                synchronized (map) {
+                    return get(map).size();
+                }
+            }
+        }
+
+
+        public boolean isEmpty() {
+            if (fast) {
+                return get(map).isEmpty();
+            } else {
+                synchronized (map) {
+                    return get(map).isEmpty();
+                }
+            }
+        }
+
+        public boolean contains(Object o) {
+            if (fast) {
+                return get(map).contains(o);
+            } else {
+                synchronized (map) {
+                    return get(map).contains(o);
+                }
+            }
+        }
+
+        public boolean containsAll(Collection o) {
+            if (fast) {
+                return get(map).containsAll(o);
+            } else {
+                synchronized (map) {
+                    return get(map).containsAll(o);
+                }
+            }
+        }
+
+        public Object[] toArray(Object[] o) {
+            if (fast) {
+                return get(map).toArray(o);
+            } else {
+                synchronized (map) {
+                    return get(map).toArray(o);
+                }
+            }
+        }
+
+        public Object[] toArray() {
+            if (fast) {
+                return get(map).toArray();
+            } else {
+                synchronized (map) {
+                    return get(map).toArray();
+                }
+            }
+        }
+
+
+        public boolean equals(Object o) {
+            if (o == this) return true;
+            if (fast) {
+                return get(map).equals(o);
+            } else {
+                synchronized (map) {
+                    return get(map).equals(o);
+                }
+            }
+        }
+
+        public int hashCode() {
+            if (fast) {
+                return get(map).hashCode();
+            } else {
+                synchronized (map) {
+                    return get(map).hashCode();
+                }
+            }
+        }
+
+        public boolean add(Object o) {
+            throw new UnsupportedOperationException();
+        }
+
+        public boolean addAll(Collection c) {
+            throw new UnsupportedOperationException();
+        }
+
+        public Iterator iterator() {
+            return new CollectionViewIterator();
+        }
+
+        private class CollectionViewIterator implements Iterator {
+
+            private Map expected;
+            private Map.Entry lastReturned = null;
+            private Iterator iterator;
+
+            public CollectionViewIterator() {
+                this.expected = map;
+                this.iterator = expected.entrySet().iterator();
+            }
+ 
+            public boolean hasNext() {
+                if (expected != map) {
+                    throw new ConcurrentModificationException();
+                }
+                return iterator.hasNext();
+            }
+
+            public Object next() {
+                if (expected != map) {
+                    throw new ConcurrentModificationException();
+                }
+                lastReturned = (Map.Entry)iterator.next();
+                return iteratorNext(lastReturned);
+            }
+
+            public void remove() {
+                if (lastReturned == null) {
+                    throw new IllegalStateException();
+                }
+                if (fast) {
+                    synchronized (FastHashMap.this) {
+                        if (expected != map) {
+                            throw new ConcurrentModificationException();
+                        }
+                        FastHashMap.this.remove(lastReturned.getKey());
+                        lastReturned = null;
+                        expected = map;
+                    }
+                } else {
+                    iterator.remove();
+                    lastReturned = null;
+                }
+            }
+        }
+   }
+
+
+   private class KeySet extends CollectionView implements Set {
+
+       protected Collection get(Map map) {
+           return map.keySet();
+       }
+
+       protected Object iteratorNext(Map.Entry entry) {
+           return entry.getKey();
+       }       
+
+   }
+
+
+   private class Values extends CollectionView {
+
+       protected Collection get(Map map) {
+           return map.values();
+       }
+
+       protected Object iteratorNext(Map.Entry entry) {
+           return entry.getValue();
+       }
+   }
+
+
+   private class EntrySet extends CollectionView implements Set {
+
+       protected Collection get(Map map) {
+           return map.entrySet();
+       }
+
+
+       protected Object iteratorNext(Map.Entry entry) {
+           return entry;
+       }
+
+   }
 
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.3 2002/06/18 05:35:58 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/06/18 05:35:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap1.java,v 1.4 2002/08/13 04:34:09 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/13 04:34:09 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.TreeMap;
  * Test FastTreeMap in <strong>fast</strong> mode.
  *
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap1.java,v 1.3 2002/06/18 05:35:58 mas Exp $
+ * @version $Id: TestFastTreeMap1.java,v 1.4 2002/08/13 04:34:09 pjack Exp $
  */
 public class TestFastTreeMap1 extends TestFastTreeMap
 {
@@ -91,7 +91,7 @@ public class TestFastTreeMap1 extends TestFastTreeMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         FastTreeMap ftm = new FastTreeMap();
         ftm.setFast(true);
         return (ftm);
@@ -99,36 +99,7 @@ public class TestFastTreeMap1 extends TestFastTreeMap
 
     public void setUp()
     {
-        map = (TreeMap) makeMap();
+        map = (TreeMap) makeEmptyMap();
     }
 
-    /**
-     *  When the fast tree map is in fast mode, the underlying tree map is
-     *  cloned on modification (i.e. on a put).  Because of that, any
-     *  previously existing entry set will be representing the old (pre-clone)
-     *  map and will not reflect changes made to the map after the clone.  So,
-     *  we must override this test.
-     **/
-    public void testMapEntrySetChangesWithMapPut() {
-    }
-
-    /**
-     *  When the fast tree map is in fast mode, the underlying tree map is
-     *  cloned on modification (i.e. on a put).  Because of that, any
-     *  previously existing entry set will be representing the old (pre-clone)
-     *  map and will not reflect changes made to the map after the clone.  So,
-     *  we must override this test.
-     **/
-    public void testMapEntrySetChangesWithMapRemove() {
-    }
-
-    /**
-     *  When the fast tree map is in fast mode, the underlying tree map is
-     *  cloned on modification (i.e. on a put).  Because of that, any
-     *  previously existing entry set will be representing the old (pre-clone)
-     *  map, so changes to the set will not be seen in the map. So, we must
-     *  override this test.
-     **/
-    public void testMapEntrySetRemoveCausesMapModification() {
-    }
 }

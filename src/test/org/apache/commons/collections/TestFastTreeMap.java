@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.7 2002/08/12 18:00:46 pjack Exp $
- * $Revision: 1.7 $
- * $Date: 2002/08/12 18:00:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastTreeMap.java,v 1.8 2002/08/13 04:34:09 pjack Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/08/13 04:34:09 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.TreeMap;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastTreeMap.java,v 1.7 2002/08/12 18:00:46 pjack Exp $
+ * @version $Id: TestFastTreeMap.java,v 1.8 2002/08/13 04:34:09 pjack Exp $
  */
 public class TestFastTreeMap extends TestTreeMap
 {
@@ -93,6 +93,10 @@ public class TestFastTreeMap extends TestTreeMap
         FastTreeMap ftm = new FastTreeMap();
         ftm.setFast(false);
         return (ftm);
+    }
+
+    public Map makeConfirmedEmptyMap() {
+        return new TreeMap();
     }
   
     /**
