@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.13 2003/12/24 23:22:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DefaultMapBag.java,v 1.14 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @deprecated Moved to bag subpackage as AbstractMapBag. Due to be removed in v4.0.
  * @since Commons Collections 2.0
- * @version $Revision: 1.13 $ $Date: 2003/12/24 23:22:54 $
+ * @version $Revision: 1.14 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -198,7 +198,7 @@ public abstract class DefaultMapBag implements Bag {
         Iterator i = other.uniqueSet().iterator();
         while (i.hasNext()) {
             Object current = i.next();
-            boolean contains = getCount(current) >= ((Bag) other).getCount(current);
+            boolean contains = getCount(current) >= other.getCount(current);
             result = result && contains;
         }
         return result;

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EntrySetMapIterator.java,v 1.4 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EntrySetMapIterator.java,v 1.5 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.ResettableIterator;
  * </pre>
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.5 $ $Date: 2004/01/08 22:26:07 $
  *
  * @author Stephen Colebourne
  */
@@ -112,7 +112,7 @@ public class EntrySetMapIterator implements MapIterator, ResettableIterator {
      * Gets the next <em>key</em> from the <code>Map</code>.
      *
      * @return the next key in the iteration
-     * @throws NoSuchElementException if the iteration is finished
+     * @throws java.util.NoSuchElementException if the iteration is finished
      */
     public Object next() {
         last = (Map.Entry) iterator.next();

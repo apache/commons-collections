@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/TransformedCollection.java,v 1.1 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/collection/TransformedCollection.java,v 1.2 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.Transformer;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author Stephen Colebourne
  */
@@ -121,7 +121,7 @@ public class TransformedCollection extends AbstractCollectionDecorator {
      * The transformer itself may throw an exception if necessary.
      * 
      * @param object  the object to transform
-     * @throws the transformed object
+     * @return a transformed object
      */
     protected Object transform(Object object) {
         return transformer.transform(object);
@@ -133,7 +133,7 @@ public class TransformedCollection extends AbstractCollectionDecorator {
      * The transformer itself may throw an exception if necessary.
      * 
      * @param coll  the collection to transform
-     * @throws the transformed object
+     * @return a transformed object
      */
     protected Collection transform(Collection coll) {
         List list = new ArrayList(coll.size());

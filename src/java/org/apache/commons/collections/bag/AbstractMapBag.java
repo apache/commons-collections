@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.10 2004/01/02 01:36:51 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.11 2004/01/08 22:26:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
- * @version $Revision: 1.10 $ $Date: 2004/01/02 01:36:51 $
+ * @version $Revision: 1.11 $ $Date: 2004/01/08 22:26:08 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -196,7 +196,7 @@ public abstract class AbstractMapBag implements Bag {
         Iterator it = other.uniqueSet().iterator();
         while (it.hasNext()) {
             Object current = it.next();
-            boolean contains = getCount(current) >= ((Bag) other).getCount(current);
+            boolean contains = getCount(current) >= other.getCount(current);
             result = result && contains;
         }
         return result;

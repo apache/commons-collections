@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/TransformIterator.java,v 1.6 2003/11/02 16:29:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/TransformIterator.java,v 1.7 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import org.apache.commons.collections.Transformer;
  * Decorates an iterator such that each element returned is transformed.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.6 $ $Date: 2003/11/02 16:29:12 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author James Strachan
  * @author Stephen Colebourne
@@ -123,7 +123,7 @@ public class TransformIterator implements Iterator {
      * occurs and the object from the iterator is returned directly.
      * 
      * @return the next object
-     * @throws NoSuchElementException if there are no more elements
+     * @throws java.util.NoSuchElementException if there are no more elements
      */
     public Object next() {
         return transform(iterator.next());

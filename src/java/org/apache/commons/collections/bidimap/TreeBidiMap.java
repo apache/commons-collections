@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.7 2004/01/02 01:36:51 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.8 2004/01/08 22:26:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -108,7 +108,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.7 $ $Date: 2004/01/02 01:36:51 $
+ * @version $Revision: 1.8 $ $Date: 2004/01/08 22:26:08 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -712,11 +712,11 @@ public class TreeBidiMap implements OrderedBidiMap {
      * @param o1  the first object
      * @param o2  the second object
      *
-     * @return negative value if o1 < o2; 0 if o1 == o2; positive
-     *         value if o1 > o2
+     * @return negative value if o1 &lt; o2; 0 if o1 == o2; positive
+     *         value if o1 &gt; o2
      */
     private static int compare(final Comparable o1, final Comparable o2) {
-        return ((Comparable) o1).compareTo(o2);
+        return o1.compareTo(o2);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedMap.java,v 1.3 2003/12/02 23:51:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedMap.java,v 1.4 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,7 +62,7 @@ package org.apache.commons.collections;
  * iteration through that order.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/02 23:51:49 $
+ * @version $Revision: 1.4 $ $Date: 2004/01/08 22:26:07 $
  *
  * @author Stephen Colebourne
  */
@@ -92,7 +92,7 @@ public interface OrderedMap extends IterableMap {
      * Gets the first key currently in this map.
      *
      * @return the first key currently in this map
-     * @throws NoSuchElementException if this map is empty
+     * @throws java.util.NoSuchElementException if this map is empty
      */
     public Object firstKey();
 
@@ -100,7 +100,7 @@ public interface OrderedMap extends IterableMap {
      * Gets the last key currently in this map.
      *
      * @return the last key currently in this map
-     * @throws NoSuchElementException if this map is empty
+     * @throws java.util.NoSuchElementException if this map is empty
      */
     public Object lastKey();
     

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorEnumeration.java,v 1.5 2003/10/28 02:44:51 ggregory Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorEnumeration.java,v 1.6 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import java.util.Iterator;
  * Adapter to make an {@link Iterator Iterator} instance appear to be an {@link Enumeration Enumeration} instance.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.5 $ $Date: 2003/10/28 02:44:51 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */
@@ -108,7 +108,7 @@ public class IteratorEnumeration implements Enumeration {
      *  Returns the next element from the underlying iterator.
      *
      *  @return the next element from the underlying iterator.
-     *  @throws NoSuchElementException  if the underlying iterator has no
+     *  @throws java.util.NoSuchElementException  if the underlying iterator has no
      *    more elements
      */
     public Object nextElement() {

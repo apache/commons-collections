@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyIterator.java,v 1.7 2004/01/04 18:04:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ProxyIterator.java,v 1.8 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import java.util.Iterator;
  *
  * @deprecated Use AbstractIteratorDecorator. Will be removed in v4.0
  * @since Commons Collections 1.0
- * @version $Revision: 1.7 $ $Date: 2004/01/04 18:04:16 $
+ * @version $Revision: 1.8 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author James Strachan
  */
@@ -111,7 +111,7 @@ public class ProxyIterator implements Iterator {
      *  Returns the next element from the underlying iterator.
      *
      *  @return the next element from the underlying iterator
-     *  @throws NoSuchElementException  if the underlying iterator 
+     *  @throws java.util.NoSuchElementException  if the underlying iterator 
      *    raises it because it has no more elements
      */
     public Object next() {

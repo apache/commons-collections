@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.7 2004/01/05 22:15:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.8 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -119,7 +119,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.7 $ $Date: 2004/01/05 22:15:14 $
+ * @version $Revision: 1.8 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author Paul Jack
  */
@@ -353,7 +353,7 @@ public class ReferenceMap extends AbstractMap {
     /**
      *  Reads the contents of this object from the given input stream.
      *
-     *  @param inp  the input stream to read from
+     *  @param in  the input stream to read from
      *  @throws IOException  if the stream raises it
      *  @throws ClassNotFoundException  if the stream raises it
      */
@@ -640,7 +640,7 @@ public class ReferenceMap extends AbstractMap {
     public void clear() {
         Arrays.fill(table, null);
         size = 0;
-        while (queue.poll() != null) {}; // drain the queue
+        while (queue.poll() != null) {} // drain the queue
     }
 
 

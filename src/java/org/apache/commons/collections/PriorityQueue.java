@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.11 2004/01/06 21:31:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.12 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ package org.apache.commons.collections;
  * @deprecated Replaced by the Buffer interface and implementations in buffer subpackage.
  *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
- * @version $Revision: 1.11 $ $Date: 2004/01/06 21:31:32 $
+ * @version $Revision: 1.12 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author Peter Donald
  */
@@ -98,7 +98,7 @@ public interface PriorityQueue {
      * Return element on top of heap but don't remove it.
      *
      * @return the element at top of heap
-     * @throws NoSuchElementException if <code>isEmpty() == true</code>
+     * @throws java.util.NoSuchElementException if <code>isEmpty() == true</code>
      */
     Object peek();
 
@@ -106,7 +106,7 @@ public interface PriorityQueue {
      * Return element on top of heap and remove it.
      *
      * @return the element at top of heap
-     * @throws NoSuchElementException if <code>isEmpty() == true</code>
+     * @throws java.util.NoSuchElementException if <code>isEmpty() == true</code>
      */
     Object pop();
     

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.8 2003/12/29 16:07:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.9 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -85,7 +85,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * iterators. In this case the class will function as an empty iterator.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.8 $ $Date: 2003/12/29 16:07:53 $
+ * @version $Revision: 1.9 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -297,7 +297,7 @@ public class IteratorChain implements Iterator {
      * Returns the next Object of the current Iterator
      * 
      * @return Object from the current Iterator
-     * @throws NoSuchElementException if all the Iterators are exhausted
+     * @throws java.util.NoSuchElementException if all the Iterators are exhausted
      */
     public Object next() {
         lockChain();

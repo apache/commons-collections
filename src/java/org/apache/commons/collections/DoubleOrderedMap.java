@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.11 2004/01/06 22:07:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.12 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -141,7 +141,7 @@ import java.util.Set;
  * @see org.apache.commons.collections.bidimap.DualTreeBidiMap
  * @see org.apache.commons.collections.bidimap.DualHashBidiMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.11 $ $Date: 2004/01/06 22:07:47 $
+ * @version $Revision: 1.12 $ $Date: 2004/01/08 22:26:07 $
  * 
  * @author Marc Johnson
  */
@@ -535,7 +535,7 @@ public final class DoubleOrderedMap extends AbstractMap {
      *         value if o1 > o2
      */
     private static int compare(final Comparable o1, final Comparable o2) {
-        return ((Comparable) o1).compareTo(o2);
+        return o1.compareTo(o2);
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedMapIterator.java,v 1.1 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/OrderedMapIterator.java,v 1.2 2004/01/08 22:26:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,7 +63,7 @@ package org.apache.commons.collections;
  * This iterator allows both forward and reverse iteration through the map.
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/08 22:26:07 $
  *
  * @author Stephen Colebourne
  */
@@ -80,7 +80,7 @@ public interface OrderedMapIterator extends MapIterator, OrderedIterator {
      * Gets the previous <em>key</em> from the <code>Map</code>.
      *
      * @return the previous key in the iteration
-     * @throws NoSuchElementException if the iteration is finished
+     * @throws java.util.NoSuchElementException if the iteration is finished
      */
     Object previous();
 
