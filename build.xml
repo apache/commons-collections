@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.25 2002/03/28 06:50:15 morgand Exp $ -->
+<!-- $Id: build.xml,v 1.26 2002/03/28 15:45:03 morgand Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -318,7 +318,11 @@
 
       <cvs dest="${workdir}" cvsRoot="${cvs.root}" 
           package="jakarta-commons" tag="${cvs.tag}"/>
-      <copy file="../LICENSE" toDir="${workdir}/jakarta-commons"/>
+      <move toDir="${workdir}/${src.name}">
+        <fileset dir="${workdir}/jakarta-commons/collections"/>
+      </move>
+      <delete dir="${workdir}/jakarta-commons"/> 
+      <copy file="../LICENSE" toDir="${workdir}/${src.name}"/>
       
       <!-- create tar.gz -->
       <tar longfile="gnu" tarfile="${dest.src.tar}">
