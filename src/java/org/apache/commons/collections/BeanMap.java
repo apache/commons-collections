@@ -47,6 +47,9 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * @author James Strachan
  * @author Stephen Colebourne
  * @author Dimiter Dimitrov
+ * 
+ * @deprecated Identical class now available in commons-beanutils (full jar version).
+ * This version is due to be removed in collections v4.0.
  */
 public class BeanMap extends AbstractMap implements Cloneable {
 
