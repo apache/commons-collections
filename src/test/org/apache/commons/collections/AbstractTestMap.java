@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.4 2003/10/07 22:20:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.5 2003/10/07 22:35:59 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.4 $ $Date: 2003/10/07 22:20:57 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/07 22:35:59 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -468,8 +468,8 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     // test methods.  
 
     /**
-     *  Test to ensure that makeEmptyMap and makeFull returns a new non-null
-     *  map with each invocation.  
+     * Test to ensure that makeEmptyMap and makeFull returns a new non-null
+     * map with each invocation.  
      */
     public void testMakeMap() {
         Map em = makeEmptyMap();
@@ -496,7 +496,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests Map.isEmpty()
+     * Tests Map.isEmpty()
      */
     public void testMapIsEmpty() {
         resetEmpty();
@@ -511,7 +511,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests Map.size()
+     * Tests Map.size()
      */
     public void testMapSize() {
         resetEmpty();
@@ -526,12 +526,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests {@link Map#clear()}.  If the map {@link #isRemoveSupported()}
-     *  can add and remove elements}, then {@link Map#size()} and {@link
-     *  Map#isEmpty()} are used to ensure that map has no elements after a call
-     *  to clear.  If the map does not support adding and removing elements,
-     *  this method checks to ensure clear throws an
-     *  UnsupportedOperationException.
+     * Tests {@link Map#clear()}.  If the map {@link #isRemoveSupported()}
+     * can add and remove elements}, then {@link Map#size()} and
+     * {@link Map#isEmpty()} are used to ensure that map has no elements after
+     * a call to clear.  If the map does not support adding and removing
+     * elements, this method checks to ensure clear throws an
+     * UnsupportedOperationException.
      */
     public void testMapClear() {
         if (!isRemoveSupported()) {
@@ -556,9 +556,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Tests Map.containsKey(Object) by verifying it returns false for all
-     *  sample keys on a map created using an empty map and returns true for
-     *  all sample keys returned on a full map. 
+     * Tests Map.containsKey(Object) by verifying it returns false for all
+     * sample keys on a map created using an empty map and returns true for
+     * all sample keys returned on a full map. 
      */
     public void testMapContainsKey() {
         Object[] keys = getSampleKeys();
@@ -579,9 +579,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests Map.containsValue(Object) by verifying it returns false for all
-     *  sample values on an empty map and returns true for all sample values on
-     *  a full map.
+     * Tests Map.containsValue(Object) by verifying it returns false for all
+     * sample values on an empty map and returns true for all sample values on
+     * a full map.
      */
     public void testMapContainsValue() {
         Object[] values = getSampleValues();
@@ -603,7 +603,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Tests Map.equals(Object)
+     * Tests Map.equals(Object)
      */
     public void testMapEquals() {
         resetEmpty();
@@ -631,7 +631,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Tests Map.get(Object)
+     * Tests Map.get(Object)
      */
     public void testMapGet() {
         resetEmpty();
@@ -653,7 +653,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests Map.hashCode()
+     * Tests Map.hashCode()
      */
     public void testMapHashCode() {
         resetEmpty();
@@ -666,13 +666,13 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests Map.toString().  Since the format of the string returned by the
-     *  toString() method is not defined in the Map interface, there is no
-     *  common way to test the results of the toString() method.  Thereforce,
-     *  it is encouraged that Map implementations override this test with one
-     *  that checks the format matches any format defined in its API.  This
-     *  default implementation just verifies that the toString() method does
-     *  not return null.
+     * Tests Map.toString().  Since the format of the string returned by the
+     * toString() method is not defined in the Map interface, there is no
+     * common way to test the results of the toString() method.  Thereforce,
+     * it is encouraged that Map implementations override this test with one
+     * that checks the format matches any format defined in its API.  This
+     * default implementation just verifies that the toString() method does
+     * not return null.
      */
     public void testMapToString() {
         resetEmpty();
@@ -708,7 +708,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         }
     }
 
-        /**
+    /**
      * Compare the current serialized form of the Map
      * against the canonical version in CVS.
      */
@@ -730,7 +730,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests Map.put(Object, Object)
+     * Tests Map.put(Object, Object)
      */
     public void testMapPut() {
         resetEmpty();
@@ -768,9 +768,22 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                                    !map.containsValue(values[i]));
                     }
                 }
+            } else {
+                try {
+                    map.put(keys[0], newValues[0]);
+                    fail("Expected UnsupportedOperationException on put (change)");
+                } catch (UnsupportedOperationException ex) {}
             }
             
         } else if (isPutChangeSupported()) {
+            resetEmpty();
+            try {
+                map.put(keys[0], values[0]);
+                fail("Expected UnsupportedOperationException or IllegalArgumentException on put (add) when fixed size");
+            } catch (IllegalArgumentException ex) {
+            } catch (UnsupportedOperationException ex) {
+            }
+            
             resetFull();
             int i = 0;
             for (Iterator it = map.keySet().iterator(); it.hasNext() && i < newValues.length; i++) {
@@ -792,14 +805,29 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                         !map.containsValue(values[i]));
                 }
             }
+        } else {
+            try {
+                map.put(keys[0], values[0]);
+                fail("Expected UnsupportedOperationException on put (add)");
+            } catch (UnsupportedOperationException ex) {}
         }
     }
 
     /**
-     *  Tests Map.putAll(Collection)
+     * Tests Map.putAll(map)
      */
     public void testMapPutAll() {
-        if (!isPutAddSupported()) return;
+        if (!isPutAddSupported()) {
+            if (!isPutChangeSupported()) {
+                Map temp = makeFullMap();
+                resetEmpty();
+                try {
+                    map.putAll(temp);
+                    fail("Expected UnsupportedOperationException on putAll");
+                } catch (UnsupportedOperationException ex) {}
+            }
+            return;
+        }
 
         resetEmpty();
 
@@ -824,7 +852,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
     /**
-     *  Tests Map.remove(Object)
+     * Tests Map.remove(Object)
      */
     public void testMapRemove() {
         if (!isRemoveSupported()) {
@@ -1013,12 +1041,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Utility methods to create an array of Map.Entry objects
-     *  out of the given key and value arrays.<P>
+     * Utility methods to create an array of Map.Entry objects
+     * out of the given key and value arrays.<P>
      *
-     *  @param keys    the array of keys
-     *  @param values  the array of values
-     *  @return an array of Map.Entry of those keys to those values
+     * @param keys    the array of keys
+     * @param values  the array of values
+     * @return an array of Map.Entry of those keys to those values
      */
     private Map.Entry[] makeEntryArray(Object[] keys, Object[] values) {
         Map.Entry[] result = new Map.Entry[keys.length];
@@ -1032,12 +1060,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Bulk test {@link Map#entrySet()}.  This method runs through all of
-     *  the tests in {@link TestSet}.  
-     *  After modification operations, {@link #verify()} is invoked to ensure
-     *  that the map and the other collection views are still valid.
+     * Bulk test {@link Map#entrySet()}.  This method runs through all of
+     * the tests in {@link TestSet}.  
+     * After modification operations, {@link #verify()} is invoked to ensure
+     * that the map and the other collection views are still valid.
      *
-     *  @return a {@link TestSet} instance for testing the map's entry set
+     * @return a {@link TestSet} instance for testing the map's entry set
      */
     public BulkTest bulkTestMapEntrySet() {
         return new TestMapEntrySet();
@@ -1100,12 +1128,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Bulk test {@link Map#keySet()}.  This method runs through all of
-     *  the tests in {@link TestSet}.  
-     *  After modification operations, {@link #verify()} is invoked to ensure
-     *  that the map and the other collection views are still valid.
+     * Bulk test {@link Map#keySet()}.  This method runs through all of
+     * the tests in {@link TestSet}.  
+     * After modification operations, {@link #verify()} is invoked to ensure
+     * that the map and the other collection views are still valid.
      *
-     *  @return a {@link TestSet} instance for testing the map's key set
+     * @return a {@link TestSet} instance for testing the map's key set
      */
     public BulkTest bulkTestMapKeySet() {
         return new TestMapKeySet();
@@ -1159,12 +1187,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Bulk test {@link Map#values()}.  This method runs through all of
-     *  the tests in {@link TestCollection}.  
-     *  After modification operations, {@link #verify()} is invoked to ensure
-     *  that the map and the other collection views are still valid.
+     * Bulk test {@link Map#values()}.  This method runs through all of
+     * the tests in {@link TestCollection}.  
+     * After modification operations, {@link #verify()} is invoked to ensure
+     * that the map and the other collection views are still valid.
      *
-     *  @return a {@link TestCollection} instance for testing the map's 
+     * @return a {@link TestCollection} instance for testing the map's 
      *    values collection
      */
     public BulkTest bulkTestMapValues() {
@@ -1240,8 +1268,8 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Resets the {@link #map}, {@link #entrySet}, {@link #keySet},
-     *  {@link #values} and {@link #confirmed} fields to empty.
+     * Resets the {@link #map}, {@link #entrySet}, {@link #keySet},
+     * {@link #values} and {@link #confirmed} fields to empty.
      */
     protected void resetEmpty() {
         this.map = makeEmptyMap();
@@ -1251,8 +1279,8 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Resets the {@link #map}, {@link #entrySet}, {@link #keySet},
-     *  {@link #values} and {@link #confirmed} fields to full.
+     * Resets the {@link #map}, {@link #entrySet}, {@link #keySet},
+     * {@link #values} and {@link #confirmed} fields to full.
      */
     protected void resetFull() {
         this.map = makeFullMap();
@@ -1267,7 +1295,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Resets the collection view fields.
+     * Resets the collection view fields.
      */
     private void views() {
         this.keySet = map.keySet();
@@ -1277,14 +1305,14 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Verifies that {@link #map} is still equal to {@link #confirmed}.
-     *  This method checks that the map is equal to the HashMap, 
-     *  <I>and</I> that the map's collection views are still equal to
-     *  the HashMap's collection views.  An <Code>equals</Code> test
-     *  is done on the maps and their collection views; their size and
-     *  <Code>isEmpty</Code> results are compared; their hashCodes are
-     *  compared; and <Code>containsAll</Code> tests are run on the 
-     *  collection views.
+     * Verifies that {@link #map} is still equal to {@link #confirmed}.
+     * This method checks that the map is equal to the HashMap, 
+     * <I>and</I> that the map's collection views are still equal to
+     * the HashMap's collection views.  An <Code>equals</Code> test
+     * is done on the maps and their collection views; their size and
+     * <Code>isEmpty</Code> results are compared; their hashCodes are
+     * compared; and <Code>containsAll</Code> tests are run on the 
+     * collection views.
      */
     protected void verify() {
         verifyMap();
@@ -1365,7 +1393,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
 
     /**
-     *  Erases any leftover instance variables by setting them to null.
+     * Erases any leftover instance variables by setting them to null.
      */
     protected void tearDown() throws Exception {
         map = null;
