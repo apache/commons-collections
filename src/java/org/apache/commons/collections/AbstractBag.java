@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractBag.java,v 1.2 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractBag.java,v 1.3 2002/02/22 04:39:53 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/22 04:39:53 $
  *
  * ====================================================================
  *
@@ -63,6 +63,7 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
@@ -73,8 +74,12 @@ import java.util.Set;
 /**
  * This class provides a skeletal implementation of the {@link Bag}
  * interface to minimize the effort required for target implementations.
+ * Subclasses need only to call {@link #setMap(Map)} in their constructor 
+ * specifying a map instance that will be used to store the contents of 
+ * the bag. 
  *
  * @author Chuck Burdick
+ * @author <a href="michael@iammichael.org">Michael Smith</a>
  **/
 public abstract class AbstractBag implements Bag {
    private Map _map = null;
@@ -91,7 +96,7 @@ public abstract class AbstractBag implements Bag {
          int count = (i + getCount(o));
          _map.put(o, new Integer(count));
          _total += i;
-         return (getCount(o) == i);
+         return (count == i);
       } else {
          return false;
       }
@@ -139,13 +144,9 @@ public abstract class AbstractBag implements Bag {
    }
 
    public boolean equals(Object o) {
-      boolean result = false;
-      if (o instanceof AbstractBag) {
-         result = _map.equals(((AbstractBag)o).getMap());
-      } else if (o instanceof Map) {
-         result = _map.equals((Map)o);
-      }
-      return result;
+      return (o == this || 
+              (o != null && o.getClass().equals(this.getClass()) &&
+               ((AbstractBag)o)._map.equals(this._map)));
    }
 
    public int hashCode() {
@@ -203,12 +204,15 @@ public abstract class AbstractBag implements Bag {
       _mods++;
       boolean result = false;
       int count = getCount(o);
-      if (count > i) {
+      if (i <= 0) {
+         result = false;
+      } else if (count > i) {
          _map.put(o, new Integer(count - i));
          result = true;
          _total -= i;
-      } else {
-         result = uniqueSet().remove(o);
+      } else { // count > 0 && count <= i  
+         // need to remove all
+         result = (_map.remove(o) != null);
          _total -= count;
       }
       return result;
@@ -274,7 +278,7 @@ public abstract class AbstractBag implements Bag {
    }
 
    public Set uniqueSet() {
-      return _map.keySet();
+      return Collections.unmodifiableSet(_map.keySet());
    }
 
    public int size() {
@@ -316,7 +320,7 @@ public abstract class AbstractBag implements Bag {
       Iterator i = uniqueSet().iterator();
       while (i.hasNext()) {
          Object current = i.next();
-         for (int index = 0; index < getCount(current); index++) {
+         for (int index = getCount(current); index > 0; index--) {
             result.add(current);
          }
       }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.2 2002/02/10 08:07:42 jstrachan Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/10 08:07:42 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Bag.java,v 1.3 2002/02/22 04:39:53 mas Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/22 04:39:53 $
  *
  * ====================================================================
  *
@@ -113,7 +113,7 @@ public interface Bag extends Collection {
 
    /**
     * Remove the given number of occurrences from the bag. If the bag
-    * contains less than <code>i</code> occurrences, the item will be
+    * contains <code>i</code> occurrences or less, the item will be
     * removed from the {@link #uniqueSet}.
     * @see #getCount
     * @see #remove(Object)
