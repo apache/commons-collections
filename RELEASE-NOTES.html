@@ -18,7 +18,8 @@
 <center><h2>RELEASE NOTES: COLLECTIONS 3.1</h2></center>
 
 <p>
-This release focusses on bug fixes and minor enhancements.
+This release adds a few new classes and fixes a number of bugs.
+This release is binary compatible with release 2.1.1.
 No deprecations have occurred.
 
 <hr />
@@ -41,6 +42,7 @@ No deprecations have occurred.
 <li>Empty*Iterator - Iterators over empty collections</li>
 <li>TransformedPredicate - A predicate where the input object is transformed [26946]</li>
 <li>PredicateDecorator - An interface to provide a uniform interface to the decorated predicates</li>
+<li>AbstractSerializable*Decorator - Abstract classes for decorators that are Serializable</li>
 </ul>
 
 <center><h3>ENHANCEMENTS</h3></center>
@@ -66,15 +68,20 @@ No deprecations have occurred.
 <h4>Made Serializable</h4>
 <ul>
 <li>Fast3Map [27946]</li>
-<li>FixedSizeMap/SortedMap [18815]</li>
-<li>LazyMap/SortedMap [18815]</li>
-<li>ReferenceMap [18815]</li>
-<li>ListOrderedMap [18815]</li>
-<li>PredicatedMap/SortedMap [18815]</li>
-<li>TransformedMap/SortedMap [18815]</li>
-<li>TypedMap/SortedMap [18815]</li>
-<li>UnmodifiableMap/SortedMap/OrderedMap [18815]</li>
+<li>ReferenceMap</li>
+<li>UnboundedFifoBuffer</li>
+<li>BoundedFifoBuffer</li>
+<li>CircularFifoBuffer</li>
 <li>TiedMapEntry</li>
+<li>FixedSize* [18815]</li>
+<li>Predicated* [18815]</li>
+<li>Synchronized* [18815]</li>
+<li>Transformed* [18815]</li>
+<li>Typed* [18815]</li>
+<li>Unmodifiable* [18815]</li>
+<li>Lazy* [18815]</li>
+<li>ListOrdered* [18815]</li>
+<li>SetUniqueList [18815]</li>
 </ul>
 
 <center><h3>BUG FIXES</h3></center>
