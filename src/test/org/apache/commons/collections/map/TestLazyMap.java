@@ -29,11 +29,14 @@ import org.apache.commons.collections.FactoryUtils;
  * {@link LazyMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/07 23:05:37 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/09 09:39:16 $
  * 
  * @author Phil Steitz
  */
 public class TestLazyMap extends AbstractTestMap {
+    
+    protected static final Factory oneFactory = FactoryUtils.constantFactory("One");
+    protected static final Factory nullFactory = FactoryUtils.nullFactory();
     
     public TestLazyMap(String testName) {
         super(testName);
@@ -47,12 +50,8 @@ public class TestLazyMap extends AbstractTestMap {
         String[] testCaseName = { TestLazyMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
- //-------------------------------------------------------------------
-    
-    protected Factory oneFactory = FactoryUtils.constantFactory("One");
-    protected Factory nullFactory = FactoryUtils.nullFactory();
-    
+
+    //-----------------------------------------------------------------------    
     protected Map decorateMap(Map map, Factory factory) {
         return LazyMap.decorate(map, factory);
     }
@@ -61,12 +60,11 @@ public class TestLazyMap extends AbstractTestMap {
         return decorateMap(new HashMap(), nullFactory);
     }
     
-//--------------------------------------------------------------------   
-    
     protected Map makeTestMap(Factory factory) {
         return decorateMap(new HashMap(), factory);
     }
-    
+
+    //-----------------------------------------------------------------------    
     public void testMapGet() {
         Map map = makeTestMap(oneFactory);
         assertEquals(0, map.size());
