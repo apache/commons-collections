@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.4 2003/02/19 20:33:11 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/02/19 20:33:11 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.5 2003/04/26 15:12:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -65,8 +62,11 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import junit.framework.Test;
+
 /**
- *  Test cases for BoundedFifoBuffer.
+ * Test cases for BoundedFifoBuffer.
+ * 
+ * @author Paul Jack
  */
 public class TestBoundedFifoBuffer extends TestCollection {
 
@@ -87,8 +87,6 @@ public class TestBoundedFifoBuffer extends TestCollection {
         return new BoundedFifoBuffer(100);
     }
 
-
-
     /**
      *  Returns an empty ArrayList.
      *
@@ -97,7 +95,6 @@ public class TestBoundedFifoBuffer extends TestCollection {
     public Collection makeConfirmedCollection() {
         return new ArrayList();
     }
-
 
     /**
      *  Returns a full ArrayList.
@@ -110,7 +107,6 @@ public class TestBoundedFifoBuffer extends TestCollection {
         return c;
     }
 
-
     /**
      *  Overridden because BoundedFifoBuffer doesn't support null elements.
      *
@@ -120,13 +116,11 @@ public class TestBoundedFifoBuffer extends TestCollection {
         return getFullNonNullElements();
     }
 
-
     /**
      *  Overridden, because BoundedFifoBuffer's iterators aren't fail-fast.
      */
     public void testCollectionIteratorFailFast() {
     }
-
 
     /**
      *  Runs through the regular verifications, but also verifies that 
@@ -185,6 +179,18 @@ public class TestBoundedFifoBuffer extends TestCollection {
         try {
             new BoundedFifoBuffer(-20);
         } catch (IllegalArgumentException ex) {
+            return;
+        }
+        fail();
+    }
+
+    /**
+     * Tests that the constructor correctly throws an exception.
+     */
+    public void testConstructorException3() {
+        try {
+            new BoundedFifoBuffer(null);
+        } catch (NullPointerException ex) {
             return;
         }
         fail();
