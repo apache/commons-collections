@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.10 2003/04/26 10:25:35 scolebourne Exp $
- * $Revision: 1.10 $
- * $Date: 2003/04/26 10:25:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCollection.java,v 1.11 2003/05/09 18:34:19 scolebourne Exp $
+ * $Revision: 1.11 $
+ * $Date: 2003/05/09 18:34:19 $
  *
  * ====================================================================
  *
@@ -70,6 +70,7 @@ import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 
@@ -156,7 +157,7 @@ import java.util.NoSuchElementException;
  * @author Paul Jack
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author Neil O'Toole
- * @version $Id: TestCollection.java,v 1.10 2003/04/26 10:25:35 scolebourne Exp $
+ * @version $Id: TestCollection.java,v 1.11 2003/05/09 18:34:19 scolebourne Exp $
  */
 public abstract class TestCollection extends TestObject {
 
@@ -1050,6 +1051,9 @@ public abstract class TestCollection extends TestObject {
         if (classes.size() > 1) return;
         
         Class cl = (Class)classes.iterator().next();
+        if (Map.Entry.class.isAssignableFrom(cl)) {  // check needed for protective cases like Predicated/Unmod map entrySet
+            cl = Map.Entry.class;
+        }
         a = (Object[])Array.newInstance(cl, 0);
         array = collection.toArray(a);
         assertEquals("toArray(Object[]) should return correct array type",
