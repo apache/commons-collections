@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.12 2003/09/14 03:30:23 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestLazyMap.java,v 1.1 2003/09/14 03:30:23 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,58 +58,71 @@
 package org.apache.commons.collections.decorators;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.commons.collections.TestMap;
+import org.apache.commons.collections.Factory;
+import org.apache.commons.collections.FactoryUtils;
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestMap} for exercising the 
+ * {@link LazyMap} implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2003/09/14 03:30:23 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/14 03:30:23 $
  * 
- * @author Stephen Colebourne
+ * @author Phil Steitz
  */
-public class TestAll extends TestCase {
+public class TestLazyMap extends TestMap {
     
-    public TestAll(String testName) {
+    public TestLazyMap(String testName) {
         super(testName);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestOrderedSet.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestPredicatedCollection.suite());
-        suite.addTest(TestPredicatedBuffer.suite());
-        suite.addTest(TestPredicatedList.suite());
-        suite.addTest(TestPredicatedSet.suite());
-        suite.addTest(TestPredicatedMap.suite());
-        suite.addTest(TestPredicatedSortedMap.suite());
-        suite.addTest(TestLazyMap.suite());
-        suite.addTest(TestLazySortedMap.suite());
-        
-        return suite;
+        return new TestSuite(TestLazyMap.class);
     }
+    
+    public static void main(String args[]) {
+        String[] testCaseName = { TestLazyMap.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+    
+ //-------------------------------------------------------------------
+    
+    protected Factory oneFactory = FactoryUtils.constantFactory("One");
+    protected Factory nullFactory = FactoryUtils.nullFactory();
+    
+    protected Map decorateMap(Map map, Factory factory) {
+        return LazyMap.decorate(map, factory);
+    }
+    
+    public Map makeEmptyMap() {
+        return decorateMap(new HashMap(), nullFactory);
+    }
+    
+//--------------------------------------------------------------------   
+    
+    protected Map makeTestMap(Factory factory) {
+        return decorateMap(new HashMap(), factory);
+    }
+    
+    public void testMapGet() {
+        Map map = makeTestMap(oneFactory);
+        assertEquals(0, map.size());
+        String s1 = (String) map.get("Five");
+        assertEquals("One", s1);
+        assertEquals(1, map.size());
+        String s2 = (String) map.get(new String(new char[] {'F','i','v','e'}));
+        assertEquals("One", s2);
+        assertEquals(1, map.size());
+        assertSame(s1, s2);
         
+        map = makeTestMap(nullFactory);
+        Object o = map.get("Five");
+        assertEquals(null,o);
+        assertEquals(1, map.size());
+        
+    }       
 }

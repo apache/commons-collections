@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.11 2003/09/13 16:12:47 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.12 2003/09/14 03:30:23 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,13 +69,14 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.collections.decorators.PredicatedMap;
+import org.apache.commons.collections.decorators.LazyMap;
 
 import junit.framework.Test;
 
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.11 $ $Date: 2003/09/13 16:12:47 $
+ * @version $Revision: 1.12 $ $Date: 2003/09/14 03:30:23 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -176,20 +177,36 @@ public class TestMapUtils extends BulkTest {
     }
 
     public void testLazyMapFactory() {
-        Map map = MapUtils.lazyMap(new HashMap(), new Factory() {
-            public Object create() {
-                return new Integer(5);
-            }
-        });
-
-        assertEquals(0, map.size());
-        Integer i1 = (Integer) map.get("Five");
-        assertEquals(new Integer(5), i1);
-        assertEquals(1, map.size());
-        Integer i2 = (Integer) map.get(new String(new char[] {'F','i','v','e'}));
-        assertEquals(new Integer(5), i2);
-        assertEquals(1, map.size());
-        assertSame(i1, i2);
+        Factory factory = FactoryUtils.constantFactory(new Integer(5));
+        Map map = MapUtils.lazyMap(new HashMap(), factory);       
+        assertTrue(map instanceof LazyMap);        
+        try {
+            map = MapUtils.lazyMap(new HashMap(), (Factory) null);
+            fail("Expecting IllegalArgumentException for null factory");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        try {
+            map = MapUtils.lazyMap(null, factory);
+            fail("Expecting IllegalArgumentException for null map");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        Transformer transformer = TransformerUtils.asTransformer(factory);
+        map = MapUtils.lazyMap(new HashMap(), transformer);       
+        assertTrue(map instanceof LazyMap);  
+         try {
+            map = MapUtils.lazyMap(new HashMap(), (Transformer) null);
+            fail("Expecting IllegalArgumentException for null transformer");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        try {
+            map = MapUtils.lazyMap(null, transformer);
+            fail("Expecting IllegalArgumentException for null map");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }              
     }
 
     public void testLazyMapTransformer() {
