@@ -24,11 +24,15 @@ import org.apache.commons.collections.Predicate;
  * Decorates another <code>Collection</code> to validate that additions
  * match a specified predicate.
  * <p>
- * If an object cannot be added to the collection, an IllegalArgumentException
- * is thrown.
+ * This collection exists to provide validation for the decorated collection.
+ * It is normally created to decorate an empty collection.
+ * If an object cannot be added to the collection, an IllegalArgumentException is thrown.
+ * <p>
+ * One usage would be to ensure that no null entries are added to the collection.
+ * <pre>Collection coll = PredicatedCollection.decorate(new ArrayList(), NotNullPredicate.INSTANCE);</pre>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/15 12:39:13 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/21 21:38:40 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

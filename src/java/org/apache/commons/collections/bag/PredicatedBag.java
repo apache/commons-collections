@@ -25,11 +25,15 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * Decorates another <code>Bag</code> to validate that additions
  * match a specified predicate.
  * <p>
- * If an object cannot be added to the list, an IllegalArgumentException
- * is thrown.
+ * This bag exists to provide validation for the decorated bag.
+ * It is normally created to decorate an empty bag.
+ * If an object cannot be added to the bag, an IllegalArgumentException is thrown.
+ * <p>
+ * One usage would be to ensure that no null entries are added to the bag.
+ * <pre>Bag bag = PredicatedBag.decorate(new HashBag(), NotNullPredicate.INSTANCE);</pre>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/05/15 12:27:04 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/21 21:38:40 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

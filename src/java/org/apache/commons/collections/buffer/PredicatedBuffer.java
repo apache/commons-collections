@@ -23,11 +23,15 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * Decorates another <code>Buffer</code> to validate that additions
  * match a specified predicate.
  * <p>
- * If an object cannot be added to the collection, an IllegalArgumentException
- * is thrown.
+ * This buffer exists to provide validation for the decorated buffer.
+ * It is normally created to decorate an empty buffer.
+ * If an object cannot be added to the buffer, an IllegalArgumentException is thrown.
+ * <p>
+ * One usage would be to ensure that no null entries are added to the buffer.
+ * <pre>Buffer buffer = PredicatedBuffer.decorate(new UnboundedFifoBuffer(), NotNullPredicate.INSTANCE);</pre>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/15 12:33:23 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/21 21:38:48 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

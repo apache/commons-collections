@@ -28,10 +28,15 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  * Decorates another <code>List</code> to validate that all additions
  * match a specified predicate.
  * <p>
+ * This list exists to provide validation for the decorated list.
+ * It is normally created to decorate an empty list.
  * If an object cannot be added to the list, an IllegalArgumentException is thrown.
+ * <p>
+ * One usage would be to ensure that no null entries are added to the list.
+ * <pre>List list = PredicatedList.decorate(new ArrayList(), NotNullPredicate.INSTANCE);</pre>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:12:26 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/21 21:38:40 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

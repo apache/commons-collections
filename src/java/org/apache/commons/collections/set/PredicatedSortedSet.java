@@ -24,10 +24,15 @@ import org.apache.commons.collections.Predicate;
  * Decorates another <code>SortedSet</code> to validate that all additions
  * match a specified predicate.
  * <p>
+ * This set exists to provide validation for the decorated set.
+ * It is normally created to decorate an empty set.
  * If an object cannot be added to the set, an IllegalArgumentException is thrown.
+ * <p>
+ * One usage would be to ensure that no null entries are added to the set.
+ * <pre>SortedSet set = PredicatedSortedSet.decorate(new TreeSet(), NotNullPredicate.INSTANCE);</pre>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:14:27 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/21 21:38:42 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

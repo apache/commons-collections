@@ -24,13 +24,17 @@ import org.apache.commons.collections.Predicate;
  * Decorates another <code>SortedMap </code> to validate that additions
  * match a specified predicate.
  * <p>
- * If an object cannot be added to the map, an IllegalArgumentException
- * is thrown.
+ * This map exists to provide validation for the decorated map.
+ * It is normally created to decorate an empty map.
+ * If an object cannot be added to the map, an IllegalArgumentException is thrown.
+ * <p>
+ * One usage would be to ensure that no null keys are added to the map.
+ * <pre>SortedMap map = PredicatedSortedSet.decorate(new TreeMap(), NotNullPredicate.INSTANCE, null);</pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/09 10:36:01 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/21 21:38:49 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
