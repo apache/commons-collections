@@ -1,8 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.4 2003/01/09 13:40:10 rwaldhoff Exp $
- * $Revision: 1.4 $
- * $Date: 2003/01/09 13:40:10 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.5 2003/01/10 18:47:15 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -64,23 +61,60 @@ package org.apache.commons.collections.primitives;
 import org.apache.commons.collections.primitives.adapters.IntListIterator;
 
 /**
- * An ordered collection (a {@link java.util.List}) of int values.
+ * An ordered collection (a list) of <code>int</code> values.
  *
- * @version $Revision: 1.4 $ $Date: 2003/01/09 13:40:10 $
+ * @see org.apache.commons.collections.primitives.adapters.IntListList
+ * @see org.apache.commons.collections.primitives.adapters.ListIntList
+ *
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.5 $ $Date: 2003/01/10 18:47:15 $
+ * 
  * @author Rodney Waldhoff 
  */
 public interface IntList extends IntCollection {
     /** 
      * Inserts the specified element at the specified position 
-     * within me (optional operation). 
+     * within me (optional operation). Shifts the element currently 
+     * at that position (if any) and any subsequent elements to the 
+     * right, increasing their indices.
+     * 
+     * @param index the index at which to insert the element
+     * @param element the value to insert
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IllegalArgumentException is some aspect of the specified element 
+     *         prevents it from being added to me
+     * @throws IndexOutOfBoundsException if the specified index is out of range
      */
     void add(int index, int element);
           
+    /** 
+     * Inserts all of the elements in the specified collection into me,
+     * at the specified position (optional operation).  Shifts the 
+     * element currently at that position (if any) and any subsequent 
+     * elements to the right, increasing their indices.  The new elements 
+     * will appear in the order that they are returned by the given 
+     * collection's {@link IntCollection#iterator iterator}.
+     * 
+     * @param index the index at which to insert the first element from 
+     *        the specified collection
+     * @param collection the {@link IntCollection} of elements to add 
+     * @return <code>true</code> iff I changed as a result of this call
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IndexOutOfBoundsException if the specified index is out of range
+     */
     boolean addAll(int index, IntCollection collection);
     
     /** 
      * Returns the element at the specified position within 
      * me. 
+     * 
+     * @param index the index of the element to return
+     * @return the value of the element at the specified position
+     * @throws IndexOutOfBoundsException if the specified index is out of range
      */
     int get(int index);
     
@@ -88,36 +122,58 @@ public interface IntList extends IntCollection {
      * Returns the index of the first occurrence 
      * of the specified element within me, 
      * or <code>-1</code> if I do not contain 
-     * the this element. 
+     * the element. 
+     * 
+     * @param element the element to search for
+     * @return the smallest index of an element matching the specified value,
+     *         or <code>-1</code> if no such matching element can be found 
      */
     int indexOf(int element);
      
     /** 
      * Returns the index of the last occurrence 
      * of the specified element within me, 
-     * or -1 if I do not contain this element. 
+     * or -1 if I do not contain the element. 
+     * 
+     * @param element the element to search for
+     * @return the largest index of an element matching the specified value,
+     *         or <code>-1</code> if no such matching element can be found 
      */
     int lastIndexOf(int element);
     
     /** 
-     * Returns a list iterator over all my elements.
+     * Returns a {@link IntListIterator list iterator} over all 
+     * my elements in the appropriate sequence.
      */
     IntListIterator listIterator();
     
     /** 
-     * Returns a list iterator over my elements,
+     * Returns a {@link IntListIterator list iterator}
+     * over my elements, in the appropriate sequence, 
      * starting at the specified position. The 
      * specified index indicates the first element 
      * that would be returned by an initial call 
      * to the next method. An initial call to the 
      * previous method would return the element 
      * with the specified index minus one.
+     * 
+     * @throws IndexOutOfBoundsException if the specified index is out of range
      */
     IntListIterator listIterator(int index);
     
     /** 
      * Removes the element at the specified position in 
-     * me (optional operation). 
+     * (optional operation).  Any subsequent elements 
+     * are shifted to the left, subtracting one from their 
+     * indices.  Returns the element that was removed from
+     * the list.
+     * 
+     * @param index the index of the element to remove
+     * @return the value of the element that was removed
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IndexOutOfBoundsException if the specified index is out of range
      */
     int removeElementAt(int index);
    
@@ -125,13 +181,43 @@ public interface IntList extends IntCollection {
      * Replaces the element at the specified 
      * position in me with the specified element
      * (optional operation). 
+     * 
+     * @param index the index of the element to change
+     * @param element the value to be stored at the specified position
+     * @return the value previously stored at the specified position
+     * 
+     * @throws UnsupportedOperationException when this operation is not 
+     *         supported
+     * @throws IndexOutOfBoundsException if the specified index is out of range
      */
     int set(int index, int element);
     
     /** 
      * Returns a view of the elements within me 
-     * between the specified fromIndex, inclusive, and 
-     * toIndex, exclusive. 
+     * between the specified <i>fromIndex</i>, inclusive, and 
+     * <i>toIndex</i>, exclusive.  The returned {@link IntList}
+     * is backed by me, so that any changes in 
+     * the returned list are reflected in me, and vice-versa.
+     * The returned list supports all of the optional operations
+     * that I support.
+     * <p/>
+     * Note that when <code><i>fromIndex</i> == <i>toIndex</i></code>,
+     * the returned list is empty, and when 
+     * <code><i>fromIndex</i> == 0 && <i>fromIndex</i> == {@link #size() size()}</code>
+     * the returned list is my "improper" sublist, containing all my elements.
+     * <p/>
+     * The semantics of the returned list become undefined
+     * if I am structurally modified in any way other than 
+     * via the returned list.
+     * 
+     * @param fromIndex the smallest index (inclusive) in me that appears in 
+     *        the returned list
+     * @param toIndex the largest index (exclusive) in me that appears in the 
+     *        returned list
+     * @return a view of this list from <i>fromIndex</i> (inclusive) to 
+     *         <i>toIndex</i> exclusive
+     * 
+     * @throws IndexOutOfBoundsException if either specified index is out of range
      */
     IntList subList(int fromIndex, int toIndex);
 
