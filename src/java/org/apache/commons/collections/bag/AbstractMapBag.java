@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.7 2003/12/24 23:22:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.8 2003/12/28 14:46:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/12/24 23:22:54 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/28 14:46:28 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -431,10 +431,10 @@ public abstract class AbstractMapBag implements Bag {
 
     //-----------------------------------------------------------------------
     /**
-     * Mutable integer class for storing the data
+     * Mutable integer class for storing the data.
      */
-    static class MutableInteger {
-        int value;
+    protected static class MutableInteger {
+        protected int value;
         
         MutableInteger(int value) {
             this.value = value;
