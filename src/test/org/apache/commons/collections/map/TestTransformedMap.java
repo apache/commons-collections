@@ -29,7 +29,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/09 09:43:09 $
  * 
  * @author Stephen Colebourne
  */
@@ -48,10 +48,12 @@ public class TestTransformedMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    //-----------------------------------------------------------------------
     public Map makeEmptyMap() {
         return TransformedMap.decorate(new HashMap(), TestTransformedCollection.NOOP_TRANSFORMER, TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
+    //-----------------------------------------------------------------------
     public void testTransformedMap() {
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
 
@@ -93,4 +95,19 @@ public class TestTransformedMap extends AbstractTestMap {
         assertEquals(new Integer(88), entry.getValue());
         assertEquals(new Integer(88), map.get(entry.getKey()));
     }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/TransformedMap.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/TransformedMap.fullCollection.version3.1.obj");
+//    }
 }

@@ -16,6 +16,8 @@
 package org.apache.commons.collections.map;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -24,17 +26,25 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.PredicateUtils;
 
 /**
  * Extension of {@link TestPredicatedMap} for exercising the 
  * {@link PredicatedSortedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/09 09:43:09 $
  * 
  * @author Phil Steitz
  */
-public class TestPredicatedSortedMap extends TestPredicatedMap{
+public class TestPredicatedSortedMap extends AbstractTestSortedMap{
+    
+    protected static final Predicate truePredicate = PredicateUtils.truePredicate();
+    protected static final Predicate testPredicate = new Predicate() {
+        public boolean evaluate(Object o) {
+            return (o instanceof String);
+        }
+    };
     
     public TestPredicatedSortedMap(String testName) {
         super(testName);
@@ -48,9 +58,8 @@ public class TestPredicatedSortedMap extends TestPredicatedMap{
         String[] testCaseName = { TestPredicatedSortedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
- //-------------------------------------------------------------------    
-    
+
+    //-----------------------------------------------------------------------
     protected SortedMap decorateMap(SortedMap map, Predicate keyPredicate, 
         Predicate valuePredicate) {
         return PredicatedSortedMap.decorate(map, keyPredicate, valuePredicate);
@@ -64,16 +73,82 @@ public class TestPredicatedSortedMap extends TestPredicatedMap{
         return decorateMap(new TreeMap(), testPredicate, testPredicate);
     } 
     
-    public boolean isAllowNullKey() {
-        return false;
-    }
-    
-//--------------------------------------------------------------------   
-    
     public SortedMap makeTestSortedMap() {
         return decorateMap(new TreeMap(), testPredicate, testPredicate);
     }
     
+    public boolean isSubMapViewsSerializable() {
+        // TreeMap sub map views have a bug in deserialization.
+        return false;
+    }
+
+    public boolean isAllowNullKey() {
+        return false;
+    }
+
+    // from TestPredicatedMap
+    //-----------------------------------------------------------------------
+    public void testEntrySet() {
+        SortedMap map = makeTestSortedMap();
+        assertTrue("returned entryset should not be null",
+            map.entrySet() != null);
+        map = decorateMap(new TreeMap(), null, null);
+        map.put("oneKey", "oneValue");
+        assertTrue("returned entryset should contain one entry",
+            map.entrySet().size() == 1); 
+        map = decorateMap(map, null, null);
+    }
+    
+    public void testPut() {
+        Map map = makeTestMap();
+        try {
+            map.put("Hi", new Integer(3));
+            fail("Illegal value should raise IllegalArgument");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+
+        try {
+            map.put(new Integer(3), "Hi");
+            fail("Illegal key should raise IllegalArgument");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+
+        assertTrue(!map.containsKey(new Integer(3)));
+        assertTrue(!map.containsValue(new Integer(3)));
+
+        Map map2 = new HashMap();
+        map2.put("A", "a");
+        map2.put("B", "b");
+        map2.put("C", "c");
+        map2.put("c", new Integer(3));
+
+        try {
+            map.putAll(map2);
+            fail("Illegal value should raise IllegalArgument");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+
+        map.put("E", "e");
+        Iterator iterator = map.entrySet().iterator();
+        try {
+            Map.Entry entry = (Map.Entry)iterator.next();
+            entry.setValue(new Integer(3));
+            fail("Illegal value should raise IllegalArgument");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        
+        map.put("F", "f");
+        iterator = map.entrySet().iterator();
+        Map.Entry entry = (Map.Entry)iterator.next();
+        entry.setValue("x");
+        
+    }
+
+    //-----------------------------------------------------------------------
     public void testSortOrder() {
         SortedMap map = makeTestSortedMap();
         map.put("A",  "a");
@@ -104,5 +179,19 @@ public class TestPredicatedSortedMap extends TestPredicatedMap{
         assertTrue("natural order, so comparator should be null", 
             c == null);
     }
-        
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/PredicatedSortedMap.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/PredicatedSortedMap.fullCollection.version3.1.obj");
+//    }
 }

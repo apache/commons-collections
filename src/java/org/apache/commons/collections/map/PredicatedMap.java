@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,12 +37,17 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.8 $ $Date: 2004/04/09 09:43:09 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedMap extends AbstractMapDecorator {
+public class PredicatedMap
+        extends AbstractMapDecorator
+        implements Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 7412622456128415156L;
 
     /** The key predicate to use */
     protected final Predicate keyPredicate;
@@ -90,6 +99,32 @@ public class PredicatedMap extends AbstractMapDecorator {
         if (valuePredicate != null && valuePredicate.evaluate(value) == false) {
             throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
         }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     * @since Commons Collections 3.1
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @since Commons Collections 3.1
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------

@@ -30,11 +30,19 @@ import org.apache.commons.collections.PredicateUtils;
  * {@link PredicatedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/09 09:43:09 $
  * 
  * @author Phil Steitz
  */
 public class TestPredicatedMap extends AbstractTestMap{
+    
+    protected static final Predicate truePredicate = PredicateUtils.truePredicate();
+    protected static final Predicate testPredicate = new Predicate() {
+        public boolean evaluate(Object o) {
+            return (o instanceof String);
+        }
+    };
+    
     
     public TestPredicatedMap(String testName) {
         super(testName);
@@ -48,11 +56,8 @@ public class TestPredicatedMap extends AbstractTestMap{
         String[] testCaseName = { TestPredicatedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
- //-------------------------------------------------------------------
-    
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    
+
+    //-----------------------------------------------------------------------
     protected Map decorateMap(Map map, Predicate keyPredicate, 
         Predicate valuePredicate) {
         return PredicatedMap.decorate(map, keyPredicate, valuePredicate);
@@ -62,19 +67,11 @@ public class TestPredicatedMap extends AbstractTestMap{
         return decorateMap(new HashMap(), truePredicate, truePredicate);
     }
     
-//--------------------------------------------------------------------   
-    
-     protected Predicate testPredicate =  
-        new Predicate() {
-            public boolean evaluate(Object o) {
-                return o instanceof String;
-            }
-        };      
-    
     public Map makeTestMap() {
         return decorateMap(new HashMap(), testPredicate, testPredicate);
     }
-    
+
+    //-----------------------------------------------------------------------
     public void testEntrySet() {
         Map map = makeTestMap();
         assertTrue("returned entryset should not be null",
@@ -134,5 +131,19 @@ public class TestPredicatedMap extends AbstractTestMap{
         entry.setValue("x");
         
     }
-        
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/PredicatedMap.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/PredicatedMap.fullCollection.version3.1.obj");
+//    }
 }

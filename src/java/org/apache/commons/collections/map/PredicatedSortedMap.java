@@ -15,7 +15,12 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.SortedMap;
 
 import org.apache.commons.collections.Predicate;
@@ -28,13 +33,17 @@ import org.apache.commons.collections.Predicate;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/09 09:43:09 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class PredicatedSortedMap
-        extends PredicatedMap implements SortedMap {
+        extends PredicatedMap
+        implements SortedMap, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 3359846175935304332L;
 
     /**
      * Factory method to create a predicated (validating) sorted map.
@@ -62,6 +71,32 @@ public class PredicatedSortedMap
      */
     protected PredicatedSortedMap(SortedMap map, Predicate keyPredicate, Predicate valuePredicate) {
         super(map, keyPredicate, valuePredicate);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     * @since Commons Collections 3.1
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @since Commons Collections 3.1
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
     }
 
     /**
