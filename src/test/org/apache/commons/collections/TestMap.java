@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.13 2002/02/26 00:08:07 morgand Exp $
- * $Revision: 1.13 $
- * $Date: 2002/02/26 00:08:07 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.14 2002/02/26 18:08:58 morgand Exp $
+ * $Revision: 1.14 $
+ * $Date: 2002/02/26 18:08:58 $
  *
  * ====================================================================
  *
@@ -87,7 +87,7 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.13 2002/02/26 00:08:07 morgand Exp $
+ * @version $Id: TestMap.java,v 1.14 2002/02/26 18:08:58 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
 
@@ -929,31 +929,6 @@ public abstract class TestMap extends TestObject {
         assertEquals("Both maps are same size",map2.size(),getSampleKeys().length);
     }
 
-
-    public String getCanonicalEmptyMapName(Map map) {
-        StringBuffer retval = new StringBuffer();
-        retval.append("data/test/");
-        String mapName = map.getClass().getName();
-        mapName = mapName.substring(mapName.lastIndexOf(".")+1,mapName.length());
-        retval.append(mapName);
-        retval.append(".emptyMap.version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
-    }
-
-    public String getCanonicalFullMapName(Map map) {
-        StringBuffer retval = new StringBuffer();
-        retval.append("data/test/");
-        String mapName = map.getClass().getName();
-        mapName = mapName.substring(mapName.lastIndexOf(".")+1,mapName.length());
-        retval.append(mapName);
-        retval.append(".fullMap.version");
-        retval.append(getCompatibilityVersion());
-        retval.append(".obj");
-        return retval.toString();
-    }
-
     /**
      * Compare the current serialized form of the Map
      * against the canonical version in CVS.
@@ -964,12 +939,12 @@ public abstract class TestMap extends TestObject {
         Map map = makeEmptyMap();
         if (!(map instanceof Serializable)) return;
         
-        writeExternalFormToDisk((Serializable) map, getCanonicalEmptyMapName(map));
+        writeExternalFormToDisk((Serializable) map, getCanonicalEmptyCollectionName(map));
         */
 
         // test to make sure the canonical form has been preserved
         if (!(makeEmptyMap() instanceof Serializable)) return;
-        Map map = (Map) readExternalFormFromDisk(getCanonicalEmptyMapName(makeEmptyMap()));
+        Map map = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(makeEmptyMap()));
         assertTrue("Map is empty",map.isEmpty()  == true);
     }
 
@@ -983,12 +958,12 @@ public abstract class TestMap extends TestObject {
         Map map = makeFullMap();
         if (!(map instanceof Serializable)) return;
         
-        writeExternalFormToDisk((Serializable) map, getCanonicalFullMapName(map));
+        writeExternalFormToDisk((Serializable) map, getCanonicalFullCollectionName(map));
         */
 
         // test to make sure the canonical form has been preserved
         if (!(makeFullMap() instanceof Serializable)) return;
-        Map map = (Map) readExternalFormFromDisk(getCanonicalFullMapName(makeFullMap()));
+        Map map = (Map) readExternalFormFromDisk(getCanonicalFullCollectionName(makeFullMap()));
         assertEquals("Map is the right size",map.size(), getSampleKeys().length);
     }
 
