@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.3 2002/08/19 21:19:03 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/19 21:19:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntArrayList.java,v 1.4 2002/08/21 23:54:18 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/21 23:54:18 $
  *
  * ====================================================================
  *
@@ -74,10 +74,10 @@ import java.util.ListIterator;
 /**
  * A list of <Code>int</Code> elements.
  *
- * @version $Revision: 1.3 $ $Date: 2002/08/19 21:19:03 $
+ * @version $Revision: 1.4 $ $Date: 2002/08/21 23:54:18 $
  * @author Rodney Waldhoff 
  */
-public class IntArrayList extends AbstractIntList implements List, Serializable {
+public class IntArrayList extends AbstractIntArrayList implements Serializable {
 
     //------------------------------------------------------------ Constructors  
 

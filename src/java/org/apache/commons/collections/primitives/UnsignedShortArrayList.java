@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.3 2002/08/19 21:19:03 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/19 21:19:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedShortArrayList.java,v 1.4 2002/08/21 23:54:18 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/21 23:54:18 $
  *
  * ====================================================================
  *
@@ -76,10 +76,10 @@ import java.util.ListIterator;
  * Mutators on this class will reject any <Code>int</Code> that does not
  * express an unsigned 16-bit value.
  *
- * @version $Revision: 1.3 $ $Date: 2002/08/19 21:19:03 $
+ * @version $Revision: 1.4 $ $Date: 2002/08/21 23:54:18 $
  * @author Rodney Waldhoff 
  */
-public class UnsignedShortArrayList extends AbstractIntList implements List, Serializable {
+public class UnsignedShortArrayList extends AbstractIntArrayList implements Serializable {
 
     //------------------------------------------------------------ Constructors
     

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntList.java,v 1.1 2002/08/19 21:19:03 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/19 21:19:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntList.java,v 1.2 2002/08/21 23:54:18 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/21 23:54:18 $
  *
  * ====================================================================
  *
@@ -71,21 +71,12 @@ import java.util.ListIterator;
 /**
  * Abstract base class for lists backed by an <Code>int</Code> array.
  *
- * @version $Revision: 1.1 $ $Date: 2002/08/19 21:19:03 $
+ * @version $Revision: 1.2 $ $Date: 2002/08/21 23:54:18 $
  * @author Rodney Waldhoff 
  */
-public abstract class AbstractIntList extends AbstractList implements List, Serializable {
+public abstract class AbstractIntList extends AbstractList {
 
     //------------------------------------------------------ Abstract Accessors
-
-    /**
-     *  Returns the maximum size the list can reach before the array 
-     *  is resized.
-     *
-     *  @return the maximum size the list can reach before the array is resized
-     */
-    abstract public int capacity();
-
 
     /**
      *  Returns the number of <Code>int</Code> elements currently in this
@@ -267,20 +258,6 @@ public abstract class AbstractIntList extends AbstractList implements List, Seri
      *  Removes all <Code>int</Code> values from this list.
      */
     abstract public void clear();
-
-    /**
-     *  Ensures that the length of the internal <Code>int</Code> array is
-     *  at list the given value.
-     *
-     *  @param mincap  the minimum capcity for this list
-     */
-    abstract public void ensureCapacity(int mincap);
-
-    /**
-     *  Resizes the internal array such that {@link #capacity()} is equal
-     *  to {@link #size()}.
-     */
-    abstract public void trimToSize();
 
     //--------------------------------------------------------------- Modifiers
     
