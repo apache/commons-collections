@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedCollection.java,v 1.6 2003/11/29 18:14:20 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedCollection.java,v 1.7 2003/12/11 22:48:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,14 +60,14 @@ package org.apache.commons.collections;
 import java.util.Collection;
 
 /**
- * A BoundedCollection is a collection that is bounded in size.
+ * Defines a collection that is bounded in size.
  * <p>
  * The size of the collection can vary, but it can never exceed a preset 
  * maximum number of elements. This interface allows the querying of details
  * associated with the maximum number of elements.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/11/29 18:14:20 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/11 22:48:09 $
  * 
  * @author Herve Quiroz
  * @author Stephen Colebourne
