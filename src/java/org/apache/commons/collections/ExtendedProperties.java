@@ -168,7 +168,7 @@ import java.util.Vector;
  * @author <a href="mailto:kjohnson@transparent.com>Kent Johnson</a>
  * @author <a href="mailto:dlr@finemaltcoding.com>Daniel Rall</a>
  * @author <a href="mailto:ipriha@surfeu.fi>Ilkka Priha</a>
- * @version $Id: ExtendedProperties.java,v 1.2 2001/05/04 02:22:48 geirm Exp $
+ * @version $Id: ExtendedProperties.java,v 1.3 2001/05/10 00:40:08 geirm Exp $
  */
 public class ExtendedProperties extends Hashtable
 {
@@ -519,7 +519,6 @@ public class ExtendedProperties extends Hashtable
                     else
                     {
                         addProperty(key,value);
-                        //setProperty(key,value);
                     }                       
                 }
             }
@@ -581,7 +580,6 @@ public class ExtendedProperties extends Hashtable
      * @param String key
      * @param String value
      */
-    //public void setProperty(String key, Object token)
     public void addProperty(String key, Object token)
     {
         Object o = this.get(key);
@@ -635,7 +633,7 @@ public class ExtendedProperties extends Hashtable
                 while (tokenizer.hasMoreTokens())
                 {
                     String value = tokenizer.nextToken();
-                    
+                   
                     /*
                      * we know this is a string, so make sure it
                      * just goes in rather than risking vectorization
@@ -656,23 +654,34 @@ public class ExtendedProperties extends Hashtable
                  * in a definite order it will be possible.
                  */
 
-                /*
-                 * safety check
-                 */
-
-                if( !containsKey( key ) )
-                {
-                    keysAsListed.add(key);
-                }
-
-                /*
-                 * and the value
-                 */
-                put(key, token);
+                addPropertyDirect( key, token );
             }                
         }
     }
 
+    /**
+     *   Adds a key/value pair to the map.  This routine does
+     *   no magic morphing.  It ensures the keylist is maintained
+     *
+     *  @param key key to use for mapping
+     *  @param obj object to store
+     */
+    private void addPropertyDirect( String key, Object obj )
+    {
+        /*
+         * safety check
+         */
+        
+        if( !containsKey( key ) )
+        {
+            keysAsListed.add(key);
+        }
+        
+        /*
+         * and the value
+         */
+        put(key, obj);
+    }
 
     /**
      *  Sets a string property w/o checking for commas - used
@@ -719,12 +728,7 @@ public class ExtendedProperties extends Hashtable
         }
         else
         {
-            if( !containsKey( key ) )
-            {
-                keysAsListed.add(key);
-            }
-
-            put( key, token);
+            addPropertyDirect( key, token );
         }
     }
 
@@ -809,7 +813,6 @@ public class ExtendedProperties extends Hashtable
         for (Iterator i = c.getKeys() ; i.hasNext() ;)
         {
             String key = (String) i.next();
-            //clearProperty(key);
             setProperty( key, c.get(key) );
         }
     }
@@ -918,14 +921,12 @@ public class ExtendedProperties extends Hashtable
                 }                    
                 
                 /*
-                 * Make sure to use the setProperty() method and not
-                 * just put(). setProperty() takes care of catching
-                 * all the keys in the order they appear in a
-                 * properties files or the order they are set
-                 * dynamically.
+                 *  use addPropertyDirect() - this will plug the data as 
+                 *  is into the Map, but will also do the right thing
+                 *  re key accounting
                  */
 
-                c.setProperty(newKey, get(key));
+                c.addPropertyDirect( newKey, get(key) );
             }
         }
         

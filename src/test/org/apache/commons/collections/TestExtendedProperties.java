@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.1 2001/05/04 02:23:44 geirm Exp $
- * $Revision: 1.1 $
- * $Date: 2001/05/04 02:23:44 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.2 2001/05/10 00:40:09 geirm Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/05/10 00:40:09 $
  *
  * ====================================================================
  *
@@ -70,7 +70,7 @@ import junit.framework.TestSuite;
  *   class
  * 
  *   @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
- *   @version $Id: TestExtendedProperties.java,v 1.1 2001/05/04 02:23:44 geirm Exp $
+ *   @version $Id: TestExtendedProperties.java,v 1.2 2001/05/10 00:40:09 geirm Exp $
  */
 public class TestExtendedProperties extends TestCase
 {
@@ -119,5 +119,29 @@ public class TestExtendedProperties extends TestCase
          *  property
          */
         assert("This returns scalar", ( eprop.getString("number") instanceof String ) );
+
+        /*
+         * test comma separated string properties
+         */
+        String prop = "hey, that's a test";
+        eprop.setProperty("prop.string", prop);
+        assert("This returns vector", ( eprop.getVector("prop.string") instanceof java.util.Vector ) );
+        
+        String prop2 = "hey\\, that's a test";
+        eprop.remove("prop.string");
+        eprop.setProperty("prop.string", prop2);
+        assert("This returns array", ( eprop.getString("prop.string") instanceof java.lang.String) );
+        
+        /*
+         * test subset : we want to make sure that the EP doesn't reprocess the data 
+         *  elements when generating the subset
+         */
+
+        ExtendedProperties subEprop = eprop.subset("prop");
+
+        assert("Returns the full string",  subEprop.getString("string").equals( prop ) );
+        assert("This returns string for subset", ( subEprop.getString("string") instanceof java.lang.String) );
+        assert("This returns array for subset", ( subEprop.getVector("string") instanceof java.util.Vector) );
+        
     }
 }
