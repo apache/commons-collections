@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.6 2002/09/07 19:49:49 rwaldhoff Exp $
- * $Revision: 1.6 $
- * $Date: 2002/09/07 19:49:49 $
+ * $Id: TestCollectionUtils.java,v 1.7 2002/11/01 19:54:27 rwaldhoff Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/11/01 19:54:27 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCollectionUtils.java,v 1.6 2002/09/07 19:49:49 rwaldhoff Exp $
+ * @version $Revision: 1.7 $ $Date: 2002/11/01 19:54:27 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -117,10 +117,10 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(new Integer(2),freq.get("b"));
         assertEquals(new Integer(3),freq.get("c"));
         assertEquals(new Integer(4),freq.get("d"));
-        assertTrue(null == freq.get("e"));
+        assertNull(freq.get("e"));
 
         freq = CollectionUtils.getCardinalityMap(_b);
-        assertTrue(null == freq.get("a"));
+        assertNull(freq.get("a"));
         assertEquals(new Integer(4),freq.get("b"));
         assertEquals(new Integer(3),freq.get("c"));
         assertEquals(new Integer(2),freq.get("d"));
@@ -139,6 +139,51 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(3,CollectionUtils.cardinality("c",_b));
         assertEquals(2,CollectionUtils.cardinality("d",_b));
         assertEquals(1,CollectionUtils.cardinality("e",_b));
+    }
+    
+    public void testCardinalityOfNull() {
+        List list = new ArrayList();
+        assertEquals(0,CollectionUtils.cardinality(null,list));
+        {
+            Map freq = CollectionUtils.getCardinalityMap(list);
+            assertNull(freq.get(null));
+        }
+        list.add("A");
+        assertEquals(0,CollectionUtils.cardinality(null,list));
+        {
+            Map freq = CollectionUtils.getCardinalityMap(list);
+            assertNull(freq.get(null));
+        }
+        list.add(null);
+        assertEquals(1,CollectionUtils.cardinality(null,list));
+        {
+            Map freq = CollectionUtils.getCardinalityMap(list);
+            assertEquals(new Integer(1),freq.get(null));
+        }
+        list.add("B");
+        assertEquals(1,CollectionUtils.cardinality(null,list));
+        {
+            Map freq = CollectionUtils.getCardinalityMap(list);
+            assertEquals(new Integer(1),freq.get(null));
+        }
+        list.add(null);
+        assertEquals(2,CollectionUtils.cardinality(null,list));
+        {
+            Map freq = CollectionUtils.getCardinalityMap(list);
+            assertEquals(new Integer(2),freq.get(null));
+        }
+        list.add("B");
+        assertEquals(2,CollectionUtils.cardinality(null,list));
+        {
+            Map freq = CollectionUtils.getCardinalityMap(list);
+            assertEquals(new Integer(2),freq.get(null));
+        }
+        list.add(null);
+        assertEquals(3,CollectionUtils.cardinality(null,list));
+        {
+            Map freq = CollectionUtils.getCardinalityMap(list);
+            assertEquals(new Integer(3),freq.get(null));
+        }
     }
 
     public void testContainsAny() {
@@ -203,19 +248,19 @@ public class TestCollectionUtils extends TestCase {
     public void testIntersection() {
         Collection col = CollectionUtils.intersection(_a,_b);
         Map freq = CollectionUtils.getCardinalityMap(col);
-        assertTrue(null == freq.get("a"));
+        assertNull(freq.get("a"));
         assertEquals(new Integer(2),freq.get("b"));
         assertEquals(new Integer(3),freq.get("c"));
         assertEquals(new Integer(2),freq.get("d"));
-        assertTrue(null == freq.get("e"));
+        assertNull(freq.get("e"));
 
         Collection col2 = CollectionUtils.intersection(_b,_a);
         Map freq2 = CollectionUtils.getCardinalityMap(col2);
-        assertTrue(null == freq2.get("a"));
+        assertNull(freq2.get("a"));
         assertEquals(new Integer(2),freq2.get("b"));
         assertEquals(new Integer(3),freq2.get("c"));
         assertEquals(new Integer(2),freq2.get("d"));
-        assertTrue(null == freq2.get("e"));
+        assertNull(freq2.get("e"));
     }
 
     public void testDisjunction() {
@@ -223,7 +268,7 @@ public class TestCollectionUtils extends TestCase {
         Map freq = CollectionUtils.getCardinalityMap(col);
         assertEquals(new Integer(1),freq.get("a"));
         assertEquals(new Integer(2),freq.get("b"));
-        assertTrue(null == freq.get("c"));
+        assertNull(freq.get("c"));
         assertEquals(new Integer(2),freq.get("d"));
         assertEquals(new Integer(1),freq.get("e"));
 
@@ -231,7 +276,7 @@ public class TestCollectionUtils extends TestCase {
         Map freq2 = CollectionUtils.getCardinalityMap(col2);
         assertEquals(new Integer(1),freq2.get("a"));
         assertEquals(new Integer(2),freq2.get("b"));
-        assertTrue(null == freq2.get("c"));
+        assertNull(freq2.get("c"));
         assertEquals(new Integer(2),freq2.get("d"));
         assertEquals(new Integer(1),freq2.get("e"));
     }
@@ -254,18 +299,18 @@ public class TestCollectionUtils extends TestCase {
         Collection col = CollectionUtils.subtract(_a,_b);
         Map freq = CollectionUtils.getCardinalityMap(col);
         assertEquals(new Integer(1),freq.get("a"));
-        assertTrue(null == freq.get("b"));
-        assertTrue(null == freq.get("c"));
+        assertNull(freq.get("b"));
+        assertNull(freq.get("c"));
         assertEquals(new Integer(2),freq.get("d"));
-        assertTrue(null == freq.get("e"));
+        assertNull(freq.get("e"));
 
         Collection col2 = CollectionUtils.subtract(_b,_a);
         Map freq2 = CollectionUtils.getCardinalityMap(col2);
         assertEquals(new Integer(1),freq2.get("e"));
-        assertTrue(null == freq2.get("d"));
-        assertTrue(null == freq2.get("c"));
+        assertNull(freq2.get("d"));
+        assertNull(freq2.get("c"));
         assertEquals(new Integer(2),freq2.get("b"));
-        assertTrue(null == freq2.get("a"));
+        assertNull(freq2.get("a"));
     }
 
     public void testIsSubCollectionOfSelf() {

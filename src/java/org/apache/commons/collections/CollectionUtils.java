@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.18 2002/10/13 00:38:36 scolebourne Exp $
- * $Revision: 1.18 $
- * $Date: 2002/10/13 00:38:36 $
+ * $Id: CollectionUtils.java,v 1.19 2002/11/01 19:54:26 rwaldhoff Exp $
+ * $Revision: 1.19 $
+ * $Date: 2002/11/01 19:54:26 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -75,6 +75,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
+
 /**
  * A set of {@link Collection} related utility methods.
  *
@@ -83,7 +84,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Steve Downey
- * @version $Revision: 1.18 $ $Date: 2002/10/13 00:38:36 $
+ * @version $Revision: 1.19 $ $Date: 2002/11/01 19:54:26 $
  */
 public class CollectionUtils {
 
@@ -318,11 +319,17 @@ public class CollectionUtils {
      */
     public static int cardinality(Object obj, final Collection col) {
         int count = 0;
-        Iterator it = col.iterator();
-        while(it.hasNext()) {
-            Object elt = it.next();
-            if((null == obj && null == elt) || obj.equals(elt)) {
-                count++;
+        if(null == obj) {
+            for(Iterator it = col.iterator();it.hasNext();) {
+                if(null == it.next()) {
+                    count++;
+                }
+            }
+        } else {
+            for(Iterator it = col.iterator();it.hasNext();) {
+                if(obj.equals(it.next())) {
+                    count++;
+                }
             }
         }
         return count;
