@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestCharList.java,v 1.1 2003/04/16 18:32:40 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestCharList.java,v 1.2 2003/04/16 19:03:39 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.adapters.CharListList;
 import org.apache.commons.collections.primitives.adapters.ListCharList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/16 18:32:40 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/16 19:03:39 $
  * @author Rodney Waldhoff
  */
 public abstract class TestCharList extends TestList {
@@ -422,4 +422,12 @@ public abstract class TestCharList extends TestList {
         }
     }
 
+    public void testCharListToString() throws Exception {
+        String expected = "The quick brown fox jumped over the lazy dogs.";
+        CharList list = makeEmptyCharList();
+        for(int i=0;i<expected.length();i++) {
+            list.add(expected.charAt(i));
+        }
+        assertEquals(expected,list.toString());
+    }
 }

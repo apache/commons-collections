@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/RandomAccessCharList.java,v 1.1 2003/04/16 18:32:39 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/RandomAccessCharList.java,v 1.2 2003/04/16 19:03:39 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -74,7 +74,7 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/04/16 18:32:39 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/16 19:03:39 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -203,16 +203,8 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
     }
     
     public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("[");
-        for(CharIterator iter = iterator(); iter.hasNext();) {
-            buf.append(iter.next());
-            if(iter.hasNext()) {
-                buf.append(", ");
-            }
-        }
-        buf.append("]");
-        return buf.toString();
+        // could cache these like StringBuffer does
+        return new String(toArray());
     }
     
     // protected utilities

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListCharList.java,v 1.1 2003/04/16 18:32:39 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListCharList.java,v 1.2 2003/04/16 19:03:39 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -71,7 +71,7 @@ import org.apache.commons.collections.primitives.CharList;
  * implementation in the "obvious" way.
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.1 $ $Date: 2003/04/16 18:32:39 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/16 19:03:39 $
  * @author Rodney Waldhoff 
  */
 public class ListCharList extends AbstractListCharList implements Serializable {
@@ -107,6 +107,11 @@ public class ListCharList extends AbstractListCharList implements Serializable {
         _list = list;     
     }
     
+    public String toString() {
+        // could cache these like StringBuffer does
+        return new String(toArray());
+    }
+
     protected List getList() {
         return _list;
     }
