@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.43 2003/10/02 20:36:11 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.44 2003/10/02 23:46:54 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -6,19 +6,31 @@
 
    <!-- patternset describing test classes -->
    <patternset id="patternset-test-classes">
+      <include name="**/AbstractTest*.class"/>
+      <include name="**/BulkTest*.class"/>
       <include name="**/Test*.class"/>
    </patternset>
 
    <!-- patternset describing non test classes -->
    <patternset id="patternset-non-test-classes">
       <include name="**/*.class"/>
+      <exclude name="**/AbstractTest*.class"/>
+      <exclude name="**/BulkTest*.class"/>
       <exclude name="**/Test*.class"/>
    </patternset>
 
    <!-- patternset describing non test source files (*.java, *html, etc.) -->
    <patternset id="patternset-javadocable-sources">
       <include name="**/*"/>
+      <exclude name="**/AbstractTest*.java"/>
+      <exclude name="**/BulkTest*.java"/>
       <exclude name="**/Test*.java"/>
+   </patternset>
+
+   <!-- patternset describing test framework classes -->
+   <patternset id="patternset-testframework-classes">
+      <include name="**/AbstractTest*.class"/>
+      <include name="**/BulkTest*.class"/>
    </patternset>
 
    <!-- ######################################################### -->
@@ -71,6 +83,7 @@
       <property name="dest.doc.api" value="${dest.doc}/api"/>
       <property name="dest.jardir" value="${dest}"/>
       <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
+      <property name="dest.jardir.testframework.jar" value="${dest.jardir}/${name}-testframework.jar"/>
       <property name="dest.jardir.object-jar" value="${dest.jardir}/${name}-object.jar"/>
       <property name="dest.jardir.primitive-jar" value="${dest.jardir}/${name}-primitive.jar"/>
       
@@ -253,15 +266,18 @@
 
    <target name="dist" depends="test,dist-jar,doc,dist-tar,dist-zip" description="builds binary distribution"/>
 
-   <target name="dist-jar" depends="build">
+   <target name="dist-jar" depends="dist-jar-main"/>
+   <!-- Add testframework to above if it is to be released -->
+   
+   <target name="dist-jar-main" depends="build">
       <mkdir dir="${dest.jardir}"/>
+      
       <mkdir dir="${workdir}"/>
       <copy todir="${workdir}">
          <fileset dir="${dest.classes}">
             <patternset refid="patternset-non-test-classes"/>
          </fileset>
       </copy>
-      
       <mkdir dir="${workdir}/META-INF"/>
       <copy todir="${workdir}/META-INF" file="./LICENSE.txt"/>
       
@@ -281,14 +297,32 @@
             <include name="org/apache/commons/collections/primitives/**"/>
          </fileset>
       </jar>
-
-      <delete dir="${workdir}"/>
-      <delete dir="${dest.classes}"/>
       
+      <delete dir="${workdir}"/>
+   </target>
+         
+   <target name="dist-jar-testframework" depends="build-test">
+      <mkdir dir="${dest.jardir}"/>
+      
+      <mkdir dir="${workdir}"/>
+      <copy todir="${workdir}">
+         <fileset dir="${dest.classes}">
+            <patternset refid="patternset-testframework-classes"/>
+         </fileset>
+      </copy>
+      <mkdir dir="${workdir}/META-INF"/>
+      <copy todir="${workdir}/META-INF" file="./LICENSE.txt"/>
+      
+      <jar jarfile="${dest.jardir.testframework.jar}" manifest="${source.src}/conf/MANIFEST.MF">
+         <fileset dir="${workdir}"/>
+      </jar>
+      
+      <delete dir="${workdir}"/>
    </target>
    
    <target name="dist-tar" depends="dist-jar,doc">
 
+      <delete dir="${dest.classes}"/>
       <mkdir dir="${workdir}/${bin.name}"/>
       <copy todir="${workdir}/${bin.name}">
          <fileset dir="${dest}">         
@@ -312,6 +346,7 @@
 
    <target name="dist-zip" depends="dist-jar,doc">
 
+      <delete dir="${dest.classes}"/>
       <mkdir dir="${workdir}/${bin.name}"/>
       <copy todir="${workdir}/${bin.name}">
          <fileset dir="${dest}">         
