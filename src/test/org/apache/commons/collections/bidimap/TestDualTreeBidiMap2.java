@@ -20,6 +20,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -35,10 +39,11 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2004/06/11 23:29:07 $
+ * @version $Revision: 1.2 $ $Date: 2004/06/21 22:30:05 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
+ * @author Jonas Van Poucke
  */
 public class TestDualTreeBidiMap2 extends AbstractTestSortedBidiMap {
 
@@ -85,6 +90,25 @@ public class TestDualTreeBidiMap2 extends AbstractTestSortedBidiMap {
             assertNotNull(obj.comparator());
             assertNotNull(bidi.comparator());
             assertTrue(bidi.comparator() instanceof ReverseComparator);
+        }
+    }
+
+    public void testSortOrder() throws Exception {
+        SortedBidiMap sm = (SortedBidiMap) makeFullMap();
+
+        // Sort by the comparator used in the makeEmptyBidiMap() method
+        List newSortedKeys = Arrays.asList(getSampleKeys());
+        Collections.sort(newSortedKeys, new ReverseComparator(ComparableComparator.getInstance()));
+        newSortedKeys = Collections.unmodifiableList(newSortedKeys);
+
+        Iterator mapIter = sm.keySet().iterator();
+        Iterator expectedIter = newSortedKeys.iterator();
+        while (expectedIter.hasNext()) {
+            Object expectedKey = expectedIter.next();
+            Object mapKey = mapIter.next();
+            assertNotNull("key in sorted list may not be null", expectedKey);
+            assertNotNull("key in map may not be null", mapKey);
+            assertEquals("key from sorted list and map must be equal", expectedKey, mapKey);
         }
     }
 
