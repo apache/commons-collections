@@ -67,7 +67,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.47 $ $Date: 2004/07/17 21:23:59 $
+ * @version $Revision: 1.48 $ $Date: 2004/09/22 23:03:50 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -1073,6 +1073,7 @@ public class MapUtils {
         return out;
     }
      
+    //-----------------------------------------------------------------------
     /**
      * Protects against adding null values to a map.
      * <p>
@@ -1096,6 +1097,85 @@ public class MapUtils {
         } else {
             map.put(key, value);
         }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Puts all the keys and values from the specified array into the map.
+     * <p>
+     * This method is an alternative to the {@link java.util.Map#putAll(java.util.Map)}
+     * method and constructors. It allows you to build a map from an object array
+     * of various possible styles.
+     * <p>
+     * If the first entry in the object array implements {@link java.util.Map.Entry}
+     * or {@link KeyValue} then the key and value are added from that object.
+     * If the first entry in the object array is an object array itself, then
+     * it is assumed that index 0 in the sub-array is the key and index 1 is the value.
+     * Otherwise, the array is treated as keys and values in alternate indices.
+     * <p>
+     * For example, to create a color map:
+     * <pre>
+     * Map colorMap = MapUtils.putAll(new HashMap(), new String[][] {
+     *     {"RED", "#FF0000"},
+     *     {"GREEN", "#00FF00"},
+     *     {"BLUE", "#0000FF"}
+     * });
+     * </pre>
+     * or:
+     * <pre>
+     * Map colorMap = MapUtils.putAll(new HashMap(), new String[] {
+     *     "RED", "#FF0000",
+     *     "GREEN", "#00FF00",
+     *     "BLUE", "#0000FF"
+     * });
+     * </pre>
+     * or:
+     * <pre>
+     * Map colorMap = MapUtils.putAll(new HashMap(), new Map.Entry[] {
+     *     new DefaultMapEntry("RED", "#FF0000"),
+     *     new DefaultMapEntry("GREEN", "#00FF00"),
+     *     new DefaultMapEntry("BLUE", "#0000FF")
+     * });
+     * </pre>
+     *
+     * @param map  the map to populate, must not be null
+     * @param array  an array to populate from, null ignored
+     * @return the input map
+     * @throws NullPointerException  if map is null
+     * @throws IllegalArgumentException  if sub-array or entry matching used and an
+     *  entry is invalid
+     * @throws ClassCaseException if the array contents is mixed
+     */
+    public static Map putAll(Map map, Object[] array) {
+        map.size();  // force NPE
+        if (array == null || array.length == 0) {
+            return map;
+        }
+        Object obj = array[0];
+        if (obj instanceof Map.Entry) {
+            for (int i = 0; i < array.length; i++) {
+                Map.Entry entry = (Map.Entry) array[i];
+                map.put(entry.getKey(), entry.getValue());
+            }
+        } else if (obj instanceof KeyValue) {
+            for (int i = 0; i < array.length; i++) {
+                KeyValue keyval = (KeyValue) array[i];
+                map.put(keyval.getKey(), keyval.getValue());
+            }
+        } else if (obj instanceof Object[]) {
+            for (int i = 0; i < array.length; i++) {
+                Object[] sub = (Object[]) array[i];
+                if (sub == null || sub.length < 2) {
+                    throw new IllegalArgumentException("Invalid array element: " + i);
+                }
+                map.put(sub[0], sub[1]);
+            }
+        } else {
+            for (int i = 0; i < array.length - 1;) {
+                map.put(array[i++], array[i++]);
+            }
+        }
+        return map;
     }
 
     // Map decorators

@@ -28,6 +28,8 @@ import java.util.TreeMap;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.keyvalue.DefaultKeyValue;
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.collections.map.PredicatedMap;
 import org.apache.commons.collections.map.TestPredicatedMap;
@@ -35,7 +37,7 @@ import org.apache.commons.collections.map.TestPredicatedMap;
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.23 $ $Date: 2004/04/09 14:55:39 $
+ * @version $Revision: 1.24 $ $Date: 2004/09/22 23:03:50 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -214,7 +216,118 @@ public class TestMapUtils extends BulkTest {
         assertEquals( out.get("D"), "4" );
         assertEquals( out.get("E"), "5" );
     }
-                
+
+    public void testPutAll_Map_array() {
+        try {
+            MapUtils.putAll(null, null);
+            fail();
+        } catch (NullPointerException ex) {}
+        try {
+            MapUtils.putAll(null, new Object[0]);
+            fail();
+        } catch (NullPointerException ex) {}
+        
+        Map test = MapUtils.putAll(new HashMap(), new String[0]);
+        assertEquals(0, test.size());
+        
+        // sub array
+        test = MapUtils.putAll(new HashMap(), new String[][] {
+            {"RED", "#FF0000"},
+            {"GREEN", "#00FF00"},
+            {"BLUE", "#0000FF"}
+        });
+        assertEquals(true, test.containsKey("RED"));
+        assertEquals("#FF0000", test.get("RED"));
+        assertEquals(true, test.containsKey("GREEN"));
+        assertEquals("#00FF00", test.get("GREEN"));
+        assertEquals(true, test.containsKey("BLUE"));
+        assertEquals("#0000FF", test.get("BLUE"));
+        assertEquals(3, test.size());
+        
+        try {
+            MapUtils.putAll(new HashMap(), new String[][] {
+                {"RED", "#FF0000"},
+                null,
+                {"BLUE", "#0000FF"}
+            });
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        
+        try {
+            MapUtils.putAll(new HashMap(), new String[][] {
+                {"RED", "#FF0000"},
+                {"GREEN"},
+                {"BLUE", "#0000FF"}
+            });
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        
+        try {
+            MapUtils.putAll(new HashMap(), new String[][] {
+                {"RED", "#FF0000"},
+                {},
+                {"BLUE", "#0000FF"}
+            });
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        
+        // flat array
+        test = MapUtils.putAll(new HashMap(), new String[] {
+            "RED", "#FF0000",
+            "GREEN", "#00FF00",
+            "BLUE", "#0000FF"
+        });
+        assertEquals(true, test.containsKey("RED"));
+        assertEquals("#FF0000", test.get("RED"));
+        assertEquals(true, test.containsKey("GREEN"));
+        assertEquals("#00FF00", test.get("GREEN"));
+        assertEquals(true, test.containsKey("BLUE"));
+        assertEquals("#0000FF", test.get("BLUE"));
+        assertEquals(3, test.size());
+        
+        test = MapUtils.putAll(new HashMap(), new String[] {
+            "RED", "#FF0000",
+            "GREEN", "#00FF00",
+            "BLUE", "#0000FF",
+            "PURPLE" // ignored
+        });
+        assertEquals(true, test.containsKey("RED"));
+        assertEquals("#FF0000", test.get("RED"));
+        assertEquals(true, test.containsKey("GREEN"));
+        assertEquals("#00FF00", test.get("GREEN"));
+        assertEquals(true, test.containsKey("BLUE"));
+        assertEquals("#0000FF", test.get("BLUE"));
+        assertEquals(3, test.size());
+        
+        // map entry
+        test = MapUtils.putAll(new HashMap(), new Object[] {
+            new DefaultMapEntry("RED", "#FF0000"),
+            new DefaultMapEntry("GREEN", "#00FF00"),
+            new DefaultMapEntry("BLUE", "#0000FF")
+        });
+        assertEquals(true, test.containsKey("RED"));
+        assertEquals("#FF0000", test.get("RED"));
+        assertEquals(true, test.containsKey("GREEN"));
+        assertEquals("#00FF00", test.get("GREEN"));
+        assertEquals(true, test.containsKey("BLUE"));
+        assertEquals("#0000FF", test.get("BLUE"));
+        assertEquals(3, test.size());
+        
+        // key value
+        test = MapUtils.putAll(new HashMap(), new Object[] {
+            new DefaultKeyValue("RED", "#FF0000"),
+            new DefaultKeyValue("GREEN", "#00FF00"),
+            new DefaultKeyValue("BLUE", "#0000FF")
+        });
+        assertEquals(true, test.containsKey("RED"));
+        assertEquals("#FF0000", test.get("RED"));
+        assertEquals(true, test.containsKey("GREEN"));
+        assertEquals("#00FF00", test.get("GREEN"));
+        assertEquals(true, test.containsKey("BLUE"));
+        assertEquals("#0000FF", test.get("BLUE"));
+        assertEquals(3, test.size());
+    }
+
     public void testConvertResourceBundle() {
         final Map in = new HashMap( 5 , 1 );
         in.put( "1" , "A" );
