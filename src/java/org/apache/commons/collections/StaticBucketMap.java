@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.5 2002/10/12 22:15:19 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/10/12 22:15:19 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.6 2002/10/18 07:03:12 bayard Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/10/18 07:03:12 $
  *
  * ====================================================================
  *
@@ -136,8 +136,8 @@ import java.util.NoSuchElementException;
  * @author  <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
  * @author  <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author  Paul Jack
- * @version CVS $Revision: 1.5 $ $Date: 2002/10/12 22:15:19 $
- * @since Avalon 4.0
+ * @version CVS $Revision: 1.6 $ $Date: 2002/10/18 07:03:12 $
+ * @since Collections 2.1
  */
 public final class StaticBucketMap implements Map
 {
