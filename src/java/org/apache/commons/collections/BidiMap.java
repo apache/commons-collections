@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.5 2003/11/02 15:27:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.6 2003/11/08 18:40:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,7 +75,7 @@ import org.apache.commons.collections.iterators.MapIterator;
  * 
  * @see org.apache.commons.collections.DualHashBidiMap
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/11/02 15:27:53 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/08 18:40:17 $
  *
  * @author Stephen Colebourne
  */
@@ -168,7 +168,7 @@ public interface BidiMap extends Map {
      * @throws UnsupportedOperationException if this method is not supported
      *  by the implementation
      */
-    Object removeKey(Object value);
+    Object removeValue(Object value);
     
     /**
      * Gets a view of this map where the keys and values are reversed.

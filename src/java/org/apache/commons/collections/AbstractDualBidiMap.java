@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.8 2003/11/02 19:48:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.9 2003/11/08 18:40:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,6 @@ import org.apache.commons.collections.decorators.AbstractIteratorDecorator;
 import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
 import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.ResetableMapIterator;
-import org.apache.commons.collections.pairs.TiedMapEntry;
 
 /**
  * Abstract <code>BidiMap</code> implemented using two maps.
@@ -76,7 +75,7 @@ import org.apache.commons.collections.pairs.TiedMapEntry;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.8 2003/11/02 19:48:39 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.9 2003/11/08 18:40:17 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -240,7 +239,7 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         return maps[1].get(value);
     }
 
-    public Object removeKey(Object value) {
+    public Object removeValue(Object value) {
         Object key = null;
         if (maps[1].containsKey(value)) {
             key = maps[1].remove(value);
@@ -613,18 +612,6 @@ public abstract class AbstractDualBidiMap implements BidiMap {
             iterator = map.maps[0].entrySet().iterator();
             last = null;
             canRemove = false;
-        }
-        
-        public Map.Entry asMapEntry() {
-            return new TiedMapEntry(map, getKey()) {
-                public Object setValue(Object value) {
-                    if (map.maps[1].containsKey(value) &&
-                        map.maps[1].get(value) != last.getKey()) {
-                        throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
-                    }
-                    return super.setValue(value);
-                }
-            };
         }
         
         public String toString() {
