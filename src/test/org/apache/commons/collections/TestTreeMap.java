@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.2 2001/07/14 23:33:27 craigmcc Exp $
- * $Revision: 1.2 $
- * $Date: 2001/07/14 23:33:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.2.2.1 2002/02/26 00:51:21 morgand Exp $
+ * $Revision: 1.2.2.1 $
+ * $Date: 2002/02/26 00:51:21 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestTreeMap.java,v 1.2 2001/07/14 23:33:27 craigmcc Exp $
+ * @version $Id: TestTreeMap.java,v 1.2.2.1 2002/02/26 00:51:21 morgand Exp $
  */
 public class TestTreeMap extends TestMap
 {
@@ -89,7 +89,7 @@ public class TestTreeMap extends TestMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         TreeMap tm = new TreeMap();
         return (tm);
     }
@@ -98,7 +98,7 @@ public class TestTreeMap extends TestMap
 
     public void setUp()
     {
-        map = (TreeMap) makeMap();
+        map = (TreeMap) makeEmptyMap();
     }
 
     public void testNewMap()

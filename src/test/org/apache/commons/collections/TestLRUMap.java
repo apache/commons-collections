@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.11 2002/02/19 21:28:53 morgand Exp $
- * $Revision: 1.11 $
- * $Date: 2002/02/19 21:28:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.11.2.1 2002/02/26 00:51:21 morgand Exp $
+ * $Revision: 1.11.2.1 $
+ * $Date: 2002/02/26 00:51:21 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.11 2002/02/19 21:28:53 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.11.2.1 2002/02/26 00:51:21 morgand Exp $
  */
 public class TestLRUMap extends TestMap
 {
@@ -93,7 +93,7 @@ public class TestLRUMap extends TestMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         LRUMap map = new LRUMap(10);
         return map;
     }
@@ -153,7 +153,7 @@ public class TestLRUMap extends TestMap
 
 
     public void testMapSupportsNullValues() {
-        Map map = makeMap();
+        Map map = makeEmptyMap();
         map.put(new Integer(1),"foo");
         
         assertTrue("no null values in Map",map.containsValue(null) == false);

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.1 2001/09/18 10:41:39 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2001/09/18 10:41:39 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.1.2.1 2002/02/26 00:51:21 morgand Exp $
+ * $Revision: 1.1.2.1 $
+ * $Date: 2002/02/26 00:51:21 $
  *
  * ====================================================================
  *
@@ -90,7 +90,7 @@ public class TestMultiHashMap extends TestMap
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeMap() {
+    public Map makeEmptyMap() {
         return new MultiHashMap();
     }
     
