@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.1 2002/03/01 23:29:24 morgand Exp $
- * $Revision: 1.1 $
- * $Date: 2002/03/01 23:29:24 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.2 2002/03/01 23:40:43 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/03/01 23:40:43 $
  *
  * ====================================================================
  *
@@ -164,6 +164,16 @@ public class ComparatorChain implements Comparator,Serializable {
         } else {
             orderingBits.clear(index);
         }
+    }
+
+    public void setForwardSort(int index) {
+        checkLocked();
+        orderingBits.clear(index);
+    }
+
+    public void setReverseSort(int index) {
+        checkLocked();
+        orderingBits.set(index);
     }
 
     public void checkLocked() {
