@@ -32,7 +32,7 @@ import org.apache.commons.collections.MapIterator;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2004/02/18 01:20:33 $
+ * @version $Revision: 1.12 $ $Date: 2004/04/09 14:38:13 $
  * 
  * @author Stephen Colebourne
  */
@@ -211,7 +211,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
         }
 
         Object newValue = addSetValues()[0];
-        Object newValue2 = addSetValues()[1];
+        Object newValue2 = (addSetValues().length == 1 ? addSetValues()[0] : addSetValues()[1]);
         MapIterator it = makeFullMapIterator();
         Map map = getMap();
         Map confirmed = getConfirmedMap();
