@@ -197,12 +197,6 @@ Object was null.</p>
 some architectures.  Fixed the subList(int,int) method so that changes to the
 sublist are reflected in the original list, even in fast mode.</p>
 
-<p><u>FastArrayList</u></p>
-
-<p>Added severe warning about possible unexpected failures of this class on
-some architectures.  Fixed the subList(int,int) method so that changes to the
-sublist are reflected in the original list, even in fast mode.</p>
-
 <p><u>FastHashMap</u></p>
 
 <p>Added severe warning about possible unexpected failures of this class on
@@ -219,11 +213,11 @@ mode.</p>
 
 <p><u>LRUMap</u></p>
 
-<p>The get(Object) was fixed to ensure that if containsKey(foo) returns
-false, then get(foo) will not change that.  (Before, invoking
-get(Object) on a nonexistent key could cause that key to map to
-incorrectly map to a null value).  Also, the changes to SequencedHashMap
-were inherited by LRUMap.</p>
+<p>The get(Object) method was fixed to ensure that if containsKey(foo)
+returns false, then get(foo) will not change that.  (Before, invoking
+get(Object) on a nonexistent key could cause that key to incorrectly map
+to a null value).  Also, the changes to SequencedHashMap were inherited
+by LRUMap.</p>
 
 <p><u>ListUtils</u></p>
 
