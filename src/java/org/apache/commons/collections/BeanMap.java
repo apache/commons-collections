@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.4 2002/02/22 07:00:30 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/22 07:00:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.5 2002/03/13 04:15:49 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/03/13 04:15:49 $
  *
  * ====================================================================
  *
