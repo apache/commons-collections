@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.5 2002/03/19 22:25:51 morgand Exp $
- * $Revision: 1.5 $
- * $Date: 2002/03/19 22:25:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.6 2002/03/25 21:20:53 morgand Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/03/25 21:20:53 $
  *
  * ====================================================================
  *
@@ -85,7 +85,9 @@ import java.util.List;
  * <p>Calling a method that adds new Comparators or
  * changes the ascend/descend sort <i>after compare(Object,
  * Object) has been called</i> will result in an
- * UnsupportedOperationException.</p>
+ * UnsupportedOperationException.  However, <i>take care</i>
+ * to not alter the underlying List of Comparators
+ * or the BitSet that defines the sort order.</p>
  * 
  * <p>Instances of ComparatorChain are not synchronized.
  * The class is not thread-safe at construction time, but
@@ -162,15 +164,13 @@ public class ComparatorChain implements Comparator,Serializable {
      * sort order is used; a return value of <i>true</i>
      * indicates reverse sort order.
      * 
-     * @param list   List of Comparators.  NOTE: This constructor performs a
-     *               defensive copy of the list elements into a new
-     *               List.
+     * @param list   List of Comparators.  NOTE: This constructor does not perform a
+     *               defensive copy of the list
      * @param bits   Sort order for each Comparator.  Extra bits are ignored,
      *               unless extra Comparators are added by another method.
      */
     public ComparatorChain(List list, BitSet bits) {
-        comparatorChain = new ArrayList();
-        comparatorChain.addAll(list);
+        comparatorChain = list;
         orderingBits = bits;
     }
 
