@@ -47,7 +47,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.18 $ $Date: 2004/05/26 21:56:05 $
+ * @version $Revision: 1.19 $ $Date: 2004/06/04 23:27:30 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -292,7 +292,8 @@ public class AbstractHashedMap implements IterableMap {
         if (mapSize == 0) {
             return;
         }
-        ensureCapacity(calculateNewCapacity(size + mapSize));
+        int newSize = (int) ((size + mapSize) / loadFactor + 1);
+        ensureCapacity(calculateNewCapacity(newSize));
         for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
             put(entry.getKey(), entry.getValue());
@@ -578,39 +579,47 @@ public class AbstractHashedMap implements IterableMap {
      */
     protected void checkCapacity() {
         if (size >= threshold) {
-            ensureCapacity(data.length * 2);
+            int newCapacity = data.length * 2;
+            if (newCapacity <= MAXIMUM_CAPACITY) {
+                ensureCapacity(newCapacity);
+            }
         }
     }
     
     /**
      * Changes the size of the data structure to the capacity proposed.
      * 
-     * @param newCapacity  the new capacity of the array
+     * @param newCapacity  the new capacity of the array (a power of two, less or equal to max)
      */
     protected void ensureCapacity(int newCapacity) {
         int oldCapacity = data.length;
         if (newCapacity <= oldCapacity) {
             return;
         }
-        HashEntry oldEntries[] = data;
-        HashEntry newEntries[] = new HashEntry[newCapacity];
+        if (size == 0) {
+            threshold = calculateThreshold(newCapacity, loadFactor);
+            data = new HashEntry[newCapacity];
+        } else {
+            HashEntry oldEntries[] = data;
+            HashEntry newEntries[] = new HashEntry[newCapacity];
 
-        modCount++;
-        for (int i = oldCapacity - 1; i >= 0; i--) {
-            HashEntry entry = oldEntries[i];
-            if (entry != null) {
-                oldEntries[i] = null;  // gc
-                do {
-                    HashEntry next = entry.next;
-                    int index = hashIndex(entry.hashCode, newCapacity);  
-                    entry.next = newEntries[index];
-                    newEntries[index] = entry;
-                    entry = next;
-                } while (entry != null);
+            modCount++;
+            for (int i = oldCapacity - 1; i >= 0; i--) {
+                HashEntry entry = oldEntries[i];
+                if (entry != null) {
+                    oldEntries[i] = null;  // gc
+                    do {
+                        HashEntry next = entry.next;
+                        int index = hashIndex(entry.hashCode, newCapacity);  
+                        entry.next = newEntries[index];
+                        newEntries[index] = entry;
+                        entry = next;
+                    } while (entry != null);
+                }
             }
+            threshold = calculateThreshold(newCapacity, loadFactor);
+            data = newEntries;
         }
-        threshold = calculateThreshold(newCapacity, loadFactor);
-        data = newEntries;
     }
 
     /**
@@ -628,7 +637,7 @@ public class AbstractHashedMap implements IterableMap {
             while (newCapacity < proposedCapacity) {
                 newCapacity <<= 1;  // multiply by two
             }
-            if (proposedCapacity > MAXIMUM_CAPACITY) {
+            if (newCapacity > MAXIMUM_CAPACITY) {
                 newCapacity = MAXIMUM_CAPACITY;
             }
         }
