@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayListIterator.java,v 1.5 2003/09/29 03:56:12 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayListIterator.java,v 1.6 2003/09/29 22:37:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import java.util.NoSuchElementException;
  * @see java.util.ListIterator
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/09/29 03:56:12 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/29 22:37:40 $
  *
  * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
  * @author Stephen Colebourne
@@ -86,13 +86,16 @@ import java.util.NoSuchElementException;
 public class ArrayListIterator extends ArrayIterator implements ResetableListIterator {
 
     /**
-     * Holds the index of the last item returned by a call to <code>next()</code> or <code>previous()</code>. This
-     *  is set to <code>-1</code> if neither method has yet been invoked. <code>lastItemIndex</code> is used to to
-     * implement the {@link #set} method.
+     * Holds the index of the last item returned by a call to <code>next()</code>
+     * or <code>previous()</code>. This is set to <code>-1</code> if neither method
+     * has yet been invoked. <code>lastItemIndex</code> is used to to implement 
+     * the {@link #set} method.
      *
      */
     protected int lastItemIndex = -1;
 
+    // Constructors
+    // ----------------------------------------------------------------------
     /**
      * Constructor for use with <code>setArray</code>.
      * <p>
@@ -120,14 +123,14 @@ public class ArrayListIterator extends ArrayIterator implements ResetableListIte
      * specified array from a specific start index.
      *
      * @param array  the array to iterate over
-     * @param start  the index to start iterating at
+     * @param startIndex  the index to start iterating at
      * @throws IllegalArgumentException if <code>array</code> is not an array.
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
-    public ArrayListIterator(Object array, int start) {
-        super(array, start);
-        this.startIndex = start;
+    public ArrayListIterator(Object array, int startIndex) {
+        super(array, startIndex);
+        this.startIndex = startIndex;
     }
 
     /**
@@ -135,21 +138,20 @@ public class ArrayListIterator extends ArrayIterator implements ResetableListIte
      * in the specified array.
      *
      * @param array  the array to iterate over
-     * @param start  the index to start iterating at
-     * @param end  the index (exclusive) to finish iterating at
+     * @param startIndex  the index to start iterating at
+     * @param endIndex  the index (exclusive) to finish iterating at
      * @throws IllegalArgumentException if <code>array</code> is not an array.
      * @throws IndexOutOfBoundsException if the start or end index is out of bounds
      * @throws IllegalArgumentException if end index is before the start
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ArrayListIterator(Object array, int start, int end) {
-        super(array, start, end);
-        this.startIndex = start;
+    public ArrayListIterator(Object array, int startIndex, int endIndex) {
+        super(array, startIndex, endIndex);
+        this.startIndex = startIndex;
     }
 
     // ListIterator interface
-    //-------------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     /**
      * Returns true if there are previous elements to return from the array.
      *

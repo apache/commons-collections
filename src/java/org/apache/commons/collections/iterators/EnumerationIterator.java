@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EnumerationIterator.java,v 1.4 2003/09/29 22:02:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/EnumerationIterator.java,v 1.5 2003/09/29 22:37:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,68 +66,71 @@ import java.util.Iterator;
  * to be {@link Iterator Iterator} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.4 $ $Date: 2003/09/29 22:02:33 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/29 22:37:40 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  */
 public class EnumerationIterator implements Iterator {
     
+    /** The collection to remove elements from */
     private Collection collection;
-
+    /** The enumeration being converted */
     private Enumeration enumeration;
-
+    /** The last object retrieved */
     private Object last;
     
+    // Constructors
+    //-----------------------------------------------------------------------
     /**
-     *  Constructs a new <code>EnumerationIterator</code> that will not
-     *  function until {@link #setEnumeration(Enumeration)} is called.
+     * Constructs a new <code>EnumerationIterator</code> that will not
+     * function until {@link #setEnumeration(Enumeration)} is called.
      */
     public EnumerationIterator() {
         this(null, null);
     }
 
     /**
-     *  Constructs a new <code>EnumerationIterator</code> that provides
-     *  an iterator view of the given enumeration.
+     * Constructs a new <code>EnumerationIterator</code> that provides
+     * an iterator view of the given enumeration.
      *
-     *  @param enumeration  the enumeration to use
+     * @param enumeration  the enumeration to use
      */
-    public EnumerationIterator( Enumeration enumeration ) {
+    public EnumerationIterator(final Enumeration enumeration) {
         this(enumeration, null);
     }
 
     /**
-     *  Constructs a new <code>EnumerationIterator</code> that will remove
-     *  elements from the specified collection.
+     * Constructs a new <code>EnumerationIterator</code> that will remove
+     * elements from the specified collection.
      *
-     *  @param enum  the enumeration to use
-     *  @param collection  the collection to remove elements form
+     * @param enum  the enumeration to use
+     * @param collection  the collection to remove elements form
      */
-    public EnumerationIterator( Enumeration enum, Collection collection ) {
+    public EnumerationIterator(final Enumeration enum, final Collection collection) {
+        super();
         this.enumeration = enum;
         this.collection = collection;
         this.last = null;
     }
 
     // Iterator interface
-    //-------------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     /**
-     *  Returns true if the underlying enumeration has more elements.
+     * Returns true if the underlying enumeration has more elements.
      *
-     *  @return true if the underlying enumeration has more elements
-     *  @throws NullPointerException  if the underlying enumeration is null
+     * @return true if the underlying enumeration has more elements
+     * @throws NullPointerException  if the underlying enumeration is null
      */
     public boolean hasNext() {
         return enumeration.hasMoreElements();
     }
 
     /**
-     *  Returns the next object from the enumeration.
+     * Returns the next object from the enumeration.
      *
-     *  @return the next object from the enumeration
-     *  @throws NullPointerException if the enumeration is null
+     * @return the next object from the enumeration
+     * @throws NullPointerException if the enumeration is null
      */
     public Object next() {
         last = enumeration.nextElement();
@@ -135,48 +138,45 @@ public class EnumerationIterator implements Iterator {
     }
 
     /**
+     * Removes the last retrieved element if a collection is attached.
+     * <p>
      * Functions if an associated <code>Collection</code> is known.
      * If so, the first occurrence of the last returned object from this
      * iterator will be removed from the collection.
      *
      * @exception IllegalStateException <code>next()</code> not called.
-     * @exception UnsupportedOperationException No associated
-     * <code>Collection</code>.
+     * @exception UnsupportedOperationException if no associated collection
      */
     public void remove() {
         if (collection != null) {
             if (last != null) {
                 collection.remove(last);
+            } else {
+                throw new IllegalStateException("next() must have been called for remove() to function");
             }
-            else {
-                throw new IllegalStateException
-                    ("next() must have been called for remove() to function");
-            }
-        }
-        else {
-            throw new UnsupportedOperationException
-                ("No Collection associated with this Iterator");
+        } else {
+            throw new UnsupportedOperationException("No Collection associated with this Iterator");
         }
     }
 
     // Properties
-    //-------------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     /**
-     *  Returns the underlying enumeration.
+     * Returns the underlying enumeration.
      *
-     *  @return the underlying enumeration
+     * @return the underlying enumeration
      */
     public Enumeration getEnumeration() {
         return enumeration;
     }
 
     /**
-     *  Sets the underlying enumeration.
+     * Sets the underlying enumeration.
      *
-     *  @param enumeration  the new underlying enumeration
+     * @param enumeration  the new underlying enumeration
      */
-    public void setEnumeration( Enumeration enumeration ) {
+    public void setEnumeration(final Enumeration enumeration) {
         this.enumeration = enumeration;
     }
+    
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.5 2003/08/31 17:25:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ArrayIterator.java,v 1.6 2003/09/29 22:37:40 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,7 +61,7 @@ import java.lang.reflect.Array;
 import java.util.NoSuchElementException;
 
 /** 
- * Implements an {@link java.util.Iterator Iterator} over an array.
+ * Implements an {@link java.util.Iterator Iterator} over any array.
  * <p>
  * The array can be either an array of object or of primitives. If you know 
  * that you have an object array, the 
@@ -72,17 +72,17 @@ import java.util.NoSuchElementException;
  * the iterator back to the start if required.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:25:49 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/29 22:37:40 $
  *
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author James Strachan
  * @author Mauricio S. Moura
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
+ * @author Michael A. Smith
+ * @author Neil O'Toole
  * @author Stephen Colebourne
  */
 public class ArrayIterator implements ResetableIterator {
 
-    /** The array */    
+    /** The array to iterate over */    
     protected Object array;
     /** The start index to loop from */
     protected int startIndex = 0;
@@ -91,6 +91,8 @@ public class ArrayIterator implements ResetableIterator {
     /** The current iterator index */
 	protected int index = 0;
     
+    // Constructors
+    // ----------------------------------------------------------------------
     /**
      * Constructor for use with <code>setArray</code>.
      * <p>
@@ -109,9 +111,9 @@ public class ArrayIterator implements ResetableIterator {
      * @throws IllegalArgumentException if <code>array</code> is not an array.
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ArrayIterator(Object array) {
+    public ArrayIterator(final Object array) {
         super();
-        setArray( array );
+        setArray(array);
     }
 
     /**
@@ -119,15 +121,17 @@ public class ArrayIterator implements ResetableIterator {
      * specified array from a specific start index.
      *
      * @param array  the array to iterate over.
-     * @param start  the index to start iterating at.
+     * @param startIndex  the index to start iterating at.
      * @throws IllegalArgumentException if <code>array</code> is not an array.
      * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public ArrayIterator(Object array, int start) {
-        setArray( array );
-        checkBound(start, "start");
-        this.startIndex = start;
-        this.index = start;
+    public ArrayIterator(final Object array, final int startIndex) {
+        super();
+        setArray(array);
+        checkBound(startIndex, "start");
+        this.startIndex = startIndex;
+        this.index = startIndex;
     }
 
     /**
@@ -135,80 +139,87 @@ public class ArrayIterator implements ResetableIterator {
      * in the specified array.
      *
      * @param array  the array to iterate over.
-     * @param start  the index to start iterating at.
-     * @param end  the index to finish iterating at.
+     * @param startIndex  the index to start iterating at.
+     * @param endIndex  the index to finish iterating at.
      * @throws IllegalArgumentException if <code>array</code> is not an array.
      * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws IndexOutOfBoundsException if either index is invalid
      */
-    public ArrayIterator(Object array, int start, int end) {
-        setArray( array );
-        checkBound(start, "start");
-        checkBound(end, "end");
-        if (end < start) {
+    public ArrayIterator(final Object array, final int startIndex, final int endIndex) {
+        super();
+        setArray(array);
+        checkBound(startIndex, "start");
+        checkBound(endIndex, "end");
+        if (endIndex < startIndex) {
             throw new IllegalArgumentException("End index must not be less than start index.");
         }
-        this.startIndex = start;
-        this.endIndex = end;
-        this.index = start;
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+        this.index = startIndex;
     }
 
-    protected void checkBound(int bound, String type ) {
+    /**
+     * Checks whether the index is valid or not.
+     * 
+     * @param bound  the index to check
+     * @param type  the index type (for error messges)
+     * @throws IndexOutOfBoundsException if the index is invalid
+     */
+    protected void checkBound(final int bound, final String type ) {
         if (bound > this.endIndex) {
             throw new ArrayIndexOutOfBoundsException(
-              "Attempt to make an ArrayIterator that "+type+
+              "Attempt to make an ArrayIterator that " + type +
               "s beyond the end of the array. "
             );
         }
         if (bound < 0) {
             throw new ArrayIndexOutOfBoundsException(
-              "Attempt to make an ArrayIterator that "+type+
+              "Attempt to make an ArrayIterator that " + type +
               "s before the start of the array. "
             );
         }
     }
 
     // Iterator interface
-    //-------------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     /**
-     *  Returns true if there are more elements to return from the array.
+     * Returns true if there are more elements to return from the array.
      *
-     *  @return true if there is a next element to return
+     * @return true if there is a next element to return
      */
     public boolean hasNext() {
         return (index < endIndex);
     }
 
     /**
-     *  Returns the next element in the array.
+     * Returns the next element in the array.
      *
-     *  @return the next element in the array
-     *  @throws NoSuchElementException if all the elements in the array
-     *    have already been returned
+     * @return the next element in the array
+     * @throws NoSuchElementException if all the elements in the array
+     *  have already been returned
      */
     public Object next() {
         if (hasNext() == false) {
             throw new NoSuchElementException();
         }
-        return Array.get( array, index++ );
+        return Array.get(array, index++);
     }
 
     /**
-     *  Throws {@link UnsupportedOperationException}.
+     * Throws {@link UnsupportedOperationException}.
      *
-     *  @throws UnsupportedOperationException always
+     * @throws UnsupportedOperationException always
      */
     public void remove() {
-        throw new UnsupportedOperationException( "remove() method is not supported" );
+        throw new UnsupportedOperationException("remove() method is not supported");
     }
 
     // Properties
-    //-------------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     /**
-     *  Retrieves the array that this iterator is iterating over. 
+     * Gets the array that this iterator is iterating over. 
      *
-     *  @return the array this iterator iterates over, or <code>null</code> if
+     * @return the array this iterator iterates over, or <code>null</code> if
      *  the no-arg constructor was used and {@link #setArray(Object)} has never
      *  been called with a valid array.
      */
@@ -217,40 +228,25 @@ public class ArrayIterator implements ResetableIterator {
     }
     
     /**
-     *  Changes the array that the ArrayIterator should iterate over.  If an
-     *  array has previously been set (using the single-arg constructor or this
-     *  method), that array along with the current iterator position within
-     *  that array is discarded in favor of the argument to this method.  This
-     *  method can be used in combination with {@link #getArray()} to "reset"
-     *  the iterator to the beginning of the array:
-     *
-     *  <pre>
-     *    ArrayIterator iterator = ...
-     *    ...
-     *    iterator.setArray(iterator.getArray());
-     *  </pre>
-     *
-     *  Note: Using i.setArray(i.getArray()) may throw a NullPointerException
-     *  if no array has ever been set for the iterator (see {@link
-     *  #getArray()})
+     * Sets the array that the ArrayIterator should iterate over.
      * <p>
-     * The {@link #reset()} method is a better choice for resetting the iterator.
+     * If an array has previously been set (using the single-arg constructor
+     * or this method) then that array is discarded in favour of this one.
+     * Iteration is restarted at the start of the new array.
+     * Although this can be used to reset iteration, the {@link #reset()} method
+     * is a more effective choice.
      *
-     *  @param array the array that the iterator should iterate over.
-     *
-     *  @exception IllegalArgumentException if <code>array</code> is not an
-     *  array.
-     *
-     *  @exception NullPointerException 
-     *  if <code>array</code> is <code>null</code>
+     * @param array the array that the iterator should iterate over.
+     * @throws IllegalArgumentException if <code>array</code> is not an array.
+     * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public void setArray( Object array ) {
+    public void setArray(final Object array) {
         // Array.getLength throws IllegalArgumentException if the object is not
         // an array or NullPointerException if the object is null.  This call
         // is made before saving the array and resetting the index so that the
         // array iterator remains in a consistent state if the argument is not
         // an array or is null.
-        this.endIndex = Array.getLength( array );
+        this.endIndex = Array.getLength(array);
         this.startIndex = 0;
         this.array = array;
         this.index = 0;
