@@ -31,12 +31,20 @@ import java.util.SortedMap;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/02 21:16:50 $
  * 
  * @author Stephen Colebourne
  */
 public abstract class AbstractSortedMapDecorator
         extends AbstractMapDecorator implements SortedMap {
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     * @since Commons Collections 3.1
+     */
+    protected AbstractSortedMapDecorator() {
+        super();
+    }
 
     /**
      * Constructor that wraps (not copies).

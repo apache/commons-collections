@@ -32,12 +32,20 @@ import org.apache.commons.collections.OrderedMapIterator;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/02 21:17:48 $
  * 
  * @author Stephen Colebourne
  */
 public abstract class AbstractOrderedMapDecorator
         extends AbstractMapDecorator implements OrderedMap {
+
+    /**
+     * Constructor only used in deserialization, do not use otherwise.
+     * @since Commons Collections 3.1
+     */
+    protected AbstractOrderedMapDecorator() {
+        super();
+    }
 
     /**
      * Constructor that wraps (not copies).
