@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.2 2003/10/09 10:33:45 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.3 2003/10/09 20:18:25 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import java.util.NoSuchElementException;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/10/09 10:33:45 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/09 20:18:25 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -300,7 +300,7 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
     /**
      * Test remove after add behaviour.
      */
-    public void testRemoveAfterAdd() {
+    public void testAddThenRemove() {
         ListIterator it = makeFullListIterator();
         
         // add then remove
