@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.4 2003/12/07 23:59:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/LinkedMap.java,v 1.5 2003/12/28 17:58:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.util.Map;
  * In this implementation order is maintained is by original insertion.
  * <p>
  * This implementation improves on the JDK1.4 LinkedHashMap by adding the 
- * {@link org.apache.commons.collections.iterators.MapIterator MapIterator}
+ * {@link org.apache.commons.collections.MapIterator MapIterator}
  * functionality, additional convenience methods and allowing
  * bidirectional iteration. It also implements <code>OrderedMap</code>.
  * <p>
@@ -83,7 +83,7 @@ import java.util.Map;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/07 23:59:13 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/28 17:58:54 $
  *
  * @author Stephen Colebourne
  */

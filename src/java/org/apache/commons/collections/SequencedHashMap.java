@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.23 2003/12/06 13:03:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.24 2003/12/28 17:59:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,12 +86,12 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * (see: {@link java.util.List#remove(Object)} and {@link java.util.Map#remove(Object)}).
  * <p>
  * This class is not thread safe.  When a thread safe implementation is
- * required, use {@link Collections#synchronizedMap(Map)} as it is documented,
+ * required, use {@link java.util.Collections#synchronizedMap(Map)} as it is documented,
  * or use explicit synchronization controls.
  *
  * @see org.apache.commons.collections.set.ListOrderedSet
  * @since Commons Collections 2.0
- * @version $Revision: 1.23 $ $Date: 2003/12/06 13:03:15 $
+ * @version $Revision: 1.24 $ $Date: 2003/12/28 17:59:47 $
  * 
  * @author Michael A. Smith
  * @author Daniel Rall

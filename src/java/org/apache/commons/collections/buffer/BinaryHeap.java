@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryHeap.java,v 1.2 2003/12/28 16:36:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryHeap.java,v 1.3 2003/12/28 17:58:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,8 @@ import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.PriorityQueue;
 
 /**
- * Binary heap implementation of {@link PriorityQueue} and {@link Buffer}.
+ * Binary heap implementation of <code>PriorityQueue</code> that provides for
+ * removal based on <code>Comparator</code> ordering.
  * <p>
  * The removal order of a binary heap is based on either the natural sort
  * order of its elements or a specified {@link Comparator}.  The 
@@ -83,15 +84,15 @@ import org.apache.commons.collections.PriorityQueue;
  * time.  All other operations perform in linear time or worse.
  * <p>
  * Note that this implementation is not synchronized.  Use 
- * {@link BufferUtils#synchronizedBuffer(Buffer)} to provide
- * synchronized access to a <code>BinaryHeap</code>:
+ * {@link org.apache.commons.collections.PriorityQueueUtils#synchronizedPriorityQueue(PriorityQueue)}
+ * to provide synchronized access to a <code>BinaryHeap</code>:
  *
  * <pre>
  * Buffer heap = BufferUtils.synchronizedBuffer(new BinaryHeap());
  * </pre>
  *
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision: 1.2 $ $Date: 2003/12/28 16:36:48 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/28 17:58:54 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram

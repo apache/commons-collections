@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.2 2003/12/24 01:15:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.3 2003/12/28 17:58:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.OrderedIterator;
  * is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/24 01:15:40 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/28 17:58:54 $
  *
  * @author Rich Dougherty
  * @author Phil Steitz
@@ -470,7 +470,7 @@ public abstract class AbstractLinkedList implements List {
      * Creates a new node with the specified object as its 
      * <code>value</code> and inserts it before <code>node</code>.
      * <p>
-     * This implementation uses {@link #createNode(Object)} and {@link #addNode(Node, Node)}.
+     * This implementation uses {@link #createNode(Object)} and {@link #addNode(Node,Node)}.
      *
      * @param node  node to insert before
      * @param value  value of the newly added node
@@ -485,7 +485,7 @@ public abstract class AbstractLinkedList implements List {
      * Creates a new node with the specified object as its 
      * <code>value</code> and inserts it after <code>node</code>.
      * <p>
-     * This implementation uses {@link #createNode(Object)} and {@link #addNode(Node, Node)}.
+     * This implementation uses {@link #createNode(Object)} and {@link #addNode(Node,Node)}.
      * 
      * @param node  node to insert after
      * @param value  value of the newly added node
@@ -685,12 +685,12 @@ public abstract class AbstractLinkedList implements List {
 
         /**
          * The node that will be returned by {@link #next()}. If this is equal
-         * to {@link #marker} then there are no more values to return.
+         * to {@link AbstractLinkedList#header} then there are no more values to return.
          */
         protected Node next;
 
         /**
-         * The index of {@link #nextNode}.
+         * The index of {@link #next}.
          */
         protected int nextIndex;
 
