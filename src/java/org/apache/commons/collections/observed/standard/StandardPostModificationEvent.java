@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationEvent.java,v 1.2 2003/09/07 00:51:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardPostModificationEvent.java,v 1.3 2003/09/07 10:33:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,8 +57,6 @@
  */
 package org.apache.commons.collections.observed.standard;
 
-import java.util.Collection;
-
 import org.apache.commons.collections.observed.ModificationHandler;
 import org.apache.commons.collections.observed.ObservedCollection;
 
@@ -72,7 +70,7 @@ import org.apache.commons.collections.observed.ObservedCollection;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/07 00:51:31 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/07 10:33:33 $
  * 
  * @author Stephen Colebourne
  */
@@ -86,7 +84,7 @@ public class StandardPostModificationEvent extends StandardModificationEvent {
     /**
      * Constructor.
      * 
-     * @param collection  the event source
+     * @param obsCollection  the event source
      * @param handler  the handler
      * @param type  the event type
      * @param preSize  the size before the change
@@ -98,7 +96,7 @@ public class StandardPostModificationEvent extends StandardModificationEvent {
      * @param rangeOffset  the offset of the range, -1 if unknown
      */
     public StandardPostModificationEvent(
-        final Collection collection,
+        final ObservedCollection obsCollection,
         final ModificationHandler handler,
         final int type,
         final int preSize,
@@ -109,7 +107,8 @@ public class StandardPostModificationEvent extends StandardModificationEvent {
         final ObservedCollection range,
         final int rangeOffset) {
 
-        super(collection, handler, type, preSize, index, object, repeat, previous, range, rangeOffset);
+        super(obsCollection, handler, type, preSize, index,
+            object, repeat, previous, range, rangeOffset);
         postSize = collection.size();
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.3 2003/09/07 00:51:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.4 2003/09/07 10:33:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import org.apache.commons.collections.observed.ObservedCollection;
  * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/07 00:51:31 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/07 10:33:33 $
  * 
  * @author Stephen Colebourne
  */
@@ -437,7 +437,7 @@ public class StandardModificationHandler extends ModificationHandler {
             int type, int index, Object object,
             int repeat, Object previous, ObservedCollection range, int rangeOffset) {
 
-        preSize = getCollection().size();
+        preSize = getObservedCollection().size();
         return firePreEvent(type, index, object, repeat, previous, range, rangeOffset);
     }
 
@@ -465,7 +465,7 @@ public class StandardModificationHandler extends ModificationHandler {
                     if ((holder.mask & type) > 0) {
                         if (event == null) {
                             event = new StandardPreModificationEvent(
-                                getCollection(), this, type, preSize, index, object,
+                                getObservedCollection(), this, type, preSize, index, object,
                                 repeat, previous, range, rangeOffset);
                         }
                         holder.listener.modificationOccurring(event);
@@ -522,7 +522,7 @@ public class StandardModificationHandler extends ModificationHandler {
                     if ((holder.mask & type) > 0) {
                         if (event == null) {
                             event = new StandardPostModificationEvent(
-                                getCollection(), this, type, preSize, index,
+                                getObservedCollection(), this, type, preSize, index,
                                 object, repeat, previous, range, rangeOffset);
                         }
                         holder.listener.modificationOccurred(event);

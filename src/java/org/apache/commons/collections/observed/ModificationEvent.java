@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationEvent.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationEvent.java,v 1.2 2003/09/07 10:33:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,14 +66,14 @@ import java.util.EventObject;
  * This class can be used as is, but generally it is subclassed.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/07 10:33:32 $
  * 
  * @author Stephen Colebourne
  */
 public class ModificationEvent extends EventObject {
 
     /** The source collection */
-    protected final Collection collection;
+    protected final ObservedCollection collection;
     /** The handler */
     protected final ModificationHandler handler;
     /** The event code */
@@ -84,17 +84,17 @@ public class ModificationEvent extends EventObject {
     /**
      * Constructor.
      * 
-     * @param collection  the event source
+     * @param obsCollection  the event source
      * @param handler  the handler
      * @param type  the event type
      */
     public ModificationEvent(
-        final Collection collection,
+        final ObservedCollection obsCollection,
         final ModificationHandler handler,
         final int type) {
 
-        super(collection);
-        this.collection = collection;
+        super(obsCollection);
+        this.collection = obsCollection;
         this.handler = handler;
         this.type = type;
     }
@@ -104,16 +104,32 @@ public class ModificationEvent extends EventObject {
     /**
      * Gets the collection the event is reporting on.
      * <p>
-     * This method returns the <code>ObservedCollection</code> instance.
-     * If this collection is wrapped, by a synchronized wrapper for example,
-     * changing this collection will bypass the wrapper. For the synchronized
-     * example, this will be OK so long as the event is processed in the same
-     * thread and program stack as the modification was made in.
+     * Using this collection will bypass any decorators that have been added
+     * to the <code>ObservedCollection</code>. For example, if a synchronized
+     * decorator was added it will not be called by changes to this collection.
+     * <p>
+     * For the synchronization case, you are normally OK however. If you
+     * process the event in the same thread as the original change then your
+     * code will be protected by the original synchronized decorator and this
+     * collection may be used freely.
      * 
      * @return the collection
      */
-    public Collection getSourceCollection() {
+    public ObservedCollection getObservedCollection() {
         return collection;
+    }
+
+    /**
+     * Gets the base collection underlying the observed collection.
+     * <p>
+     * Using this collection will bypass the event sending mechanism.
+     * It will also bypass any other decorators, such as synchronization.
+     * Use with care.
+     * 
+     * @return the collection
+     */
+    public Collection getBaseCollection() {
+        return handler.getBaseCollection();
     }
 
     /**

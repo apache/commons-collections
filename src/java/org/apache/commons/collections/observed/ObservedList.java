@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedList.java,v 1.3 2003/09/07 00:51:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservedList.java,v 1.4 2003/09/07 10:33:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,7 +58,6 @@
 package org.apache.commons.collections.observed;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -77,7 +76,7 @@ import org.apache.commons.collections.decorators.AbstractListIteratorDecorator;
  * base <code>List</code>.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/07 00:51:31 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/07 10:33:32 $
  * 
  * @author Stephen Colebourne
  */

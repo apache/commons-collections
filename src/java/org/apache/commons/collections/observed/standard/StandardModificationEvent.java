@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.4 2003/09/07 00:51:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.5 2003/09/07 10:33:33 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.observed.ObservedCollection;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/09/07 00:51:31 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/07 10:33:33 $
  * 
  * @author Stephen Colebourne
  */
@@ -106,7 +106,7 @@ public class StandardModificationEvent extends ModificationEvent {
     /**
      * Constructor.
      * 
-     * @param collection  the event source
+     * @param obsCollection  the event source
      * @param handler  the handler
      * @param type  the event type
      * @param preSize  the size before the change
@@ -118,7 +118,7 @@ public class StandardModificationEvent extends ModificationEvent {
      * @param rangeOffset  the offset of the range, -1 if unknown
      */
     public StandardModificationEvent(
-        final Collection collection,
+        final ObservedCollection obsCollection,
         final ModificationHandler handler,
         final int type,
         final int preSize,
@@ -129,7 +129,7 @@ public class StandardModificationEvent extends ModificationEvent {
         final ObservedCollection range,
         final int rangeOffset) {
 
-        super(collection, handler, type);
+        super(obsCollection, handler, type);
         this.preSize = preSize;
         this.index = index;
         this.object = object;

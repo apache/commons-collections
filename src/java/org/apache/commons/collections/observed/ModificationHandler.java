@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.3 2003/09/07 00:51:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.4 2003/09/07 10:33:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,27 +66,33 @@ import java.util.Collection;
  * <code>preXxx</code> and <code>postXxx</code> naming convention.
  * It also provides a default implementation that forwards to single methods.
  * <p>
+ * To write your own handler, you will normally subclass and override the
+ * <code>preEvent</code> and <code>postEvent</code> methods. However, you
+ * could choose to override any individual event method.
+ * <p>
  * This class could have been implemented as an interface, however to do so
  * would prevent the addition of extra events in the future. It does mean
  * that if you subclass this class, you must check it when you upgrade to a
  * later collections release.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/09/07 00:51:31 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/07 10:33:32 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class ModificationHandler {
+public class ModificationHandler {
     
     /** Singleton factory */
     static final ModificationHandlerFactory FACTORY = new Factory();
     
     /** The collection being observed */
-    private ObservedCollection collection = null;
+    private ObservedCollection obsCollection = null;
+    /** The underlying base collection being decorated */
+    private Collection baseCollection = null;
     /** The root handler */
-    protected final ModificationHandler rootHandler;
+    private final ModificationHandler rootHandler;
     /** The range offset, 0 if not a range */
-    protected final int rangeOffset;
+    private final int rangeOffset;
     
     // Constructors
     //-----------------------------------------------------------------------
@@ -119,28 +125,60 @@ public abstract class ModificationHandler {
      * All other methods will throw NullPointerException until then.
      * 
      * @param coll  the observed collection, must not be null
+     * @param baseColl  the base collection, must not be null
      * @throws IllegalArgumentException if the collection is null
      * @throws IllegalStateException if init has already been called
      */
-    void init(final ObservedCollection coll) {
+    void init(final ObservedCollection coll, Collection baseColl) {
         if (coll == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
-        if (this.collection != null) {
+        if (baseColl == null) {
+            throw new IllegalArgumentException("Base Collection must not be null");
+        }
+        if (this.obsCollection != null) {
             throw new IllegalArgumentException("init() has already been called");
         }
-        this.collection = coll;
+        this.obsCollection = coll;
+        this.baseCollection = baseColl;
     }
 
-    // Collection access
+    // Field access
     //-----------------------------------------------------------------------
     /**
      * Gets the observed collection.
      * 
      * @return the observed collection
      */
-    public ObservedCollection getCollection() {
-        return collection;
+    public ObservedCollection getObservedCollection() {
+        return obsCollection;
+    }
+    
+    /**
+     * Gets the base collection.
+     * 
+     * @return the base collection
+     */
+    protected Collection getBaseCollection() {
+        return baseCollection;
+    }
+    
+    /**
+     * Gets the root handler.
+     * 
+     * @return the root handler
+     */
+    protected ModificationHandler getRootHandler() {
+        return rootHandler;
+    }
+    
+    /**
+     * Gets the range offset.
+     * 
+     * @return the range offset
+     */
+    protected int getRangeOffset() {
+        return rangeOffset;
     }
     
     // PreListeners
@@ -245,6 +283,8 @@ public abstract class ModificationHandler {
     //-----------------------------------------------------------------------
     /**
      * Handles the pre event.
+     * <p>
+     * This implementation does nothing.
      * 
      * @param type  the event type to send
      * @param index  the index where the change starts, the method param or derived
@@ -254,12 +294,16 @@ public abstract class ModificationHandler {
      * @param range  the range collection, null if no range
      * @param rangeOffset  the offset of the range, -1 if unknown
      */
-    protected abstract boolean preEvent(
+    protected boolean preEvent(
             int type, int index, Object object, int repeat,
-            Object previous, ObservedCollection range, int rangeOffset);
+            Object previous, ObservedCollection range, int rangeOffset) {
+        return true;
+    }
 
     /**
      * Handles the post event.
+     * <p>
+     * This implementation does nothing.
      * 
      * @param modified  true if the method succeeded in changing the collection
      * @param type  the event type to send
@@ -270,9 +314,10 @@ public abstract class ModificationHandler {
      * @param range  the range collection, null if no range
      * @param rangeOffset  the offset of the range, -1 if unknown
      */
-    protected abstract void postEvent(
+    protected void postEvent(
             boolean modified, int type, int index, Object object, int repeat,
-            Object previous, ObservedCollection range, int rangeOffset);
+            Object previous, ObservedCollection range, int rangeOffset) {
+    }
 
     // Event handling
     //-----------------------------------------------------------------------
@@ -685,7 +730,7 @@ public abstract class ModificationHandler {
         return new SubListHandler(rootHandler, fromIndex + rangeOffset);
     }
     
-    protected class SubListHandler extends ModificationHandler {
+    protected static class SubListHandler extends ModificationHandler {
         
         /**
          * Constructor.
@@ -706,9 +751,9 @@ public abstract class ModificationHandler {
                 int type, int index, Object object, int repeat,
                 Object previous, ObservedCollection ignoredRange, int ignoredOffset) {
 
-            return rootHandler.preEvent(
+            return getRootHandler().preEvent(
                 type, index, object, repeat,
-                previous, getCollection(), this.rangeOffset);
+                previous, getObservedCollection(), getRangeOffset());
         }
 
         /**
@@ -720,9 +765,9 @@ public abstract class ModificationHandler {
                 boolean modified, int type, int index, Object object, int repeat,
                 Object previous, ObservedCollection ignoredRange, int ignoredOffset) {
 
-            rootHandler.postEvent(
+            getRootHandler().postEvent(
                 modified, type, index, object, repeat,
-                previous, getCollection(), this.rangeOffset);
+                previous, getObservedCollection(), getRangeOffset());
         }
     }
     
@@ -739,7 +784,7 @@ public abstract class ModificationHandler {
         if (pos != -1) {
             name = name.substring(pos + 1);
         }
-        return name + '[' + (collection == null ? "" : "initialised") + ']';
+        return name + '[' + (obsCollection == null ? "" : "initialised") + ']';
     }
 
     // Factory to create handler from handler
