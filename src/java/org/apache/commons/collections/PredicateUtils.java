@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.12 2003/11/23 17:01:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PredicateUtils.java,v 1.13 2003/11/23 19:11:21 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,8 +63,19 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.ExceptionPredicate;
+import org.apache.commons.collections.functors.FalsePredicate;
 import org.apache.commons.collections.functors.FunctorException;
+import org.apache.commons.collections.functors.IdentityPredicate;
+import org.apache.commons.collections.functors.InstanceofPredicate;
+import org.apache.commons.collections.functors.NotNullPredicate;
+import org.apache.commons.collections.functors.NotPredicate;
+import org.apache.commons.collections.functors.NullIsExceptionPredicate;
+import org.apache.commons.collections.functors.NullIsFalsePredicate;
+import org.apache.commons.collections.functors.NullIsTruePredicate;
+import org.apache.commons.collections.functors.NullPredicate;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * <code>PredicateUtils</code> provides reference implementations and utilities
@@ -91,29 +102,12 @@ import org.apache.commons.collections.functors.FunctorException;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.12 $ $Date: 2003/11/23 17:01:36 $
+ * @version $Revision: 1.13 $ $Date: 2003/11/23 19:11:21 $
  * 
  * @author Stephen Colebourne
  * @author Ola Berg
  */
 public class PredicateUtils {
-
-    /**
-     * A predicate that always returns true
-     */
-    private static final Predicate TRUE_PREDICATE = new ConstantPredicate(true);
-    /**
-     * A predicate that always returns false
-     */
-    private static final Predicate FALSE_PREDICATE = new ConstantPredicate(false);
-    /**
-     * A predicate that returns true if the object is null
-     */
-    private static final Predicate NULL_PREDICATE = new IdentityPredicate(null);
-    /**
-     * A predicate that returns true if the object is not null
-     */
-    private static final Predicate NOT_NULL_PREDICATE = new NotPredicate(NULL_PREDICATE);
 
     /**
      * This class is not normally instantiated.
@@ -141,7 +135,7 @@ public class PredicateUtils {
      * @return the predicate
      */
     public static Predicate truePredicate() {
-        return TRUE_PREDICATE;
+        return TruePredicate.INSTANCE;
     }
 
     /**
@@ -150,7 +144,7 @@ public class PredicateUtils {
      * @return the predicate
      */
     public static Predicate falsePredicate() {
-        return FALSE_PREDICATE;
+        return FalsePredicate.INSTANCE;
     }
 
     /**
@@ -159,7 +153,7 @@ public class PredicateUtils {
      * @return the predicate
      */
     public static Predicate nullPredicate() {
-        return NULL_PREDICATE;
+        return NullPredicate.INSTANCE;
     }
 
     /**
@@ -168,7 +162,7 @@ public class PredicateUtils {
      * @return the predicate
      */
     public static Predicate notNullPredicate() {
-        return NOT_NULL_PREDICATE;
+        return NotNullPredicate.INSTANCE;
     }
 
     /**
@@ -179,10 +173,7 @@ public class PredicateUtils {
      * @return the predicate
      */
     public static Predicate equalPredicate(Object value) {
-        if (value == null) {
-            return NULL_PREDICATE;
-        }
-        return new EqualPredicate(value);
+        return EqualPredicate.getInstance(value);
     }
 
     /**
@@ -193,10 +184,7 @@ public class PredicateUtils {
      * @return the predicate
      */
     public static Predicate identityPredicate(Object value) {
-        if (value == null) {
-            return NULL_PREDICATE;
-        }
-        return new IdentityPredicate(value);
+        return IdentityPredicate.getInstance(value);
     }
     
     /**
@@ -209,10 +197,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the class is null
      */
     public static Predicate instanceofPredicate(Class type) {
-        if (type == null) {
-            throw new IllegalArgumentException("The type to check instanceof must not be null");
-        }
-        return new InstanceofPredicate(type);
+        return InstanceofPredicate.getInstance(type);
     }
 
     /**
@@ -454,10 +439,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicate is null
      */
     public static Predicate notPredicate(Predicate predicate) {
-        if (predicate == null) {
-            throw new IllegalArgumentException("The predicate must not be null");
-        }
-        return new NotPredicate(predicate);
+        return NotPredicate.getInstance(predicate);
     }
 
     // Adaptors
@@ -492,10 +474,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicate is null.
      */
     public static Predicate nullIsExceptionPredicate(Predicate predicate){
-        if (predicate == null) {
-            throw new IllegalArgumentException("The predicate must not be null");
-        }
-        return new NullIsExceptionPredicate( predicate);
+        return NullIsExceptionPredicate.getInstance(predicate);
     }
 
     /**
@@ -508,10 +487,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicate is null.
      */
     public static Predicate nullIsFalsePredicate(Predicate predicate){
-        if (predicate == null) {
-            throw new IllegalArgumentException("The predicate must not be null");
-        }
-        return new NullIsFalsePredicate(predicate);
+        return NullIsFalsePredicate.getInstance(predicate);
     }
 
     /**
@@ -524,10 +500,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicate is null.
      */
     public static Predicate nullIsTruePredicate(Predicate predicate){
-        if (predicate == null) {
-            throw new IllegalArgumentException("The predicate must not be null");
-        }
-        return new NullIsTruePredicate(predicate);
+        return NullIsTruePredicate.getInstance(predicate);
     }
 
     /**
@@ -579,32 +552,6 @@ public class PredicateUtils {
             preds[i] = predicates[i];
         }
         return preds;
-    }
-
-    // ConstantPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * ConstantPredicate returns the same instance each time.
-     */
-    private static class ConstantPredicate implements Predicate, Serializable {
-        /** The constant value to return each time */
-        private final boolean iConstant;
-
-        /**
-         * Constructor to store constant
-         */
-        private ConstantPredicate(boolean constant) {
-            super();
-            iConstant = constant;
-        }
-
-        /**
-         * Always return constant
-         */
-        public boolean evaluate(Object object) {
-            return iConstant;
-        }
     }
 
     // AllPredicate
@@ -704,110 +651,6 @@ public class PredicateUtils {
         }
     }
 
-    // NotPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * NotPredicate returns the opposite of the wrapped predicate
-     */
-    private static class NotPredicate implements Predicate, Serializable {
-        /** The predicate to call */
-        private final Predicate iPredicate;
-
-        /**
-         * Constructor
-         */
-        private NotPredicate(Predicate predicate) {
-            super();
-            iPredicate = predicate;
-        }
-
-        /**
-         * Return true if the wrapped predicate returns false, and vice versa
-         */
-        public boolean evaluate(Object object) {
-            return !iPredicate.evaluate(object);
-        }
-    }
-
-    // InstanceofPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * InstanceofPredicate checks the type of an object
-     */
-    private static class InstanceofPredicate implements Predicate, Serializable {
-        /** The type to check for */
-        private final Class iType;
-
-        /**
-         * Constructor
-         */
-        public InstanceofPredicate(Class type) {
-            super();
-            iType = type;
-        }
-
-        /**
-         * Return true if the object is an instanceof the type of the predicate.
-         */
-        public boolean evaluate(Object object) {
-            return iType.isInstance(object);
-        }
-    }
-
-    // EqualPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * EqualPredicate that checks if the object is a particular value by equals().
-     */
-    private static class EqualPredicate implements Predicate, Serializable {
-        /** The object to compare to */
-        private final Object iValue;
-
-        /**
-         * Constructor
-         */
-        public EqualPredicate(Object value) {
-            super();
-            iValue = value;
-        }
-
-        /**
-         * Return true if the object is equals() to the value stored in the predicate.
-         */
-        public boolean evaluate(Object object) {
-            return iValue.equals(object);
-        }
-    }
-
-    // IdentityPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * IdentityPredicate that checks if the object is a particular value by identity.
-     */
-    private static class IdentityPredicate implements Predicate, Serializable {
-        /** The object to compare identity to */
-        private final Object iValue;
-
-        /**
-         * Constructor
-         */
-        public IdentityPredicate(Object value) {
-            super();
-            iValue = value;
-        }
-
-        /**
-         * Return true if the object is equals() to the value stored in the predicate.
-         */
-        public boolean evaluate(Object object) {
-            return iValue == object;
-        }
-    }
-
     // UniquePredicate
     //----------------------------------------------------------------------------------
 
@@ -865,93 +708,6 @@ public class PredicateUtils {
                         + (result == null ? "null object" : result.getClass().getName()));
             }
             return ((Boolean) result).booleanValue();
-        }
-    }
-
-    // NullIsExceptionPredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * NullIsExceptionPredicate returns an exception if null is passed in.
-     */
-    private static class NullIsExceptionPredicate implements Predicate, Serializable {
-        /** The predicate to call */
-        private final Predicate iPredicate;
-        
-        /**
-         * Constructor
-         */
-        private NullIsExceptionPredicate(Predicate predicate){
-            super();
-            iPredicate = predicate;
-        }
-        
-        /**
-         * Return an exception if null
-         */
-        public boolean evaluate(Object object){
-            if (object == null) {
-                throw new FunctorException("NullIsExceptionPredicate: Input Object must not be null");
-            }
-            return iPredicate.evaluate(object);
-        }
-    }
-
-    // NullIsFalsePredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * NullIsFalsePredicate returns false if null is passed in.
-     */
-    private static class NullIsFalsePredicate implements Predicate, Serializable {
-        /** The predicate to call */
-        private final Predicate iPredicate;
-        
-        /**
-         * Constructor
-         */
-        private NullIsFalsePredicate(Predicate predicate){
-            super();
-            iPredicate = predicate;
-        }
-        
-        /**
-         * Return false if null
-         */
-        public boolean evaluate(Object object){
-            if (object == null) {
-                return false;
-            }
-            return iPredicate.evaluate(object);
-        }
-    }
-
-    // NullIsTruePredicate
-    //----------------------------------------------------------------------------------
-
-    /**
-     * NullIsTruePredicate returns true if null is passed in.
-     */
-    private static class NullIsTruePredicate implements Predicate, Serializable {
-        /** The predicate to call */
-        private final Predicate iPredicate;
-        
-        /**
-         * Constructor
-         */
-        private NullIsTruePredicate(Predicate predicate){
-            super();
-            iPredicate = predicate;
-        }
-        
-        /**
-         * Return true if null
-         */
-        public boolean evaluate(Object object){
-            if (object == null) {
-                return true;
-            }
-            return iPredicate.evaluate(object);
         }
     }
 
