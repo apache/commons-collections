@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.3 2003/09/29 23:24:18 matth Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.4 2003/10/05 20:52:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,63 +57,143 @@
  */
 package org.apache.commons.collections;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import junit.framework.TestCase;
 
 /**
  * JUnit tests.
  * 
+ * @version $Revision: 1.4 $ $Date: 2003/10/05 20:52:29 $
+ * 
  * @author Matthew Hawthorne
- * @version $Id: TestBidiMap.java,v 1.3 2003/09/29 23:24:18 matth Exp $
- * @see org.apache.commons.collections.BidiMap
  */
-public abstract class TestBidiMap extends TestCase {
+public abstract class TestBidiMap extends AbstractTestMap {
 
     // Test data.
     private static final Object KEY = "key1";
     private static final Object VALUE = "value1";
 
-    private static final Object[][] entries =
+    private static final Object[][] entriesKV =
         new Object[][] {
             new Object[] { KEY, VALUE },
             new Object[] { "key2", "value2" },
             new Object[] { "key3", "value3" }
     };
+    private static final Object[][] entriesVK =
+        new Object[][] {
+            new Object[] { VALUE, KEY },
+            new Object[] { "value2", "key2" },
+            new Object[] { "value3", "key3" }
+    };
+    private final Object[][] entries;
 
     public TestBidiMap(String testName) {
         super(testName);
+        entries = entriesKV;
     }
 
+    public TestBidiMap() {
+        super("Inverse");
+        entries = entriesVK;
+    }
+
+    //-----------------------------------------------------------------------
     /**
-     * Creates an empty <code>BidiMap</code> implementation.
+     * Implement to create an empty <code>BidiMap</code>.
      * 
      * @return an empty <code>BidiMap</code> implementation.
      */
-    protected abstract BidiMap createBidiMap();
+    protected abstract BidiMap makeEmptyBidiMap();
 
-    // testGetKey
-
-    public void testGetKey() {
-        testGetKey(createBidiMapWithData(), entries[0][0], entries[0][1]);
+    /**
+     * Override to create a full <code>BidiMap</code> other than the default.
+     * 
+     * @return a full <code>BidiMap</code> implementation.
+     */
+    protected BidiMap makeFullBidiMap() {
+        final BidiMap map = makeEmptyBidiMap();
+        for (int i = 0; i < entries.length; i++) {
+            map.put(entries[i][0], entries[i][1]);
+        }
+        return map;
     }
 
-    public void testGetKeyInverse() {
-        testGetKey(
-            createBidiMapWithData().inverseBidiMap(),
+    /**
+     * Override to return the empty BidiMap.
+     */
+    protected final  Map makeEmptyMap() {
+        return makeEmptyBidiMap();
+    }
+
+    /**
+     * Override to indicate to AbstractTestMap this is a BidiMap.
+     */
+    protected boolean useDuplicateValues() {
+        return false;
+    }
+    
+    /**
+     * Override to prevent infinite recursion of tests.
+     */
+    protected String[] ignoredTests() {
+        return new String[] {"TestHashBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
+    }
+    
+    // BidiPut
+    //-----------------------------------------------------------------------
+    public void testBidiPut() {
+        BidiMap map = makeEmptyBidiMap();
+        BidiMap inverse = map.inverseBidiMap();
+        assertEquals(0, map.size());
+        assertEquals(map.size(), inverse.size());
+        
+        map.put("A", "B");
+        assertEquals(1, map.size());
+        assertEquals(map.size(), inverse.size());
+        assertEquals("B", map.get("A"));
+        assertEquals("A", inverse.get("B"));
+        
+        map.put("A", "C");
+        assertEquals(1, map.size());
+        assertEquals(map.size(), inverse.size());
+        assertEquals("C", map.get("A"));
+        assertEquals("A", inverse.get("C"));
+        
+        map.put("B", "C");
+        assertEquals(1, map.size());
+        assertEquals(map.size(), inverse.size());
+        assertEquals("C", map.get("B"));
+        assertEquals("B", inverse.get("C"));
+        
+        map.put("E", "F");
+        assertEquals(2, map.size());
+        assertEquals(map.size(), inverse.size());
+        assertEquals("F", map.get("E"));
+        assertEquals("E", inverse.get("F"));
+    }
+
+    // testGetKey
+    //-----------------------------------------------------------------------
+    public void testBidiGetKey() {
+        doTestGetKey(makeFullBidiMap(), entries[0][0], entries[0][1]);
+    }
+
+    public void testBidiGetKeyInverse() {
+        doTestGetKey(
+            makeFullBidiMap().inverseBidiMap(),
             entries[0][1],
             entries[0][0]);
     }
 
-    private final void testGetKey(BidiMap map, Object key, Object value) {
+    private final void doTestGetKey(BidiMap map, Object key, Object value) {
         assertEquals("Value not found for key.", value, map.get(key));
         assertEquals("Key not found for value.", key, map.getKey(value));
     }
 
     // testInverse
-
-    public void testInverse() {
-        final BidiMap map = createBidiMapWithData();
+    //-----------------------------------------------------------------------
+    public void testBidiInverse() {
+        final BidiMap map = makeFullBidiMap();
         final BidiMap inverseMap = map.inverseBidiMap();
 
         assertSame(
@@ -132,36 +212,10 @@ public abstract class TestBidiMap extends TestCase {
             inverseMap.getKey(entries[0][0]));
     }
 
-    /**
-     * Ensures that calling:
-     * 
-     * <pre>
-     * map.add(a, c)
-     * map.add(b, c)
-     * </pre>
-     * 
-     * Removes the entry (a, c)
-     */
-    public void testAddDuplicateValue() {
-        final BidiMap map = createBidiMap();
-
-        final Object key1 = "key1";
-        final Object key2 = "key2";
-        final Object value = "value";
-
-        map.put(key1, value);
-        map.put(key2, value);
-
-        assertTrue(
-            "Key/value pair was not removed on duplicate value.",
-            !map.containsKey(key1));
-
-        assertEquals("Key/value mismatch", key2, map.getKey(value));
-    }
-
-    public void testModifyEntrySet() {
-        modifyEntrySet(createBidiMapWithData());
-        modifyEntrySet(createBidiMapWithData().inverseBidiMap());
+    //-----------------------------------------------------------------------
+    public void testBidiModifyEntrySet() {
+        modifyEntrySet(makeFullBidiMap());
+        modifyEntrySet(makeFullBidiMap().inverseBidiMap());
     }
 
     private final void modifyEntrySet(BidiMap map) {
@@ -186,34 +240,28 @@ public abstract class TestBidiMap extends TestCase {
             map.getKey(oldValue));
     }
 
-    // ----------------------------------------------------------------
-    // Removal tests
-    // ----------------------------------------------------------------
-
-    public void testClear() {
-        BidiMap map = createBidiMapWithData();
+    //-----------------------------------------------------------------------
+    public void testBidiClear() {
+        BidiMap map = makeFullBidiMap();
         map.clear();
         assertTrue("Map was not cleared.", map.isEmpty());
-        assertTrue(
-            "Inverse map was not cleared.",
-            map.inverseBidiMap().isEmpty());
+        assertTrue("Inverse map was not cleared.", map.inverseBidiMap().isEmpty());
 
         // Tests clear on inverse
-        map = createBidiMapWithData().inverseBidiMap();
+        map = makeFullBidiMap().inverseBidiMap();
         map.clear();
         assertTrue("Map was not cleared.", map.isEmpty());
-        assertTrue(
-            "Inverse map was not cleared.",
-            map.inverseBidiMap().isEmpty());
+        assertTrue("Inverse map was not cleared.", map.inverseBidiMap().isEmpty());
 
     }
 
-    public void testRemove() {
-        remove(createBidiMapWithData(), KEY);
-        remove(createBidiMapWithData().inverseBidiMap(), VALUE);
+    //-----------------------------------------------------------------------
+    public void testBidiRemove() {
+        remove(makeFullBidiMap(), KEY);
+        remove(makeFullBidiMap().inverseBidiMap(), VALUE);
 
-        removeKey(createBidiMapWithData(), VALUE);
-        removeKey(createBidiMapWithData().inverseBidiMap(), KEY);
+        removeKey(makeFullBidiMap(), VALUE);
+        removeKey(makeFullBidiMap().inverseBidiMap(), KEY);
     }
 
     private final void remove(BidiMap map, Object key) {
@@ -228,9 +276,10 @@ public abstract class TestBidiMap extends TestCase {
         assertNull("Value was not removed.", map.getKey(value));
     }
 
-    public void testRemoveByKeySet() {
-        removeByKeySet(createBidiMapWithData(), KEY, VALUE);
-        removeByKeySet(createBidiMapWithData().inverseBidiMap(), VALUE, KEY);
+    //-----------------------------------------------------------------------
+    public void testBidiRemoveByKeySet() {
+        removeByKeySet(makeFullBidiMap(), KEY, VALUE);
+        removeByKeySet(makeFullBidiMap().inverseBidiMap(), VALUE, KEY);
     }
 
     private final void removeByKeySet(BidiMap map, Object key, Object value) {
@@ -247,16 +296,16 @@ public abstract class TestBidiMap extends TestCase {
             !map.inverseBidiMap().containsKey(value));
     }
 
-    public void testRemoveByEntrySet() {
-        removeByEntrySet(createBidiMapWithData(), KEY, VALUE);
-        removeByEntrySet(createBidiMapWithData().inverseBidiMap(), VALUE, KEY);
+    //-----------------------------------------------------------------------
+    public void testBidiRemoveByEntrySet() {
+        removeByEntrySet(makeFullBidiMap(), KEY, VALUE);
+        removeByEntrySet(makeFullBidiMap().inverseBidiMap(), VALUE, KEY);
     }
 
-    private final void removeByEntrySet(
-        BidiMap map,
-        Object key,
-        Object value) {
-        map.entrySet().remove(new DefaultMapEntry(key, value));
+    private final void removeByEntrySet(BidiMap map, Object key, Object value) {
+        Map temp = new HashMap();
+        temp.put(key, value);
+        map.entrySet().remove(temp.entrySet().iterator().next());
 
         assertTrue("Key was not removed.", !map.containsKey(key));
         assertTrue("Value was not removed.", !map.containsValue(value));
@@ -269,28 +318,24 @@ public abstract class TestBidiMap extends TestCase {
             !map.inverseBidiMap().containsKey(value));
     }
 
-    // ----------------------------------------------------------------
-    // Data generation methods
-    // ----------------------------------------------------------------
-
-    /**
-     * This classes used to extend collections.TestMap, but can't anymore since 
-     * put() breaks a contract.
-     */
-    protected Map makeEmptyMap() {
-        return createBidiMap();
+    public BulkTest bulkTestInverseMap() {
+        return new TestInverseBidiMap(this);
     }
 
-    protected final BidiMap createBidiMapWithData() {
-        final BidiMap map = createBidiMap();
-        fillMap(map);
-        return map;
-    }
-
-    private static final void fillMap(BidiMap map) {
-        for (int i = 0; i < entries.length; i++) {
-            map.put(entries[i][0], entries[i][1]);
+    class TestInverseBidiMap extends TestBidiMap {
+        final TestBidiMap main;
+        
+        public TestInverseBidiMap(TestBidiMap main) {
+            super();
+            this.main = main;
+        }
+        protected BidiMap makeEmptyBidiMap() {
+            return main.makeEmptyBidiMap().inverseBidiMap();
+        }
+        
+        protected BidiMap makeFullBidiMap() {
+            return main.makeFullBidiMap().inverseBidiMap();
         }
     }
-
-} // TestBidiMap
+    
+}

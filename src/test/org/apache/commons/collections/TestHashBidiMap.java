@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestHashBidiMap.java,v 1.1 2003/09/23 20:29:34 matth Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestHashBidiMap.java,v 1.2 2003/10/05 20:52:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,15 +58,14 @@
 package org.apache.commons.collections;
 
 import junit.framework.Test;
-import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 /**
  * JUnit tests.
  * 
+ * @version $Revision: 1.2 $ $Date: 2003/10/05 20:52:29 $
+ * 
  * @author Matthew Hawthorne
- * @version $Id: TestHashBidiMap.java,v 1.1 2003/09/23 20:29:34 matth Exp $
- * @see org.apache.commons.collections.HashBidiMap
  */
 public class TestHashBidiMap extends TestBidiMap {
 
@@ -75,15 +74,15 @@ public class TestHashBidiMap extends TestBidiMap {
     }
     
     public static Test suite() {
-        return new TestSuite(TestHashBidiMap.class);
+        return BulkTest.makeSuite(TestHashBidiMap.class);
     }
 
     public TestHashBidiMap(String testName) {
         super(testName);
     }
 
-    protected BidiMap createBidiMap() {
+    protected BidiMap makeEmptyBidiMap() {
         return new HashBidiMap();
     }
 
-} // TestHashBidiMap
+}
