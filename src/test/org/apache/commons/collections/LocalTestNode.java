@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.14 2002/01/20 04:36:08 craigmcc Exp $
- * $Revision: 1.14 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/LocalTestNode.java,v 1.1 2002/01/20 04:36:08 craigmcc Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/01/20 04:36:08 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -61,46 +61,104 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
+
 
 /**
- * Entry point for all Collections tests.
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.14 2002/01/20 04:36:08 craigmcc Exp $
- */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+* Class LocalTestNode
+*
+* a helper class for TestDoubleOrderedMap
+*
+* @author Marc Johnson (marcj at users dot sourceforge dot net)
+*/
+class LocalTestNode implements Comparable {
+
+    private Comparable key;
+    private Comparable value;
+
+    /**
+     * construct a LocalTestNode
+     *
+     * @param key value used to create the key and value
+     */
+    LocalTestNode(final int key) {
+        this.key   = new Integer(key);
+        this.value = String.valueOf(key);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayIterator.suite());
-        suite.addTest(TestArrayIterator2.suite());
-        suite.addTest(TestArrayList.suite());
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestHashMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestSingletonIterator.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTreeMap.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        return suite;
+    /**
+     * @param key the unique key associated with the current node.
+     */
+    void setKey(Comparable key) {
+        this.key = key;
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    /**
+     * @return the unique key associated with the current node
+     */
+    Comparable getKey() {
+        return key;
+    }
+
+    /**
+     * @param value the unique value associated with the current node.
+     */
+    void setValue(Comparable value) {
+        this.value = value;
+    }
+
+    /**
+     * @return the unique value associated with the current node
+     */
+    Comparable getValue() {
+        return value;
+    }
+
+    /**
+     * Method compareTo
+     *
+     * @param o
+     *
+     * @return
+     */
+    public int compareTo(Object o) {
+
+        LocalTestNode other = (LocalTestNode) o;
+        int           rval  = getKey().compareTo(other.getKey());
+
+        if (rval == 0) {
+            rval = getValue().compareTo(other.getValue());
+        }
+
+        return rval;
+    }
+
+    /**
+     * Method equals
+     *
+     * @param o
+     *
+     * @return true if equal
+     */
+    public boolean equals(Object o) {
+
+        if (o == null) {
+            return false;
+        }
+
+        if (!(o.getClass().equals(this.getClass()))) {
+            return false;
+        }
+
+        LocalTestNode node = (LocalTestNode) o;
+
+        return (getKey().equals(node.getKey())
+                && getValue().equals(node.getValue()));
+    }
+
+    /**
+     * @return hash code
+     */
+    public int hashCode() {
+        return getKey().hashCode() ^ getValue().hashCode();
     }
 }
