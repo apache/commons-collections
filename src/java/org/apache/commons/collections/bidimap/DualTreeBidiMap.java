@@ -46,7 +46,7 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * not store each object twice, which can save on memory use.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.12 2004/02/18 00:57:39 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.13 2004/05/15 12:13:03 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -172,6 +172,8 @@ public class DualTreeBidiMap
      * <p>
      * This implementation copies the elements to an ArrayList in order to
      * provide the forward/backward behaviour.
+     * 
+     * @return a new ordered map iterator
      */
     public OrderedMapIterator orderedMapIterator() {
         return new BidiOrderedMapIterator(this);
@@ -206,8 +208,14 @@ public class DualTreeBidiMap
      * Internal sorted map view.
      */
     protected static class ViewMap extends AbstractSortedMapDecorator {
+        /** The parent bidi map. */
         final DualTreeBidiMap bidi;
         
+        /**
+         * Constructor.
+         * @param bidi  the parent bidi map
+         * @param sm  the subMap sorted map
+         */
         protected ViewMap(DualTreeBidiMap bidi, SortedMap sm) {
             // the implementation is not great here...
             // use the maps[0] as the filtered map, but maps[1] as the full map
@@ -255,6 +263,10 @@ public class DualTreeBidiMap
         /** The last returned entry */
         private Map.Entry last = null;
         
+        /**
+         * Constructor.
+         * @param parent  the parent map
+         */
         protected BidiOrderedMapIterator(AbstractDualBidiMap parent) {
             super();
             this.parent = parent;

@@ -36,7 +36,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.11 2004/04/01 22:18:12 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.12 2004/05/15 12:13:03 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -401,6 +401,11 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         /** Whether remove is allowed at present */
         protected boolean canRemove = false;
         
+        /**
+         * Constructor.
+         * @param iterator  the iterator to decorate
+         * @param parent  the parent map
+         */
         protected KeySetIterator(Iterator iterator, AbstractDualBidiMap parent) {
             super(iterator);
             this.parent = parent;
@@ -469,6 +474,11 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         /** Whether remove is allowed at present */
         protected boolean canRemove = false;
         
+        /**
+         * Constructor.
+         * @param iterator  the iterator to decorate
+         * @param parent  the parent map
+         */
         protected ValuesIterator(Iterator iterator, AbstractDualBidiMap parent) {
             super(iterator);
             this.parent = parent;
@@ -540,6 +550,11 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         /** Whether remove is allowed at present */
         protected boolean canRemove = false;
         
+        /**
+         * Constructor.
+         * @param iterator  the iterator to decorate
+         * @param parent  the parent map
+         */
         protected EntrySetIterator(Iterator iterator, AbstractDualBidiMap parent) {
             super(iterator);
             this.parent = parent;
@@ -572,6 +587,11 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         /** The parent map */        
         protected final AbstractDualBidiMap parent;
         
+        /**
+         * Constructor.
+         * @param entry  the entry to decorate
+         * @param parent  the parent map
+         */
         protected MapEntry(Map.Entry entry, AbstractDualBidiMap parent) {
             super(entry);
             this.parent = parent;
@@ -603,6 +623,10 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         /** Whether remove is allowed at present */
         protected boolean canRemove = false;
         
+        /**
+         * Constructor.
+         * @param parent  the parent map
+         */
         protected BidiMapIterator(AbstractDualBidiMap parent) {
             super();
             this.parent = parent;

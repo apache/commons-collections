@@ -36,7 +36,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>SortedBidiMap</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:57:39 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/15 12:13:03 $
  * 
  * @author Stephen Colebourne
  */
@@ -48,8 +48,11 @@ public final class UnmodifiableSortedBidiMap
 
     /**
      * Factory method to create an unmodifiable map.
+     * <p>
+     * If the map passed in is already unmodifiable, it is returned.
      * 
      * @param map  the map to decorate, must not be null
+     * @return an unmodifiable SortedBidiMap
      * @throws IllegalArgumentException if map is null
      */
     public static SortedBidiMap decorate(SortedBidiMap map) {
