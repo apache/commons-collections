@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestFlat3Map.java,v 1.1 2003/11/02 23:41:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestFlat3Map.java,v 1.2 2003/11/08 18:46:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import org.apache.commons.collections.iterators.MapIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/02 23:41:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/08 18:46:57 $
  * 
  * @author Stephen Colebourne
  */
@@ -100,8 +100,8 @@ public class TestFlat3Map extends AbstractTestMap {
             super("TestFlatMapIterator");
         }
         
-        protected Object addSetValue() {
-            return TestFlat3Map.this.getNewSampleValues()[0];
+        protected Object[] addSetValues() {
+            return TestFlat3Map.this.getNewSampleValues();
         }
         
         protected boolean supportsRemove() {
@@ -127,88 +127,14 @@ public class TestFlat3Map extends AbstractTestMap {
             return TestFlat3Map.this.map;
         }
         
+        protected Map getConfirmedMap() {
+            // assumes makeFullMapIterator() called first
+            return TestFlat3Map.this.confirmed;
+        }
+        
         protected void verify() {
             super.verify();
-            // cannot cross verify as we don't know what superclass did
+            TestFlat3Map.this.verify();
         }
     }
-    
-    //-----------------------------------------------------------------------
-    public void testMapIteratorRemove() {
-        resetFull();
-        Flat3Map testMap = (Flat3Map) map;
-        MapIterator it = testMap.mapIterator();
-        assertEquals(true, it.hasNext());
-        Object key = it.next();
-        
-        if (isRemoveSupported() == false) {
-            try {
-                it.remove();
-                fail();
-            } catch (UnsupportedOperationException ex) {
-            }
-            return;
-        }
-        
-        it.remove();
-        confirmed.remove(key);
-        assertEquals(false, testMap.containsKey(key));
-        verify();
-        
-        try {
-            it.remove();  // second remove fails
-        } catch (IllegalStateException ex) {
-        }
-        verify();
-    }
-
-    //-----------------------------------------------------------------------
-    public void testMapIteratorSet() {
-        Object newValue1 = getOtherValues()[0];
-        Object newValue2 = getOtherValues()[1];
-        
-        resetFull();
-        Flat3Map testMap = (Flat3Map) map;
-        MapIterator it = testMap.mapIterator();
-        assertEquals(true, it.hasNext());
-        Object key1 = it.next();
-        
-        if (isSetValueSupported() == false) {
-            try {
-                it.setValue(newValue1);
-                fail();
-            } catch (UnsupportedOperationException ex) {
-            }
-            return;
-        }
-        
-        it.setValue(newValue1);
-        confirmed.put(key1, newValue1);
-        assertSame(key1, it.getKey());
-        assertSame(newValue1, it.getValue());
-        assertEquals(true, testMap.containsKey(key1));
-        assertEquals(true, testMap.containsValue(newValue1));
-        assertEquals(newValue1, testMap.get(key1));
-        verify();
-        
-        it.setValue(newValue1);  // same value - should be OK
-        confirmed.put(key1, newValue1);
-        assertSame(key1, it.getKey());
-        assertSame(newValue1, it.getValue());
-        assertEquals(true, testMap.containsKey(key1));
-        assertEquals(true, testMap.containsValue(newValue1));
-        assertEquals(newValue1, testMap.get(key1));
-        verify();
-        
-        Object key2 = it.next();
-        it.setValue(newValue2);
-        confirmed.put(key2, newValue2);
-        assertSame(key2, it.getKey());
-        assertSame(newValue2, it.getValue());
-        assertEquals(true, testMap.containsKey(key2));
-        assertEquals(true, testMap.containsValue(newValue2));
-        assertEquals(newValue2, testMap.get(key2));
-        verify();
-    }
-
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.3 2003/11/02 19:47:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.4 2003/11/08 18:46:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/02 19:47:10 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/08 18:46:57 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -229,14 +229,12 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
         // remove after next should be fine
         it.next();
         it.remove();
-        verify();
         
         // should throw IllegalStateException for second remove()
         try {
             it.remove();
             fail();
         } catch (IllegalStateException ex) {}
-        verify();
     }
     
 }

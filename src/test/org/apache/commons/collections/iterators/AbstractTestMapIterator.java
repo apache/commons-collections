@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.2 2003/11/02 19:47:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.3 2003/11/08 18:46:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,7 +62,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.Map.Entry;
 
 /**
  * Abstract class for testing the MapIterator interface.
@@ -73,7 +72,7 @@ import java.util.Map.Entry;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/02 19:47:10 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/08 18:46:57 $
  * 
  * @author Stephen Colebourne
  */
@@ -112,14 +111,13 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
     protected abstract Map getMap();
     
     /**
-     * Override if the map returned by getMap() is NOT the one tied to the iterator.
+     * Implement this method to return the confirmed map which contains the same
+     * data as the iterator.
      * 
-     * @return true if the getMap() map is the one tied to the iterator
+     * @return a full map which can be updated
      */
-    protected boolean supportsTiedMap() {
-        return true;
-    }
-
+    protected abstract Map getConfirmedMap();
+    
     /**
      * Implements the abstract superclass method to return the list iterator.
      * 
@@ -149,11 +147,11 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
     }
 
     /**
-     * The value to be used in the add and set tests.
-     * Default is null.
+     * The values to be used in the add and set tests.
+     * Default is two strings.
      */
-    protected Object addSetValue() {
-        return null;
+    protected Object[] addSetValues() {
+        return new Object[] {"A", "B"};
     }
 
     //-----------------------------------------------------------------------
@@ -187,23 +185,17 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             fail();
         } catch (IllegalStateException ex) {}
         
-        // asMapEntry() should throw an IllegalStateException
-        try {
-            it.asMapEntry();
-            fail();
-        } catch (IllegalStateException ex) {}
-        
         if (supportsSetValue() == false) {
             // setValue() should throw an UnsupportedOperationException/IllegalStateException
             try {
-                it.setValue(addSetValue());
+                it.setValue(addSetValues()[0]);
                 fail();
             } catch (UnsupportedOperationException ex) {
             } catch (IllegalStateException ex) {}
         } else {
             // setValue() should throw an IllegalStateException
             try {
-                it.setValue(addSetValue());
+                it.setValue(addSetValues()[0]);
                 fail();
             } catch (IllegalStateException ex) {}
         }
@@ -223,9 +215,6 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
         assertEquals(true, it.hasNext());
         
         assertEquals(true, it.hasNext());
-        Map.Entry lastEntry = null;
-        Object lastKey = null;
-        Object lastValue = null;
         Set set = new HashSet();
         while (it.hasNext()) {
             // getKey
@@ -239,21 +228,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             assertSame("Value must be mapped to key", map.get(key), value);
             assertTrue("Value must be in map",  map.containsValue(value));
             assertSame("Value must be mapped to key", map.get(key), value);
-            
-            // asMapEntry
-            Map.Entry entry = it.asMapEntry();
-            assertSame("MapEntry key must match", key, entry.getKey());
-            assertSame("MapEntry value must match", value, entry.getValue());
-            
-            assertTrue("MapEntry must be independent", entry != lastEntry);
-            if (lastKey != null && lastValue != null) {
-                assertSame("MapEntry must not change after next()", lastKey, lastEntry.getKey());
-                assertSame("MapEntry must not change after next()", lastValue, lastEntry.getValue());
-            }
-            
-            lastEntry = entry;
-            lastKey = key;
-            lastValue = value;
+
             verify();
         }
     }
@@ -264,13 +239,14 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
             return;
         }
 
-        Object newValue = addSetValue();
+        Object newValue = addSetValues()[0];
+        Object newValue2 = addSetValues()[1];
         MapIterator it = makeFullMapIterator();
         Map map = getMap();
+        Map confirmed = getConfirmedMap();
         assertEquals(true, it.hasNext());
         Object key = it.next();
         Object value = it.getValue();
-        Entry entry = it.asMapEntry();
         
         if (supportsSetValue() == false) {
             try {
@@ -281,97 +257,70 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
         }
         
         Object old = it.setValue(newValue);
+        confirmed.put(key, newValue);
         assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Key must not change after setValue", key, entry.getKey());
         assertSame("Value must be changed after setValue", newValue, it.getValue());
-        assertSame("Value must be changed after setValue", newValue, entry.getValue());
         assertSame("setValue must return old value", value, old);
-        if (supportsTiedMap()) {
-            assertTrue("Key must be in map",  map.containsKey(key));
-            assertTrue("Old value must not be in map",  map.containsValue(value) == false);
-            assertTrue("Value must be in map",  map.containsValue(newValue));
-            assertSame("Value must be mapped to key", map.get(key), newValue);
-        }
         verify();
         
         it.setValue(newValue);  // same value - should be OK
+        confirmed.put(key, newValue);
         assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Key must not change after setValue", key, entry.getKey());
         assertSame("Value must be changed after setValue", newValue, it.getValue());
-        assertSame("Value must be changed after setValue", newValue, entry.getValue());
-        if (supportsTiedMap()) {
-            assertTrue("Key must be in map",  map.containsKey(key));
-            assertTrue("Old value must not be in map",  map.containsValue(value) == false);
-            assertTrue("Value must be in map",  map.containsValue(newValue));
-            assertSame("Value must be mapped to key", map.get(key), newValue);
-        }
+        verify();
+        
+        it.setValue(newValue2);  // new value
+        confirmed.put(key, newValue2);
+        assertSame("Key must not change after setValue", key, it.getKey());
+        assertSame("Value must be changed after setValue", newValue2, it.getValue());
         verify();
     }
 
     //-----------------------------------------------------------------------
-    public void testMapIteratorMapEntrySet() {
-        if (supportsFullIterator() == false) {
-            return;
-        }
-
-        Object newValue = addSetValue();
+    public void testRemove() { // override
         MapIterator it = makeFullMapIterator();
         Map map = getMap();
+        Map confirmed = getConfirmedMap();
         assertEquals(true, it.hasNext());
         Object key = it.next();
-        Object value = it.getValue();
-        Entry entry = it.asMapEntry();
         
-        if (supportsSetValue() == false) {
+        if (supportsRemove() == false) {
             try {
-                entry.setValue(newValue);
+                it.remove();
                 fail();
-            } catch (UnsupportedOperationException ex) {}
+            } catch (UnsupportedOperationException ex) {
+            }
             return;
         }
         
-        Object old = entry.setValue(newValue);
-        assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Key must not change after setValue", key, entry.getKey());
-        assertSame("Value must be changed after setValue", newValue, it.getValue());
-        assertSame("Value must be changed after setValue", newValue, entry.getValue());
-        assertSame("setValue must return old value", value, old);
-        if (supportsTiedMap()) {
-            assertTrue("Key must be in map",  map.containsKey(key));
-            assertTrue("Old value must not be in map",  map.containsValue(value) == false);
-            assertTrue("Value must be in map",  map.containsValue(newValue));
-            assertSame("Value must be mapped to key", map.get(key), newValue);
-        }
+        it.remove();
+        confirmed.remove(key);
+        assertEquals(false, map.containsKey(key));
         verify();
         
-        entry.setValue(newValue);  // same value - should be OK
-        assertSame("Key must not change after setValue", key, it.getKey());
-        assertSame("Key must not change after setValue", key, entry.getKey());
-        assertSame("Value must be changed after setValue", newValue, it.getValue());
-        assertSame("Value must be changed after setValue", newValue, entry.getValue());
-        if (supportsTiedMap()) {
-            assertTrue("Key must be in map",  map.containsKey(key));
-            assertTrue("Old value must not be in map",  map.containsValue(value) == false);
-            assertTrue("Value must be in map",  map.containsValue(newValue));
-            assertSame("Value must be mapped to key", map.get(key), newValue);
+        try {
+            it.remove();  // second remove fails
+        } catch (IllegalStateException ex) {
         }
         verify();
     }
 
     //-----------------------------------------------------------------------
-    public void testBidiMapIteratorSetRemoveSet() {
+    public void testMapIteratorSetRemoveSet() {
         if (supportsSetValue() == false || supportsRemove() == false) {
             return;
         }
-        Object newValue = addSetValue();
-        
+        Object newValue = addSetValues()[0];
         MapIterator it = makeFullMapIterator();
         Map map = getMap();
+        Map confirmed = getConfirmedMap();
+        
         assertEquals(true, it.hasNext());
         Object key = it.next();
         
         it.setValue(newValue);
         it.remove();
+        confirmed.remove(key);
         verify();
         
         try {

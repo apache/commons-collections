@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.8 2003/11/02 15:27:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.9 2003/11/08 18:47:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,13 +66,17 @@ import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.iterators.OrderedMapIterator;
 import org.apache.commons.collections.iterators.ResetableIterator;
 import org.apache.commons.collections.iterators.ResetableListIterator;
+import org.apache.commons.collections.iterators.ResetableMapIterator;
+import org.apache.commons.collections.iterators.ResetableOrderedMapIterator;
 
 /**
  * Tests for IteratorUtils.
  * 
- * @version $Revision: 1.8 $ $Date: 2003/11/02 15:27:54 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/08 18:47:38 $
  * 
  * @author Unknown
  */
@@ -429,6 +433,8 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty iterator
      */
     public void testEmptyIterator() {
+        assertTrue(IteratorUtils.EMPTY_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_ITERATOR instanceof ResetableIterator);
         assertEquals(false, IteratorUtils.EMPTY_ITERATOR.hasNext());
         IteratorUtils.EMPTY_ITERATOR.reset();
         assertSame(IteratorUtils.EMPTY_ITERATOR, IteratorUtils.EMPTY_ITERATOR);
@@ -448,6 +454,10 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty list iterator
      */
     public void testEmptyListIterator() {
+        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ListIterator);
+        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResetableIterator);
+        assertTrue(IteratorUtils.EMPTY_LIST_ITERATOR instanceof ResetableListIterator);
         assertEquals(false, IteratorUtils.EMPTY_LIST_ITERATOR.hasNext());
         assertEquals(0, IteratorUtils.EMPTY_LIST_ITERATOR.nextIndex());
         assertEquals(-1, IteratorUtils.EMPTY_LIST_ITERATOR.previousIndex());
@@ -481,6 +491,10 @@ public class TestIteratorUtils extends BulkTest {
      * Test empty map iterator
      */
     public void testEmptyMapIterator() {
+        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof MapIterator);
+        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof ResetableIterator);
+        assertTrue(IteratorUtils.EMPTY_MAP_ITERATOR instanceof ResetableMapIterator);
         assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR.hasNext());
         IteratorUtils.EMPTY_MAP_ITERATOR.reset();
         assertSame(IteratorUtils.EMPTY_MAP_ITERATOR, IteratorUtils.EMPTY_MAP_ITERATOR);
@@ -505,8 +519,46 @@ public class TestIteratorUtils extends BulkTest {
             IteratorUtils.EMPTY_MAP_ITERATOR.setValue(null);
             fail();
         } catch (IllegalStateException ex) {}
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Test empty map iterator
+     */
+    public void testEmptyOrderedMapIterator() {
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof Iterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof MapIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof OrderedMapIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResetableIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResetableMapIterator);
+        assertTrue(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR instanceof ResetableOrderedMapIterator);
+        assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasNext());
+        assertEquals(false, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.hasPrevious());
+        IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.reset();
+        assertSame(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR);
+        assertSame(IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR, IteratorUtils.emptyOrderedMapIterator());
         try {
-            IteratorUtils.EMPTY_MAP_ITERATOR.asMapEntry();
+            IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.next();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.previous();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.getKey();
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.getValue();
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.setValue(null);
             fail();
         } catch (IllegalStateException ex) {}
     }

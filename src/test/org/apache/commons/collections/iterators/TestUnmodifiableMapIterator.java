@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableMapIterator.java,v 1.1 2003/11/02 18:29:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableMapIterator.java,v 1.2 2003/11/08 18:46:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,7 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -69,7 +70,7 @@ import org.apache.commons.collections.Unmodifiable;
 /**
  * Tests the UnmodifiableMapIterator.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/02 18:29:59 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/08 18:46:57 $
  * 
  * @author Stephen Colebourne
  */
@@ -99,6 +100,13 @@ public class TestUnmodifiableMapIterator extends AbstractTestMapIterator {
         return testMap;
     }
 
+    protected Map getConfirmedMap() {
+        Map testMap = new HashMap();
+        testMap.put("A", "a");
+        testMap.put("B", "b");
+        testMap.put("C", "c");
+        return testMap;
+    }
 
     public boolean supportsRemove() {
         return false;

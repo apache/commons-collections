@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.7 2003/11/02 19:48:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.8 2003/11/08 18:46:57 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import org.apache.commons.collections.iterators.MapIterator;
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/11/02 19:48:39 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/08 18:46:57 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -242,6 +242,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiModifyEntrySet() {
+        if (isSetValueSupported() == false) return;
+        
         modifyEntrySet(makeFullBidiMap());
         modifyEntrySet(makeFullBidiMap().inverseBidiMap());
     }
@@ -288,8 +290,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         remove(makeFullBidiMap(), entries[0][0]);
         remove(makeFullBidiMap().inverseBidiMap(), entries[0][1]);
 
-        removeKey(makeFullBidiMap(), entries[0][1]);
-        removeKey(makeFullBidiMap().inverseBidiMap(), entries[0][0]);
+        removeValue(makeFullBidiMap(), entries[0][1]);
+        removeValue(makeFullBidiMap().inverseBidiMap(), entries[0][0]);
     }
 
     private final void remove(BidiMap map, Object key) {
@@ -298,8 +300,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         assertNull("Value was not removed.", map.getKey(value));
     }
 
-    private final void removeKey(BidiMap map, Object value) {
-        final Object key = map.removeKey(value);
+    private final void removeValue(BidiMap map, Object value) {
+        final Object key = map.removeValue(value);
         assertTrue("Key was not removed.", !map.containsKey(key));
         assertNull("Value was not removed.", map.getKey(value));
     }
@@ -484,8 +486,8 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
             super("TestBidiMapIterator");
         }
         
-        protected Object addSetValue() {
-            return AbstractTestBidiMap.this.getNewSampleValues()[0];
+        protected Object[] addSetValues() {
+            return AbstractTestBidiMap.this.getNewSampleValues();
         }
         
         protected boolean supportsRemove() {
@@ -511,41 +513,17 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
             return AbstractTestBidiMap.this.map;
         }
         
+        protected Map getConfirmedMap() {
+            // assumes makeFullMapIterator() called first
+            return AbstractTestBidiMap.this.confirmed;
+        }
+        
         protected void verify() {
             super.verify();
-            AbstractTestBidiMap.this.verifyInverse();
+            AbstractTestBidiMap.this.verify();
         }
     }
     
-    //-----------------------------------------------------------------------
-    public void testBidiMapIteratorRemove() {
-        resetFull();
-        BidiMap bidi = (BidiMap) map;
-        MapIterator it = bidi.mapIterator();
-        assertEquals(true, it.hasNext());
-        Object key = it.next();
-        
-        if (isRemoveSupported() == false) {
-            try {
-                it.remove();
-                fail();
-            } catch (UnsupportedOperationException ex) {
-            }
-            return;
-        }
-        
-        it.remove();
-        confirmed.remove(key);
-        assertEquals(false, bidi.containsKey(key));
-        verify();
-        
-        try {
-            it.remove();  // second remove fails
-        } catch (IllegalStateException ex) {
-        }
-        verify();
-    }
-
     //-----------------------------------------------------------------------
     public void testBidiMapIteratorSet() {
         Object newValue1 = getOtherValues()[0];
