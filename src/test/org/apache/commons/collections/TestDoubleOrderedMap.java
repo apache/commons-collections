@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.1 2002/01/20 04:36:08 craigmcc Exp $
- * $Revision: 1.1 $
- * $Date: 2002/01/20 04:36:08 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.2 2002/02/20 23:48:13 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/02/20 23:48:13 $
  *
  * ====================================================================
  *
@@ -69,13 +69,16 @@ import java.util.*;
 
 
 /**
-* Class TestDoubleOrderedMap
-*
-* Test cases for DoubleOrderedMap
-*
-* @author Marc Johnson (marcj at users dot sourceforge dot net)
-*/
-public class TestDoubleOrderedMap extends TestCase {
+ * Class TestDoubleOrderedMap
+ * 
+ * Test cases for DoubleOrderedMap.  This class cannot
+ * implement TestMap.SupportsPut, because it is a special
+ * Map that does not support duplicate keys, duplicate 
+ * values, or null values.
+ * 
+ * @author Marc Johnson (marcj at users dot sourceforge dot net)
+ */
+public class TestDoubleOrderedMap extends TestMap  {
 
     /**
      * constructor
@@ -95,12 +98,16 @@ public class TestDoubleOrderedMap extends TestCase {
         return new TestSuite(TestDoubleOrderedMap.class);
     }
 
+    public Map makeMap() {
+        return new DoubleOrderedMap();
+    }
+
     /**
      * test size() method
      */
     public void testSize() {
 
-        Map m = new DoubleOrderedMap();
+        Map m = makeMap();
 
         assertEquals(0, m.size());
 
@@ -131,7 +138,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testIsEmpty() {
 
-        Map m = new DoubleOrderedMap();
+        Map m = makeMap();
 
         assertTrue(m.isEmpty());
 
@@ -171,7 +178,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testContainsKey() {
 
-        Map m = new DoubleOrderedMap();
+        Map m = makeMap();
 
         try {
             m.containsKey(new Object());
@@ -210,7 +217,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testContainsValue() {
 
-        Map           m       = new DoubleOrderedMap();
+        Map           m       = (DoubleOrderedMap) makeMap();
         LocalTestNode nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -229,7 +236,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testGet() {
 
-        Map m = new DoubleOrderedMap();
+        Map m = makeMap();
 
         try {
             m.get(new Object());
@@ -269,7 +276,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testPut() {
 
-        Map m = new DoubleOrderedMap();
+        Map m = makeMap();
 
         try {
             m.put(new Object(), "foo");
@@ -307,7 +314,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testRemove() {
 
-        DoubleOrderedMap m       = new DoubleOrderedMap();
+        DoubleOrderedMap m       = (DoubleOrderedMap) makeMap();
         LocalTestNode    nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -357,7 +364,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testPutAll() {
 
-        Map           m       = new DoubleOrderedMap();
+        Map           m       = (DoubleOrderedMap) makeMap();
         LocalTestNode nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -402,7 +409,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         m1 = new HashMap();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -422,7 +429,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testClear() {
 
-        Map           m       = new DoubleOrderedMap();
+        Map           m       = (DoubleOrderedMap) makeMap();
         LocalTestNode nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -451,9 +458,9 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testKeySet() {
 
-        testKeySet(new DoubleOrderedMap());
+        testKeySet((DoubleOrderedMap) makeMap());
 
-        Map           m       = new DoubleOrderedMap();
+        Map           m       = (DoubleOrderedMap) makeMap();
         LocalTestNode nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -462,7 +469,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         testKeySet(m);
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -481,7 +488,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -510,7 +517,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         Collection c1 = new LinkedList();
         Collection c2 = new LinkedList();
@@ -526,7 +533,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySet().containsAll(c1));
         assertTrue(!m.keySet().containsAll(c2));
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         c1.add(new Integer(-55));
@@ -544,7 +551,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(!m.keySet().retainAll(c1));
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -558,7 +565,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySet().retainAll(c1));
         assertEquals(nodes.length / 2, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -568,7 +575,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySet().retainAll(c1));
         assertEquals(0, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -578,7 +585,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(!m.keySet().removeAll(c1));
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -592,7 +599,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySet().removeAll(c1));
         assertEquals(nodes.length / 2, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -603,7 +610,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySet().removeAll(c1));
         assertEquals(0, m.size());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -618,9 +625,9 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testValues() {
 
-        testValues(new DoubleOrderedMap());
+        testValues((DoubleOrderedMap) makeMap());
 
-        Map           m       = new DoubleOrderedMap();
+        Map           m       = (DoubleOrderedMap) makeMap();
         LocalTestNode nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -629,7 +636,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         testValues(m);
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -648,7 +655,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -667,7 +674,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         Collection c1 = new LinkedList();
         Collection c2 = new LinkedList();
@@ -683,7 +690,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.values().containsAll(c1));
         assertTrue(!m.values().containsAll(c2));
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -696,7 +703,7 @@ public class TestDoubleOrderedMap extends TestCase {
             fail("should have caught exception of addAll()");
         } catch (UnsupportedOperationException ignored) {}
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -707,7 +714,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(!m.values().retainAll(c1));
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -721,7 +728,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.values().retainAll(c1));
         assertEquals(nodes.length / 2, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -731,7 +738,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.values().retainAll(c1));
         assertEquals(0, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -741,7 +748,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(!m.values().removeAll(c1));
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -755,7 +762,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.values().removeAll(c1));
         assertEquals(nodes.length / 2, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -766,7 +773,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.values().removeAll(c1));
         assertEquals(0, m.size());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -781,9 +788,9 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testEntrySet() {
 
-        testEntrySet(new DoubleOrderedMap());
+        testEntrySet((DoubleOrderedMap) makeMap());
 
-        Map           m       = new DoubleOrderedMap();
+        Map           m       = (DoubleOrderedMap) makeMap();
         LocalTestNode nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -792,7 +799,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         testEntrySet(m);
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -817,7 +824,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         Collection c1 = new LinkedList();
 
@@ -831,7 +838,7 @@ public class TestDoubleOrderedMap extends TestCase {
             fail("should have caught exception of addAll()");
         } catch (UnsupportedOperationException ignored) {}
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -840,7 +847,7 @@ public class TestDoubleOrderedMap extends TestCase {
         m.entrySet().clear();
         assertEquals(0, m.size());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -863,7 +870,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testEquals() {
 
-        Map           m       = new DoubleOrderedMap();
+        Map           m       = (DoubleOrderedMap) makeMap();
         LocalTestNode nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -881,7 +888,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertEquals(m, m1);
 
-        m1 = new DoubleOrderedMap();
+        m1 = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < (nodes.length - 1); k++) {
             m1.put(nodes[k].getKey(), nodes[k]);
@@ -889,7 +896,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(!m.equals(m1));
 
-        m1 = new DoubleOrderedMap();
+        m1 = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m1.put(nodes[k].getKey(), nodes[k]);
@@ -900,7 +907,7 @@ public class TestDoubleOrderedMap extends TestCase {
         m1.put(node1.getKey(), node1);
         assertTrue(!m.equals(m1));
 
-        m1 = new DoubleOrderedMap();
+        m1 = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m1.put(nodes[k].getKey(), nodes[nodes.length - (k + 1)]);
@@ -908,7 +915,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(!m.equals(m1));
 
-        m1 = new DoubleOrderedMap();
+        m1 = (DoubleOrderedMap) makeMap();
 
         for (int k = nodes.length - 1; k >= 0; k--) {
             m1.put(nodes[k].getKey(), nodes[k]);
@@ -922,14 +929,14 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testHashCode() {
 
-        Map           m       = new DoubleOrderedMap();
+        Map           m       = (DoubleOrderedMap) makeMap();
         LocalTestNode nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
         }
 
-        Map m1 = new DoubleOrderedMap();
+        Map m1 = (DoubleOrderedMap) makeMap();
 
         for (int k = nodes.length - 1; k >= 0; k--) {
             m1.put(nodes[k].getKey(), nodes[k]);
@@ -943,7 +950,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testConstructors() {
 
-        DoubleOrderedMap m = new DoubleOrderedMap();
+        DoubleOrderedMap m = (DoubleOrderedMap) makeMap();
 
         assertTrue(m.isEmpty());
 
@@ -951,7 +958,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m1.isEmpty());
 
-        m1 = new DoubleOrderedMap();
+        m1 = (DoubleOrderedMap) makeMap();
 
         LocalTestNode nodes[] = makeLocalNodes();
 
@@ -1039,7 +1046,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testGetKeyForValue() {
 
-        DoubleOrderedMap m = new DoubleOrderedMap();
+        DoubleOrderedMap m = (DoubleOrderedMap) makeMap();
 
         try {
             m.getKeyForValue(new Object());
@@ -1079,7 +1086,7 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testRemoveValue() {
 
-        DoubleOrderedMap m       = new DoubleOrderedMap();
+        DoubleOrderedMap m       = (DoubleOrderedMap) makeMap();
         LocalTestNode    nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1125,9 +1132,9 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testEntrySetByValue() {
 
-        testEntrySetByValue(new DoubleOrderedMap());
+        testEntrySetByValue((DoubleOrderedMap) makeMap());
 
-        DoubleOrderedMap m       = new DoubleOrderedMap();
+        DoubleOrderedMap m       = (DoubleOrderedMap) makeMap();
         LocalTestNode    nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1136,7 +1143,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         testEntrySetByValue(m);
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -1162,7 +1169,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         Collection c1 = new LinkedList();
 
@@ -1176,7 +1183,7 @@ public class TestDoubleOrderedMap extends TestCase {
             fail("should have caught exception of addAll()");
         } catch (UnsupportedOperationException ignored) {}
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -1185,7 +1192,7 @@ public class TestDoubleOrderedMap extends TestCase {
         m.entrySetByValue().clear();
         assertEquals(0, m.size());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -1209,9 +1216,9 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testKeySetByValue() {
 
-        testKeySetByValue(new DoubleOrderedMap());
+        testKeySetByValue((DoubleOrderedMap) makeMap());
 
-        DoubleOrderedMap m       = new DoubleOrderedMap();
+        DoubleOrderedMap m       = (DoubleOrderedMap) makeMap();
         LocalTestNode    nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1220,7 +1227,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         testKeySetByValue(m);
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -1240,7 +1247,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -1269,7 +1276,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         Collection c1 = new LinkedList();
         Collection c2 = new LinkedList();
@@ -1285,7 +1292,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySetByValue().containsAll(c1));
         assertTrue(!m.keySetByValue().containsAll(c2));
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         c1.add(new Integer(-55));
@@ -1303,7 +1310,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(!m.keySetByValue().retainAll(c1));
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1317,7 +1324,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySetByValue().retainAll(c1));
         assertEquals(nodes.length / 2, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1327,7 +1334,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySetByValue().retainAll(c1));
         assertEquals(0, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1337,7 +1344,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(!m.keySetByValue().removeAll(c1));
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1351,7 +1358,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySetByValue().removeAll(c1));
         assertEquals(nodes.length / 2, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1362,7 +1369,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.keySetByValue().removeAll(c1));
         assertEquals(0, m.size());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -1377,9 +1384,9 @@ public class TestDoubleOrderedMap extends TestCase {
      */
     public void testValuesByValue() {
 
-        testValuesByValue(new DoubleOrderedMap());
+        testValuesByValue((DoubleOrderedMap) makeMap());
 
-        DoubleOrderedMap m       = new DoubleOrderedMap();
+        DoubleOrderedMap m       = (DoubleOrderedMap) makeMap();
         LocalTestNode    nodes[] = makeLocalNodes();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1388,7 +1395,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         testValuesByValue(m);
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -1408,7 +1415,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
@@ -1427,7 +1434,7 @@ public class TestDoubleOrderedMap extends TestCase {
 
         assertTrue(m.isEmpty());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         Collection c1 = new LinkedList();
         Collection c2 = new LinkedList();
@@ -1443,7 +1450,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.valuesByValue().containsAll(c1));
         assertTrue(!m.valuesByValue().containsAll(c2));
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1456,7 +1463,7 @@ public class TestDoubleOrderedMap extends TestCase {
             fail("should have caught exception of addAll()");
         } catch (UnsupportedOperationException ignored) {}
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1467,7 +1474,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(!m.valuesByValue().retainAll(c1));
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1481,7 +1488,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.valuesByValue().retainAll(c1));
         assertEquals(nodes.length / 2, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1491,7 +1498,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.valuesByValue().retainAll(c1));
         assertEquals(0, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1501,7 +1508,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(!m.valuesByValue().removeAll(c1));
         assertEquals(nodes.length, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1515,7 +1522,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.valuesByValue().removeAll(c1));
         assertEquals(nodes.length / 2, m.size());
 
-        m  = new DoubleOrderedMap();
+        m  = (DoubleOrderedMap) makeMap();
         c1 = new LinkedList();
 
         for (int k = 0; k < nodes.length; k++) {
@@ -1526,7 +1533,7 @@ public class TestDoubleOrderedMap extends TestCase {
         assertTrue(m.valuesByValue().removeAll(c1));
         assertEquals(0, m.size());
 
-        m = new DoubleOrderedMap();
+        m = (DoubleOrderedMap) makeMap();
 
         for (int k = 0; k < nodes.length; k++) {
             m.put(nodes[k].getKey(), nodes[k]);
