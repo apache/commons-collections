@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.3 2001/05/18 00:12:45 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2001/05/18 00:12:45 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.4 2001/05/20 21:03:30 craigmcc Exp $
+ * $Revision: 1.4 $
+ * $Date: 2001/05/20 21:03:30 $
  *
  * ====================================================================
  *
@@ -95,7 +95,7 @@ import java.util.Set;
  * maximum performance.</p>
  *
  * @author Craig R. McClanahan
- * @version $Revision: 1.3 $ $Date: 2001/05/18 00:12:45 $
+ * @version $Revision: 1.4 $ $Date: 2001/05/20 21:03:30 $
  */
 
 public class FastHashMap extends HashMap {
@@ -300,7 +300,7 @@ public class FastHashMap extends HashMap {
         if (fast) {
             if (mo.size() != map.size())
                 return (false);
-            Iterator i = map.entrySet().iterator();
+            java.util.Iterator i = map.entrySet().iterator();
             while (i.hasNext()) {
                 Map.Entry e = (Map.Entry) i.next();
                 Object key = e.getKey();
@@ -318,7 +318,7 @@ public class FastHashMap extends HashMap {
             synchronized (map) {
                 if (mo.size() != map.size())
                     return (false);
-                Iterator i = map.entrySet().iterator();
+                java.util.Iterator i = map.entrySet().iterator();
                 while (i.hasNext()) {
                     Map.Entry e = (Map.Entry) i.next();
                     Object key = e.getKey();
@@ -368,14 +368,14 @@ public class FastHashMap extends HashMap {
 
         if (fast) {
             int h = 0;
-            Iterator i = map.entrySet().iterator();
+            java.util.Iterator i = map.entrySet().iterator();
             while (i.hasNext())
                 h += i.next().hashCode();
             return (h);
         } else {
             synchronized (map) {
                 int h = 0;
-                Iterator i = map.entrySet().iterator();
+                java.util.Iterator i = map.entrySet().iterator();
                 while (i.hasNext())
                     h += i.next().hashCode();
                 return (h);

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.2 2001/04/21 12:19:57 craigmcc Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/21 12:19:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.3 2001/05/20 21:03:30 craigmcc Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/05/20 21:03:30 $
  *
  * ====================================================================
  *
@@ -94,7 +94,7 @@ import java.util.ListIterator;
  * maximum performance.</p>
  *
  * @author Craig R. McClanahan
- * @version $Revision: 1.2 $ $Date: 2001/04/21 12:19:57 $
+ * @version $Revision: 1.3 $ $Date: 2001/05/20 21:03:30 $
  */
 
 public class FastArrayList extends ArrayList {
@@ -452,7 +452,7 @@ public class FastArrayList extends ArrayList {
 
         if (fast) {
             int hashCode = 1;
-            Iterator i = list.iterator();
+            java.util.Iterator i = list.iterator();
             while (i.hasNext()) {
                 Object o = i.next();
                 hashCode = 31 * hashCode + (o == null ? 0 : o.hashCode());
@@ -461,7 +461,7 @@ public class FastArrayList extends ArrayList {
         } else {
             synchronized (list) {
                 int hashCode = 1;
-                Iterator i = list.iterator();
+                java.util.Iterator i = list.iterator();
                 while (i.hasNext()) {
                     Object o = i.next();
                     hashCode = 31 * hashCode + (o == null ? 0 : o.hashCode());
