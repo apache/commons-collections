@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.7 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/12 03:59:15 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ExtendedProperties.java,v 1.8 2003/01/25 12:21:19 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.io.IOException;
@@ -162,8 +158,9 @@ import java.util.Vector;
  * much time to improve it), I wrote it this way.  If you don't like
  * it, go ahead and tune it up!
  *
- *
  * @since 1.0
+ * @version $Revision: 1.8 $ $Date: 2003/01/25 12:21:19 $
+ * 
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
  * @author <a href="mailto:daveb@miceda-data">Dave Bryson</a>
@@ -173,7 +170,6 @@ import java.util.Vector;
  * @author <a href="mailto:kjohnson@transparent.com">Kent Johnson</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
- * @version $Id: ExtendedProperties.java,v 1.7 2002/06/12 03:59:15 mas Exp $
  */
 public class ExtendedProperties extends Hashtable
 {
@@ -414,17 +410,6 @@ public class ExtendedProperties extends Hashtable
     }
 
     /**
-     * Private initializer method that sets up the generic
-     * resources.
-     *
-     * @exception IOException, if there was an I/O problem.
-     */
-    private void init( ExtendedProperties exp ) throws IOException
-    {
-        isInitialized = true;
-    }
-    
-    /**
      * Indicate to client code whether property
      * resources have been initialized or not.
      */
@@ -568,6 +553,13 @@ public class ExtendedProperties extends Hashtable
              */
             return;
         }
+        finally
+        {
+            /*
+             * Loading is initializing
+             */
+            isInitialized = true;
+        }
     }
 
     /**
@@ -695,6 +687,12 @@ public class ExtendedProperties extends Hashtable
                 addPropertyDirect( key, token );
             }                
         }
+        
+        /*
+         * Adding a property connotes initialization
+         */
+        isInitialized = true;
+        
     }
 
     /**
