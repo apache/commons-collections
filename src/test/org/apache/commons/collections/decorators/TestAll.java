@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.14 2003/09/20 02:51:50 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.15 2003/09/20 16:57:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.TestSuite;
  * Entry point for all collections decorators tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.14 $ $Date: 2003/09/20 02:51:50 $
+ * @version $Revision: 1.15 $ $Date: 2003/09/20 16:57:20 $
  * 
  * @author Stephen Colebourne
  */
@@ -83,9 +83,14 @@ public class TestAll extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite();
         
+        suite.addTest(TestBlockingBuffer.suite());
+        
         suite.addTest(TestFixedSizeList.suite());
         suite.addTest(TestFixedSizeMap.suite());
         suite.addTest(TestFixedSizeSortedMap.suite());
+        
+        suite.addTest(TestLazyMap.suite());
+        suite.addTest(TestLazySortedMap.suite());
         
         suite.addTest(TestOrderedSet.suite());
         
@@ -98,6 +103,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestTransformedSortedBag.suite());
         suite.addTest(TestTransformedSortedMap.suite());
         suite.addTest(TestTransformedSortedSet.suite());
+        
         suite.addTest(TestPredicatedBag.suite());
         suite.addTest(TestPredicatedSortedBag.suite());
         suite.addTest(TestPredicatedCollection.suite());
@@ -106,9 +112,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestPredicatedSet.suite());
         suite.addTest(TestPredicatedMap.suite());
         suite.addTest(TestPredicatedSortedMap.suite());
-        suite.addTest(TestLazyMap.suite());
-        suite.addTest(TestLazySortedMap.suite());
-        suite.addTest(TestBlockingBuffer.suite());
+        
         suite.addTest(TestTypedBag.suite());
         suite.addTest(TestTypedSortedBag.suite());
         
