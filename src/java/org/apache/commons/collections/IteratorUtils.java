@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.5 2002/11/21 23:08:27 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/11/21 23:08:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.6 2002/12/08 15:42:35 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/12/08 15:42:35 $
  *
  * ====================================================================
  *
@@ -60,6 +60,7 @@
  */
 package org.apache.commons.collections;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -91,7 +92,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * <code>org.apache.commons.collections.iterators</code> subpackage.
  *
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorUtils.java,v 1.5 2002/11/21 23:08:27 scolebourne Exp $
+ * @version $Id: IteratorUtils.java,v 1.6 2002/12/08 15:42:35 scolebourne Exp $
  * @since 2.1
  */
 public class IteratorUtils {
@@ -113,6 +114,9 @@ public class IteratorUtils {
     private IteratorUtils() {
     }
 
+    // Iterator creators
+    //----------------------------------------------------------------------
+    
     /**
      * Gets an empty iterator.
      * <p>
@@ -238,6 +242,34 @@ public class IteratorUtils {
 //    public static ListIterator arrayListIterator(Object[] array, int start, int end) {
 //        return new ArrayListIterator(array, start, end);
 //    }
+    
+    // Iterator wrappers
+    //----------------------------------------------------------------------
+    
+    /**
+     * Gets an immutable version of an {@link Iterator}. The returned object
+     * will always throw an {@link java.lang.UnsupportedOperationException} for
+     * the {@link Iterator#remove()} method.
+     *
+     * @param iterator The iterator to make immutable.
+     * @return An immutable version of the iterator.
+     */
+    public static Iterator unmodifiableIterator(Iterator iterator) {
+        return new UnmodifiableIterator(iterator);
+    }
+    
+    /**
+     * Gets an immutable version of a {@link ListIterator}.The returned object
+     * will always throw an {@link java.lang.UnsupportedOperationException} for
+     * the {@link Iterator#remove()}, {@link ListIterator#add()} and
+     * {@link ListIterator#set(Object)} methods.
+     *
+     * @param listIterator The iterator to make immutable.
+     * @return An immutable version of the iterator.
+     */
+    public static ListIterator unmodifiableListIterator(ListIterator listIterator) {
+        return new UnmodifiableListIterator(listIterator);
+    }
 
     /**
      * Gets an iterator that iterates through two {@link Iterator}s 
@@ -685,5 +717,103 @@ public class IteratorUtils {
         }
 
     }
-    
+
+    /**
+     * A wrapper for an {@link java.util.Iterator} which makes it immutable. All
+     * calls are passed through to the delegate. The {@link #remove()} method
+     * always throws an {@link java.lang.UnsupportedOperationException}.
+     *
+     * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
+     */
+    static class UnmodifiableIterator implements Iterator, Serializable {
+
+        /**
+         * All calls to this iterator are passed to the delegate.
+         */
+        protected Iterator delegate;
+
+        /**
+         * Create an UnmodifiableIterator.
+         *
+         * @param delegate The delegate to pass all calls to.
+         */
+        public UnmodifiableIterator(Iterator delegate) {
+            this.delegate = delegate;
+        }
+
+        public boolean hasNext() {
+            return delegate.hasNext();
+        }
+
+        public Object next() {
+            return delegate.next();
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("This iterator is immutable");
+        }
+
+    }
+
+    /**
+     * A wrapper for an {@link java.util.ListIterator} which makes it immutable.
+     * All calls are passed through to the delegate. The {@link #remove()},
+     * {@link #add(Object)} and (@link #set(Object)} methods always throw an
+     * {@link java.lang.UnsupportedOperationException}.
+     *
+     * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
+     */
+    static class UnmodifiableListIterator
+        implements ListIterator, Serializable {
+
+        /**
+         * All calls to this iterator are passed to the delegate.
+         */
+        protected ListIterator delegate;
+
+        /**
+         * Create an UnmodifiableListIterator.
+         *
+         * @param delegate The delegate to pass all calls to.
+         */
+        public UnmodifiableListIterator(ListIterator delegate) {
+            this.delegate = delegate;
+        }
+
+        public boolean hasNext() {
+            return delegate.hasNext();
+        }
+
+        public Object next() {
+            return delegate.next();
+        }
+
+        public boolean hasPrevious() {
+            return delegate.hasPrevious();
+        }
+
+        public Object previous() {
+            return delegate.previous();
+        }
+
+        public int nextIndex() {
+            return delegate.nextIndex();
+        }
+
+        public int previousIndex() {
+            return delegate.previousIndex();
+        }
+
+        public void remove() {
+            throw new UnsupportedOperationException("This iterator is immutable");
+        }
+
+        public void set(Object o) {
+            throw new UnsupportedOperationException("This iterator is immutable");
+        }
+
+        public void add(Object o) {
+            throw new UnsupportedOperationException("This iterator is immutable");
+        }
+    }
 }

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.2 2002/10/12 22:36:21 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/10/12 22:36:21 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.3 2002/12/08 15:42:35 scolebourne Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/12/08 15:42:35 $
  *
  * ====================================================================
  *
@@ -62,7 +62,9 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import junit.framework.Test;
 /**
@@ -74,6 +76,9 @@ public class TestIteratorUtils extends BulkTest {
         super(name);
     }
 
+    public static void main(String args[]) {
+        junit.textui.TestRunner.run(suite());
+    }
 
     public static Test suite() {
         return BulkTest.makeSuite(TestIteratorUtils.class);
@@ -106,4 +111,186 @@ public class TestIteratorUtils extends BulkTest {
         assertEquals(list, Arrays.asList(result));
     }
 
+    /**
+     * Gets an immutable Iterator operating on the elements ["a", "b", "c", "d"].
+     */
+    private Iterator getImmutableIterator() {
+        List list = new ArrayList();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        list.add("d");
+        return IteratorUtils.unmodifiableIterator(list.iterator());
+    }
+
+    /**
+     * Gets an immutable ListIterator operating on the elements ["a", "b", "c", "d"].
+     */
+    private ListIterator getImmutableListIterator() {
+        List list = new ArrayList();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        list.add("d");
+        return IteratorUtils.unmodifiableListIterator(list.listIterator());
+    }
+
+	/**
+	 * Test next() and hasNext() for an immutable Iterator.
+	 */
+    public void testUnmodifiableIteratorIteration() {
+        Iterator iterator = getImmutableIterator();
+
+        assertTrue(iterator.hasNext());
+
+        assertEquals("a", iterator.next());
+
+        assertTrue(iterator.hasNext());
+
+        assertEquals("b", iterator.next());
+
+        assertTrue(iterator.hasNext());
+
+        assertEquals("c", iterator.next());
+
+        assertTrue(iterator.hasNext());
+
+        assertEquals("d", iterator.next());
+
+        assertTrue(!iterator.hasNext());
+    }
+
+    /**
+     * Test next(), hasNext(), previous() and hasPrevious() for an immutable
+     * ListIterator.
+     */
+    public void testUnmodifiableListIteratorIteration() {
+        ListIterator listIterator = getImmutableListIterator();
+
+        assertTrue(!listIterator.hasPrevious());
+        assertTrue(listIterator.hasNext());
+
+        assertEquals("a", listIterator.next());
+
+        assertTrue(listIterator.hasPrevious());
+        assertTrue(listIterator.hasNext());
+
+        assertEquals("b", listIterator.next());
+
+        assertTrue(listIterator.hasPrevious());
+        assertTrue(listIterator.hasNext());
+
+        assertEquals("c", listIterator.next());
+
+        assertTrue(listIterator.hasPrevious());
+        assertTrue(listIterator.hasNext());
+
+        assertEquals("d", listIterator.next());
+
+        assertTrue(listIterator.hasPrevious());
+        assertTrue(!listIterator.hasNext());
+
+        assertEquals("d", listIterator.previous());
+
+        assertTrue(listIterator.hasPrevious());
+        assertTrue(listIterator.hasNext());
+
+        assertEquals("c", listIterator.previous());
+
+        assertTrue(listIterator.hasPrevious());
+        assertTrue(listIterator.hasNext());
+
+        assertEquals("b", listIterator.previous());
+
+        assertTrue(listIterator.hasPrevious());
+        assertTrue(listIterator.hasNext());
+
+        assertEquals("a", listIterator.previous());
+
+        assertTrue(!listIterator.hasPrevious());
+        assertTrue(listIterator.hasNext());
+    }
+
+    /**
+     * Test remove() for an immutable Iterator.
+     */
+    public void testUnmodifiableIteratorImmutability() {
+        Iterator iterator = getImmutableIterator();
+
+        try {
+            iterator.remove();
+            // We shouldn't get to here.
+            fail("remove() should throw an UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // This is correct; ignore the exception.
+        }
+
+        iterator.next();
+
+        try {
+            iterator.remove();
+            // We shouldn't get to here.
+            fail("remove() should throw an UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // This is correct; ignore the exception.
+        }
+
+    }
+
+    /**
+     * Test remove() for an immutable ListIterator.
+     */
+    public void testUnmodifiableListIteratorImmutability() {
+    	ListIterator listIterator = getImmutableListIterator();
+
+        try {
+            listIterator.remove();
+            // We shouldn't get to here.
+            fail("remove() should throw an UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // This is correct; ignore the exception.
+        }
+
+        try {
+            listIterator.set("a");
+            // We shouldn't get to here.
+            fail("set(Object) should throw an UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // This is correct; ignore the exception.
+        }
+
+        try {
+            listIterator.add("a");
+            // We shouldn't get to here.
+            fail("add(Object) should throw an UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // This is correct; ignore the exception.
+        }
+
+        listIterator.next();
+
+        try {
+            listIterator.remove();
+            // We shouldn't get to here.
+            fail("remove() should throw an UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // This is correct; ignore the exception.
+        }
+
+        try {
+            listIterator.set("a");
+            // We shouldn't get to here.
+            fail("set(Object) should throw an UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // This is correct; ignore the exception.
+        }
+
+        try {
+            listIterator.add("a");
+            // We shouldn't get to here.
+            fail("add(Object) should throw an UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // This is correct; ignore the exception.
+        }
+    }
 }
