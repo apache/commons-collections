@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayIterator.java,v 1.7 2003/09/29 03:56:12 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayIterator.java,v 1.8 2003/10/10 21:06:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,7 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /** 
@@ -69,16 +70,17 @@ import java.util.NoSuchElementException;
  * back to the start if required.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/09/29 03:56:12 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/10 21:06:18 $
  * 
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author James Strachan
  * @author Mauricio S. Moura
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
+ * @author Michael A. Smith
+ * @author Neil O'Toole
  * @author Stephen Colebourne
  * @author Phil Steitz
  */
-public class ObjectArrayIterator implements ResetableIterator {
+public class ObjectArrayIterator
+        implements Iterator, ResetableIterator {
 
     /** The array */
     protected Object[] array = null;

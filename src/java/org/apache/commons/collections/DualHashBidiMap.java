@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/DualHashBidiMap.java,v 1.2 2003/10/09 20:21:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/DualHashBidiMap.java,v 1.3 2003/10/10 21:06:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.util.Map;
  * Implementation of <code>BidiMap</code> that uses two <code>HashMap</code> instances.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualHashBidiMap.java,v 1.2 2003/10/09 20:21:32 scolebourne Exp $
+ * @version $Id: DualHashBidiMap.java,v 1.3 2003/10/10 21:06:17 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -124,8 +124,8 @@ public class DualHashBidiMap extends AbstractDualBidiMap implements Serializable
      * @param inverseBidiMap  the inverse BidiMap
      * @return new bidi map
      */
-    protected BidiMap createBidiMap(Map normalMap, Map reverseMap, BidiMap inverseMap) {
-        return new DualHashBidiMap(normalMap, reverseMap, inverseMap);
+    protected BidiMap createBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
+        return new DualHashBidiMap(normalMap, reverseMap, inverseBidiMap);
     }
 
     // Serialization
