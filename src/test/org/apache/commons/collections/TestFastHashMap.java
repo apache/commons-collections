@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.3 2001/04/16 22:42:04 jvanzyl Exp $
- * $Revision: 1.3 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/16 22:42:04 $
  *
  * ====================================================================
@@ -61,29 +61,50 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.3 2001/04/16 22:42:04 jvanzyl Exp $
+ * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
+ * @version $Id: TestFastHashMap.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestFastHashMap extends TestCase
+{
+    public TestFastHashMap(String testName) 
+    {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        return suite;
+    public static Test suite() 
+    {
+        return new TestSuite(TestFastHashMap.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+    public static void main(String args[]) 
+    {
+        String[] testCaseName = { TestFastHashMap.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
+    }
+
+    private FastHashMap map = null;
+
+    public void setUp() 
+    {
+        map = new FastHashMap();
+    }
+
+    public void testNewMap() 
+    {
+        assert("New map is empty", map.isEmpty());
+        assertEquals("New map has size zero", map.size(), 0);
+    }
+
+    public void testSearch() 
+    {
+        map.put("first", "First Item");
+        map.put("second", "Second Item");
+        assertEquals("Top item is 'Second Item'", map.get("first"), "First Item");
+        assertEquals("Next Item is 'First Item'", map.get("second"), "Second Item");
     }
 }

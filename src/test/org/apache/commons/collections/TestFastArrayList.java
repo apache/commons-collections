@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.3 2001/04/16 22:42:04 jvanzyl Exp $
- * $Revision: 1.3 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
+ * $Revision: 1.1 $
  * $Date: 2001/04/16 22:42:04 $
  *
  * ====================================================================
@@ -61,29 +61,60 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.3 2001/04/16 22:42:04 jvanzyl Exp $
+ * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
+ * @version $Id: TestFastArrayList.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestFastArrayList extends TestCase
+{
+    public TestFastArrayList(String testName) 
+    {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        return suite;
+    public static Test suite() 
+    {
+        return new TestSuite(TestFastArrayList.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+    public static void main(String args[]) 
+    {
+        String[] testCaseName = { TestFastArrayList.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
+    }
+
+    private FastArrayList list = null;
+
+    public void setUp() 
+    {
+        list = new FastArrayList();
+    }
+
+    public void testNewFastArrayList() 
+    {
+        assert("New list is empty", list.isEmpty());
+        assertEquals("New list has size zero", list.size(), 0);
+
+        try 
+        {
+            list.get(1);
+            fail("get(int i) should have thrown IndexOutOfBoundsException");
+        } 
+        catch (IndexOutOfBoundsException e)
+        {
+            ; // Expected result
+        }
+    }
+
+    public void testSearch() 
+    {
+        list.add("First Item");
+        list.add("Last Item");
+        assertEquals("First item is 'First Item'", list.get(0), "First Item");
+        assertEquals("Last Item is 'Last Item'", list.get(1), "Last Item");
     }
 }
