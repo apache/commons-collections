@@ -36,9 +36,11 @@ import java.util.Collection;
  * </pre>
  * <p>
  * This buffer prevents null objects from being added.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:18 $
+ * @version $Revision: 1.4 $ $Date: 2004/06/02 23:12:44 $
  * 
  * @author Stefano Fornari
  * @author Stephen Colebourne
