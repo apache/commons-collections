@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayIterator.java,v 1.4 2003/08/31 17:28:40 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/08/31 17:28:40 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestArrayIterator.java,v 1.5 2003/10/01 21:54:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -65,18 +62,20 @@ import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 /**
  * Tests the ArrayIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
- * The code of this test was supplied by Mauricio S. Moura
+ * The code of this test was supplied by Mauricio S. Moura.
+ * 
+ * @version $Revision: 1.5 $ $Date: 2003/10/01 21:54:54 $
  * 
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
  * @author Stephen Colebourne
- * @version $Id: TestArrayIterator.java,v 1.4 2003/08/31 17:28:40 scolebourne Exp $
  */
-public class TestArrayIterator extends TestIterator {
+public class TestArrayIterator extends AbstractTestIterator {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
@@ -94,13 +93,6 @@ public class TestArrayIterator extends TestIterator {
 
     public Iterator makeFullIterator() {
         return new ArrayIterator(testArray);
-    }
-
-    /**
-     * Return a new, empty {@link Object} to used for testing.
-     */
-    public Object makeObject() {
-        return makeFullIterator();
     }
 
     public boolean supportsRemove() {

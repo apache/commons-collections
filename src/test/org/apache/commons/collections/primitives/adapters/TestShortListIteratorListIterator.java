@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortListIteratorListIterator.java,v 1.3 2003/08/31 17:28:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortListIteratorListIterator.java,v 1.4 2003/10/01 21:54:55 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,15 +64,15 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.TestListIterator;
+import org.apache.commons.collections.iterators.AbstractTestListIterator;
 import org.apache.commons.collections.primitives.ArrayShortList;
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:28:38 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/01 21:54:55 $
  * @author Rodney Waldhoff
  */
-public class TestShortListIteratorListIterator extends TestListIterator {
+public class TestShortListIteratorListIterator extends AbstractTestListIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -88,10 +88,6 @@ public class TestShortListIteratorListIterator extends TestListIterator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
     public ListIterator makeEmptyListIterator() {
         return ShortListIteratorListIterator.wrap(makeEmptyShortList().listIterator());
     }
@@ -117,6 +113,10 @@ public class TestShortListIteratorListIterator extends TestListIterator {
         return new short[] { (short)0, (short)1, (short)2, (short)3, (short)4, (short)5, (short)6, (short)7, (short)8, (short)9 };
     }
     
+    protected Object addSetValue() {
+        return new Short((short)1);
+    }
+
     // tests
     // ------------------------------------------------------------------------
 

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestLoopingIterator.java,v 1.2 2003/08/31 17:28:40 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2003/08/31 17:28:40 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestLoopingIterator.java,v 1.3 2003/10/01 21:54:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -68,10 +65,13 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 /**
- * Tests the LoopingIterator class using jUnit.
+ * Tests the LoopingIterator class.
  * 
- * @author <a href="mailto:joncrlsn@users.sf.net">Jonathan Carlson</a>
+ * @version $Revision: 1.3 $ $Date: 2003/10/01 21:54:54 $
+ * 
+ * @author Jonathan Carlson
  * @author Stephen Colebourne
  */
 public class TestLoopingIterator extends TestCase {

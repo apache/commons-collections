@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestByteIterator.java,v 1.2 2003/08/31 17:28:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestByteIterator.java,v 1.3 2003/10/01 21:54:56 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -60,14 +60,14 @@ package org.apache.commons.collections.primitives;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.iterators.TestIterator;
+import org.apache.commons.collections.iterators.AbstractTestIterator;
 import org.apache.commons.collections.primitives.adapters.ByteIteratorIterator;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:40 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/01 21:54:56 $
  * @author Rodney Waldhoff
  */
-public abstract class TestByteIterator extends TestIterator {
+public abstract class TestByteIterator extends AbstractTestIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -79,10 +79,6 @@ public abstract class TestByteIterator extends TestIterator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    protected Object makeObject() {
-        return makeFullIterator();
-    }
-    
     public Iterator makeEmptyIterator() {
         return ByteIteratorIterator.wrap(makeEmptyByteIterator());
     }

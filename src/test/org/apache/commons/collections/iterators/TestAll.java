@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.5 2003/08/31 17:28:40 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2003/08/31 17:28:40 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestAll.java,v 1.6 2003/10/01 21:54:54 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2003/10/01 21:54:54 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.5 2003/08/31 17:28:40 scolebourne Exp $
+ * @version $Id: TestAll.java,v 1.6 2003/10/01 21:54:54 scolebourne Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -83,6 +83,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestArrayListIterator2.suite());
         suite.addTest(TestObjectArrayIterator.suite());
         suite.addTest(TestObjectArrayListIterator.suite());
+        suite.addTest(TestObjectArrayListIterator2.suite());
         suite.addTest(TestCollatingIterator.suite());
         suite.addTest(TestFilterIterator.suite());
         suite.addTest(TestFilterListIterator.suite());

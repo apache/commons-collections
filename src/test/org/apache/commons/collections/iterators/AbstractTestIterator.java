@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestIterator.java,v 1.5 2003/08/31 17:28:40 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2003/08/31 17:28:40 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.1 2003/10/01 21:54:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -64,122 +61,166 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.TestObject;
+
 /**
- * Base class for testing Iterator interface
+ * Abstract class for testing the Iterator interface.
+ * <p>
+ * This class provides a framework for testing an implementation of Iterator.
+ * Concrete subclasses must provide the iterator to be tested.
+ * They must also specify certain details of how the iterator operates by
+ * overriding the supportsXxx() methods if necessary.
+ * 
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/10/01 21:54:54 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public abstract class TestIterator extends TestObject {
+public abstract class AbstractTestIterator extends TestObject {
 
-    public TestIterator(String testName) {
+    /**
+     * JUnit constructor.
+     * 
+     * @param testName  the test class name
+     */
+    public AbstractTestIterator(String testName) {
         super(testName);
     }
 
-    public abstract Iterator makeEmptyIterator();
-
-    public abstract Iterator makeFullIterator();
+    //-----------------------------------------------------------------------
+    /**
+     * Implement this method to return an iterator over an empty collection.
+     * 
+     * @return an empty iterator
+     */
+    protected abstract Iterator makeEmptyIterator();
 
     /**
-     * Whether or not we are testing an iterator that can be
-     * empty.  Default is true.
+     * Implement this method to return an iterator over a collection with elements.
      * 
-     * @return true if Iterators can be empty
+     * @return a full iterator
      */
-    public boolean supportsEmptyIterator() {
+    protected abstract Iterator makeFullIterator();
+
+    /**
+     * Implements the abstract superclass method to return the full iterator.
+     * 
+     * @return a full iterator
+     */
+    protected Object makeObject() {
+        return makeFullIterator();
+    }
+
+    /**
+     * Whether or not we are testing an iterator that can be empty.
+     * Default is true.
+     * 
+     * @return true if Iterator can be empty
+     */
+    protected boolean supportsEmptyIterator() {
         return true;
     }
 
     /**
-     * Whether or not we are testing an iterator that can contain
-     * elements.  Default is true.
+     * Whether or not we are testing an iterator that can contain elements.
+     * Default is true.
      * 
-     * @return true if Iterators can be empty
+     * @return true if Iterator can be full
      */
-    public boolean supportsFullIterator() {
+    protected boolean supportsFullIterator() {
         return true;
     }
 
     /**
-     * Whether or not we are testing an iterator that supports
-     * remove().  Default is true.
+     * Whether or not we are testing an iterator that supports remove().
+     * Default is true.
      * 
-     * @return true if Iterators can be empty
+     * @return true if Iterator supports remove
      */
-    public boolean supportsRemove() {
+    protected boolean supportsRemove() {
         return true;
     }
 
+    //-----------------------------------------------------------------------
     /**
-     * Should throw a NoSuchElementException.
+     * Test the empty iterator.
      */
     public void testEmptyIterator() {
         if (supportsEmptyIterator() == false) {
             return;
         }
 
-        Iterator iter = makeEmptyIterator();
-        assertTrue("hasNext() should return false for empty iterators", iter.hasNext() == false);
+        Iterator it = makeEmptyIterator();
+        
+        // hasNext() should return false
+        assertEquals("hasNext() should return false for empty iterators", false, it.hasNext());
+        
+        // next() should throw a NoSuchElementException
         try {
-            iter.next();
+            it.next();
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
         } catch (NoSuchElementException e) {
         }
     }
 
     /**
-     * NoSuchElementException (or any other exception)
-     * should not be thrown for the first element.  
-     * NoSuchElementException must be thrown when
-     * hasNext() returns false
+     * Test normal iteration behaviour.
      */
     public void testFullIterator() {
         if (supportsFullIterator() == false) {
             return;
         }
 
-        Iterator iter = makeFullIterator();
+        Iterator it = makeFullIterator();
 
-        assertTrue("hasNext() should return true for at least one element", iter.hasNext());
+        // hasNext() must be true (ensure makeFullIterator is correct!)
+        assertEquals("hasNext() should return true for at least one element", true, it.hasNext());
 
+        // next() must not throw exception (ensure makeFullIterator is correct!)
         try {
-            iter.next();
+            it.next();
         } catch (NoSuchElementException e) {
             fail("Full iterators must have at least one element");
         }
 
-        while (iter.hasNext()) {
-            iter.next();
+        // iterate through
+        while (it.hasNext()) {
+            it.next();
         }
 
+        // next() must throw NoSuchElementException now
         try {
-            iter.next();
+            it.next();
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
         } catch (NoSuchElementException e) {
         }
     }
 
     /**
-     * Test remove
+     * Test remove behaviour.
      */
     public void testRemove() {
         Iterator it = makeFullIterator();
         
         if (supportsRemove() == false) {
+            // check for UnsupportedOperationException if not supported
             try {
                 it.remove();
             } catch (UnsupportedOperationException ex) {}
             return;
         }
         
+        // should throw IllegalStateException before next() called
         try {
             it.remove();
             fail();
         } catch (IllegalStateException ex) {}
         
+        // remove after next should be fine
         it.next();
         it.remove();
         
+        // should throw IllegalStateException for second remove()
         try {
             it.remove();
             fail();

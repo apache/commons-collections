@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestByteListIteratorListIterator.java,v 1.2 2003/08/31 17:28:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestByteListIteratorListIterator.java,v 1.3 2003/10/01 21:54:55 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,15 +64,15 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.TestListIterator;
+import org.apache.commons.collections.iterators.AbstractTestListIterator;
 import org.apache.commons.collections.primitives.ArrayByteList;
 import org.apache.commons.collections.primitives.ByteList;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:38 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/01 21:54:55 $
  * @author Rodney Waldhoff
  */
-public class TestByteListIteratorListIterator extends TestListIterator {
+public class TestByteListIteratorListIterator extends AbstractTestListIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -88,10 +88,6 @@ public class TestByteListIteratorListIterator extends TestListIterator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
     public ListIterator makeEmptyListIterator() {
         return ByteListIteratorListIterator.wrap(makeEmptyByteList().listIterator());
     }
@@ -117,6 +113,10 @@ public class TestByteListIteratorListIterator extends TestListIterator {
         return new byte[] { (byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5, (byte)6, (byte)7, (byte)8, (byte)9 };
     }
     
+    protected Object addSetValue() {
+        return new Byte((byte)1);
+    }
+
     // tests
     // ------------------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestCharListIteratorListIterator.java,v 1.2 2003/08/31 17:28:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestCharListIteratorListIterator.java,v 1.3 2003/10/01 21:54:55 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,15 +64,15 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.TestListIterator;
+import org.apache.commons.collections.iterators.AbstractTestListIterator;
 import org.apache.commons.collections.primitives.ArrayCharList;
 import org.apache.commons.collections.primitives.CharList;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:38 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/01 21:54:55 $
  * @author Rodney Waldhoff
  */
-public class TestCharListIteratorListIterator extends TestListIterator {
+public class TestCharListIteratorListIterator extends AbstractTestListIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -88,10 +88,6 @@ public class TestCharListIteratorListIterator extends TestListIterator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
     public ListIterator makeEmptyListIterator() {
         return CharListIteratorListIterator.wrap(makeEmptyCharList().listIterator());
     }
@@ -117,6 +113,10 @@ public class TestCharListIteratorListIterator extends TestListIterator {
         return new char[] { (char)0, (char)1, (char)2, (char)3, (char)4, (char)5, (char)6, (char)7, (char)8, (char)9 };
     }
     
+    protected Object addSetValue() {
+        return new Character((char)1);
+    }
+
     // tests
     // ------------------------------------------------------------------------
 

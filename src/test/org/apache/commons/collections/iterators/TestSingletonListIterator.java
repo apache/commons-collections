@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.5 2003/08/31 17:28:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonListIterator.java,v 1.6 2003/10/01 21:54:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,6 @@
  */
 package org.apache.commons.collections.iterators;
 
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -67,10 +66,11 @@ import junit.framework.TestSuite;
 /**
  * Tests the SingletonListIterator.
  *
+ * @version $Revision: 1.6 $ $Date: 2003/10/01 21:54:55 $
+ * 
  * @author Stephen Colebourne
- * @version $Id: TestSingletonListIterator.java,v 1.5 2003/08/31 17:28:40 scolebourne Exp $
  */
-public class TestSingletonListIterator extends TestIterator {
+public class TestSingletonListIterator extends AbstractTestListIterator {
 
     private static final Object testValue = "foo";
     
@@ -88,21 +88,18 @@ public class TestSingletonListIterator extends TestIterator {
      * 
      * @return null
      */
-    public Iterator makeEmptyIterator() {
+    public ListIterator makeEmptyListIterator() {
         return null;
     }
 
-    public Iterator makeFullIterator() {
+    public ListIterator makeFullListIterator() {
         return new SingletonListIterator( testValue );
     }
 
-    /**
-     * Return a new, empty {@link Object} to used for testing.
-     */
-    public Object makeObject() {
-        return makeFullIterator();
+    public boolean supportsAdd() {
+        return false;
     }
-    
+
     public boolean supportsRemove() {
         return false;
     }

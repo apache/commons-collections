@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestFloatListIteratorListIterator.java,v 1.3 2003/08/31 17:28:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestFloatListIteratorListIterator.java,v 1.4 2003/10/01 21:54:55 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,15 +64,15 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.TestListIterator;
+import org.apache.commons.collections.iterators.AbstractTestListIterator;
 import org.apache.commons.collections.primitives.ArrayFloatList;
 import org.apache.commons.collections.primitives.FloatList;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:28:38 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/01 21:54:55 $
  * @author Rodney Waldhoff
  */
-public class TestFloatListIteratorListIterator extends TestListIterator {
+public class TestFloatListIteratorListIterator extends AbstractTestListIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -88,10 +88,6 @@ public class TestFloatListIteratorListIterator extends TestListIterator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
     public ListIterator makeEmptyListIterator() {
         return FloatListIteratorListIterator.wrap(makeEmptyFloatList().listIterator());
     }
@@ -117,6 +113,10 @@ public class TestFloatListIteratorListIterator extends TestListIterator {
         return new float[] { (float)0, (float)1, (float)2, (float)3, (float)4, (float)5, (float)6, (float)7, (float)8, (float)9 };
     }
     
+    protected Object addSetValue() {
+        return new Float((float)1);
+    }
+
     // tests
     // ------------------------------------------------------------------------
 

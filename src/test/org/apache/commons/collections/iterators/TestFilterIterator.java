@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterIterator.java,v 1.6 2003/08/31 17:28:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterIterator.java,v 1.7 2003/10/01 21:54:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,11 +71,12 @@ import org.apache.commons.collections.Predicate;
 /**
  * Test the filter iterator.
  *
+ * @version $Revision: 1.7 $ $Date: 2003/10/01 21:54:54 $
+ * 
  * @author  Jan Sorensen
  * @author Ralph Wagner
- * @version $Revision: 1.6 $ $Date: 2003/08/31 17:28:40 $
  */
-public class TestFilterIterator extends TestIterator {
+public class TestFilterIterator extends AbstractTestIterator {
 
     /** Creates new TestFilterIterator */
     public TestFilterIterator(String name) {
@@ -127,10 +128,6 @@ public class TestFilterIterator extends TestIterator {
         array = new String[] { "a", "b", "c" };
         list = new ArrayList(Arrays.asList(array));
         return makePassThroughFilter(list.iterator());
-    }
-
-    public Object makeObject() {
-        return makeFullIterator();
     }
 
     public void testRepeatedHasNext() {

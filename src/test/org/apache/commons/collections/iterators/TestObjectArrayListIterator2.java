@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestListIterator.java,v 1.3 2003/08/31 17:28:40 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2003/08/31 17:28:40 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestObjectArrayListIterator2.java,v 1.1 2003/10/01 21:54:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,54 +57,48 @@
  */
 package org.apache.commons.collections.iterators;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.ListIterator;
 
-/**
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:28:40 $ 
- * @author Rodney Waldhoff
- */
-public abstract class TestListIterator extends TestIterator {
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
-    public TestListIterator(String testName) {
+/**
+ * Tests the ObjectArrayListIterator class.
+ * 
+ * @version $Revision: 1.1 $ $Date: 2003/10/01 21:54:54 $
+ * 
+ * @author Stephen Colebourne
+ */
+public class TestObjectArrayListIterator2 extends AbstractTestListIterator {
+
+    protected String[] testArray = { "One", "Two", "Three" };
+    
+    public TestObjectArrayListIterator2(String testName) {
         super(testName);
     }
 
-    public abstract ListIterator makeEmptyListIterator();
-
-    public abstract ListIterator makeFullListIterator();
-
-    public Iterator makeEmptyIterator() {
-        return makeEmptyListIterator();
+    public static Test suite() {
+        return new TestSuite(TestObjectArrayListIterator2.class);
     }
 
-    public Iterator makeFullIterator() {
-        return makeFullListIterator();
+    public ListIterator makeEmptyListIterator() {
+        return new ObjectArrayListIterator(new Object[0]);
     }
 
-    // tests
+    public ListIterator makeFullListIterator() {
+        return new ObjectArrayListIterator(testArray);
+    }
 
-    public void testEmptyListIteratorIsIndeedEmpty() {
-        ListIterator iter = makeEmptyListIterator();
-        assertTrue(!iter.hasNext());
-        assertTrue(!iter.hasPrevious());
+    public ListIterator makeArrayListIterator(Object[] array) {
+        return new ObjectArrayListIterator(array);
+    }
+
+    public boolean supportsAdd() {
+        return false;
     }
     
-    public void testWalkForwardAndBack() {
-        ArrayList list = new ArrayList();
-        ListIterator iter = makeFullListIterator();
-        while(iter.hasNext()) {
-            list.add(iter.next());
-        }
-        for(int i = list.size()-1;i>=0;i--) {
-            Object obj = list.get(i);
-            if(null == obj) {
-                assertNull(iter.previous());
-            } else {
-                assertEquals(obj,iter.previous());
-            }
-        }
-        assertTrue(!iter.hasPrevious());
+    public boolean supportsRemove() {
+        return false;
     }
+
 }

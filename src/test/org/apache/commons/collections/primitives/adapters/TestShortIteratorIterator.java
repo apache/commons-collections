@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortIteratorIterator.java,v 1.2 2003/08/31 17:28:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortIteratorIterator.java,v 1.3 2003/10/01 21:54:55 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,15 +62,15 @@ import java.util.Iterator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.TestIterator;
+import org.apache.commons.collections.iterators.AbstractTestIterator;
 import org.apache.commons.collections.primitives.ArrayShortList;
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:38 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/01 21:54:55 $
  * @author Rodney Waldhoff
  */
-public class TestShortIteratorIterator extends TestIterator {
+public class TestShortIteratorIterator extends AbstractTestIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -86,10 +86,6 @@ public class TestShortIteratorIterator extends TestIterator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
     public Iterator makeEmptyIterator() {
         return ShortIteratorIterator.wrap(makeEmptyShortList().iterator());
     }

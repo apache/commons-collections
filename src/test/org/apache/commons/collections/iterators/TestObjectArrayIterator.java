@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestObjectArrayIterator.java,v 1.2 2003/08/31 17:28:40 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2003/08/31 17:28:40 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestObjectArrayIterator.java,v 1.3 2003/10/01 21:54:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -65,16 +62,18 @@ import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 /**
  * Tests the ObjectArrayIterator.
+ * 
+ * @version $Revision: 1.3 $ $Date: 2003/10/01 21:54:54 $
  * 
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
  * @author Stephen Colebourne
- * @version $Id: TestObjectArrayIterator.java,v 1.2 2003/08/31 17:28:40 scolebourne Exp $
  */
-public class TestObjectArrayIterator extends TestIterator {
+public class TestObjectArrayIterator extends AbstractTestIterator {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
@@ -112,13 +111,6 @@ public class TestObjectArrayIterator extends TestIterator {
 
     public boolean supportsRemove() {
         return false;
-    }
-
-    /**
-     * Return a new, empty {@link Object} to used for testing.
-     */
-    public Object makeObject() {
-        return makeFullIterator();
     }
 
     public void testIterator() {

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonIterator.java,v 1.5 2003/08/31 17:28:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestSingletonIterator.java,v 1.6 2003/10/01 21:54:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -67,10 +67,11 @@ import junit.framework.TestSuite;
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  *
+ * @version $Revision: 1.6 $ $Date: 2003/10/01 21:54:54 $
+ * 
  * @author James Strachan
- * @version $Id: TestSingletonIterator.java,v 1.5 2003/08/31 17:28:40 scolebourne Exp $
  */
-public class TestSingletonIterator extends TestIterator {
+public class TestSingletonIterator extends AbstractTestIterator {
 
     private static final Object testValue = "foo";
     
@@ -96,13 +97,6 @@ public class TestSingletonIterator extends TestIterator {
         return new SingletonIterator( testValue );
     }
 
-    /**
-     * Return a new, empty {@link Object} to used for testing.
-     */
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
     public boolean supportsRemove() {
         return false;
     }

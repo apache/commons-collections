@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUniqueFilterIterator.java,v 1.4 2003/08/31 17:28:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUniqueFilterIterator.java,v 1.5 2003/10/01 21:54:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,17 +66,16 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Tests the ArrayIterator to ensure that the next() method will actually
- * perform the iteration rather than the hasNext() method.
- * The code of this test was supplied by Mauricio S. Moura
+ * Tests the UniqueFilterIterator class.
+ * 
+ * @version $Revision: 1.5 $ $Date: 2003/10/01 21:54:54 $
  * 
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
  * @author Stephen Colebourne
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:28:40 $
  */
-public class TestUniqueFilterIterator extends TestIterator {
+public class TestUniqueFilterIterator extends AbstractTestIterator {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
@@ -115,13 +114,6 @@ public class TestUniqueFilterIterator extends TestIterator {
         Iterator i = list1.iterator();
 
         return new UniqueFilterIterator(i);
-    }
-
-    /**
-     * Return a new, empty {@link Object} to used for testing.
-     */
-    public Object makeObject() {
-        return makeFullIterator();
     }
 
     public void testIterator() {

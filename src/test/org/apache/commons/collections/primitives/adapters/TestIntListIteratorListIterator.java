@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListIteratorListIterator.java,v 1.5 2003/08/31 17:28:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListIteratorListIterator.java,v 1.6 2003/10/01 21:54:55 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,15 +64,15 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.TestListIterator;
+import org.apache.commons.collections.iterators.AbstractTestListIterator;
 import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.collections.primitives.IntList;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:28:38 $
+ * @version $Revision: 1.6 $ $Date: 2003/10/01 21:54:55 $
  * @author Rodney Waldhoff
  */
-public class TestIntListIteratorListIterator extends TestListIterator {
+public class TestIntListIteratorListIterator extends AbstractTestListIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -88,10 +88,6 @@ public class TestIntListIteratorListIterator extends TestListIterator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        return makeFullIterator();
-    }
-    
     public ListIterator makeEmptyListIterator() {
         return IntListIteratorListIterator.wrap(makeEmptyIntList().listIterator());
     }
@@ -117,6 +113,10 @@ public class TestIntListIteratorListIterator extends TestListIterator {
         return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
     }
     
+    protected Object addSetValue() {
+        return new Integer(1);
+    }
+
     // tests
     // ------------------------------------------------------------------------
 
