@@ -138,7 +138,8 @@ These classes have changed since <i>Collections 2.0</i>:
 <p><u>ArrayStack</u></p>
 
 <p>Now implements the Buffer interface.  The Buffer.get() and Buffer.remove()
-methods are implemented in terms of peek() and pop().</p>
+methods are implemented in terms of peek() and pop().  The class has also
+been altered to allow null elements inline with ArrayList.</p>
 
 <p><u>BeanMap</u></p>
 
@@ -233,6 +234,13 @@ unintuitive side-effects, it violated the java.util.Map contract in several
 places and its internal algorithms were inefficient.  A new class,
 ReferenceMap, is a more general solution that can be used in place of 
 SoftRefHashMap.
+</p>
+
+<p><u>StringStack</u></p>
+
+<p>StringStack has been <b>deprecated</b> because it was unsuitable for 
+inclusion in collections. It enabled a delimited String to be built up.
+This functionality is better placed in StringUtils in the lang project.
 </p>
 
 <hr />
