@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.8 2003/12/07 23:59:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Flat3Map.java,v 1.9 2003/12/29 00:38:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -98,34 +98,34 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/12/07 23:59:13 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/29 00:38:32 $
  *
  * @author Stephen Colebourne
  */
 public class Flat3Map implements IterableMap {
     
     /** The size of the map, used while in flat mode */
-    private int iSize;
+    private int size;
     /** Hash, used while in flat mode */
-    private int iHash1;
+    private int hash1;
     /** Hash, used while in flat mode */
-    private int iHash2;
+    private int hash2;
     /** Hash, used while in flat mode */
-    private int iHash3;
+    private int hash3;
     /** Key, used while in flat mode */
-    private Object iKey1;
+    private Object key1;
     /** Key, used while in flat mode */
-    private Object iKey2;
+    private Object key2;
     /** Key, used while in flat mode */
-    private Object iKey3;
+    private Object key3;
     /** Value, used while in flat mode */
-    private Object iValue1;
+    private Object value1;
     /** Value, used while in flat mode */
-    private Object iValue2;
+    private Object value2;
     /** Value, used while in flat mode */
-    private Object iValue3;
+    private Object value3;
     /** Map, used while in delegate mode */
-    private HashedMap iMap;
+    private HashedMap delegateMap;
 
     /**
      * Constructor.
@@ -152,30 +152,30 @@ public class Flat3Map implements IterableMap {
      * @return the mapped value, null if no match
      */
     public Object get(Object key) {
-        if (iMap != null) {
-            return iMap.get(key);
+        if (delegateMap != null) {
+            return delegateMap.get(key);
         }
         if (key == null) {
-            switch (iSize) {
+            switch (size) {
                 // drop through
                 case 3:
-                    if (iKey3 == null) return iValue3;
+                    if (key3 == null) return value3;
                 case 2:
-                    if (iKey2 == null) return iValue2;
+                    if (key2 == null) return value2;
                 case 1:
-                    if (iKey1 == null) return iValue1;
+                    if (key1 == null) return value1;
             }
         } else {
-            if (iSize > 0) {
+            if (size > 0) {
                 int hashCode = key.hashCode();
-                switch (iSize) {
+                switch (size) {
                     // drop through
                     case 3:
-                        if (iHash3 == hashCode && key.equals(iKey3)) return iValue3;
+                        if (hash3 == hashCode && key.equals(key3)) return value3;
                     case 2:
-                        if (iHash2 == hashCode && key.equals(iKey2)) return iValue2;
+                        if (hash2 == hashCode && key.equals(key2)) return value2;
                     case 1:
-                        if (iHash1 == hashCode && key.equals(iKey1)) return iValue1;
+                        if (hash1 == hashCode && key.equals(key1)) return value1;
                 }
             }
         }
@@ -188,10 +188,10 @@ public class Flat3Map implements IterableMap {
      * @return the size
      */
     public int size() {
-        if (iMap != null) {
-            return iMap.size();
+        if (delegateMap != null) {
+            return delegateMap.size();
         }
-        return iSize;
+        return size;
     }
 
     /**
@@ -211,28 +211,28 @@ public class Flat3Map implements IterableMap {
      * @return true if the map contains the key
      */
     public boolean containsKey(Object key) {
-        if (iMap != null) {
-            return iMap.containsKey(key);
+        if (delegateMap != null) {
+            return delegateMap.containsKey(key);
         }
         if (key == null) {
-            switch (iSize) {  // drop through
+            switch (size) {  // drop through
                 case 3:
-                    if (iKey3 == null) return true;
+                    if (key3 == null) return true;
                 case 2:
-                    if (iKey2 == null) return true;
+                    if (key2 == null) return true;
                 case 1:
-                    if (iKey1 == null) return true;
+                    if (key1 == null) return true;
             }
         } else {
-            if (iSize > 0) {
+            if (size > 0) {
                 int hashCode = key.hashCode();
-                switch (iSize) {  // drop through
+                switch (size) {  // drop through
                     case 3:
-                        if (iHash3 == hashCode && key.equals(iKey3)) return true;
+                        if (hash3 == hashCode && key.equals(key3)) return true;
                     case 2:
-                        if (iHash2 == hashCode && key.equals(iKey2)) return true;
+                        if (hash2 == hashCode && key.equals(key2)) return true;
                     case 1:
-                        if (iHash1 == hashCode && key.equals(iKey1)) return true;
+                        if (hash1 == hashCode && key.equals(key1)) return true;
                 }
             }
         }
@@ -246,26 +246,26 @@ public class Flat3Map implements IterableMap {
      * @return true if the map contains the key
      */
     public boolean containsValue(Object value) {
-        if (iMap != null) {
-            return iMap.containsValue(value);
+        if (delegateMap != null) {
+            return delegateMap.containsValue(value);
         }
         if (value == null) {  // drop through
-            switch (iSize) {
+            switch (size) {
                 case 3:
-                    if (iValue3 == null) return true;
+                    if (value3 == null) return true;
                 case 2:
-                    if (iValue2 == null) return true;
+                    if (value2 == null) return true;
                 case 1:
-                    if (iValue1 == null) return true;
+                    if (value1 == null) return true;
             }
         } else {
-            switch (iSize) {  // drop through
+            switch (size) {  // drop through
                 case 3:
-                    if (value.equals(iValue3)) return true;
+                    if (value.equals(value3)) return true;
                 case 2:
-                    if (value.equals(iValue2)) return true;
+                    if (value.equals(value2)) return true;
                 case 1:
-                    if (value.equals(iValue1)) return true;
+                    if (value.equals(value1)) return true;
             }
         }
         return false;
@@ -280,51 +280,51 @@ public class Flat3Map implements IterableMap {
      * @return the value previously mapped to this key, null if none
      */
     public Object put(Object key, Object value) {
-        if (iMap != null) {
-            return iMap.put(key, value);
+        if (delegateMap != null) {
+            return delegateMap.put(key, value);
         }
         // change existing mapping
         if (key == null) {
-            switch (iSize) {  // drop through
+            switch (size) {  // drop through
                 case 3:
-                    if (iKey3 == null) {
-                        Object old = iValue3;
-                        iValue3 = value;
+                    if (key3 == null) {
+                        Object old = value3;
+                        value3 = value;
                         return old;
                     }
                 case 2:
-                    if (iKey2 == null) {
-                        Object old = iValue2;
-                        iValue2 = value;
+                    if (key2 == null) {
+                        Object old = value2;
+                        value2 = value;
                         return old;
                     }
                 case 1:
-                    if (iKey1 == null) {
-                        Object old = iValue1;
-                        iValue1 = value;
+                    if (key1 == null) {
+                        Object old = value1;
+                        value1 = value;
                         return old;
                     }
             }
         } else {
-            if (iSize > 0) {
+            if (size > 0) {
                 int hashCode = key.hashCode();
-                switch (iSize) {  // drop through
+                switch (size) {  // drop through
                     case 3:
-                        if (iHash3 == hashCode && key.equals(iKey3)) {
-                            Object old = iValue3;
-                            iValue3 = value;
+                        if (hash3 == hashCode && key.equals(key3)) {
+                            Object old = value3;
+                            value3 = value;
                             return old;
                         }
                     case 2:
-                        if (iHash2 == hashCode && key.equals(iKey2)) {
-                            Object old = iValue2;
-                            iValue2 = value;
+                        if (hash2 == hashCode && key.equals(key2)) {
+                            Object old = value2;
+                            value2 = value;
                             return old;
                         }
                     case 1:
-                        if (iHash1 == hashCode && key.equals(iKey1)) {
-                            Object old = iValue1;
-                            iValue1 = value;
+                        if (hash1 == hashCode && key.equals(key1)) {
+                            Object old = value1;
+                            value1 = value;
                             return old;
                         }
                 }
@@ -332,28 +332,28 @@ public class Flat3Map implements IterableMap {
         }
         
         // add new mapping
-        switch (iSize) {
+        switch (size) {
             default:
                 convertToMap();
-                iMap.put(key, value);
+                delegateMap.put(key, value);
                 return null;
             case 2:
-                iHash3 = (key == null ? 0 : key.hashCode());
-                iKey3 = key;
-                iValue3 = value;
+                hash3 = (key == null ? 0 : key.hashCode());
+                key3 = key;
+                value3 = value;
                 break;
             case 1:
-                iHash2 = (key == null ? 0 : key.hashCode());
-                iKey2 = key;
-                iValue2 = value;
+                hash2 = (key == null ? 0 : key.hashCode());
+                key2 = key;
+                value2 = value;
                 break;
             case 0:
-                iHash1 = (key == null ? 0 : key.hashCode());
-                iKey1 = key;
-                iValue1 = value;
+                hash1 = (key == null ? 0 : key.hashCode());
+                key1 = key;
+                value1 = value;
                 break;
         }
-        iSize++;
+        size++;
         return null;
     }
 
@@ -367,8 +367,8 @@ public class Flat3Map implements IterableMap {
         if (size == 0) {
             return;
         }
-        if (iMap != null) {
-            iMap.putAll(map);
+        if (delegateMap != null) {
+            delegateMap.putAll(map);
             return;
         }
         if (size < 4) {
@@ -378,7 +378,7 @@ public class Flat3Map implements IterableMap {
             }
         } else {
             convertToMap();
-            iMap.putAll(map);
+            delegateMap.putAll(map);
         }
     }
 
@@ -386,20 +386,20 @@ public class Flat3Map implements IterableMap {
      * Converts the flat map data to a HashMap.
      */
     private void convertToMap() {
-        iMap = new HashedMap();
-        switch (iSize) {  // drop through
+        delegateMap = new HashedMap();
+        switch (size) {  // drop through
             case 3:
-                iMap.put(iKey3, iValue3);
+                delegateMap.put(key3, value3);
             case 2:
-                iMap.put(iKey2, iValue2);
+                delegateMap.put(key2, value2);
             case 1:
-                iMap.put(iKey1, iValue1);
+                delegateMap.put(key1, value1);
         }
         
-        iSize = 0;
-        iHash1 = iHash2 = iHash3 = 0;
-        iKey1 = iKey2 = iKey3 = null;
-        iValue1 = iValue2 = iValue3 = null;
+        size = 0;
+        hash1 = hash2 = hash3 = 0;
+        key1 = key2 = key3 = null;
+        value1 = value2 = value3 = null;
     }
 
     /**
@@ -409,141 +409,141 @@ public class Flat3Map implements IterableMap {
      * @return the value mapped to the removed key, null if key not in map
      */
     public Object remove(Object key) {
-        if (iMap != null) {
-            return iMap.remove(key);
+        if (delegateMap != null) {
+            return delegateMap.remove(key);
         }
-        if (iSize == 0) {
+        if (size == 0) {
             return null;
         }
         if (key == null) {
-            switch (iSize) {  // drop through
+            switch (size) {  // drop through
                 case 3:
-                    if (iKey3 == null) {
-                        Object old = iValue3;
-                        iHash3 = 0;
-                        iKey3 = null;
-                        iValue3 = null;
-                        iSize = 2;
+                    if (key3 == null) {
+                        Object old = value3;
+                        hash3 = 0;
+                        key3 = null;
+                        value3 = null;
+                        size = 2;
                         return old;
                     }
-                    if (iKey2 == null) {
-                        Object old = iValue3;
-                        iHash2 = iHash3;
-                        iKey2 = iKey3;
-                        iValue2 = iValue3;
-                        iHash3 = 0;
-                        iKey3 = null;
-                        iValue3 = null;
-                        iSize = 2;
+                    if (key2 == null) {
+                        Object old = value3;
+                        hash2 = hash3;
+                        key2 = key3;
+                        value2 = value3;
+                        hash3 = 0;
+                        key3 = null;
+                        value3 = null;
+                        size = 2;
                         return old;
                     }
-                    if (iKey1 == null) {
-                        Object old = iValue3;
-                        iHash1 = iHash3;
-                        iKey1 = iKey3;
-                        iValue1 = iValue3;
-                        iHash3 = 0;
-                        iKey3 = null;
-                        iValue3 = null;
-                        iSize = 2;
+                    if (key1 == null) {
+                        Object old = value3;
+                        hash1 = hash3;
+                        key1 = key3;
+                        value1 = value3;
+                        hash3 = 0;
+                        key3 = null;
+                        value3 = null;
+                        size = 2;
                         return old;
                     }
                     return null;
                 case 2:
-                    if (iKey2 == null) {
-                        Object old = iValue2;
-                        iHash2 = 0;
-                        iKey2 = null;
-                        iValue2 = null;
-                        iSize = 1;
+                    if (key2 == null) {
+                        Object old = value2;
+                        hash2 = 0;
+                        key2 = null;
+                        value2 = null;
+                        size = 1;
                         return old;
                     }
-                    if (iKey1 == null) {
-                        Object old = iValue2;
-                        iHash1 = iHash2;
-                        iKey1 = iKey2;
-                        iValue1 = iValue2;
-                        iHash2 = 0;
-                        iKey2 = null;
-                        iValue2 = null;
-                        iSize = 1;
+                    if (key1 == null) {
+                        Object old = value2;
+                        hash1 = hash2;
+                        key1 = key2;
+                        value1 = value2;
+                        hash2 = 0;
+                        key2 = null;
+                        value2 = null;
+                        size = 1;
                         return old;
                     }
                     return null;
                 case 1:
-                    if (iKey1 == null) {
-                        Object old = iValue1;
-                        iHash1 = 0;
-                        iKey1 = null;
-                        iValue1 = null;
-                        iSize = 0;
+                    if (key1 == null) {
+                        Object old = value1;
+                        hash1 = 0;
+                        key1 = null;
+                        value1 = null;
+                        size = 0;
                         return old;
                     }
             }
         } else {
-            if (iSize > 0) {
+            if (size > 0) {
                 int hashCode = key.hashCode();
-                switch (iSize) {  // drop through
+                switch (size) {  // drop through
                     case 3:
-                        if (iHash3 == hashCode && key.equals(iKey3)) {
-                            Object old = iValue3;
-                            iHash3 = 0;
-                            iKey3 = null;
-                            iValue3 = null;
-                            iSize = 2;
+                        if (hash3 == hashCode && key.equals(key3)) {
+                            Object old = value3;
+                            hash3 = 0;
+                            key3 = null;
+                            value3 = null;
+                            size = 2;
                             return old;
                         }
-                        if (iHash2 == hashCode && key.equals(iKey2)) {
-                            Object old = iValue3;
-                            iHash2 = iHash3;
-                            iKey2 = iKey3;
-                            iValue2 = iValue3;
-                            iHash3 = 0;
-                            iKey3 = null;
-                            iValue3 = null;
-                            iSize = 2;
+                        if (hash2 == hashCode && key.equals(key2)) {
+                            Object old = value3;
+                            hash2 = hash3;
+                            key2 = key3;
+                            value2 = value3;
+                            hash3 = 0;
+                            key3 = null;
+                            value3 = null;
+                            size = 2;
                             return old;
                         }
-                        if (iHash1 == hashCode && key.equals(iKey1)) {
-                            Object old = iValue3;
-                            iHash1 = iHash3;
-                            iKey1 = iKey3;
-                            iValue1 = iValue3;
-                            iHash3 = 0;
-                            iKey3 = null;
-                            iValue3 = null;
-                            iSize = 2;
+                        if (hash1 == hashCode && key.equals(key1)) {
+                            Object old = value3;
+                            hash1 = hash3;
+                            key1 = key3;
+                            value1 = value3;
+                            hash3 = 0;
+                            key3 = null;
+                            value3 = null;
+                            size = 2;
                             return old;
                         }
                         return null;
                     case 2:
-                        if (iHash2 == hashCode && key.equals(iKey2)) {
-                            Object old = iValue2;
-                            iHash2 = 0;
-                            iKey2 = null;
-                            iValue2 = null;
-                            iSize = 1;
+                        if (hash2 == hashCode && key.equals(key2)) {
+                            Object old = value2;
+                            hash2 = 0;
+                            key2 = null;
+                            value2 = null;
+                            size = 1;
                             return old;
                         }
-                        if (iHash1 == hashCode && key.equals(iKey1)) {
-                            Object old = iValue2;
-                            iHash1 = iHash2;
-                            iKey1 = iKey2;
-                            iValue1 = iValue2;
-                            iHash2 = 0;
-                            iKey2 = null;
-                            iValue2 = null;
-                            iSize = 1;
+                        if (hash1 == hashCode && key.equals(key1)) {
+                            Object old = value2;
+                            hash1 = hash2;
+                            key1 = key2;
+                            value1 = value2;
+                            hash2 = 0;
+                            key2 = null;
+                            value2 = null;
+                            size = 1;
                             return old;
                         }
                         return null;
                     case 1:
-                        if (iHash1 == hashCode && key.equals(iKey1)) {
-                            Object old = iValue1;
-                            iHash1 = 0;
-                            iKey1 = null;
-                            iValue1 = null;
-                            iSize = 0;
+                        if (hash1 == hashCode && key.equals(key1)) {
+                            Object old = value1;
+                            hash1 = 0;
+                            key1 = null;
+                            value1 = null;
+                            size = 0;
                             return old;
                         }
                 }
@@ -557,14 +557,14 @@ public class Flat3Map implements IterableMap {
      * to avoid garbage collection issues.
      */
     public void clear() {
-        if (iMap != null) {
-            iMap.clear();  // should aid gc
-            iMap = null;  // switch back to flat mode
+        if (delegateMap != null) {
+            delegateMap.clear();  // should aid gc
+            delegateMap = null;  // switch back to flat mode
         } else {
-            iSize = 0;
-            iHash1 = iHash2 = iHash3 = 0;
-            iKey1 = iKey2 = iKey3 = null;
-            iValue1 = iValue2 = iValue3 = null;
+            size = 0;
+            hash1 = hash2 = hash3 = 0;
+            key1 = key2 = key3 = null;
+            value1 = value2 = value3 = null;
         }
     }
 
@@ -581,10 +581,10 @@ public class Flat3Map implements IterableMap {
      * @return the map iterator
      */
     public MapIterator mapIterator() {
-        if (iMap != null) {
-            return iMap.mapIterator();
+        if (delegateMap != null) {
+            return delegateMap.mapIterator();
         }
-        if (iSize == 0) {
+        if (size == 0) {
             return IteratorUtils.EMPTY_MAP_ITERATOR;
         }
         return new FlatMapIterator(this);
@@ -594,90 +594,90 @@ public class Flat3Map implements IterableMap {
      * FlatMapIterator
      */
     static class FlatMapIterator implements MapIterator, ResettableIterator {
-        private final Flat3Map iFlatMap;
-        private int iIndex = 0;
-        private boolean iCanRemove = false;
+        private final Flat3Map parent;
+        private int nextIndex = 0;
+        private boolean canRemove = false;
         
-        FlatMapIterator(Flat3Map map) {
+        FlatMapIterator(Flat3Map parent) {
             super();
-            iFlatMap = map;
+            this.parent = parent;
         }
 
         public boolean hasNext() {
-            return (iIndex < iFlatMap.iSize);
+            return (nextIndex < parent.size);
         }
 
         public Object next() {
             if (hasNext() == false) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
-            iCanRemove = true;
-            iIndex++;
+            canRemove = true;
+            nextIndex++;
             return getKey();
         }
 
         public void remove() {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
-            iFlatMap.remove(getKey());
-            iIndex--;
-            iCanRemove = false;
+            parent.remove(getKey());
+            nextIndex--;
+            canRemove = false;
         }
 
         public Object getKey() {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
-            switch (iIndex) {
+            switch (nextIndex) {
                 case 3:
-                    return iFlatMap.iKey3;
+                    return parent.key3;
                 case 2:
-                    return iFlatMap.iKey2;
+                    return parent.key2;
                 case 1:
-                    return iFlatMap.iKey1;
+                    return parent.key1;
             }
             throw new IllegalStateException("Invalid map index");
         }
 
         public Object getValue() {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
-            switch (iIndex) {
+            switch (nextIndex) {
                 case 3:
-                    return iFlatMap.iValue3;
+                    return parent.value3;
                 case 2:
-                    return iFlatMap.iValue2;
+                    return parent.value2;
                 case 1:
-                    return iFlatMap.iValue1;
+                    return parent.value1;
             }
             throw new IllegalStateException("Invalid map index");
         }
 
         public Object setValue(Object value) {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             Object old = getValue();
-            switch (iIndex) {
+            switch (nextIndex) {
                 case 3: 
-                    iFlatMap.iValue3 = value;
+                    parent.value3 = value;
                 case 2:
-                    iFlatMap.iValue2 = value;
+                    parent.value2 = value;
                 case 1:
-                    iFlatMap.iValue1 = value;
+                    parent.value1 = value;
             }
             return old;
         }
         
         public void reset() {
-            iIndex = 0;
-            iCanRemove = false;
+            nextIndex = 0;
+            canRemove = false;
         }
         
         public String toString() {
-            if (iCanRemove) {
+            if (canRemove) {
                 return "Iterator[" + getKey() + "=" + getValue() + "]";
             } else {
                 return "Iterator[]";
@@ -695,8 +695,8 @@ public class Flat3Map implements IterableMap {
      * @return the entrySet view
      */
     public Set entrySet() {
-        if (iMap != null) {
-            return iMap.entrySet();
+        if (delegateMap != null) {
+            return delegateMap.entrySet();
         }
         return new EntrySet(this);
     }
@@ -705,19 +705,19 @@ public class Flat3Map implements IterableMap {
      * EntrySet
      */
     static class EntrySet extends AbstractSet {
-        private final Flat3Map iFlatMap;
+        private final Flat3Map parent;
         
-        EntrySet(Flat3Map map) {
+        EntrySet(Flat3Map parent) {
             super();
-            iFlatMap = map;
+            this.parent = parent;
         }
 
         public int size() {
-            return iFlatMap.size();
+            return parent.size();
         }
         
         public void clear() {
-            iFlatMap.clear();
+            parent.clear();
         }
         
         public boolean remove(Object obj) {
@@ -726,19 +726,19 @@ public class Flat3Map implements IterableMap {
             }
             Map.Entry entry = (Map.Entry) obj;
             Object key = entry.getKey();
-            boolean result = iFlatMap.containsKey(key);
-            iFlatMap.remove(key);
+            boolean result = parent.containsKey(key);
+            parent.remove(key);
             return result;
         }
 
         public Iterator iterator() {
-            if (iFlatMap.iMap != null) {
-                return iFlatMap.iMap.entrySet().iterator();
+            if (parent.delegateMap != null) {
+                return parent.delegateMap.entrySet().iterator();
             }
-            if (iFlatMap.size() == 0) {
+            if (parent.size() == 0) {
                 return IteratorUtils.EMPTY_ITERATOR;
             }
-            return new EntrySetIterator(iFlatMap);
+            return new EntrySetIterator(parent);
         }
     }
 
@@ -746,85 +746,85 @@ public class Flat3Map implements IterableMap {
      * EntrySetIterator and MapEntry
      */
     static class EntrySetIterator implements Iterator, Map.Entry {
-        private final Flat3Map iFlatMap;
-        private int iIndex = 0;
-        private boolean iCanRemove = false;
+        private final Flat3Map parent;
+        private int nextIndex = 0;
+        private boolean canRemove = false;
         
-        EntrySetIterator(Flat3Map map) {
+        EntrySetIterator(Flat3Map parent) {
             super();
-            iFlatMap = map;
+            this.parent = parent;
         }
 
         public boolean hasNext() {
-            return (iIndex < iFlatMap.iSize);
+            return (nextIndex < parent.size);
         }
 
         public Object next() {
             if (hasNext() == false) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
-            iCanRemove = true;
-            iIndex++;
+            canRemove = true;
+            nextIndex++;
             return this;
         }
 
         public void remove() {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
-            iFlatMap.remove(getKey());
-            iIndex--;
-            iCanRemove = false;
+            parent.remove(getKey());
+            nextIndex--;
+            canRemove = false;
         }
 
         public Object getKey() {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
-            switch (iIndex) {
+            switch (nextIndex) {
                 case 3:
-                    return iFlatMap.iKey3;
+                    return parent.key3;
                 case 2:
-                    return iFlatMap.iKey2;
+                    return parent.key2;
                 case 1:
-                    return iFlatMap.iKey1;
+                    return parent.key1;
             }
             throw new IllegalStateException("Invalid map index");
         }
 
         public Object getValue() {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
-            switch (iIndex) {
+            switch (nextIndex) {
                 case 3:
-                    return iFlatMap.iValue3;
+                    return parent.value3;
                 case 2:
-                    return iFlatMap.iValue2;
+                    return parent.value2;
                 case 1:
-                    return iFlatMap.iValue1;
+                    return parent.value1;
             }
             throw new IllegalStateException("Invalid map index");
         }
 
         public Object setValue(Object value) {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             Object old = getValue();
-            switch (iIndex) {
+            switch (nextIndex) {
                 case 3: 
-                    iFlatMap.iValue3 = value;
+                    parent.value3 = value;
                 case 2:
-                    iFlatMap.iValue2 = value;
+                    parent.value2 = value;
                 case 1:
-                    iFlatMap.iValue1 = value;
+                    parent.value1 = value;
             }
             return old;
         }
         
         public boolean equals(Object obj) {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 return false;
             }
             if (obj instanceof Map.Entry == false) {
@@ -838,7 +838,7 @@ public class Flat3Map implements IterableMap {
         }
         
         public int hashCode() {
-            if (iCanRemove == false) {
+            if (canRemove == false) {
                 return 0;
             }
             Object key = getKey();
@@ -848,7 +848,7 @@ public class Flat3Map implements IterableMap {
         }
         
         public String toString() {
-            if (iCanRemove) {
+            if (canRemove) {
                 return getKey() + "=" + getValue();
             } else {
                 return "";
@@ -864,8 +864,8 @@ public class Flat3Map implements IterableMap {
      * @return the keySet view
      */
     public Set keySet() {
-        if (iMap != null) {
-            return iMap.keySet();
+        if (delegateMap != null) {
+            return delegateMap.keySet();
         }
         return new KeySet(this);
     }
@@ -874,39 +874,39 @@ public class Flat3Map implements IterableMap {
      * KeySet
      */
     static class KeySet extends AbstractSet {
-        private final Flat3Map iFlatMap;
+        private final Flat3Map parent;
         
-        KeySet(Flat3Map map) {
+        KeySet(Flat3Map parent) {
             super();
-            iFlatMap = map;
+            this.parent = parent;
         }
 
         public int size() {
-            return iFlatMap.size();
+            return parent.size();
         }
         
         public void clear() {
-            iFlatMap.clear();
+            parent.clear();
         }
         
         public boolean contains(Object key) {
-            return iFlatMap.containsKey(key);
+            return parent.containsKey(key);
         }
 
         public boolean remove(Object key) {
-            boolean result = iFlatMap.containsKey(key);
-            iFlatMap.remove(key);
+            boolean result = parent.containsKey(key);
+            parent.remove(key);
             return result;
         }
 
         public Iterator iterator() {
-            if (iFlatMap.iMap != null) {
-                return iFlatMap.iMap.keySet().iterator();
+            if (parent.delegateMap != null) {
+                return parent.delegateMap.keySet().iterator();
             }
-            if (iFlatMap.size() == 0) {
+            if (parent.size() == 0) {
                 return IteratorUtils.EMPTY_ITERATOR;
             }
-            return new KeySetIterator(iFlatMap);
+            return new KeySetIterator(parent);
         }
     }
 
@@ -915,8 +915,8 @@ public class Flat3Map implements IterableMap {
      */
     static class KeySetIterator extends EntrySetIterator {
         
-        KeySetIterator(Flat3Map map) {
-            super(map);
+        KeySetIterator(Flat3Map parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -933,8 +933,8 @@ public class Flat3Map implements IterableMap {
      * @return the values view
      */
     public Collection values() {
-        if (iMap != null) {
-            return iMap.values();
+        if (delegateMap != null) {
+            return delegateMap.values();
         }
         return new Values(this);
     }
@@ -943,33 +943,33 @@ public class Flat3Map implements IterableMap {
      * Values
      */
     static class Values extends AbstractCollection {
-        private final Flat3Map iFlatMap;
+        private final Flat3Map parent;
         
-        Values(Flat3Map map) {
+        Values(Flat3Map parent) {
             super();
-            iFlatMap = map;
+            this.parent = parent;
         }
 
         public int size() {
-            return iFlatMap.size();
+            return parent.size();
         }
         
         public void clear() {
-            iFlatMap.clear();
+            parent.clear();
         }
         
         public boolean contains(Object value) {
-            return iFlatMap.containsValue(value);
+            return parent.containsValue(value);
         }
 
         public Iterator iterator() {
-            if (iFlatMap.iMap != null) {
-                return iFlatMap.iMap.values().iterator();
+            if (parent.delegateMap != null) {
+                return parent.delegateMap.values().iterator();
             }
-            if (iFlatMap.size() == 0) {
+            if (parent.size() == 0) {
                 return IteratorUtils.EMPTY_ITERATOR;
             }
-            return new ValuesIterator(iFlatMap);
+            return new ValuesIterator(parent);
         }
     }
 
@@ -978,8 +978,8 @@ public class Flat3Map implements IterableMap {
      */
     static class ValuesIterator extends EntrySetIterator {
         
-        ValuesIterator(Flat3Map map) {
-            super(map);
+        ValuesIterator(Flat3Map parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -999,37 +999,37 @@ public class Flat3Map implements IterableMap {
         if (obj == this) {
             return true;
         }
-        if (iMap != null) {
-            return iMap.equals(obj);
+        if (delegateMap != null) {
+            return delegateMap.equals(obj);
         }
         if (obj instanceof Map == false) {
             return false;
         }
         Map other = (Map) obj;
-        if (iSize != other.size()) {
+        if (size != other.size()) {
             return false;
         }
-        if (iSize > 0) {
+        if (size > 0) {
             Object otherValue = null;
-            switch (iSize) {  // drop through
+            switch (size) {  // drop through
                 case 3:
-                    if (other.containsKey(iKey3) == false) {
-                        otherValue = other.get(iKey3);
-                        if (iValue3 == null ? otherValue != null : !iValue3.equals(otherValue)) {
+                    if (other.containsKey(key3) == false) {
+                        otherValue = other.get(key3);
+                        if (value3 == null ? otherValue != null : !value3.equals(otherValue)) {
                             return false;
                         }
                     }
                 case 2:
-                    if (other.containsKey(iKey2) == false) {
-                        otherValue = other.get(iKey2);
-                        if (iValue2 == null ? otherValue != null : !iValue2.equals(otherValue)) {
+                    if (other.containsKey(key2) == false) {
+                        otherValue = other.get(key2);
+                        if (value2 == null ? otherValue != null : !value2.equals(otherValue)) {
                             return false;
                         }
                     }
                 case 1:
-                    if (other.containsKey(iKey1) == false) {
-                        otherValue = other.get(iKey1);
-                        if (iValue1 == null ? otherValue != null : !iValue1.equals(otherValue)) {
+                    if (other.containsKey(key1) == false) {
+                        otherValue = other.get(key1);
+                        if (value1 == null ? otherValue != null : !value1.equals(otherValue)) {
                             return false;
                         }
                     }
@@ -1044,17 +1044,17 @@ public class Flat3Map implements IterableMap {
      * @return the hashcode defined in the Map interface
      */
     public int hashCode() {
-        if (iMap != null) {
-            return iMap.hashCode();
+        if (delegateMap != null) {
+            return delegateMap.hashCode();
         }
         int total = 0;
-        switch (iSize) {  // drop through
+        switch (size) {  // drop through
             case 3:
-                total += (iHash3 ^ (iValue3 == null ? 0 : iValue3.hashCode()));
+                total += (hash3 ^ (value3 == null ? 0 : value3.hashCode()));
             case 2:
-                total += (iHash2 ^ (iValue2 == null ? 0 : iValue2.hashCode()));
+                total += (hash2 ^ (value2 == null ? 0 : value2.hashCode()));
             case 1:
-                total += (iHash1 ^ (iValue1 == null ? 0 : iValue1.hashCode()));
+                total += (hash1 ^ (value1 == null ? 0 : value1.hashCode()));
         }
         return total;
     }
@@ -1065,29 +1065,29 @@ public class Flat3Map implements IterableMap {
      * @return a string version of the map
      */
     public String toString() {
-        if (iMap != null) {
-            return iMap.toString();
+        if (delegateMap != null) {
+            return delegateMap.toString();
         }
-        if (iSize == 0) {
+        if (size == 0) {
             return "{}";
         }
         StringBuffer buf = new StringBuffer(128);
         buf.append('{');
-        switch (iSize) {  // drop through
+        switch (size) {  // drop through
             case 3:
-                buf.append(iKey3);
+                buf.append(key3);
                 buf.append('=');
-                buf.append(iValue3);
+                buf.append(value3);
                 buf.append(',');
             case 2:
-                buf.append(iKey2);
+                buf.append(key2);
                 buf.append('=');
-                buf.append(iValue2);
+                buf.append(value2);
                 buf.append(',');
             case 1:
-                buf.append(iKey1);
+                buf.append(key1);
                 buf.append('=');
-                buf.append(iValue1);
+                buf.append(value1);
         }
         buf.append('}');
         return buf.toString();
