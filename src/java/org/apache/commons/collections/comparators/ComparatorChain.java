@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.4 2002/03/04 19:18:56 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/03/04 19:18:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.5 2002/03/19 22:25:51 morgand Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/03/19 22:25:51 $
  *
  * ====================================================================
  *
@@ -101,8 +101,18 @@ public class ComparatorChain implements Comparator,Serializable {
     protected BitSet orderingBits = null;
 
     // ComparatorChain is "locked" after the first time
-    // compare(Object,Object) is called)
+    // compare(Object,Object) is called
     protected boolean isLocked = false;
+
+    /**
+     * Construct a ComparatorChain with no Comparators.
+     * You must add at least one Comparator before calling
+     * the compare(Object,Object) method, or an 
+     * UnsupportedOperationException is thrown
+     */
+    public ComparatorChain() {
+        this(new ArrayList(),new BitSet());
+    }
 
     /**
      * Construct a ComparatorChain with a single Comparator,
@@ -274,11 +284,29 @@ public class ComparatorChain implements Comparator,Serializable {
         }
     }
 
-    public int compare(Object o1, Object o2) {
+    private void checkChainIntegrity() {
+        if (comparatorChain.size() == 0) {
+            throw new UnsupportedOperationException("ComparatorChains must contain at least one Comparator");
+        }
+    }
+
+    /**
+     * Perform comaparisons on the Objects as per
+     * Comparator.compare(o1,o2).
+     * 
+     * @param o1     object 1
+     * @param o2     object 2
+     * @return -1, 0, or 1
+     * @exception UnsupportedOperationException
+     *                   if the ComparatorChain does not contain at least one
+     *                   Comparator
+     */
+    public int compare(Object o1, Object o2) throws UnsupportedOperationException {
         if (isLocked == false) {
+            checkChainIntegrity();
             isLocked = true;
         }
-        
+
         // iterate over all comparators in the chain
         Iterator comparators = comparatorChain.iterator();
         for (int comparatorIndex = 0; comparators.hasNext(); ++comparatorIndex) {

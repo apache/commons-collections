@@ -31,6 +31,52 @@ public class TestComparatorChain extends TestComparator {
         return chain;
     }
 
+    public void testNoopComparatorChain() {
+        ComparatorChain chain = new ComparatorChain();
+        Integer i1 = new Integer(4);
+        Integer i2 = new Integer(6);
+        chain.addComparator(new ComparableComparator());
+
+        int correctValue = i1.compareTo(i2);
+        assertTrue("Comparison returns the right order",chain.compare(i1,i2) == correctValue);
+    }
+
+    public void testBadNoopComparatorChain() {
+        ComparatorChain chain = new ComparatorChain();
+        Integer i1 = new Integer(4);
+        Integer i2 = new Integer(6);
+        try {
+            chain.compare(i1,i2);
+            fail("An exception should be thrown when a chain contains zero comparators.");
+        } catch (UnsupportedOperationException e) {
+
+        }
+    }
+
+    public void testListComparatorChain() {
+        List list = new LinkedList();
+        list.add(new ComparableComparator());
+        ComparatorChain chain = new ComparatorChain(list);
+        Integer i1 = new Integer(4);
+        Integer i2 = new Integer(6);
+
+        int correctValue = i1.compareTo(i2);
+        assertTrue("Comparison returns the right order",chain.compare(i1,i2) == correctValue);
+    }
+
+    public void testBadListComparatorChain() {
+        List list = new LinkedList();
+        ComparatorChain chain = new ComparatorChain(list);
+        Integer i1 = new Integer(4);
+        Integer i2 = new Integer(6);
+        try {
+            chain.compare(i1,i2);
+            fail("An exception should be thrown when a chain contains zero comparators.");
+        } catch (UnsupportedOperationException e) {
+
+        }
+    }
+
     public List getComparableObjectsOrdered() {
         List list = new LinkedList();
         // this is the correct order assuming a
