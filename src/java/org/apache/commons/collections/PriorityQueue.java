@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.8 2003/12/13 23:51:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/PriorityQueue.java,v 1.9 2004/01/01 18:58:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,17 +57,16 @@
  */
 package org.apache.commons.collections;
 
-import java.util.NoSuchElementException;
-
 /**
  * Defines a collection for priority queues, which can insert, peek and pop.
  * <p>
- * This interface does not dictate whether it is min or max heap.
+ * This interface is now replaced by the <code>Buffer</code> interface.
+ * It remains for backwards compatability.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.8 $ $Date: 2003/12/13 23:51:28 $
+ * @version $Revision: 1.9 $ $Date: 2004/01/01 18:58:55 $
  * 
- * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
+ * @author Peter Donald
  */
 public interface PriorityQueue {
     
@@ -100,7 +99,7 @@ public interface PriorityQueue {
      * @return the element at top of heap
      * @throws NoSuchElementException if <code>isEmpty() == true</code>
      */
-    Object peek() throws NoSuchElementException;
+    Object peek();
 
     /**
      * Return element on top of heap and remove it.
@@ -108,6 +107,6 @@ public interface PriorityQueue {
      * @return the element at top of heap
      * @throws NoSuchElementException if <code>isEmpty() == true</code>
      */
-    Object pop() throws NoSuchElementException;
+    Object pop();
     
 }
