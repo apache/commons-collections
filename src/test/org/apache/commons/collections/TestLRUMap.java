@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.18 2002/05/08 16:07:05 morgand Exp $
- * $Revision: 1.18 $
- * $Date: 2002/05/08 16:07:05 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.19 2002/05/08 17:34:17 morgand Exp $
+ * $Revision: 1.19 $
+ * $Date: 2002/05/08 17:34:17 $
  *
  * ====================================================================
  *
@@ -73,7 +73,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.18 2002/05/08 16:07:05 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.19 2002/05/08 17:34:17 morgand Exp $
  */
 public class TestLRUMap extends TestSequencedHashMap
 {
@@ -93,6 +93,13 @@ public class TestLRUMap extends TestSequencedHashMap
     public Map makeEmptyMap() {
         LRUMap map = new LRUMap();
         return map;
+    }
+
+    // had to override from TestSequencedHashMap, because the test performs a get
+    // inside a loop.  Since get() alter the Map in this class, an infinite loop
+    // is produced
+    public void testSequenceMap() {
+        fail("trying to work out an infinite loop bug");
     }
 
     public void testRemoveLRU() {
@@ -167,11 +174,11 @@ public class TestLRUMap extends TestSequencedHashMap
         // promote 1 to top
         // eviction order is now 2,3,1
         map.get("1");
-
+        
         // add another value, forcing a remove
         // 2 should be evicted (then 3,1,4)
         map.put("4","4");
-
+        
         Iterator keyIterator = map.keySet().iterator();
         Object[] keys = new Object[3];
         for (int i = 0; keyIterator.hasNext() ; ++i) {
@@ -181,6 +188,7 @@ public class TestLRUMap extends TestSequencedHashMap
         assertTrue("first evicted should be 3, was " + keys[0], keys[0].equals("3"));
         assertTrue("second evicted should be 1, was " + keys[1], keys[1].equals("1"));
         assertTrue("third evicted should be 4, was " + keys[2], keys[2].equals("4"));
+        
     }
 
     /**
