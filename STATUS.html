@@ -7,7 +7,7 @@
 
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
-$Id: STATUS.html,v 1.19 2002/10/21 02:03:29 bayard Exp $<br>
+$Id: STATUS.html,v 1.20 2002/11/21 23:09:57 scolebourne Exp $<br>
 <a href="#Introduction">[Introduction]</a>
 <a href="#Dependencies">[Dependencies]</a>
 <a href="#Release Info">[Release Info]</a>
@@ -163,6 +163,7 @@ The following classes are included:</p>
 <li><strong>ListIteratorWrapper</strong> - As the wrapped Iterator is 
     traversed, ListIteratorWrapper builds a LinkedList of its values, 
     permitting all required operations of ListIterator.</li>
+<li><strong>LoopingIterator</strong> - Loops continuously around a collection.</li>
 <li><strong>ProxyIterator</strong> - Delegates its methods to a proxy 
     instance.</li>
 <li><strong>ProxyListIterator</strong> - Delegates its methods to a proxy 
@@ -269,6 +270,14 @@ component to ensure that it continues to meet a variety of needs.</p>
         them.  Some classes, like StaticBucketMap, cannot possibly have 
         fail-fast iterators, but otherwise everything else should.</td>
     <td align="center">&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><strong>ArrayListIterator</strong>.  A ListIterator for arrays</td>
+  </tr>
+
+  <tr>
+    <td><strong>LoopingListIterator</strong>.  A ListIterator similar to LoopingIterator</td>
   </tr>
 
   <tr>
