@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.8 2003/10/09 20:44:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/ObjectArrayListIterator.java,v 1.9 2003/11/08 18:37:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,9 +74,9 @@ import java.util.NoSuchElementException;
  * @see java.util.ListIterator
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2003/10/09 20:44:32 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/08 18:37:16 $
  * 
- * @author <a href="mailto:neilotoole@users.sourceforge.net">Neil O'Toole</a>
+ * @author Neil O'Toole
  * @author Stephen Colebourne
  * @author Phil Steitz
  */
