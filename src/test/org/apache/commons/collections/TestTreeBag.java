@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeBag.java,v 1.1 2001/08/29 15:28:07 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2001/08/29 15:28:07 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeBag.java,v 1.2 2003/03/05 19:03:33 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/03/05 19:03:33 $
  *
  * ====================================================================
  *
@@ -61,14 +61,14 @@
 
 package org.apache.commons.collections;
 
-import junit.framework.*;
+import junit.framework.Test;import junit.framework.TestSuite;
 
 /**
  * Extension of {@link TestBag} for exercising the {@link TreeBag}
  * implementation.
  *
  * @author Chuck Burdick
- * @version $Id: TestTreeBag.java,v 1.1 2001/08/29 15:28:07 jstrachan Exp $ */
+ * @version $Id: TestTreeBag.java,v 1.2 2003/03/05 19:03:33 rwaldhoff Exp $ */
 public class TestTreeBag extends TestBag {
    public TestTreeBag(String testName) {
       super(testName);
