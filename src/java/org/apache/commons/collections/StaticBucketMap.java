@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.1 2002/06/21 06:17:45 mas Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/21 06:17:45 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.2 2002/07/10 03:35:32 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/07/10 03:35:32 $
  *
  * ====================================================================
  *
@@ -68,16 +68,21 @@ import java.util.Set;
 import java.util.ArrayList;
 
 /**
- * A StaticBucketMap is an efficient thread-safe implementation of the
- * <code>java.util.Map</code>.  The map supports <code>get</code>,
- * <code>put</code>, and <code>contains</code> methods most efficiently.
- * The other methods are supported, but are ver inneficient compared to
- * other <code>java.util.Map</code> implementations.
+ * A StaticBucketMap is an efficient, thread-safe implementation of
+ * <code>java.util.Map</code> that performs well in in a highly
+ * thread-contentious environment.  The map supports very efficient
+ * <code>get</code>, <code>put</code>, <code>contains</code>, and
+ * <code>remove</code> operations, assuming (approximate) uniform hashing and
+ * that the number of entries does not exceed the size of the map.  If the
+ * number of entries exceeds the size of the map or if the hashcodes of the
+ * objects are not uniformly distributed, these operations have a worst case
+ * scenario that is proportional to the number of elements in the map
+ * (<I>O(n)</I>).
  *
  * @author  <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author  <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
- * @author  <a href-"mailto:mas@apache.org">Michael A. Smith</a>
- * @version CVS $Revision: 1.1 $ $Date: 2002/06/21 06:17:45 $
+ * @author  <a href="mailto:mas@apache.org">Michael A. Smith</a>
+ * @version CVS $Revision: 1.2 $ $Date: 2002/07/10 03:35:32 $
  * @since Avalon 4.0
  */
 public final class StaticBucketMap implements Map
