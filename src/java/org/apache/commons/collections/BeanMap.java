@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.5 2002/03/13 04:15:49 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/03/13 04:15:49 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.6 2002/03/13 04:36:18 mas Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/03/13 04:36:18 $
  *
  * ====================================================================
  *
@@ -68,8 +68,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.AbstractMap;
+import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -85,13 +87,13 @@ import java.util.Set;
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   */
 
-public class BeanMap extends AbstractMap {
+public class BeanMap extends AbstractMap implements Cloneable {
 
-    private Object bean;
+    private transient Object bean;
 
-    private HashMap readMethods = new HashMap();
-    private HashMap writeMethods = new HashMap();
-    private HashMap types = new HashMap();
+    private transient HashMap readMethods = new HashMap();
+    private transient HashMap writeMethods = new HashMap();
+    private transient HashMap types = new HashMap();
 
     public static final Object[] NULL_ARGUMENTS = {};
     public static HashMap defaultTransformers = new HashMap();
@@ -177,18 +179,77 @@ public class BeanMap extends AbstractMap {
     // Map interface
     //-------------------------------------------------------------------------
 
-    public Object clone() {
+    /**
+     *  Clone this bean map using the following process: 
+     *
+     *  <ul>
+
+     *  <li>If there is no underlying bean, return a cloned BeanMap without a
+     *  bean.
+     *
+     *  <li>Since there is an underlying bean, try to instantiate a new bean of
+     *  the same type using Class.newInstance().
+     * 
+     *  <li>If the instantiation fails, throw a CloneNotSupportedException
+     *
+     *  <li>Clone the bean map and set the newly instantiated bean as the
+     *  underyling bean for the bean map.
+     *
+     *  <li>Copy each property that is both readable and writable from the
+     *  existing object to a cloned bean map.  
+     *
+     *  <li>If anything fails along the way, throw a
+     *  CloneNotSupportedException.
+     *
+     *  <ul>
+     **/
+    public Object clone() throws CloneNotSupportedException {
+        BeanMap newMap = (BeanMap)super.clone();
+
+        if(bean == null) {
+            // no bean, just an empty bean map at the moment.  return a newly
+            // cloned and empty bean map.
+            return newMap;
+        }
+
+        Object newBean = null;            
         Class beanClass = null;
         try {
             beanClass = bean.getClass();
-            Object newBean = beanClass.newInstance();
-            Map newMap = new BeanMap( newBean );
-            newMap.putAll( this );
-            return newMap;
-        } 
-        catch (Exception e) {
-            throw new UnsupportedOperationException( "Could not create new instance of class: " + beanClass );
+            newBean = beanClass.newInstance();
+        } catch (Exception e) {
+            // unable to instantiate
+            throw new CloneNotSupportedException
+                ("Unable to instantiate the underlying bean \"" +
+                 beanClass.getName() + "\": " + e);
         }
+            
+        try {
+            newMap.setBean(newBean);
+        } catch (Exception exception) {
+            throw new CloneNotSupportedException
+                ("Unable to set bean in the cloned bean map: " + 
+                 exception);
+        }
+            
+        try {
+            // copy only properties that are readable and writable.  If its
+            // not readable, we can't get the value from the old map.  If
+            // its not writable, we can't write a value into the new map.
+            Iterator readableKeys = readMethods.keySet().iterator();
+            while(readableKeys.hasNext()) {
+                Object key = readableKeys.next();
+                if(getWriteMethod(key) != null) {
+                    newMap.put(key, get(key));
+                }
+            }
+        } catch (Exception exception) {
+            throw new CloneNotSupportedException
+                ("Unable to copy bean values to cloned bean map: " +
+                 exception);
+        }
+
+        return newMap;
     }
 
     /**
@@ -200,6 +261,8 @@ public class BeanMap extends AbstractMap {
      *  BeanMap are fixed).
      **/
     public void clear() {
+        if(bean == null) return;
+
         Class beanClass = null;
         try {
             beanClass = bean.getClass();
@@ -281,7 +344,33 @@ public class BeanMap extends AbstractMap {
     }
 
     public Set entrySet() {
-        return readMethods.keySet();
+        return Collections.unmodifiableSet(new AbstractSet() {
+            public Iterator iterator() {
+                return new Iterator() {
+
+                    Iterator methodIter = 
+                      BeanMap.this.readMethods.keySet().iterator();
+
+                    public boolean hasNext() {
+                        return methodIter.hasNext();
+                    }
+
+                    public Object next() {
+                        Object key = (Object)methodIter.next();
+                        return new DefaultMapEntry(key, get(key));
+                    }
+
+                    public void remove() {
+                      throw new UnsupportedOperationException
+                        ("remove() not supported from BeanMap.entrySet()");
+                    }
+                };
+            }
+
+            public int size() {
+              return BeanMap.this.readMethods.size();
+            }
+        });
     }
 
     public Collection values() {
@@ -369,6 +458,8 @@ public class BeanMap extends AbstractMap {
     }
 
     private void initialise() {
+        if(getBean() == null) return;
+
         Class  beanClass = getBean().getClass();
         try {
             //BeanInfo beanInfo = Introspector.getBeanInfo( bean, null );

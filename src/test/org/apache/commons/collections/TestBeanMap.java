@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.3 2002/02/22 07:00:30 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/22 07:00:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.4 2002/03/13 04:36:18 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/03/13 04:36:18 $
  *
  * ====================================================================
  *
@@ -278,5 +278,23 @@ public class TestBeanMap extends TestMap {
     public void testClear() {
         //TODO: make sure a call to BeanMap.clear returns the bean to its
         //default initialization values.
+    }
+
+    public void testBeanMapClone() {
+        BeanMap map = (BeanMap)makeFullMap();
+        try {
+            BeanMap map2 = (BeanMap)((BeanMap)map).clone();
+
+            // make sure containsKey is working to verify the bean was cloned
+            // ok, and the read methods were properly initialized
+            Object[] keys = getSampleKeys();
+            for(int i = 0; i < keys.length; i++) {
+                assertTrue("Cloned BeanMap should contain the same keys",
+                           map2.containsKey(keys[i]));
+            }
+        } catch (CloneNotSupportedException exception) {
+            fail("BeanMap.clone() should not throw a " +
+                 "CloneNotSupportedException when clone should succeed.");
+        }
     }
 }
