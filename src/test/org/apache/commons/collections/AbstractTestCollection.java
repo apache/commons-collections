@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.5 2003/10/10 21:19:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.6 2003/10/19 00:25:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -146,7 +146,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.5 $ $Date: 2003/10/10 21:19:39 $
+ * @version $Revision: 1.6 $ $Date: 2003/10/19 00:25:11 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -321,7 +321,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
             // no match found!
             if(!match) {
                 fail("Collection should not contain a value that the " +
-                     "confirmed collection does not have.");
+                     "confirmed collection does not have: " + o);
             }
         }
         
@@ -727,12 +727,14 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
         // make sure calls to "containsAll" don't change anything
         verify();
 
-        col = Arrays.asList(getFullElements()).subList(2, 5);
+        int min = (getFullElements().length < 2 ? 0 : 2);
+        int max = (getFullElements().length == 1 ? 1 : 
+                    (getFullElements().length <= 5 ? getFullElements().length - 1 : 5));
+        col = Arrays.asList(getFullElements()).subList(min, max);
         assertTrue("Full collection should containAll partial full " +
                    "elements", collection.containsAll(col));
         assertTrue("Full collection should containAll itself", 
                    collection.containsAll(collection));
-
         // make sure calls to "containsAll" don't change anything
         verify();
         
@@ -959,7 +961,10 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
         
         resetFull();
         int size = collection.size();
-        Collection all = Arrays.asList(getFullElements()).subList(2, 5);
+        int min = (getFullElements().length < 2 ? 0 : 2);
+        int max = (getFullElements().length == 1 ? 1 : 
+                    (getFullElements().length <= 5 ? getFullElements().length - 1 : 5));
+        Collection all = Arrays.asList(getFullElements()).subList(min, max);
         assertTrue("Full collection removeAll should work", 
                    collection.removeAll(all));
         confirmed.removeAll(all);
@@ -1013,17 +1018,21 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
         assertEquals("Collection size shouldn't change", size, 
                      collection.size());
         
-        resetFull();
-        size = collection.size();
-        assertTrue("Collection should changed by partial retainAll",
-                   collection.retainAll(elements.subList(2, 5)));
-        confirmed.retainAll(elements.subList(2, 5));
-        verify();
+        if (getFullElements().length > 1) {
+            resetFull();
+            size = collection.size();
+            int min = (getFullElements().length < 2 ? 0 : 2);
+            int max = (getFullElements().length <= 5 ? getFullElements().length - 1 : 5);
+            assertTrue("Collection should changed by partial retainAll",
+                       collection.retainAll(elements.subList(min, max)));
+            confirmed.retainAll(elements.subList(min, max));
+            verify();
         
-        Iterator iter = collection.iterator();
-        while (iter.hasNext()) {
-            assertTrue("Collection only contains retained element", 
-                       elements.subList(2, 5).contains(iter.next()));
+            Iterator iter = collection.iterator();
+            while (iter.hasNext()) {
+                assertTrue("Collection only contains retained element", 
+                           elements.subList(min, max).contains(iter.next()));
+            }
         }
         
         resetFull();
