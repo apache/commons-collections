@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedIntList.java,v 1.5 2003/08/31 17:21:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ArrayUnsignedIntList.java,v 1.6 2003/10/09 20:51:15 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -76,7 +76,7 @@ import java.io.Serializable;
  * This implementation supports all optional methods.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:21:14 $
+ * @version $Revision: 1.6 $ $Date: 2003/10/09 20:51:15 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -110,7 +110,7 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements LongLi
      * Constructs a list containing the elements of the given collection, 
      * in the order they are returned by that collection's iterator.
      * 
-     * @see ArrayIntList#addAll(org.apache.commons.collections.primitives.LongCollection)
+     * @see AbstractLongCollection#addAll(LongCollection)
      * @param that the non-<code>null</code> collection of <code>int</code>s 
      *        to add
      * @throws NullPointerException if <i>that</i> is <code>null</code>

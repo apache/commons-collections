@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/CharList.java,v 1.2 2003/08/31 17:21:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/CharList.java,v 1.3 2003/10/09 20:51:15 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,7 +64,7 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.ListCharList
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:21:14 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/09 20:51:15 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -168,7 +168,7 @@ public interface CharList extends CharCollection {
      * This contract ensures that this method is consistent with 
      * {@link #equals equals} and with the 
      * {@link java.util.List#hashCode hashCode}
-     * method of a {@link java.util.List List} of {@link Char}s. 
+     * method of a {@link java.util.List List} of {@link Character}s. 
      * 
      * @return my hash code
      */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollections.java,v 1.3 2003/08/31 17:21:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollections.java,v 1.4 2003/10/09 20:51:15 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,7 +68,7 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableIntListI
  * The methods of this class all throw a NullPointerException is the 
  * provided collections are null.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:21:15 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/09 20:51:15 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -120,7 +120,7 @@ public final class IntCollections {
     
     /**
      * Returns an unmodifiable version of the given non-null IntIterator.
-     * @param list the non-null IntIterator to wrap in an unmodifiable decorator
+     * @param iter the non-null IntIterator to wrap in an unmodifiable decorator
      * @return an unmodifiable version of the given non-null IntIterator
      * @throws NullPointerException if the given IntIterator is null
      * @see org.apache.commons.collections.primitives.decorators.UnmodifiableIntIterator#wrap
@@ -134,7 +134,7 @@ public final class IntCollections {
         
     /**
      * Returns an unmodifiable version of the given non-null IntListIterator.
-     * @param list the non-null IntListIterator to wrap in an unmodifiable decorator
+     * @param iter the non-null IntListIterator to wrap in an unmodifiable decorator
      * @return an unmodifiable version of the given non-null IntListIterator
      * @throws NullPointerException if the given IntListIterator is null
      * @see org.apache.commons.collections.primitives.decorators.UnmodifiableIntListIterator#wrap

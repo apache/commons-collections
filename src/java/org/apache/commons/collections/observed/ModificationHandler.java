@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.7 2003/09/21 20:01:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ModificationHandler.java,v 1.8 2003/10/09 20:50:04 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import java.util.Collection;
  * later collections release.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/09/21 20:01:53 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/09 20:50:04 $
  * 
  * @author Stephen Colebourne
  */
@@ -324,7 +324,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before add(obj) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * It does not set the index for List implementations.
      * 
      * @param object  the object being added
@@ -337,7 +337,7 @@ public class ModificationHandler {
     /**
      * Send an event after add(obj) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * It does not set the index for List implementations.
      * 
      * @param object  the object being added
@@ -351,7 +351,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before add(int,obj) is called on a List.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param index  the index to add at
      * @param object  the object being added
@@ -364,7 +364,7 @@ public class ModificationHandler {
     /**
      * Send an event after add(int,obj) is called on a List.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param index  the index to add at
      * @param object  the object being added
@@ -377,7 +377,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before add(obj,int) is called on a Bag.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param object  the object being added
      * @param nCopies  the number of copies being added
@@ -390,7 +390,7 @@ public class ModificationHandler {
     /**
      * Send an event after add(obj,int) is called on a Bag.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * The method result is not used by this implementation (Bag violates the
      * Collection contract)
      * 
@@ -406,7 +406,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before add(obj) is called on a ListIterator.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param index  the index of the iterator
      * @param object  the object being added
@@ -419,7 +419,7 @@ public class ModificationHandler {
     /**
      * Send an event after add(obj) is called on a ListIterator.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param index  the index of the iterator
      * @param object  the object being added
@@ -433,7 +433,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before addAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param coll  the collection being added
      * @return true to process modification
@@ -445,7 +445,7 @@ public class ModificationHandler {
     /**
      * Send an event after addAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param coll  the collection being added
      * @param collChanged  the result from the addAll method
@@ -458,7 +458,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before addAll(int,coll) is called on a List.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param index  the index to addAll at
      * @param coll  the collection being added
@@ -471,7 +471,7 @@ public class ModificationHandler {
     /**
      * Send an event after addAll(int,coll) is called on a List.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param index  the index to addAll at
      * @param coll  the collection being added
@@ -485,7 +485,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before clear() is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @return true to process modification
      */
@@ -496,7 +496,7 @@ public class ModificationHandler {
     /**
      * Send an event after clear() is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      */
     protected void postClear() {
         // assumes a modification occurred
@@ -507,7 +507,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before remove(obj) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param object  the object being removed
      * @return true to process modification
@@ -519,7 +519,7 @@ public class ModificationHandler {
     /**
      * Send an event after remove(obj) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param object  the object being removed
      * @param collChanged  the result from the remove method
@@ -532,7 +532,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before remove(int) is called on a List.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param index  the index to remove at
      * @return true to process modification
@@ -546,7 +546,7 @@ public class ModificationHandler {
     /**
      * Send an event after remove(int) is called on a List.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param index  the index to remove at
      * @param previousValue  the result from the remove method
@@ -559,7 +559,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before remove(obj,int) is called on a Bag.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param object  the object being removed
      * @param nCopies  the number of copies being removed
@@ -572,7 +572,7 @@ public class ModificationHandler {
     /**
      * Send an event after remove(obj,int) is called on a Bag.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param object  the object being removed
      * @param nCopies  the number of copies being removed
@@ -586,7 +586,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before remove() is called on a Buffer.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @return true to process modification
      */
@@ -597,7 +597,7 @@ public class ModificationHandler {
     /**
      * Send an event after remove() is called on a Buffer.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param removedValue  the previous value at this index
      */
@@ -610,7 +610,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before remove(obj) is called on an Iterator.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param index  the index of the iterator
      * @param removedValue  the object being removed
@@ -623,7 +623,7 @@ public class ModificationHandler {
     /**
      * Send an event after remove(obj) is called on an Iterator.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param index  the index of the iterator
      * @param removedValue  the previous value at this index
@@ -637,7 +637,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before removeAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param coll  the collection being removed
      * @return true to process modification
@@ -649,7 +649,7 @@ public class ModificationHandler {
     /**
      * Send an event after removeAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param coll  the collection being removed
      * @param collChanged  the result from the removeAll method
@@ -662,7 +662,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before retainAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param coll  the collection being retained
      * @return true to process modification
@@ -674,7 +674,7 @@ public class ModificationHandler {
     /**
      * Send an event after retainAll(coll) is called.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param coll  the collection being retained
      * @param collChanged  the result from the retainAll method
@@ -687,7 +687,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before set(int,obj) is called on a List.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param index  the index to add at
      * @param object  the object being added
@@ -702,7 +702,7 @@ public class ModificationHandler {
     /**
      * Send an event after set(int,obj) is called on a List.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param index  the index to add at
      * @param object  the object being added
@@ -717,7 +717,7 @@ public class ModificationHandler {
     /**
      * Store data and send event before set(obj) is called on a ListIterator.
      * <p>
-     * This implementation forwards to {@link #preEvent(int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #preEvent}.
      * 
      * @param index  the index to set at
      * @param object  the object being added
@@ -731,7 +731,7 @@ public class ModificationHandler {
     /**
      * Send an event after set(obj) is called on a ListIterator.
      * <p>
-     * This implementation forwards to {@link #postEvent(boolean, int, int, Object, int, Object, Object, int)}.
+     * This implementation forwards to {@link #postEvent}.
      * 
      * @param index  the index to set at
      * @param object  the object being added

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.6 2003/09/21 20:00:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationHandler.java,v 1.7 2003/10/09 20:50:04 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import org.apache.commons.collections.observed.ObservableCollection;
  * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/09/21 20:00:29 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/09 20:50:04 $
  * 
  * @author Stephen Colebourne
  */
@@ -111,9 +111,9 @@ public class StandardModificationHandler extends ModificationHandler {
     /**
      * Constructor the creates the handler but leaves it invalid.
      * <p>
-     * The handler can only be used after {@link #init(ObservableCollection)} is
-     * called. This is normally done automatically by
-     * {@link ObservableCollection#decorate(Collection, ModificationHandler)}.
+     * The handler can only be used after it has been properly initialized.
+     * This is normally done automatically by
+     * {@link ObservableCollection#decorate(Collection, Object)}.
      */
     public StandardModificationHandler() {
         super();
@@ -122,9 +122,9 @@ public class StandardModificationHandler extends ModificationHandler {
     /**
      * Constructor the creates the handler but leaves it invalid.
      * <p>
-     * The handler can only be used after {@link #init(ObservableCollection)} is
-     * called. This is normally done automatically by
-     * {@link ObservableCollection#decorate(Collection, ModificationHandler)}.
+     * The handler can only be used after it has been properly initialized.
+     * This is normally done automatically by
+     * {@link ObservableCollection#decorate(Collection, Object)}.
      * 
      * @param pre  the pre listener
      * @param preMask  the mask for the pre listener
@@ -244,7 +244,6 @@ public class StandardModificationHandler extends ModificationHandler {
      * 
      * @param listener  the listener to change, may be null
      * @param mask  the new mask (0 for none, -1 for all)
-     * @return a non-null array of listeners
      */
     public synchronized void setPreModificationListenerMask(StandardPreModificationListener listener, int mask) {
         if (listener != null) {
@@ -380,7 +379,6 @@ public class StandardModificationHandler extends ModificationHandler {
      * 
      * @param listener  the listener to change, may be null
      * @param mask  the new mask (0 for none, -1 for all)
-     * @return a non-null array of listeners
      */
     public synchronized void setPostModificationListenerMask(StandardPostModificationListener listener, int mask) {
         if (listener != null) {

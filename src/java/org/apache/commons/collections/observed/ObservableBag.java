@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableBag.java,v 1.1 2003/09/21 16:00:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableBag.java,v 1.2 2003/10/09 20:50:04 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,14 +67,15 @@ import org.apache.commons.collections.Bag;
  * Each modifying method call made on this <code>Bag</code> is forwarded to a
  * {@link ModificationHandler}.
  * The handler manages the event, notifying listeners and optionally vetoing changes.
- * The default handler is {@link StandardModificationHandler}.
+ * The default handler is
+ * {@link org.apache.commons.collections.observed.standard.StandardModificationHandler StandardModificationHandler}.
  * See this class for details of configuration available.
  * <p>
  * NOTE: The {@link #uniqueSet()} method returns a <code>Set</code> that is
  * NOT observed. This is because the set should be unmodifiable.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/21 16:00:28 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/09 20:50:04 $
  * 
  * @author Stephen Colebourne
  */

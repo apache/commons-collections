@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableSortedSet.java,v 1.2 2003/09/28 21:49:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableSortedSet.java,v 1.3 2003/10/09 20:50:04 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,11 +66,12 @@ import java.util.SortedSet;
  * Each modifying method call made on this <code>SortedSet</code> is forwarded to a
  * {@link ModificationHandler}.
  * The handler manages the event, notifying listeners and optionally vetoing changes.
- * The default handler is {@link StandardModificationHandler}.
+ * The default handler is
+ * {@link org.apache.commons.collections.observed.standard.StandardModificationHandler StandardModificationHandler}.
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/28 21:49:50 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/09 20:50:04 $
  * 
  * @author Stephen Colebourne
  */
