@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.1 2003/09/20 20:24:30 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.2 2003/10/05 20:38:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,11 +66,41 @@ import java.util.Map;
  * a key to be looked up from a value with equal performance.
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/20 20:24:30 $
+ * @version $Revision: 1.2 $ $Date: 2003/10/05 20:38:55 $
  *
  * @author Stephen Colebourne
  */
 public interface BidiMap extends Map {
+    
+    /**
+     * Puts the key-value pair into the map, replacing any previous pair.
+     * <p>
+     * When adding a key-value pair, the value may already exist in the map
+     * against a different key. That mapping is removed, to ensure that the
+     * value only occurs once in the inverse map.
+     * <pre>
+     *  BidiMap map1 = new HashBidiMap();
+     *  map.put("A","B");  // contains A mapped to B, as per Map
+     *  map.put("A","C");  // contains A mapped to C, as per Map
+     * 
+     *  BidiMap map2 = new HashBidiMap();
+     *  map.put("A","B");  // contains A mapped to B, as per Map
+     *  map.put("C","B");  // contains C mapped to B, key A is removed
+     * </pre>
+     *
+     * @param key  the key to store
+     * @param value  the value to store
+     * @return the previous value mapped to this key
+     * 
+     * @throws UnsupportedOperationException if the <code>put</code> method is not supported
+     * @throws ClassCastException (optional) if the map limits the type of the 
+     *  value and the specifed value is inappropriate
+     * @throws IllegalArgumentException (optional) if the map limits the values
+     *  in some way and the value was invalid
+     * @throws NullPointerException (optional) if the map limits the values to
+     *  non-null and null was specified
+     */
+    public Object put(Object key, Object value);
     
     /**
      * Gets the key that is currently mapped to the specified value.
