@@ -321,16 +321,6 @@
         		<include>org/apache/commons/collections/TestAllPackages.java</include>
       		</includes>
    		</unitTest>
-
-    	<!-- Integration unit test classes -->
-    	<integrationUnitTestPatterns></integrationUnitTestPatterns>
-    
-    	<resources>
-      		<includes>
-       			<include>**/*.properties</include>
-      		</includes>
-    	</resources>
-    	<jars/>
   	</build>
 
   <reports>
