@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.1 2002/06/04 16:50:09 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:50:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.2 2002/06/21 03:50:40 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/21 03:50:40 $
  *
  * ====================================================================
  *
@@ -72,7 +72,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:50:09 $
+ * @version $Revision: 1.2 $ $Date: 2002/06/21 03:50:40 $
  * @author Rodney Waldhoff 
  */
 public class FloatArrayList extends AbstractList implements List, Serializable {
@@ -138,6 +138,12 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
         return old;
     }
 
+    public Object set(int index, Object value) {
+        Float f = (Float)value;
+        return new Float(setFloat(index, f.floatValue()));
+    }
+
+
     public boolean addFloat(float value) {
         ensureCapacity(_size+1);
         _data[_size++] = value;
@@ -182,6 +188,10 @@ public class FloatArrayList extends AbstractList implements List, Serializable {
             removeFloatAt(index);
             return true;
         }
+    }
+
+    public Object remove(int index) {
+        return new Float(removeFloatAt(index));
     }
 
     public void ensureCapacity(int mincap) {
