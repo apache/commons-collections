@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.8 2003/04/15 03:07:50 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestAll.java,v 1.9 2003/04/16 18:32:38 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,7 +62,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.8 $ $Date: 2003/04/15 03:07:50 $
+ * @version $Revision: 1.9 $ $Date: 2003/04/16 18:32:38 $
  * @author Rodney Waldhoff
  */
 public class TestAll extends TestCase {
@@ -95,6 +95,15 @@ public class TestAll extends TestCase {
         suite.addTest(TestListIteratorShortListIterator.suite());
         suite.addTest(TestShortIteratorIterator.suite());
         suite.addTest(TestShortListIteratorListIterator.suite());
+
+        suite.addTest(TestCollectionCharCollection.suite());
+        suite.addTest(TestCharCollectionCollection.suite());
+        suite.addTest(TestCharListList.suite());
+        suite.addTest(TestListCharList.suite());
+        suite.addTest(TestIteratorCharIterator.suite());
+        suite.addTest(TestListIteratorCharListIterator.suite());
+        suite.addTest(TestCharIteratorIterator.suite());
+        suite.addTest(TestCharListIteratorListIterator.suite());
 
         suite.addTest(TestCollectionIntCollection.suite());
         suite.addTest(TestIntCollectionCollection.suite());
