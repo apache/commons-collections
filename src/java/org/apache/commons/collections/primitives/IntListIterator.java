@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListIterator.java,v 1.5 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListIterator.java,v 1.6 2003/01/11 21:32:20 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,13 +58,13 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * A list iterator over <code>int</code> values.
+ * A bi-directional iterator over <code>int</code> values.
  *
  * @see org.apache.commons.collections.primitives.adapters.IntListIteratorListIterator
  * @see org.apache.commons.collections.primitives.adapters.ListIteratorIntListIterator
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.5 $ $Date: 2003/01/11 21:28:02 $
+ * @version $Revision: 1.6 $ $Date: 2003/01/11 21:32:20 $
  * 
  * @author Rodney Waldhoff 
  */
