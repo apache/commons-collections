@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.2 2003/12/03 00:49:38 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bag/AbstractMapBag.java,v 1.3 2003/12/03 01:02:32 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import org.apache.commons.collections.Bag;
  * the number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/03 00:49:38 $
+ * @version $Revision: 1.3 $ $Date: 2003/12/03 01:02:32 $
  * 
  * @author Chuck Burdick
  * @author Michael A. Smith
@@ -378,13 +378,20 @@ public abstract class AbstractMapBag implements Bag {
     }
 
     /**
-     * Removes one copy of the specified object from the bag.
+     * Removes all copies of the specified object from the bag.
      * 
      * @param object  the object to remove
      * @return true if the bag changed
      */
     public boolean remove(Object object) {
-        return remove(object, getCount(object));
+        MutableInteger mut = (MutableInteger) map.get(object);
+        if (mut == null) {
+            return false;
+        }
+        modCount++;
+        map.remove(object);
+        size -= mut.value;
+        return true;
     }
 
     /**
