@@ -9,3 +9,4 @@ eclipse
 bin
 junit*.properties
 *.bat
+jcoverage.ser
