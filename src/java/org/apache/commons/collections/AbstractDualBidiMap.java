@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.2 2003/10/09 20:21:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.3 2003/10/10 21:09:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.2 2003/10/09 20:21:32 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.3 2003/10/10 21:09:49 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -335,7 +335,8 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     protected static class KeySetIterator extends AbstractIteratorDecorator {
         
         private final AbstractDualBidiMap map;
-        private Object last;
+        private Object last = null;
+        private boolean canRemove = false;
         
         protected KeySetIterator(Iterator iterator, AbstractDualBidiMap map) {
             super(iterator);
@@ -344,14 +345,19 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         
         public Object next() {
             last = super.next();
+            canRemove = true;
             return last;
         }
         
         public void remove() {
+            if (canRemove == false) {
+                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+            }
             Object value = map.maps[0].get(last);
             super.remove();
             map.maps[1].remove(value);
             last = null;
+            canRemove = false;
         }
     }
 
@@ -388,7 +394,8 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     protected static class EntrySetIterator extends AbstractIteratorDecorator {
         
         private final AbstractDualBidiMap map;
-        private Map.Entry last;
+        private Map.Entry last = null;
+        private boolean canRemove = false;
         
         protected EntrySetIterator(Iterator iterator, AbstractDualBidiMap map) {
             super(iterator);
@@ -397,13 +404,20 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         
         public Object next() {
             last = new MapEntry((Map.Entry) super.next(), map);
+            canRemove = true;
             return last;
         }
         
         public void remove() {
+            if (canRemove == false) {
+                throw new IllegalStateException("Iterator remove() can only be called once after next()");
+            }
+            // store value as remove may change the entry in the decorator (eg.TreeMap)
+            Object value = last.getValue();
             super.remove();
-            map.maps[1].remove(last.getValue());
+            map.maps[1].remove(value);
             last = null;
+            canRemove = false;
         }
     }
 
