@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntCollection.java,v 1.1 2003/01/05 03:03:14 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/05 03:03:14 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntCollection.java,v 1.2 2003/01/06 03:59:12 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/06 03:59:12 $
  *
  * ====================================================================
  *
@@ -62,14 +62,13 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/01/05 03:03:14 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/06 03:59:12 $
  * @author Rodney Waldhoff 
  */
 abstract class AbstractIntCollection implements IntCollection {
     public abstract IntIterator iterator();
     public abstract int size();
           
-    
     protected AbstractIntCollection() { }
               
     /** Unsupported in this base implementation. */

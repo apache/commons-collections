@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.2 2002/06/04 16:50:09 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2002/06/04 16:50:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.3 2003/01/06 03:59:12 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/01/06 03:59:12 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/06/04 16:50:09 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/06 03:59:12 $
  * @author Rodney Waldhoff
  */
 public class TestAll extends TestCase {
@@ -81,6 +81,7 @@ public class TestAll extends TestCase {
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
+        suite.addTest(TestArrayIntList.suite());
         suite.addTest(TestUnsignedByteArrayList.suite());
         suite.addTest(TestShortArrayList.suite());
         suite.addTest(TestUnsignedShortArrayList.suite());

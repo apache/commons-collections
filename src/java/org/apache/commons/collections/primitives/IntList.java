@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.2 2003/01/04 23:16:29 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2003/01/04 23:16:29 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.3 2003/01/06 03:59:12 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2003/01/06 03:59:12 $
  *
  * ====================================================================
  *
@@ -64,16 +64,18 @@ package org.apache.commons.collections.primitives;
 /**
  * An ordered collection (a {@link java.util.List}) of int values.
  *
- * @version $Revision: 1.2 $ $Date: 2003/01/04 23:16:29 $
+ * @version $Revision: 1.3 $ $Date: 2003/01/06 03:59:12 $
  * @author Rodney Waldhoff 
  */
-public interface IntList {
+public interface IntList extends IntCollection {
     /** 
      * Inserts the specified element at the specified position 
      * within me (optional operation). 
      */
     void add(int index, int element);
           
+    boolean addAll(int index, IntCollection collection);
+    
     /** 
      * Returns the element at the specified position within 
      * me. 
