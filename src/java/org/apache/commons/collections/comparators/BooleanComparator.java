@@ -19,20 +19,22 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * A {@link Comparator} for {@link Boolean} objects.
+ * A {@link Comparator} for {@link Boolean} objects that can sort either
+ * true or false first.
  * <p>
  * @see #getTrueFirstComparator()
  * @see #getFalseFirstComparator()
  * @see #getBooleanComparator(boolean)
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.13 $ $Date: 2004/05/15 13:24:11 $
+ * @version $Revision: 1.14 $ $Date: 2004/05/16 11:56:47 $
  * 
  * @author Rodney Waldhoff
  */
 public final class BooleanComparator implements Comparator, Serializable {
-    
-    // TODO: Serialization version
+
+    /** Serialization version. */
+    private static final long serialVersionUID = 1830042991606340609L;
 
     /** Constant "true first" reference. */
     private static final BooleanComparator TRUE_FIRST = new BooleanComparator(true);
