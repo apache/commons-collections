@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.16 2003/04/15 00:11:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListDoubleList.java,v 1.1 2003/04/15 00:11:20 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,62 +55,62 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import java.io.Serializable;
+import java.util.List;
+
+import org.apache.commons.collections.primitives.DoubleList;
 
 /**
- * @version $Revision: 1.16 $ $Date: 2003/04/15 00:11:20 $
- * @author Rodney Waldhoff
+ * Adapts a {@link Number}-valued {@link List List} 
+ * to the {@link DoubleList DoubleList} interface.
+ * <p />
+ * This implementation delegates most methods
+ * to the provided {@link List List} 
+ * implementation in the "obvious" way.
+ *
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.1 $ $Date: 2003/04/15 00:11:20 $
+ * @author Rodney Waldhoff 
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
+public class ListDoubleList extends AbstractListDoubleList implements Serializable {
+    
+    /**
+     * Create an {@link DoubleList DoubleList} wrapping
+     * the specified {@link List List}.  When
+     * the given <i>list</i> is <code>null</code>,
+     * returns <code>null</code>.
+     * 
+     * @param list the (possibly <code>null</code>) 
+     *        {@link List List} to wrap
+     * @return a {@link DoubleList DoubleList} wrapping the given 
+     *         <i>list</i>, or <code>null</code> when <i>list</i> is
+     *         <code>null</code>.
+     */
+    public static DoubleList wrap(List list) {
+        if(null == list) {
+            return null;
+        } else if(list instanceof Serializable) {
+            return new ListDoubleList(list);
+        } else {
+            return new NonSerializableListDoubleList(list);
+        }
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    /**
+     * Creates an {@link DoubleList DoubleList} wrapping
+     * the specified {@link List List}.
+     * @see #wrap
+     */
+    public ListDoubleList(List list) {
+        _list = list;     
     }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        suite.addTest(TestArrayUnsignedByteList.suite());
-
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(TestAbstractFloatCollection.suite());
-        suite.addTest(TestRandomAccessFloatList.suite());
-        suite.addTest(TestArrayFloatList.suite());
-
-        suite.addTest(TestAbstractDoubleCollection.suite());
-        suite.addTest(TestRandomAccessDoubleList.suite());
-        suite.addTest(TestArrayDoubleList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
+    
+    protected List getList() {
+        return _list;
+    }
         
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
-    }
+    private List _list = null;
+    
 }
-

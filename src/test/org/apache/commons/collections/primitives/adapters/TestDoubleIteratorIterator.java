@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.16 2003/04/15 00:11:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestDoubleIteratorIterator.java,v 1.1 2003/04/15 00:11:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,62 +55,68 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
+
+import java.util.Iterator;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.iterators.TestIterator;
+import org.apache.commons.collections.primitives.ArrayDoubleList;
+import org.apache.commons.collections.primitives.DoubleList;
+
 /**
- * @version $Revision: 1.16 $ $Date: 2003/04/15 00:11:20 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/15 00:11:19 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestDoubleIteratorIterator extends TestIterator {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestDoubleIteratorIterator(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        suite.addTest(TestArrayUnsignedByteList.suite());
-
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(TestAbstractFloatCollection.suite());
-        suite.addTest(TestRandomAccessFloatList.suite());
-        suite.addTest(TestArrayFloatList.suite());
-
-        suite.addTest(TestAbstractDoubleCollection.suite());
-        suite.addTest(TestRandomAccessDoubleList.suite());
-        suite.addTest(TestArrayDoubleList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
-        
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+        return new TestSuite(TestDoubleIteratorIterator.class);
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    public Object makeObject() {
+        return makeFullIterator();
+    }
+    
+    public Iterator makeEmptyIterator() {
+        return DoubleIteratorIterator.wrap(makeEmptyDoubleList().iterator());
+    }
+    
+    public Iterator makeFullIterator() {
+        return DoubleIteratorIterator.wrap(makeFullDoubleList().iterator());
+    }
+
+    protected DoubleList makeEmptyDoubleList() {
+        return new ArrayDoubleList();
+    }
+    
+    protected DoubleList makeFullDoubleList() {
+        DoubleList list = makeEmptyDoubleList();
+        double[] elts = getFullElements();
+        for(int i=0;i<elts.length;i++) {
+            list.add((double)elts[i]);
+        }
+        return list;
+    }
+    
+    public double[] getFullElements() {
+        return new double[] { (double)0, (double)1, (double)2, (double)3, (double)4, (double)5, (double)6, (double)7, (double)8, (double)9 };
+    }
+    
+    // tests
+    // ------------------------------------------------------------------------
+
+
+}

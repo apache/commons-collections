@@ -1,9 +1,9 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.16 2003/04/15 00:11:20 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestCollectionDoubleCollection.java,v 1.1 2003/04/15 00:11:19 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,62 +55,82 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
+
+import java.io.Serializable;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestObject;
+import org.apache.commons.collections.primitives.DoubleCollection;
+
 /**
- * @version $Revision: 1.16 $ $Date: 2003/04/15 00:11:20 $
+ * @version $Revision: 1.1 $ $Date: 2003/04/15 00:11:19 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestCollectionDoubleCollection extends TestObject {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestCollectionDoubleCollection(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        suite.addTest(TestArrayUnsignedByteList.suite());
-
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-
-        suite.addTest(TestAbstractFloatCollection.suite());
-        suite.addTest(TestRandomAccessFloatList.suite());
-        suite.addTest(TestArrayFloatList.suite());
-
-        suite.addTest(TestAbstractDoubleCollection.suite());
-        suite.addTest(TestRandomAccessDoubleList.suite());
-        suite.addTest(TestArrayDoubleList.suite());
-
-        suite.addTest(org.apache.commons.collections.primitives.adapters.TestAll.suite());
-        
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+        return new TestSuite(TestCollectionDoubleCollection.class);
     }
-}
 
+    // collections testing framework
+    // ------------------------------------------------------------------------
+
+    protected Object makeObject() {
+        List list = new ArrayList();
+        for(int i=0;i<10;i++) {
+            list.add(new Double((double)i));
+        }
+        return new CollectionDoubleCollection(list);
+    }
+
+    public void testSerializeDeserializeThenCompare() {
+        // Collection.equal contract doesn't work that way
+    }
+
+    /** @TODO need to add serialized form to cvs */
+    public void testCanonicalEmptyCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+
+    public void testCanonicalFullCollectionExists() {
+        // XXX FIX ME XXX
+        // need to add a serialized form to cvs
+    }
+    
+    // tests
+    // ------------------------------------------------------------------------
+
+    public void testWrapNull() {
+        assertNull(CollectionDoubleCollection.wrap(null));
+    }
+    
+    public void testWrapSerializable() {
+        DoubleCollection collection = CollectionDoubleCollection.wrap(new ArrayList());
+        assertNotNull(collection);
+        assertTrue(collection instanceof Serializable);
+    }
+    
+    public void testWrapNonSerializable() {
+        DoubleCollection collection = CollectionDoubleCollection.wrap(new AbstractList() { 
+            public Object get(int i) { throw new IndexOutOfBoundsException(); } 
+            public int size() { return 0; } 
+        });
+        assertNotNull(collection);
+        assertTrue(!(collection instanceof Serializable));
+    }
+
+}
