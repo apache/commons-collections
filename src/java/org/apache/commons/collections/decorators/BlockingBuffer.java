@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/BlockingBuffer.java,v 1.2 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/BlockingBuffer.java,v 1.3 2003/09/18 03:28:28 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,13 +64,14 @@ import org.apache.commons.collections.BufferUnderflowException;
 
 /**
  * <code>BlockingBuffer</code> decorates another <code>Buffer</code>
- * to block on calls to the get method to wait until entries are
+ * to block on calls to the get and remove methods to wait until entries are
  * added to the buffer.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.3 $ $Date: 2003/09/18 03:28:28 $
  * 
  * @author Stephen Colebourne
+ * @author Janek Bogucki
  */
 public class BlockingBuffer extends SynchronizedBuffer {
     
@@ -98,7 +99,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
     public boolean add(Object o) {
         synchronized (lock) {
             boolean result = collection.add(o);
-            notify();
+            notifyAll();
             return result;
         }
     }
