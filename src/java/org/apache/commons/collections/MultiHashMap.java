@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.6 2002/10/12 22:15:18 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2002/10/12 22:15:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.7 2002/11/01 19:41:00 rwaldhoff Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/11/01 19:41:00 $
  *
  * ====================================================================
  *
@@ -186,6 +186,12 @@ public class MultiHashMap extends HashMap implements MultiMap
         super.putAll( mapToPut );
     }
     
+    /** 
+     * Note: Currently the returned {@link Collection} is <i>not</i>
+     * backed by this map.
+     * @see Map#values
+     * @see http://issues.apache.org/bugzilla/show_bug.cgi?id=9573
+     */
     public Collection values()
     {
         ArrayList returnList = new ArrayList( super.size() );
