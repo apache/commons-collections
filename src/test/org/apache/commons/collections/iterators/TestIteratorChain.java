@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestIteratorChain.java,v 1.6 2003/10/01 21:54:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestIteratorChain.java,v 1.7 2003/12/29 16:07:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import junit.framework.TestSuite;
 /**
  * Tests the IteratorChain class.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/10/01 21:54:55 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/29 16:07:53 $
  * 
  * @author James Strachan
  * @author Mauricio S. Moura
@@ -180,5 +180,18 @@ public class TestIteratorChain extends AbstractTestIterator {
         assertEquals("C",chain.next());
         assertTrue("should not have next",!chain.hasNext());
     }
+    
+    public void testEmptyChain() {
+        IteratorChain chain = new IteratorChain();
+        assertEquals(false, chain.hasNext());
+        try {
+            chain.next();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            chain.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+        
 }
-

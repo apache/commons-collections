@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.7 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/IteratorChain.java,v 1.8 2003/12/29 16:07:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,57 +61,61 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
- * <p>An IteratorChain is an Iterator that wraps one or
- * more Iterators.  When any method from the
- * Iterator interface is called, the IteratorChain will
- * proxy to a single underlying Iterator.  The 
- * IteratorChain will invoke the Iterators in sequence until 
- * all Iterators are exhausted completely.</p>
- * 
- * <p>Under many circumstances, linking Iterators together
- * in this manner is more efficient (and convenient)
- * than reading out the contents of each Iterator into a
- * List and creating a new Iterator.</p>
- * 
- * <p>Calling a method that adds new Iterator<i>after
- * a method in the Iterator interface
- * has been called</i> will result in an
- * UnsupportedOperationException.  Subclasses should <i>take care</i>
- * to not alter the underlying List of Iterators.</p>
+ * An IteratorChain is an Iterator that wraps a number of Iterators.
+ * <p>
+ * This class makes mutiple iterators look like one to the caller
+ * When any method from the Iterator interface is called, the IteratorChain
+ * will delegate to a single underlying Iterator. The IteratorChain will
+ * invoke the Iterators in sequence until all Iterators are exhausted.
+ * <p>
+ * Under many circumstances, linking Iterators together in this manner is
+ * more efficient (and convenient) than reading out the contents of each
+ * Iterator into a List and creating a new Iterator.
+ * <p>
+ * Calling a method that adds new Iterator<i>after a method in the Iterator
+ * interface has been called</i> will result in an UnsupportedOperationException.
+ * Subclasses should <i>take care</i> to not alter the underlying List of Iterators.
+ * <p>
+ * NOTE: As from version 3.0, the IteratorChain may contain no
+ * iterators. In this case the class will function as an empty iterator.
  * 
  * @since Commons Collections 2.1
- * @version $Revision: 1.7 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.8 $ $Date: 2003/12/29 16:07:53 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
 public class IteratorChain implements Iterator {
 
+	/** The chain of iterators */
     protected final List iteratorChain = new ArrayList();
+    /** The index of the current iterator */
     protected int currentIteratorIndex = 0;
+    /** The current iterator */
     protected Iterator currentIterator = null;
-    // the "last used" Iterator is the Iterator upon which
-    // next() or hasNext() was most recently called
-    // used for the remove() operation only
+    /**
+     * The "last used" Iterator is the Iterator upon which
+     * next() or hasNext() was most recently called
+     * used for the remove() operation only
+     */
     protected Iterator lastUsedIterator = null;
-
-    // ComparatorChain is "locked" after the first time
-    // compare(Object,Object) is called
+    /**
+     * ComparatorChain is "locked" after the first time
+     * compare(Object,Object) is called
+     */
     protected boolean isLocked = false;
 
-    // Constructors
-    // -------------------------------------------------------------------
-    
+    //-----------------------------------------------------------------------
     /**
      * Construct an IteratorChain with no Iterators.
-     * You must add at least Iterator before calling
-     * any method from the Iterator interface, or an 
-     * UnsupportedOperationException is thrown
+     * <p>
+     * You will normally use {@link #addIterator(Iterator)} to add
+     * some iterators after using this constructor.
      */
     public IteratorChain() {
         super();
@@ -172,9 +176,7 @@ public class IteratorChain implements Iterator {
         }
     }
     
-    // Public Methods
-    // -------------------------------------------------------------------
-
+    //-----------------------------------------------------------------------
     /**
      * Add an Iterator to the end of the chain 
      * 
@@ -226,74 +228,64 @@ public class IteratorChain implements Iterator {
     }
 
     /**
-     * Determine if modifications can still be made to the
-     * IteratorChain.  IteratorChains cannot be modified
-     * once they have executed a method from the Iterator
-     * interface.
+     * Determine if modifications can still be made to the IteratorChain.
+     * IteratorChains cannot be modified once they have executed a method
+     * from the Iterator interface.
      * 
-     * @return true = IteratorChain cannot be modified; false = 
-     *         IteratorChain can still be modified.
+     * @return true if IteratorChain cannot be modified, false if it can 
      */
     public boolean isLocked() {
         return isLocked;
     }
 
-    // throw an exception if the IteratorChain is locked
+    /**
+     * Checks whether the iterator chain is now locked and in use.
+     */
     private void checkLocked() {
         if (isLocked == true) {
             throw new UnsupportedOperationException("IteratorChain cannot be changed after the first use of a method from the Iterator interface");
         }
     }
 
-    private void checkChainIntegrity() {
-        if (iteratorChain.size() == 0) {
-            throw new UnsupportedOperationException("IteratorChains must contain at least one Iterator");
-        }
-    }
-
-    // you MUST call this method whenever you call a method in the Iterator interface, because
-    // this method also assigns the initial value of the currentIterator variable
+    /**
+     * Lock the chain so no more iterators can be added.
+     * This must be called from all Iterator interface methods.
+     */
     private void lockChain() {
         if (isLocked == false) {
-            checkChainIntegrity();
             isLocked = true;
         }
     }
 
-    // call this before any Iterator method to make sure that the current Iterator
-    // is not exhausted
+    /**
+     * Updates the current iterator field to ensure that the current Iterator
+     * is not exhausted
+     */
     protected void updateCurrentIterator() {
         if (currentIterator == null) {
-            currentIterator = (Iterator) iteratorChain.get(0);
+            if (iteratorChain.isEmpty()) {
+                currentIterator = IteratorUtils.EMPTY_ITERATOR;
+            } else {
+                currentIterator = (Iterator) iteratorChain.get(0);
+            }
             // set last used iterator here, in case the user calls remove
             // before calling hasNext() or next() (although they shouldn't)
             lastUsedIterator = currentIterator;
         }
 
-        if (currentIteratorIndex == (iteratorChain.size() - 1)) {
-            return;
-        }
-
-        while (currentIterator.hasNext() == false) {
-            ++currentIteratorIndex;
+        while (currentIterator.hasNext() == false && currentIteratorIndex < iteratorChain.size() - 1) {
+            currentIteratorIndex++;
             currentIterator = (Iterator) iteratorChain.get(currentIteratorIndex);
-
-            if (currentIteratorIndex == (iteratorChain.size() - 1)) {
-                return;
-            }
         }
     }
 
+    //-----------------------------------------------------------------------
     /**
-     * Return true if any Iterator in the IteratorChain has a remaining
-     * element.
+     * Return true if any Iterator in the IteratorChain has a remaining element.
      * 
      * @return true if elements remain
-     * @exception UnsupportedOperationException
-     *                   if the IteratorChain does not contain at least one
-     *                   Iterator
      */
-    public boolean hasNext() throws UnsupportedOperationException {
+    public boolean hasNext() {
         lockChain();
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
@@ -305,13 +297,9 @@ public class IteratorChain implements Iterator {
      * Returns the next Object of the current Iterator
      * 
      * @return Object from the current Iterator
-     * @exception NoSuchElementException
-     *                   if all the Iterators are exhausted
-     * @exception UnsupportedOperationException
-     *                   if the IteratorChain does not contain at least one
-     *                   Iterator
+     * @throws NoSuchElementException if all the Iterators are exhausted
      */
-    public Object next() throws NoSuchElementException, UnsupportedOperationException {
+    public Object next() {
         lockChain();
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
@@ -327,20 +315,17 @@ public class IteratorChain implements Iterator {
      * UnsupportedOperationException if the underlying
      * Iterator does not support this method. 
      * 
-     * @exception UnsupportedOperationException
-     *                   if the remove operator is not supported by the underlying
-     *                   Iterator or if there are no Iterators in the IteratorChain
-     * @exception IllegalStateException
-     *                   if the next method has not yet been called, or the
-     *                   remove method has already been called after the last
-     *                   call to the next method.
+     * @throws UnsupportedOperationException
+     *   if the remove operator is not supported by the underlying Iterator
+     * @throws IllegalStateException
+     *   if the next method has not yet been called, or the remove method has
+     *   already been called after the last call to the next method.
      */
-    public void remove() throws UnsupportedOperationException, IllegalStateException  {
+    public void remove() {
         lockChain();
         updateCurrentIterator();
 
         lastUsedIterator.remove();
     }
-
 
 }
