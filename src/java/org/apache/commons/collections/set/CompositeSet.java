@@ -26,11 +26,11 @@ import org.apache.commons.collections.collection.CompositeCollection;
  * Decorates a set of other sets to provide a single unified view.
  * <p>
  * Changes made to this set will actually be made on the decorated set.
- * Add and remove operations require the use of a pluggable strategy. If no
- * strategy is provided then add and remove are unsupported.
+ * Add operations require the use of a pluggable strategy.
+ * If no strategy is provided then add is unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:14:27 $
+ * @version $Revision: 1.4 $ $Date: 2004/09/22 23:39:46 $
  *
  * @author Brian McCallister
  */
