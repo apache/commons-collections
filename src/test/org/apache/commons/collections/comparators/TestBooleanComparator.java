@@ -1,5 +1,5 @@
 /* 
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestBooleanComparator.java,v 1.1 2003/01/10 00:21:08 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestBooleanComparator.java,v 1.2 2003/01/10 17:08:29 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -67,7 +67,7 @@ import junit.framework.TestSuite;
  * 
  * @since Commons Collections 2.2
  * 
- * @version $Revision: 1.1 $ $Date: 2003/01/10 00:21:08 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/10 17:08:29 $
  * 
  * @author Rodney Waldhoff
  */
@@ -102,6 +102,10 @@ public class TestBooleanComparator extends TestComparator {
         return list;
     }
     
+    public String getCompatibilityVersion() {
+        return "2.2";
+    }
+
     // tests
     // ------------------------------------------------------------------------
 
@@ -130,12 +134,6 @@ public class TestBooleanComparator extends TestComparator {
 
         assertTrue(!(new BooleanComparator().equals(new BooleanComparator(true))));
         assertTrue(!(new BooleanComparator(true).equals(new BooleanComparator(false))));
-    }
-    
-    public void testComparatorCompatibility() {
-        // XXX FIX ME XXX
-        // need to a serialized form to cvs
-        // XXX FIX ME XXX        
     }
     
     // utilities
