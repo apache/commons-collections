@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.11 2001/05/04 15:51:57 rwaldhoff Exp $ -->
+<!-- $Id: build.xml,v 1.12 2001/05/06 11:10:36 jstrachan Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -146,7 +146,6 @@
       <mkdir dir="${dest.doc.api}"/>
       <javadoc packagenames="org.*"
                sourcepath="${workdir}"
-               classpath="${classpath}"
                destdir="${dest.doc.api}"
                windowtitle="${Name-Long}"
                doctitle="${Name-Long}"
@@ -162,6 +161,7 @@
                nohelp="true"
                nonavbar="false"
                serialwarn="false">
+          <link href="http://java.sun.com/products/jdk/1.3/docs/api"/>
       </javadoc>
       <delete dir="${workdir}"/>
    </target>
