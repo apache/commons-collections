@@ -183,8 +183,9 @@ implements TestMap.SupportsPut, TestMap.EntrySetSupportsRemove
     public void testFullMapSerialization() 
     throws IOException, ClassNotFoundException {
         SequencedHashMap map = (SequencedHashMap) makeFullMap();
-        if (!(map instanceof Serializable)) return;
-        
+
+        if (!(map instanceof Serializable)) return;  
+
         byte[] objekt = writeExternalFormToBytes((Serializable) map);
         SequencedHashMap map2 = (SequencedHashMap) readExternalFormFromBytes(objekt);
 
@@ -196,9 +197,9 @@ implements TestMap.SupportsPut, TestMap.EntrySetSupportsRemove
         assertEquals("Both maps have the same first key",
                      map2.getFirstKey(),getSampleKeys()[0]);
         assertEquals("Both maps have the same last key",
-                     map.getLastKey(),getSampleKeys()[0]);
+                     map.getLastKey(),getSampleKeys()[getSampleKeys().length - 1]);
         assertEquals("Both maps have the same last key",
-                     map2.getLastKey(),getSampleKeys()[0]);
+                     map2.getLastKey(),getSampleKeys()[getSampleKeys().length - 1]);
     }
 
     protected void tearDown() {
