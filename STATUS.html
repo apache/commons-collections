@@ -7,7 +7,7 @@
 
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
-$Id: STATUS.html,v 1.10 2002/02/21 17:38:28 bayard Exp $<br>
+$Id: STATUS.html,v 1.11 2002/02/26 21:34:03 morgand Exp $<br>
 <a href="#Introduction">[Introduction]</a>
 <a href="#Dependencies">[Dependencies]</a>
 <a href="#Release Info">[Release Info]</a>
@@ -29,6 +29,12 @@ The following classes are included:</p>
 <li><strong>ArrayStack</strong> - An implementation of the java.util.Stack API
     that is based on an ArrayList instead of a Vector, so it is not synchronized to
     protect against multi-threaded access.</li>
+<li><strong>Bag</strong> - A Collection that keeps a count of its members of the same
+    type, using <code>hashCode</code> to check for equality. Suppose
+    you have a Bag that contains <code>{a, a, b, c}</code>.  Calling
+    getCount on <code>a</code> would return 2, while calling
+    uniqueSet would return <code>{a, b, c}</code>.  <i>Note: this is an
+    interface with several implementations.</i></li>
 <li><strong>BeanMap</strong> - An implementation of the java.util.Map API
     that is based on a JavaBean using introspection. The property names are the
     keys of the map and the property values are the values of the map.</li>
@@ -37,6 +43,11 @@ The following classes are included:</p>
 <li><strong>CursorableLinkedList</strong> - an implementation of the java.util.List
     interface supporting a java.util.ListIterator that allows concurrent
     modifications to the underlying list.</li>
+<li><strong>DoubleOrderedMap</strong> - Red-Black tree-based implementation of Map. 
+    This class guarantees
+    that the map will be in both ascending key order and ascending
+    value order, sorted according to the natural order for the key's
+    and value's classes.</li>
 <li><strong>ExtendedProperties</strong> - extends normal Java properties by adding
     the possibility to use the same key many times, concatenating the value strings
     instead of overwriting them.</li>
@@ -49,10 +60,40 @@ The following classes are included:</p>
 <li><strong>FastTreeMap</strong> - a custom implementation of java.util.TreeMap
     designed to operate in a multithreaded environment where the large majority of
     method calls are read-only, instead of structural changes.</li>
+<li><strong>FilterIterator</strong> - A Proxy <code>Iterator</code> which takes a 
+    <code>Predicate</code> 
+    instance to filter out objects from an underlying <code>Iterator</code> instance.
+    Only objects for which the
+    specified <code>Predicate</code> evaluates to <code>true</code> are
+    returned.</li>
+<li><strong>FilterListIterator</strong> - A proxy <code>ListIterator</code> which 
+    takes a <code>Predicate</code> instance to filter
+    out objects from an underlying <code>ListIterator</code> 
+    instance. Only objects for which the specified 
+    <code>Predicate</code> evaluates to <code>true</code> are
+    returned by the iterator.</li>
+<li><strong>HashBag</strong> -  An implementation of <strong>Bag</strong> that is backed by a 
+    HashMap.</li>
 <li><strong>ListUtils</strong> - miscelaneous utilities to manipulate Lists.</li>
+<li><strong>MultiMap</strong> - This is simply a Map with slightly different semantics.
+    Instead of returning an Object, it returns a Collection.
+    So for example, you can put( key, new Integer(1) ); 
+    and then a Object get( key ); will return you a Collection 
+    instead of an Integer.  This is an interface implemented
+    by <strong>MultiHashMap</strong>.</li>
 <li><strong>PriorityQueue</strong> - a PriorityQueue interface, with
     <strong>BinaryHeap</strong> and <strong>SynchronizedPriorityQueue</strong>
     implementations.</li>
+<li><strong>SequencedHashMap</strong> -  A map of objects whose mapping entries are 
+    sequenced based on the order in
+    which they were added.</li>
+<li><strong>SingletonIterator</strong> - An Iterator over a single 
+    object instance.</li>
+<li><strong>SortedBag</strong> - A type of <strong>Bag</strong> that maintains order among its unique
+    representative members</li>
+<li><strong>TreeBag</strong> - An implementation of <strong>Bag</strong> that is backed by a 
+    TreeMap. Order will be maintained among the unique representative
+    members.</li>
 </ul>
 
 <a name="Dependencies"></a>
