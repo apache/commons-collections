@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.9 2001/05/04 03:04:58 geirm Exp $ -->
+<!-- $Id: build.xml,v 1.10 2001/05/04 09:48:04 geirm Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -66,7 +66,7 @@
       <property name="dest.doc" value="${dest}/docs"/>
       <property name="dest.doc.api" value="${dest.doc}/api"/>
       <property name="dest.jardir" value="${dest}"/>
-      <property name="dest.jardir.jar" value="${dest.jardir}/${name}-${component.version}.jar"/>
+      <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
 
       <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
       <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->      
