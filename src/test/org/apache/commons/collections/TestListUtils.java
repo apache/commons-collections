@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.10 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.10 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.11 2003/09/12 03:59:00 psteitz Exp $
+ * $Revision: 1.11 $
+ * $Date: 2003/09/12 03:59:00 $
  *
  * ====================================================================
  *
@@ -65,6 +65,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.collections.decorators.PredicatedList;
+
 import junit.framework.Test;
 
 /**
@@ -86,32 +88,31 @@ public class TestListUtils extends BulkTest {
 
     public void testNothing() {
     }
-
-    public BulkTest bulkTestPredicatedList() {
-        return new TestPredicatedCollection("") {
-
-            public Collection predicatedCollection() {
-                Predicate p = getPredicate();
-                return ListUtils.predicatedList(new ArrayList(), p);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new TestList("") {
-                    public List makeEmptyList() {
-                        return (List)predicatedCollection();
-                    }
-
-                    public Object[] getFullElements() {
-                        return getFullNonNullStringElements();
-                    }
-
-                    public Object[] getOtherElements() {
-                        return getOtherNonNullStringElements();
-                    }
-
-                };
+    
+    public void testpredicatedList() {
+        Predicate predicate = new Predicate() {
+            public boolean evaluate(Object o) {
+                return o instanceof String;
             }
         };
+        List list =
+        ListUtils.predicatedList(new ArrayStack(), predicate);
+        assertTrue("returned object should be a PredicatedList",
+            list instanceof PredicatedList);
+        try {
+            list =
+            ListUtils.predicatedList(new ArrayStack(), null);
+            fail("Expecting IllegalArgumentException for null predicate.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+        try {
+            list =
+            ListUtils.predicatedList(null, predicate);
+            fail("Expecting IllegalArgumentException for null list.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
     }
 
     public BulkTest bulkTestTypedList() {

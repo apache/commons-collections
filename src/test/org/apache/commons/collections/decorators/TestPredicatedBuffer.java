@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.10 2003/09/12 03:59:00 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedBuffer.java,v 1.1 2003/09/12 03:59:00 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,54 +58,88 @@
 package org.apache.commons.collections.decorators;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import org.apache.commons.collections.ArrayStack;
+import org.apache.commons.collections.Buffer;
+import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.BufferUnderflowException;
 
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestPredicatedCollection} for exercising the 
+ * {@link PredicatedBuffer} implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.10 $ $Date: 2003/09/12 03:59:00 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/12 03:59:00 $
  * 
- * @author Stephen Colebourne
+ * @author Phil Steitz
  */
-public class TestAll extends TestCase {
+public class TestPredicatedBuffer extends TestPredicatedCollection {
     
-    public TestAll(String testName) {
+    public TestPredicatedBuffer(String testName) {
         super(testName);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestOrderedSet.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestPredicatedCollection.suite());
-        suite.addTest(TestPredicatedBuffer.suite());
-        suite.addTest(TestPredicatedList.suite());
-        suite.addTest(TestPredicatedSet.suite());
-        
-        return suite;
+        return new TestSuite(TestPredicatedBuffer.class);
     }
-        
+    
+    public static void main(String args[]) {
+        String[] testCaseName = { TestPredicatedBuffer.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+    
+    //---------------------------------------------------------------
+    
+    protected Buffer decorateBuffer(Buffer buffer, Predicate predicate) {
+        return PredicatedBuffer.decorate(buffer, predicate);
+    }
+    
+    public Collection makeCollection() {
+        return decorateBuffer(new ArrayStack(), truePredicate);
+    }
+    
+    public Collection makeConfirmedCollection() {
+        return new ArrayStack();
+    }
+    
+    public Collection makeConfirmedFullCollection() {
+        ArrayStack list = new ArrayStack();
+        list.addAll(java.util.Arrays.asList(getFullElements()));
+        return list;
+    }
+    
+    //------------------------------------------------------------
+    
+    public Buffer makeTestBuffer() {
+        return decorateBuffer(new ArrayStack(), testPredicate);
+    }
+    
+    public void testGet() {
+        Buffer buffer = makeTestBuffer();
+        try {
+            Object o = buffer.get();
+            fail("Expecting BufferUnderflowException");
+        } catch (BufferUnderflowException ex) {
+            // expected
+        }
+        buffer.add("one");
+        buffer.add("two");
+        buffer.add("three");
+        assertEquals("Buffer get", buffer.get(), "three");
+    }
+    
+    public void testRemove() {
+        Buffer buffer = makeTestBuffer();
+        buffer.add("one");
+        assertEquals("Buffer get", buffer.remove(), "one");
+        try {
+            buffer.remove();
+            fail("Expecting BufferUnderflowException");
+        } catch (BufferUnderflowException ex) {
+            // expected
+        }      
+    }
 }

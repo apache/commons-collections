@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.7 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.8 2003/09/12 03:59:00 psteitz Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/09/12 03:59:00 $
  *
  * ====================================================================
  *
@@ -65,6 +65,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.collections.decorators.PredicatedSet;
+
 import junit.framework.Test;
 
 
@@ -87,33 +89,30 @@ public class TestSetUtils extends BulkTest {
 
     public void testNothing() {
     }
-
-    public BulkTest bulkTestPredicatedSet() {
-        return new TestPredicatedCollection("") {
-
-            public Collection predicatedCollection() {
-                Predicate p = getPredicate();
-                return SetUtils.predicatedSet(new HashSet(), p);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new TestSet("") {
-                    public Set makeEmptySet() {
-                        return (Set)predicatedCollection();
-                    }
-
-                    public Object[] getFullElements() {
-                        return getFullNonNullStringElements();
-                    }
-
-                    public Object[] getOtherElements() {
-                        return getOtherNonNullStringElements();
-                    }
-
-                };
+    
+    public void testpredicatedSet() {
+        Predicate predicate = new Predicate() {
+            public boolean evaluate(Object o) {
+                return o instanceof String;
             }
         };
+        Set set = SetUtils.predicatedSet(new HashSet(), predicate);
+        assertTrue("returned object should be a PredicatedSet",
+            set instanceof PredicatedSet);
+        try {
+            set = SetUtils.predicatedSet(new HashSet(), null);
+            fail("Expecting IllegalArgumentException for null predicate.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+        try {
+            set = SetUtils.predicatedSet(null, predicate);
+            fail("Expecting IllegalArgumentException for null set.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
     }
+
 
     public BulkTest bulkTestTypedSet() {
         return new TestTypedCollection("") {

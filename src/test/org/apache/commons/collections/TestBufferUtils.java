@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.4 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.5 2003/09/12 03:59:00 psteitz Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/09/12 03:59:00 $
  *
  * ====================================================================
  *
@@ -62,6 +62,7 @@ package org.apache.commons.collections;
 
 import java.util.Arrays;
 import java.util.Collection;
+import org.apache.commons.collections.decorators.PredicatedBuffer;
 
 import junit.framework.Test;
 
@@ -83,41 +84,27 @@ public class TestBufferUtils extends BulkTest {
     public void testNothing() {
     }
 
-    public BulkTest bulkTestPredicatedBuffer() {
-        return new TestPredicatedCollection("") {
-
-            public Collection predicatedCollection() {
-                Predicate p = getPredicate();
-                return BufferUtils.predicatedBuffer(new ArrayStack(), p);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new TestCollection("") {
-                    public Collection makeCollection() {
-                        return predicatedCollection();
-                    }
-
-                    public Collection makeConfirmedCollection() {
-                        return new ArrayStack();
-                    }
-
-                    public Collection makeConfirmedFullCollection() {
-                        ArrayStack list = new ArrayStack();
-                        list.addAll(java.util.Arrays.asList(getFullElements()));
-                        return list;
-                    }
-
-                    public Object[] getFullElements() {
-                        return getFullNonNullStringElements();
-                    }
-
-                    public Object[] getOtherElements() {
-                        return getOtherNonNullStringElements();
-                    }
-
-                };
+    public void testpredicatedBuffer() {
+        Predicate predicate = new Predicate() {
+            public boolean evaluate(Object o) {
+                return o instanceof String;
             }
         };
+        Buffer buffer = BufferUtils.predicatedBuffer(new ArrayStack(), predicate);
+        assertTrue("returned object should be a PredicatedBuffer",
+            buffer instanceof PredicatedBuffer);
+        try {
+            buffer = BufferUtils.predicatedBuffer(new ArrayStack(), null);
+            fail("Expecting IllegalArgumentException for null predicate.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+        try {
+            buffer = BufferUtils.predicatedBuffer(null, predicate);
+            fail("Expecting IllegalArgumentException for null buffer.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
     }
 
 

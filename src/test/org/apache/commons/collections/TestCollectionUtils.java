@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.18 2003/09/05 02:16:33 psteitz Exp $
- * $Revision: 1.18 $
- * $Date: 2003/09/05 02:16:33 $
+ * $Id: TestCollectionUtils.java,v 1.19 2003/09/12 03:59:00 psteitz Exp $
+ * $Revision: 1.19 $
+ * $Date: 2003/09/12 03:59:00 $
  *
  * ====================================================================
  *
@@ -74,6 +74,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.decorators.PredicatedCollection;
+
 /**
  * Tests for CollectionUtils.
  * 
@@ -81,7 +83,7 @@ import junit.framework.TestSuite;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  * 
- * @version $Revision: 1.18 $ $Date: 2003/09/05 02:16:33 $
+ * @version $Revision: 1.19 $ $Date: 2003/09/12 03:59:00 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -582,42 +584,33 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(new Integer(4), set.iterator().next());
     }
 
-
-    public BulkTest bulkTestPredicatedCollection1() {
-        return new TestPredicatedCollection("") {
-            public Collection predicatedCollection() {
-                Predicate p = getPredicate();
-                return CollectionUtils.predicatedCollection(new ArrayList(), p);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new TestCollection("") {
-                    public Collection makeCollection() {
-                        return predicatedCollection();
-                    }
-
-                    public Collection makeConfirmedCollection() {
-                        return new ArrayList();
-                    }
-
-                    public Collection makeConfirmedFullCollection() {
-                        ArrayList list = new ArrayList();
-                        list.addAll(java.util.Arrays.asList(getFullElements()));
-                        return list;
-                    }
-
-                    public Object[] getFullElements() {
-                        return getFullNonNullStringElements();
-                    }
-
-                    public Object[] getOtherElements() {
-                        return getOtherNonNullStringElements();
-                    }
-
-                };
+    public void testPredicatedCollection() {
+        Predicate predicate = new Predicate() {
+            public boolean evaluate(Object o) {
+                return o instanceof String;
             }
         };
+        Collection collection = 
+            CollectionUtils.predicatedCollection(new ArrayList(), predicate);
+        assertTrue("returned object should be a PredicatedCollection",
+            collection instanceof PredicatedCollection);
+        try { 
+           collection = 
+                CollectionUtils.predicatedCollection(new ArrayList(), null); 
+           fail("Expecting IllegalArgumentException for null predicate.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+        try { 
+           collection = 
+                CollectionUtils.predicatedCollection(null, predicate); 
+           fail("Expecting IllegalArgumentException for null collection.");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }             
     }
+        
+   
 
     public BulkTest bulkTestTypedCollection() {
         return new TestTypedCollection("") {
