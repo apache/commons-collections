@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.6 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.6 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.7 2002/08/18 20:11:37 pjack Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/08/18 20:11:37 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.Iterator;
  *  Contains static utility methods for operating on {@link Buffer} objects.
  *
  *  @author Paul Jack
- *  @version $Id: BufferUtils.java,v 1.6 2002/08/15 20:04:31 pjack Exp $
+ *  @version $Id: BufferUtils.java,v 1.7 2002/08/18 20:11:37 pjack Exp $
  *  @since 2.1
  */
 public class BufferUtils {
@@ -181,20 +181,6 @@ public class BufferUtils {
     }
 
 
-    /**
-     *  Returns a bounded buffer backed by the given buffer.  New elements
-     *  may only be added to the returned buffer if its size is less than
-     *  the specified maximum; otherwise, an {@link IllegalStateException}
-     *  will be thrown.
-     *
-     *  @param buf  the buffer whose size to bind
-     *  @param maxSize  the maximum size of the returned buffer
-     *  @return  a bounded buffer
-     */
-    public static Buffer boundedBuffer(Buffer buf, int maxSize) {
-        return new BoundedBuffer(buf, maxSize);
-    }
-
 
     private static class SynchronizedBuffer 
     extends CollectionUtils.SynchronizedCollection
@@ -251,23 +237,5 @@ public class BufferUtils {
 
     }
 
-
-    private static class BoundedBuffer
-    extends CollectionUtils.BoundedCollection
-    implements Buffer {
-
-        public BoundedBuffer(Buffer b, int maxSize) {
-            super(b, maxSize);
-        }
-
-        public Object get() {
-            return ((Buffer)collection).get();
-        }
-
-        public Object remove() {
-            return ((Buffer)collection).remove();
-        }
-
-    }
 
 }

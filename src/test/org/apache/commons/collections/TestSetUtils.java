@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.1 2002/08/13 00:26:52 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/13 00:26:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.2 2002/08/18 20:11:38 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/18 20:11:38 $
  *
  * ====================================================================
  *
@@ -108,31 +108,6 @@ public class TestSetUtils extends BulkTest {
             }
         };
     }
-
-
-
-    public BulkTest bulkTestBoundedSet() {
-        return new TestBoundedCollection("") {
-
-            public Collection boundedCollection() {
-                return SetUtils.boundedSet(new HashSet(), 0);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new TestSet("") {
-                    public Set makeEmptySet() {
-                        Object[] full = getFullElements();
-                        Object[] other = getOtherElements();
-                        int maxSize = full.length + other.length;
-                        return SetUtils.boundedSet(new HashSet(), maxSize);
-                    }
-
-                };
-            }
-        };
-    }
-
-
 
 
 }

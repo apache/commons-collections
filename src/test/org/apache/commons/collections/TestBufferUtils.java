@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.1 2002/08/13 00:26:52 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/13 00:26:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBufferUtils.java,v 1.2 2002/08/18 20:11:38 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/18 20:11:38 $
  *
  * ====================================================================
  *
@@ -113,38 +113,6 @@ public class TestBufferUtils extends BulkTest {
 
                     public Object[] getOtherElements() {
                         return getOtherNonNullStringElements();
-                    }
-
-                };
-            }
-        };
-    }
-
-
-    public BulkTest bulkTestBoundedBuffer() {
-        return new TestBoundedCollection("") {
-
-            public Collection boundedCollection() {
-                return BufferUtils.boundedBuffer(new ArrayStack(), 0);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new TestCollection("") {
-                    public Collection makeCollection() {
-                        Object[] full = getFullElements();
-                        Object[] other = getOtherElements();
-                        int maxSize = full.length + other.length;
-                        return BufferUtils.boundedBuffer(new ArrayStack(), maxSize);
-                    }
-
-                    public Collection makeConfirmedCollection() {
-                        return new ArrayStack();
-                    }
-
-                    public Collection makeConfirmedFullCollection() {
-                        ArrayStack list = new ArrayStack();
-                        list.addAll(java.util.Arrays.asList(getFullElements()));
-                        return list;
                     }
 
                 };

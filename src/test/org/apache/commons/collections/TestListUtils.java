@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.3 2002/08/15 20:09:38 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/15 20:09:38 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.4 2002/08/18 20:11:38 pjack Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/08/18 20:11:38 $
  *
  * ====================================================================
  *
@@ -100,29 +100,6 @@ public class TestListUtils extends BulkTest {
 
                     public Object[] getOtherElements() {
                         return getOtherNonNullStringElements();
-                    }
-
-                };
-            }
-        };
-    }
-
-
-
-    public BulkTest bulkTestBoundedList() {
-        return new TestBoundedCollection("") {
-
-            public Collection boundedCollection() {
-                return ListUtils.boundedList(new ArrayList(), 0);
-            }
-
-            public BulkTest bulkTestAll() {
-                return new TestList("") {
-                    public List makeEmptyList() {
-                        Object[] full = getFullElements();
-                        Object[] other = getOtherElements();
-                        int maxSize = full.length * 2; // + other.length;
-                        return ListUtils.boundedList(new ArrayList(), maxSize);
                     }
 
                 };

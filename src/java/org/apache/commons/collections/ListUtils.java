@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.9 2002/08/17 21:10:46 pjack Exp $
- * $Revision: 1.9 $
- * $Date: 2002/08/17 21:10:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.10 2002/08/18 20:11:37 pjack Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/08/18 20:11:37 $
  *
  * ====================================================================
  *
@@ -357,89 +357,6 @@ public class ListUtils
     }
 
 
-    static class BoundedList extends CollectionUtils.CollectionWrapper 
-    implements List {
-
-        final protected int maxSize;
-
-        public BoundedList(List list, int maxSize) {
-            super(list);
-            if (maxSize < 0) {
-                throw new IllegalArgumentException("maxSize must be nonnegative.");
-            }
-            this.maxSize = maxSize;
-        }
-
-        public boolean addAll(Collection c) {
-            validate(c.size());
-            return collection.addAll(c);
-        }
-
-        public boolean add(Object o) {
-            validate(1);
-            return collection.add(o);
-        }
-
-        public boolean addAll(int i, Collection c) {
-            validate(c.size());
-            return getList().addAll(i, c);
-        }
-
-        public void add(int i, Object o) {
-            validate(1);
-            getList().add(i, o);
-        }
-
-        public Object get(int i) {
-            return getList().get(i);
-        }
-
-        public Object set(int i, Object o) {
-            return getList().set(i, o);
-        }
-
-        public Object remove(int i) {
-            return getList().remove(i);
-        }
-
-        public int indexOf(Object o) {
-            return getList().indexOf(o);
-        }
-
-        public int lastIndexOf(Object o) {
-            return getList().lastIndexOf(o);
-        }
-
-        public ListIterator listIterator() {
-            return listIterator(0);
-        }
-
-        public ListIterator listIterator(int i) {
-            return new ListIteratorWrapper(getList().listIterator(i)) {
-                public void add(Object o) {
-                    validate(1);
-                    iterator.add(o);
-                }
-            };
-        }
-
-        public List subList(int i1, int i2) {
-            return getList().subList(i1, i2);
-        }
-
-        private List getList() {
-            return (List)collection;
-        }
-
-        private void validate(int delta) {
-            if (delta + size() > maxSize) {
-                throw new IllegalStateException("Maximum size reached.");
-            }
-        }
-
-    }
-
-
     static class LazyList extends CollectionUtils.CollectionWrapper 
     implements List {
 
@@ -593,21 +510,6 @@ public class ListUtils
      */
     public static List fixedSizeList(List list) {
         return new FixedSizeList(list);
-    }
-
-
-    /**
-     *  Returns a bounded list backed by the given list.
-     *  New elements may only be added to the returned list if its 
-     *  size is less than the specified maximum; otherwise, an
-     *  {@link IllegalStateException} will be thrown.
-     *
-     *  @param list  the list whose size to bind
-     *  @param maxSize  the maximum size of the returned list
-     *  @return  a bounded list 
-     */
-    public static List boundedList(List list, int maxSize) {
-        return new BoundedList(list, maxSize);
     }
 
 

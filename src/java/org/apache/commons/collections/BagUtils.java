@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.4 2002/08/17 21:10:46 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/17 21:10:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.5 2002/08/18 20:11:37 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/18 20:11:37 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import java.util.Set;
  *  and {@link SortedBag} instances.<P>
  *
  *  @author Paul Jack
- *  @version $Id: BagUtils.java,v 1.4 2002/08/17 21:10:46 pjack Exp $
+ *  @version $Id: BagUtils.java,v 1.5 2002/08/18 20:11:37 pjack Exp $
  *  @since 2.1
  */
 public class BagUtils {
@@ -175,58 +175,6 @@ public class BagUtils {
     }
 
 
-    static class BoundedBag extends CollectionUtils.CollectionWrapper
-    implements Bag {
-
-        final protected int maxSize;
-
-        public BoundedBag(Bag bag, int maxSize) {
-            super(bag);
-            if (maxSize < 0) {
-                throw new IllegalArgumentException("maxSize must be nonnegative.");
-            }
-            this.maxSize = maxSize;
-        }
-
-        public boolean add(Object o) {
-            validate(1);
-            return collection.add(o);
-        }
-
-        public boolean addAll(Collection c) {
-            validate(c.size());
-            return collection.addAll(c);
-        }
-
-        public boolean add(Object o, int count) {
-            validate(count);
-            return getBag().add(o, count);
-        }
-
-        public boolean remove(Object o, int count) {
-            return getBag().remove(o, count);
-        }
-
-        public Set uniqueSet() {
-            return getBag().uniqueSet();
-        }
-
-        public int getCount(Object o) {
-            return getBag().getCount(o);
-        }
-
-        private Bag getBag() {
-            return (Bag)collection;
-        }
-
-        protected void validate(int delta) {
-            if (delta + size() > maxSize) {
-                throw new IllegalStateException("Maximum size reached.");
-            }
-        }
-    }
-
-
     static class PredicatedSortedBag extends PredicatedBag 
     implements SortedBag {
 
@@ -283,32 +231,6 @@ public class BagUtils {
 
         public UnmodifiableSortedBag(SortedBag bag) {
             super(bag);
-        }
-
-        public Comparator comparator() {
-            return getSortedBag().comparator();
-        }
-
-        public Object first() {
-            return getSortedBag().first();
-        }
-
-        public Object last() {
-            return getSortedBag().last();
-        }
-
-        private SortedBag getSortedBag() {
-            return (SortedBag)collection;
-        }
-
-    }
-
-
-    static class BoundedSortedBag extends BoundedBag
-    implements SortedBag {
-
-        public BoundedSortedBag(SortedBag bag, int maxSize) {
-            super(bag, maxSize);
         }
 
         public Comparator comparator() {
@@ -389,23 +311,6 @@ public class BagUtils {
 
 
     /**
-     *  Returns a bounded bag backed by the given bag.
-     *  New elements may only be added to the returned bag if its 
-     *  size is less than the specified maximum; otherwise, an
-     *  {@link IllegalStateException} will be thrown.
-     *
-     *  @param b  the bag whose size to bind
-     *  @param maxSize  the maximum size of the returned bag
-     *  @return  a bounded bag 
-     */
-    public static Bag boundedBag(Bag b, int maxSize) {
-        return new BoundedBag(b, maxSize);
-    }
-
-
-
-
-    /**
      *  Returns a predicated sorted bag backed by the given sorted bag.  
      *  Only objects that pass the test in the given predicate can be 
      *  added to the bag.
@@ -462,21 +367,6 @@ public class BagUtils {
      */
     public static SortedBag synchronizedSortedBag(SortedBag b) {
         return new SynchronizedSortedBag(b);
-    }
-
-
-    /**
-     *  Returns a bounded sorted bag backed by the given sorted bag.
-     *  New elements may only be added to the returned bag if its 
-     *  size is less than the specified maximum; otherwise, an
-     *  {@link IllegalStateException} will be thrown.
-     *
-     *  @param b  the bag whose size to bind
-     *  @param maxSize  the maximum size of the returned bag
-     *  @return  a bounded bag 
-     */
-    public static SortedBag boundedSortedBag(SortedBag b, int maxSize) {
-        return new BoundedSortedBag(b, maxSize);
     }
 
 

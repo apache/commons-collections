@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.14 2002/08/18 15:26:20 scolebourne Exp $
- * $Revision: 1.14 $
- * $Date: 2002/08/18 15:26:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.15 2002/08/18 20:11:37 pjack Exp $
+ * $Revision: 1.15 $
+ * $Date: 2002/08/18 20:11:37 $
  *
  * ====================================================================
  *
@@ -83,7 +83,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: CollectionUtils.java,v 1.14 2002/08/18 15:26:20 scolebourne Exp $
+ * @version $Id: CollectionUtils.java,v 1.15 2002/08/18 20:11:37 pjack Exp $
  */
 public class CollectionUtils {
 
@@ -875,47 +875,6 @@ public class CollectionUtils {
         }
 
     }
-
-
-    static class BoundedCollection extends CollectionWrapper {
-
-        final protected int maxSize;
-
-
-        public BoundedCollection(Collection c, int maxSize) {
-            super(c);
-            if (maxSize < 0) {
-                throw new IllegalArgumentException("maxSize must be nonnegative.");
-            }
-            this.maxSize = maxSize;
-        }
-
-        public boolean add(Object o) {
-            if (!collection.contains(o)) {
-                validate(1);
-            }
-            return collection.add(o);
-        }
-
-        public boolean addAll(Collection c) {
-            int delta = 0;
-            for (Iterator iter = c.iterator(); iter.hasNext(); ) {
-                if (!collection.contains(iter.next())) delta++;
-            }
-            validate(delta);
-            return collection.addAll(c);
-        }
-
-
-        protected void validate(int delta) {
-            if (delta + size() > maxSize) {
-                throw new IllegalStateException("Maximum size reached.");
-            }
-        }
-
-    }
-
-
 
 
     static class SynchronizedCollection {

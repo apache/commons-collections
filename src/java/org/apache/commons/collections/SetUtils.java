@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.4 2002/08/17 21:10:46 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/17 21:10:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.5 2002/08/18 20:11:37 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/18 20:11:37 $
  *
  * ====================================================================
  *
@@ -73,7 +73,7 @@ import java.util.SortedSet;
  *  and {@link SortedSet} instances.
  *
  *  @author Paul Jack
- *  @version $Id: SetUtils.java,v 1.4 2002/08/17 21:10:46 pjack Exp $
+ *  @version $Id: SetUtils.java,v 1.5 2002/08/18 20:11:37 pjack Exp $
  *  @since 2.1
  */
 public class SetUtils {
@@ -91,45 +91,6 @@ public class SetUtils {
 
         public PredicatedSet(Set set, Predicate p) {
             super(set, p);
-        }
-
-    }
-
-    static class BoundedSet extends CollectionUtils.CollectionWrapper
-    implements Set {
-
-        final protected int maxSize;
-
-
-        public BoundedSet(Set set, int maxSize) {
-            super(set);
-            if (maxSize < 0) {
-                throw new IllegalArgumentException("maxSize must be nonnegative.");
-            }
-            this.maxSize = maxSize;
-        }
-
-        public boolean add(Object o) {
-            if (!collection.contains(o)) {
-                validate(1);
-            }
-            return collection.add(o);
-        }
-
-        public boolean addAll(Collection c) {
-            int delta = 0;
-            for (Iterator iter = c.iterator(); iter.hasNext(); ) {
-                if (!collection.contains(iter.next())) delta++;
-            }
-            validate(delta);
-            return collection.addAll(c);
-        }
-
-
-        private void validate(int delta) {
-            if (delta + size() > maxSize) {
-                throw new IllegalStateException("Maximum size reached.");
-            }
         }
 
     }
@@ -189,20 +150,6 @@ public class SetUtils {
         return new PredicatedSet(set, p);
     }
 
-
-    /**
-     *  Returns a bounded set backed by the given set.
-     *  New elements may only be added to the returned set if its 
-     *  size is less than the specified maximum; otherwise, an
-     *  {@link IllegalStateException} will be thrown.
-     *
-     *  @param set  the set whose size to bind
-     *  @param maxSize  the maximum size of the returned set
-     *  @return  a bounded set 
-     */
-    public static Set boundedSet(Set set, int maxSize) {
-        return new BoundedSet(set, maxSize);
-    }
 
 
     /**

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.10 2002/08/17 21:10:46 pjack Exp $
- * $Revision: 1.10 $
- * $Date: 2002/08/17 21:10:46 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.11 2002/08/18 20:11:37 pjack Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/08/18 20:11:37 $
  *
  * ====================================================================
  *
@@ -859,44 +859,6 @@ public class MapUtils {
     }
 
 
-    static class BoundedMap extends ProxyMap {
-
-        final protected int maxSize;
-
-        public BoundedMap(Map map, int maxSize) {
-            super(map);
-            if (map == null) {
-                throw new IllegalArgumentException("map may not be null.");
-            }
-            if (maxSize < 0) {
-                throw new IllegalArgumentException("maxSize must be nonnegative.");
-            }
-            this.maxSize = maxSize;
-        }
-
-        public Object put(Object key, Object value) {
-            if (!containsKey(key)) validate(1);
-            return map.put(key, value);
-        }
-
-        public void putAll(Map m) {
-            int delta = 0;
-            for (Iterator iter = m.keySet().iterator(); iter.hasNext(); ) {
-                 if (!map.containsKey(iter.next())) delta++;
-            }
-            validate(delta);
-            map.putAll(m);
-        }
-
-
-        protected void validate(int delta) {
-            if (map.size() + delta > maxSize) {
-                throw new IllegalStateException("Maximum size reached.");
-            }
-        }
-    }
-
-
     static class FixedSizeMap extends ProxyMap {
 
         public FixedSizeMap(Map map) {
@@ -1094,21 +1056,6 @@ public class MapUtils {
      */
     public static Map predicatedMap(Map map, Predicate keyPred, Predicate valuePred) {
         return new PredicatedMap(map, keyPred, valuePred);
-    }
-
-
-    /**
-     *  Returns a bounded map backed by the given map.
-     *  New pairs may only be added to the returned map if its 
-     *  size is less than the specified maximum; otherwise, an
-     *  {@link IllegalStateException} will be thrown.
-     *
-     *  @param b  the map whose size to bind
-     *  @param maxSize  the maximum size of the returned map
-     *  @return  a bounded map 
-     */
-    public static Map boundedMap(Map map, int maxSize) {
-        return new BoundedMap(map, maxSize);
     }
 
 
