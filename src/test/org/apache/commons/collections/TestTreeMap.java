@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.10 2003/10/07 22:20:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeMap.java,v 1.11 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,10 +59,12 @@ package org.apache.commons.collections;
 
 import java.util.TreeMap;
 
+import org.apache.commons.collections.map.AbstractTestMap;
+
 /**
  * Tests TreeMap.
  * 
- * @version $Revision: 1.10 $ $Date: 2003/10/07 22:20:57 $
+ * @version $Revision: 1.11 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Jason van Zyl
  */

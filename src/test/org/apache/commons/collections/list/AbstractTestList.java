@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestList.java,v 1.3 2003/10/20 22:58:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/AbstractTestList.java,v 1.1 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.list;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -72,6 +72,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.collection.AbstractTestCollection;
+
 /**
  * Abstract test class for {@link java.util.List} methods and contracts.
  * <p>
@@ -83,7 +86,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.3 $ $Date: 2003/10/20 22:58:28 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.13 2003/10/05 21:17:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.14 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,10 +64,12 @@ import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.map.AbstractTestMap;
+
 /**
  * Unit Tests for <code>MultiHashMap</code>.
  * 
- * @version $Revision: 1.13 $ $Date: 2003/10/05 21:17:40 $
+ * @version $Revision: 1.14 $ $Date: 2003/11/16 22:15:09 $
  *
  * @author Unknown
  */

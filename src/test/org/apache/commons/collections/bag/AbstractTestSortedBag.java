@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedBag.java,v 1.2 2003/10/05 23:10:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestSortedBag.java,v 1.1 2003/11/16 22:15:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,13 +55,14 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bag;
+
 
 /**
  * Abstract test class for {@link SortedBag} methods and contracts.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/10/05 23:10:31 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:10 $
  * 
  * @author Stephen Colebourne
  */

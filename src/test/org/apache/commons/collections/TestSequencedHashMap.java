@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSequencedHashMap.java,v 1.22 2003/10/05 21:23:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSequencedHashMap.java,v 1.23 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,13 +65,15 @@ import java.util.Map;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.map.AbstractTestMap;
+
 /**
  * Unit tests 
  * {@link org.apache.commons.collections.SequencedHashMap}.
  * Be sure to use the "labRat" instance whenever possible,
  * so that subclasses will be tested correctly.
  * 
- * @version $Revision: 1.22 $ $Date: 2003/10/05 21:23:21 $
+ * @version $Revision: 1.23 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Morgan Delagrange
  * @author Daniel Rall

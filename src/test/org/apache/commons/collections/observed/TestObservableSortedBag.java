@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedBag.java,v 1.3 2003/11/02 16:21:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedBag.java,v 1.4 2003/11/16 22:15:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,16 +60,16 @@ package org.apache.commons.collections.observed;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.AbstractTestSortedBag;
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.TreeBag;
+import org.apache.commons.collections.bag.AbstractTestSortedBag;
 
 /**
  * Extension of {@link TestSortedBag} for exercising the
  * {@link ObservedSortedBag} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/02 16:21:16 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/16 22:15:12 $
  * 
  * @author Stephen Colebourne
  */

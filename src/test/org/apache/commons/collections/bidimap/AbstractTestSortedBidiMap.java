@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestSortedBidiMap.java,v 1.2 2003/11/16 21:39:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestSortedBidiMap.java,v 1.3 2003/11/16 22:15:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,13 +69,13 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import org.apache.commons.collections.AbstractTestSortedMap;
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.map.AbstractTestSortedMap;
 
 /**
  * Abstract test class for {@link SortedBidiMap} methods and contracts.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/11/16 21:39:42 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/16 22:15:11 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestStaticBucketMap.java,v 1.7 2003/10/05 21:23:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestStaticBucketMap.java,v 1.8 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,11 +61,13 @@ import java.util.Map;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.map.AbstractTestMap;
+
 /**
  * Unit tests 
  * {@link org.apache.commons.collections.StaticBucketMap}.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/10/05 21:23:21 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Michael A. Smith
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.13 2003/11/16 21:39:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.1 2003/11/16 22:15:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.map;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -66,6 +66,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.set.AbstractTestSet;
 
 /**
  * Abstract test class for {@link java.util.Map} methods and contracts.
@@ -153,7 +158,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.13 $ $Date: 2003/11/16 21:39:42 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:10 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -444,6 +449,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         return (Map.Entry) map.entrySet().iterator().next();
     }
 
+    /**
+     * Gets the compatability version, needed for package access.
+     */
+    protected String getCompatibilityVersion() {
+        return super.getCompatibilityVersion();
+    }
     //-----------------------------------------------------------------------
     /**
      * Test to ensure the test setup is working properly.  This method checks

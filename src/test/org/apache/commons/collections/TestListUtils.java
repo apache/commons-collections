@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.15 2003/11/16 00:05:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.16 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,12 +64,13 @@ import java.util.List;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.list.AbstractTestList;
 import org.apache.commons.collections.list.PredicatedList;
 
 /**
  * Tests for ListUtils.
  * 
- * @version $Revision: 1.15 $ $Date: 2003/11/16 00:05:47 $
+ * @version $Revision: 1.16 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Stephen Colebourne
  * @author Neil O'Toole

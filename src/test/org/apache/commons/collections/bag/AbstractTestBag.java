@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBag.java,v 1.2 2003/10/05 12:34:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.1 2003/11/16 22:15:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,12 +55,15 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bag;
 
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.Bag;
 
 /**
  * Abstract test class for {@link Bag} methods and contracts.
@@ -72,7 +75,7 @@ import java.util.List;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Bag} fails.
  *
- * @version $Revision: 1.2 $ $Date: 2003/10/05 12:34:46 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:10 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLinkedList.java,v 1.5 2003/10/05 21:17:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLinkedList.java,v 1.6 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,6 +63,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.list.AbstractTestList;
+
 /**
  * Tests base {@link java.util.LinkedList} methods and contracts.
  * <p>
@@ -73,7 +75,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/10/05 21:17:40 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/16 22:15:09 $
  *
  * @author Rich Dougherty
  */

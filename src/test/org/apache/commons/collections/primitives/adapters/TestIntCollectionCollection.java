@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntCollectionCollection.java,v 1.5 2003/10/02 22:14:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntCollectionCollection.java,v 1.6 2003/11/16 22:15:08 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -64,12 +64,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestObject;
-import org.apache.commons.collections.primitives.RandomAccessIntList;
 import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.collections.primitives.IntList;
+import org.apache.commons.collections.primitives.RandomAccessIntList;
 
 /**
- * @version $Revision: 1.5 $ $Date: 2003/10/02 22:14:31 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/16 22:15:08 $
  * @author Rodney Waldhoff
  */
 public class TestIntCollectionCollection extends AbstractTestObject {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.11 2003/10/05 21:03:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.12 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,13 +66,14 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.collection.AbstractTestCollection;
 import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
 /**
  * Tests the BinaryHeap.
  * 
- * @version $Revision: 1.11 $ $Date: 2003/10/05 21:03:44 $
+ * @version $Revision: 1.12 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Michael A. Smith
  */

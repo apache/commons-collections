@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.9 2003/11/16 21:39:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/AbstractTestCollection.java,v 1.1 2003/11/16 22:15:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.collection;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -69,6 +69,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+
+import org.apache.commons.collections.AbstractTestObject;
 
 /**
  * Abstract test class for {@link java.util.Collection} methods and contracts.
@@ -147,7 +149,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.9 $ $Date: 2003/11/16 21:39:42 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:11 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack

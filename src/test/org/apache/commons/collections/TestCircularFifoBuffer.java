@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCircularFifoBuffer.java,v 1.5 2003/10/05 21:11:06 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestCircularFifoBuffer.java,v 1.6 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,10 +64,12 @@ import java.util.List;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.collection.AbstractTestCollection;
+
 /**
  * Test cases for CircularFifoBuffer.
  * 
- * @version $Revision: 1.5 $ $Date: 2003/10/05 21:11:06 $
+ * @version $Revision: 1.6 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Stephen Colebourne
  */

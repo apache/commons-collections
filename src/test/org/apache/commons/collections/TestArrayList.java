@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.9 2003/10/05 21:03:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayList.java,v 1.10 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,10 +62,12 @@ import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.list.AbstractTestList;
+
 /**
  * Abstract test class for ArrayList.
  * 
- * @version $Revision: 1.9 $ $Date: 2003/10/05 21:03:44 $
+ * @version $Revision: 1.10 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Jason van Zyl
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.9 2003/10/09 11:09:10 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.10 2003/11/16 22:15:11 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -59,10 +59,10 @@ package org.apache.commons.collections.primitives;
 
 import java.util.List;
 
-import org.apache.commons.collections.AbstractTestList;
+import org.apache.commons.collections.list.AbstractTestList;
 
 /**
- * @version $Revision: 1.9 $ $Date: 2003/10/09 11:09:10 $
+ * @version $Revision: 1.10 $ $Date: 2003/11/16 22:15:11 $
  * @author Rodney Waldhoff
  * @deprecated this should have been removed along with the others
  */

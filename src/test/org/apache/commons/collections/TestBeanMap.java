@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.14 2003/11/01 18:47:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.15 2003/11/16 22:15:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,10 +64,12 @@ import java.util.Map;
 import junit.framework.Test;
 import junit.textui.TestRunner;
 
+import org.apache.commons.collections.map.AbstractTestMap;
+
 /**
  * Test cases for BeanMap
  * 
- * @version $Revision: 1.14 $ $Date: 2003/11/01 18:47:18 $
+ * @version $Revision: 1.15 $ $Date: 2003/11/16 22:15:09 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne

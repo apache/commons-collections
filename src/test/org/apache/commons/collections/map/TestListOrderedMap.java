@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestListOrderedMap.java,v 1.1 2003/11/16 00:05:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestListOrderedMap.java,v 1.2 2003/11/16 22:15:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,6 @@ import java.util.Set;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections.AbstractTestMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
@@ -76,7 +75,7 @@ import org.apache.commons.collections.iterators.MapIterator;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:11 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne

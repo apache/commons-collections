@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedMap.java,v 1.4 2003/10/31 01:25:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestSortedMap.java,v 1.1 2003/11/16 22:15:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.map;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,10 +65,12 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.collections.BulkTest;
+
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.4 $ $Date: 2003/10/31 01:25:45 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:11 $
  * 
  * @author Stephen Colebourne
  */

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestFixedSizeMap.java,v 1.1 2003/11/16 00:05:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestFixedSizeMap.java,v 1.2 2003/11/16 22:15:11 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,14 +63,12 @@ import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.AbstractTestMap;
-
 /**
  * Extension of {@link AbstractTestMap} for exercising the {@link FixedSizeMap}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:11 $
  * 
  * @author Stephen Colebourne
  */

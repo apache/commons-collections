@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedSet.java,v 1.4 2003/10/12 06:37:30 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/AbstractTestSortedSet.java,v 1.1 2003/11/16 22:15:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,13 +55,15 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.set;
 
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+
+import org.apache.commons.collections.BulkTest;
 
 /**
  * Abstract test class for {@link SortedSet} methods and contracts.
@@ -72,7 +74,7 @@ import java.util.TreeSet;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/10/12 06:37:30 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:10 $
  * 
  * @author Stephen Colebourne
  * @author Dieter Wimberger
@@ -220,7 +222,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
         return new TestSortedSetSubSet(lobound, false);
     }
 
-    class TestSortedSetSubSet extends AbstractTestSortedSet {
+    public class TestSortedSetSubSet extends AbstractTestSortedSet {
 
         private int m_Type;
         private int m_LowBound;
