@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.3 2003/12/28 22:44:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.4 2003/12/29 00:38:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/28 22:44:18 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/29 00:38:08 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -714,8 +714,8 @@ public class AbstractHashedMap implements IterableMap {
      */
     protected static class HashMapIterator extends HashIterator implements MapIterator {
         
-        HashMapIterator(AbstractHashedMap map) {
-            super(map);
+        protected HashMapIterator(AbstractHashedMap parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -781,24 +781,25 @@ public class AbstractHashedMap implements IterableMap {
      * EntrySet implementation.
      */
     protected static class EntrySet extends AbstractSet {
-        private final AbstractHashedMap map;
+        /** The parent map */
+        protected final AbstractHashedMap parent;
         
-        EntrySet(AbstractHashedMap map) {
+        protected EntrySet(AbstractHashedMap parent) {
             super();
-            this.map = map;
+            this.parent = parent;
         }
 
         public int size() {
-            return map.size();
+            return parent.size();
         }
         
         public void clear() {
-            map.clear();
+            parent.clear();
         }
         
         public boolean contains(Object entry) {
             if (entry instanceof Map.Entry) {
-                return map.containsKey(((Map.Entry) entry).getKey());
+                return parent.containsKey(((Map.Entry) entry).getKey());
             }
             return false;
         }
@@ -809,13 +810,13 @@ public class AbstractHashedMap implements IterableMap {
             }
             Map.Entry entry = (Map.Entry) obj;
             Object key = entry.getKey();
-            boolean result = map.containsKey(key);
-            map.remove(key);
+            boolean result = parent.containsKey(key);
+            parent.remove(key);
             return result;
         }
 
         public Iterator iterator() {
-            return map.createEntrySetIterator();
+            return parent.createEntrySetIterator();
         }
     }
 
@@ -824,8 +825,8 @@ public class AbstractHashedMap implements IterableMap {
      */
     protected static class EntrySetIterator extends HashIterator {
         
-        EntrySetIterator(AbstractHashedMap map) {
-            super(map);
+        protected EntrySetIterator(AbstractHashedMap parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -865,33 +866,34 @@ public class AbstractHashedMap implements IterableMap {
      * KeySet implementation.
      */
     protected static class KeySet extends AbstractSet {
-        private final AbstractHashedMap map;
+        /** The parent map */
+        protected final AbstractHashedMap parent;
         
-        KeySet(AbstractHashedMap map) {
+        protected KeySet(AbstractHashedMap parent) {
             super();
-            this.map = map;
+            this.parent = parent;
         }
 
         public int size() {
-            return map.size();
+            return parent.size();
         }
         
         public void clear() {
-            map.clear();
+            parent.clear();
         }
         
         public boolean contains(Object key) {
-            return map.containsKey(key);
+            return parent.containsKey(key);
         }
         
         public boolean remove(Object key) {
-            boolean result = map.containsKey(key);
-            map.remove(key);
+            boolean result = parent.containsKey(key);
+            parent.remove(key);
             return result;
         }
 
         public Iterator iterator() {
-            return map.createKeySetIterator();
+            return parent.createKeySetIterator();
         }
     }
 
@@ -900,8 +902,8 @@ public class AbstractHashedMap implements IterableMap {
      */
     protected static class KeySetIterator extends EntrySetIterator {
         
-        KeySetIterator(AbstractHashedMap map) {
-            super(map);
+        protected KeySetIterator(AbstractHashedMap parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -941,27 +943,28 @@ public class AbstractHashedMap implements IterableMap {
      * Values implementation.
      */
     protected static class Values extends AbstractCollection {
-        private final AbstractHashedMap map;
+        /** The parent map */
+        protected final AbstractHashedMap parent;
         
-        Values(AbstractHashedMap map) {
+        protected Values(AbstractHashedMap parent) {
             super();
-            this.map = map;
+            this.parent = parent;
         }
 
         public int size() {
-            return map.size();
+            return parent.size();
         }
         
         public void clear() {
-            map.clear();
+            parent.clear();
         }
         
         public boolean contains(Object value) {
-            return map.containsValue(value);
+            return parent.containsValue(value);
         }
         
         public Iterator iterator() {
-            return map.createValuesIterator();
+            return parent.createValuesIterator();
         }
     }
 
@@ -970,8 +973,8 @@ public class AbstractHashedMap implements IterableMap {
      */
     protected static class ValuesIterator extends HashIterator {
         
-        ValuesIterator(AbstractHashedMap map) {
-            super(map);
+        protected ValuesIterator(AbstractHashedMap parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -1042,16 +1045,22 @@ public class AbstractHashedMap implements IterableMap {
      * Base Iterator
      */
     protected static abstract class HashIterator implements Iterator {
-        protected final AbstractHashedMap map;
+        
+        /** The parent map */
+        protected final AbstractHashedMap parent;
+        /** The current index into the array of buckets */
         protected int hashIndex;
-        protected HashEntry current;
+        /** The last returned entry */
+        protected HashEntry last;
+        /** The next entry */
         protected HashEntry next;
+        /** The modification count expected */
         protected int expectedModCount;
         
-        protected HashIterator(AbstractHashedMap map) {
+        protected HashIterator(AbstractHashedMap parent) {
             super();
-            this.map = map;
-            HashEntry[] data = map.data;
+            this.parent = parent;
+            HashEntry[] data = parent.data;
             int i = data.length;
             HashEntry next = null;
             while (i > 0 && next == null) {
@@ -1059,7 +1068,7 @@ public class AbstractHashedMap implements IterableMap {
             }
             this.next = next;
             this.hashIndex = i;
-            this.expectedModCount = map.modCount;
+            this.expectedModCount = parent.modCount;
         }
 
         public boolean hasNext() {
@@ -1067,14 +1076,14 @@ public class AbstractHashedMap implements IterableMap {
         }
 
         protected HashEntry nextEntry() { 
-            if (map.modCount != expectedModCount) {
+            if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
             HashEntry newCurrent = next;
             if (newCurrent == null)  {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
-            HashEntry[] data = map.data;
+            HashEntry[] data = parent.data;
             int i = hashIndex;
             HashEntry n = newCurrent.next;
             while (n == null && i > 0) {
@@ -1082,29 +1091,29 @@ public class AbstractHashedMap implements IterableMap {
             }
             next = n;
             hashIndex = i;
-            current = newCurrent;
+            last = newCurrent;
             return newCurrent;
         }
 
         protected HashEntry currentEntry() {
-            return current;
+            return last;
         }
         
         public void remove() {
-            if (current == null) {
+            if (last == null) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
-            if (map.modCount != expectedModCount) {
+            if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            map.remove(current.getKey());
-            current = null;
-            expectedModCount = map.modCount;
+            parent.remove(last.getKey());
+            last = null;
+            expectedModCount = parent.modCount;
         }
 
         public String toString() {
-            if (current != null) {
-                return "Iterator[" + current.getKey() + "=" + current.getValue() + "]";
+            if (last != null) {
+                return "Iterator[" + last.getKey() + "=" + last.getValue() + "]";
             } else {
                 return "Iterator[]";
             }

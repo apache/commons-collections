@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.3 2003/12/28 17:58:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/AbstractLinkedList.java,v 1.4 2003/12/29 00:38:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.OrderedIterator;
  * is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/28 17:58:54 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/29 00:38:08 $
  *
  * @author Rich Dougherty
  * @author Phil Steitz
@@ -681,7 +681,7 @@ public abstract class AbstractLinkedList implements List {
     protected static class LinkedListIterator implements ListIterator, OrderedIterator {
         
         /** The parent list */
-        protected final AbstractLinkedList list;
+        protected final AbstractLinkedList parent;
 
         /**
          * The node that will be returned by {@link #next()}. If this is equal
@@ -718,11 +718,11 @@ public abstract class AbstractLinkedList implements List {
          * @param parent  the parent list
          * @param fromIndex  the index to start at
          */
-        public LinkedListIterator(AbstractLinkedList parent, int fromIndex) throws IndexOutOfBoundsException {
+        protected LinkedListIterator(AbstractLinkedList parent, int fromIndex) throws IndexOutOfBoundsException {
             super();
-            this.list = parent;
-            this.expectedModCount = list.modCount;
-            this.next = list.getNode(fromIndex, true);
+            this.parent = parent;
+            this.expectedModCount = parent.modCount;
+            this.next = parent.getNode(fromIndex, true);
             this.nextIndex = fromIndex;
         }
 
@@ -734,7 +734,7 @@ public abstract class AbstractLinkedList implements List {
          * count isn't the value that was expected.
          */
         protected void checkModCount() {
-            if (list.modCount != expectedModCount) {
+            if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
         }
@@ -754,7 +754,7 @@ public abstract class AbstractLinkedList implements List {
         }
 
         public boolean hasNext() {
-            return next != list.header;
+            return next != parent.header;
         }
 
         public Object next() {
@@ -771,7 +771,7 @@ public abstract class AbstractLinkedList implements List {
         }
 
         public boolean hasPrevious() {
-            return next.previous != list.header;
+            return next.previous != parent.header;
         }
 
         public Object previous() {
@@ -797,7 +797,7 @@ public abstract class AbstractLinkedList implements List {
 
         public void remove() {
             checkModCount();
-            list.removeNode(getLastNodeReturned());
+            parent.removeNode(getLastNodeReturned());
             current = null;
             nextIndex--;
             expectedModCount++;
@@ -810,7 +810,7 @@ public abstract class AbstractLinkedList implements List {
 
         public void add(Object obj) {
             checkModCount();
-            list.addNodeBefore(next, obj);
+            parent.addNodeBefore(next, obj);
             current = null;
             nextIndex++;
             expectedModCount++;
@@ -828,7 +828,7 @@ public abstract class AbstractLinkedList implements List {
         protected final LinkedSubList sub;
         
         protected LinkedSubListIterator(LinkedSubList sub, int startIndex) {
-            super(sub.list, startIndex + sub.offset);
+            super(sub.parent, startIndex + sub.offset);
             this.sub = sub;
         }
 
@@ -846,13 +846,13 @@ public abstract class AbstractLinkedList implements List {
 
         public void add(Object obj) {
             super.add(obj);
-            sub.expectedModCount = list.modCount;
+            sub.expectedModCount = parent.modCount;
             sub.size++;
         }
         
         public void remove() {
             super.remove();
-            sub.expectedModCount = list.modCount;
+            sub.expectedModCount = parent.modCount;
             sub.size--;
         }
     }
@@ -863,7 +863,7 @@ public abstract class AbstractLinkedList implements List {
      */
     protected static class LinkedSubList extends AbstractList {
         /** The main list */
-        private AbstractLinkedList list;
+        private AbstractLinkedList parent;
         /** Offset from the main list */
         private int offset;
         /** Sublist size */
@@ -871,20 +871,20 @@ public abstract class AbstractLinkedList implements List {
         /** Sublist modCount */
         private int expectedModCount;
 
-        protected LinkedSubList(AbstractLinkedList list, int fromIndex, int toIndex) {
+        protected LinkedSubList(AbstractLinkedList parent, int fromIndex, int toIndex) {
             if (fromIndex < 0) {
                 throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
             }
-            if (toIndex > list.size()) {
+            if (toIndex > parent.size()) {
                 throw new IndexOutOfBoundsException("toIndex = " + toIndex);
             }
             if (fromIndex > toIndex) {
                 throw new IllegalArgumentException("fromIndex(" + fromIndex + ") > toIndex(" + toIndex + ")");
             }
-            this.list = list;
+            this.parent = parent;
             this.offset = fromIndex;
             this.size = toIndex - fromIndex;
-            this.expectedModCount = list.modCount;
+            this.expectedModCount = parent.modCount;
         }
 
         public int size() {
@@ -895,14 +895,14 @@ public abstract class AbstractLinkedList implements List {
         public Object get(int index) {
             rangeCheck(index, size);
             checkModCount();
-            return list.get(index + offset);
+            return parent.get(index + offset);
         }
 
         public void add(int index, Object obj) {
             rangeCheck(index, size + 1);
             checkModCount();
-            list.add(index + offset, obj);
-            expectedModCount = list.modCount;
+            parent.add(index + offset, obj);
+            expectedModCount = parent.modCount;
             size++;
             LinkedSubList.this.modCount++;
         }
@@ -910,8 +910,8 @@ public abstract class AbstractLinkedList implements List {
         public Object remove(int index) {
             rangeCheck(index, size);
             checkModCount();
-            Object result = list.remove(index + offset);
-            expectedModCount = list.modCount;
+            Object result = parent.remove(index + offset);
+            expectedModCount = parent.modCount;
             size--;
             LinkedSubList.this.modCount++;
             return result;
@@ -929,8 +929,8 @@ public abstract class AbstractLinkedList implements List {
             }
 
             checkModCount();
-            list.addAll(offset + index, coll);
-            expectedModCount = list.modCount;
+            parent.addAll(offset + index, coll);
+            expectedModCount = parent.modCount;
             size += cSize;
             LinkedSubList.this.modCount++;
             return true;
@@ -939,7 +939,7 @@ public abstract class AbstractLinkedList implements List {
         public Object set(int index, Object obj) {
             rangeCheck(index, size);
             checkModCount();
-            return list.set(index + offset, obj);
+            return parent.set(index + offset, obj);
         }
 
         public void clear() {
@@ -953,17 +953,17 @@ public abstract class AbstractLinkedList implements List {
 
         public Iterator iterator() {
             checkModCount();
-            return list.createSubListIterator(this);
+            return parent.createSubListIterator(this);
         }
 
         public ListIterator listIterator(final int index) {
             rangeCheck(index, size + 1);
             checkModCount();
-            return list.createSubListListIterator(this, index);
+            return parent.createSubListListIterator(this, index);
         }
 
         public List subList(int fromIndexInclusive, int toIndexExclusive) {
-            return new LinkedSubList(list, fromIndexInclusive + offset, toIndexExclusive + offset);
+            return new LinkedSubList(parent, fromIndexInclusive + offset, toIndexExclusive + offset);
         }
 
         protected void rangeCheck(int index, int beyond) {
@@ -973,7 +973,7 @@ public abstract class AbstractLinkedList implements List {
         }
 
         protected void checkModCount() {
-            if (list.modCount != expectedModCount) {
+            if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
         }

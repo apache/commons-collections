@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractLinkedMap.java,v 1.4 2003/12/28 22:53:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractLinkedMap.java,v 1.5 2003/12/29 00:38:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -98,7 +98,7 @@ import org.apache.commons.collections.ResettableIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/28 22:53:28 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/29 00:38:08 $
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
@@ -375,8 +375,8 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     protected static class LinkMapIterator extends LinkIterator implements OrderedMapIterator {
         
-        LinkMapIterator(AbstractLinkedMap map) {
-            super(map);
+        protected LinkMapIterator(AbstractLinkedMap parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -431,8 +431,8 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     protected static class EntrySetIterator extends LinkIterator {
         
-        EntrySetIterator(AbstractLinkedMap map) {
-            super(map);
+        protected EntrySetIterator(AbstractLinkedMap parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -463,8 +463,8 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     protected static class KeySetIterator extends EntrySetIterator {
         
-        KeySetIterator(AbstractLinkedMap map) {
-            super(map);
+        protected KeySetIterator(AbstractLinkedMap parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -495,8 +495,8 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      */
     protected static class ValuesIterator extends LinkIterator {
         
-        ValuesIterator(AbstractLinkedMap map) {
-            super(map);
+        protected ValuesIterator(AbstractLinkedMap parent) {
+            super(parent);
         }
 
         public Object next() {
@@ -539,78 +539,78 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
             implements OrderedIterator, ResettableIterator {
                 
         /** The parent map */
-        protected final AbstractLinkedMap map;
+        protected final AbstractLinkedMap parent;
         /** The current (last returned) entry */
-        protected LinkEntry current;
+        protected LinkEntry last;
         /** The next entry */
         protected LinkEntry next;
         /** The modification count expected */
         protected int expectedModCount;
         
-        protected LinkIterator(AbstractLinkedMap map) {
+        protected LinkIterator(AbstractLinkedMap parent) {
             super();
-            this.map = map;
-            this.next = map.header.after;
-            this.expectedModCount = map.modCount;
+            this.parent = parent;
+            this.next = parent.header.after;
+            this.expectedModCount = parent.modCount;
         }
 
         public boolean hasNext() {
-            return (next != map.header);
+            return (next != parent.header);
         }
         
         public boolean hasPrevious() {
-            return (next.before != map.header);
+            return (next.before != parent.header);
         }
 
         protected LinkEntry nextEntry() {
-            if (map.modCount != expectedModCount) {
+            if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            if (next == map.header)  {
+            if (next == parent.header)  {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
-            current = next;
+            last = next;
             next = next.after;
-            return current;
+            return last;
         }
 
         protected LinkEntry previousEntry() {
-            if (map.modCount != expectedModCount) {
+            if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
             LinkEntry previous = next.before;
-            if (previous == map.header)  {
+            if (previous == parent.header)  {
                 throw new NoSuchElementException(AbstractHashedMap.NO_PREVIOUS_ENTRY);
             }
             next = previous;
-            current = previous;
-            return current;
+            last = previous;
+            return last;
         }
         
         protected LinkEntry currentEntry() {
-            return current;
+            return last;
         }
         
         public void remove() {
-            if (current == null) {
+            if (last == null) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
-            if (map.modCount != expectedModCount) {
+            if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            map.remove(current.getKey());
-            current = null;
-            expectedModCount = map.modCount;
+            parent.remove(last.getKey());
+            last = null;
+            expectedModCount = parent.modCount;
         }
         
         public void reset() {
-            current = null;
-            next = map.header.after;
+            last = null;
+            next = parent.header.after;
         }
 
         public String toString() {
-            if (current != null) {
-                return "Iterator[" + current.getKey() + "=" + current.getValue() + "]";
+            if (last != null) {
+                return "Iterator[" + last.getKey() + "=" + last.getValue() + "]";
             } else {
                 return "Iterator[]";
             }

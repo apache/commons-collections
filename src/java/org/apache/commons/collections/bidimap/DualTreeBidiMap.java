@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.6 2003/12/25 00:33:04 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualTreeBidiMap.java,v 1.7 2003/12/29 00:38:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * not store each object twice, which can save on memory use.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.6 2003/12/25 00:33:04 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.7 2003/12/29 00:38:08 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -289,14 +289,17 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
      */
     protected static class BidiOrderedMapIterator implements OrderedMapIterator, ResettableIterator {
         
-        protected final AbstractDualBidiMap map;
+        /** The parent map */
+        protected final AbstractDualBidiMap parent;
+        /** The iterator being decorated */
         protected ListIterator iterator;
+        /** The last returned entry */
         private Map.Entry last = null;
         
-        protected BidiOrderedMapIterator(AbstractDualBidiMap map) {
+        protected BidiOrderedMapIterator(AbstractDualBidiMap parent) {
             super();
-            this.map = map;
-            iterator = new ArrayList(map.entrySet()).listIterator();
+            this.parent = parent;
+            iterator = new ArrayList(parent.entrySet()).listIterator();
         }
         
         public boolean hasNext() {
@@ -319,7 +322,7 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
         
         public void remove() {
             iterator.remove();
-            map.remove(last.getKey());
+            parent.remove(last.getKey());
             last = null;
         }
         
@@ -341,15 +344,15 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
             if (last == null) {
                 throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
             }
-            if (map.maps[1].containsKey(value) &&
-                map.maps[1].get(value) != last.getKey()) {
+            if (parent.maps[1].containsKey(value) &&
+                parent.maps[1].get(value) != last.getKey()) {
                 throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
             }
-            return map.put(last.getKey(), value);
+            return parent.put(last.getKey(), value);
         }
         
         public void reset() {
-            iterator = new ArrayList(map.entrySet()).listIterator();
+            iterator = new ArrayList(parent.entrySet()).listIterator();
             last = null;
         }
         

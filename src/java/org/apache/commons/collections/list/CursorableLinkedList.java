@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/CursorableLinkedList.java,v 1.1 2003/12/24 01:15:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/CursorableLinkedList.java,v 1.2 2003/12/29 00:38:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -94,7 +94,7 @@ import java.util.ListIterator;
  *
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
- * @version $Revision: 1.1 $ $Date: 2003/12/24 01:15:40 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/29 00:38:08 $
  * 
  * @author Rodney Waldhoff
  * @author Janek Bogucki
@@ -456,11 +456,11 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          */
         public int nextIndex() {
             if (nextIndexValid == false) {
-                if (next == list.header) {
-                    nextIndex = list.size();
+                if (next == parent.header) {
+                    nextIndex = parent.size();
                 } else {
                     int pos = 0;
-                    Node temp = list.header.next;
+                    Node temp = parent.header.next;
                     while (temp != next) {
                         pos++;
                         temp = temp.next;
@@ -531,277 +531,9 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          */
         public void close() {
             if (valid) {
-                ((CursorableLinkedList) list).unregisterCursor(this);
+                ((CursorableLinkedList) parent).unregisterCursor(this);
                 valid = false;
             }
         }
     }
 }
-
-//class CursorableSubList extends CursorableLinkedList implements List {
-//
-//    //--- constructors -----------------------------------------------
-//
-//    CursorableSubList(CursorableLinkedList list, int from, int to) {
-//        if(0 > from || list.size() < to) {
-//            throw new IndexOutOfBoundsException();
-//        } else if(from > to) {
-//            throw new IllegalArgumentException();
-//        }
-//        _list = list;
-//        if(from < list.size()) {
-//            _head.setNext(_list.getListableAt(from));
-//            _pre = (null == _head.next()) ? null : _head.next().prev();
-//        } else {
-//            _pre = _list.getListableAt(from-1);
-//        }
-//        if(from == to) {
-//            _head.setNext(null);
-//            _head.setPrev(null);
-//            if(to < list.size()) {
-//                _post = _list.getListableAt(to);
-//            } else {
-//                _post = null;
-//            }
-//        } else {
-//            _head.setPrev(_list.getListableAt(to-1));
-//            _post = _head.prev().next();
-//        }
-//        _size = to - from;
-//        _modCount = _list._modCount;
-//    }
-//
-//    //--- public methods ------------------------------------------
-//
-//    public void clear() {
-//        checkForComod();
-//        Iterator it = iterator();
-//        while(it.hasNext()) {
-//            it.next();
-//            it.remove();
-//        }
-//    }
-//
-//    public Iterator iterator() {
-//        checkForComod();
-//        return super.iterator();
-//    }
-//
-//    public int size() {
-//        checkForComod();
-//        return super.size();
-//    }
-//
-//    public boolean isEmpty() {
-//        checkForComod();
-//        return super.isEmpty();
-//    }
-//
-//    public Object[] toArray() {
-//        checkForComod();
-//        return super.toArray();
-//    }
-//
-//    public Object[] toArray(Object a[]) {
-//        checkForComod();
-//        return super.toArray(a);
-//    }
-//
-//    public boolean contains(Object o) {
-//        checkForComod();
-//        return super.contains(o);
-//    }
-//
-//    public boolean remove(Object o) {
-//        checkForComod();
-//        return super.remove(o);
-//    }
-//
-//    public Object removeFirst() {
-//        checkForComod();
-//        return super.removeFirst();
-//    }
-//
-//    public Object removeLast() {
-//        checkForComod();
-//        return super.removeLast();
-//    }
-//
-//    public boolean addAll(Collection c) {
-//        checkForComod();
-//        return super.addAll(c);
-//    }
-//
-//    public boolean add(Object o) {
-//        checkForComod();
-//        return super.add(o);
-//    }
-//
-//    public boolean addFirst(Object o) {
-//        checkForComod();
-//        return super.addFirst(o);
-//    }
-//
-//    public boolean addLast(Object o) {
-//        checkForComod();
-//        return super.addLast(o);
-//    }
-//
-//    public boolean removeAll(Collection c) {
-//        checkForComod();
-//        return super.removeAll(c);
-//    }
-//
-//    public boolean containsAll(Collection c) {
-//        checkForComod();
-//        return super.containsAll(c);
-//    }
-//
-//    public boolean addAll(int index, Collection c) {
-//        checkForComod();
-//        return super.addAll(index,c);
-//    }
-//
-//    public int hashCode() {
-//        checkForComod();
-//        return super.hashCode();
-//    }
-//
-//    public boolean retainAll(Collection c) {
-//        checkForComod();
-//        return super.retainAll(c);
-//    }
-//
-//    public Object set(int index, Object element) {
-//        checkForComod();
-//        return super.set(index,element);
-//    }
-//
-//    public boolean equals(Object o) {
-//        checkForComod();
-//        return super.equals(o);
-//    }
-//
-//    public Object get(int index) {
-//        checkForComod();
-//        return super.get(index);
-//    }
-//
-//    public Object getFirst() {
-//        checkForComod();
-//        return super.getFirst();
-//    }
-//
-//    public Object getLast() {
-//        checkForComod();
-//        return super.getLast();
-//    }
-//
-//    public void add(int index, Object element) {
-//        checkForComod();
-//        super.add(index,element);
-//    }
-//
-//    public ListIterator listIterator(int index) {
-//        checkForComod();
-//        return super.listIterator(index);
-//    }
-//
-//    public Object remove(int index) {
-//        checkForComod();
-//        return super.remove(index);
-//    }
-//
-//    public int indexOf(Object o) {
-//        checkForComod();
-//        return super.indexOf(o);
-//    }
-//
-//    public int lastIndexOf(Object o) {
-//        checkForComod();
-//        return super.lastIndexOf(o);
-//    }
-//
-//    public ListIterator listIterator() {
-//        checkForComod();
-//        return super.listIterator();
-//    }
-//
-//    public List subList(int fromIndex, int toIndex) {
-//        checkForComod();
-//        return super.subList(fromIndex,toIndex);
-//    }
-//
-//    //--- protected methods ------------------------------------------
-//
-//    /**
-//     * Inserts a new <i>value</i> into my
-//     * list, after the specified <i>before</i> element, and before the
-//     * specified <i>after</i> element
-//     *
-//     * @return the newly created {@link CursorableLinkedList.Listable}
-//     */
-//    protected Listable insertListable(Listable before, Listable after, Object value) {
-//        _modCount++;
-//        _size++;
-//        Listable elt = _list.insertListable((null == before ? _pre : before), (null == after ? _post : after),value);
-//        if(null == _head.next()) {
-//            _head.setNext(elt);
-//            _head.setPrev(elt);
-//        }
-//        if(before == _head.prev()) {
-//            _head.setPrev(elt);
-//        }
-//        if(after == _head.next()) {
-//            _head.setNext(elt);
-//        }
-//        broadcastListableInserted(elt);
-//        return elt;
-//    }
-//
-//    /**
-//     * Removes the given {@link CursorableLinkedList.Listable} from my list.
-//     */
-//    protected void removeListable(Listable elt) {
-//        _modCount++;
-//        _size--;
-//        if(_head.next() == elt && _head.prev() == elt) {
-//            _head.setNext(null);
-//            _head.setPrev(null);
-//        }
-//        if(_head.next() == elt) {
-//            _head.setNext(elt.next());
-//        }
-//        if(_head.prev() == elt) {
-//            _head.setPrev(elt.prev());
-//        }
-//        _list.removeListable(elt);
-//        broadcastListableRemoved(elt);
-//    }
-//
-//    /**
-//     * Test to see if my underlying list has been modified
-//     * by some other process.  If it has, throws a
-//     * {@link ConcurrentModificationException}, otherwise
-//     * quietly returns.
-//     *
-//     * @throws ConcurrentModificationException
-//     */
-//    protected void checkForComod() throws ConcurrentModificationException {
-//        if(_modCount != _list._modCount) {
-//            throw new ConcurrentModificationException();
-//        }
-//    }
-//
-//    //--- protected attributes ---------------------------------------
-//
-//    /** My underlying list */
-//    protected CursorableLinkedList _list = null;
-//
-//    /** The element in my underlying list preceding the first element in my list. */
-//    protected Listable _pre = null;
-//
-//    /** The element in my underlying list following the last element in my list. */
-//    protected Listable _post = null;
-//
-//}
