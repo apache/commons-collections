@@ -1,13 +1,13 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.14 2003/01/04 13:10:27 rwaldhoff Exp $
- * $Revision: 1.14 $
- * $Date: 2003/01/04 13:10:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.15 2003/01/04 13:43:10 rwaldhoff Exp $
+ * $Revision: 1.15 $
+ * $Date: 2003/01/04 13:43:10 $
  *
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -84,7 +84,7 @@ import java.io.Serializable;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.14 2003/01/04 13:10:27 rwaldhoff Exp $
+ * @version $Id: TestObject.java,v 1.15 2003/01/04 13:43:10 rwaldhoff Exp $
  */
 public abstract class TestObject extends BulkTest {
     public TestObject(String testName) {
