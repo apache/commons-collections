@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.48 2003/09/23 20:29:34 matth Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestHashBidiMap.java,v 1.1 2003/09/23 20:29:34 matth Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,68 +58,32 @@
 package org.apache.commons.collections;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import junit.textui.TestRunner;
 
 /**
- * Entry point for all Collections package tests.
+ * JUnit tests.
  * 
- * @version $Revision: 1.48 $ $Date: 2003/09/23 20:29:34 $
- * 
- * @author Rodney Waldhoff
- * @author Stephen Colebourne
+ * @author Matthew Hawthorne
+ * @version $Id: TestHashBidiMap.java,v 1.1 2003/09/23 20:29:34 matth Exp $
+ * @see org.apache.commons.collections.HashBidiMap
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestHashBidiMap extends TestBidiMap {
+
+    public static void main(String[] args) {
+        TestRunner.run(suite());
+    }
+    
+    public static Test suite() {
+        return new TestSuite(TestHashBidiMap.class);
+    }
+
+    public TestHashBidiMap(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestBagUtils.suite());
-        suite.addTest(TestClosureUtils.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestBufferUtils.suite());
-        suite.addTest(TestFactoryUtils.suite());
-        suite.addTest(TestListUtils.suite());
-        suite.addTest(TestMapUtils.suite());
-        suite.addTest(TestPredicateUtils.suite());
-        suite.addTest(TestSetUtils.suite());
-        suite.addTest(TestTransformerUtils.suite());
-        
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestBinaryHeap.suite());
-        suite.addTest(TestBoundedFifoBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCircularFifoBuffer.suite());
-        suite.addTest(TestCommonsLinkedList.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestHashBidiMap.suite());
-        suite.addTest(TestIteratorUtils.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestMultiKey.suite());
-        suite.addTest(TestNodeCachingLinkedList.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
-        return suite;
+    protected BidiMap createBidiMap() {
+        return new HashBidiMap();
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-}
+
+} // TestHashBidiMap
