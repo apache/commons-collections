@@ -8,7 +8,7 @@
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
 <h2>Developers Guide</h2>
-$Id: DEVELOPERS-GUIDE.html,v 1.1 2002/06/29 03:49:01 mas Exp $<br>
+$Id: DEVELOPERS-GUIDE.html,v 1.2 2002/07/03 02:34:09 mas Exp $<br>
 <a href="#Introduction">[Introduction]</a>
 <a href="#CollectionInterfaces">[Collection Interfaces]</a>
 <a href="#CollectionImplementations">[Collection Implementations]</a>
@@ -80,13 +80,20 @@ functionality</li>
 interface</li>
 </ul>
 
-<p>Where the method in a Utils class is a decorator, the naming pattern
-yyyedXxx shall be used, such as <code>synchronizedMap(Map)</code> or
-<code>predicatedSet(Set)</code>.  Typically, these decorators should be
-implemented as non-public, static, inner classes; however, if warranted due to
-maintenance or other reasons, these decorator classes may be moved to top-level
-classes in a subpackage.  The naming of such a subpackage should be discussed
-and agreed upon on the developers mailing list.</p>
+<p>Where the method in a Utils class is a decorator, the name shall consist of
+an adjective followed by the collection type.  Typically such adjective is
+formed by appending an -ed suffix (meaning "having"/"characterized by") to the
+word describing the type of decorator.  For example,
+<code>synchronizedMap(Map)</code> or <code>predicatedSet(Set)</code>.
+Occasionally, such construct is awkward and a more suitable adjective can be
+used instead.  For example, <code>lazyList</code>,
+<code>unmodifiableList</code>.</p>
+
+<p>Typically, these decorators should be implemented as non-public, static,
+inner classes; however, if warranted due to maintenance or other reasons, these
+decorator classes may be moved to top-level classes in a subpackage.  The
+naming of such a subpackage should be discussed and agreed upon on the
+developers mailing list.</p>
 
 </body>
 </html>
