@@ -68,6 +68,12 @@
       <email></email>
       <organization></organization>
     </developer>
+    <contributor>
+      <name>Matthew Hawthorne</name>
+      <id>matth</id>
+      <email></email>
+      <organization></organization>
+    </contributor>
   </developers>
   
   <contributors>
@@ -132,9 +138,6 @@
     <contributor>
       <name>Gerhard Froehlich</name>
       <email>nospam@abc.g-froehlich@gmx.de@</email>
-    </contributor>
-    <contributor>
-      <name>Matthew Hawthorne</name>
     </contributor>
     <contributor>
       <name>Paul Jack</name>
