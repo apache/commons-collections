@@ -20,7 +20,6 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.TransformerUtils;
 
 /**
  * An Iterator that can traverse multiple iterators down an object graph.
@@ -71,7 +70,7 @@ import org.apache.commons.collections.TransformerUtils;
  * more efficient (and convenient) than using nested for loops to extract a list.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/03/20 00:21:08 $
+ * @version $Revision: 1.2 $ $Date: 2004/05/03 11:38:49 $
  * 
  * @author Stephen Colebourne
  */
@@ -110,7 +109,7 @@ public class ObjectGraphIterator implements Iterator {
         } else {
             this.root = root;
         }
-        this.transformer = (transformer == null ? TransformerUtils.nopTransformer() : transformer);
+        this.transformer = transformer;
     }
 
     /**
@@ -126,7 +125,7 @@ public class ObjectGraphIterator implements Iterator {
     public ObjectGraphIterator(Iterator rootIterator) {
         super();
         this.currentIterator = rootIterator;
-        this.transformer = TransformerUtils.nopTransformer();
+        this.transformer = null;
     }
 
     //-----------------------------------------------------------------------
@@ -141,8 +140,11 @@ public class ObjectGraphIterator implements Iterator {
             if (root == null) {
                 // do nothing, hasNext will be false
             } else {
-                Object value = transformer.transform(root);
-                findNext(value);
+                if (transformer == null) {
+                    findNext(root);
+                } else {
+                    findNext(transformer.transform(root));
+                }
                 root = null;
             }
         } else {
@@ -167,7 +169,9 @@ public class ObjectGraphIterator implements Iterator {
             
             while (currentIterator.hasNext() && hasNext == false) {
                 Object next = currentIterator.next();
-                next = transformer.transform(next);
+                if (transformer != null) {
+                    next = transformer.transform(next);
+                }
                 findNext(next);
             }
             if (hasNext) {
