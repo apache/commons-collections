@@ -114,6 +114,8 @@
     <mkdir      dir="${build.classes}/META-INF"/>
     <copy      file="LICENSE.txt"
              tofile="${build.classes}/META-INF/LICENSE.txt"/>
+    <copy      file="NOTICE.txt"
+             tofile="${build.classes}/META-INF/NOTICE.txt"/>
              
     <tstamp/>
     <mkdir      dir="${build.conf}"/>
@@ -279,6 +281,8 @@
     <mkdir      dir="${tf.build.tf}/META-INF"/>
     <copy      file="LICENSE.txt"
              tofile="${tf.build.tf}/META-INF/LICENSE.txt"/>
+    <copy      file="NOTICE.txt"
+             tofile="${tf.build.tf}/META-INF/NOTICE.txt"/>
              
     <tstamp/>
     <mkdir      dir="${tf.build.conf}"/>
@@ -337,6 +341,7 @@
     <copy     todir="${build.dist.bin.work}">
       <fileset dir=".">
         <include name="LICENSE.txt"/>
+        <include name="NOTICE.txt"/>
         <include name="README.txt"/>
         <include name="RELEASE-NOTES.html"/>
       </fileset>
@@ -354,6 +359,7 @@
     <copy     todir="${build.dist.src.work}">
       <fileset dir=".">
         <include name="LICENSE.txt"/>
+        <include name="NOTICE.txt"/>
         <include name="README.txt"/>
         <include name="RELEASE-NOTES.html"/>
         <include name="DEVELOPERS-GUIDE.html"/>
