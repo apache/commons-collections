@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.6 2002/12/08 15:42:35 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2002/12/08 15:42:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.7 2002/12/13 12:01:58 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/12/13 12:01:58 $
  *
  * ====================================================================
  *
@@ -75,6 +75,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
+import org.apache.commons.collections.iterators.ArrayListIterator;
 import org.apache.commons.collections.iterators.CollatingIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
 import org.apache.commons.collections.iterators.FilterIterator;
@@ -83,6 +84,8 @@ import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.IteratorEnumeration;
 import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.LoopingIterator;
+import org.apache.commons.collections.iterators.ObjectArrayIterator;
+import org.apache.commons.collections.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -92,7 +95,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * <code>org.apache.commons.collections.iterators</code> subpackage.
  *
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorUtils.java,v 1.6 2002/12/08 15:42:35 scolebourne Exp $
+ * @version $Id: IteratorUtils.java,v 1.7 2002/12/13 12:01:58 scolebourne Exp $
  * @since 2.1
  */
 public class IteratorUtils {
@@ -167,81 +170,188 @@ public class IteratorUtils {
         return new SingletonListIterator(object);
     }
 
+    // Arrays
+    //----------------------------------------------------------------------
+
     /**
-     * Gets an iterator over an array.
+     * Gets an iterator over an object array.
      *
      * @param array  the array over which to iterate
      * @return  an iterator over the array
      * @throws NullPointerException if array is null
      */
     public static Iterator arrayIterator(Object[] array) {
+        return new ObjectArrayIterator(array);
+    }
+
+    /**
+     * Gets an iterator over an object or primitive array.
+     * <p>
+     * This method will handle primitive arrays as well as object arrays.
+     * The primitives will be wrapped in the appropriate wrapper class.
+     *
+     * @param array  the array over which to iterate
+     * @return  an iterator over the array
+     * @throws IllegalArgumentException if the array is not an array
+     * @throws NullPointerException if array is null
+     */
+    public static Iterator arrayIterator(Object array) {
         return new ArrayIterator(array);
     }
 
     /**
-     * Gets an iterator over the end part of an array.
+     * Gets an iterator over the end part of an object array.
      *
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @return an iterator over part of the array
-     * @throws IllegalArgumentException if array bounds are invalid
+     * @throws IndexOutOfBoundsException if start is less than zero
      * @throws NullPointerException if array is null
      */
     public static Iterator arrayIterator(Object[] array, int start) {
+        return new ObjectArrayIterator(array, start);
+    }
+
+    /**
+     * Gets an iterator over the end part of an object or primitive array.
+     * <p>
+     * This method will handle primitive arrays as well as object arrays.
+     * The primitives will be wrapped in the appropriate wrapper class.
+     *
+     * @param array  the array over which to iterate
+     * @param start  the index to start iterating at
+     * @return an iterator over part of the array
+     * @throws IllegalArgumentException if the array is not an array
+     * @throws IndexOutOfBoundsException if start is less than zero
+     * @throws NullPointerException if array is null
+     */
+    public static Iterator arrayIterator(Object array, int start) {
         return new ArrayIterator(array, start);
     }
 
     /**
-     * Gets an iterator over part of an array.
+     * Gets an iterator over part of an object array.
      *
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
      * @param end  the index to finish iterating at
      * @return an iterator over part of the array
-     * @throws IllegalArgumentException if array bounds are invalid
+     * @throws IndexOutOfBoundsException if array bounds are invalid
+     * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
     public static Iterator arrayIterator(Object[] array, int start, int end) {
+        return new ObjectArrayIterator(array, start, end);
+    }
+
+    /**
+     * Gets an iterator over part of an object or primitive array.
+     * <p>
+     * This method will handle primitive arrays as well as object arrays.
+     * The primitives will be wrapped in the appropriate wrapper class.
+     *
+     * @param array  the array over which to iterate
+     * @param start  the index to start iterating at
+     * @param end  the index to finish iterating at
+     * @return an iterator over part of the array
+     * @throws IllegalArgumentException if the array is not an array
+     * @throws IndexOutOfBoundsException if array bounds are invalid
+     * @throws IllegalArgumentException if end is before start
+     * @throws NullPointerException if array is null
+     */
+    public static Iterator arrayIterator(Object array, int start, int end) {
         return new ArrayIterator(array, start, end);
     }
 
-//    /**
-//     * Gets a list iterator over an array.
-//     *
-//     * @param array  the array over which to iterate
-//     * @return  a list iterator over the array
-//     * @throws NullPointerException if array is null
-//     */
-//    public static ListIterator arrayListIterator(Object[] array) {
-//        return new ArrayListIterator(array);
-//    }
-//
-//    /**
-//     * Gets a list iterator over the end part of an array.
-//     *
-//     * @param array  the array over which to iterate
-//     * @param start  the index to start iterating at
-//     * @return a list iterator over part of the array
-//     * @throws IllegalArgumentException if array bounds are invalid
-//     * @throws NullPointerException if array is null
-//     */
-//    public static ListIterator arrayListIterator(Object[] array, int start) {
-//        return new ArrayListIterator(array, start);
-//    }
-//
-//    /**
-//     * Gets a list iterator over part of an array.
-//     *
-//     * @param array  the array over which to iterate
-//     * @param start  the index to start iterating at
-//     * @param end  the index to finish iterating at
-//     * @return a list iterator over part of the array
-//     * @throws IllegalArgumentException if array bounds are invalid
-//     * @throws NullPointerException if array is null
-//     */
-//    public static ListIterator arrayListIterator(Object[] array, int start, int end) {
-//        return new ArrayListIterator(array, start, end);
-//    }
+    /**
+     * Gets a list iterator over an object array.
+     *
+     * @param array  the array over which to iterate
+     * @return  a list iterator over the array
+     * @throws NullPointerException if array is null
+     */
+    public static ListIterator arrayListIterator(Object[] array) {
+        return new ObjectArrayListIterator(array);
+    }
+
+    /**
+     * Gets a list iterator over an object or primitive array.
+     * <p>
+     * This method will handle primitive arrays as well as object arrays.
+     * The primitives will be wrapped in the appropriate wrapper class.
+     *
+     * @param array  the array over which to iterate
+     * @return  a list iterator over the array
+     * @throws IllegalArgumentException if the array is not an array
+     * @throws NullPointerException if array is null
+     */
+    public static ListIterator arrayListIterator(Object array) {
+        return new ArrayListIterator(array);
+    }
+
+    /**
+     * Gets a list iterator over the end part of an object array.
+     *
+     * @param array  the array over which to iterate
+     * @param start  the index to start iterating at
+     * @return a list iterator over part of the array
+     * @throws IndexOutOfBoundsException if start is less than zero
+     * @throws NullPointerException if array is null
+     */
+    public static ListIterator arrayListIterator(Object[] array, int start) {
+        return new ObjectArrayListIterator(array, start);
+    }
+
+    /**
+     * Gets a list iterator over the end part of an object or primitive array.
+     * <p>
+     * This method will handle primitive arrays as well as object arrays.
+     * The primitives will be wrapped in the appropriate wrapper class.
+     *
+     * @param array  the array over which to iterate
+     * @param start  the index to start iterating at
+     * @return a list iterator over part of the array
+     * @throws IllegalArgumentException if the array is not an array
+     * @throws IndexOutOfBoundsException if start is less than zero
+     * @throws NullPointerException if array is null
+     */
+    public static ListIterator arrayListIterator(Object array, int start) {
+        return new ArrayListIterator(array, start);
+    }
+
+    /**
+     * Gets a list iterator over part of an object array.
+     *
+     * @param array  the array over which to iterate
+     * @param start  the index to start iterating at
+     * @param end  the index to finish iterating at
+     * @return a list iterator over part of the array
+     * @throws IndexOutOfBoundsException if array bounds are invalid
+     * @throws IllegalArgumentException if end is before start
+     * @throws NullPointerException if array is null
+     */
+    public static ListIterator arrayListIterator(Object[] array, int start, int end) {
+        return new ObjectArrayListIterator(array, start, end);
+    }
+    
+    /**
+     * Gets a list iterator over part of an object or primitive array.
+     * <p>
+     * This method will handle primitive arrays as well as object arrays.
+     * The primitives will be wrapped in the appropriate wrapper class.
+     *
+     * @param array  the array over which to iterate
+     * @param start  the index to start iterating at
+     * @param end  the index to finish iterating at
+     * @return a list iterator over part of the array
+     * @throws IllegalArgumentException if the array is not an array
+     * @throws IndexOutOfBoundsException if array bounds are invalid
+     * @throws IllegalArgumentException if end is before start
+     * @throws NullPointerException if array is null
+     */
+    public static ListIterator arrayListIterator(Object array, int start, int end) {
+        return new ArrayListIterator(array, start, end);
+    }
     
     // Iterator wrappers
     //----------------------------------------------------------------------
@@ -611,7 +721,7 @@ public class IteratorUtils {
             return ((Collection) obj).iterator();
             
         } else if (obj instanceof Object[]) {
-            return new ArrayIterator(obj);
+            return new ObjectArrayIterator((Object[]) obj);
             
         } else if (obj instanceof Enumeration) {
             return new EnumerationIterator((Enumeration) obj);

@@ -7,7 +7,7 @@
 
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
-$Id: STATUS.html,v 1.21 2002/11/24 16:23:20 scolebourne Exp $<br>
+$Id: STATUS.html,v 1.22 2002/12/13 12:04:16 scolebourne Exp $<br>
 <a href="#Introduction">[Introduction]</a>
 <a href="#Dependencies">[Dependencies]</a>
 <a href="#Release Info">[Release Info]</a>
@@ -141,7 +141,8 @@ have a variable number of elements up to a fixed bound.</li>
 <p><b>iterators subpackage:</b></p>
 
 <ul>
-<li><strong>ArrayIterator</strong> - a java.util.Iterator wrapper for arrays.</li>
+<li><strong>ArrayIterator</strong> - an Iterator wrapper for arrays, including primitive arrays.</li>
+<li><strong>ArrayListIterator</strong> - a ListIterator wrapper for arrays, including primitive arrays.</li>
 <li><strong>CollectinIterator</strong> - Provides an ordered iterator over
     the elements contained in a collection of ordered iterators.</li>
 <li><strong>EnumerationIterator</strong> - Adapter to make Enumeration
@@ -166,6 +167,8 @@ have a variable number of elements up to a fixed bound.</li>
     traversed, ListIteratorWrapper builds a LinkedList of its values, 
     permitting all required operations of ListIterator.</li>
 <li><strong>LoopingIterator</strong> - Loops continuously around a collection.</li>
+<li><strong>ObjectArrayIterator</strong> - an Iterator wrapper for Object arrays.</li>
+<li><strong>ObjectArrayListIterator</strong> - a ListIterator wrapper for Object arrays.</li>
 <li><strong>ProxyIterator</strong> - Delegates its methods to a proxy 
     instance.</li>
 <li><strong>ProxyListIterator</strong> - Delegates its methods to a proxy 
