@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedSet.java,v 1.3 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedSet.java,v 1.4 2003/09/03 00:11:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -60,10 +60,7 @@ package org.apache.commons.collections.decorators;
 import java.util.Set;
 
 import org.apache.commons.collections.event.ModificationHandler;
-import org.apache.commons.collections.event.StandardModificationHandler;
-import org.apache.commons.collections.event.StandardModificationListener;
-import org.apache.commons.collections.event.StandardPostModificationListener;
-import org.apache.commons.collections.event.StandardPreModificationListener;
+import org.apache.commons.collections.event.ModificationHandlerFactory;
 
 /**
  * <code>ObservedSet</code> decorates a <code>Set</code>
@@ -82,7 +79,7 @@ import org.apache.commons.collections.event.StandardPreModificationListener;
  * uses a technique other than listeners to communicate events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/03 00:11:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -105,112 +102,52 @@ public class ObservedSet extends ObservedCollection implements Set {
     }
 
     /**
-     * Factory method to create an observable set and register one
-     * listener to receive events before the change is made.
+     * Factory method to create an observable set using a listener or a handler.
      * <p>
-     * A {@link StandardModificationHandler} will be created.
-     * The listener will be added to the handler.
-     *
-     * @param coll  the set to decorate, must not be null
-     * @param listener  set listener, must not be null
-     * @return the observed set
-     * @throws IllegalArgumentException if the set or listener is null
-     */
-    public static ObservedSet decorate(
-            final Set coll,
-            final StandardPreModificationListener listener) {
-        
-        if (coll == null) {
-            throw new IllegalArgumentException("Set must not be null");
-        }
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        StandardModificationHandler handler = new StandardModificationHandler(
-            listener, -1, null, 0
-        );
-        return new ObservedSet(coll, handler);
-    }
-
-    /**
-     * Factory method to create an observable set and register one
-     * listener to receive events after the change is made.
+     * A lot of functionality is available through this method.
+     * If you don't need the extra functionality, simply implement the
+     * {@link org.apache.commons.collections.event.StandardModificationListener}
+     * interface and pass it in as the second parameter.
      * <p>
-     * A {@link StandardModificationHandler} will be created.
-     * The listener will be added to the handler.
-     *
-     * @param coll  the set to decorate, must not be null
-     * @param listener  set listener, must not be null
-     * @return the observed set
-     * @throws IllegalArgumentException if the set or listener is null
-     */
-    public static ObservedSet decorate(
-            final Set coll,
-            final StandardPostModificationListener listener) {
-        
-        if (coll == null) {
-            throw new IllegalArgumentException("Set must not be null");
-        }
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        StandardModificationHandler handler = new StandardModificationHandler(
-            null, 0, listener, -1
-        );
-        return new ObservedSet(coll, handler);
-    }
-
-    /**
-     * Factory method to create an observable set and register one
-     * listener to receive events both before and after the change is made.
+     * Internally, an <code>ObservedSet</code> relies on a {@link ModificationHandler}.
+     * The handler receives all the events and processes them, typically by
+     * calling listeners. Different handler implementations can be plugged in
+     * to provide a flexible event system.
      * <p>
-     * A {@link StandardModificationHandler} will be created.
-     * The listener will be added to the handler.
-     *
-     * @param coll  the set to decorate, must not be null
-     * @param listener  set listener, must not be null
-     * @return the observed set
-     * @throws IllegalArgumentException if the set or listener is null
-     */
-    public static ObservedSet decorate(
-            final Set coll,
-            final StandardModificationListener listener) {
-        
-        if (coll == null) {
-            throw new IllegalArgumentException("Set must not be null");
-        }
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        StandardModificationHandler handler = new StandardModificationHandler(
-            listener, -1, listener, -1
-        );
-        return new ObservedSet(coll, handler);
-    }
-
-    /**
-     * Factory method to create an observable set using a
-     * specific handler.
+     * The handler implementation is determined by the listener parameter.
+     * If the parameter is a <code>ModificationHandler</code> it is used directly.
+     * Otherwise, the factory mechanism of {@link ModificationHandlerFactory} is used
+     * to create the handler for the listener parameter.
      * <p>
-     * The handler may be configured independently with listeners or other
-     * event recognition.
+     * The listener is defined as an Object for maximum flexibility.
+     * It does not have to be a listener in the classic JavaBean sense.
+     * It is entirely up to the factory and handler as to how the parameter
+     * is interpretted. An IllegalArgumentException is thrown if no suitable
+     * handler can be found for this listener.
+     * <p>
+     * A <code>null</code> listener will throw an IllegalArgumentException
+     * unless a special handler factory has been registered.
+     * <p>
      *
      * @param set  the set to decorate, must not be null
-     * @param handler  observed handler, must not be null
+     * @param listener  set listener, may be null
      * @return the observed set
-     * @throws IllegalArgumentException if the set or handler is null
+     * @throws IllegalArgumentException if the set is null
+     * @throws IllegalArgumentException if there is no valid handler for the listener
      */
     public static ObservedSet decorate(
             final Set set,
-            final ModificationHandler handler) {
-                
+            final Object listener) {
+        
         if (set == null) {
             throw new IllegalArgumentException("Set must not be null");
         }
-        if (handler == null) {
-            throw new IllegalArgumentException("Handler must not be null");
+        if (listener instanceof ModificationHandler) {
+            return new ObservedSet(set, (ModificationHandler) listener);
+        } else {
+            ModificationHandler handler = ModificationHandlerFactory.createHandler(set, listener);
+            return new ObservedSet(set, handler);
         }
-        return new ObservedSet(set, handler);
     }
 
     // Constructors

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedCollection.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/ObservedCollection.java,v 1.5 2003/09/03 00:11:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,10 +61,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.collections.event.ModificationHandler;
+import org.apache.commons.collections.event.ModificationHandlerFactory;
 import org.apache.commons.collections.event.StandardModificationHandler;
-import org.apache.commons.collections.event.StandardModificationListener;
-import org.apache.commons.collections.event.StandardPostModificationListener;
-import org.apache.commons.collections.event.StandardPreModificationListener;
 
 /**
  * <code>ObservedCollection</code> decorates a <code>Collection</code>
@@ -75,15 +73,9 @@ import org.apache.commons.collections.event.StandardPreModificationListener;
  * The handler manages the event, notifying listeners and optionally vetoing changes.
  * The default handler is {@link StandardModificationHandler}.
  * See this class for details of configuration available.
- * <p>
- * For convenience, add, remove and get listener methods are made available on
- * this class. They accept a generic listener type, whereas handlers generally
- * require a specific type. Thus a ClassCastException may be thrown from these
- * methods. They may also throw UnsupportedOperationException if the handler
- * uses a technique other than listeners to communicate events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/03 00:11:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -109,112 +101,52 @@ public class ObservedCollection extends AbstractCollectionDecorator {
     }
 
     /**
-     * Factory method to create an observable collection and register one
-     * listener to receive events before the change is made.
+     * Factory method to create an observable collection using a listener or a handler.
      * <p>
-     * A {@link StandardModificationHandler} will be created.
-     * The listener will be added to the handler.
+     * A lot of functionality is available through this method.
+     * If you don't need the extra functionality, simply implement the
+     * {@link org.apache.commons.collections.event.StandardModificationListener}
+     * interface and pass it in as the second parameter.
+     * <p>
+     * Internally, an <code>ObservedCollection</code> relies on a {@link ModificationHandler}.
+     * The handler receives all the events and processes them, typically by
+     * calling listeners. Different handler implementations can be plugged in
+     * to provide a flexible event system.
+     * <p>
+     * The handler implementation is determined by the listener parameter.
+     * If the parameter is a <code>ModificationHandler</code> it is used directly.
+     * Otherwise, the factory mechanism of {@link ModificationHandlerFactory} is used
+     * to create the handler for the listener parameter.
+     * <p>
+     * The listener is defined as an Object for maximum flexibility.
+     * It does not have to be a listener in the classic JavaBean sense.
+     * It is entirely up to the factory and handler as to how the parameter
+     * is interpretted. An IllegalArgumentException is thrown if no suitable
+     * handler can be found for this listener.
+     * <p>
+     * A <code>null</code> listener will throw an IllegalArgumentException
+     * unless a special handler factory has been registered.
+     * <p>
      *
      * @param coll  the collection to decorate, must not be null
-     * @param listener  collection listener, must not be null
+     * @param listener  collection listener, may be null
      * @return the observed collection
-     * @throws IllegalArgumentException if the collection or listener is null
+     * @throws IllegalArgumentException if the collection is null
+     * @throws IllegalArgumentException if there is no valid handler for the listener
      */
     public static ObservedCollection decorate(
             final Collection coll,
-            final StandardPreModificationListener listener) {
+            final Object listener) {
         
         if (coll == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
+        if (listener instanceof ModificationHandler) {
+            return new ObservedCollection(coll, (ModificationHandler) listener);
+        } else {
+            ModificationHandler handler = ModificationHandlerFactory.createHandler(coll, listener);
+            return new ObservedCollection(coll, handler);
         }
-        StandardModificationHandler handler = new StandardModificationHandler(
-            listener, -1, null, 0
-        );
-        return new ObservedCollection(coll, handler);
-    }
-
-    /**
-     * Factory method to create an observable collection and register one
-     * listener to receive events after the change is made.
-     * <p>
-     * A {@link StandardModificationHandler} will be created.
-     * The listener will be added to the handler.
-     *
-     * @param coll  the collection to decorate, must not be null
-     * @param listener  collection listener, must not be null
-     * @return the observed collection
-     * @throws IllegalArgumentException if the collection or listener is null
-     */
-    public static ObservedCollection decorate(
-            final Collection coll,
-            final StandardPostModificationListener listener) {
-        
-        if (coll == null) {
-            throw new IllegalArgumentException("Collection must not be null");
-        }
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        StandardModificationHandler handler = new StandardModificationHandler(
-            null, 0, listener, -1
-        );
-        return new ObservedCollection(coll, handler);
-    }
-
-    /**
-     * Factory method to create an observable collection and register one
-     * listener to receive events both before and after the change is made.
-     * <p>
-     * A {@link StandardModificationHandler} will be created.
-     * The listener will be added to the handler.
-     *
-     * @param coll  the collection to decorate, must not be null
-     * @param listener  collection listener, must not be null
-     * @return the observed collection
-     * @throws IllegalArgumentException if the collection or listener is null
-     */
-    public static ObservedCollection decorate(
-            final Collection coll,
-            final StandardModificationListener listener) {
-        
-        if (coll == null) {
-            throw new IllegalArgumentException("Collection must not be null");
-        }
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        StandardModificationHandler handler = new StandardModificationHandler(
-            listener, -1, listener, -1
-        );
-        return new ObservedCollection(coll, handler);
-    }
-
-    /**
-     * Factory method to create an observable collection using a
-     * specific handler.
-     * <p>
-     * The handler may be configured independently with listeners or other
-     * event recognition.
-     *
-     * @param coll  the collection to decorate, must not be null
-     * @param handler  observed handler, must not be null
-     * @return the observed collection
-     * @throws IllegalArgumentException if the collection or handler is null
-     */
-    public static ObservedCollection decorate(
-            final Collection coll,
-            final ModificationHandler handler) {
-                
-        if (coll == null) {
-            throw new IllegalArgumentException("Collection must not be null");
-        }
-        if (handler == null) {
-            throw new IllegalArgumentException("Handler must not be null");
-        }
-        return new ObservedCollection(coll, handler);
     }
 
     // Constructors
@@ -234,7 +166,7 @@ public class ObservedCollection extends AbstractCollectionDecorator {
             final ModificationHandler handler) {
         super(coll);
         this.handler = (handler == null ? new StandardModificationHandler() : handler);
-        this.handler.init(this);
+        ModificationHandlerFactory.initHandler(this.handler, this);
     }
 
     // Handler access
@@ -246,46 +178,6 @@ public class ObservedCollection extends AbstractCollectionDecorator {
      */
     public ModificationHandler getHandler() {
         return handler;
-    }
-    
-    // Listener convenience methods
-    //----------------------------------------------------------------------
-    /**
-     * Adds a listener to the handler to receive pre modification events.
-     * This method simply delegates to the handler.
-     * <p>
-     * No error occurs if the listener is <code>null</code>.
-     * <p>
-     * The listener does not necessarily have to be a listener in the classic
-     * JavaBean sense. It is entirely up to the handler as to how it interprets
-     * the listener parameter. A ClassCastException is thrown if the handler
-     * cannot interpret the parameter.
-     * 
-     * @param listener  the listener to add, may be null (ignored)
-     * @throws ClassCastException if the listener is not of the correct type
-     * @throws UnsupportedOperationException if the handler does not support listeners
-     */
-    public void addPreModificationListener(Object listener) {
-        getHandler().addPreModificationListener(listener);
-    }
-    
-    /**
-     * Adds a listener to the handler to receive post modification events.
-     * This method simply delegates to the handler.
-     * <p>
-     * No error occurs if the listener is <code>null</code>.
-     * <p>
-     * The listener does not necessarily have to be a listener in the classic
-     * JavaBean sense. It is entirely up to the handler as to how it interprets
-     * the listener parameter. A ClassCastException is thrown if the handler
-     * cannot interpret the parameter.
-     * 
-     * @param listener  the listener to add, may be null (ignored)
-     * @throws ClassCastException if the listener is not of the correct type
-     * @throws UnsupportedOperationException if the handler does not support listeners
-     */
-    public void addPostModificationListener(Object listener) {
-        getHandler().addPostModificationListener(listener);
     }
     
     // Collection

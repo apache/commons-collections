@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.5 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.6 2003/09/03 00:11:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.TestSuite;
  * Entry point for all collections decorators tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.6 $ $Date: 2003/09/03 00:11:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -82,10 +82,17 @@ public class TestAll extends TestCase {
     
     public static Test suite() {
         TestSuite suite = new TestSuite();
+        
         suite.addTest(TestFixedSizeList.suite());
         suite.addTest(TestFixedSizeMap.suite());
         suite.addTest(TestFixedSizeSortedMap.suite());
+        
+        suite.addTest(TestObservedCollection.suite());
+        suite.addTest(TestObservedList.suite());
+        suite.addTest(TestObservedSet.suite());
+        
         suite.addTest(TestSequencedSet.suite());
+        
         suite.addTest(TestTransformedBag.suite());
         suite.addTest(TestTransformedBuffer.suite());
         suite.addTest(TestTransformedCollection.suite());
@@ -95,6 +102,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestTransformedSortedBag.suite());
         suite.addTest(TestTransformedSortedMap.suite());
         suite.addTest(TestTransformedSortedSet.suite());
+        
         return suite;
     }
         

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestObservedSet.java,v 1.3 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestObservedSet.java,v 1.4 2003/09/03 00:11:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,25 +65,17 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.TestSet;
-import org.apache.commons.collections.event.StandardModificationHandler;
 
 /**
  * Extension of {@link TestSet} for exercising the
  * {@link ObservedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.4 $ $Date: 2003/09/03 00:11:28 $
  * 
  * @author Stephen Colebourne
  */
-public class TestObservedSet extends TestSet {
-    
-    private static Integer SIX = new Integer(6);
-    private static Integer SEVEN = new Integer(7);
-    private static Integer EIGHT = new Integer(8);
-    private static final ObservedTestHelper.Listener LISTENER = ObservedTestHelper.LISTENER;
-    private static final ObservedTestHelper.PreListener PRE_LISTENER = ObservedTestHelper.PRE_LISTENER;
-    private static final ObservedTestHelper.PostListener POST_LISTENER = ObservedTestHelper.POST_LISTENER;
+public class TestObservedSet extends TestSet implements ObservedTestHelper.ObservedFactory {
     
     public TestObservedSet(String testName) {
         super(testName);
@@ -100,102 +92,27 @@ public class TestObservedSet extends TestSet {
 
     //-----------------------------------------------------------------------
     public Set makeEmptySet() {
-        return ObservedSet.decorate(new HashSet(), LISTENER);
+        return ObservedSet.decorate(new HashSet(), ObservedTestHelper.LISTENER);
     }
 
     protected Set makeFullSet() {
         Set set = new HashSet();
         set.addAll(Arrays.asList(getFullElements()));
-        return ObservedSet.decorate(set, LISTENER);
+        return ObservedSet.decorate(set, ObservedTestHelper.LISTENER);
     }
     
     //-----------------------------------------------------------------------
     public void testObservedSet() {
-        ObservedSet coll = ObservedSet.decorate(new HashSet());
-        ObservedTestHelper.doTestFactoryPlain(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestFactoryWithListener(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), PRE_LISTENER);
-        ObservedTestHelper.doTestFactoryWithPreListener(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), POST_LISTENER);
-        ObservedTestHelper.doTestFactoryWithPostListener(coll);
-        
-        coll = ObservedSet.decorate(new HashSet());
-        ObservedTestHelper.doTestAddRemoveGetPreListeners(coll);
-        
-        coll = ObservedSet.decorate(new HashSet());
-        ObservedTestHelper.doTestAddRemoveGetPostListeners(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestAdd(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestAddAll(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestClear(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestRemove(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestRemoveAll(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestRetainAll(coll);
-        
-        coll = ObservedSet.decorate(new HashSet(), LISTENER);
-        ObservedTestHelper.doTestIteratorRemove(coll);
+        ObservedTestHelper.bulkTestObservedSet(this);
     }
 
-    //-----------------------------------------------------------------------    
-    public void testFactoryWithHandler() {
-        StandardModificationHandler handler = new StandardModificationHandler();
-        ObservedSet coll = ObservedSet.decorate(new HashSet(), handler);
-        
-        assertSame(handler, coll.getHandler());
-        assertEquals(0, coll.getHandler().getPreModificationListeners().length);
-        assertEquals(0, coll.getHandler().getPostModificationListeners().length);
+    //-----------------------------------------------------------------------
+    public ObservedCollection createObservedCollection() {
+        return ObservedSet.decorate(new HashSet());
     }
-    
-//    public void testFactoryWithMasks() {
-//        ObservedSet coll = ObservedSet.decorate(new HashSet(), LISTENER, -1, 0);
-//        LISTENER.preEvent = null;
-//        LISTENER.postEvent = null;
-//        coll.add(SIX);
-//        assertTrue(LISTENER.preEvent != null);
-//        assertTrue(LISTENER.postEvent == null);
-//        
-//        coll = ObservedSet.decorate(new HashSet(), LISTENER, 0, -1);
-//        LISTENER.preEvent = null;
-//        LISTENER.postEvent = null;
-//        coll.add(SIX);
-//        assertTrue(LISTENER.preEvent == null);
-//        assertTrue(LISTENER.postEvent != null);
-//        
-//        coll = ObservedSet.decorate(new HashSet(), LISTENER, -1, -1);
-//        LISTENER.preEvent = null;
-//        LISTENER.postEvent = null;
-//        coll.add(SIX);
-//        assertTrue(LISTENER.preEvent != null);
-//        assertTrue(LISTENER.postEvent != null);
-//        
-//        coll = ObservedSet.decorate(new HashSet(), LISTENER, 0, 0);
-//        LISTENER.preEvent = null;
-//        LISTENER.postEvent = null;
-//        coll.add(SIX);
-//        assertTrue(LISTENER.preEvent == null);
-//        assertTrue(LISTENER.postEvent == null);
-//        
-//        coll = ObservedSet.decorate(new HashSet(), LISTENER, ModificationEventType.ADD, ModificationEventType.ADD_ALL);
-//        LISTENER.preEvent = null;
-//        LISTENER.postEvent = null;
-//        coll.add(SIX);
-//        assertTrue(LISTENER.preEvent != null);
-//        assertTrue(LISTENER.postEvent == null);
-//    }
-//    
+
+    public ObservedCollection createObservedCollection(Object listener) {
+        return ObservedSet.decorate(new HashSet(), listener);
+    }
+
 }

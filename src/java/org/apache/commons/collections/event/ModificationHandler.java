@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationHandler.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/ModificationHandler.java,v 1.5 2003/09/03 00:11:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,14 +62,17 @@ import java.util.Collection;
 import org.apache.commons.collections.decorators.ObservedCollection;
 
 /**
- * Abstract base implementation of a handler for collection modification.
+ * Defines a handler for collection modification events.
  * <p>
- * All data storage and event sending is performed by a subclass.
- * This class provides a default implementation for the event handling methods
- * that forwards to single points.
+ * This class defines the event handling methods, following the 
+ * <code>preXxx</code> and <code>postXxx</code> naming convention.
+ * It also provides a default implementation that forwards to single methods.
+ * <p>
+ * This class could have been implemented as an interface, however to do so
+ * would prevent the addition of extra events in the future.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/03 00:11:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -98,7 +101,7 @@ public abstract class ModificationHandler {
      * @throws IllegalArgumentException if the collection is null
      * @throws IllegalStateException if init has already been called
      */
-    public void init(final ObservedCollection coll) {
+    void init(final ObservedCollection coll) {
         if (coll == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }

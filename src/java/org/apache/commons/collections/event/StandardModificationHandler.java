@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationHandler.java,v 1.4 2003/08/31 22:44:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/event/Attic/StandardModificationHandler.java,v 1.5 2003/09/03 00:11:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,8 @@
  */
 package org.apache.commons.collections.event;
 
+import java.util.Collection;
+
 /**
  * The standard implementation of a <code>ModificationHandler</code> that
  * sends standard JavaBean style events to listeners.
@@ -70,11 +72,15 @@ package org.apache.commons.collections.event;
  * modification events.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 22:44:54 $
+ * @version $Revision: 1.5 $ $Date: 2003/09/03 00:11:28 $
  * 
  * @author Stephen Colebourne
  */
 public class StandardModificationHandler extends ModificationHandler {
+    
+    static {
+        ModificationHandlerFactory.addFactory(new Factory());
+    }
 
     /** A reusable empty holders array. */    
     protected static final PreHolder[] EMPTY_PRE_HOLDERS = new PreHolder[0];
@@ -524,4 +530,40 @@ public class StandardModificationHandler extends ModificationHandler {
         postEvent(preSize > 0, ModificationEventType.CLEAR, -1, null, 1, null);
     }
 
+    // Factory
+    //-----------------------------------------------------------------------
+    /**
+     * Factory implementation for the StandardModificationHandler.
+     * 
+     * @author Stephen Colebourne
+     */
+    static class Factory extends ModificationHandlerFactory {
+        
+        /**
+         * Creates a StandardModificationHandler using the listener.
+         * 
+         * @param coll  the collection being decorated
+         * @param listener  a listener object to create a handler for
+         * @return an instantiated handler with the listener attached,
+         *  or null if the listener type is unsuited to this factory
+         */
+        protected ModificationHandler create(Collection coll, Object listener) {
+            if (listener instanceof StandardPreModificationListener) {
+                if (listener instanceof StandardPostModificationListener) {
+                    return new StandardModificationHandler(
+                        (StandardPreModificationListener) listener, -1,
+                        (StandardPostModificationListener) listener, -1);
+                } else {
+                    return new StandardModificationHandler(
+                        (StandardPreModificationListener) listener, -1, null, 0);
+                }
+            }
+            if (listener instanceof StandardPostModificationListener) {
+                return new StandardModificationHandler(
+                    null, 0, (StandardPostModificationListener) listener, -1);
+            }
+            return null;
+        }
+    }
+    
 }
