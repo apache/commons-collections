@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.38 2003/09/07 15:09:34 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.39 2003/09/09 21:25:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,7 +81,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.38 $ $Date: 2003/09/07 15:09:34 $
+ * @version $Revision: 1.39 $ $Date: 2003/09/09 21:25:18 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -93,6 +93,9 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Janek Bogucki
  */
 public class CollectionUtils {
+
+	/** Constant to avoid repeated object creation */
+    private static Integer INTEGER_ONE = new Integer(1);
 
     /**
      * An empty unmodifiable collection.
@@ -191,62 +194,71 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a {@link Collection} containing <tt><i>a</i> - <i>b</i></tt>.
+     * Returns a new {@link Collection} containing <tt><i>a</i> - <i>b</i></tt>.
      * The cardinality of each element <i>e</i> in the returned {@link Collection}
      * will be the cardinality of <i>e</i> in <i>a</i> minus the cardinality
      * of <i>e</i> in <i>b</i>, or zero, whichever is greater.
      *
+     * @param a  the collection to subtract from, must not be null
+     * @param b  the collection to subtract, must not be null
+     * @return a new collection with the results
      * @see Collection#removeAll
      */
     public static Collection subtract(final Collection a, final Collection b) {
         ArrayList list = new ArrayList( a );
-        Iterator it =  b.iterator();
-        while(it.hasNext()) {
+        for (Iterator it = b.iterator(); it.hasNext();) {
             list.remove(it.next());
         }
         return list;
     }
 
     /**
-     * Returns <code>true</code> iff some element of <i>a</i>
-     * is also an element of <i>b</i> (or, equivalently, if 
-     * some element of <i>b</i> is also an element of <i>a</i>).
-     * In other words, this method returns <code>true</code>
-     * iff the {@link #intersection} of <i>a</i> and <i>b</i>
-     * is not empty.
+     * Returns <code>true</code> iff at least one element is in both collections.
+     * <p>
+     * In other words, this method returns <code>true</code> iff the
+     * {@link #intersection} of <i>coll1</i> and <i>coll2</i> is not empty.
+     * 
+     * @param coll1  the first collection, must not be null
+     * @param coll2  the first collection, must not be null
+     * @return <code>true</code> iff the intersection of the collections is non-empty
      * @since 2.1
-     * @param a a non-<code>null</code> Collection
-     * @param b a non-<code>null</code> Collection
-     * @return <code>true</code> iff the intersection of <i>a</i> and <i>b</i> is non-empty
      * @see #intersection
      */
-    public static boolean containsAny(final Collection a, final Collection b) {
-        // TO DO: we may be able to optimize this by ensuring either a or b
-        // is the larger of the two Collections, but I'm not sure which.
-        for(Iterator iter = a.iterator(); iter.hasNext();) {
-            if(b.contains(iter.next())) {
-                return true;
+    public static boolean containsAny(final Collection coll1, final Collection coll2) {
+        if (coll1.size() > coll2.size()) {
+            for (Iterator it = coll1.iterator(); it.hasNext();) {
+                if (coll2.contains(it.next())) {
+                    return true;
+                }
+            }
+        } else {
+            for (Iterator it = coll2.iterator(); it.hasNext();) {
+                if (coll1.contains(it.next())) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
     /**
-     * Returns a {@link Map} mapping each unique element in
-     * the given {@link Collection} to an {@link Integer}
-     * representing the number of occurences of that element
-     * in the {@link Collection}.
-     * An entry that maps to <tt>null</tt> indicates that the
-     * element does not appear in the given {@link Collection}.
+     * Returns a {@link Map} mapping each unique element in the given
+     * {@link Collection} to an {@link Integer} representing the number
+     * of occurences of that element in the {@link Collection}.
+     * <p>
+     * Only those elements present in the collection will appear as
+     * keys in the map.
+     * 
+     * @param coll  the collection to get the cardinality map for
+     * @return the populated cardinality map
      */
-    public static Map getCardinalityMap(final Collection col) {
-        HashMap count = new HashMap();
-        Iterator it = col.iterator();
-        while(it.hasNext()) {
+    public static Map getCardinalityMap(final Collection coll) {
+        Map count = new HashMap();
+        for (Iterator it = coll.iterator(); it.hasNext();) {
             Object obj = it.next();
-            Integer c = (Integer)(count.get(obj));
-            if(null == c) {
-                count.put(obj,new Integer(1));
+            Integer c = (Integer) (count.get(obj));
+            if (c == null) {
+                count.put(obj,INTEGER_ONE);
             } else {
                 count.put(obj,new Integer(c.intValue() + 1));
             }
