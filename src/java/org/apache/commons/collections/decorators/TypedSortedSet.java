@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedSortedSet.java,v 1.4 2003/08/31 17:24:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/TypedSortedSet.java,v 1.5 2003/11/16 00:39:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,8 @@ import java.util.SortedSet;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:24:46 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/16 00:39:37 $
+ * @deprecated TO BE REMOVED BEFORE v3.0
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne

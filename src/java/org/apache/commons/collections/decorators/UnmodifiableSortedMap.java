@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableSortedMap.java,v 1.3 2003/10/29 23:49:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableSortedMap.java,v 1.4 2003/11/16 00:39:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,8 @@ import java.util.SortedMap;
  * to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/10/29 23:49:18 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/16 00:39:37 $
+ * @deprecated TO BE REMOVED BEFORE v3.0
  * 
  * @author Stephen Colebourne
  */
