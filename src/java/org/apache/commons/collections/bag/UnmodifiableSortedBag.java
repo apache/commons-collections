@@ -17,16 +17,18 @@ package org.apache.commons.collections.bag;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.commons.collections.SortedBag;
 import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.iterators.UnmodifiableIterator;
+import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>SortedBag</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 00:56:25 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/03 15:13:05 $
  * 
  * @author Stephen Colebourne
  */
@@ -84,6 +86,20 @@ public final class UnmodifiableSortedBag
 
     public boolean retainAll(Collection coll) {
         throw new UnsupportedOperationException();
+    }
+
+    //-----------------------------------------------------------------------
+    public boolean add(Object object, int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    public boolean remove(Object object, int count) {
+        throw new UnsupportedOperationException();
+    }
+
+    public Set uniqueSet() {
+        Set set = getBag().uniqueSet();
+        return UnmodifiableSet.decorate(set);
     }
 
 }
