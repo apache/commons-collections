@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.11 2002/03/19 00:54:34 mas Exp $
- * $Revision: 1.11 $
- * $Date: 2002/03/19 00:54:34 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.12 2002/03/19 01:33:12 mas Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/03/19 01:33:12 $
  *
  * ====================================================================
  *
@@ -64,12 +64,12 @@ import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-/** Implements {@link Iterator} over an array of objects
+/** Implements an {@link Iterator} over an array of objects.
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
   * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
-  * @version $Revision: 1.11 $
+  * @version $Revision: 1.12 $
   */
 public class ArrayIterator implements Iterator {
     
@@ -78,9 +78,26 @@ public class ArrayIterator implements Iterator {
     private int index = 0;
   
     
+    /**
+     *  Construct an ArrayIterator.  Using this constructor, the iterator is
+     *  equivalent to an empty iterator until {@link #setArray(Object)} is
+     *  called to establish the array to iterate over.
+     **/
     public ArrayIterator() {
     }
-    
+   
+    /**
+     *  Construct an ArrayIterator that will iterate over the values in the
+     *  specified array.
+     *
+     *  @param array the array to iterate over.
+     *
+     *  @exception IllegalArgumentException if <code>array</code> is not an
+     *  array.
+     *
+     *  @exception NullPointerException 
+     *  if <code>array</code> is <code>null</code>
+     **/
     public ArrayIterator(Object array) {
         setArray( array );
     }
@@ -104,19 +121,50 @@ public class ArrayIterator implements Iterator {
 
     // Properties
     //-------------------------------------------------------------------------
+
+    /**
+     *  Retrieves the array that this iterator is iterating over. 
+     *
+     *  @return the array this iterator iterates over, or <code>null</code> if
+     *  the no-arg constructor was used and {@link #setArray(Object)} has never
+     *  been called with a valid array.
+     **/
     public Object getArray() {
         return array;
     }
     
     /**
+     *  Changes the array that the ArrayIterator should iterate over.  If an
+     *  array has previously been set (using the single-arg constructor or this
+     *  method), that array along with the current iterator position within
+     *  that array is discarded in favor of the argument to this method.  This
+     *  method can be used in combination with {@link #getArray()} to "reset"
+     *  the iterator to the beginning of the array:
+     *
+     *  <pre>
+     *    ArrayIterator iterator = ...
+     *    ...
+     *    iterator.setArray(iterator.getArray());
+     *  </pre>
+     *
+     *  Note: Using i.setArray(i.getArray()) may throw a NullPointerException
+     *  if no array has ever been set for the iterator (see {@link
+     *  #getArray()})
+     *
+     *  @param array the array that the iterator should iterate over.
+     *
      *  @exception IllegalArgumentException if <code>array</code> is not an
      *  array.
+     *
+     *  @exception NullPointerException 
+     *  if <code>array</code> is <code>null</code>
      **/
     public void setArray( Object array ) {
         // Array.getLength throws IllegalArgumentException if the object is not
-        // an array.  This call is made before saving the array and resetting
-        // the index so that the array iterator remains in a consistent state
-        // if the argument is not an array.
+        // an array or NullPointerException if the object is null.  This call
+        // is made before saving the array and resetting the index so that the
+        // array iterator remains in a consistent state if the argument is not
+        // an array or is null.
         this.length = Array.getLength( array );
         this.array = array;
         this.index = 0;
