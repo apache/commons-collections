@@ -155,9 +155,19 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.6 $ $Date: 2004/01/14 21:34:34 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/24 21:48:27 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
+
+    /**
+     * JDK1.2 has bugs in null handling of Maps, especially HashMap.Entry.toString
+     * This avoids nulls for JDK1.2
+     */
+    private static final boolean JDK12;
+    static {
+        String str = System.getProperty("java.version");
+        JDK12 = str.startsWith("1.2");
+    }
 
     // These instance variables are initialized with the reset method.
     // Tests for map methods that alter the map (put, putAll, remove) 
@@ -304,7 +314,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             "hello", "goodbye", "we'll", "see", "you", "all", "again",
             "key",
             "key2",
-            (isAllowNullKey()) ? null : "nonnullkey"
+            (isAllowNullKey() && !JDK12) ? null : "nonnullkey"
         };
         return result;
     }
@@ -346,7 +356,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         Object[] result = new Object[] {
             "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev",
             "hellov", "goodbyev", "we'llv", "seev", "youv", "allv", "againv",
-            (isAllowNullValue()) ? null : "nonnullvalue",
+            (isAllowNullValue() && !JDK12) ? null : "nonnullvalue",
             "value",
             (isAllowDuplicateValues()) ? "value" : "value2",
         };
@@ -366,7 +376,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      */
     public Object[] getNewSampleValues() {
         Object[] result = new Object[] {
-            (isAllowNullValue() && isAllowDuplicateValues()) ? null : "newnonnullvalue",
+            (isAllowNullValue() && !JDK12 && isAllowDuplicateValues()) ? null : "newnonnullvalue",
             "newvalue",
             (isAllowDuplicateValues()) ? "newvalue" : "newvalue2",
             "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", 
