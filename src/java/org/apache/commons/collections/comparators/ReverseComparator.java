@@ -59,10 +59,10 @@ import java.util.Comparator;
 
 /**
  * Reverses the order of another comparator.
- *
+ * 
  * @author bayard@generationjava.com
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: ReverseComparator.java,v 1.6 2002/03/20 00:25:37 mas Exp $
+ * @version $Id: ReverseComparator.java,v 1.7 2002/03/20 17:09:16 morgand Exp $
  */
 public class ReverseComparator implements Comparator,Serializable {
 
@@ -70,15 +70,24 @@ public class ReverseComparator implements Comparator,Serializable {
 
     /**
      * Creates a comparator that compares objects based on the inverse of their
-     * natural ordering.
+     * natural ordering.  Using this Constructor will create a ReverseComparator
+     * that is functionaly identical to the Comparator returned by
+     * java.util.Collections.<b>reverseOrder()</b>.
+     * 
+     * @see java.util.Collections#reverseOrder()
      */
     public ReverseComparator() {
         this(null);
     }
 
     /**
-     * Creates a reverse comparator that inverts the comparison 
-     * of the passed in comparator.
+     * Creates a reverse comparator that inverts the comparison
+     * of the passed in comparator.  If you pass in a null,
+     * the ReverseComparator defaults to reversing the
+     * natural order, as per 
+     * java.util.Collections.<b>reverseOrder()</b>.
+     * 
+     * @param comparator Comparator to reverse
      */
     public ReverseComparator(Comparator comparator) {
         if(comparator != null) {
