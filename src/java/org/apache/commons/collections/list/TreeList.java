@@ -1,5 +1,5 @@
 /*
- *  Copyright 2004 The Apache Software Foundation
+ *  Copyright 2004-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -50,7 +50,7 @@ import org.apache.commons.collections.OrderedIterator;
  * does use sligtly more memory.
  * 
  * @since Commons Collections 3.1
- * @version $Revision: 1.3 $ $Date: 2004/05/26 21:56:05 $
+ * @version $Revision: 1.4 $ $Date: 2005/01/03 23:52:49 $
  *
  * @author Joerg Schmuecker
  * @author Stephen Colebourne
@@ -762,8 +762,6 @@ public class TreeList extends AbstractList {
          * #previous()}. Set to <code>null</code> if {@link #next()} or {@link
          * #previous()} haven't been called, or if the node has been removed
          * with {@link #remove()} or a new node added with {@link #add(Object)}.
-         * Should be accessed through {@link #getLastNodeReturned()} to enforce
-         * this behaviour.
          */
         protected AVLNode current;
         /**

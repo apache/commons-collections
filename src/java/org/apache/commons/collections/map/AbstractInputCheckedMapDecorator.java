@@ -1,5 +1,5 @@
 /*
- *  Copyright 2004 The Apache Software Foundation
+ *  Copyright 2004-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ import org.apache.commons.collections.set.AbstractSetDecorator;
  * versions of Commons Collections.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.2 $ $Date: 2004/05/21 22:01:04 $
+ * @version $Revision: 1.3 $ $Date: 2005/01/03 23:52:49 $
  * 
  * @author Stephen Colebourne
  */
@@ -88,7 +88,7 @@ abstract class AbstractInputCheckedMapDecorator
      * <p>
      * This implementation returns <code>true</code>.
      * 
-     * @param value  the value to check
+     * @return true always
      */
     protected boolean isSetValueChecking() {
         return true;

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.15 $ $Date: 2004/11/12 00:02:58 $
+ * @version $Revision: 1.16 $ $Date: 2005/01/03 23:52:49 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -1376,7 +1376,7 @@ public class TreeBidiMap implements OrderedBidiMap {
      * Compares for equals as per the API.
      *
      * @param obj  the object to compare to
-     * @param index  the KEY or VALUE int
+     * @param type  the KEY or VALUE int
      * @return true if equal
      */
     private boolean doEquals(Object obj, final int type) {
@@ -1412,7 +1412,7 @@ public class TreeBidiMap implements OrderedBidiMap {
     /**
      * Gets the hash code value for this map as per the API.
      *
-     * @param index  the KEY or VALUE int
+     * @param type  the KEY or VALUE int
      * @return the hash code value for this map
      */
     private int doHashCode(final int type) {
@@ -1430,7 +1430,7 @@ public class TreeBidiMap implements OrderedBidiMap {
     /**
      * Gets the string form of this map as per AbstractMap.
      *
-     * @param index  the KEY or VALUE int
+     * @param type  the KEY or VALUE int
      * @return the string form of this map
      */
     private String doToString(final int type) {
