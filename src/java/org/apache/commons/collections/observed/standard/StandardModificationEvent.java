@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.1 2003/09/03 23:54:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/standard/Attic/StandardModificationEvent.java,v 1.2 2003/09/06 16:53:23 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -78,7 +78,7 @@ import org.apache.commons.collections.observed.ModificationHandler;
  * All objects used are the real objects from the method calls, not clones.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/03 23:54:26 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/06 16:53:23 $
  * 
  * @author Stephen Colebourne
  */
@@ -167,6 +167,8 @@ public class StandardModificationEvent extends ModificationEvent {
     public Collection getChangeCollection() {
         if (object == null) {
             return Collections.EMPTY_LIST;
+        } else if (type == ModificationEventType.ADD_NCOPIES || type == ModificationEventType.REMOVE_NCOPIES) {
+            return Collections.singletonList(object);
         } else if (isType(ModificationEventType.GROUP_BULK)) {
             if (object instanceof Collection) {
                 return (Collection) object;
