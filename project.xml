@@ -4,7 +4,7 @@
   <extend>../project.xml</extend>
   <name>Collections</name>
   <id>commons-collections</id>
-  <currentVersion>3.0</currentVersion>
+  <currentVersion>3.1-dev</currentVersion>
 
   <organization>
     <name>Apache Software Foundation</name>
@@ -12,7 +12,6 @@
     <logo>http://jakarta.apache.org/images/jakarta-logo.gif</logo>
   </organization>
   
-  <package>org.apache.commons.collections.*</package>
   <inceptionYear>2001</inceptionYear>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
   <logo>/images/logo.png</logo>
