@@ -1,7 +1,7 @@
 /*
- * $Id: CollectionUtils.java,v 1.22 2002/12/08 15:29:59 scolebourne Exp $
- * $Revision: 1.22 $
- * $Date: 2002/12/08 15:29:59 $
+ * $Id: CollectionUtils.java,v 1.23 2002/12/11 19:05:14 scolebourne Exp $
+ * $Revision: 1.23 $
+ * $Date: 2002/12/11 19:05:14 $
  *
  * ====================================================================
  *
@@ -84,7 +84,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Steve Downey
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
  * @author BluePhelix@web.de (Peter)
- * @version $Revision: 1.22 $ $Date: 2002/12/08 15:29:59 $
+ * @version $Revision: 1.23 $ $Date: 2002/12/11 19:05:14 $
  */
 public class CollectionUtils {
 
@@ -1037,7 +1037,7 @@ public class CollectionUtils {
         }
 
         public Iterator iterator() {
-            return new UnmodifiableIterator(collection.iterator());
+            return new IteratorUtils.UnmodifiableIterator(collection.iterator());
         }
 
     }
@@ -1118,32 +1118,6 @@ public class CollectionUtils {
             return collection.toString();
         }
 
-    }
-
-
-    static class UnmodifiableIterator 
-            implements Iterator {
-
-        protected final Iterator iterator;
-
-        public UnmodifiableIterator(Iterator iterator) {
-            if (iterator == null) {
-                throw new IllegalArgumentException("Iterator must not be null");
-            }
-            this.iterator = iterator;
-        }
-
-        public boolean hasNext() {
-            return iterator.hasNext();
-        }
-
-        public Object next() {
-            return iterator.next();
-        }
-
-        public void remove() {
-            throw new UnsupportedOperationException();
-        }
     }
 
 
