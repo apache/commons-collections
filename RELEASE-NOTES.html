@@ -2,41 +2,53 @@
 
 <center><h2>RELEASE NOTES: COLLECTIONS 3.0</h2></center>
 
-<p><i>Collections 3.0</i> includes a significant number of new collections
-in addition to various bug fixes and refactoring changes. The major additions
-are:
+<p><i>Collections 3.0</i> includes a lot of new functionality, including new interfaces
+and new implementations in addition to various bug fixes and refactoring changes.
+The major additions are:
 </p>
 <ul>
-<li><strong>Buffers</strong> - A new collection interface for queues and 
-queue-like things.</li>
-<li><strong>Decorators</strong> - A group of static utility classes that provide
-decorators for other collections</li>
+<li><strong>Bidirectional maps</strong> -
+    New interface and implementations for maps that need bidirectional lookup.</li>
+<li><strong>Map iterator</strong> -
+    New interface to enable iteration over map keys and values in one easy step.</li>
+<li><strong>Observable collections</strong> -
+    New collection decorators that allow changes to collections to be observed via listeners.</li>
+<li><strong>Decorators</strong> -
+    An entire package of classes that decorate existing collections/maps to add functionality.
+    This includes fixed size, lazy loading, validating, unmodifiable, synchronized, bounded,
+    transforming and ordered.</li>
+<li><strong>Functors</strong> -
+    A default set of functor implementations is now provided for Predicate, Transformer,
+    Closure and Factory.</li>
+<li><strong>Pairs</strong> -
+    A new package full of key-value pairs and map entry implementations.</li>
 </ul>
 <p>
-The decorators are found on classes named <code>XxxUtils</code> where Xxx is the
-collection type. The decorators are:
-</p>
-<ul>
-<li><strong>Synchronized</strong> - Synchronized decorators where not provided 
-by <code>Collections</code>.</li>
-<li><strong>Unmodifiable</strong> - Unmodifiable decorators where not provided 
-by <code>Collections</code>.</li>
-<li><strong>Predicated</strong> - Decorators that only allow the addition of an
-element to the collection if it matches a <code>Predicate</code>.</li>
-<li><strong>FixedSize</strong> - Decorators that ensure that the list/map 
-cannot change size.</li>
-<li><strong>Lazy</strong> - Decorators that create objects on demand using a
-<code>Factory</code>.</li>
-</ul>
-<p>
-Access to Iterators and Comparators has also been brought in line, by the provision
-of <code>IteratorUtils</code> and <code>ComparatorUtils</code>.
+All previously deprecated classes have been removed.
 </p>
 
 <hr />
 
 <center><h3>
-NEW COLLECTIONS, COMPARATORS, ITERATORS AND UTILITY CLASSES
+NEW PACKAGES
+</h3></center>
+
+<p>These packages are new to <i>Collections 3.0</i>:</p>
+
+<ul>
+<li><strong>decorators</strong> - 
+	Package of classes that decorate other collections/maps. Some of these classes
+	were previously inner classes, others are new.</li>
+	
+<li><strong>observed</strong> - 
+	Package of classes that enable changes to collections/maps to be observed.</li>
+	
+<li><strong>pairs</strong> - 
+	Package of key-value pairs and map entries.</li>
+</ul>
+
+<center><h3>
+NEW CLASSES
 </h3></center>
 
 <p>These collections are new to <i>Collections 3.0</i>:</p>
@@ -44,25 +56,39 @@ NEW COLLECTIONS, COMPARATORS, ITERATORS AND UTILITY CLASSES
 <ul>
 </ul>
 
-<p>These comparators are new to <i>Collections 2.1</i>:</p>
+<p>These comparators are new to <i>Collections 3.0</i>:</p>
 
 <ul>
+<li><strong>BooleanIterator</strong> - 
+	Provides a comparator over Boolean instances.</li>
+
+<li><strong>FixedOrderIterator</strong> - 
+	Provides an iterator in a fixed pre-determined order.</li>
 </ul>
 
-<p>These iterators are new to <i>Collections 2.1</i>:</p>
+<p>These iterators are new to <i>Collections 3.0</i>:</p>
 
 <ul>
-<li><strong>ArrayListIterator</strong> - Provides a ListIterator over an array
-    of any type (including primitive arrays).</li>
+<li><strong>MapIterator</strong> - 
+	Interface that defines a simple and powerful way to iterate over a Map.</li>
 
-<li><strong>LoopingIterator</strong> - Provides an Iterator that loops repeatedly
-	over the collection.</li>
+<li><strong>Resetable*Iterator</strong> - 
+	Interfaces that defines a reset() method to reset the iterator back to the start.</li>
 
-<li><strong>ObjectArrayIterator/ListIterator</strong> - 
+<li><strong>ArrayListIterator</strong> - 
+    Provides a ListIterator over an array of any type (including primitive arrays).</li>
+
+<li><strong>LoopingIterator</strong> - 
+    Provides an Iterator that loops repeatedly over the collection.</li>
+
+<li><strong>ObjectArray*Iterator</strong> - 
 	Provides iterators over an Object array.</li>
 
-<li><strong>ResetableIterator/ListIterator</strong> - 
-	Interface that defines a reset() method to reset the iterator back to the start.</li>
+<li><strong>Abstract*IteratorDecorator</strong> - 
+	Provides abstract decorators that can be used to build extra functionality.</li>
+
+<li><strong>Unmodifiable*Iterator</strong> - 
+	Provides decorators for iterators that are unmodifiable.</li>
 </ul>
 
 <p>These are the new utility classes:</p>
@@ -75,7 +101,20 @@ NEW COLLECTIONS, COMPARATORS, ITERATORS AND UTILITY CLASSES
 
 <center><h3>CHANGED CLASSES</h3></center>
 
-<p>These iterators have changed since <i>Collections 2.1</i>:</p>
+<p>These comparators have changed since <i>Collections 3.0</i>:</p>
+
+<ul>
+<li><strong>ComparableComparator</strong> - 
+	Simpler implementation that respects interface better.</li>
+	
+<li><strong>ComparatorChain</strong> - 
+	Equals and HashCode added.</li>
+	
+<li><strong>ReverseComparator</strong> - 
+	Equals and HashCode added.</li>
+</ul>
+
+<p>These iterators have changed since <i>Collections 3.0</i>:</p>
 
 <ul>
 <li><strong>ArrayIterator</strong> - 
@@ -90,8 +129,14 @@ NEW COLLECTIONS, COMPARATORS, ITERATORS AND UTILITY CLASSES
 <li><strong>IteratorChain</strong> - 
 	Bug fix for when remove() called before hasNext()/next().</li>
 
-<li><strong>SingletonIterator/ListIterator</strong> - 
+<li><strong>Singleton*Iterator</strong> - 
 	These now implement the ResetableIterator interface.</li>
+
+<li><strong>Proxy*Iterator</strong> - 
+	Now deprecated in favour of AbstractIteratorDecorator/AbstractListIteratorDecorator.</li>
+
+<li><strong>Filter*Iterator/TransformIterator</strong> - 
+	No longer extend ProxyIterator.</li>
 </ul>
 
 
