@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.7 2003/11/02 15:27:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.8 2003/11/02 19:48:39 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import org.apache.commons.collections.decorators.AbstractIteratorDecorator;
 import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
 import org.apache.commons.collections.iterators.MapIterator;
 import org.apache.commons.collections.iterators.ResetableMapIterator;
-import org.apache.commons.collections.pairs.AbstractMapEntry;
+import org.apache.commons.collections.pairs.TiedMapEntry;
 
 /**
  * Abstract <code>BidiMap</code> implemented using two maps.
@@ -76,7 +76,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntry;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.7 2003/11/02 15:27:53 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.8 2003/11/02 19:48:39 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -225,6 +225,10 @@ public abstract class AbstractDualBidiMap implements BidiMap {
      * Obtains a <code>MapIterator</code> over the map.
      * The iterator implements <code>ResetableMapIterator</code>.
      * This implementation relies on the entrySet iterator.
+     * <p>
+     * The setValue() methods only allow a new value to be set.
+     * If the value being set is already in the map, an IllegalArgumentException
+     * is thrown (as setValue cannot change the size of the map).
      * 
      * @return a map iterator
      */
@@ -268,6 +272,17 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         return values;
     }
 
+    /**
+     * Gets an entrySet view of the map.
+     * Changes made on the set are reflected in the map.
+     * The set supports remove and clear but not add.
+     * <p>
+     * The Map Entry setValue() method only allow a new value to be set.
+     * If the value being set is already in the map, an IllegalArgumentException
+     * is thrown (as setValue cannot change the size of the map).
+     * 
+     * @return the entrySet view
+     */
     public Set entrySet() {
         if (entrySet == null) {
             entrySet = new EntrySet(this);
@@ -601,9 +616,12 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         }
         
         public Map.Entry asMapEntry() {
-            return new AbstractMapEntry(getKey(), getValue()) {
+            return new TiedMapEntry(map, getKey()) {
                 public Object setValue(Object value) {
-                    BidiMapIterator.this.setValue(value);
+                    if (map.maps[1].containsKey(value) &&
+                        map.maps[1].get(value) != last.getKey()) {
+                        throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
+                    }
                     return super.setValue(value);
                 }
             };
