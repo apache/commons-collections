@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.6 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.7 2003/11/01 18:45:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,12 +71,12 @@ import java.util.Set;
  * Red-Black tree-based implementation of Map. This class guarantees
  * that the map will be in both ascending key order and ascending
  * value order, sorted according to the natural order for the key's
- * and value's classes.<p>
- *
+ * and value's classes.
+ * <p>
  * This Map is intended for applications that need to be able to look
  * up a key-value pairing by either key or value, and need to do so
- * with equal efficiency.<p>
- *
+ * with equal efficiency.
+ * <p>
  * While that goal could be accomplished by taking a pair of TreeMaps
  * and redirecting requests to the appropriate TreeMap (e.g.,
  * containsKey would be directed to the TreeMap that maps values to
@@ -84,8 +84,11 @@ import java.util.Set;
  * to values), there are problems with that implementation,
  * particularly when trying to keep the two TreeMaps synchronized with
  * each other. And if the data contained in the TreeMaps is large, the
- * cost of redundant storage becomes significant.<p>
- *
+ * cost of redundant storage becomes significant. (See also the new
+ * {@link org.apache.commons.collections.DualTreeBidiMap DualTreeBidiMap} and
+ * {@link org.apache.commons.collections.DualHashBidiMap DualHashBidiMap}
+ * implementations.)
+ * <p>
  * This solution keeps the data properly synchronized and minimizes
  * the data storage. The red-black algorithm is based on TreeMap's,
  * but has been modified to simultaneously map a tree node by key and
@@ -94,49 +97,52 @@ import java.util.Set;
  * operations (there is a savings in that the lookup of the node to be
  * removed only has to be performed once). And since only one node
  * contains the key and value, storage is significantly less than that
- * required by two TreeMaps.<p>
- *
+ * required by two TreeMaps.
+ * <p>
  * There are some limitations placed on data kept in this Map. The
- * biggest one is this:<p>
- *
+ * biggest one is this:
+ * <p>
  * When performing a put operation, neither the key nor the value may
  * already exist in the Map. In the java.util Map implementations
  * (HashMap, TreeMap), you can perform a put with an already mapped
  * key, and neither cares about duplicate values at all ... but this
  * implementation's put method with throw an IllegalArgumentException
- * if either the key or the value is already in the Map.<p>
- *
+ * if either the key or the value is already in the Map.
+ * <p>
  * Obviously, that same restriction (and consequence of failing to
- * heed that restriction) applies to the putAll method.<p>
- *
+ * heed that restriction) applies to the putAll method.
+ * <p>
  * The Map.Entry instances returned by the appropriate methods will
  * not allow setValue() and will throw an
- * UnsupportedOperationException on attempts to call that method.<p>
- *
+ * UnsupportedOperationException on attempts to call that method.
+ * <p>
  * New methods are added to take advantage of the fact that values are
- * kept sorted independently of their keys:<p>
- *
+ * kept sorted independently of their keys:
+ * <p>
  * Object getKeyForValue(Object value) is the opposite of get; it
- * takes a value and returns its key, if any.<p>
- *
+ * takes a value and returns its key, if any.
+ * <p>
  * Object removeValue(Object value) finds and removes the specified
- * value and returns the now un-used key.<p>
- *
+ * value and returns the now un-used key.
+ * <p>
  * Set entrySetByValue() returns the Map.Entry's in a Set whose
  * iterator will iterate over the Map.Entry's in ascending order by
- * their corresponding values.<p>
- *
+ * their corresponding values.
+ * <p>
  * Set keySetByValue() returns the keys in a Set whose iterator will
  * iterate over the keys in ascending order by their corresponding
- * values.<p>
- *
+ * values.
+ * <p>
  * Collection valuesByValue() returns the values in a Collection whose
- * iterator will iterate over the values in ascending order.<p>
+ * iterator will iterate over the values in ascending order.
  *
+ * @see BidiMap
+ * @see DualTreeBidiMap
+ * @see DualHashBidiMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.6 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/01 18:45:48 $
  * 
- * @author Marc Johnson (marcj at users dot sourceforge dot net)
+ * @author Marc Johnson
  */
 public final class DoubleOrderedMap extends AbstractMap {
 //  final for performance
@@ -1606,10 +1612,13 @@ public final class DoubleOrderedMap extends AbstractMap {
      * by the map, so changes to the map are reflected in the set, and
      * vice-versa.  If the map is modified while an iteration over the
      * set is in progress, the results of the iteration are
-     * undefined. The set supports element removal, which removes the
-     * corresponding mapping from the map, via the Iterator.remove,
-     * Set.remove, removeAll, retainAll and clear operations.  It does
-     * not support the add or addAll operations.
+     * undefined.
+     * <p>
+     * The set supports element removal, which removes the corresponding
+     * mapping from the map, via the Iterator.remove, Set.remove, removeAll,
+     * retainAll and clear operations.
+     * It does not support the add or addAll operations.
+     * The setValue method is not supported on the Map Entry.
      *
      * @return a set view of the mappings contained in this map.
      */
