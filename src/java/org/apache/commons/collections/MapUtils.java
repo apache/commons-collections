@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.37 2003/09/21 16:26:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.38 2003/10/03 06:24:13 bayard Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,6 +74,7 @@ import org.apache.commons.collections.decorators.FixedSizeMap;
 import org.apache.commons.collections.decorators.FixedSizeSortedMap;
 import org.apache.commons.collections.decorators.LazyMap;
 import org.apache.commons.collections.decorators.LazySortedMap;
+import org.apache.commons.collections.decorators.OrderedMap;
 import org.apache.commons.collections.decorators.PredicatedMap;
 import org.apache.commons.collections.decorators.PredicatedSortedMap;
 import org.apache.commons.collections.decorators.TransformedMap;
@@ -108,7 +109,7 @@ import org.apache.commons.collections.decorators.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.37 $ $Date: 2003/09/21 16:26:08 $
+ * @version $Revision: 1.38 $ $Date: 2003/10/03 06:24:13 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -1036,6 +1037,21 @@ public class MapUtils {
         return LazyMap.decorate(map, transformerFactory);
     }
 
+    /**
+     * Returns a map that maintains the order of keys that are added
+     * backed by the given map.
+     * <p>
+     * If a key is added twice, the order is determined by the first add.
+     * The order is observed through the keySet, values and entrySet.
+     *
+     * @param map  the map to order, must not be null
+     * @return an ordered map backed by the given map
+     * @throws IllegalArgumentException  if the Map is null
+     */
+    public static Map orderedMap(Map map) {
+        return OrderedMap.decorate(map);
+    }
+    
     // SortedMap decorators
     //-----------------------------------------------------------------------
     /**

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.17 2003/10/03 06:24:13 bayard Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestOrderedMap.java,v 1.1 2003/10/03 06:24:13 bayard Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,69 +57,91 @@
  */
 package org.apache.commons.collections.decorators;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TestMap;
+
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestMap} for exercising the {@link OrderedMap}
+ * implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.17 $ $Date: 2003/10/03 06:24:13 $
+ * @version $Revision: 1.1 $ $Date: 2003/10/03 06:24:13 $
  * 
- * @author Stephen Colebourne
+ * @author Henri Yandell
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestOrderedMap extends TestMap {
+
+    public TestOrderedMap(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return new TestSuite(TestOrderedMap.class);
+    }
+
     public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
+        String[] testCaseName = { TestOrderedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestBlockingBuffer.suite());
-        
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestLazyMap.suite());
-        suite.addTest(TestLazySortedMap.suite());
-        
-        suite.addTest(TestOrderedSet.suite());
-        suite.addTest(TestOrderedMap.suite());
 
-        suite.addTest(TestSetList.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestPredicatedCollection.suite());
-        suite.addTest(TestPredicatedBuffer.suite());
-        suite.addTest(TestPredicatedList.suite());
-        suite.addTest(TestPredicatedSet.suite());
-        suite.addTest(TestPredicatedMap.suite());
-        suite.addTest(TestPredicatedSortedMap.suite());
-        
-        suite.addTest(TestTypedBag.suite());
-        suite.addTest(TestTypedSortedBag.suite());
-        
-        return suite;
+    public Map makeEmptyMap() {
+        return OrderedMap.decorate(new HashMap());
     }
-        
+
+    // Creates a known series of Objects, puts them in 
+    // an OrderedMap and ensures that all three Collection 
+    // methods return in the correct order.
+    public void testInsertionOrder() {
+        int size = 10; // number to try
+        ArrayList list = new ArrayList(size);
+        for( int i=0; i<size; i++ ) {
+            list.add( new Object() );
+        }
+
+        Map map = makeEmptyMap();
+        for( Iterator itr = list.iterator(); itr.hasNext(); ) {
+            Object obj = itr.next();
+            map.put( obj, obj );
+        }
+
+        assertSameContents(map.values(), list);
+        assertSameContents(map.keySet(), list);
+
+        // check entrySet
+        Set entries = map.entrySet();
+        assertEquals( entries.size(), list.size() );
+        Iterator i1 = entries.iterator();
+        Iterator i2 = list.iterator();
+        while( i1.hasNext() && i2.hasNext() ) {
+            Map.Entry entry = (Map.Entry) i1.next();
+            Object obj = i2.next();
+            assertSame( entry.getKey(), obj );
+            assertSame( entry.getValue(), obj );
+        }
+        assertTrue( !(i1.hasNext() && i2.hasNext()) );
+
+    }
+
+    private void assertSameContents(Collection c1, Collection c2) {
+        assertNotNull(c1);
+        assertNotNull(c2);
+        assertEquals( c1.size(), c2.size() );
+        Iterator i1 = c1.iterator();
+        Iterator i2 = c2.iterator();
+        while( i1.hasNext() && i2.hasNext() ) {
+            assertSame( i1.next(), i2.next() );
+        }
+        // ensure they've both ended
+        assertTrue( !(i1.hasNext() && i2.hasNext()) );
+    }
+
 }
