@@ -46,7 +46,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.12 $ $Date: 2004/02/27 00:24:05 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -1153,7 +1153,7 @@ public class AbstractHashedMap implements IterableMap {
             cloned.values = null;
             cloned.modCount = 0;
             cloned.size = 0;
-            init();
+            cloned.init();
             cloned.putAll(this);
             return cloned;
             
