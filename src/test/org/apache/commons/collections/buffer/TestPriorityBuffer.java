@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/Attic/TestBinaryBuffer.java,v 1.2 2004/01/01 23:56:51 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestPriorityBuffer.java,v 1.1 2004/01/02 02:14:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,30 +74,30 @@ import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
 /**
- * Tests the BinaryHeap.
+ * Tests the PriorityBuffer.
  * 
- * @version $Revision: 1.2 $ $Date: 2004/01/01 23:56:51 $
+ * @version $Revision: 1.1 $ $Date: 2004/01/02 02:14:28 $
  * 
  * @author Michael A. Smith
  */
-public class TestBinaryBuffer extends AbstractTestCollection {
+public class TestPriorityBuffer extends AbstractTestCollection {
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(suite());
     }
 
     public static Test suite() {
-        return new TestSuite(TestBinaryBuffer.class);
+        return new TestSuite(TestPriorityBuffer.class);
     }
 
-    public TestBinaryBuffer(String testName) {
+    public TestPriorityBuffer(String testName) {
         super(testName);
     }
 
     //-----------------------------------------------------------------------  
     public void verify() {
         super.verify();
-        BinaryBuffer heap = (BinaryBuffer) collection;
+        PriorityBuffer heap = (PriorityBuffer) collection;
 
         Comparator c = heap.comparator;
         if (c == null) {
@@ -143,7 +143,7 @@ public class TestBinaryBuffer extends AbstractTestCollection {
      * Return a new, empty {@link Object} to used for testing.
      */
     public Collection makeCollection() {
-        return new BinaryBuffer();
+        return new PriorityBuffer();
     }
 
     //-----------------------------------------------------------------------  
@@ -174,7 +174,7 @@ public class TestBinaryBuffer extends AbstractTestCollection {
     }
     
     public void testBasicOps() {
-        BinaryBuffer heap = new BinaryBuffer();
+        PriorityBuffer heap = new PriorityBuffer();
 
         heap.add("a");
         heap.add("c");
@@ -223,7 +223,7 @@ public class TestBinaryBuffer extends AbstractTestCollection {
     }
 
     public void testBasicComparatorOps() {
-        BinaryBuffer heap = new BinaryBuffer(new ReverseComparator(new ComparableComparator()));
+        PriorityBuffer heap = new PriorityBuffer(new ReverseComparator(new ComparableComparator()));
 
         assertTrue("heap should be empty after create", heap.isEmpty());
 
@@ -292,7 +292,7 @@ public class TestBinaryBuffer extends AbstractTestCollection {
      */  
     public void testAddRemove() {
         resetEmpty();
-        BinaryBuffer heap = (BinaryBuffer) collection;
+        PriorityBuffer heap = (PriorityBuffer) collection;
         heap.add(new Integer(0));
         heap.add(new Integer(2));
         heap.add(new Integer(4));
@@ -323,12 +323,12 @@ public class TestBinaryBuffer extends AbstractTestCollection {
         int heapSize = 100;
         int operations = 20;
         Random randGenerator = new Random();
-        BinaryBuffer h = null;
+        PriorityBuffer h = null;
         for(int i=0; i < iterations; i++) {
             if (i < iterations / 2) {          
-                h = new BinaryBuffer(true);
+                h = new PriorityBuffer(true);
             } else {
-                h = new BinaryBuffer(false);
+                h = new PriorityBuffer(false);
             }
             for(int r = 0; r < heapSize; r++) {
                 h.add( new Integer( randGenerator.nextInt(heapSize)) );
@@ -345,7 +345,7 @@ public class TestBinaryBuffer extends AbstractTestCollection {
      * Pops all elements from the heap and verifies that the elements come off
      * in the correct order.  NOTE: this method empties the heap.
      */
-    protected void checkOrder(BinaryBuffer h) {
+    protected void checkOrder(PriorityBuffer h) {
         Integer lastNum = null;
         Integer num = null;
         boolean fail = false;
@@ -365,7 +365,7 @@ public class TestBinaryBuffer extends AbstractTestCollection {
      * Returns a string showing the contents of the heap formatted as a tree.
      * Makes no attempt at padding levels or handling wrapping. 
      */
-    protected String showTree(BinaryBuffer h) {
+    protected String showTree(PriorityBuffer h) {
         int count = 1;
         StringBuffer buffer = new StringBuffer();
         for (int offset = 1; count < h.size() + 1; offset *= 2) {

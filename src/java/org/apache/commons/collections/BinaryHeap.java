@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.18 2004/01/02 01:36:51 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BinaryHeap.java,v 1.19 2004/01/02 02:14:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import java.util.NoSuchElementException;
  * The <code>PriorityQueue</code> interface has now been replaced for most uses
  * by the <code>Buffer</code> interface. This class and the interface are
  * retained for backwards compatability. The intended replacement is
- * {@link org.apache.commons.collections.buffer.BinaryBuffer BinaryBuffer}.
+ * {@link org.apache.commons.collections.buffer.PriorityBuffer PriorityBuffer}.
  * <p>
  * The removal order of a binary heap is based on either the natural sort
  * order of its elements or a specified {@link Comparator}.  The 
@@ -92,7 +92,7 @@ import java.util.NoSuchElementException;
  * </pre>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.18 $ $Date: 2004/01/02 01:36:51 $
+ * @version $Revision: 1.19 $ $Date: 2004/01/02 02:14:28 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram

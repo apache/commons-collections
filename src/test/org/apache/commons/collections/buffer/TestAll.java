@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestAll.java,v 1.3 2004/01/01 19:01:34 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestAll.java,v 1.4 2004/01/02 02:14:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.TestSuite;
  * Entry point for tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/01/01 19:01:34 $
+ * @version $Revision: 1.4 $ $Date: 2004/01/02 02:14:28 $
  * 
  * @author Stephen Colebourne
  */
@@ -83,14 +83,15 @@ public class TestAll extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite();
         
-        suite.addTest(TestBinaryBuffer.suite());
-        suite.addTest(TestBlockingBuffer.suite());
         suite.addTest(TestBoundedFifoBuffer.suite());
         suite.addTest(TestBoundedFifoBuffer2.suite());
         suite.addTest(TestCircularFifoBuffer.suite());
+        suite.addTest(TestPriorityBuffer.suite());
+        suite.addTest(TestUnboundedFifoBuffer.suite());
+        
+        suite.addTest(TestBlockingBuffer.suite());
         suite.addTest(TestPredicatedBuffer.suite());
         suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
         
         return suite;
     }

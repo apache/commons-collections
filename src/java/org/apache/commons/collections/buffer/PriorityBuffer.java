@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/Attic/BinaryBuffer.java,v 1.3 2004/01/02 01:36:51 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/buffer/PriorityBuffer.java,v 1.1 2004/01/02 02:14:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -85,14 +85,14 @@ import org.apache.commons.collections.BufferUnderflowException;
  * Note that this implementation is not synchronized.  Use 
  * {@link org.apache.commons.collections.BufferUtils#synchronizedBuffer(Buffer)} or
  * {@link org.apache.commons.collections.buffer.SynchronizedBuffer#decorate(Buffer)}
- * to provide synchronized access to a <code>BinaryBuffer</code>:
+ * to provide synchronized access to a <code>PriorityBuffer</code>:
  *
  * <pre>
- * Buffer heap = SynchronizedBuffer.decorate(new BinaryBuffer());
+ * Buffer heap = SynchronizedBuffer.decorate(new PriorityBuffer());
  * </pre>
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
- * @version $Revision: 1.3 $ $Date: 2004/01/02 01:36:51 $
+ * @version $Revision: 1.1 $ $Date: 2004/01/02 02:14:29 $
  * 
  * @author Peter Donald
  * @author Ram Chidambaram
@@ -100,19 +100,19 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public class BinaryBuffer extends AbstractCollection implements Buffer {
+public class PriorityBuffer extends AbstractCollection implements Buffer {
 
     /**
-     * The default capacity for a binary heap.
+     * The default capacity for the buffer.
      */
     private static final int DEFAULT_CAPACITY = 13;
     
     /**
-     * The elements in this heap.
+     * The elements in this buffer.
      */
     protected Object[] elements;
     /**
-     * The number of elements currently in this heap.
+     * The number of elements currently in this buffer.
      */
     protected int size;
     /**
@@ -131,7 +131,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      * Constructs a new empty buffer that sorts in ascending order by the
      * natural order of the objects added.
      */
-    public BinaryBuffer() {
+    public PriorityBuffer() {
         this(DEFAULT_CAPACITY, true, null);
     }
 
@@ -142,7 +142,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      * @param comparator  the comparator used to order the elements,
      *  null means use natural order
      */
-    public BinaryBuffer(Comparator comparator) {
+    public PriorityBuffer(Comparator comparator) {
         this(DEFAULT_CAPACITY, true, comparator);
     }
 
@@ -153,7 +153,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      * @param ascendingOrder  if <code>true</code> the heap is created as a 
      * minimum heap; otherwise, the heap is created as a maximum heap
      */
-    public BinaryBuffer(boolean ascendingOrder) {
+    public PriorityBuffer(boolean ascendingOrder) {
         this(DEFAULT_CAPACITY, ascendingOrder, null);
     }
 
@@ -165,7 +165,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      * @param comparator  the comparator used to order the elements,
      *  null means use natural order
      */
-    public BinaryBuffer(boolean ascendingOrder, Comparator comparator) {
+    public PriorityBuffer(boolean ascendingOrder, Comparator comparator) {
         this(DEFAULT_CAPACITY, ascendingOrder, comparator);
     }
 
@@ -176,7 +176,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      * @param capacity  the initial capacity for the buffer, greater than zero
      * @throws IllegalArgumentException if <code>capacity</code> is &lt;= <code>0</code>
      */
-    public BinaryBuffer(int capacity) {
+    public PriorityBuffer(int capacity) {
         this(capacity, true, null);
     }
 
@@ -189,7 +189,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      *  null means use natural order
      * @throws IllegalArgumentException if <code>capacity</code> is &lt;= <code>0</code>
      */
-    public BinaryBuffer(int capacity, Comparator comparator) {
+    public PriorityBuffer(int capacity, Comparator comparator) {
         this(capacity, true, comparator);
     }
 
@@ -202,7 +202,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      *  minimum heap; otherwise, the heap is created as a maximum heap.
      * @throws IllegalArgumentException if <code>capacity</code> is <code>&lt;= 0</code>
      */
-    public BinaryBuffer(int capacity, boolean ascendingOrder) {
+    public PriorityBuffer(int capacity, boolean ascendingOrder) {
         this(capacity, ascendingOrder, null);
     }
 
@@ -217,7 +217,7 @@ public class BinaryBuffer extends AbstractCollection implements Buffer {
      *  null means use natural order
      * @throws IllegalArgumentException if <code>capacity</code> is <code>&lt;= 0</code>
      */
-    public BinaryBuffer(int capacity, boolean ascendingOrder, Comparator comparator) {
+    public PriorityBuffer(int capacity, boolean ascendingOrder, Comparator comparator) {
         super();
         if (capacity <= 0) {
             throw new IllegalArgumentException("invalid capacity");
