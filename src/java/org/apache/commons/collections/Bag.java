@@ -27,15 +27,18 @@ import java.util.Set;
  * Calling {@link #getCount(Object)} on <code>a</code> would return 2, while
  * calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
  * <p>
- * <i>Note that this interface violates the {@link Collection} contract.</i> 
+ * <i>NOTE: This interface violates the {@link Collection} contract.</i> 
  * The behavior specified in many of these methods is <i>not</i> the same
- * as the behavior specified by <code>Collection</code>.  The noncompliant methods
- * are clearly marked with "(Violation)".  A future
- * version of this class will specify the same behavior as <code>Collection</code>,
- * which unfortunately will break backwards compatibility with this version.
+ * as the behavior specified by <code>Collection</code>.
+ * The noncompliant methods are clearly marked with "(Violation)".
+ * Exercise caution when using a bag as a <code>Collection</code>.
+ * <p>
+ * This violation resulted from the original specification of this interface.
+ * In an ideal world, the interface would be changed to fix the problems, however
+ * it has been decided to maintain backwards compatibility instead.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.16 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.17 $ $Date: 2004/04/27 20:43:05 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
