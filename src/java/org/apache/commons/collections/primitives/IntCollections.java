@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollections.java,v 1.1 2003/05/20 17:05:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntCollections.java,v 1.2 2003/07/08 18:04:49 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,11 +68,41 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableIntListI
  * The methods of this class all throw a NullPointerException is the 
  * provided collections are null.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/05/20 17:05:28 $
+ * @version $Revision: 1.2 $ $Date: 2003/07/08 18:04:49 $
  * 
  * @author Rodney Waldhoff 
  */
-public class IntCollections {
+public final class IntCollections {
+
+    /**
+     * Returns an unmodifiable IntList containing only the specified element.
+     * @param value the single value
+     * @return an unmodifiable IntList containing only the specified element.
+     */    
+    public static IntList singletonIntList(int value) {
+        // TODO: a specialized implementation of IntList may be more performant
+        IntList list = new ArrayIntList(1);
+        list.add(value);
+        return UnmodifiableIntList.wrap(list);
+    }
+
+    /**
+     * Returns an unmodifiable IntIterator containing only the specified element.
+     * @param value the single value
+     * @return an unmodifiable IntIterator containing only the specified element.
+     */    
+    public static IntIterator singletonIntIterator(int value) {
+        return singletonIntList(value).iterator();
+    }
+
+    /**
+     * Returns an unmodifiable IntListIterator containing only the specified element.
+     * @param value the single value
+     * @return an unmodifiable IntListIterator containing only the specified element.
+     */    
+    public static IntListIterator singletonIntListIterator(int value) {
+        return singletonIntList(value).listIterator();
+    }
 
     /**
      * Returns an unmodifiable version of the given non-null IntList.
@@ -81,7 +111,7 @@ public class IntCollections {
      * @throws NullPointerException if the given IntList is null
      * @see org.apache.commons.collections.primitives.decorators.UnmodifiableIntList#wrap
      */    
-    public static final IntList unmodifiableIntList(IntList list) throws NullPointerException {
+    public static IntList unmodifiableIntList(IntList list) throws NullPointerException {
         if(null == list) {
             throw new NullPointerException();
         }
@@ -95,7 +125,7 @@ public class IntCollections {
      * @throws NullPointerException if the given IntIterator is null
      * @see org.apache.commons.collections.primitives.decorators.UnmodifiableIntIterator#wrap
      */    
-    public static final IntIterator unmodifiableIntIterator(IntIterator iter) {
+    public static IntIterator unmodifiableIntIterator(IntIterator iter) {
         if(null == iter) {
             throw new NullPointerException();
         }
@@ -109,7 +139,7 @@ public class IntCollections {
      * @throws NullPointerException if the given IntListIterator is null
      * @see org.apache.commons.collections.primitives.decorators.UnmodifiableIntListIterator#wrap
      */    
-    public static final IntListIterator unmodifiableIntListIterator(IntListIterator iter) {
+    public static IntListIterator unmodifiableIntListIterator(IntListIterator iter) {
         if(null == iter) {
             throw new NullPointerException();
         }
@@ -121,7 +151,7 @@ public class IntCollections {
      * @return an unmodifiable, empty IntList.
      * @see #EMPTY_INT_LIST
      */    
-    public static final IntList getEmptyIntList() {
+    public static IntList getEmptyIntList() {
         return EMPTY_INT_LIST;
     }
     
@@ -130,7 +160,7 @@ public class IntCollections {
      * @return an unmodifiable, empty IntIterator.
      * @see #EMPTY_INT_ITERATOR
      */    
-    public static final IntIterator getEmptyIntIterator() {
+    public static IntIterator getEmptyIntIterator() {
         return EMPTY_INT_ITERATOR;
     }
     
@@ -139,7 +169,7 @@ public class IntCollections {
      * @return an unmodifiable, empty IntListIterator.
      * @see #EMPTY_INT_LIST_ITERATOR
      */    
-    public static final IntListIterator getEmptyIntListIterator() {
+    public static IntListIterator getEmptyIntListIterator() {
         return EMPTY_INT_LIST_ITERATOR;
     }    
 

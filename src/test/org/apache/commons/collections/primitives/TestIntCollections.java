@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntCollections.java,v 1.1 2003/05/20 17:05:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntCollections.java,v 1.2 2003/07/08 18:04:49 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,7 +62,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/05/20 17:05:28 $
+ * @version $Revision: 1.2 $ $Date: 2003/07/08 18:04:49 $
  * @author Rodney Waldhoff
  * @deprecated as the tested classes are deprecated also
  */
@@ -79,6 +79,47 @@ public class TestIntCollections extends TestCase {
     }
 
     //---------------------------------------------------------------- Tests
+
+    public void testSingletonIntListIterator() {
+        IntListIterator iter = IntCollections.singletonIntListIterator(17);
+        assertTrue(!iter.hasPrevious());        
+        assertTrue(iter.hasNext());        
+        assertEquals(17,iter.next());        
+        assertTrue(iter.hasPrevious());        
+        assertTrue(!iter.hasNext());        
+        assertEquals(17,iter.previous());        
+        try {
+            iter.set(18);
+            fail("Expected UnsupportedOperationException");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }
+    }
+
+    public void testSingletonIntIterator() {
+        IntIterator iter = IntCollections.singletonIntIterator(17);
+        assertTrue(iter.hasNext());        
+        assertEquals(17,iter.next());        
+        assertTrue(!iter.hasNext());        
+        try {
+            iter.remove();
+            fail("Expected UnsupportedOperationException");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }
+    }
+
+    public void testSingletonIntList() {
+        IntList list = IntCollections.singletonIntList(17);
+        assertEquals(1,list.size());
+        assertEquals(17,list.get(0));        
+        try {
+            list.add(18);
+            fail("Expected UnsupportedOperationException");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        }
+    }
 
     public void testUnmodifiableIntListNull() {
         try {
