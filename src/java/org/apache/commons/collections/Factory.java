@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SimpleObjectFactory.java,v 1.2 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.1 2002/08/13 01:19:00 pjack Exp $
+ * $Revision: 1.1 $
+ * $Date: 2002/08/13 01:19:00 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,15 +63,15 @@ import java.util.*;
 import java.lang.reflect.*;
 
 /**
- * SimpleObjectFactory
+ * Factory
  * A simple interface that describes the most basic means of having the ability
  * to create an object.
  *
  * @author Arron Bates
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.1 $
  * @since 2.1
  */
-public interface SimpleObjectFactory {
+public interface Factory {
 
   /** Simple method from which will come the new object from the factory.
    *

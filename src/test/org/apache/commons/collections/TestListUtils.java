@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.1 2002/08/13 00:26:52 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/13 00:26:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.2 2002/08/13 01:19:00 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/13 01:19:00 $
  *
  * ====================================================================
  *
@@ -132,7 +132,7 @@ public class TestListUtils extends BulkTest {
 
 
     public void testLazyList() {
-        List list = ListUtils.lazyList(new ArrayList(), new SimpleObjectFactory() {
+        List list = ListUtils.lazyList(new ArrayList(), new Factory() {
 
             private int index;
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.5 2002/08/13 00:26:51 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/13 00:26:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.6 2002/08/13 01:19:00 pjack Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/08/13 01:19:00 $
  *
  * ====================================================================
  *
@@ -389,9 +389,9 @@ public class ListUtils
     static class LazyList extends CollectionUtils.CollectionWrapper 
     implements List {
 
-        final protected SimpleObjectFactory factory;
+        final protected Factory factory;
 
-        public LazyList(List list, SimpleObjectFactory factory) {
+        public LazyList(List list, Factory factory) {
             super(list);
             this.factory = factory;
         }
@@ -502,7 +502,7 @@ public class ListUtils
      *  For instance:
      *
      *  <Pre>
-     *  SimpleObjectFactory factory = new SimpleObjectFactory() {
+     *  Factory factory = new Factory() {
      *      public Object createObject() {
      *          return new Date();
      *      }
@@ -520,7 +520,7 @@ public class ListUtils
      *  @param factory  the factory for creating new objects
      *  @return a lazy list backed by the given list
      */
-    public static List lazyList(List list, SimpleObjectFactory factory) {
+    public static List lazyList(List list, Factory factory) {
         return new LazyList(list, factory);
     }
 

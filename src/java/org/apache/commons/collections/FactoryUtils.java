@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.2 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FactoryUtils.java,v 1.3 2002/08/13 01:19:00 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/13 01:19:00 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,22 +69,22 @@ import java.lang.reflect.*;
  * objects.
  *
  * @author Arron Bates
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.1
  */
 public class FactoryUtils {
   
-  /** Creates a SimpleObjectFactory whith a class definition, which will be
+  /** Creates a Factory whith a class definition, which will be
    * used to create a new object from an empty constructor.
    *
    * @param inClass class definition which will be ued to create the new object
    * @return the simple object factory.
    */
-  public static SimpleObjectFactory createStandardFactory(Class inClass) {
+  public static Factory createStandardFactory(Class inClass) {
     return new StandardFactory(inClass);
   }
   
-  /** Creates a SimpleObjectFactory whith the class definition and argument
+  /** Creates a Factory whith the class definition and argument
    * details, which can create a new object from a constructor which requires
    * arguments.
    *
@@ -93,7 +93,7 @@ public class FactoryUtils {
    * @param argObjects the objects for the arguments themselves
    * @return the simple object factory.
    */
-  public static SimpleObjectFactory createStandardFactory(Class inClass,
+  public static Factory createStandardFactory(Class inClass,
                                                           Class[] argTypes,
                                                           Object[] argObjects) {
     return new StandardFactory(inClass, argTypes, argObjects);
@@ -104,7 +104,7 @@ public class FactoryUtils {
   /* A simple factory, which takes the bare bones of object creation to do just
    * that, create new objects.
    */
-  private static class StandardFactory implements SimpleObjectFactory {
+  private static class StandardFactory implements Factory {
     
     /* builds the object factory. The class definition can creat objects which
      * have no-argument constructors.
