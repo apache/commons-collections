@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.6 2003/12/29 00:38:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.7 2003/12/29 01:28:20 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.6 2003/12/29 00:38:08 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.7 2003/12/29 01:28:20 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -258,6 +258,13 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     
     // Map views
     //-----------------------------------------------------------------------
+    /**
+     * Gets a keySet view of the map.
+     * Changes made on the view are reflected in the map.
+     * The set supports remove and clear but not add.
+     * 
+     * @return the keySet view
+     */
     public Set keySet() {
         if (keySet == null) {
             keySet = new KeySet(this);
@@ -265,11 +272,40 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         return keySet;
     }
 
+    /**
+     * Creates a key set iterator.
+     * Subclasses can override this to return iterators with different properties.
+     * 
+     * @param iterator  the iterator to decorate
+     * @return the keySet iterator
+     */
+    protected Iterator createKeySetIterator(Iterator iterator) {
+        return new KeySetIterator(iterator, this);
+    }
+
+    /**
+     * Gets a values view of the map.
+     * Changes made on the view are reflected in the map.
+     * The set supports remove and clear but not add.
+     * 
+     * @return the values view
+     */
     public Collection values() {
         if (values == null) {
             values = new Values(this);
         }
         return values;
+    }
+
+    /**
+     * Creates a values iterator.
+     * Subclasses can override this to return iterators with different properties.
+     * 
+     * @param iterator  the iterator to decorate
+     * @return the values iterator
+     */
+    protected Iterator createValuesIterator(Iterator iterator) {
+        return new ValuesIterator(iterator, this);
     }
 
     /**
@@ -290,6 +326,17 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         return entrySet;
     }
     
+    /**
+     * Creates an entry set iterator.
+     * Subclasses can override this to return iterators with different properties.
+     * 
+     * @param iterator  the iterator to decorate
+     * @return the entrySet iterator
+     */
+    protected Iterator createEntrySetIterator(Iterator iterator) {
+        return new EntrySetIterator(iterator, this);
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Inner class View.
@@ -299,6 +346,12 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         /** The parent map */
         protected final AbstractDualBidiMap parent;
         
+        /**
+         * Constructs a new view of the BidiMap.
+         * 
+         * @param coll  the collection view being decorated
+         * @param parent  the parent BidiMap
+         */
         protected View(Collection coll, AbstractDualBidiMap parent) {
             super(coll);
             this.parent = parent;
@@ -349,12 +402,17 @@ public abstract class AbstractDualBidiMap implements BidiMap {
      */
     protected static class KeySet extends View implements Set {
         
+        /**
+         * Constructs a new view of the BidiMap.
+         * 
+         * @param parent  the parent BidiMap
+         */
         protected KeySet(AbstractDualBidiMap parent) {
             super(parent.maps[0].keySet(), parent);
         }
 
         public Iterator iterator() {
-            return new KeySetIterator(super.iterator(), parent);
+            return parent.createKeySetIterator(super.iterator());
         }
         
         public boolean contains(Object key) {
@@ -412,12 +470,17 @@ public abstract class AbstractDualBidiMap implements BidiMap {
      */
     protected static class Values extends View implements Set {
         
+        /**
+         * Constructs a new view of the BidiMap.
+         * 
+         * @param parent  the parent BidiMap
+         */
         protected Values(AbstractDualBidiMap parent) {
             super(parent.maps[0].values(), parent);
         }
 
         public Iterator iterator() {
-            return new ValuesIterator(super.iterator(), parent);
+            return parent.createValuesIterator(super.iterator());
         }
         
         public boolean contains(Object value) {
@@ -474,12 +537,17 @@ public abstract class AbstractDualBidiMap implements BidiMap {
      */
     protected static class EntrySet extends View implements Set {
         
+        /**
+         * Constructs a new view of the BidiMap.
+         * 
+         * @param parent  the parent BidiMap
+         */
         protected EntrySet(AbstractDualBidiMap parent) {
             super(parent.maps[0].entrySet(), parent);
         }
 
         public Iterator iterator() {
-            return new EntrySetIterator(super.iterator(), parent);
+            return parent.createEntrySetIterator(super.iterator());
         }
         
         public boolean remove(Object obj) {
