@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.47 2003/10/10 21:13:36 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.48 2003/10/27 16:17:26 rwaldhoff Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -287,6 +287,10 @@
 
    <!-- validation build to ensure that testframework is independent -->
    <target name="validate-build-testframework" depends="init" if="available-src-test">
+      <echo message=" *** WARNING ***"/>
+      <echo message="This target temporarily disabled."/>
+      <echo message=" *** WARNING ***"/>
+      <!--
       <delete dir="${dest.classes.testframework}"/>
       <mkdir dir="${dest.classes.testframework}"/>
       <copy todir="${dest.classes.testframework}">
@@ -301,6 +305,7 @@
              debug="${javac.debug}"
              deprecation="${javac.deprecation}"
              optimize="${javac.optimize}"/>
+       -->             
    </target>
 
    <!-- ######################################################### -->
