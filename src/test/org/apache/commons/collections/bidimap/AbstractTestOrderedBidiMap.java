@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestTreeBidiMap.java,v 1.1 2003/11/08 18:52:51 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestOrderedBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,109 +55,82 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.TreeMap;
 
-import junit.framework.Test;
-import junit.textui.TestRunner;
+import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.iterators.OrderedMapIterator;
 
 /**
- * JUnit tests.
+ * Abstract test class for {@link OrderedBidiMap} methods and contracts.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/08 18:52:51 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
  * 
+ * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class TestTreeBidiMap extends AbstractTestBidiMap {
+public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
 
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
-    
-    public static Test suite() {
-        return BulkTest.makeSuite(TestTreeBidiMap.class);
-    }
-
-    public TestTreeBidiMap(String testName) {
+    public AbstractTestOrderedBidiMap(String testName) {
         super(testName);
     }
 
-    protected BidiMap makeEmptyBidiMap() {
-        return new TreeBidiMap();
-    }
-    
-    protected Map makeConfirmedMap() {
-        return new TreeMap();
+    public AbstractTestOrderedBidiMap() {
+        super();
     }
 
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
-    protected String[] ignoredTests() {
-        return new String[] {"TestTreeBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
-    }
-    
-    protected boolean isAllowNullKey() {
-        return false;
-    }
-    
-    protected boolean isAllowNullValue() {
-        return false;
-    }
-    
-    protected boolean isSetValueSupported() {
-        return false;
-    }
-    
+    //-----------------------------------------------------------------------
     public void testFirstKey() {
-        TreeBidiMap bidi = (TreeBidiMap) makeEmptyMap();
+        resetEmpty();
+        OrderedBidiMap bidi = (OrderedBidiMap) map;
         try {
             bidi.firstKey();
             fail();
         } catch (NoSuchElementException ex) {}
         
         resetFull();
-        bidi = (TreeBidiMap) map;
+        bidi = (OrderedBidiMap) map;
         Object confirmedFirst = confirmed.keySet().iterator().next();
         assertEquals(confirmedFirst, bidi.firstKey());
     }
     
     public void testLastKey() {
-        TreeBidiMap bidi = (TreeBidiMap) makeEmptyMap();
+        resetEmpty();
+        OrderedBidiMap bidi = (OrderedBidiMap) map;
         try {
             bidi.lastKey();
             fail();
         } catch (NoSuchElementException ex) {}
         
         resetFull();
-        bidi = (TreeBidiMap) map;
+        bidi = (OrderedBidiMap) map;
         Object confirmedLast = null;
         for (Iterator it = confirmed.keySet().iterator(); it.hasNext();) {
             confirmedLast = it.next();
         }
         assertEquals(confirmedLast, bidi.lastKey());
     }
-    
+
+    //-----------------------------------------------------------------------    
     public void testNextKey() {
-        TreeBidiMap bidi = (TreeBidiMap) makeEmptyMap();
-        try {
-            bidi.nextKey(null);
-            fail();
-        } catch (NullPointerException ex) {}
-        try {
-            bidi.nextKey(new Object());
-            fail();
-        } catch (ClassCastException ex) {}
+        resetEmpty();
+        OrderedBidiMap bidi = (OrderedBidiMap) map;
+        assertEquals(null, bidi.nextKey(getOtherKeys()[0]));
+        if (isAllowNullKey() == false) {
+            try {
+                assertEquals(null, bidi.nextKey(null)); // this is allowed too
+            } catch (NullPointerException ex) {}
+        } else {
+            assertEquals(null, bidi.nextKey(null));
+        }
         
         resetFull();
-        bidi = (TreeBidiMap) map;
+        bidi = (OrderedBidiMap) map;
         Iterator it = confirmed.keySet().iterator();
         Object confirmedLast = it.next();
         while (it.hasNext()) {
@@ -167,29 +140,30 @@ public class TestTreeBidiMap extends AbstractTestBidiMap {
         }
         assertEquals(null, bidi.nextKey(confirmedLast));
         
-        try {
-            bidi.nextKey(null);
-            fail();
-        } catch (NullPointerException ex) {}
-        try {
-            bidi.nextKey(new Object());
-            fail();
-        } catch (ClassCastException ex) {}
+        if (isAllowNullKey() == false) {
+            try {
+                bidi.nextKey(null);
+                fail();
+            } catch (NullPointerException ex) {}
+        } else {
+            assertEquals(null, bidi.nextKey(null));
+        }
     }
     
     public void testPreviousKey() {
-        TreeBidiMap bidi = (TreeBidiMap) makeEmptyMap();
-        try {
-            bidi.previousKey(null);
-            fail();
-        } catch (NullPointerException ex) {}
-        try {
-            bidi.previousKey(new Object());
-            fail();
-        } catch (ClassCastException ex) {}
+        resetEmpty();
+        OrderedBidiMap bidi = (OrderedBidiMap) map;
+        assertEquals(null, bidi.previousKey(getOtherKeys()[0]));
+        if (isAllowNullKey() == false) {
+            try {
+                assertEquals(null, bidi.previousKey(null)); // this is allowed too
+            } catch (NullPointerException ex) {}
+        } else {
+            assertEquals(null, bidi.previousKey(null));
+        }
         
         resetFull();
-        bidi = (TreeBidiMap) map;
+        bidi = (OrderedBidiMap) map;
         List list = new ArrayList(confirmed.keySet());
         Collections.reverse(list);
         Iterator it = list.iterator();
@@ -201,14 +175,45 @@ public class TestTreeBidiMap extends AbstractTestBidiMap {
         }
         assertEquals(null, bidi.previousKey(confirmedLast));
         
-        try {
-            bidi.previousKey(null);
-            fail();
-        } catch (NullPointerException ex) {}
-        try {
-            bidi.previousKey(new Object());
-            fail();
-        } catch (ClassCastException ex) {}
+        if (isAllowNullKey() == false) {
+            try {
+                bidi.previousKey(null);
+                fail();
+            } catch (NullPointerException ex) {}
+        } else {
+            assertEquals(null, bidi.previousKey(null));
+        }
+    }
+    
+    //-----------------------------------------------------------------------
+    public void testMapIteratorOrder() {
+        resetFull();
+        OrderedBidiMap bidi = (OrderedBidiMap) map;
+        List ordered = new ArrayList(map.keySet());
+        List ordered2 = new ArrayList(map.keySet());
+        assertEquals("KeySet iterator is not consistent", ordered, ordered2);
+        
+        int i = 0;
+        for (MapIterator it = bidi.mapIterator(); it.hasNext(); i++) {
+            Object key = (Object) it.next();
+            assertEquals("Inconsistent order", ordered.get(i), key);
+            assertEquals("Incorrect value for key", bidi.get(key), it.getValue());
+        }
+        i = 0;
+        OrderedMapIterator it = bidi.orderedMapIterator();
+        for (; it.hasNext(); i++) {
+            Object key = (Object) it.next();
+            assertEquals("Inconsistent order", ordered.get(i), key);
+            assertEquals("Incorrect value for key", bidi.get(key), it.getValue());
+            assertEquals(true, it.hasPrevious());
+        }
+        i--;
+        for (; it.hasPrevious(); i--) {
+            Object key = (Object) it.previous();
+            assertEquals("Inconsistent order", ordered.get(i), key);
+            assertEquals("Incorrect value for key", bidi.get(key), it.getValue());
+            assertEquals(true, it.hasNext());
+        }
     }
     
 }

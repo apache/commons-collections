@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAllPackages.java,v 1.7 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/Attic/OrderedBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,44 +55,53 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.apache.commons.collections.map.OrderedMap;
 
 /**
- * Entry point for all Collections project tests.
+ * Defines a map that allows bidirectional lookup between key and values
+ * and retains and provides access to an ordering.
+ * <p>
+ * Implementations should allow a value to be looked up from a key and
+ * a key to be looked up from a value with equal performance.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/11/16 20:35:46 $
- * 
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
+ *
  * @author Stephen Colebourne
  */
-public class TestAllPackages extends TestCase {
-    public TestAllPackages(String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(org.apache.commons.collections.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.bag.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.bidimap.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.buffer.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.collection.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.list.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.map.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.observed.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.pairs.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.set.TestAll.suite());
-        return suite;
-    }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAllPackages.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
+public interface OrderedBidiMap extends BidiMap, OrderedMap {
+    
+    /**
+     * Gets a view of this map where the keys and values are reversed.
+     * <p>
+     * Changes to one map will be visible in the other and vice versa.
+     * This enables both directions of the map to be accessed equally.
+     * <p>
+     * Implementations should seek to avoid creating a new object every time this
+     * method is called. See <code>AbstractMap.values()</code> etc. Calling this
+     * method on the inverse map should return the original.
+     * <p>
+     * Implementations must return an <code>OrderedBidiMap</code> instance,
+     * usually by forwarding to <code>inverseOrderedBidiMap()</code>.
+     *
+     * @return an inverted bidirectional map
+     */
+    public BidiMap inverseBidiMap();
+    
+    /**
+     * Gets a view of this map where the keys and values are reversed.
+     * <p>
+     * Changes to one map will be visible in the other and vice versa.
+     * This enables both directions of the map to be accessed equally.
+     * <p>
+     * Implementations should seek to avoid creating a new object every time this
+     * method is called. See <code>AbstractMap.values()</code> etc. Calling this
+     * method on the inverse map should return the original.
+     *
+     * @return an inverted bidirectional map
+     */
+    public OrderedBidiMap inverseOrderedBidiMap();
     
 }

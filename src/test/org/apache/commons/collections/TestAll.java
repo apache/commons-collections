@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.53 2003/11/08 18:52:51 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.54 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,7 +64,7 @@ import junit.framework.TestSuite;
 /**
  * Entry point for all Collections package tests.
  * 
- * @version $Revision: 1.53 $ $Date: 2003/11/08 18:52:51 $
+ * @version $Revision: 1.54 $ $Date: 2003/11/16 20:35:46 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -96,8 +96,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestCommonsLinkedList.suite());
         suite.addTest(TestCursorableLinkedList.suite());
         suite.addTest(TestDoubleOrderedMap.suite());
-        suite.addTest(TestDualHashBidiMap.suite());
-        suite.addTest(TestDualTreeBidiMap.suite());
         suite.addTest(TestExtendedProperties.suite());
         suite.addTest(TestFastArrayList.suite());
         suite.addTest(TestFastArrayList1.suite());
@@ -115,7 +113,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestSequencedHashMap.suite());
         suite.addTest(TestStaticBucketMap.suite());
         suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTreeBidiMap.suite());
         suite.addTest(TestUnboundedFifoBuffer.suite());
         suite.addTest(TestEnumerationUtils.suite());
         return suite;

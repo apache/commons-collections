@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestDualHashBidiMap.java,v 1.2 2003/10/10 21:11:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/Attic/OrderedMap.java,v 1.1 2003/11/16 20:35:47 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,42 +55,73 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.map;
 
-import junit.framework.Test;
-import junit.textui.TestRunner;
+import java.util.Map;
+
+import org.apache.commons.collections.iterators.OrderedMapIterator;
 
 /**
- * JUnit tests.
+ * Defines a map that maintains order and allows both forward and backward
+ * iteration through that order.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/10/10 21:11:39 $
- * 
- * @author Matthew Hawthorne
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:47 $
+ *
  * @author Stephen Colebourne
  */
-public class TestDualHashBidiMap extends AbstractTestBidiMap {
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
+public interface OrderedMap extends Map {
     
-    public static Test suite() {
-        return BulkTest.makeSuite(TestDualHashBidiMap.class);
-    }
-
-    public TestDualHashBidiMap(String testName) {
-        super(testName);
-    }
-
-    protected BidiMap makeEmptyBidiMap() {
-        return new DualHashBidiMap();
-    }
+    /**
+     * Obtains an <code>OrderedMapIterator</code> over the map.
+     * <p>
+     * A ordered map iterator is an efficient way of iterating over maps
+     * in both directions.
+     * <pre>
+     * BidiMap map = new TreeBidiMap();
+     * MapIterator it = map.mapIterator();
+     * while (it.hasNext()) {
+     *   Object key = it.next();
+     *   Object value = it.getValue();
+     *   it.setValue("newValue");
+     *   Object previousKey = it.previous();
+     * }
+     * </pre>
+     * 
+     * @return a map iterator
+     */
+    OrderedMapIterator orderedMapIterator();
+    
+    /**
+     * Gets the first key currently in this map.
+     *
+     * @return the first key currently in this map
+     * @throws NoSuchElementException if this map is empty
+     */
+    public Object firstKey();
 
     /**
-     * Override to prevent infinite recursion of tests.
+     * Gets the last key currently in this map.
+     *
+     * @return the last key currently in this map
+     * @throws NoSuchElementException if this map is empty
      */
-    protected String[] ignoredTests() {
-        return new String[] {"TestDualHashBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
-    }
+    public Object lastKey();
+    
+    /**
+     * Gets the next key after the one specified.
+     *
+     * @param key  the key to search for next from
+     * @return the next key, null if no match or at end
+     */
+    public Object nextKey(Object key);
+
+    /**
+     * Gets the previous key before the one specified.
+     *
+     * @param key  the key to search for previous from
+     * @return the previous key, null if no match or at start
+     */
+    public Object previousKey(Object key);
     
 }

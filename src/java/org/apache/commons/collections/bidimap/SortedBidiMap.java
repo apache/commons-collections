@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SortedBidiMap.java,v 1.1 2003/09/21 15:23:04 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/Attic/SortedBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
 import java.util.SortedMap;
 
@@ -67,11 +67,28 @@ import java.util.SortedMap;
  * a key to be looked up from a value with equal performance.
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/21 15:23:04 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
  *
  * @author Stephen Colebourne
  */
-public interface SortedBidiMap extends SortedMap, BidiMap {
+public interface SortedBidiMap extends OrderedBidiMap, SortedMap {
+    
+    /**
+     * Gets a view of this map where the keys and values are reversed.
+     * <p>
+     * Changes to one map will be visible in the other and vice versa.
+     * This enables both directions of the map to be accessed equally.
+     * <p>
+     * Implementations should seek to avoid creating a new object every time this
+     * method is called. See <code>AbstractMap.values()</code> etc. Calling this
+     * method on the inverse map should return the original.
+     * <p>
+     * Implementations must return a <code>SortedBidiMap</code> instance,
+     * usually by forwarding to <code>inverseSortedBidiMap()</code>.
+     *
+     * @return an inverted bidirectional map
+     */
+    public BidiMap inverseBidiMap();
     
     /**
      * Gets a view of this map where the keys and values are reversed.
@@ -82,6 +99,9 @@ public interface SortedBidiMap extends SortedMap, BidiMap {
      * Implementations should seek to avoid creating a new object every time this
      * method is called. See <code>AbstractMap.values()</code> etc. Calling this
      * method on the inverse map should return the original.
+     * <p>
+     * The inverse map returned by <code>inverseBidiMap()</code> should be the
+     * same object as returned by this method.
      *
      * @return an inverted bidirectional map
      */

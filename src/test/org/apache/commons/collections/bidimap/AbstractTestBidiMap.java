@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.8 2003/11/08 18:46:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -63,13 +63,15 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.AbstractTestMap;
+import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 import org.apache.commons.collections.iterators.MapIterator;
 
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.8 $ $Date: 2003/11/08 18:46:57 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

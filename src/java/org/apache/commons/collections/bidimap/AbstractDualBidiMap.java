@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.11 2003/11/16 00:05:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -75,7 +75,7 @@ import org.apache.commons.collections.pairs.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.11 2003/11/16 00:05:44 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -566,7 +566,7 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         }
         
         public Object next() {
-            last = new MapEntry((Map.Entry) iterator.next(), map);
+            last = (Map.Entry) iterator.next();
             canRemove = true;
             return last.getKey();
         }

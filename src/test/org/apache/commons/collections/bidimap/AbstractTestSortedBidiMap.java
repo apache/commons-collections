@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedBidiMap.java,v 1.2 2003/11/01 18:47:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestSortedBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,17 +69,19 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import org.apache.commons.collections.AbstractTestSortedMap;
+import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.pairs.DefaultMapEntry;
 
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/11/01 18:47:18 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestSortedBidiMap extends AbstractTestBidiMap {
+public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiMap {
 
     protected List sortedKeys = new ArrayList();
     protected List sortedValues = new ArrayList();
@@ -128,21 +130,6 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestBidiMap {
         return new TreeMap();
     }
 
-    //-----------------------------------------------------------------------    
-    public void testFirstKey() {
-        SortedMap sm = (SortedMap) makeFullMap();
-        assertSame(sm.keySet().iterator().next(), sm.firstKey());
-    }
-    
-    public void testLastKey() {
-        SortedMap sm = (SortedMap) makeFullMap();
-        Object obj = null;
-        for (Iterator it = sm.keySet().iterator(); it.hasNext();) {
-            obj = (Object) it.next();
-        }
-        assertSame(obj, sm.lastKey());
-    }
-    
     //-----------------------------------------------------------------------
     //-----------------------------------------------------------------------
     public void testBidiHeadMapContains() {

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestDualTreeBidiMap.java,v 1.1 2003/10/31 01:26:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestAll.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,42 +55,39 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * JUnit tests.
+ * Entry point for tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/10/31 01:26:25 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
  * 
- * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class TestDualTreeBidiMap extends AbstractTestSortedBidiMap {
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
+public class TestAll extends TestCase {
     
-    public static Test suite() {
-        return BulkTest.makeSuite(TestDualTreeBidiMap.class);
-    }
-
-    public TestDualTreeBidiMap(String testName) {
+    public TestAll(String testName) {
         super(testName);
     }
 
-    protected BidiMap makeEmptyBidiMap() {
-        return new DualTreeBidiMap();
-    }
-
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
-    protected String[] ignoredTests() {
-        return new String[] {"TestDualTreeBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
+    public static void main(String args[]) {
+        String[] testCaseName = { TestAll.class.getName() };
+        junit.textui.TestRunner.main(testCaseName);
     }
     
+    public static Test suite() {
+        TestSuite suite = new TestSuite();
+        
+        suite.addTest(TestDualHashBidiMap.suite());
+        suite.addTest(TestDualTreeBidiMap.suite());
+        suite.addTest(TestTreeBidiMap.suite());
+        
+        return suite;
+    }
+        
 }

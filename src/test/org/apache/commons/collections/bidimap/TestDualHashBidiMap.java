@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAllPackages.java,v 1.7 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestDualHashBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,44 +55,50 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import junit.textui.TestRunner;
+
+import org.apache.commons.collections.BulkTest;
 
 /**
- * Entry point for all Collections project tests.
+ * JUnit tests.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/11/16 20:35:46 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
  * 
+ * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class TestAllPackages extends TestCase {
-    public TestAllPackages(String testName) {
+public class TestDualHashBidiMap extends AbstractTestBidiMap {
+
+    public static void main(String[] args) {
+        TestRunner.run(suite());
+    }
+    
+    public static Test suite() {
+        return BulkTest.makeSuite(TestDualHashBidiMap.class);
+    }
+
+    public TestDualHashBidiMap(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(org.apache.commons.collections.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.bag.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.bidimap.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.buffer.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.collection.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.list.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.map.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.observed.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.pairs.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.set.TestAll.suite());
-        return suite;
+    protected BidiMap makeEmptyBidiMap() {
+        return new DualHashBidiMap();
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAllPackages.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    /**
+     * Override to prevent infinite recursion of tests.
+     */
+    protected String[] ignoredTests() {
+        return new String[] {"TestDualHashBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }
     
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/DualHashBidiMap.emptyCollection.version3.obj");
+//        resetFull();
+//        writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/DualHashBidiMap.fullCollection.version3.obj");
+//    }
 }

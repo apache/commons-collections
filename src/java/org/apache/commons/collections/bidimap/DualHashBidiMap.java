@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableMapIterator.java,v 1.3 2003/11/16 20:35:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/DualHashBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,83 +55,90 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections.iterators;
+package org.apache.commons.collections.bidimap;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
-import org.apache.commons.collections.Unmodifiable;
-import org.apache.commons.collections.bidimap.BidiMap;
-import org.apache.commons.collections.bidimap.DualHashBidiMap;
-
 /**
- * Tests the UnmodifiableMapIterator.
+ * Implementation of <code>BidiMap</code> that uses two <code>HashMap</code> instances.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/11/16 20:35:47 $
+ * @since Commons Collections 3.0
+ * @version $Id: DualHashBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * 
+ * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableMapIterator extends AbstractTestMapIterator {
+public class DualHashBidiMap extends AbstractDualBidiMap implements Serializable {
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableMapIterator.class);
+    /** Ensure serialization compatability */
+    private static final long serialVersionUID = 721969328361808L;
+
+    /**
+     * Creates an empty <code>HashBidiMap</code>
+     */
+    public DualHashBidiMap() {
+        super();
     }
 
-    public TestUnmodifiableMapIterator(String testName) {
-        super(testName);
-    }
-
-    public MapIterator makeEmptyMapIterator() {
-        return UnmodifiableMapIterator.decorate(new DualHashBidiMap().mapIterator());
-    }
-
-    public MapIterator makeFullMapIterator() {
-        return UnmodifiableMapIterator.decorate(((BidiMap) getMap()).mapIterator());
+    /** 
+     * Constructs a <code>HashBidiMap</code> and copies the mappings from
+     * specified <code>Map</code>.  
+     *
+     * @param map  the map whose mappings are to be placed in this map
+     */
+    public DualHashBidiMap(Map map) {
+        super();
+        putAll(map);
     }
     
-    protected Map getMap() {
-        Map testMap = new DualHashBidiMap();
-        testMap.put("A", "a");
-        testMap.put("B", "b");
-        testMap.put("C", "c");
-        return testMap;
+    /** 
+     * Constructs a <code>HashBidiMap</code> that decorates the specified maps.
+     *
+     * @param normalMap  the normal direction map
+     * @param reverseMap  the reverse direction map
+     * @param inverseBidiMap  the inverse BidiMap
+     */
+    protected DualHashBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
+        super(normalMap, reverseMap, inverseBidiMap);
     }
 
-    protected Map getConfirmedMap() {
-        Map testMap = new HashMap();
-        testMap.put("A", "a");
-        testMap.put("B", "b");
-        testMap.put("C", "c");
-        return testMap;
+    /**
+     * Creates a new instance of the map used by the subclass to store data.
+     * 
+     * @return the map to be used for internal storage
+     */
+    protected Map createMap() {
+        return new HashMap();
     }
 
-    public boolean supportsRemove() {
-        return false;
+    /**
+     * Creates a new instance of this object.
+     * 
+     * @param normalMap  the normal direction map
+     * @param reverseMap  the reverse direction map
+     * @param inverseBidiMap  the inverse BidiMap
+     * @return new bidi map
+     */
+    protected BidiMap createBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
+        return new DualHashBidiMap(normalMap, reverseMap, inverseBidiMap);
     }
 
-    public boolean supportsSetValue() {
-        return false;
-    }
-    
+    // Serialization
     //-----------------------------------------------------------------------
-    public void testMapIterator() {
-        assertTrue(makeEmptyMapIterator() instanceof Unmodifiable);
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(maps[0]);
     }
-    
-    public void testDecorateFactory() {
-        MapIterator it = makeFullMapIterator();
-        assertSame(it, UnmodifiableMapIterator.decorate(it));
-        
-        it = ((BidiMap) getMap()).mapIterator() ;
-        assertTrue(it != UnmodifiableMapIterator.decorate(it));
-        
-        try {
-            UnmodifiableMapIterator.decorate(null);
-            fail();
-        } catch (IllegalArgumentException ex) {}
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        Map map = (Map) in.readObject();
+        putAll(map);
     }
 
 }

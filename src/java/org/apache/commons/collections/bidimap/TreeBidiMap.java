@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/TreeBidiMap.java,v 1.1 2003/11/08 18:52:51 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.bidimap;
 
 import java.util.AbstractSet;
 import java.util.Collection;
@@ -65,7 +65,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.iterators.OrderedIterator;
 import org.apache.commons.collections.iterators.OrderedMapIterator;
 import org.apache.commons.collections.pairs.UnmodifiableMapEntry;
 
@@ -84,21 +86,17 @@ import org.apache.commons.collections.pairs.UnmodifiableMapEntry;
  * and redirecting requests to the appropriate TreeMap (e.g.,
  * containsKey would be directed to the TreeMap that maps values to
  * keys, containsValue would be directed to the TreeMap that maps keys
- * to values), there are problems with that implementation,
- * particularly when trying to keep the two TreeMaps synchronized with
- * each other. And if the data contained in the TreeMaps is large, the
- * cost of redundant storage becomes significant. (See also the
- * {@link org.apache.commons.collections.DualTreeBidiMap DualTreeBidiMap} and
- * {@link org.apache.commons.collections.DualHashBidiMap DualHashBidiMap}
- * implementations.)
+ * to values), there are problems with that implementation.
+ * If the data contained in the TreeMaps is large, the cost of redundant
+ * storage becomes significant. The {@link DualTreeBidiMap} and
+ * {@link DualHashBidiMap} implementations use this approach.
  * <p>
- * This solution keeps the data properly synchronized and minimizes
- * the data storage. The red-black algorithm is based on TreeMap's,
- * but has been modified to simultaneously map a tree node by key and
- * by value. This doubles the cost of put operations (but so does
- * using two TreeMaps), and nearly doubles the cost of remove
- * operations (there is a savings in that the lookup of the node to be
- * removed only has to be performed once). And since only one node
+ * This solution keeps minimizes the data storage by holding data only once.
+ * The red-black algorithm is based on java util TreeMap, but has been modified
+ * to simultaneously map a tree node by key and by value. This doubles the
+ * cost of put operations (but so does using two TreeMaps), and nearly doubles
+ * the cost of remove operations (there is a savings in that the lookup of the
+ * node to be removed only has to be performed once). And since only one node
  * contains the key and value, storage is significantly less than that
  * required by two TreeMaps.
  * <p>
@@ -106,16 +104,13 @@ import org.apache.commons.collections.pairs.UnmodifiableMapEntry;
  * not allow setValue() and will throw an
  * UnsupportedOperationException on attempts to call that method.
  *
- * @see BidiMap
- * @see DualTreeBidiMap
- * @see DualHashBidiMap
- * @since Commons Collections 2.0 (previously DoubleOrderedMap)
- * @version $Revision: 1.1 $ $Date: 2003/11/08 18:52:51 $
+ * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
+ * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
  */
-public class TreeBidiMap implements BidiMap {
+public class TreeBidiMap implements OrderedBidiMap {
 
     private static final int KEY = 0;
     private static final int VALUE = 1;
@@ -429,9 +424,33 @@ public class TreeBidiMap implements BidiMap {
      */
     public MapIterator mapIterator() {
         if (isEmpty()) {
-            return IteratorUtils.EMPTY_MAP_ITERATOR;
+            return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
         }
         return new ViewMapIterator(this, KEY);
+    }
+
+    /**
+     * Gets an ordered iterator over the map entries.
+     * <p>
+     * This iterator allows both forward and reverse iteration over the entries.
+     * 
+     * @return an iterator
+     */
+    public OrderedMapIterator orderedMapIterator() {
+        if (isEmpty()) {
+            return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
+        }
+        return new ViewMapIterator(this, KEY);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the inverse map for comparison.
+     * 
+     * @return the inverse map
+     */
+    public BidiMap inverseBidiMap() {
+        return inverseOrderedBidiMap();
     }
 
     /**
@@ -439,7 +458,7 @@ public class TreeBidiMap implements BidiMap {
      * 
      * @return the inverse map
      */
-    public BidiMap inverseBidiMap() {
+    public OrderedBidiMap inverseOrderedBidiMap() {
         if (inverse == null) {
             inverse = new Inverse(this);
         }
@@ -1508,7 +1527,7 @@ public class TreeBidiMap implements BidiMap {
     /**
      * An iterator over the map.
      */
-    static class ViewIterator implements Iterator {
+    static class ViewIterator implements OrderedIterator {
 
         protected final TreeBidiMap main;
         protected final int orderType;
@@ -1913,7 +1932,7 @@ public class TreeBidiMap implements BidiMap {
     /**
      * A node used to store the data.
      */
-    static class Inverse implements BidiMap {
+    static class Inverse implements OrderedBidiMap {
         
         private final TreeBidiMap main;
         private Set keySet;
@@ -1947,6 +1966,32 @@ public class TreeBidiMap implements BidiMap {
 
         public boolean containsValue(final Object value) {
             return main.containsKey(value);
+        }
+
+        public Object firstKey() {
+            if (main.nodeCount == 0) {
+                throw new NoSuchElementException("Map is empty");
+            }
+            return main.leastNode(main.rootNode[VALUE], VALUE).getValue();
+        }
+
+        public Object lastKey() {
+            if (main.nodeCount == 0) {
+                throw new NoSuchElementException("Map is empty");
+            }
+            return main.greatestNode(main.rootNode[VALUE], VALUE).getValue();
+        }
+    
+        public Object nextKey(Object key) {
+            checkKey(key);
+            Node node = main.nextGreater(main.lookup((Comparable) key, VALUE), VALUE);
+            return (node == null ? null : node.getValue());
+        }
+
+        public Object previousKey(Object key) {
+            checkKey(key);
+            Node node = main.nextSmaller(main.lookup((Comparable) key, VALUE), VALUE);
+            return (node == null ? null : node.getValue());
         }
 
         public Object put(final Object key, final Object value) {
@@ -1996,12 +2041,23 @@ public class TreeBidiMap implements BidiMap {
         
         public MapIterator mapIterator() {
             if (isEmpty()) {
-                return IteratorUtils.EMPTY_MAP_ITERATOR;
+                return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
+            }
+            return new ViewMapIterator(main, VALUE);
+        }
+
+        public OrderedMapIterator orderedMapIterator() {
+            if (isEmpty()) {
+                return IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR;
             }
             return new ViewMapIterator(main, VALUE);
         }
 
         public BidiMap inverseBidiMap() {
+            return main;
+        }
+        
+        public OrderedBidiMap inverseOrderedBidiMap() {
             return main;
         }
         
