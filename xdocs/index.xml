@@ -36,7 +36,7 @@ collections such as union, intersection, and closure.</li>
 
 <section name="Documentation">
 <p>
-An alphabetical list of the package can be found in the <a href="http://cvs.apache.org/viewcvs/~checkout~/jakarta-commons/collections/STATUS.html?rev=1.13">collections
+An alphabetical list of the package can be found in the <a href="http://cvs.apache.org/viewcvs/~checkout~/jakarta-commons/collections/STATUS.html">collections
 status document</a>.
 </p>
 
@@ -47,6 +47,9 @@ The <a href="collections/api/index.html">JavaDoc API documents</a> are available
 
 <section name="Releases">
 <ul>
+<li><a
+href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v2.1/">Version
+2.1</a></li>
 <li><a
 href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v2.0/">Version
 2.0</a></li>
