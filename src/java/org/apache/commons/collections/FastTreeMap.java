@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.2 2001/04/21 12:19:57 craigmcc Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/21 12:19:57 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.3 2001/05/18 00:12:45 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/05/18 00:12:45 $
  *
  * ====================================================================
  *
@@ -97,7 +97,7 @@ import java.util.TreeMap;
  * maximum performance.</p>
  *
  * @author Craig R. McClanahan
- * @version $Revision: 1.2 $ $Date: 2001/04/21 12:19:57 $
+ * @version $Revision: 1.3 $ $Date: 2001/05/18 00:12:45 $
  */
 
 public class FastTreeMap extends TreeMap {
@@ -322,7 +322,7 @@ public class FastTreeMap extends TreeMap {
                 return (false);
             Iterator i = map.entrySet().iterator();
             while (i.hasNext()) {
-                Entry e = (Entry) i.next();
+                Map.Entry e = (Map.Entry) i.next();
                 Object key = e.getKey();
                 Object value = e.getValue();
                 if (value == null) {
@@ -340,7 +340,7 @@ public class FastTreeMap extends TreeMap {
                     return (false);
                 Iterator i = map.entrySet().iterator();
                 while (i.hasNext()) {
-                    Entry e = (Entry) i.next();
+                    Map.Entry e = (Map.Entry) i.next();
                     Object key = e.getKey();
                     Object value = e.getValue();
                     if (value == null) {
