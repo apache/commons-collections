@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.29 2003/08/31 13:05:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.30 2003/08/31 14:30:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.29 $ $Date: 2003/08/31 13:05:44 $
+ * @version $Revision: 1.30 $ $Date: 2003/08/31 14:30:15 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -116,7 +116,6 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  * @author Arun Mammen Thomas
  * @author Janek Bogucki
  * @author Max Rydahl Andersen
- * @author Arun Mammen Thomas
  */
 public class MapUtils {
     

@@ -1,5 +1,5 @@
 /* 
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparableComparator.java,v 1.10 2003/05/16 15:08:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparableComparator.java,v 1.11 2003/08/31 14:29:53 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -77,9 +77,9 @@ import java.util.Comparator;
  * {@link #compare} for details.
  *
  * @since Commons Collections 2.0
- * @version $Revision: 1.10 $ $Date: 2003/05/16 15:08:45 $
+ * @version $Revision: 1.11 $ $Date: 2003/08/31 14:29:53 $
  *
- * @author bayard@generationjava.com
+ * @author Henri Yandell
  *
  * @see java.util.Collections#reverseOrder
  */
