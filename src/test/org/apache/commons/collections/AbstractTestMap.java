@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.10 2003/11/01 18:47:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.11 2003/11/02 15:27:05 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -153,7 +153,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.10 $ $Date: 2003/11/01 18:47:18 $
+ * @version $Revision: 1.11 $ $Date: 2003/11/02 15:27:05 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -1478,30 +1478,40 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     protected void verifyEntrySet() {
         int size = confirmed.size();
         boolean empty = confirmed.isEmpty();
-        assertEquals("entrySet should be same size as HashMap's",
+        assertEquals("entrySet should be same size as HashMap's" +
+                     "\nTest: " + entrySet + "\nReal: " + confirmed.entrySet(),
                      size, entrySet.size());
-        assertEquals("entrySet should be empty if HashMap is", 
+        assertEquals("entrySet should be empty if HashMap is" +
+                     "\nTest: " + entrySet + "\nReal: " + confirmed.entrySet(),
                      empty, entrySet.isEmpty());
-        assertTrue("entrySet should contain all HashMap's elements",
+        assertTrue("entrySet should contain all HashMap's elements" +
+                   "\nTest: " + entrySet + "\nReal: " + confirmed.entrySet(),
                    entrySet.containsAll(confirmed.entrySet()));
-        assertEquals("entrySet hashCodes should be the same", 
+        assertEquals("entrySet hashCodes should be the same" +
+                     "\nTest: " + entrySet + "\nReal: " + confirmed.entrySet(),
                      confirmed.entrySet().hashCode(), entrySet.hashCode());
-        assertEquals("Map's entry set should still equal HashMap's", 
+        assertEquals("Map's entry set should still equal HashMap's" +
+                     "\nTest: " + entrySet + "\nReal: " + confirmed.entrySet(),
                      confirmed.entrySet(), entrySet);
     }
 
     protected void verifyKeySet() { 
         int size = confirmed.size();
         boolean empty = confirmed.isEmpty();
-        assertEquals("keySet should be same size as HashMap's",
+        assertEquals("keySet should be same size as HashMap's" +
+                     "\nTest: " + keySet + "\nReal: " + confirmed.keySet(),
                      size, keySet.size());
-        assertEquals("keySet should be empty if HashMap is", 
+        assertEquals("keySet should be empty if HashMap is" +
+                     "\nTest: " + keySet + "\nReal: " + confirmed.keySet(),
                      empty, keySet.isEmpty());
-        assertTrue("keySet should contain all HashMap's elements",
+        assertTrue("keySet should contain all HashMap's elements" +
+                   "\nTest: " + keySet + "\nReal: " + confirmed.keySet(),
                    keySet.containsAll(confirmed.keySet()));
-        assertEquals("keySet hashCodes should be the same", 
+        assertEquals("keySet hashCodes should be the same" +
+                     "\nTest: " + keySet + "\nReal: " + confirmed.keySet(),
                      confirmed.keySet().hashCode(), keySet.hashCode());
-        assertEquals("Map's key set should still equal HashMap's",
+        assertEquals("Map's key set should still equal HashMap's" +
+                     "\nTest: " + keySet + "\nReal: " + confirmed.keySet(),
                      confirmed.keySet(), keySet);
     }
 
@@ -1511,9 +1521,11 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
         int size = confirmed.size();
         boolean empty = confirmed.isEmpty();
-        assertEquals("values should be same size as HashMap's",
+        assertEquals("values should be same size as HashMap's" +
+                     "\nTest: " + test + "\nReal: " + known,
                      size, values.size());
-        assertEquals("values should be empty if HashMap is", 
+        assertEquals("values should be empty if HashMap is" +
+                     "\nTest: " + test + "\nReal: " + known,
                      empty, values.isEmpty());
         assertTrue("values should contain all HashMap's elements" +
                    "\nTest: " + test + "\nReal: " + known,
