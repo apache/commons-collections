@@ -31,7 +31,7 @@ import org.apache.commons.collections.FunctorException;
  * Factory implementation that creates a new instance each time based on a prototype.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -84,6 +84,7 @@ public class PrototypeFactory {
      * Use <code>getInstance</code> if you want that.
      */
     private PrototypeFactory() {
+        super();
     }
 
     // PrototypeCloneFactory
@@ -123,7 +124,9 @@ public class PrototypeFactory {
         }
 
         /**
-         * Return clone of prototype
+         * Creates an object by calling the clone method.
+         * 
+         * @return the new object
          */
         public Object create() {
             // needed for post-serialization
@@ -164,7 +167,9 @@ public class PrototypeFactory {
         }
 
         /**
-         * Return clone of prototype by serialization
+         * Creates an object using serialization.
+         * 
+         * @return the new object
          */
         public Object create() {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(512);
@@ -186,13 +191,15 @@ public class PrototypeFactory {
                     if (bais != null) {
                         bais.close();
                     }
-                } catch (IOException ignored) {
+                } catch (IOException ex) {
+                    // ignore
                 }
                 try {
                     if (baos != null) {
                         baos.close();
                     }
-                } catch (IOException ignored) {
+                } catch (IOException ex) {
+                    // ignore
                 }
             }
         }

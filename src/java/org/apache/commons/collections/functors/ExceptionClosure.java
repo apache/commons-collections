@@ -24,7 +24,7 @@ import org.apache.commons.collections.FunctorException;
  * Closure implementation that always throws an exception.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -56,9 +56,12 @@ public final class ExceptionClosure implements Closure, Serializable {
 
     /**
      * Always throw an exception.
+     * 
+     * @param input  the input object
+     * @throws FunctorException always
      */
-    public void execute(Object object) {
+    public void execute(Object input) {
         throw new FunctorException("ExceptionClosure invoked");
     }
-    
+
 }

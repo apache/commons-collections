@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * and ignore the result.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -64,7 +64,9 @@ public class TransformerClosure implements Closure, Serializable {
     }
 
     /**
-     * Call the transformer.
+     * Executes the closure by calling the decorated transformer.
+     * 
+     * @param input  the input object
      */
     public void execute(Object input) {
         iTransformer.transform(input);
@@ -72,6 +74,7 @@ public class TransformerClosure implements Closure, Serializable {
 
     /**
      * Gets the transformer.
+     * 
      * @return the transformer
      * @since Commons Collections 3.1
      */

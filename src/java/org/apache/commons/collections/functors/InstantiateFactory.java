@@ -26,7 +26,7 @@ import org.apache.commons.collections.FunctorException;
  * Factory implementation that creates a new object instance by reflection.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -50,6 +50,7 @@ public class InstantiateFactory implements Factory, Serializable {
      * @param classToInstantiate  the class to instantiate, not null
      * @param paramTypes  the constructor parameter types
      * @param args  the constructor arguments
+     * @return a new instantiate factory
      */
     public static Factory getInstance(Class classToInstantiate, Class[] paramTypes, Object[] args) {
         if (classToInstantiate == null) {
@@ -113,7 +114,9 @@ public class InstantiateFactory implements Factory, Serializable {
     }
 
     /**
-     * Create the object using a constructor
+     * Creates an object using the stored constructor.
+     * 
+     * @return the new object
      */
     public Object create() {
         // needed for post-serialization

@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
  * like a do-while or while loop.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -76,7 +76,9 @@ public class WhileClosure implements Closure, Serializable {
     }
 
     /**
-     * Execute the closure until the predicate is false.
+     * Executes the closure until the predicate is false.
+     * 
+     * @param input  the input object
      */
     public void execute(Object input) {
         if (iDoLoop) {
@@ -89,6 +91,7 @@ public class WhileClosure implements Closure, Serializable {
 
     /**
      * Gets the predicate in use.
+     * 
      * @return the predicate
      * @since Commons Collections 3.1
      */
@@ -98,6 +101,7 @@ public class WhileClosure implements Closure, Serializable {
 
     /**
      * Gets the closure.
+     * 
      * @return the closure
      * @since Commons Collections 3.1
      */
@@ -107,6 +111,7 @@ public class WhileClosure implements Closure, Serializable {
 
     /**
      * Is the loop a do-while loop.
+     * 
      * @return true is do-while, false if while
      * @since Commons Collections 3.1
      */

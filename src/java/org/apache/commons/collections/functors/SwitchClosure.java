@@ -27,7 +27,7 @@ import org.apache.commons.collections.Predicate;
  * like a switch statement.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -127,7 +127,9 @@ public class SwitchClosure implements Closure, Serializable {
     }
 
     /**
-     * Execute the closure whose predicate returns true
+     * Executes the closure whose matching predicate returns true
+     * 
+     * @param input  the input object
      */
     public void execute(Object input) {
         for (int i = 0; i < iPredicates.length; i++) {
@@ -141,6 +143,7 @@ public class SwitchClosure implements Closure, Serializable {
 
     /**
      * Gets the predicates, do not modify the array.
+     * 
      * @return the predicates
      * @since Commons Collections 3.1
      */
@@ -150,6 +153,7 @@ public class SwitchClosure implements Closure, Serializable {
 
     /**
      * Gets the closures, do not modify the array.
+     * 
      * @return the closures
      * @since Commons Collections 3.1
      */
@@ -159,11 +163,12 @@ public class SwitchClosure implements Closure, Serializable {
 
     /**
      * Gets the default closure.
+     * 
      * @return the default closure
      * @since Commons Collections 3.1
      */
     public Closure getDefaultClosure() {
         return iDefault;
     }
-
+    
 }

@@ -24,7 +24,7 @@ import org.apache.commons.collections.FunctorException;
  * Factory implementation that always throws an exception.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -55,10 +55,13 @@ public final class ExceptionFactory implements Factory, Serializable {
     }
 
     /**
-     * Always throw an exception.
+     * Always throws an exception.
+     * 
+     * @return never
+     * @throws FunctorException always
      */
     public Object create() {
         throw new FunctorException("ExceptionFactory invoked");
     }
-    
+
 }

@@ -23,7 +23,7 @@ import org.apache.commons.collections.Closure;
  * Closure implementation that calls another closure n times, like a for loop.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -71,7 +71,9 @@ public class ForClosure implements Closure, Serializable {
     }
 
     /**
-     * Execute the closure count times.
+     * Executes the closure <code>count</code> times.
+     * 
+     * @param input  the input object
      */
     public void execute(Object input) {
         for (int i = 0; i < iCount; i++) {
@@ -81,6 +83,7 @@ public class ForClosure implements Closure, Serializable {
 
     /**
      * Gets the closure.
+     * 
      * @return the closure
      * @since Commons Collections 3.1
      */
@@ -90,6 +93,7 @@ public class ForClosure implements Closure, Serializable {
 
     /**
      * Gets the count.
+     * 
      * @return the count
      * @since Commons Collections 3.1
      */

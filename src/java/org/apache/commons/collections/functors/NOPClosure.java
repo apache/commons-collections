@@ -23,7 +23,7 @@ import org.apache.commons.collections.Closure;
  * Closure implementation that does nothing.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/31 23:13:04 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -53,10 +53,12 @@ public class NOPClosure implements Closure, Serializable {
     }
 
     /**
-     * Do nothing
+     * Do nothing.
+     * 
+     * @param input  the input object
      */
     public void execute(Object input) {
         // do nothing
     }
-    
+
 }

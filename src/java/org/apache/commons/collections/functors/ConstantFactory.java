@@ -27,7 +27,7 @@ import org.apache.commons.collections.Factory;
  * use the prototype factory.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -67,7 +67,9 @@ public class ConstantFactory implements Factory, Serializable {
     }
 
     /**
-     * Always return constant
+     * Always return constant.
+     * 
+     * @return the stored constant value
      */
     public Object create() {
         return iConstant;
@@ -75,6 +77,7 @@ public class ConstantFactory implements Factory, Serializable {
 
     /**
      * Gets the constant.
+     * 
      * @return the constant
      * @since Commons Collections 3.1
      */

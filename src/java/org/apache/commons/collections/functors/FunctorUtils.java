@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
  * Internal utilities for functors.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 00:59:20 $
+ * @version $Revision: 1.7 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -36,6 +36,7 @@ class FunctorUtils {
      * Restricted constructor.
      */
     private FunctorUtils() {
+        super();
     }
     
     /**
@@ -147,6 +148,7 @@ class FunctorUtils {
      * Copy method
      * 
      * @param transformers  the transformers to copy
+     * @return a clone of the transformers
      */
     static Transformer[] copy(Transformer[] transformers) {
         if (transformers == null) {

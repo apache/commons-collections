@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
  * based on a predicate.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/03/13 17:17:03 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/16 11:47:38 $
  *
  * @author Stephen Colebourne
  */
@@ -76,7 +76,9 @@ public class IfClosure implements Closure, Serializable {
     }
 
     /**
-     * Execute the correct closure.
+     * Executes the true or false closure accoring to the result of the predicate.
+     * 
+     * @param input  the input object
      */
     public void execute(Object input) {
         if (iPredicate.evaluate(input) == true) {
@@ -88,6 +90,7 @@ public class IfClosure implements Closure, Serializable {
 
     /**
      * Gets the predicate.
+     * 
      * @return the predicate
      * @since Commons Collections 3.1
      */
@@ -97,6 +100,7 @@ public class IfClosure implements Closure, Serializable {
 
     /**
      * Gets the closure called when true.
+     * 
      * @return the closure
      * @since Commons Collections 3.1
      */
@@ -106,6 +110,7 @@ public class IfClosure implements Closure, Serializable {
 
     /**
      * Gets the closure called when false.
+     * 
      * @return the closure
      * @since Commons Collections 3.1
      */
