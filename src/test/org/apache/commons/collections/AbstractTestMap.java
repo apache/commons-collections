@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.2 2003/10/05 12:34:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.3 2003/10/05 20:47:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -151,7 +151,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.2 $ $Date: 2003/10/05 12:34:46 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/05 20:47:37 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -303,7 +303,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      */
     protected Object[] getNewSampleValues() {
         Object[] result = new Object[] {
-            (useNullValue()) ? null : "newnonnullvalue",
+            (useNullValue() && useDuplicateValues()) ? null : "newnonnullvalue",
             "newvalue",
             (useDuplicateValues()) ? "newvalue" : "newvalue2",
             "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv", 
@@ -801,11 +801,91 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         verify();
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Tests that the {@link Map#values} collection is backed by
+     * the underlying map for clear().
+     */
+    public void testValuesClearChangesMap() {
+        if (!isAddRemoveModifiable()) return;
+        
+        // clear values, reflected in map
+        resetFull();
+        Collection values = map.values();
+        assertTrue(map.size() > 0);
+        assertTrue(values.size() > 0);
+        values.clear();
+        assertTrue(map.size() == 0);
+        assertTrue(values.size() == 0);
+        
+        // clear map, reflected in values
+        resetFull();
+        values = map.values();
+        assertTrue(map.size() > 0);
+        assertTrue(values.size() > 0);
+        map.clear();
+        assertTrue(map.size() == 0);
+        assertTrue(values.size() == 0);
+    }
+    
+    /**
+     * Tests that the {@link Map#keySet} collection is backed by
+     * the underlying map for clear().
+     */
+    public void testKeySetClearChangesMap() {
+        if (!isAddRemoveModifiable()) return;
+        
+        // clear values, reflected in map
+        resetFull();
+        Set keySet = map.keySet();
+        assertTrue(map.size() > 0);
+        assertTrue(keySet.size() > 0);
+        keySet.clear();
+        assertTrue(map.size() == 0);
+        assertTrue(keySet.size() == 0);
+        
+        // clear map, reflected in values
+        resetFull();
+        keySet = map.keySet();
+        assertTrue(map.size() > 0);
+        assertTrue(keySet.size() > 0);
+        map.clear();
+        assertTrue(map.size() == 0);
+        assertTrue(keySet.size() == 0);
+    }
+    
+    /**
+     * Tests that the {@link Map#entrySet()} collection is backed by
+     * the underlying map for clear().
+     */
+    public void testEntrySetClearChangesMap() {
+        if (!isAddRemoveModifiable()) return;
+        
+        // clear values, reflected in map
+        resetFull();
+        Set entrySet = map.entrySet();
+        assertTrue(map.size() > 0);
+        assertTrue(entrySet.size() > 0);
+        entrySet.clear();
+        assertTrue(map.size() == 0);
+        assertTrue(entrySet.size() == 0);
+        
+        // clear map, reflected in values
+        resetFull();
+        entrySet = map.entrySet();
+        assertTrue(map.size() > 0);
+        assertTrue(entrySet.size() > 0);
+        map.clear();
+        assertTrue(map.size() == 0);
+        assertTrue(entrySet.size() == 0);
+    }
+    
+    //-----------------------------------------------------------------------
     /**
      * Tests that the {@link Map#values} collection is backed by
      * the underlying map by removing from the values collection
      * and testing if the value was removed from the map.
-     * <p/>
+     * <p>
      * We should really test the "vice versa" case--that values removed
      * from the map are removed from the values collection--also,
      * but that's a more difficult test to construct (lacking a
@@ -813,21 +893,23 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * 
      * @see http://issues.apache.org/bugzilla/show_bug.cgi?id=9573
      */
-    public void testValuesRemovedFromValuesCollectionAreRemovedFromMap() {
+    public void testValuesRemoveChangesMap() {
         resetFull();
         Object[] sampleValues = getSampleValues();
         Collection values = map.values();
-        for(int i=0;i<sampleValues.length;i++) {
-            if(map.containsValue(sampleValues[i])) {
-                while(values.contains(sampleValues[i])) {
+        for (int i = 0; i < sampleValues.length; i++) {
+            if (map.containsValue(sampleValues[i])) {
+                while (values.contains(sampleValues[i])) {
                     try {
                         values.remove(sampleValues[i]);
-                    } catch(UnsupportedOperationException e) {
+                    } catch (UnsupportedOperationException e) {
                         // if values.remove is unsupported, just skip this test
                         return;
                     }
                 }
-                assertTrue("Value should have been removed from the underlying map.",!map.containsValue(sampleValues[i]));
+                assertTrue(
+                    "Value should have been removed from the underlying map.",
+                    !map.containsValue(sampleValues[i]));
             }
         }
     }
@@ -837,27 +919,27 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * the underlying map by removing from the keySet set
      * and testing if the key was removed from the map.
      */
-    public void testValuesRemovedFromKeySetAreRemovedFromMap() {
+    public void testKeySetRemoveChangesMap() {
         resetFull();
         Object[] sampleKeys = getSampleKeys();
         Set keys = map.keySet();
-        for(int i=0;i<sampleKeys.length;i++) {
+        for (int i = 0; i < sampleKeys.length; i++) {
             try {
                 keys.remove(sampleKeys[i]);
-            } catch(UnsupportedOperationException e) {
+            } catch (UnsupportedOperationException e) {
                 // if key.remove is unsupported, just skip this test
                 return;
             }
-            assertTrue("Key should have been removed from the underlying map.",!map.containsKey(sampleKeys[i]));
+            assertTrue(
+                "Key should have been removed from the underlying map.",
+                !map.containsKey(sampleKeys[i]));
         }
     }
 
     // TODO: Need:
     //    testValuesRemovedFromEntrySetAreRemovedFromMap
     //    same for EntrySet/KeySet/values's
-    //      Iterator.remove, removeAll, retainAll, clear
-    // TODO: Also need:
-    //    Test that EntrySet/KeySet/values all do not allow add/addAll
+    //      Iterator.remove, removeAll, retainAll
 
 
     /**
