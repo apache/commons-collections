@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.4 2001/05/22 15:53:06 jstrachan Exp $
- * $Revision: 1.4 $
- * $Date: 2001/05/22 15:53:06 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.5 2001/08/29 16:10:29 jstrachan Exp $
+ * $Revision: 1.5 $
+ * $Date: 2001/08/29 16:10:29 $
  *
  * ====================================================================
  *
@@ -67,6 +67,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -76,7 +77,7 @@ import java.util.Set;
  *
  * @author Rodney Waldhoff
  *
- * @version $Id: CollectionUtils.java,v 1.4 2001/05/22 15:53:06 jstrachan Exp $
+ * @version $Id: CollectionUtils.java,v 1.5 2001/08/29 16:10:29 jstrachan Exp $
  */
 public class CollectionUtils {
     /**
@@ -407,6 +408,115 @@ public class CollectionUtils {
         }
     }    
     
+    /**
+     * Given an Object, and an index, it will get the nth value in the
+     * object.
+     */
+    public static Object index(Object obj, int idx) {
+        return index(obj, new Integer(idx));
+    }
+    
+    /**
+     * Given an Object, and an index, it will get the nth value in the
+     * object.
+     */
+    public static Object index(Object obj, Object index) {
+        if(obj instanceof Map) {
+            Map map = (Map)obj;
+            if(map.containsKey(index)) {
+                return map.get(index);
+            }
+        }
+        int idx = -1;
+        if(index instanceof Integer) {
+            idx = ((Integer)index).intValue();
+        }
+        if(idx < 0) {
+            return obj;
+        } 
+        else if(obj instanceof Map) {
+            Map map = (Map)obj;
+            Iterator iterator = map.keySet().iterator();
+            while(iterator.hasNext()) {
+                idx--;
+                if(idx == -1) {
+                    return iterator.next();
+                } else {
+                    iterator.next();
+                }
+            }
+        } 
+        else if(obj instanceof List) {
+            return ((List)obj).get(idx);
+        } 
+        else if(obj instanceof Object[]) {
+            return ((Object[])obj)[idx];
+        } 
+        else if(obj instanceof Enumeration) {
+            Enumeration enum = (Enumeration)obj;
+            while(enum.hasMoreElements()) {
+                idx--;
+                if(idx == -1) {
+                    return enum.nextElement();
+                } else {
+                    enum.nextElement();
+                }
+            }
+        } 
+        else if(obj instanceof Iterator) {
+            Iterator iterator = (Iterator)obj;
+            while(iterator.hasNext()) {
+                idx--;
+                if(idx == -1) {
+                    return iterator.next();
+                } else {
+                    iterator.next();
+                }
+            }
+        }
+        return obj;
+    }
+
+    /** Returns an Iterator for the given object. Currently this method can handle
+     * Iterator, Enumeration, Collection, Map, Object[] or array */
+    public static Iterator getIterator(Object obj) {
+        if(obj instanceof Iterator) {
+            return (Iterator)obj;
+        } 
+        else if(obj instanceof Collection) {
+            return ((Collection)obj).iterator();
+        } 
+        else if(obj instanceof Object[]) {
+            return new ArrayIterator( obj );
+        } 
+        else if(obj instanceof Enumeration) {
+            return new EnumerationIterator( (Enumeration)obj );
+        } 
+        else if(obj instanceof Map) {
+            return ((Map)obj).values().iterator();
+        } 
+        else if(obj != null && obj.getClass().isArray()) {
+            return new ArrayIterator( obj );
+        }
+        else{
+            return null;
+        }
+    }
+
+    /** Reverses the order of the given array */
+    public static void reverseArray(Object[] array) {
+        int i = 0;
+        int j = array.length - 1;
+        Object tmp;
+        
+        while(j>i) {
+            tmp = array[j];
+            array[j] = array[i];
+            array[i] = tmp;
+            j--;
+            i++;
+        }
+    }
     private static final int getFreq(final Object obj, final Map freqMap) {
         try {
             return ((Integer)(freqMap.get(obj))).intValue();
