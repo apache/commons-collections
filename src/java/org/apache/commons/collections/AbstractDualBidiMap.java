@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.6 2003/11/01 18:47:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.7 2003/11/02 15:27:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,6 +65,9 @@ import java.util.Set;
 import org.apache.commons.collections.decorators.AbstractCollectionDecorator;
 import org.apache.commons.collections.decorators.AbstractIteratorDecorator;
 import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
+import org.apache.commons.collections.iterators.MapIterator;
+import org.apache.commons.collections.iterators.ResetableMapIterator;
+import org.apache.commons.collections.pairs.AbstractMapEntry;
 
 /**
  * Abstract <code>BidiMap</code> implemented using two maps.
@@ -73,7 +76,7 @@ import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.6 2003/11/01 18:47:18 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.7 2003/11/02 15:27:53 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -218,6 +221,13 @@ public abstract class AbstractDualBidiMap implements BidiMap {
 
     // BidiMap
     //-----------------------------------------------------------------------
+    /**
+     * Obtains a <code>MapIterator</code> over the map.
+     * The iterator implements <code>ResetableMapIterator</code>.
+     * This implementation relies on the entrySet iterator.
+     * 
+     * @return a map iterator
+     */
     public MapIterator mapIterator() {
         return new BidiMapIterator(this);
     }
@@ -524,19 +534,25 @@ public abstract class AbstractDualBidiMap implements BidiMap {
     /**
      * Inner class MapIterator.
      */
-    protected static class BidiMapIterator extends AbstractIteratorDecorator implements MapIterator {
+    protected static class BidiMapIterator implements ResetableMapIterator {
         
         protected final AbstractDualBidiMap map;
+        protected Iterator iterator;
         private Map.Entry last = null;
         private boolean canRemove = false;
         
         protected BidiMapIterator(AbstractDualBidiMap map) {
-            super(map.maps[0].entrySet().iterator());
+            super();
             this.map = map;
+            this.iterator = map.maps[0].entrySet().iterator();
+        }
+        
+        public boolean hasNext() {
+            return iterator.hasNext();
         }
         
         public Object next() {
-            last = new MapEntry((Map.Entry) super.next(), map);
+            last = new MapEntry((Map.Entry) iterator.next(), map);
             canRemove = true;
             return last.getKey();
         }
@@ -547,7 +563,7 @@ public abstract class AbstractDualBidiMap implements BidiMap {
             }
             // store value as remove may change the entry in the decorator (eg.TreeMap)
             Object value = last.getValue();
-            super.remove();
+            iterator.remove();
             map.maps[1].remove(value);
             last = null;
             canRemove = false;
@@ -576,6 +592,29 @@ public abstract class AbstractDualBidiMap implements BidiMap {
                 throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
             }
             return map.put(last.getKey(), value);
+        }
+        
+        public void reset() {
+            iterator = map.maps[0].entrySet().iterator();
+            last = null;
+            canRemove = false;
+        }
+        
+        public Map.Entry asMapEntry() {
+            return new AbstractMapEntry(getKey(), getValue()) {
+                public Object setValue(Object value) {
+                    BidiMapIterator.this.setValue(value);
+                    return super.setValue(value);
+                }
+            };
+        }
+        
+        public String toString() {
+            if (last == null) {
+                return "MapIterator[" + getKey() + "=" + getValue() + "]";
+            } else {
+                return "MapIterator[]";
+            }
         }
     }
     

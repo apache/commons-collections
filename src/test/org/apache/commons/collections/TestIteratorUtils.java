@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.7 2003/10/05 21:17:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestIteratorUtils.java,v 1.8 2003/11/02 15:27:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.iterators.ResetableListIterator;
 /**
  * Tests for IteratorUtils.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/10/05 21:17:40 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/02 15:27:54 $
  * 
  * @author Unknown
  */
@@ -424,6 +424,94 @@ public class TestIteratorUtils extends BulkTest {
         return IteratorUtils.unmodifiableListIterator(list.listIterator());
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Test empty iterator
+     */
+    public void testEmptyIterator() {
+        assertEquals(false, IteratorUtils.EMPTY_ITERATOR.hasNext());
+        IteratorUtils.EMPTY_ITERATOR.reset();
+        assertSame(IteratorUtils.EMPTY_ITERATOR, IteratorUtils.EMPTY_ITERATOR);
+        assertSame(IteratorUtils.EMPTY_ITERATOR, IteratorUtils.emptyIterator());
+        try {
+            IteratorUtils.EMPTY_ITERATOR.next();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            IteratorUtils.EMPTY_ITERATOR.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Test empty list iterator
+     */
+    public void testEmptyListIterator() {
+        assertEquals(false, IteratorUtils.EMPTY_LIST_ITERATOR.hasNext());
+        assertEquals(0, IteratorUtils.EMPTY_LIST_ITERATOR.nextIndex());
+        assertEquals(-1, IteratorUtils.EMPTY_LIST_ITERATOR.previousIndex());
+        IteratorUtils.EMPTY_LIST_ITERATOR.reset();
+        assertSame(IteratorUtils.EMPTY_LIST_ITERATOR, IteratorUtils.EMPTY_LIST_ITERATOR);
+        assertSame(IteratorUtils.EMPTY_LIST_ITERATOR, IteratorUtils.emptyListIterator());
+        try {
+            IteratorUtils.EMPTY_LIST_ITERATOR.next();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            IteratorUtils.EMPTY_LIST_ITERATOR.previous();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            IteratorUtils.EMPTY_LIST_ITERATOR.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_LIST_ITERATOR.set(null);
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_LIST_ITERATOR.add(null);
+            fail();
+        } catch (UnsupportedOperationException ex) {}
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Test empty map iterator
+     */
+    public void testEmptyMapIterator() {
+        assertEquals(false, IteratorUtils.EMPTY_MAP_ITERATOR.hasNext());
+        IteratorUtils.EMPTY_MAP_ITERATOR.reset();
+        assertSame(IteratorUtils.EMPTY_MAP_ITERATOR, IteratorUtils.EMPTY_MAP_ITERATOR);
+        assertSame(IteratorUtils.EMPTY_MAP_ITERATOR, IteratorUtils.emptyMapIterator());
+        try {
+            IteratorUtils.EMPTY_MAP_ITERATOR.next();
+            fail();
+        } catch (NoSuchElementException ex) {}
+        try {
+            IteratorUtils.EMPTY_MAP_ITERATOR.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_MAP_ITERATOR.getKey();
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_MAP_ITERATOR.getValue();
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_MAP_ITERATOR.setValue(null);
+            fail();
+        } catch (IllegalStateException ex) {}
+        try {
+            IteratorUtils.EMPTY_MAP_ITERATOR.asMapEntry();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+    
+    //-----------------------------------------------------------------------
 	/**
 	 * Test next() and hasNext() for an immutable Iterator.
 	 */

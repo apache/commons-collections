@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.4 2003/11/01 18:47:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.5 2003/11/02 15:27:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,10 +64,12 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.iterators.MapIterator;
+
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.4 $ $Date: 2003/11/01 18:47:18 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/02 15:27:54 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -491,12 +493,14 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         }
         try {
             it.remove();
-        } catch (UnsupportedOperationException ex) {
         } catch (IllegalStateException ex) {
         }
         try {
             it.setValue(null);
-        } catch (UnsupportedOperationException ex) {
+        } catch (IllegalStateException ex) {
+        }
+        try {
+            it.asMapEntry();
         } catch (IllegalStateException ex) {
         }
         verify();
@@ -509,12 +513,28 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         MapIterator it = bidi.mapIterator();
         
         assertEquals(true, it.hasNext());
+        Map.Entry lastEntry = null;
+        Object lastKey = null;
+        Object lastValue = null;
         while (it.hasNext()) {
             Object key = it.next();
             assertSame(key, it.getKey());
         
             Object value = it.getValue();
             assertSame(bidi.get(key), value);
+            
+            Map.Entry entry = it.asMapEntry();
+            assertTrue(entry != lastEntry);
+            if (lastKey != null && lastValue != null) {
+                assertSame(lastKey, lastEntry.getKey());
+                assertSame(lastValue, lastEntry.getValue());
+            }
+            assertSame(key, entry.getKey());
+            assertSame(value, entry.getValue());
+            
+            lastEntry = entry;
+            lastKey = key;
+            lastValue = value;
         }
         verify();
     }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.4 2003/10/29 00:06:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.5 2003/11/02 15:27:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,6 +59,8 @@ package org.apache.commons.collections;
 
 import java.util.Map;
 
+import org.apache.commons.collections.iterators.MapIterator;
+
 /**
  * Defines a map that allows bidirectional lookup between key and values.
  * <p>
@@ -73,7 +75,7 @@ import java.util.Map;
  * 
  * @see org.apache.commons.collections.DualHashBidiMap
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/10/29 00:06:25 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/02 15:27:53 $
  *
  * @author Stephen Colebourne
  */
@@ -88,9 +90,11 @@ public interface BidiMap extends Map {
      * <pre>
      * BidiMap map = new DualHashBidiMap();
      * MapIterator it = map.mapIterator();
-     * Object key = it.next();
-     * Object value = it.getValue();
-     * it.setValue("newValue");
+     * while (it.hasNext()) {
+     *   Object key = it.next();
+     *   Object value = it.getValue();
+     *   it.setValue("newValue");
+     * }
      * </pre>
      * 
      * @return a map iterator

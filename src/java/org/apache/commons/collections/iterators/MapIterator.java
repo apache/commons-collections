@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapIterator.java,v 1.1 2003/10/29 00:06:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/Attic/MapIterator.java,v 1.1 2003/11/02 15:27:54 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,26 +55,35 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Defines an iterator that operates over a <code>Map</code>.
  * <p>
  * This iterator is a special version designed for maps. It is much more
  * efficient to use this rather than an entry set iterator where the option
- * is available. A map that provides this interface may not hold the data
- * internally using Map Entry objects, thus this interface can avoid lots
- * of object creation.
+ * is available.
  * <p>
- * In use, this iterator iterates through the keys in the map. After each
- * call to <code>next()</code>, the <code>getValue()</code> method provides
- * direct access to the value. The value can also be set using
- * <code>setValue()</code>.
+ * A map that provides this interface may not hold the data internally using
+ * Map Entry objects, thus this interface can avoid lots of object creation.
+ * <p>
+ * In use, this iterator iterates through the keys in the map. After each call
+ * to <code>next()</code>, the <code>getValue()</code> method provides direct
+ * access to the value. The value can also be set using <code>setValue()</code>.
+ * <pre>
+ * MapIterator it = map.mapIterator();
+ * while (it.hasNext()) {
+ *   Object key = it.next();
+ *   Object value = it.getValue();
+ *   it.setValue(newValue);
+ * }
+ * </pre>
  *  
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/10/29 00:06:25 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/02 15:27:54 $
  *
  * @author Stephen Colebourne
  */
@@ -116,6 +125,21 @@ public interface MapIterator extends Iterator {
 
     //-----------------------------------------------------------------------
     /**
+     * Gets the last returned key-value pair from the underlying <code>Map</code>
+     * as a Map Entry instance.
+     * <p>
+     * The returned entry must not change when <code>next</code> is called.
+     * Changes made to the entry via <code>setValue</code> must change the map.
+     * 
+     * @return the last return key-value pair as an independent Map Entry
+     * @throws IllegalStateException if <code>next()</code> has not yet been called
+     * @throws IllegalStateException if <code>remove()</code> has been called since the
+     *  last call to <code>next()</code>
+     */
+    Map.Entry asMapEntry();
+    
+    //-----------------------------------------------------------------------
+    /**
      * Removes the last returned key from the underlying <code>Map</code> (optional operation).
      * <p>
      * This method can be called once per call to <code>next()</code>.
@@ -128,10 +152,11 @@ public interface MapIterator extends Iterator {
     void remove();
     
     /**
-     * Sets the value associated with the current key.
+     * Sets the value associated with the current key (optional operation).
      *
      * @param value  the new value
      * @return the previous value
+     * @throws UnsupportedOperationException if setValue is not supported by the map
      * @throws IllegalStateException if <code>next()</code> has not yet been called
      * @throws IllegalStateException if <code>remove()</code> has been called since the
      *  last call to <code>next()</code>

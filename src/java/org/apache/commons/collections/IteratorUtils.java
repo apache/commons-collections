@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.13 2003/09/29 22:44:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.14 2003/11/02 15:27:53 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,6 +70,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Map.Entry;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.ArrayListIterator;
@@ -85,6 +86,7 @@ import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections.iterators.ResetableIterator;
 import org.apache.commons.collections.iterators.ResetableListIterator;
+import org.apache.commons.collections.iterators.ResetableMapIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -95,7 +97,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.13 $ $Date: 2003/09/29 22:44:14 $
+ * @version $Revision: 1.14 $ $Date: 2003/11/02 15:27:53 $
  * 
  * @author Stephen Colebourne
  * @author Phil Steitz
@@ -107,11 +109,15 @@ public class IteratorUtils {
     /**
      * An iterator over no elements
      */    
-    public static final Iterator EMPTY_ITERATOR = new EmptyIterator();
+    public static final ResetableIterator EMPTY_ITERATOR = new EmptyIterator();
     /**
      * A list iterator over no elements
      */    
-    public static final ListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
+    public static final ResetableListIterator EMPTY_LIST_ITERATOR = new EmptyListIterator();
+    /**
+     * A map iterator over no elements
+     */    
+    public static final ResetableMapIterator EMPTY_MAP_ITERATOR = new EmptyMapIterator();
 
     /**
      * Prevents instantiation.
@@ -131,7 +137,7 @@ public class IteratorUtils {
      * @return  an iterator over nothing
      */
     public static ResetableIterator emptyIterator() {
-        return (ResetableIterator) EMPTY_ITERATOR;
+        return EMPTY_ITERATOR;
     }
 
     /**
@@ -143,7 +149,19 @@ public class IteratorUtils {
      * @return  a list iterator over nothing
      */
     public static ResetableListIterator emptyListIterator() {
-        return (ResetableListIterator) EMPTY_LIST_ITERATOR;
+        return EMPTY_LIST_ITERATOR;
+    }
+
+    /**
+     * Gets an empty map iterator.
+     * <p>
+     * This iterator is a valid map iterator object that will iterate 
+     * over nothing.
+     *
+     * @return  a list iterator over nothing
+     */
+    public static ResetableMapIterator emptyMapIterator() {
+        return EMPTY_MAP_ITERATOR;
     }
 
     /**
@@ -761,90 +779,96 @@ public class IteratorUtils {
         }
     }
     
+    //-----------------------------------------------------------------------
     /**
      * EmptyIterator class
      */
     static class EmptyIterator implements ResetableIterator {
         
-        /**
-         * @see java.util.Iterator#hasNext()
-         */
+        EmptyIterator() {
+            super();
+        }
+
         public boolean hasNext() {
             return false;
         }
 
-        /**
-         * @see java.util.Iterator#next()
-         */
         public Object next() {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("Iterator contains no elements");
         }
 
-        /**
-         * @see java.util.Iterator#remove()
-         */
         public void remove() {
-            throw new UnsupportedOperationException("remove() not supported for empty Iterator");
+            throw new IllegalStateException("Iterator contains no elements");
         }
         
-        /**
-         * Reset the iterator
-         */
         public void reset() {
             // do nothing
         }
-
     }
     
+    //-----------------------------------------------------------------------    
     /**
      * EmptyListIterator class
      */
     static class EmptyListIterator extends EmptyIterator implements ResetableListIterator {
         
-        /**
-         * @see java.util.ListIterator#hasPrevious()
-         */
+        EmptyListIterator() {
+            super();
+        }
+
         public boolean hasPrevious() {
             return false;
         }
 
-        /**
-         * @see java.util.ListIterator#previous()
-         */
         public Object previous() {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("Iterator contains no elements");
         }
 
-        /**
-         * @see java.util.ListIterator#nextIndex()
-         */
         public int nextIndex() {
             return 0;
         }
 
-        /**
-         * @see java.util.ListIterator#previousIndex()
-         */
         public int previousIndex() {
             return -1;
         }
 
-        /**
-         * @see java.util.ListIterator#add(Object)
-         */
         public void add(Object o) {
             throw new UnsupportedOperationException("add() not supported for empty Iterator");
         }
 
-        /**
-         * @see java.util.ListIterator#set(Object)
-         */
         public void set(Object o) {
-            throw new UnsupportedOperationException("set() not supported for empty Iterator");
+            throw new IllegalStateException("Iterator contains no elements");
         }
-
     }
 
+    //-----------------------------------------------------------------------    
+    /**
+     * EmptyMapIterator class
+     */
+    static class EmptyMapIterator extends EmptyIterator implements ResetableMapIterator {
+        
+        EmptyMapIterator() {
+            super();
+        }
+
+        public Object getKey() {
+            throw new IllegalStateException("Iterator contains no elements");
+        }
+
+        public Object getValue() {
+            throw new IllegalStateException("Iterator contains no elements");
+        }
+
+        public Object setValue(Object value) {
+            throw new IllegalStateException("Iterator contains no elements");
+        }
+        
+        public Entry asMapEntry() {
+            throw new IllegalStateException("Iterator contains no elements");
+        }
+    }
+
+    //-----------------------------------------------------------------------    
     /**
      * A wrapper for an {@link java.util.Iterator} which makes it immutable. All
      * calls are passed through to the delegate. The {@link #remove()} method
@@ -883,6 +907,7 @@ public class IteratorUtils {
 
     }
 
+    //-----------------------------------------------------------------------
     /**
      * An unmodifiable resetable iterator.
      *
@@ -908,6 +933,7 @@ public class IteratorUtils {
 
     }
     
+    //-----------------------------------------------------------------------
     /**
      * A wrapper for an {@link java.util.ListIterator} which makes it immutable.
      * All calls are passed through to the delegate. The {@link #remove()},
@@ -970,6 +996,7 @@ public class IteratorUtils {
         }
     }
     
+    //-----------------------------------------------------------------------
     /**
      * An unmodifiable resetable list iterator.
      *
