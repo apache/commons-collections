@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.2 2002/02/15 20:40:14 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/15 20:40:14 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.3 2002/02/15 20:48:18 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/15 20:48:18 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.Collection;
  * test case (method) your {@link Map} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.2 2002/02/15 20:40:14 morgand Exp $
+ * @version $Id: TestMap.java,v 1.3 2002/02/15 20:48:18 morgand Exp $
  */
 public abstract class TestMap extends TestObject {
     public TestMap(String testName) {
@@ -90,18 +90,6 @@ public abstract class TestMap extends TestObject {
 
     public Object makeObject() {
         return makeMap();
-    }
-
-    public void testMapSupportsNullValues() {
-        Map map = makeMap();
-        map.put(new Integer(1),"foo");
-        
-        assertTrue("no null values in Map",map.containsValue(null) == false);
-
-        map.put(new Integer(2),null);
-
-        assertTrue("null value in Map",map.containsValue(null));
-        assertTrue("key to a null value",map.containsKey(new Integer(2)));
     }
 
     /*
