@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.8 2002/02/14 22:44:01 morgand Exp $
- * $Revision: 1.8 $
- * $Date: 2002/02/14 22:44:01 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.9 2002/02/15 20:50:37 morgand Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/02/15 20:50:37 $
  *
  * ====================================================================
  *
@@ -76,7 +76,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.8 2002/02/14 22:44:01 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.9 2002/02/15 20:50:37 morgand Exp $
  */
 public class TestLRUMap extends TestHashMap
 {
@@ -154,6 +154,20 @@ public class TestLRUMap extends TestHashMap
         assertTrue("map should contain the Integer(4) object",
                    map2.containsKey(new Integer(4)));
     }
+
+
+    public void testMapSupportsNullValues() {
+        Map map = makeMap();
+        map.put(new Integer(1),"foo");
+        
+        assertTrue("no null values in Map",map.containsValue(null) == false);
+
+        map.put(new Integer(2),null);
+
+        assertTrue("null value in Map",map.containsValue(null));
+        assertTrue("key to a null value",map.containsKey(new Integer(2)));
+    }
+
 
     public void testExternalizable() throws IOException, ClassNotFoundException {
         /*
