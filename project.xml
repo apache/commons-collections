@@ -16,7 +16,8 @@
   -->
 
 <project>
-  <extend>../commons-build/project.xml</extend>
+  <extend>${common.project.xml.file}</extend>
+  
   <name>Collections</name>
   <id>commons-collections</id>
   <currentVersion>3.1-dev</currentVersion>
