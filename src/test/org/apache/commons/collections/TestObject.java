@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.1 2001/04/20 16:54:03 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/20 16:54:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.2 2002/02/20 21:50:16 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/02/20 21:50:16 $
  *
  * ====================================================================
  *
@@ -62,6 +62,18 @@
 package org.apache.commons.collections;
 
 import junit.framework.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -78,7 +90,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.1 2001/04/20 16:54:03 rwaldhoff Exp $
+ * @version $Id: TestObject.java,v 1.2 2002/02/20 21:50:16 morgand Exp $
  */
 public abstract class TestObject extends TestCase {
     public TestObject(String testName) {
@@ -108,6 +120,99 @@ public abstract class TestObject extends TestCase {
         Object obj2 = makeObject();
         if(obj1.equals(obj2)) {
             assertEquals("[2] When two objects are equal, their hashCodes should be also.",obj1.hashCode(),obj2.hashCode());
+        }
+    }
+
+    private void writeExternalFormToStream(Serializable o, OutputStream stream) 
+    throws IOException {
+        ObjectOutputStream oStream = new ObjectOutputStream(stream);
+        oStream.writeObject(o);
+    }
+
+    /**
+     * Write a Serializable or Externalizable object as
+     * a file at the given path.  NOT USEFUL as part
+     * of a unit test; this is just a utility method
+     * for creating disk-based objects in CVS that can become
+     * the basis for compatibility tests using
+     * readExternalFormFromDisk(String path)
+     * 
+     * @param o Object to serialize
+     * @param path path to write the serialized Object
+     * @exception IOException
+     */
+    protected void writeExternalFormToDisk(Serializable o, String path) 
+    throws IOException {
+        FileOutputStream fileStream = new FileOutputStream(path);
+        writeExternalFormToStream(o,fileStream);
+    }
+
+    /**
+     * Converts a Serializable or Externalizable object to
+     * bytes.  Useful for in-memory tests of serialization
+     * 
+     * @param o Object to convert to bytes
+     * @return serialized form of the Object
+     * @exception IOException
+     */
+    protected byte[] writeExternalFormToBytes(Serializable o) 
+    throws IOException {
+        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+        writeExternalFormToStream(o,byteStream);
+        return byteStream.toByteArray();
+    }
+
+    private Object readExternalFormFromStream(InputStream stream) 
+    throws IOException, ClassNotFoundException {
+        ObjectInputStream oStream = new ObjectInputStream(stream);
+        return oStream.readObject();
+    }
+
+    /**
+     * Reads a Serialized or Externalized Object from disk.
+     * Useful for creating compatibility tests betweeen
+     * different CVS versions of the same class
+     * 
+     * @param path path to the serialized Object
+     * @return the Object at the given path
+     * @exception IOException
+     * @exception ClassNotFoundException
+     */
+    protected Object readExternalFormFromDisk(String path) 
+    throws IOException, ClassNotFoundException {
+        FileInputStream stream = new FileInputStream(path);
+        return readExternalFormFromStream(stream);
+    }
+
+    /**
+     * Read a Serialized or Externalized Object from bytes.
+     * Useful for verifying serialization in memory.
+     * 
+     * @param b byte array containing a serialized Object
+     * @return Object contained in the bytes
+     * @exception IOException
+     * @exception ClassNotFoundException
+     */
+    protected Object readExternalFormFromBytes(byte[] b) 
+    throws IOException, ClassNotFoundException {
+        ByteArrayInputStream stream = new ByteArrayInputStream(b);
+        return readExternalFormFromStream(stream);
+    }
+
+    /**
+     * Sanity check method, makes sure that any Serializable
+     * class can be serialized and de-serialized in memory, 
+     * using the handy makeObject() method
+     * 
+     * @exception IOException
+     * @exception ClassNotFoundException
+     */
+    public void testSimpleSerialization() 
+    throws IOException, ClassNotFoundException {
+        Object o = makeObject();
+        if (o instanceof Serializable) {
+            byte[] objekt = writeExternalFormToBytes((Serializable) o);
+            Object p = readExternalFormFromBytes(objekt);
         }
     }
 }
