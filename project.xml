@@ -84,9 +84,6 @@
   
   <contributors>
     <contributor>
-      <name>Janek Bogucki</name>
-    </contributor>
-    <contributor>
       <name>Max Rydahl Andersen</name>
     </contributor>
     <contributor>
@@ -103,6 +100,9 @@
     </contributor>
     <contributor>
       <name>Christopher Berry</name>
+    </contributor>
+    <contributor>
+      <name>Janek Bogucki</name>
     </contributor>
     <contributor>
       <name>Chuck Burdick</name>
@@ -181,6 +181,9 @@
     </contributor>
     <contributor>
       <name>Kasper Nielsen</name>
+    </contributor>
+    <contributor>
+      <name>Steve Phelps</name>
     </contributor>
     <contributor>
       <name>Ilkka Priha</name>
