@@ -46,7 +46,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.14 $ $Date: 2004/04/01 22:18:12 $
+ * @version $Revision: 1.15 $ $Date: 2004/04/09 22:14:09 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -279,6 +279,9 @@ public class AbstractHashedMap implements IterableMap {
 
     /**
      * Puts all the values from the specified map into this map.
+     * <p>
+     * This implementation iterates around the specified map and
+     * uses {@link #put(Object, Object)}.
      * 
      * @param map  the map to add
      * @throws NullPointerException if the map is null
