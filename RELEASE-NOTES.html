@@ -18,16 +18,23 @@
 <center><h2>RELEASE NOTES: COLLECTIONS 3.1</h2></center>
 
 <p>
-This release adds a few new classes and fixes a number of bugs.
-This release is binary compatible with release 2.1.1.
+This release adds a various new classes and fixes a number of bugs.
 No deprecations have occurred.
+All feedback should be directed to commons-user at jakarta.apache.org.
 
 <hr />
 
 <center><h3>COMPATABILITY</h3></center>
+<p>
+This release is source and binary compatible with v3.0 with one known exception:
+</p>
 <ul>
-<li>ReferenceMap - No longer extends AbstractMap, only an issue if you previously cast to AbstractMap</li>
+<li>ReferenceMap (map package) - No longer extends AbstractMap, only an issue if you previously cast to AbstractMap</li>
 </ul>
+<p>
+This release also enables a workaround of the binary compatability issue with IteratorUtils in v3.0.
+Collections v2.1.1 (with deprecations solved) and v3.1 are compatible with regards to iterators.
+</p>
 
 <center><h3>NEW CLASSES</h3></center>
 <ul>
