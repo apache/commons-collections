@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.2 2001/04/20 16:54:04 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2001/04/20 16:54:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.3 2001/04/26 00:06:00 rwaldhoff Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/04/26 00:06:00 $
  *
  * ====================================================================
  *
@@ -64,6 +64,9 @@ package org.apache.commons.collections;
 import junit.framework.*;
 import java.util.List;
 import java.util.Collection;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Tests base {@link java.util.List} methods and contracts.
@@ -76,7 +79,7 @@ import java.util.Collection;
  * test case (method) your {@link List} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestList.java,v 1.2 2001/04/20 16:54:04 rwaldhoff Exp $
+ * @version $Id: TestList.java,v 1.3 2001/04/26 00:06:00 rwaldhoff Exp $
  */
 public abstract class TestList extends TestCollection {
     public TestList(String testName) {
@@ -92,67 +95,344 @@ public abstract class TestList extends TestCollection {
         return makeList();
     }
 
-    /*
+    public void testListAddByIndexBoundsChecking() {
+        List list = makeList();
 
-    // optional operation
+        try {
+            list.add(Integer.MIN_VALUE,"element");
+            fail("Shouldn't get here [Integer.MIN_VALUE]");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        } catch(ClassCastException e) {
+            // expected
+        } catch(IllegalArgumentException e) {
+            // expected
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.add(-1,"element");
+            fail("Shouldn't get here [-1]");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        } catch(ClassCastException e) {
+            // expected
+        } catch(IllegalArgumentException e) {
+            // expected
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.add(1,"element");
+            fail("Shouldn't get here [1]");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        } catch(ClassCastException e) {
+            // expected
+        } catch(IllegalArgumentException e) {
+            // expected
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.add(Integer.MAX_VALUE,"element");
+            fail("Shouldn't get here [Integer.MAX_VALUE]");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        } catch(ClassCastException e) {
+            // expected
+        } catch(IllegalArgumentException e) {
+            // expected
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+    }
+
+    public void testListAddByIndexBoundsChecking2() {
+        List list = makeList();
+        boolean added = tryToAdd(list,"element");
+
+        try {
+            list.add(-1,"element2");
+            fail("Shouldn't get here [-1]");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        } catch(ClassCastException e) {
+            // expected
+        } catch(IllegalArgumentException e) {
+            // expected
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.add(2,"element2");
+            fail("Shouldn't get here [2]");
+        } catch(UnsupportedOperationException e) {
+            // expected
+        } catch(ClassCastException e) {
+            // expected
+        } catch(IllegalArgumentException e) {
+            // expected
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+    }
+
     public void testListAddByIndex() {
-        // XXX finish me
+        List list = makeList();
+        assertEquals(0,list.size());
+        if(tryToAdd(list,0,"element2")) {
+            assertEquals(1,list.size());
+            if(tryToAdd(list,0,"element0")) {
+                assert(Arrays.equals(new String[] { "element0", "element2" },list.toArray()));
+                if(tryToAdd(list,1,"element1")) {
+                    assert(Arrays.equals(new String[] { "element0", "element1", "element2" },list.toArray()));
+                    if(tryToAdd(list,4,"element3")) {
+                        assert(Arrays.equals(new String[] { "element0", "element1", "element2", "element3" },list.toArray()));
+                    }
+                }
+            }
+        }
     }
 
-    // optional operation
     public void testListAdd() {
-        // XXX finish me
+        List list = makeList();
+        if(tryToAdd(list,"1")) {
+            assert(list.contains("1"));
+            if(tryToAdd(list,"2")) {
+                assert(list.contains("1"));
+                assert(list.contains("2"));
+                if(tryToAdd(list,"3")) {
+                    assert(list.contains("1"));
+                    assert(list.contains("2"));
+                    assert(list.contains("3"));
+                    if(tryToAdd(list,"4")) {
+                        assert(list.contains("1"));
+                        assert(list.contains("2"));
+                        assert(list.contains("3"));
+                        assert(list.contains("4"));
+                    }
+                }
+            }
+        }
     }
 
-    // optional operation
-    public void testListAddAll() {
-        // XXX finish me
+    public void testListEqualsSelf() {
+        List list = makeList();
+        assert(list.equals(list));
+        tryToAdd(list,"elt");
+        assert(list.equals(list));
+        tryToAdd(list,"elt2");
+        assert(list.equals(list));
     }
 
-    // optional operation
-    public void testListClear() {
-        // XXX finish me
-    }
+    public void testListEqualsArrayList() {
+        List list1 = makeList();
+        List list2 = new ArrayList();
+        assert(list1.equals(list2));
+        assertEquals(list1.hashCode(),list2.hashCode());
+        tryToAdd(list1,"a");
+        assert(!list1.equals(list2));
+        tryToAdd(list1,"b");
+        tryToAdd(list1,"c");
+        tryToAdd(list1,"d");
+        tryToAdd(list1,"b");
 
-    public void testListContains() {
-        // XXX finish me
-        // is this any different from Collection.contains?
-    }
-
-    public void testListContainsAll() {
-        // XXX finish me
-        // is this any different from Collection.containsAll?
+        Iterator it = list1.iterator();
+        while(it.hasNext()) {
+            list2.add(it.next());
+        }
+        assert(list1.equals(list2));
+        assertEquals(list1.hashCode(),list2.hashCode());
     }
 
     public void testListEquals() {
-        // XXX finish me
+        List list1 = makeList();
+        List list2 = makeList();
+        assert(list1.equals(list2));
+        if(tryToAdd(list1,"a") && tryToAdd(list2,"a")) {
+            assert(list1.equals(list2));
+            if(tryToAdd(list1,"b") && tryToAdd(list2,"b")) {
+                assert(list1.equals(list2));
+                if(tryToAdd(list1,"c") && tryToAdd(list2,"c")) {
+                    assert(list1.equals(list2));
+                    if(tryToAdd(list1,"b") && tryToAdd(list2,"b")) {
+                        assert(list1.equals(list2));
+                    }
+                }
+            }
+        }
     }
 
     public void testListGetByIndex() {
-        // XXX finish me
+        List list = makeList();
+        tryToAdd(list,"a");
+        tryToAdd(list,"b");
+        tryToAdd(list,"c");
+        tryToAdd(list,"d");
+        tryToAdd(list,"e");
+        tryToAdd(list,"f");
+        Object[] expected = list.toArray();
+        for(int i=0;i<expected.length;i++) {
+            assertEquals(expected[i],list.get(i));
+        }
     }
 
-    public void testListHashCode() {
-        // XXX finish me
+    public void testListGetByIndexBoundsChecking() {
+        List list = makeList();
+
+        try {
+            list.get(Integer.MIN_VALUE);
+            fail("Shouldn't get here [Integer.MIN_VALUE]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.get(-1);
+            fail("Shouldn't get here [-1]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.get(0);
+            fail("Shouldn't get here [0]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.get(1);
+            fail("Shouldn't get here [1]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.get(Integer.MAX_VALUE);
+            fail("Shouldn't get here [Integer.MAX_VALUE]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+    }
+
+    public void testListGetByIndexBoundsChecking2() {
+        List list = makeList();
+        boolean added = tryToAdd(list,"a");
+
+        try {
+            list.get(Integer.MIN_VALUE);
+            fail("Shouldn't get here [Integer.MIN_VALUE]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.get(-1);
+            fail("Shouldn't get here [-1]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.get(1);
+            fail("Shouldn't get here [1]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
+
+        try {
+            list.get(Integer.MAX_VALUE);
+            fail("Shouldn't get here [Integer.MAX_VALUE]");
+        } catch(IndexOutOfBoundsException e) {
+            // expected
+        }
     }
 
     public void testListIndexOf() {
-        // XXX finish me
+        List list = makeList();
+        tryToAdd(list,"a");
+        tryToAdd(list,"b");
+        tryToAdd(list,"c");
+        tryToAdd(list,"d");
+        tryToAdd(list,"e");
+        tryToAdd(list,"f");
+        Object[] expected = list.toArray();
+        for(int i=0;i<expected.length;i++) {
+            assertEquals(i,list.indexOf(expected[i]));
+        }
+        assertEquals(-1,list.indexOf("g"));
     }
 
-    public void testListIsEmpty() {
-        // XXX finish me
-        // is this any different from Collection.isEmpty?
+    public void testListLastIndexOf1() {
+        List list = makeList();
+        tryToAdd(list,"a");
+        tryToAdd(list,"b");
+        tryToAdd(list,"c");
+        tryToAdd(list,"d");
+        tryToAdd(list,"e");
+        tryToAdd(list,"f");
+        Object[] expected = list.toArray();
+        for(int i=0;i<expected.length;i++) {
+            assertEquals(i,list.lastIndexOf(expected[i]));
+        }
+        assertEquals(-1,list.indexOf("g"));
     }
 
-    public void testListIterator() {
-        // XXX finish me
-        // is this any different from Collection.iterator?
+    public void testListLastIndexOf2() {
+        List list = makeList();
+        tryToAdd(list,"a");
+        tryToAdd(list,"b");
+        tryToAdd(list,"c");
+        tryToAdd(list,"d");
+        tryToAdd(list,"e");
+        tryToAdd(list,"f");
+        tryToAdd(list,"a");
+        tryToAdd(list,"b");
+        tryToAdd(list,"c");
+        tryToAdd(list,"d");
+        tryToAdd(list,"e");
+        tryToAdd(list,"f");
+        Object[] expected = list.toArray();
+        int lastIndexOfA = -1;
+        int lastIndexOfB = -1;
+        int lastIndexOfC = -1;
+        int lastIndexOfD = -1;
+        int lastIndexOfE = -1;
+        int lastIndexOfF = -1;
+        int lastIndexOfG = -1;
+        for(int i=0;i<expected.length;i++) {
+            if("a".equals(expected[i])) {
+                lastIndexOfA = i;
+            } else if("b".equals(expected[i])) {
+                lastIndexOfB = i;
+            } else if("c".equals(expected[i])) {
+                lastIndexOfC = i;
+            } else if("d".equals(expected[i])) {
+                lastIndexOfD = i;
+            } else if("e".equals(expected[i])) {
+                lastIndexOfE = i;
+            } else if("f".equals(expected[i])) {
+                lastIndexOfF = i;
+            } else if("g".equals(expected[i])) {
+                lastIndexOfG = i;
+            }
+        }
+        assertEquals(lastIndexOfA,list.lastIndexOf("a"));
+        assertEquals(lastIndexOfB,list.lastIndexOf("b"));
+        assertEquals(lastIndexOfC,list.lastIndexOf("c"));
+        assertEquals(lastIndexOfD,list.lastIndexOf("d"));
+        assertEquals(lastIndexOfE,list.lastIndexOf("e"));
+        assertEquals(lastIndexOfF,list.lastIndexOf("f"));
+        assertEquals(lastIndexOfG,list.lastIndexOf("g"));
     }
 
-    public void testListLastIndexOf() {
-        // XXX finish me
-    }
+    /*
 
     public void testListListIterator() {
         // XXX finish me
@@ -173,30 +453,33 @@ public abstract class TestList extends TestCollection {
     }
 
     // optional operation
-    public void testListRemoveAll() {
-        // XXX finish me
-        // is this any different from Collection.removeAll?
-    }
-
-    // optional operation
-    public void testListRetainAll() {
-        // XXX finish me
-        // is this any different from Collection.retainAll?
-    }
-
-    // optional operation
     public void testListSet() {
         // XXX finish me
     }
-
-    // size() same as Collection.size() ?
 
     public void testListSubList() {
         // XXX finish me
     }
 
-    // toArray() same as Collection.toArray() ?
-    // toArray(Object[]) same as Collection.toArray(Object[]) ?
-
     */
+
+    private boolean tryToAdd(List list, int index, Object obj) {
+        try {
+            list.add(index,obj);
+            return true;
+        } catch(UnsupportedOperationException e) {
+            return false;
+        } catch(ClassCastException e) {
+            return false;
+        } catch(IllegalArgumentException e) {
+            return false;
+        } catch(IndexOutOfBoundsException e) {
+            return false;
+        } catch(Throwable t) {
+            t.printStackTrace();
+            fail("List.add should only throw UnsupportedOperationException, ClassCastException, IllegalArgumentException, or IndexOutOfBoundsException. Found " + t.toString());
+            return false; // never get here, since fail throws exception
+        }
+    }
+
 }
