@@ -35,9 +35,11 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * <p>
  * If an object cannot be added to the map, an IllegalArgumentException
  * is thrown.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.8 $ $Date: 2004/04/09 09:43:09 $
+ * @version $Revision: 1.9 $ $Date: 2004/04/09 10:36:01 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

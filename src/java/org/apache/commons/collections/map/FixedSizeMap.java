@@ -40,9 +40,11 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * IllegalArgumentException is thrown. This is because the put method can 
  * succeed if the mapping's key already exists in the map, so the put method
  * is not always unsupported.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/02 21:15:05 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/09 10:36:01 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -78,6 +80,10 @@ public class FixedSizeMap
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     * @since Commons Collections 3.1
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -86,6 +92,11 @@ public class FixedSizeMap
 
     /**
      * Read the map in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @since Commons Collections 3.1
      */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

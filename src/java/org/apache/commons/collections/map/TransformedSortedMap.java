@@ -15,12 +15,7 @@
  */
 package org.apache.commons.collections.map;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Comparator;
-import java.util.Map;
 import java.util.SortedMap;
 
 import org.apache.commons.collections.Transformer;
@@ -32,15 +27,17 @@ import org.apache.commons.collections.Transformer;
  * Thus objects must be removed or searched for using their transformed form.
  * For example, if the transformation converts Strings to Integers, you must
  * use the Integer form to remove objects.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/09 09:43:09 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/09 10:36:01 $
  * 
  * @author Stephen Colebourne
  */
 public class TransformedSortedMap
         extends TransformedMap
-        implements SortedMap, Serializable {
+        implements SortedMap {
 
     /** Serialization version */
     private static final long serialVersionUID = -8751771676410385778L;
@@ -77,31 +74,6 @@ public class TransformedSortedMap
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Write the map out using a custom routine.
-     * 
-     * @param out  the output stream
-     * @throws IOException
-     * @since Commons Collections 3.1
-     */
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     * 
-     * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
-     * @since Commons Collections 3.1
-     */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map) in.readObject();
-    }
-
     /**
      * Gets the map being decorated.
      * 

@@ -50,9 +50,11 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * <p>
  * If an object is added to the Map for a second time, it will remain in the
  * original position in the iteration.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.14 $ $Date: 2004/04/07 23:17:25 $
+ * @version $Revision: 1.15 $ $Date: 2004/04/09 10:36:01 $
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
@@ -94,6 +96,10 @@ public class ListOrderedMap
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     * @since Commons Collections 3.1
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -102,6 +108,11 @@ public class ListOrderedMap
 
     /**
      * Read the map in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @since Commons Collections 3.1
      */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

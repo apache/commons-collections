@@ -46,9 +46,11 @@ import org.apache.commons.collections.TransformerUtils;
  * After the above code is executed, <code>obj</code> will contain
  * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
  * instance is mapped to the "NOW" key in the map.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/07 23:05:37 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/09 10:36:01 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -119,6 +121,10 @@ public class LazyMap
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     * @since Commons Collections 3.1
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -127,6 +133,11 @@ public class LazyMap
 
     /**
      * Read the map in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @since Commons Collections 3.1
      */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

@@ -15,12 +15,7 @@
  */
 package org.apache.commons.collections.map;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Comparator;
-import java.util.Map;
 import java.util.SortedMap;
 
 import org.apache.commons.collections.Factory;
@@ -47,16 +42,18 @@ import org.apache.commons.collections.Transformer;
  * After the above code is executed, <code>obj</code> will contain
  * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
  * instance is mapped to the "NOW" key in the map.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/07 23:05:37 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/09 10:36:01 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class LazySortedMap
         extends LazyMap
-        implements SortedMap, Serializable {
+        implements SortedMap {
 
     /** Serialization version */
     private static final long serialVersionUID = 2715322183617658933L;
@@ -107,22 +104,6 @@ public class LazySortedMap
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Write the map out using a custom routine.
-     */
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeObject(map);
-    }
-
-    /**
-     * Read the map in using a custom routine.
-     */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        map = (Map) in.readObject();
-    }
-
     /**
      * Gets the map being decorated.
      * 

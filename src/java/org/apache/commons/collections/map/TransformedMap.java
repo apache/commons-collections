@@ -37,9 +37,11 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * Thus objects must be removed or searched for using their transformed form.
  * For example, if the transformation converts Strings to Integers, you must
  * use the Integer form to remove objects.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/04/09 09:43:09 $
+ * @version $Revision: 1.8 $ $Date: 2004/04/09 10:36:01 $
  * 
  * @author Stephen Colebourne
  */
