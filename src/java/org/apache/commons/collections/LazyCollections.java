@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/LazyCollections.java,v 1.1 2002/05/29 02:57:41 arron Exp $
- * $Revision: 1.1 $
- * $Date: 2002/05/29 02:57:41 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/LazyCollections.java,v 1.2 2002/05/29 03:22:42 arron Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/05/29 03:22:42 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -81,11 +81,11 @@ import java.lang.reflect.*;
  * @see org.apache.commons.collections.LazySortedMap
  *
  * @author Arron Bates
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class LazyCollections {
-  
-  
+
+
   /** Creates a LazyMap whith the provided object factory.
    *
    * @param inMap the java.util.Map implementation we have to wrap.
@@ -96,7 +96,7 @@ public class LazyCollections {
     /* creates a new lazy map with the provided factory */
 	  return new LazyMap(inMap, factory);
   }
-  
+
   /** Creates a LazyMap whith the class definition, which will be used to create
    * a SimpleObjectFactory which will create a new object from an empty
    * constructor.
@@ -110,7 +110,7 @@ public class LazyCollections {
     SimpleObjectFactory f = FactoryUtils.createStandardFactory(inClass);
 	  return new LazyMap(inMap, f);
   }
-  
+
   /** Creates a LazyMap whith the class definition and argument details, which
    * will be used to create a SimpleObjectFactory which will create a new object
    * from a constructor which requires arguments.
@@ -140,7 +140,7 @@ public class LazyCollections {
     /* creates a new lazy sorted map with the provided factory */
 	  return new LazySortedMap(inMap, factory);
   }
-  
+
   /** Creates a LazySortedMap whith the class definition, which will be used to
    * create a SimpleObjectFactory which will create a new object from an empty
    * constructor.
@@ -154,7 +154,7 @@ public class LazyCollections {
     SimpleObjectFactory f = FactoryUtils.createStandardFactory(inClass);
 	  return new LazySortedMap(inMap, f);
   }
-  
+
   /** Creates a LazySortedMap whith the class definition and argument details,
    * which will be used to create a SimpleObjectFactory which will create a new
    * object from a constructor which requires arguments.
@@ -171,8 +171,8 @@ public class LazyCollections {
     SimpleObjectFactory f = FactoryUtils.createStandardFactory(inClass, argTypes, argObjects);
     return new LazySortedMap(inMap, f);
   }
-  
-  
+
+
   /** Creates a LazyList whith the provided object factory.
    *
    * @param inMap the java.util.List implementation we have to wrap.
@@ -183,7 +183,7 @@ public class LazyCollections {
     /* creates a new lazy list with the provided factory */
     return new LazyList(inList, factory);
   }
-  
+
   /** Creates a LazyList whith the class definition, which will be used to
    * create a SimpleObjectFactory which will create a new object from an empty
    * constructor.
@@ -197,7 +197,7 @@ public class LazyCollections {
     SimpleObjectFactory f = FactoryUtils.createStandardFactory(inClass);
     return new LazyList(inList, f);
   }
-  
+
   /** Creates a LazyList whith the class definition and argument details,
    * which will be used to create a SimpleObjectFactory which will create a new
    * object from a constructor which requires arguments.
@@ -214,9 +214,9 @@ public class LazyCollections {
     SimpleObjectFactory f = FactoryUtils.createStandardFactory(inClass, argTypes, argObjects);
     return new LazyList(inList, f);
   }
-  
-  
-  
+
+
+
   /** Cleans a List implementation from nulls. Because a rampant index up the
    * line can create many nulls. At some point, the collection has to become
    * useful outside of reliable index use. clean() does this.
@@ -231,9 +231,9 @@ public class LazyCollections {
       }
     }
   }
-  
-  
-  
+
+
+
   /* This is a java.util.List implementation which provides the means of objects
    * when requested. When a system expects an object to be provided when accessed
    * via an index, this collection has been provided the rules (factory reference)
@@ -251,8 +251,8 @@ public class LazyCollections {
    * <code>clean()</code> will clear the list of these null references.
    */
   private static class LazyList implements List {
-    
-    
+
+
     /* Builds a LazyList with the provided SimpleObjectFactory as the means of
      * creating the objects.
      */
@@ -260,8 +260,8 @@ public class LazyCollections {
       this.listImpl = inList;
       this.factory = factory;
     }
-    
-    
+
+
     /* Proxy method to the impl's get method. With the exception that if it's out
      * of bounds, then the collection will grow, leaving place-holders in its
      * wake, so that an item can be set at any given index. Later the
@@ -272,8 +272,7 @@ public class LazyCollections {
      */
     public Object get(int index) {
       Object obj;
-      int size = listImpl.size();
-      if (index < this.listImpl.size()) {
+      if (index < (this.listImpl.size()-1)) {
         /* within bounds, get the object */
         obj = this.listImpl.get(index);
         if (obj == null) {
@@ -287,7 +286,7 @@ public class LazyCollections {
         }
       } else {
         /* we have to grow the list */
-        for (int i = this.listImpl.size(); i < (this.listImpl.size()-1); i++) {
+        for (int i = this.listImpl.size(); i < index; i++) {
           this.listImpl.add(null);
         }
         /* create our last object, set and return */
@@ -296,131 +295,131 @@ public class LazyCollections {
         return obj;
       }
     }
-  
-  
+
+
     /* proxy the call to the provided list implementation. */
     public List subList(int fromIndex, int toIndex) {
       /* wrap the returned sublist so it can continue the functionality */
       return new LazyList(this.listImpl.subList(fromIndex, toIndex), factory);
     }
-    
+
     /* proxy the call to the provided list implementation.*/
     public int size() {
       return this.listImpl.size();
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean isEmpty() {
       return this.listImpl.isEmpty();
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean contains(Object o) {
       return this.listImpl.contains(o);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public Iterator iterator() {
       return this.listImpl.iterator();
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public Object[] toArray() {
       return this.listImpl.toArray();
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public Object[] toArray(Object[] a) {
       return this.listImpl.toArray(a);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean add(Object o) {
       return this.listImpl.add(o);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean remove(Object o) {
       return this.listImpl.remove(o);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean containsAll(Collection c) {
       return this.listImpl.containsAll(c);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean addAll(Collection c) {
       return this.listImpl.addAll(c);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean addAll(int index, Collection c) {
       return this.listImpl.addAll(index, c);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean removeAll(Collection c) {
       return this.listImpl.removeAll(c);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public boolean retainAll(Collection c) {
       return this.listImpl.retainAll(c);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public void clear() {
       this.listImpl.clear();
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public Object set(int index, Object element) {
       return this.listImpl.set(index, element);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public void add(int index, Object element) {
       this.listImpl.add(index, element);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public Object remove(int index) {
       return this.listImpl.remove(index);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public int indexOf(Object o) {
       return this.listImpl.indexOf(o);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public int lastIndexOf(Object o) {
       return this.listImpl.lastIndexOf(o);
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public ListIterator listIterator() {
       return this.listImpl.listIterator();
     }
-    
+
     /* proxy the call to the provided list implementation. */
     public ListIterator listIterator(int index) {
-      return this.listImpl.listIterator(index); 
+      return this.listImpl.listIterator(index);
     }
-    
-  
-  
+
+
+
     /* java.util.List implementation to proxy against */
     private List listImpl;
-    
+
     /* optional object factory */
     private SimpleObjectFactory factory;
   }
-    
-    
-    
-    
+
+
+
+
   /* This is a java.util.Map implementation which provides the means of objects
    * when requested. When a system expects an object to be provided when accessed
    * via a key, this collection has been provided the rules (factory reference)
@@ -433,8 +432,8 @@ public class LazyCollections {
    * collections that hold them.
    */
   private static class LazyMap implements Map {
-    
-    
+
+
     /* Builds a LazyMap with the provided SimpleObjectFactory as the means of
      * creating the objects.
      */
@@ -442,8 +441,8 @@ public class LazyCollections {
       this.mapImpl = inMap;
       this.factory = factory;
     }
-    
-    
+
+
     /* Proxy method to the impl's get method. With the exception that if there
      * is no keyed object waiting for it, an object will be created, set and
      * returned.
@@ -457,85 +456,85 @@ public class LazyCollections {
       }
       return obj;
     }
-    
-    
+
+
     /* proxy the call to the provided Map implementation. */
     public int size() {
       return this.mapImpl.size();
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public boolean isEmpty() {
       return this.mapImpl.isEmpty();
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public boolean containsKey(Object key) {
       return this.mapImpl.containsKey(key);
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public boolean containsValue(Object value) {
       return this.mapImpl.containsValue(value);
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public Object put(Object key, Object value) {
       return this.mapImpl.put(key, value);
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public Object remove(Object key) {
       return this.mapImpl.remove(key);
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public void putAll(Map t) {
       this.mapImpl.putAll(t);
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public void clear() {
       this.mapImpl.clear();
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public Set keySet() {
       return this.mapImpl.keySet();
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public Collection values() {
       return this.mapImpl.values();
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public Set entrySet() {
       return this.mapImpl.entrySet();
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public boolean equals(Object o) {
       return this.mapImpl.equals(o);
     }
-    
+
     /* proxy the call to the provided Map implementation. */
     public int hashCode() {
       return this.mapImpl.hashCode();
     }
-  
-  
+
+
     /* java.util.Map implementation to proxy against */
     protected Map mapImpl;
-    
+
     /* optional object factory */
     protected SimpleObjectFactory factory;
   }
-  
-  
-  
-  
-  
+
+
+
+
+
   /* This is a java.util.SortedMap implementation which provides the means of objects
    * when requested. When a system expects an object to be provided when accessed
    * via a key, this collection has been provided the rules (factory reference)
@@ -548,44 +547,44 @@ public class LazyCollections {
    * collections that hold them.
    */
   private static class LazySortedMap extends LazyMap implements SortedMap {
-    
-    
+
+
     /* Builds a LazySortedMap with the provided SimpleObjectFactory as the means of
      * creating the objects.
      */
     public LazySortedMap(SortedMap inMap, SimpleObjectFactory factory) {
       super(inMap, factory);
     }
-    
-    
+
+
     /* proxy the call to the provided LazySortedMap implementation. */
     public Comparator comparator() {
       return ((SortedMap)super.mapImpl).comparator();
     }
-    
+
     /* proxy the call to the provided LazySortedMap implementation. */
     public SortedMap subMap(Object fromKey, Object toKey) {
       SortedMap subby = ((SortedMap)super.mapImpl).subMap(fromKey, toKey);
       return new LazySortedMap(subby, super.factory);
     }
-    
+
     /* proxy the call to the provided LazySortedMap implementation. */
     public SortedMap headMap(Object toKey) {
       SortedMap heady = ((SortedMap)super.mapImpl).headMap(toKey);
       return new LazySortedMap(heady, super.factory);
     }
-    
+
     /* proxy the call to the provided LazySortedMap implementation. */
     public SortedMap tailMap(Object fromKey) {
       SortedMap tailer = ((SortedMap)super.mapImpl).tailMap(fromKey);
       return new LazySortedMap(tailer, super.factory);
     }
-    
+
     /* proxy the call to the provided LazySortedMap implementation. */
     public Object firstKey() {
       return ((SortedMap)super.mapImpl).firstKey();
     }
-    
+
     /* proxy the call to the provided LazySortedMap implementation. */
     public Object lastKey() {
       return ((SortedMap)super.mapImpl).lastKey();
