@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestList.java,v 1.2 2003/10/10 21:19:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestList.java,v 1.3 2003/10/20 22:58:28 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,7 +83,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.2 $ $Date: 2003/10/10 21:19:39 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/20 22:58:28 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -365,12 +365,23 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         verify();
 
         list2 = Arrays.asList(getFullElements());
-        Collections.reverse(list2);
-        assertEquals(
-            "Full list shouldn't equal full list with same elements but different order",
-            false, list.equals(list2));
-        verify();
+        if (list2.size() < 2 && isAddSupported()) {
+            // main list is only size 1, so lets add other elements to get a better list
+            list.addAll(Arrays.asList(getOtherElements()));
+            confirmed.addAll(Arrays.asList(getOtherElements()));
+            list2 = new ArrayList(list2);
+            list2.addAll(Arrays.asList(getOtherElements()));
+        }
+        if (list2.size() > 1) {
+            Collections.reverse(list2);
+            assertEquals(
+                "Full list shouldn't equal full list with same elements but different order",
+                false, list.equals(list2));
+            verify();
+        }
 
+        resetFull();
+        list = getList();
         assertEquals("List shouldn't equal String", false, list.equals(""));
         verify();
 
