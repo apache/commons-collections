@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.26 2003/01/20 01:29:30 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.27 2003/01/25 11:29:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,7 +77,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.26 $ $Date: 2003/01/20 01:29:30 $
+ * @version $Revision: 1.27 $ $Date: 2003/01/25 11:29:37 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -366,17 +366,15 @@ public class CollectionUtils {
     /** 
      * Executes the given closure on each element in the collection.
      * <p>
-     * If the input collection is null, there is no change made.
+     * If the input collection or closure is null, there is no change made.
      * 
      * @param collection  the collection to get the input from, may be null
-     * @param closure  the closure to perform, may not be null
-     * @throws NullPointerException if the closure is null
+     * @param closure  the closure to perform, may be null
      */
     public static void forAllDo(Collection collection, Closure closure) {
-        if (collection != null) {
-            for (Iterator iter = collection.iterator(); iter.hasNext();) {
-                Object element = iter.next();
-                closure.execute(element);
+        if (collection != null && closure != null) {
+            for (Iterator it = collection.iterator(); it.hasNext();) {
+                closure.execute(it.next());
             }
         }
     }
@@ -392,10 +390,9 @@ public class CollectionUtils {
      */
     public static void filter(Collection collection, Predicate predicate) {
         if (collection != null && predicate != null) {
-            for (Iterator iter = collection.iterator(); iter.hasNext();) {
-                Object element = iter.next();
-                if (predicate.evaluate(element) == false) {
-                    iter.remove();
+            for (Iterator it = collection.iterator(); it.hasNext();) {
+                if (predicate.evaluate(it.next()) == false) {
+                    it.remove();
                 }
             }
         }
@@ -420,9 +417,8 @@ public class CollectionUtils {
         if (collection != null && transformer != null) {
             if (collection instanceof List) {
                 List list = (List) collection;
-                for (ListIterator iter = list.listIterator(); iter.hasNext();) {
-                    Object element = iter.next();
-                    iter.set(transformer.transform(element));
+                for (ListIterator it = list.listIterator(); it.hasNext();) {
+                    it.set(transformer.transform(it.next()));
                 }
             } else {
                 Collection resultCollection = collect(collection, transformer);
@@ -435,19 +431,17 @@ public class CollectionUtils {
     /** 
      * Counts the number of elements in the input collection that match the predicate.
      * <p>
-     * A <code>null</code> predicate matches no elements.
+     * A <code>null</code> collection or predicate matches no elements.
      * 
-     * @param inputCollection  the collection to get the input from, may not be null
+     * @param inputCollection  the collection to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return the number of matches for the predicate in the collection
-     * @throws NullPointerException if the input collection is null
      */
     public static int countMatches(Collection inputCollection, Predicate predicate) {
         int count = 0;
         if (inputCollection != null && predicate != null) {
             for (Iterator it = inputCollection.iterator(); it.hasNext();) {
-                Object item = it.next();
-                if (predicate.evaluate(item)) {
+                if (predicate.evaluate(it.next())) {
                     count++;
                 }
             }
