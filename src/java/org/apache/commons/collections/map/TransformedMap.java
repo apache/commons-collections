@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/TransformedMap.java,v 1.3 2003/12/25 00:49:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/TransformedMap.java,v 1.4 2004/01/05 22:15:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -77,7 +77,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/25 00:49:14 $
+ * @version $Revision: 1.4 $ $Date: 2004/01/05 22:15:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -102,7 +102,7 @@ public class TransformedMap extends AbstractMapDecorator {
     public static Map decorate(Map map, Transformer keyTransformer, Transformer valueTransformer) {
         return new TransformedMap(map, keyTransformer, valueTransformer);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.7 2004/01/02 02:13:07 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.8 2004/01/05 22:15:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -132,7 +132,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.7 $ $Date: 2004/01/02 02:13:07 $
+ * @version $Revision: 1.8 $ $Date: 2004/01/05 22:15:14 $
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich
@@ -143,8 +143,11 @@ import org.apache.commons.collections.KeyValue;
  */
 public final class StaticBucketMap implements Map {
 
+    /** The default number of buckets to use */
     private static final int DEFAULT_BUCKETS = 255;
+    /** The array of buckets, where the actual data is held */
     private Node[] buckets;
+    /** The matching array of locks */
     private Lock[] locks;
 
     /**

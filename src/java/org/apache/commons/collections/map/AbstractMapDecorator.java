@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractMapDecorator.java,v 1.1 2003/11/16 00:05:45 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractMapDecorator.java,v 1.2 2004/01/05 22:15:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -75,13 +75,13 @@ import java.util.Set;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:45 $
+ * @version $Revision: 1.2 $ $Date: 2004/01/05 22:15:14 $
  * 
  * @author Daniel Rall
  * @author Stephen Colebourne
  */
 public abstract class AbstractMapDecorator implements Map {
-    
+
     /** The map to decorate */
     protected final Map map;
 

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.6 2003/12/29 15:08:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.7 2004/01/05 22:15:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -119,7 +119,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * @see java.lang.ref.Reference
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.6 $ $Date: 2003/12/29 15:08:15 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/05 22:15:14 $
  * 
  * @author Paul Jack
  */
@@ -130,27 +130,22 @@ public class ReferenceMap extends AbstractMap {
      */
     private static final long serialVersionUID = -3370601314380922368L;
 
-
     /**
      *  Constant indicating that hard references should be used.
      */
     public static final int HARD = 0;
-
 
     /**
      *  Constant indicating that soft references should be used.
      */
     public static final int SOFT = 1;
 
-
     /**
      *  Constant indicating that weak references should be used.
      */
     public static final int WEAK = 2;
 
-
     // --- serialized instance variables:
-
 
     /**
      *  The reference type for keys.  Must be HARD, SOFT, WEAK.
@@ -160,7 +155,6 @@ public class ReferenceMap extends AbstractMap {
      */
     private int keyType;
 
-
     /**
      *  The reference type for values.  Must be HARD, SOFT, WEAK.
      *  Note: I originally marked this field as final, but then this class
@@ -168,7 +162,6 @@ public class ReferenceMap extends AbstractMap {
      *  @serial
      */
     private int valueType;
-
 
     /**
      *  The threshold variable is calculated by multiplying
@@ -184,7 +177,6 @@ public class ReferenceMap extends AbstractMap {
      */
     private boolean purgeValues = false;
 
-
     // -- Non-serialized instance variables
 
     /**
@@ -193,18 +185,15 @@ public class ReferenceMap extends AbstractMap {
      */
     private transient ReferenceQueue queue = new ReferenceQueue();
 
-
     /**
      *  The hash table.  Its length is always a power of two.  
      */
     private transient Entry[] table;
 
-
     /**
      *  Number of mappings in this map.
      */
     private transient int size;
-
 
     /**
      *  When size reaches threshold, the map is resized.  
@@ -212,30 +201,25 @@ public class ReferenceMap extends AbstractMap {
      */
     private transient int threshold;
 
-
     /**
      *  Number of times this map has been modified.
      */
     private transient volatile int modCount;
-
 
     /**
      *  Cached key set.  May be null if key set is never accessed.
      */
     private transient Set keySet;
 
-
     /**
      *  Cached entry set.  May be null if entry set is never accessed.
      */
     private transient Set entrySet;
 
-
     /**
      *  Cached values.  May be null if values() is never accessed.
      */
     private transient Collection values;
-
 
     /**
      *  Constructs a new <code>ReferenceMap</code> that will

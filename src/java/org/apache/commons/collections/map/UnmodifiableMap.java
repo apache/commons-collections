@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableMap.java,v 1.6 2003/12/03 12:27:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/UnmodifiableMap.java,v 1.7 2004/01/05 22:15:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2003-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -73,11 +73,12 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>Map</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/12/03 12:27:36 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/05 22:15:15 $
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableMap extends AbstractMapDecorator implements IterableMap, Unmodifiable {
+public final class UnmodifiableMap
+        extends AbstractMapDecorator implements IterableMap, Unmodifiable {
 
     /**
      * Factory method to create an unmodifiable map.
