@@ -37,7 +37,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.56 $ $Date: 2004/02/18 01:15:42 $
+ * @version $Revision: 1.57 $ $Date: 2004/03/31 21:43:27 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -48,6 +48,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Matthew Hawthorne
  * @author Janek Bogucki
  * @author Phil Steitz
+ * @author Steven Melzer
  */
 public class CollectionUtils {
 
@@ -739,13 +740,13 @@ public class CollectionUtils {
             return ((Object[])obj)[idx];
         } 
         else if(obj instanceof Enumeration) {
-            Enumeration enum = (Enumeration)obj;
-            while(enum.hasMoreElements()) {
+            Enumeration it = (Enumeration)obj;
+            while(it.hasMoreElements()) {
                 idx--;
                 if(idx == -1) {
-                    return enum.nextElement();
+                    return it.nextElement();
                 } else {
-                    enum.nextElement();
+                    it.nextElement();
                 }
             }
         } 
@@ -803,55 +804,91 @@ public class CollectionUtils {
      */
     public static Object get(Object object, int index) {
         if (index < 0) {
-            throw new IndexOutOfBoundsException("Index cannot be negative.");
+            throw new IndexOutOfBoundsException("Index cannot be negative: " + index);
         }
-        if(object instanceof Map) {
-            Map map = (Map)object;
+        if (object instanceof Map) {
+            Map map = (Map) object;
             Iterator iterator = map.entrySet().iterator();
             return get(iterator, index);
-        } 
-        else if(object instanceof List) {
-            return ((List)object).get(index);
-        } 
-        else if(object instanceof Object[]) {
-            return ((Object[])object)[index];
-        } 
-        else if(object instanceof Enumeration) {
-            Enumeration enum = (Enumeration)object;
-            while(enum.hasMoreElements()) {
+        } else if (object instanceof List) {
+            return ((List) object).get(index);
+        } else if (object instanceof Object[]) {
+            return ((Object[]) object)[index];
+        } else if (object instanceof Enumeration) {
+            Enumeration it = (Enumeration) object;
+            while (it.hasMoreElements()) {
                 index--;
-                if(index == -1) {
-                    return enum.nextElement();
+                if (index == -1) {
+                    return it.nextElement();
                 } else {
-                    enum.nextElement();
+                    it.nextElement();
                 }
             }
-            throw new IndexOutOfBoundsException("Entry does not exist.");
-        } 
-        else if(object instanceof Iterator) {
-            return get((Iterator)object, index);
-        }
-        else if(object instanceof Collection) {
-            Iterator iterator = ((Collection)object).iterator();
+            throw new IndexOutOfBoundsException("Entry does not exist: " + index);
+        } else if (object instanceof Iterator) {
+            Iterator it = (Iterator) object;
+            while (it.hasNext()) {
+                index--;
+                if (index == -1) {
+                    return it.next();
+                } else {
+                    it.next();
+                }
+            }
+            throw new IndexOutOfBoundsException("Entry does not exist: " + index);
+        } else if (object instanceof Collection) {
+            Iterator iterator = ((Collection) object).iterator();
             return get(iterator, index);
         } else {
-            throw new IllegalArgumentException("Unsupported object type.");
+            throw new IllegalArgumentException("Unsupported object type: " +
+                (object == null ? "null" : object.getClass().getName()));
         }
     }
     
-    private static Object get(Iterator iterator, int index) {
-        while(iterator.hasNext()) {
-            index--;
-            if(index == -1) {
-                return iterator.next();
-            } else {
-                iterator.next();
-            }
-        }
-        throw new IndexOutOfBoundsException("Entry does not exist.");
-    }
-
     /** 
+     * Gets the size of the collection/iterator specified.
+     * <p>
+     * This method can handles objects as follows
+     * <ul>
+     * <li>Collection - the collection size
+     * <li>Map - the map size
+     * <li>Object array - the array size
+     * <li>Iterator - the number of elements remaining in the iterator
+     * <li>Enumeration - the number of elements remaining in the enumeration
+     * </ul>
+     * 
+     * @param object  the object to get the size of
+     * @return the size of the specified collection
+     * @throws IllegalArgumentException thrown if object is not recognised or null
+     */
+    public static int size(Object object) {
+        int total = 0;
+        if (object instanceof Map) {
+            total = ((Map) object).size();
+        } else if (object instanceof Collection) {
+            total = ((Collection) object).size();
+        } else if (object instanceof Object[]) {
+            total = ((Object[]) object).length;
+        } else if (object instanceof Iterator) {
+            Iterator it = (Iterator) object;
+            while (it.hasNext()) {
+                total++;
+                it.next();
+            }
+        } else if (object instanceof Enumeration) {
+            Enumeration it = (Enumeration) object;
+            while (it.hasMoreElements()) {
+                total++;
+                it.nextElement();
+            }
+        } else {
+            throw new IllegalArgumentException("Unsupported object type: " +
+                (object == null ? "null" : object.getClass().getName()));
+        }
+        return total;
+    }
+    
+    /**
      * Reverses the order of the given array.
      * 
      * @param array  the array to reverse

@@ -46,8 +46,9 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  * @author Phil Steitz
+ * @author Steven Melzer
  * 
- * @version $Revision: 1.35 $ $Date: 2004/02/18 01:20:35 $
+ * @version $Revision: 1.36 $ $Date: 2004/03/31 21:43:27 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -686,7 +687,65 @@ public class TestCollectionUtils extends TestCase {
         }
     }
 
-
+    public void testSize_List() {
+        List list = new ArrayList();
+        assertEquals(0, CollectionUtils.size(list));
+        list.add("a");
+        assertEquals(1, CollectionUtils.size(list));
+        list.add("b");
+        assertEquals(2, CollectionUtils.size(list));
+    }
+    public void testSize_Map() {
+        Map map = new HashMap();
+        assertEquals(0, CollectionUtils.size(map));
+        map.put("1", "a");
+        assertEquals(1, CollectionUtils.size(map));
+        map.put("2", "b");
+        assertEquals(2, CollectionUtils.size(map));
+    }
+    public void testSize_Array() {
+        Object[] objectArray = new Object[0];
+        assertEquals(0, CollectionUtils.size(objectArray));
+        
+        String[] stringArray = new String[3];
+        assertEquals(3, CollectionUtils.size(stringArray));
+        stringArray[0] = "a";
+        stringArray[1] = "b";
+        stringArray[2] = "c";
+        assertEquals(3, CollectionUtils.size(stringArray));
+    }
+    public void testSize_Enumeration() {
+        Vector list = new Vector();
+        assertEquals(0, CollectionUtils.size(list.elements()));
+        list.add("a");
+        assertEquals(1, CollectionUtils.size(list.elements()));
+        list.add("b");
+        assertEquals(2, CollectionUtils.size(list.elements()));
+    }
+    public void testSize_Iterator() {
+        List list = new ArrayList();
+        assertEquals(0, CollectionUtils.size(list.iterator()));
+        list.add("a");
+        assertEquals(1, CollectionUtils.size(list.iterator()));
+        list.add("b");
+        assertEquals(2, CollectionUtils.size(list.iterator()));
+    }
+    public void testSize_Other() {
+        try {
+            CollectionUtils.size(null);
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException e) {}
+        try {
+            CollectionUtils.size("not a list");
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException e) {}
+        try {
+            CollectionUtils.size(new int[0]);
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException e) {}
+    }
+    
+    //-----------------------------------------------------------------------
     private static Predicate EQUALS_TWO = new Predicate() {
         public boolean evaluate(Object input) {
             return (input.equals("Two"));
