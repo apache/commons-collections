@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.10 2003/09/20 17:02:03 scolebourne Exp $
- * $Revision: 1.10 $
- * $Date: 2003/09/20 17:02:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.11 2003/10/02 23:01:10 scolebourne Exp $
+ * $Revision: 1.11 $
+ * $Date: 2003/10/02 23:01:10 $
  *
  * ====================================================================
  *
@@ -69,9 +69,9 @@ import junit.framework.Test;
  * Tests for ReferenceMap. 
  *
  * @author Paul Jack
- * @version $Id: TestReferenceMap.java,v 1.10 2003/09/20 17:02:03 scolebourne Exp $
+ * @version $Id: TestReferenceMap.java,v 1.11 2003/10/02 23:01:10 scolebourne Exp $
  */
-public class TestReferenceMap extends TestMap {
+public class TestReferenceMap extends AbstractTestMap {
 
     public TestReferenceMap(String testName) {
         super(testName);
@@ -86,7 +86,7 @@ public class TestReferenceMap extends TestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeEmptyMap() {
+    protected Map makeEmptyMap() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         return map;
     }

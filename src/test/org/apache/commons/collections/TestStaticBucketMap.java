@@ -64,7 +64,7 @@ import junit.framework.Test;
  * 
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
  */
-public class TestStaticBucketMap extends TestMap {
+public class TestStaticBucketMap extends AbstractTestMap {
 
     public TestStaticBucketMap(String name) {
         super(name);
@@ -79,7 +79,7 @@ public class TestStaticBucketMap extends TestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeEmptyMap() {
+    protected Map makeEmptyMap() {
         return new StaticBucketMap(30);
     }
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.10 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.10 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.11 2003/10/02 23:01:10 scolebourne Exp $
+ * $Revision: 1.11 $
+ * $Date: 2003/10/02 23:01:10 $
  *
  * ====================================================================
  *
@@ -71,7 +71,7 @@ import junit.framework.Test;
  * 
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
  */
-public class TestBeanMap extends TestMap {
+public class TestBeanMap extends AbstractTestMap {
 
     public TestBeanMap(String testName) {
         super(testName);
@@ -264,11 +264,11 @@ public class TestBeanMap extends TestMap {
      *  bean has.  Adding and removing mappings is not possible, thus this
      *  method is overridden to return false.
      **/
-    public boolean isAddRemoveModifiable() {
+    protected boolean isAddRemoveModifiable() {
         return false;
     }
   
-    public Map makeFullMap() {
+    protected Map makeFullMap() {
         // note: These values must match (i.e. .equals() must return true)
         // those returned from getSampleValues().
         BeanWithProperties bean = new BeanWithProperties();
@@ -285,7 +285,7 @@ public class TestBeanMap extends TestMap {
         return new BeanMap(bean);
     }
 
-    public Map makeEmptyMap() {
+    protected Map makeEmptyMap() {
         return new BeanMap();
     }
 

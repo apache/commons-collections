@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeMap.java,v 1.3 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeMap.java,v 1.4 2003/10/02 23:01:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,18 +63,18 @@ import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestMap;
+import org.apache.commons.collections.AbstractTestMap;
 
 /**
- * Extension of {@link TestMap} for exercising the {@link FixedSizeMap}
+ * Extension of {@link AbstractTestMap} for exercising the {@link FixedSizeMap}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/02 23:01:09 $
  * 
  * @author Stephen Colebourne
  */
-public class TestFixedSizeMap extends TestMap {
+public class TestFixedSizeMap extends AbstractTestMap {
 
     public TestFixedSizeMap(String testName) {
         super(testName);
@@ -89,7 +89,7 @@ public class TestFixedSizeMap extends TestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeEmptyMap() {
+    protected Map makeEmptyMap() {
         return FixedSizeMap.decorate(new HashMap());
     }
 

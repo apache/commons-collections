@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedMap.java,v 1.2 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestTransformedMap.java,v 1.3 2003/10/02 23:01:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,18 +64,18 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestMap;
+import org.apache.commons.collections.AbstractTestMap;
 
 /**
  * Extension of {@link TestMap} for exercising the {@link TransformedMap}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/02 23:01:09 $
  * 
  * @author Stephen Colebourne
  */
-public class TestTransformedMap extends TestMap {
+public class TestTransformedMap extends AbstractTestMap {
     
     public TestTransformedMap(String testName) {
         super(testName);
@@ -90,7 +90,7 @@ public class TestTransformedMap extends TestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeEmptyMap() {
+    protected Map makeEmptyMap() {
         return TransformedMap.decorate(new HashMap(), TestTransformedCollection.NOOP_TRANSFORMER, TestTransformedCollection.NOOP_TRANSFORMER);
     }
 

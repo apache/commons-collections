@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestSortedMap.java,v 1.2 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestSortedMap.java,v 1.1 2003/10/02 23:01:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,20 +57,25 @@
  */
 package org.apache.commons.collections;
 
-
 /**
- * Tests base {@link java.util.SortedMap} methods and contracts.
+ * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.1 $ $Date: 2003/10/02 23:01:09 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class TestSortedMap extends TestMap {
+public abstract class AbstractTestSortedMap extends AbstractTestMap {
 
-    public TestSortedMap(String testName) {
+    /**
+     * JUnit constructor.
+     * 
+     * @param testName  the test name
+     */
+    public AbstractTestSortedMap(String testName) {
         super(testName);
     }
     
+    //-----------------------------------------------------------------------
     /**
      * Can't sort null keys.
      * 

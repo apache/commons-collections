@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastHashMap.java,v 1.10 2003/10/02 23:01:10 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2003/10/02 23:01:10 $
  *
  * ====================================================================
  *
@@ -67,9 +67,9 @@ import junit.framework.Test;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastHashMap.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
+ * @version $Id: TestFastHashMap.java,v 1.10 2003/10/02 23:01:10 scolebourne Exp $
  */
-public class TestFastHashMap extends TestMap
+public class TestFastHashMap extends AbstractTestMap
 {
     public TestFastHashMap(String testName)
     {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestLazyMap.java,v 1.2 2003/09/20 17:05:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestLazyMap.java,v 1.3 2003/10/02 23:01:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,18 +65,18 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.FactoryUtils;
-import org.apache.commons.collections.TestMap;
+import org.apache.commons.collections.AbstractTestMap;
 
 /**
  * Extension of {@link TestMap} for exercising the 
  * {@link LazyMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/09/20 17:05:36 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/02 23:01:09 $
  * 
  * @author Phil Steitz
  */
-public class TestLazyMap extends TestMap {
+public class TestLazyMap extends AbstractTestMap {
     
     public TestLazyMap(String testName) {
         super(testName);
@@ -100,7 +100,7 @@ public class TestLazyMap extends TestMap {
         return LazyMap.decorate(map, factory);
     }
     
-    public Map makeEmptyMap() {
+    protected Map makeEmptyMap() {
         return decorateMap(new HashMap(), nullFactory);
     }
     

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeSortedMap.java,v 1.3 2003/08/31 17:28:42 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestFixedSizeSortedMap.java,v 1.4 2003/10/02 23:01:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,18 +64,18 @@ import java.util.TreeMap;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.TestSortedMap;
+import org.apache.commons.collections.AbstractTestSortedMap;
 
 /**
  * Extension of {@link TestSortedMap} for exercising the {@link FixedSizeSortedMap}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/08/31 17:28:42 $
+ * @version $Revision: 1.4 $ $Date: 2003/10/02 23:01:09 $
  * 
  * @author Stephen Colebourne
  */
-public class TestFixedSizeSortedMap extends TestSortedMap {
+public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
 
     public TestFixedSizeSortedMap(String testName) {
         super(testName);

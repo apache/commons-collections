@@ -73,7 +73,7 @@ import junit.framework.Test;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */
-public class TestSequencedHashMap extends TestMap {
+public class TestSequencedHashMap extends AbstractTestMap {
     /**
      * The instance to experiment on.
      */
@@ -105,7 +105,7 @@ public class TestSequencedHashMap extends TestMap {
         labRat = (SequencedHashMap) makeEmptyMap();
     }
 
-    public Map makeEmptyMap() {
+    protected Map makeEmptyMap() {
         return new SequencedHashMap();
     }
 

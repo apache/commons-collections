@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.11 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.11 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.12 2003/10/02 23:01:10 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2003/10/02 23:01:10 $
  *
  * ====================================================================
  *
@@ -73,7 +73,7 @@ import junit.framework.TestSuite;
  * Unit Tests for <code>MultiHashMap</code>.
  *
  */
-public class TestMultiHashMap extends TestMap
+public class TestMultiHashMap extends AbstractTestMap
 {
     public TestMultiHashMap(String testName)
     {
@@ -96,7 +96,7 @@ public class TestMultiHashMap extends TestMap
         return "2";
     }
 
-    public Map makeEmptyMap() {
+    protected Map makeEmptyMap() {
         return new MultiHashMap();
     }
     
