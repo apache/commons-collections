@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestUnsignedIntArrayList.java,v 1.1 2002/06/04 16:01:28 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:01:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestUnsignedIntArrayList.java,v 1.2 2002/06/21 04:01:31 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/21 04:01:31 $
  *
  * ====================================================================
  *
@@ -64,9 +64,10 @@ package org.apache.commons.collections.primitives;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:01:28 $
+ * @version $Revision: 1.2 $ $Date: 2002/06/21 04:01:31 $
  * @author Rodney Waldhoff
  */
 public class TestUnsignedIntArrayList extends TestAbstractLongArrayList {
@@ -78,7 +79,7 @@ public class TestUnsignedIntArrayList extends TestAbstractLongArrayList {
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite(TestUnsignedIntArrayList.class);
+        TestSuite suite = BulkTest.makeSuite(TestUnsignedIntArrayList.class);
         return suite;
     }
 

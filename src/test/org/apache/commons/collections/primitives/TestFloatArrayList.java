@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestFloatArrayList.java,v 1.1 2002/06/04 16:50:09 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:50:09 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestFloatArrayList.java,v 1.2 2002/06/21 04:01:31 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/21 04:01:31 $
  *
  * ====================================================================
  *
@@ -68,10 +68,10 @@ import org.apache.commons.collections.TestList;
 import java.util.List;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:50:09 $
+ * @version $Revision: 1.2 $ $Date: 2002/06/21 04:01:31 $
  * @author Rodney Waldhoff
  */
-public class TestFloatArrayList extends /* TestList */ TestCase {
+public class TestFloatArrayList extends TestList {
 
     //------------------------------------------------------------ Conventional
 
@@ -80,7 +80,7 @@ public class TestFloatArrayList extends /* TestList */ TestCase {
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite(TestFloatArrayList.class);
+        TestSuite suite = TestList.makeSuite(TestFloatArrayList.class);
         return suite;
     }
 
@@ -107,5 +107,47 @@ public class TestFloatArrayList extends /* TestList */ TestCase {
             assertEquals((float)i,list.getFloat(i),Float.MAX_VALUE);
         }
     }
+
+
+   protected Object[] getFullElements() {
+       Float[] result = new Float[19];
+       for (int i = 0; i < result.length; i++) {
+           result[i] = new Float((float)(i + 19));
+       }
+       return result;
+   }
+
+
+   protected Object[] getOtherElements() {
+       Float[] result = new Float[16];
+       for (int i = 0; i < result.length; i++) {
+           result[i] = new Float((float)(i + 48));
+       }
+       return result;
+   }
+
+
+   public void testCanonicalEmptyCollectionExists() {
+   }
+
+
+   public void testCanonicalFullCollectionExists() {
+   }
+
+   public void testEmptyListCompatibility() {
+   }
+
+   public void testFullListCompatibility() {
+   }
+
+   public void testCollectionIteratorFailFast() {
+   }
+
+   public void testListSubListFailFastOnAdd() {
+   }
+
+   public void testListSubListFailFastOnRemove() {
+   }
+
 }
 

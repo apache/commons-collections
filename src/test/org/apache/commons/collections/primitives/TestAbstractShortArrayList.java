@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractShortArrayList.java,v 1.1 2002/06/04 16:01:28 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2002/06/04 16:01:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractShortArrayList.java,v 1.2 2002/06/21 04:01:31 mas Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/06/21 04:01:31 $
  *
  * ====================================================================
  *
@@ -68,10 +68,10 @@ import org.apache.commons.collections.TestList;
 import java.util.List;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2002/06/04 16:01:28 $
+ * @version $Revision: 1.2 $ $Date: 2002/06/21 04:01:31 $
  * @author Rodney Waldhoff
  */
-public abstract class TestAbstractShortArrayList extends /* TestList */ TestCase {
+public abstract class TestAbstractShortArrayList extends TestList {
 
     //------------------------------------------------------------ Conventional
 
@@ -110,5 +110,58 @@ public abstract class TestAbstractShortArrayList extends /* TestList */ TestCase
             assertEquals((short)(i+128),list.getShort(i));
         }
     }
+
+    /**
+     *  Returns an array of Short objects for testing.
+     */
+    protected Object[] getFullElements() {
+        Short[] result = new Short[19];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = new Short((short)(i + 19));
+        }
+        return result;
+    }
+
+
+    /**
+     *  Returns an array of Short objects for testing.
+     */
+    protected Object[] getOtherElements() {
+        Short[] result = new Short[16];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = new Short((short)(i + 48));
+        }
+        return result;
+    }
+
+    // TODO:  Create canonical primitive lists in CVS
+
+    public void testCanonicalEmptyCollectionExists() {
+    }
+
+
+    public void testCanonicalFullCollectionExists() {
+    }
+
+    public void testEmptyListCompatibility() {
+    }
+
+    public void testFullListCompatibility() {
+    }
+
+    // TODO: Make primitive lists fail fast
+
+    public void testCollectionIteratorFailFast() {
+    }
+
+    public void testListSubListFailFastOnAdd() {
+    }
+
+    public void testListSubListFailFastOnRemove() {
+    }
+
+
+
+
 }
 
