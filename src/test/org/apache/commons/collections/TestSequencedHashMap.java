@@ -147,6 +147,30 @@ public class TestSequencedHashMap extends TestHashMap
         }
     }
 
+    public void testYoungest() {
+        labRat.put(new Integer(1),"foo");
+        labRat.put(new Integer(2),"bar");
+        assertTrue("first key is correct",labRat.get(0).equals(new Integer(1)));
+        labRat.put(new Integer(1),"boo");
+        assertTrue("second key is reassigned to first",labRat.get(0).equals(new Integer(2)));
+    }
+
+    public void testYoungestReplaceNullWithValue() {
+        labRat.put(new Integer(1),null);
+        labRat.put(new Integer(2),"foo");
+        assertTrue("first key is correct",labRat.get(0).equals(new Integer(1)));
+        labRat.put(new Integer(1),"bar");
+        assertTrue("second key is reassigned to first",labRat.get(0).equals(new Integer(2)));
+    }
+
+    public void testYoungestReplaceValueWithNull() {
+        labRat.put(new Integer(1),"bar");
+        labRat.put(new Integer(2),"foo");
+        assertTrue("first key is correct",labRat.get(0).equals(new Integer(1)));
+        labRat.put(new Integer(1),null);
+        assertTrue("second key is reassigned to first",labRat.get(0).equals(new Integer(2)));
+    }
+
     protected void tearDown() {
         labRat = null;
     }
