@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.8 2003/10/02 22:14:33 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAbstractLongArrayList.java,v 1.9 2003/10/09 11:09:10 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -62,8 +62,9 @@ import java.util.List;
 import org.apache.commons.collections.AbstractTestList;
 
 /**
- * @version $Revision: 1.8 $ $Date: 2003/10/02 22:14:33 $
+ * @version $Revision: 1.9 $ $Date: 2003/10/09 11:09:10 $
  * @author Rodney Waldhoff
+ * @deprecated this should have been removed along with the others
  */
 public abstract class TestAbstractLongArrayList extends AbstractTestList {
 
