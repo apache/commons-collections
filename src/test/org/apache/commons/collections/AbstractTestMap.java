@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.9 2003/10/31 01:24:32 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.10 2003/11/01 18:47:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -98,6 +98,7 @@ import java.util.Set;
  * <ul>
  * <li> {@link #isPutAddSupported()}
  * <li> {@link #isPutChangeSupported()}
+ * <li> {@link #isSetValueSupported()}
  * <li> {@link #isRemoveSupported()}
  * <li> {@link #isAllowDuplicateValues()}
  * <li> {@link #isAllowNullKey()}
@@ -152,7 +153,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.9 $ $Date: 2003/10/31 01:24:32 $
+ * @version $Revision: 1.10 $ $Date: 2003/11/01 18:47:18 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -213,6 +214,19 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      */
     protected boolean isPutChangeSupported() {
         return true;
+    }
+
+    /**
+     * Returns true if the maps produced by 
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * support the <code>setValue</code> operation on entrySet entries.
+     * <p>
+     * Default implementation returns isPutChangeSupported().
+     * Override if your collection class does not support setValue but does
+     * support put changing.
+     */
+    protected boolean isSetValueSupported() {
+        return isPutChangeSupported();
     }
 
     /**
@@ -781,8 +795,10 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                 }
             } else {
                 try {
+                    // two possible exception here, either valid
                     map.put(keys[0], newValues[0]);
-                    fail("Expected UnsupportedOperationException on put (change)");
+                    fail("Expected IllegalArgumentException or UnsupportedOperationException on put (change)");
+                } catch (IllegalArgumentException ex) {
                 } catch (UnsupportedOperationException ex) {}
             }
             
@@ -1085,9 +1101,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         return new TestMapEntrySet();
     }
 
-    class TestMapEntrySet extends AbstractTestSet {
+    public class TestMapEntrySet extends AbstractTestSet {
         public TestMapEntrySet() {
-            super("");
+            super("MapEntrySet");
         }
 
         // Have to implement manually; entrySet doesn't support addAll
@@ -1139,6 +1155,90 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             TestMapEntrySet.this.confirmed = AbstractTestMap.this.confirmed.entrySet();
         }
         
+        public void testMapEntrySetIteratorEntry() {
+            resetFull();
+            Iterator it = collection.iterator();
+            int count = 0;
+            while (it.hasNext()) {
+                Map.Entry entry = (Map.Entry) it.next();
+                assertEquals(true, AbstractTestMap.this.map.containsKey(entry.getKey()));
+                assertEquals(true, AbstractTestMap.this.map.containsValue(entry.getValue()));
+                assertEquals(AbstractTestMap.this.map.get(entry.getKey()), entry.getValue());
+                count++;
+            }
+            assertEquals(collection.size(), count);
+        }
+
+        public void testMapEntrySetIteratorEntrySetValue() {
+            Object key1 = getSampleKeys()[0];
+            Object key2 = getSampleKeys()[1];
+            Object newValue1 = getNewSampleValues()[0];
+            Object newValue2 = getNewSampleValues()[1];
+            
+            resetFull();
+            // explicitly get entries as sample values/keys are connected for some maps
+            // such as BeanMap
+            Iterator it = TestMapEntrySet.this.collection.iterator();
+            Map.Entry entry1 = getEntry(it, key1);
+            it = TestMapEntrySet.this.collection.iterator();
+            Map.Entry entry2 = getEntry(it, key2);
+            Iterator itConfirmed = TestMapEntrySet.this.confirmed.iterator();
+            Map.Entry entryConfirmed1 = getEntry(itConfirmed, key1);
+            itConfirmed = TestMapEntrySet.this.confirmed.iterator();
+            Map.Entry entryConfirmed2 = getEntry(itConfirmed, key2);
+            verify();
+            
+            if (isSetValueSupported() == false) {
+                try {
+                    entry1.setValue(newValue1);
+                } catch (UnsupportedOperationException ex) {
+                }
+                return;
+            }
+            
+            entry1.setValue(newValue1);
+            entryConfirmed1.setValue(newValue1);
+            assertEquals(newValue1, entry1.getValue());
+            assertEquals(true, AbstractTestMap.this.map.containsKey(entry1.getKey()));
+            assertEquals(true, AbstractTestMap.this.map.containsValue(newValue1));
+            assertEquals(newValue1, AbstractTestMap.this.map.get(entry1.getKey()));
+            verify();
+            
+            entry1.setValue(newValue1);
+            entryConfirmed1.setValue(newValue1);
+            assertEquals(newValue1, entry1.getValue());
+            assertEquals(true, AbstractTestMap.this.map.containsKey(entry1.getKey()));
+            assertEquals(true, AbstractTestMap.this.map.containsValue(newValue1));
+            assertEquals(newValue1, AbstractTestMap.this.map.get(entry1.getKey()));
+            verify();
+            
+            entry2.setValue(newValue2);
+            entryConfirmed2.setValue(newValue2);
+            assertEquals(newValue2, entry2.getValue());
+            assertEquals(true, AbstractTestMap.this.map.containsKey(entry2.getKey()));
+            assertEquals(true, AbstractTestMap.this.map.containsValue(newValue2));
+            assertEquals(newValue2, AbstractTestMap.this.map.get(entry2.getKey()));
+            verify();
+        }
+        
+        protected Map.Entry getEntry(Iterator itConfirmed, Object key) {
+            Map.Entry entry = null;
+            while (itConfirmed.hasNext()) {
+                Map.Entry temp = (Map.Entry) itConfirmed.next();
+                if (temp.getKey() == null) {
+                    if (key == null) {
+                        entry = temp;
+                        break;
+                    }
+                } else if (temp.getKey().equals(key)) {
+                    entry = temp;
+                    break;
+                }
+            }
+            assertNotNull("No matching entry in map for key '" + key + "'", entry);
+            return entry;
+        }
+
         protected void verify() {
             super.verify();
             AbstractTestMap.this.verify();
@@ -1158,7 +1258,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         return new TestMapKeySet();
     }
 
-    class TestMapKeySet extends AbstractTestSet {
+    public class TestMapKeySet extends AbstractTestSet {
         public TestMapKeySet() {
             super("");
         }
@@ -1226,7 +1326,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         return new TestMapValues();
     }
 
-    class TestMapValues extends AbstractTestCollection {
+    public class TestMapValues extends AbstractTestCollection {
         public TestMapValues() {
             super("");
         }
@@ -1415,8 +1515,12 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                      size, values.size());
         assertEquals("values should be empty if HashMap is", 
                      empty, values.isEmpty());
-        assertTrue("values should contain all HashMap's elements",
-                   values.containsAll(confirmed.values()));
+        assertTrue("values should contain all HashMap's elements" +
+                   "\nTest: " + test + "\nReal: " + known,
+                    test.containsAll(known));
+        assertTrue("values should contain all HashMap's elements" +
+                   "\nTest: " + test + "\nReal: " + known,
+                   known.containsAll(test));
         // originally coded to use a HashBag, but now separate jar so...
         for (Iterator it = known.iterator(); it.hasNext();) {
             boolean removed = test.remove(it.next());

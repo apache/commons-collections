@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.13 2003/10/07 22:20:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.14 2003/11/01 18:47:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,18 +62,24 @@ import java.lang.reflect.Method;
 import java.util.Map;
 
 import junit.framework.Test;
+import junit.textui.TestRunner;
 
 /**
  * Test cases for BeanMap
  * 
- * @version $Revision: 1.13 $ $Date: 2003/10/07 22:20:57 $
+ * @version $Revision: 1.14 $ $Date: 2003/11/01 18:47:18 $
  * 
  * @author Morgan Delagrange
+ * @author Stephen Colebourne
  */
 public class TestBeanMap extends AbstractTestMap {
 
     public TestBeanMap(String testName) {
         super(testName);
+    }
+    
+    public static void main(String[] args) {
+        TestRunner.run(suite());
     }
 
     public static Test suite() {
@@ -250,6 +256,14 @@ public class TestBeanMap extends AbstractTestMap {
             null,
         };
         return values;
+    }
+
+    /**
+     * Values is a dead copy in BeanMap, so refresh each time.
+     */
+    protected void verifyValues() {
+        values = map.values();
+        super.verifyValues();
     }
 
     /**

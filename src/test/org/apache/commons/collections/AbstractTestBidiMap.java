@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.3 2003/10/31 01:25:24 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestBidiMap.java,v 1.4 2003/11/01 18:47:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,15 +57,17 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/10/31 01:25:24 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/01 18:47:18 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -184,6 +186,16 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     protected void verifyInverse() {
         assertEquals(map.size(), ((BidiMap) map).inverseBidiMap().size());
+        Map map1 = new HashMap(map);
+        Map map2 = new HashMap(((BidiMap) map).inverseBidiMap());
+        Set keys1 = map1.keySet();
+        Set keys2 = map2.keySet();
+        Collection values1 = map1.values();
+        Collection values2 = map2.values();
+        assertEquals(true, keys1.containsAll(values2));
+        assertEquals(true, values2.containsAll(keys1));
+        assertEquals(true, values1.containsAll(keys2));
+        assertEquals(true, keys2.containsAll(values1));
     }
     
     // testGetKey
@@ -346,6 +358,72 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
             !map.inverseBidiMap().containsKey(value));
     }
 
+    public BulkTest bulkTestMapEntrySet() {
+        return new TestBidiMapEntrySet();
+    }
+
+    public class TestBidiMapEntrySet extends TestMapEntrySet {
+        public TestBidiMapEntrySet() {
+            super();
+        }
+        public void testMapEntrySetIteratorEntrySetValueCrossCheck() {
+            Object key1 = getSampleKeys()[0];
+            Object key2 = getSampleKeys()[1];
+            Object newValue1 = getNewSampleValues()[0];
+            Object newValue2 = getNewSampleValues()[1];
+                
+            resetFull();
+            // explicitly get entries as sample values/keys are connected for some maps
+            // such as BeanMap
+            Iterator it = TestBidiMapEntrySet.this.collection.iterator();
+            Map.Entry entry1 = getEntry(it, key1);
+            it = TestBidiMapEntrySet.this.collection.iterator();
+            Map.Entry entry2 = getEntry(it, key2);
+            Iterator itConfirmed = TestBidiMapEntrySet.this.confirmed.iterator();
+            Map.Entry entryConfirmed1 = getEntry(itConfirmed, key1);
+            itConfirmed = TestBidiMapEntrySet.this.confirmed.iterator();
+            Map.Entry entryConfirmed2 = getEntry(itConfirmed, key2);
+            TestBidiMapEntrySet.this.verify();
+                
+            if (isSetValueSupported() == false) {
+                try {
+                    entry1.setValue(newValue1);
+                } catch (UnsupportedOperationException ex) {
+                }
+                return;
+            }
+
+            // these checked in superclass                
+            entry1.setValue(newValue1);
+            entryConfirmed1.setValue(newValue1);
+            entry2.setValue(newValue2);
+            entryConfirmed2.setValue(newValue2);
+            
+            // at this point
+            // key1=newValue1, key2=newValue2
+            try {
+                entry2.setValue(newValue1);  // should remove key1
+            } catch (IllegalArgumentException ex) {
+                return;  // simplest way of dealing with tricky situation
+            }
+            entryConfirmed2.setValue(newValue1);
+            AbstractTestBidiMap.this.confirmed.remove(key1);
+            assertEquals(newValue1, entry2.getValue());
+            assertEquals(true, AbstractTestBidiMap.this.map.containsKey(entry2.getKey()));
+            assertEquals(true, AbstractTestBidiMap.this.map.containsValue(newValue1));
+            assertEquals(newValue1, AbstractTestBidiMap.this.map.get(entry2.getKey()));
+            assertEquals(false, AbstractTestBidiMap.this.map.containsKey(key1));
+            assertEquals(false, AbstractTestBidiMap.this.map.containsValue(newValue2));
+            TestBidiMapEntrySet.this.verify();
+            
+            // check for ConcurrentModification
+            it.next();  // if you fail here, maybe you should be throwing an IAE, see above
+            if (isRemoveSupported()) {
+                it.remove();
+            }
+        }
+    }
+        
     public BulkTest bulkTestInverseMap() {
         return new TestInverseBidiMap(this);
     }
@@ -384,6 +462,9 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
         }
         protected boolean isPutChangeSupported() {
             return main.isPutChangeSupported();
+        }
+        protected boolean isSetValueSupported() {
+            return main.isSetValueSupported();
         }
         protected boolean isRemoveSupported() {
             return main.isRemoveSupported();
@@ -468,29 +549,98 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiMapIteratorSet() {
+        Object newValue1 = getOtherValues()[0];
+        Object newValue2 = getOtherValues()[1];
+        
+        resetFull();
+        BidiMap bidi = (BidiMap) map;
+        MapIterator it = bidi.mapIterator();
+        assertEquals(true, it.hasNext());
+        Object key1 = it.next();
+        
+        if (isSetValueSupported() == false) {
+            try {
+                it.setValue(newValue1);
+            } catch (UnsupportedOperationException ex) {
+            }
+            return;
+        }
+        
+        it.setValue(newValue1);
+        confirmed.put(key1, newValue1);
+        assertSame(key1, it.getKey());
+        assertSame(newValue1, it.getValue());
+        assertEquals(true, bidi.containsKey(key1));
+        assertEquals(true, bidi.containsValue(newValue1));
+        assertEquals(newValue1, bidi.get(key1));
+        verify();
+        
+        it.setValue(newValue1);  // same value - should be OK
+        confirmed.put(key1, newValue1);
+        assertSame(key1, it.getKey());
+        assertSame(newValue1, it.getValue());
+        assertEquals(true, bidi.containsKey(key1));
+        assertEquals(true, bidi.containsValue(newValue1));
+        assertEquals(newValue1, bidi.get(key1));
+        verify();
+        
+        Object key2 = it.next();
+        it.setValue(newValue2);
+        confirmed.put(key2, newValue2);
+        assertSame(key2, it.getKey());
+        assertSame(newValue2, it.getValue());
+        assertEquals(true, bidi.containsKey(key2));
+        assertEquals(true, bidi.containsValue(newValue2));
+        assertEquals(newValue2, bidi.get(key2));
+        verify();
+        
+        // at this point
+        // key1=newValue1, key2=newValue2
+        try {
+            it.setValue(newValue1);  // should remove key1
+        } catch (IllegalArgumentException ex) {
+            return;  // simplest way of dealing with tricky situation
+        }
+        confirmed.put(key2, newValue1);
+        AbstractTestBidiMap.this.confirmed.remove(key1);
+        assertEquals(newValue1, it.getValue());
+        assertEquals(true, bidi.containsKey(it.getKey()));
+        assertEquals(true, bidi.containsValue(newValue1));
+        assertEquals(newValue1, bidi.get(it.getKey()));
+        assertEquals(false, bidi.containsKey(key1));
+        assertEquals(false, bidi.containsValue(newValue2));
+        verify();
+            
+        // check for ConcurrentModification
+        it.next();  // if you fail here, maybe you should be throwing an IAE, see above
+        if (isRemoveSupported()) {
+            it.remove();
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    public void testBidiMapIteratorSetRemoveSet() {
+        if (isSetValueSupported() == false || isRemoveSupported() == false) {
+            return;
+        }
+        Object newValue1 = getOtherValues()[0];
+        
         resetFull();
         BidiMap bidi = (BidiMap) map;
         MapIterator it = bidi.mapIterator();
         assertEquals(true, it.hasNext());
         Object key = it.next();
         
-        if (isPutChangeSupported() == false) {
-            try {
-                it.setValue(getOtherValues()[0]);
-            } catch (UnsupportedOperationException ex) {
-            }
-            return;
-        }
-        
-        it.setValue(getOtherValues()[0]);
-        confirmed.put(key, getOtherValues()[0]);
-        assertEquals(getOtherValues()[0], bidi.get(key));
+        it.setValue(newValue1);
+        confirmed.put(key, newValue1);
         verify();
         
         it.remove();
         confirmed.remove(key);
+        verify();
+        
         try {
-            it.setValue(getOtherValues()[0]);
+            it.setValue(newValue1);
         } catch (IllegalStateException ex) {
         }
         verify();

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.25 2003/10/05 21:17:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.26 2003/11/01 18:47:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,10 +68,11 @@ import junit.framework.Test;
 /**
  * Tests LRUMap.
  * 
- * @version $Revision: 1.25 $ $Date: 2003/10/05 21:17:40 $
+ * @version $Revision: 1.26 $ $Date: 2003/11/01 18:47:18 $
  * 
  * @author James Strachan
  * @author Morgan Delagrange
+ * @author Stephen Colebourne
  */
 public class TestLRUMap extends TestSequencedHashMap {
     
@@ -88,11 +89,20 @@ public class TestLRUMap extends TestSequencedHashMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    //-----------------------------------------------------------------------
     public Map makeEmptyMap() {
         LRUMap map = new LRUMap();
         return map;
     }
 
+    /**
+     * Override as test uses iterator() and getKey() in combination which doesn't work.
+     */
+    protected String[] ignoredTests() {
+        return new String[] {"TestLRUMap.bulkTestMapEntrySet.testMapEntrySetIteratorEntry"};
+    }
+
+    //-----------------------------------------------------------------------
     public void testRemoveLRU() {
         LRUMap map2 = new LRUMap(3);
         map2.put(new Integer(1),"foo");

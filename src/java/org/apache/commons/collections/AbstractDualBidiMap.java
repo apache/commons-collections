@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.5 2003/10/31 01:26:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.6 2003/11/01 18:47:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.5 2003/10/31 01:26:25 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.6 2003/11/01 18:47:18 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -510,12 +510,13 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         }
         
         public Object setValue(Object value) {
+            Object key = MapEntry.this.getKey();
+            if (map.maps[1].containsKey(value) &&
+                map.maps[1].get(value) != key) {
+                throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
+            }
+            map.put(key, value);
             final Object oldValue = super.setValue(value);
-
-            // Gets old key and pairs with new value
-            final Object inverseKey = map.maps[1].remove(oldValue);
-            map.maps[1].put(value, inverseKey);
-
             return oldValue;
         }
     }
@@ -570,13 +571,11 @@ public abstract class AbstractDualBidiMap implements BidiMap {
             if (last == null) {
                 throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
             }
-            Object oldValue = last.setValue(value);
-
-            // Gets old key and pairs with new value
-            final Object inverseKey = map.maps[1].remove(oldValue);
-            map.maps[1].put(value, inverseKey);
-
-            return oldValue;
+            if (map.maps[1].containsKey(value) &&
+                map.maps[1].get(value) != last.getKey()) {
+                throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
+            }
+            return map.put(last.getKey(), value);
         }
     }
     

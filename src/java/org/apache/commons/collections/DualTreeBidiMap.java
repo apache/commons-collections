@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/DualTreeBidiMap.java,v 1.1 2003/10/31 01:26:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/DualTreeBidiMap.java,v 1.2 2003/11/01 18:47:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,6 +58,7 @@
 package org.apache.commons.collections;
 
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -68,7 +69,7 @@ import org.apache.commons.collections.decorators.AbstractSortedMapDecorator;
  * Implementation of <code>BidiMap</code> that uses two <code>TreeMap</code> instances.
  * 
  * @since Commons Collections 3.0
- * @version $Id: DualTreeBidiMap.java,v 1.1 2003/10/31 01:26:25 scolebourne Exp $
+ * @version $Id: DualTreeBidiMap.java,v 1.2 2003/11/01 18:47:18 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -165,6 +166,9 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
         final DualTreeBidiMap bidi;
         
         protected ViewMap(DualTreeBidiMap bidi, SortedMap sm) {
+            // the implementation is not great here...
+            // use the maps[0] as the filtered map, but maps[1] as the full map
+            // this forces containsValue and clear to be overridden
             super((SortedMap) bidi.createBidiMap(sm, bidi.maps[1], bidi.inverseBidiMap));
             this.bidi = (DualTreeBidiMap) map;
         }
@@ -172,6 +176,14 @@ public class DualTreeBidiMap extends AbstractDualBidiMap implements SortedBidiMa
         public boolean containsValue(Object value) {
             // override as default implementation jumps to [1]
             return bidi.maps[0].containsValue(value);
+        }
+        
+        public void clear() {
+            // override as default implementation jumps to [1]
+            for (Iterator it = keySet().iterator(); it.hasNext();) {
+                it.next();
+                it.remove();
+            }
         }
         
         public SortedMap headMap(Object toKey) {

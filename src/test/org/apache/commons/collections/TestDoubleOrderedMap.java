@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.10 2003/10/07 22:20:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.11 2003/11/01 18:47:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -77,9 +77,10 @@ import junit.framework.Test;
  * Map that does not support duplicate keys, duplicate 
  * values, or null values.
  * 
- * @version $Revision: 1.10 $ $Date: 2003/10/07 22:20:57 $
+ * @version $Revision: 1.11 $ $Date: 2003/11/01 18:47:18 $
  * 
- * @author Marc Johnson (marcj at users dot sourceforge dot net)
+ * @author Marc Johnson
+ * @author Stephen Colebourne
  */
 public class TestDoubleOrderedMap extends AbstractTestMap  {
 
@@ -104,7 +105,7 @@ public class TestDoubleOrderedMap extends AbstractTestMap  {
     /**
      *  The default comparator in double ordered map does not allow null keys.
      **/
-    public boolean isAllowNullKey() {
+    protected boolean isAllowNullKey() {
         return false;
     }
 
@@ -112,14 +113,33 @@ public class TestDoubleOrderedMap extends AbstractTestMap  {
      *  The default comparator in double ordered map does not allow null keys,
      *  and values are keys in this map.
      **/
-    public boolean isAllowNullValue() {
+    protected boolean isAllowNullValue() {
         return false;
     }
 
     /**
      *  Double ordered map does not support duplicate values
      **/
-    public boolean isAllowDuplicateValues() {
+    protected boolean isAllowDuplicateValues() {
+        return false;
+    }
+    
+    /**
+     * Change the Map.put() test because it tries put with the same key
+     * which is invalid in the modified double ordered map contract. (The
+     * DoubleOrderedMap documentation states that an IllegalArgumentException
+     * is thrown when a key is tried to be put into the map again.  This
+     * differs from the standard Map contract which would replace the value
+     * for that key and return it.
+     */
+    protected boolean isPutChangeSupported() {
+        return false;
+    }
+
+    /**
+     * setValue() is not supported as it can change the map.
+     */
+    protected boolean isSetValueSupported() {
         return false;
     }
 
@@ -2832,14 +2852,4 @@ public class TestDoubleOrderedMap extends AbstractTestMap  {
         junit.textui.TestRunner.run(TestDoubleOrderedMap.class);
     }
 
-    /**
-     *  Override the Map.put() test because it tries put with the same key
-     *  which is invalid in the modified double ordered map contract. (The
-     *  DoubleOrderedMap documentation states that an IllegalArgumentException
-     *  is thrown when a key is tried to be put into the map again.  This
-     *  differs from the standard Map contract which would replace the value
-     *  for that key and return it.
-     **/
-    public void testMapPut() {
-    }
 }
