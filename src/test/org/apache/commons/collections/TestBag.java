@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBag.java,v 1.1 2001/08/29 15:28:07 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2001/08/29 15:28:07 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBag.java,v 1.2 2002/03/14 18:00:51 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/03/14 18:00:51 $
  *
  * ====================================================================
  *
@@ -79,7 +79,7 @@ import java.util.List;
  * test case (method) your {@link Bag} fails.
  *
  * @author Chuck Burdick
- * @version $Id: TestBag.java,v 1.1 2001/08/29 15:28:07 jstrachan Exp $
+ * @version $Id: TestBag.java,v 1.2 2002/03/14 18:00:51 morgand Exp $
  */
 public abstract class TestBag extends TestCollection {
     public TestBag(String testName) {
