@@ -32,7 +32,7 @@ import org.apache.commons.collections.TransformerUtils;
  * {@link LazySortedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/07 23:05:37 $
  * 
  * @author Phil Steitz
  */
@@ -107,4 +107,19 @@ public class TestLazySortedMap extends TestLazyMap {
             // expected
         } 
     }
+    
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/LazySortedMap.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/LazySortedMap.fullCollection.version3.1.obj");
+//    }
 }

@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.commons.collections.Factory;
@@ -44,13 +48,17 @@ import org.apache.commons.collections.TransformerUtils;
  * instance is mapped to the "NOW" key in the map.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/07 23:05:37 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class LazyMap
-        extends AbstractMapDecorator implements Map {
+        extends AbstractMapDecorator
+        implements Map, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 7990956402564206740L;
 
     /** The factory to use to construct elements */
     protected final Transformer factory;
@@ -106,6 +114,23 @@ public class LazyMap
             throw new IllegalArgumentException("Factory must not be null");
         }
         this.factory = factory;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------

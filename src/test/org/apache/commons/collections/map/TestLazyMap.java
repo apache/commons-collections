@@ -29,7 +29,7 @@ import org.apache.commons.collections.FactoryUtils;
  * {@link LazyMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/07 23:05:37 $
  * 
  * @author Phil Steitz
  */
@@ -83,5 +83,20 @@ public class TestLazyMap extends AbstractTestMap {
         assertEquals(null,o);
         assertEquals(1, map.size());
         
-    }       
+    }
+    
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/LazyMap.emptyCollection.version3.1.obj");
+//        resetFull();
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) map,
+//            "D:/dev/collections/data/test/LazyMap.fullCollection.version3.1.obj");
+//    }
 }

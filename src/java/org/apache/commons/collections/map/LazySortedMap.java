@@ -15,7 +15,12 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Map;
 import java.util.SortedMap;
 
 import org.apache.commons.collections.Factory;
@@ -44,13 +49,17 @@ import org.apache.commons.collections.Transformer;
  * instance is mapped to the "NOW" key in the map.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.5 $ $Date: 2004/04/07 23:05:37 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
  */
 public class LazySortedMap
-        extends LazyMap implements SortedMap {
+        extends LazyMap
+        implements SortedMap, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 2715322183617658933L;
 
     /**
      * Factory method to create a lazily instantiated sorted map.
@@ -95,6 +104,23 @@ public class LazySortedMap
      */
     protected LazySortedMap(SortedMap map, Transformer factory) {
         super(map, factory);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
     }
 
     /**
