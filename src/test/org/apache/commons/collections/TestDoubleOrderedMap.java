@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.3 2002/02/22 02:18:50 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/02/22 02:18:50 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.4 2002/05/28 06:51:03 mas Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/05/28 06:51:03 $
  *
  * ====================================================================
  *
@@ -2827,5 +2827,16 @@ public class TestDoubleOrderedMap extends TestMap  {
      */
     public static void main(final String unusedArgs[]) {
         junit.textui.TestRunner.run(TestDoubleOrderedMap.class);
+    }
+
+    /**
+     *  Override the Map.put() test because it tries put with the same key
+     *  which is invalid in the modified double ordered map contract. (The
+     *  DoubleOrderedMap documentation states that an IllegalArgumentException
+     *  is thrown when a key is tried to be put into the map again.  This
+     *  differs from the standard Map contract which would replace the value
+     *  for that key and return it.
+     **/
+    public void testMapPut() {
     }
 }

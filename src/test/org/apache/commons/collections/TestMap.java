@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.15 2002/05/08 17:54:28 morgand Exp $
- * $Revision: 1.15 $
- * $Date: 2002/05/08 17:54:28 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.16 2002/05/28 06:51:03 mas Exp $
+ * $Revision: 1.16 $
+ * $Date: 2002/05/28 06:51:03 $
  *
  * ====================================================================
  *
@@ -64,12 +64,16 @@ package org.apache.commons.collections;
 import junit.framework.*;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Map;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 import java.util.Iterator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 
@@ -88,7 +92,7 @@ import java.util.NoSuchElementException;
  *
  * @author Michael Smith
  * @author Rodney Waldhoff
- * @version $Id: TestMap.java,v 1.15 2002/05/08 17:54:28 morgand Exp $
+ * @version $Id: TestMap.java,v 1.16 2002/05/28 06:51:03 mas Exp $
  */
 public abstract class TestMap extends TestObject {
 
@@ -462,8 +466,8 @@ public abstract class TestMap extends TestObject {
         Map fm = makeFullMap();
 
         for(int i = 0; i < keys.length; i++) {
-            assertTrue("Map must contain key for a mapping in the map.", 
-                       fm.containsKey(keys[i]));
+            assertTrue("Map must contain key for a mapping in the map. " +
+		       "Missing: " + keys[i], fm.containsKey(keys[i]));
         }
     }
 
@@ -564,18 +568,227 @@ public abstract class TestMap extends TestObject {
         }
     }
 
-    // TODO: test entrySet().clear()
-    // TODO: test entrySet().add() throws OperationNotSupported
-    // TODO: test entrySet().addAll() throws OperationNotSupported
-    // TODO: test entrySet().contains(Object)
-    // TODO: test entrySet().containsAll(Collection)
-    // TODO: test entrySet().equals(Object)
-    // TODO: test entrySet().hashCode()
-    // TODO: test entrySet().toArray()
-    // TODO: test entrySet().toArray(Object[] a)
-    // TODO: test entrySet().remove(Object)
-    // TODO: test entrySet().removeAll(Collection)
-    // TODO: test entrySet().retainAll(Collection)
+    /**
+     *  Tests Map.entrySet().clear() using Map.isEmpty() and
+     *  Map.entrySet().isEmpty().  
+     **/
+    public void testEntrySetClear() {
+        if (!isAddRemoveModifiable()) return;
+        Map m = makeFullMap();
+        Set set = m.entrySet();
+        set.clear();
+        assertTrue("entrySet should be empty after clear", set.isEmpty());
+        assertTrue("map should be empty after entrySet.clear()", m.isEmpty());
+    }
+
+
+    /**
+     *  Tests Map.entrySet().add(Object);
+     **/
+    public void testEntrySetAdd() {
+        Map m = makeFullMap();
+        Set set = m.entrySet();
+        try {
+            set.add(new Object());
+            fail("entrySet().add should raise UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // expected
+        }
+    }
+
+
+    /**
+     *  Tests Map.entrySet().addAll(Collection);
+     **/
+    public void testEntrySetAddAll() {
+        Map m = makeFullMap();
+        Set set = m.entrySet();
+        try {
+            set.addAll(java.util.Collections.singleton(new Object()));
+            fail("entrySet().addAll(Collection) should raise " +
+		 "UnsupportedOperationException");
+        } catch (UnsupportedOperationException e) {
+            // expected
+        }
+    }
+
+    /**
+     *  Tests Map.entrySetContainsAll(Collection)
+     **/
+    public void testEntrySetContainsAll() {
+        Map m = makeFullMap();
+        Set set = m.entrySet();
+
+        java.util.ArrayList list = new java.util.ArrayList();
+        Iterator iterator = set.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry)iterator.next();
+            list.add(new DefaultMapEntry(entry.getKey(), entry.getValue()));
+
+	    assertTrue("entrySet().containsAll failed", set.containsAll(list));
+        }
+
+        list.add(new Object());
+        assertTrue("entrySet().containsAll failed", !set.containsAll(list));
+    }
+
+
+    /**
+     *  Tests entrySet().equals(Object)
+     **/
+    public void testEntrySetEquals() {
+        Map m = makeFullMap();
+        Map m2 = new HashMap(m);
+        assertTrue("Equal maps should have equal entrySets", 
+		   m.entrySet().equals(m2.entrySet()));
+
+        assertTrue("entrySet.equals(null) returned true", 
+		   !m.entrySet().equals(null));
+        assertTrue("Unequal maps should have unequal entrySets", 
+		   !m.entrySet().equals(Collections.EMPTY_SET));
+    }
+
+
+    /**
+     *  Test entrySet().hashCde()
+     **/
+    public void testEntrySetHashCode() {
+        Map m = makeFullMap();
+        Map m2 = new HashMap(m);
+        Set set = m.entrySet();
+        Set set2 = m2.entrySet();
+        assertTrue("hashCode of equal entrySets should be same", 
+		   set.hashCode() == set2.hashCode());
+    }
+
+
+    /**
+     *  Test entrySet().toArray() and entrySet().toArray(Object[])
+     **/
+    public void testEntrySetToArray() {
+        Map m = makeFullMap();
+        Set set = m.entrySet();
+        Object[] a = set.toArray();
+        assertTrue("entrySet.toArray() should be same size as map", 
+		   a.length == m.size());
+
+        a = set.toArray(new Object[0]);
+        assertTrue("entrySet.toArray(new Object[0]) should be same size " +
+		   "as map", a.length == m.size());
+
+        a = new Object[m.size() * 2];
+        a[m.size()] = new Object();
+        a = set.toArray(a);
+        assertTrue("entrySet.toArray(new Object[m.size * 2]) should set " +
+		   "last element to null", a[m.size()] == null);
+
+        a = set.toArray(new Map.Entry[0]);
+        assertTrue("entrySet.toArray(new Map.Entry[0]) should return " +
+		   "instanceof Map.Entry[]", a instanceof Map.Entry[]);
+
+        try {
+            a = set.toArray(new String[0]);
+            fail("entrySet.toArray(new String[]) should raise " +
+		 "ArrayStoreException.");
+        } catch (ArrayStoreException e) {
+            // expected
+        }
+        
+    }
+
+    /**
+     *  Tests entrySet().remove(Object)
+     **/
+    public void testEntrySetRemove2() {
+        if (!isAddRemoveModifiable()) return;
+
+        Map m = makeFullMap();
+        Set set = m.entrySet();
+
+        boolean r = set.remove(null);
+        assertTrue("entrySet.remove(null) should return false", !r);
+
+        r = set.remove("Not a Map.Entry");
+        assertTrue("entrySet.remove should return false for non-Map.Entry", 
+		   !r);
+
+	m = makeEmptyMap();
+	set = m.entrySet();
+
+	Object[] keys = getSampleKeys();
+	Object[] values = getSampleValues();
+
+	for(int i = 0; i < keys.length; i++) {
+	    // remove on all elements should return false because the map is
+	    // empty.
+	    r = set.remove(new DefaultMapEntry(keys[i], values[i]));
+	    assertTrue("entrySet.remove for nonexistent entry should " +
+		       "return false", !r);
+	}
+
+	// reset to full map to check actual removes
+	m = makeFullMap();
+	set = m.entrySet();
+
+        int size = m.size();
+        Map.Entry entry = (Map.Entry)set.iterator().next();
+        r = set.remove(entry);
+        assertTrue("entrySet.remove for internal entry should return true", r);
+        assertTrue("entrySet.size should shrink after successful remove", 
+		   set.size() == size - 1);
+        assertTrue("map size should shrink after succuessful entrySet.remove", 
+		   m.size() == size - 1);
+        entrySetEqualsMap(set, m);
+
+        size--;
+        entry = (Map.Entry)set.iterator().next();
+        entry = new DefaultMapEntry(entry.getKey(), entry.getValue());
+        r = set.remove(entry);
+        assertTrue("entrySet.remove for external entry should return true", r);
+        assertTrue("entrySet.size should shrink after successful remove", 
+		   set.size() == size - 1);
+        assertTrue("map size should shrink after succuessful entrySet.remove",
+		   m.size() == size - 1);
+        assertTrue("After remove, entrySet should not contain element", 
+		   !set.contains(entry));
+        entrySetEqualsMap(set, m);
+        r = set.remove(entry);
+        assertTrue("second entrySet.remove should return false", !r);
+    }
+
+
+    /**
+     *  Tests entrySet().removeAll() and entrySet().retainAll()
+     **/
+    public void testEntrySetBulkRemoveOperations() {
+	if (!isAddRemoveModifiable()) return;
+
+        Map m = makeFullMap();
+        Set set = m.entrySet();
+        Map m2 = new HashMap(m);
+        Set set2 = m2.entrySet();
+
+        Object[] entries = set2.toArray();
+        Collection c = Arrays.asList(entries).subList(2, 5);
+        boolean r = set.removeAll(c);
+        set2.removeAll(c);
+        assertTrue("entrySet().removeAll() returned false", r);
+        assertTrue("entrySet().removeAll() failed", m2.equals(m));
+        assertTrue("entrySet().removeAll() returned true", !set.removeAll(c));
+
+        m = makeFullMap();
+        set = m.entrySet();
+        m2 = new HashMap(m);
+        set2 = m2.entrySet();
+        entries = set2.toArray();
+        c = Arrays.asList(entries).subList(2, 5);
+        r = set.retainAll(c);
+        set2.retainAll(c);
+        assertTrue("entrySet().retainAll returned false", r);
+        assertTrue("entrySet().retainAll() failed", m2.equals(m));
+        assertTrue("entrySet().retainAll returned true", !set.retainAll(c));
+    }
+
 
     /**
      *  Tests:
@@ -693,9 +906,9 @@ public abstract class TestMap extends TestObject {
 
         while(iter.hasNext()) {
             Map.Entry entry = (Map.Entry)iter.next();
-            
-            assertTrue("Entry key from entry set iterator must exist in map",
-                       m.containsKey(entry.getKey()));
+
+            assertTrue("Entry key from entry set iterator must exist in map: " +
+		       entry, m.containsKey(entry.getKey()));
             try {
                 iter.remove();
                 // note: we do not check that the mapping was actually removed
@@ -726,6 +939,25 @@ public abstract class TestMap extends TestObject {
     }
 
     /**
+     *  utility method to ensure that a set of Map.Entry objects matches those
+     *  found in the specified map.
+     **/
+    protected void entrySetEqualsMap(Set set, Map m) {
+        Iterator iterator = set.iterator();
+        while (iterator.hasNext()) {
+            Map.Entry entry = (Map.Entry)iterator.next();
+            Object key = entry.getKey();
+            Object value = entry.getValue();
+            assertTrue("map should contain key found in entrySet", 
+		       m.containsKey(key));
+            Object v2 = m.get(key);
+            assertTrue("map should contain entry found in entrySet", 
+		       (value == null) ? v2 == null : value.equals(v2));
+        }
+    }
+
+
+    /**
      *  Tests whether the map's entrySet() is backed by the map by making sure
      *  a put in the map is reflected in the entrySet.  This test does nothing
      *  if add/remove modifications are not supported.
@@ -742,13 +974,14 @@ public abstract class TestMap extends TestObject {
                      m.isEmpty(), s.isEmpty());
         assertEquals("entrySet() must adjust size when map changes.",
                      m.size(), s.size());
-        // TODO: test set and map reflect the same contents
+
+        entrySetEqualsMap(s, m);
     }
 
     /**
      *  Tests whether the map's entrySet() is backed by the map by making sure
-     *  a remove from the map is reflected in the entrySet.  This test does nothing
-     *  if add/remove modifications are not supported.
+     *  a remove from the map is reflected in the entrySet.  This test does
+     *  nothing if add/remove modifications are not supported.
      **/
     public void testEntrySetChangesWithMapRemove() {
         if(!isAddRemoveModifiable()) return;
@@ -765,13 +998,46 @@ public abstract class TestMap extends TestObject {
                          m.isEmpty(), s.isEmpty());
             assertEquals("entrySet() must adjust size when map changes.",
                          m.size(), s.size());
-            //TODO: test set and map reflect the same contents
+            entrySetEqualsMap(s, m);
         }
     }
 
-    // TODO: test entrySet() changes after Map.remove
-    // TODO: test entrySet() changes after Map.clear
-    // TODO: test entrySet() changes after Map.putAll
+
+    /**
+     *  Tests whether the map's entrySet() is backed by the map by making sure
+     *  a clear on the map is reflected in the entrySet.  This test does
+     *  nothing if add/remove modifications are not supported.
+     **/
+    public void testEntrySetChangesWithMapClear() {
+        if (!isAddRemoveModifiable()) return;
+
+        Map m = makeFullMap();
+        Set s = m.entrySet();
+        m.clear();
+        assertTrue("entrySet() must be empty after map.clear()", s.isEmpty());
+    }
+
+
+    /**
+     *  Tests whether the map's entrySet() is backed by the map by making sure
+     *  a putAll on the map is reflected in the entrySet.  This test does
+     *  nothing if add/remove modifications are not supported.
+     **/
+    public void testEntrySetChangesWithMapPutAll() {
+        if (!isAddRemoveModifiable()) return;
+
+        Map m = makeFullMap();
+        Set s = m.entrySet();
+
+        Map m2 = new HashMap();
+        m2.put("1", "One");
+        m2.put("2", "Two");
+        m2.put("3", "Three");
+
+        m.putAll(m2);
+        entrySetEqualsMap(s, m);
+    }
+
 
     /**
      *  Tests whether the map's entrySet() is backed by the map by making sure
@@ -801,24 +1067,89 @@ public abstract class TestMap extends TestObject {
         }
     }
 
-    // TODO: test map changes after entrySet().remove
-    // TODO: test map changes after entrySet().removeAll
-    // TODO: test map changes after entrySet().retainAll
-
+    /**
+     *  Tests Map.equals(Object)
+     **/
     public void testMapEquals() {
-        // XXX finish me
+        Map m = makeEmptyMap();
+        assertTrue("Empty maps unequal.", m.equals(new HashMap()));
+
+        m = makeFullMap();
+        Map m2 = new HashMap();
+        m2.putAll(m);
+        assertTrue("Full maps unequal.", m.equals(m2));
+
+	// modify the HashMap created from the full map and make sure this
+	// change results in map.equals() to return false.
+        Iterator iter = m2.keySet().iterator();
+        iter.next();
+        iter.remove();
+        assertTrue("Different maps equal.", !m.equals(m2));
+
+        assertTrue("equals(null) returned true.", !m.equals(null));
+        assertTrue("equals(new Object()) returned true.", 
+		   !m.equals(new Object()));
     }
 
+    /**
+     *  Tests Map.get(Object)
+     **/
     public void testMapGet() {
-        // XXX finish me
+        Map m = makeEmptyMap();
+
+        Object[] keys = getSampleKeys();
+        Object[] values = getSampleValues();
+
+        for (int i = 0; i < keys.length; i++) {
+            assertTrue("Empty map.get() should return null.", 
+		       m.get(keys[i]) == null);
+        }
+
+        m = makeFullMap();
+        for (int i = 0; i < keys.length; i++) {
+	    assertEquals("Full map.get() should return value from mapping.", 
+			 values[i], m.get(keys[i]));
+        }
     }
 
+    /**
+     *  Tests Map.hashCode()
+     **/
     public void testMapHashCode() {
-        // XXX finish me
+        Map m = makeEmptyMap();
+	Map m2 = new HashMap();
+        assertTrue("Empty maps have different hashCodes.", 
+		   m.hashCode() == m2.hashCode());
+
+        m = makeFullMap();
+        m2.putAll(m);
+        assertTrue("Equal maps have different hashCodes.", 
+		   m.hashCode() == m2.hashCode());
     }
 
+    /**
+     *  Tests Map.toString().  Since the format of the string returned by the
+     *  toString() method is not defined in the Map interface, there is no
+     *  common way to test the results of the toString() method.  Thereforce,
+     *  it is encouraged that Map implementations override this test with one
+     *  that checks the format matches any format defined in its API.  This
+     *  default implementation just verifies that the toString() method does
+     *  not return null.
+     **/
+    public void testMapToString() {
+        Map m = makeEmptyMap();
+        String s = m.toString();
+        assertTrue("Empty map toString() should not return null", s != null);
+    }
+
+    /**
+     *  Tests Map.keySet()
+     **/
     public void testMapKeySet() {
-        // XXX finish me
+        Map m = makeFullMap();
+        Map m2 = new HashMap(m);
+        assertTrue("Equal maps have unequal keySets.", 
+		   m.keySet().equals(m2.keySet()));
     }
     
     //-------TEST AGAINST OPTIONAL OPERATIONS, ENABLE IN TEST SUBCLASSES
@@ -986,29 +1317,150 @@ public abstract class TestMap extends TestObject {
         assertEquals("Map is the right size",map.size(), getSampleKeys().length);
     }
 
-    /*
-        // optional operation
-public void testMapClear() {
-    // XXX finish me
-}
-
-    // optional operation
+    /**
+     *  Tests Map.put(Object, Object)
+     **/
     public void testMapPut() {
-        // XXX finish me
+        if (!isAddRemoveModifiable()) return;
+
+        Map m = makeEmptyMap();
+
+	Object[] keys = getSampleKeys();
+	Object[] values = getSampleValues();
+	Object[] newValues = getNewSampleValues();
+
+	for(int i = 0; i < keys.length; i++) {
+	    Object o = m.put(keys[i], values[i]);
+	    assertTrue("First map.put should return null", o == null);
+	    assertTrue("Map should contain key after put", 
+		       m.containsKey(keys[i]));
+	    assertTrue("Map should contain value after put", 
+		       m.containsValue(values[i]));
+	}
+	
+	for(int i = 0; i < keys.length; i++) {
+	    Object o = m.put(keys[i], newValues[i]);
+	    assertEquals("Second map.put should return previous value",
+			 values[i], o);
+	    assertTrue("Map should still contain key after put",
+		       m.containsKey(keys[i]));
+	    assertTrue("Map should contain new value after put",
+		       m.containsValue(newValues[i]));
+
+	    // if duplicates are allowed, we're not guarunteed that the value
+	    // no longer exists, so don't try checking that.
+	    if(!useDuplicateValues()) {
+		assertTrue("Map should not contain old value after second put",
+			   !m.containsValue(values[i]));
+	    }
+	}
     }
 
-    // optional operation
+    /**
+     *  Tests Map.putAll(Collection)
+     **/
     public void testMapPutAll() {
-        // XXX finish me
+        if (!isAddRemoveModifiable()) return;
+
+        Map m = makeEmptyMap();
+	Map m2 = makeFullMap();
+
+	m.putAll(m2);
+
+        assertTrue("Maps should be equal after putAll", m.equals(m2));
+
+	// repeat test with a different map implementation
+
+	m2 = new HashMap();
+	Object[] keys = getSampleKeys();
+	Object[] values = getSampleValues();
+	for(int i = 0; i < keys.length; i++) {
+	    m2.put(keys[i], values[i]);
+	}
+	
+	m = makeEmptyMap();
+	m.putAll(m2);
+	
+	assertTrue("Maps should be equal after putAll", m.equals(m2));
     }
 
-    // optional operation
+    /**
+     *  Tests Map.remove(Object)
+     **/
     public void testMapRemove() {
-        // XXX finish me
+        if (!isAddRemoveModifiable()) return;
+
+        Map m = makeEmptyMap();
+	Object[] keys = getSampleKeys();
+	for(int i = 0; i < keys.length; i++) {
+	    Object o = m.remove(keys[i]);
+	    assertTrue("First map.remove should return null", o == null);
+	}
+
+	m = makeFullMap();
+	int startSize = m.size();
+
+	Object[] values = getSampleValues();
+
+	for(int i = 0; i < keys.length; i++) {
+	    Object o = m.remove(keys[i]);
+
+	    assertEquals("map.remove with valid key should return value",
+			 values[i], o);
+	    assertEquals("map.remove should reduce size by one",
+			 (startSize - i) - 1, m.size());
+	}
     }
 
+    /**
+     *  Tests Map.values()
+     **/
     public void testMapValues() {
-        // XXX finish me
+        Map m = makeFullMap();
+
+        // since Collection.equals is reference-based, have to do
+        // this the long way...
+
+	Object[] values = getSampleValues();
+
+	Collection c = m.values();
+	
+	assertEquals("values() should have same size as map", 
+		     m.size(), c.size());
+
+	assertEquals("values() should have same number of sample values",
+		     values.length, c.size());
+
+	boolean[] matched = new boolean[values.length];
+
+	Iterator iter = c.iterator();
+	while(iter.hasNext()) {
+	    Object o = iter.next();
+	    boolean found = false;
+
+	    for(int i = 0; i < values.length; i++) {
+		// skip values already matched
+		if(matched[i]) continue;
+		
+		if((o == null && values[i] == null) ||
+		   (o != null && o.equals(values[i]))) {
+		    matched[i] = true;
+		    found = true;
+		    break;
+		}
+	    }
+
+	    if(!found) {
+		// no match for this element
+		fail("values() returned an unexpected value");
+	    }
+	}
+
+	for(int i = 0; i < matched.length; i++) {
+	    if(!matched[i]) {
+		fail("values() did not return all values from map");
+	    }
+	}
     }
 
     /**

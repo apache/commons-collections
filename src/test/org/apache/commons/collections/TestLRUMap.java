@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.20 2002/05/09 03:20:59 mas Exp $
- * $Revision: 1.20 $
- * $Date: 2002/05/09 03:20:59 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.21 2002/05/28 06:51:03 mas Exp $
+ * $Revision: 1.21 $
+ * $Date: 2002/05/28 06:51:03 $
  *
  * ====================================================================
  *
@@ -68,12 +68,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.20 2002/05/09 03:20:59 mas Exp $
+ * @version $Id: TestLRUMap.java,v 1.21 2002/05/28 06:51:03 mas Exp $
  */
 public class TestLRUMap extends TestSequencedHashMap
 {
@@ -219,6 +220,13 @@ public class TestLRUMap extends TestSequencedHashMap
 
         assertTrue("oldest key is '4'",counter.get(0).equals("4"));
         assertTrue("newest key is '2'",counter.get(1).equals("2"));
+    }
+
+
+    protected void entrySetEqualsMap(Set set, Map m) {
+        // Overridden because LRUMap.get(Object) actually alters the map,
+        // so there's no way to verify that the entry set and map contain
+        // the same entries
     }
 
     private class LRUCounter extends LRUMap {
