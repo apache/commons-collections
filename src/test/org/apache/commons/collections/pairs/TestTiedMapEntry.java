@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestAll.java,v 1.3 2003/11/02 19:45:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestTiedMapEntry.java,v 1.1 2003/11/02 19:45:48 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,37 +57,81 @@
  */
 package org.apache.commons.collections.pairs;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Entry point for key-value test cases.
+ * Test the TiedMapEntry class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/02 19:45:48 $
+ * @version $Revision: 1.1 $ $Date: 2003/11/02 19:45:48 $
  * 
- * @author Neil O'Toole
+ * @author Stephen Colebourne
  */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestTiedMapEntry extends AbstractTestMapEntry {
+
+    public TestTiedMapEntry(String testName) {
         super(testName);
+
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(TestTiedMapEntry.class);
     }
-    
+
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestDefaultKeyValue.suite());
-        suite.addTest(TestDefaultMapEntry.suite());
-        suite.addTest(TestTiedMapEntry.suite());
-        suite.addTest(TestUnmodifiableMapEntry.suite());
-        return suite;
+        return new TestSuite(TestTiedMapEntry.class);
     }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the instance to test
+     */
+    public Map.Entry makeMapEntry(Object key, Object value) {
+        Map map = new HashMap();
+        map.put(key, value);
+        return new TiedMapEntry(map, key);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Tests the constructors.
+     */
+    public void testConstructors() {
+        // ignore
+    }
+
+    /**
+     * Tests the constructors.
+     */
+    public void testSetValue() {
+        Map map = new HashMap();
+        map.put("A", "a");
+        map.put("B", "b");
+        map.put("C", "c");
+        Map.Entry entry = new TiedMapEntry(map, "A");
+        assertSame("A", entry.getKey());
+        assertSame("a", entry.getValue());
+        assertSame("a", entry.setValue("x"));
+        assertSame("A", entry.getKey());
+        assertSame("x", entry.getValue());
         
+        entry = new TiedMapEntry(map, "B");
+        assertSame("B", entry.getKey());
+        assertSame("b", entry.getValue());
+        assertSame("b", entry.setValue("y"));
+        assertSame("B", entry.getKey());
+        assertSame("y", entry.getValue());
+        
+        entry = new TiedMapEntry(map, "C");
+        assertSame("C", entry.getKey());
+        assertSame("c", entry.getValue());
+        assertSame("c", entry.setValue("z"));
+        assertSame("C", entry.getKey());
+        assertSame("z", entry.getValue());
+    }
+
 }
