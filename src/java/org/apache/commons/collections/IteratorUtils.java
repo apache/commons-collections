@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.8 2003/01/10 20:21:23 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.9 2003/01/15 21:55:43 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -83,6 +83,8 @@ import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.LoopingIterator;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.iterators.ObjectArrayListIterator;
+import org.apache.commons.collections.iterators.ResetableIterator;
+import org.apache.commons.collections.iterators.ResetableListIterator;
 import org.apache.commons.collections.iterators.SingletonIterator;
 import org.apache.commons.collections.iterators.SingletonListIterator;
 import org.apache.commons.collections.iterators.TransformIterator;
@@ -91,9 +93,10 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * instances. The implementations are provided in the 
  * {@link org.apache.commons.collections.iterators} subpackage.
  *
- * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Revision: 1.8 $ $Date: 2003/01/10 20:21:23 $
  * @since Commons Collections 2.1
+ * @version $Revision: 1.9 $ $Date: 2003/01/15 21:55:43 $
+ * 
+ * @author Stephen Colebourne
  */
 public class IteratorUtils {
     // validation is done in this class in certain cases because the
@@ -125,8 +128,8 @@ public class IteratorUtils {
      *
      * @return  an iterator over nothing
      */
-    public static Iterator emptyIterator() {
-        return EMPTY_ITERATOR;
+    public static ResetableIterator emptyIterator() {
+        return (ResetableIterator) EMPTY_ITERATOR;
     }
 
     /**
@@ -137,8 +140,8 @@ public class IteratorUtils {
      *
      * @return  a list iterator over nothing
      */
-    public static ListIterator emptyListIterator() {
-        return EMPTY_LIST_ITERATOR;
+    public static ResetableListIterator emptyListIterator() {
+        return (ResetableListIterator) EMPTY_LIST_ITERATOR;
     }
 
     /**
@@ -150,7 +153,7 @@ public class IteratorUtils {
      * @param object  the single object over which to iterate
      * @return  a singleton iterator over the object
      */
-    public static Iterator singletonIterator(Object object) {
+    public static ResetableIterator singletonIterator(Object object) {
         return new SingletonIterator(object);
     }
 
@@ -163,7 +166,7 @@ public class IteratorUtils {
      * @param object  the single object over which to iterate
      * @return  a singleton list iterator over the object
      */
-    public static ListIterator singletonListIterator(Object object) {
+    public static ResetableListIterator singletonListIterator(Object object) {
         return new SingletonListIterator(object);
     }
 
@@ -177,7 +180,7 @@ public class IteratorUtils {
      * @return  an iterator over the array
      * @throws NullPointerException if array is null
      */
-    public static Iterator arrayIterator(Object[] array) {
+    public static ResetableIterator arrayIterator(Object[] array) {
         return new ObjectArrayIterator(array);
     }
 
@@ -192,7 +195,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if the array is not an array
      * @throws NullPointerException if array is null
      */
-    public static Iterator arrayIterator(Object array) {
+    public static ResetableIterator arrayIterator(Object array) {
         return new ArrayIterator(array);
     }
 
@@ -205,7 +208,7 @@ public class IteratorUtils {
      * @throws IndexOutOfBoundsException if start is less than zero
      * @throws NullPointerException if array is null
      */
-    public static Iterator arrayIterator(Object[] array, int start) {
+    public static ResetableIterator arrayIterator(Object[] array, int start) {
         return new ObjectArrayIterator(array, start);
     }
 
@@ -222,7 +225,7 @@ public class IteratorUtils {
      * @throws IndexOutOfBoundsException if start is less than zero
      * @throws NullPointerException if array is null
      */
-    public static Iterator arrayIterator(Object array, int start) {
+    public static ResetableIterator arrayIterator(Object array, int start) {
         return new ArrayIterator(array, start);
     }
 
@@ -237,7 +240,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
-    public static Iterator arrayIterator(Object[] array, int start, int end) {
+    public static ResetableIterator arrayIterator(Object[] array, int start, int end) {
         return new ObjectArrayIterator(array, start, end);
     }
 
@@ -256,7 +259,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
-    public static Iterator arrayIterator(Object array, int start, int end) {
+    public static ResetableIterator arrayIterator(Object array, int start, int end) {
         return new ArrayIterator(array, start, end);
     }
 
@@ -267,7 +270,7 @@ public class IteratorUtils {
      * @return  a list iterator over the array
      * @throws NullPointerException if array is null
      */
-    public static ListIterator arrayListIterator(Object[] array) {
+    public static ResetableListIterator arrayListIterator(Object[] array) {
         return new ObjectArrayListIterator(array);
     }
 
@@ -282,7 +285,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if the array is not an array
      * @throws NullPointerException if array is null
      */
-    public static ListIterator arrayListIterator(Object array) {
+    public static ResetableListIterator arrayListIterator(Object array) {
         return new ArrayListIterator(array);
     }
 
@@ -295,7 +298,7 @@ public class IteratorUtils {
      * @throws IndexOutOfBoundsException if start is less than zero
      * @throws NullPointerException if array is null
      */
-    public static ListIterator arrayListIterator(Object[] array, int start) {
+    public static ResetableListIterator arrayListIterator(Object[] array, int start) {
         return new ObjectArrayListIterator(array, start);
     }
 
@@ -312,7 +315,7 @@ public class IteratorUtils {
      * @throws IndexOutOfBoundsException if start is less than zero
      * @throws NullPointerException if array is null
      */
-    public static ListIterator arrayListIterator(Object array, int start) {
+    public static ResetableListIterator arrayListIterator(Object array, int start) {
         return new ArrayListIterator(array, start);
     }
 
@@ -327,7 +330,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
-    public static ListIterator arrayListIterator(Object[] array, int start, int end) {
+    public static ResetableListIterator arrayListIterator(Object[] array, int start, int end) {
         return new ObjectArrayListIterator(array, start, end);
     }
     
@@ -346,7 +349,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if end is before start
      * @throws NullPointerException if array is null
      */
-    public static ListIterator arrayListIterator(Object array, int start, int end) {
+    public static ResetableListIterator arrayListIterator(Object array, int start, int end) {
         return new ArrayListIterator(array, start, end);
     }
     
@@ -358,10 +361,13 @@ public class IteratorUtils {
      * will always throw an {@link UnsupportedOperationException} for
      * the {@link Iterator#remove} method.
      *
-     * @param iterator The iterator to make immutable.
-     * @return An immutable version of the iterator.
+     * @param iterator  the iterator to make immutable
+     * @return an immutable version of the iterator
      */
     public static Iterator unmodifiableIterator(Iterator iterator) {
+        if (iterator instanceof ResetableIterator) {
+            return new ResetableUnmodifiableIterator((ResetableIterator) iterator);
+        }
         return new UnmodifiableIterator(iterator);
     }
     
@@ -371,10 +377,13 @@ public class IteratorUtils {
      * the {@link Iterator#remove}, {@link ListIterator#add} and
      * {@link ListIterator#set} methods.
      *
-     * @param listIterator The iterator to make immutable.
-     * @return An immutable version of the iterator.
+     * @param listIterator  the iterator to make immutable
+     * @return an immutable version of the iterator
      */
     public static ListIterator unmodifiableListIterator(ListIterator listIterator) {
+        if (listIterator instanceof ResetableListIterator) {
+            return new ResetableUnmodifiableListIterator((ResetableListIterator) listIterator);
+        }
         return new UnmodifiableListIterator(listIterator);
     }
 
@@ -545,7 +554,7 @@ public class IteratorUtils {
      * @param coll  the collection to iterate over, not null
      * @throws NullPointerException if the collection is null
      */
-    public static Iterator loopingIterator(Collection coll) {
+    public static ResetableIterator loopingIterator(Collection coll) {
         if (coll == null) {
             throw new NullPointerException("Collection must not be null");
         }
@@ -751,7 +760,7 @@ public class IteratorUtils {
     /**
      * EmptyIterator class
      */
-    static class EmptyIterator implements Iterator {
+    static class EmptyIterator implements ResetableIterator {
         
         /**
          * @see java.util.Iterator#hasNext()
@@ -773,13 +782,20 @@ public class IteratorUtils {
         public void remove() {
             throw new UnsupportedOperationException("remove() not supported for empty Iterator");
         }
+        
+        /**
+         * Reset the iterator
+         */
+        public void reset() {
+            // do nothing
+        }
 
     }
     
     /**
      * EmptyListIterator class
      */
-    static class EmptyListIterator extends EmptyIterator implements ListIterator {
+    static class EmptyListIterator extends EmptyIterator implements ResetableListIterator {
         
         /**
          * @see java.util.ListIterator#hasPrevious()
@@ -831,6 +847,7 @@ public class IteratorUtils {
      * always throws an {@link java.lang.UnsupportedOperationException}.
      *
      * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
+     * @author Stephen Colebourne
      */
     static class UnmodifiableIterator implements Iterator, Serializable {
 
@@ -842,7 +859,7 @@ public class IteratorUtils {
         /**
          * Create an UnmodifiableIterator.
          *
-         * @param delegate The delegate to pass all calls to.
+         * @param delegate  the delegate to pass all calls to
          */
         public UnmodifiableIterator(Iterator delegate) {
             this.delegate = delegate;
@@ -862,6 +879,31 @@ public class IteratorUtils {
 
     }
 
+    /**
+     * An unmodifiable resetable iterator.
+     *
+     * @author Stephen Colebourne
+     */
+    static class ResetableUnmodifiableIterator extends UnmodifiableIterator implements ResetableIterator {
+        
+        /**
+         * Create a ResetableUnmodifiableIterator.
+         *
+         * @param delegate  the delegate to pass all calls to
+         */
+        public ResetableUnmodifiableIterator(ResetableIterator delegate) {
+            super(delegate);
+        }
+
+        /**
+         * Reset the iterator
+         */
+        public void reset() {
+            ((ResetableIterator) delegate).reset();
+        }
+
+    }
+    
     /**
      * A wrapper for an {@link java.util.ListIterator} which makes it immutable.
      * All calls are passed through to the delegate. The {@link #remove()},
@@ -923,4 +965,30 @@ public class IteratorUtils {
             throw new UnsupportedOperationException("This iterator is immutable");
         }
     }
+    
+    /**
+     * An unmodifiable resetable list iterator.
+     *
+     * @author Stephen Colebourne
+     */
+    static class ResetableUnmodifiableListIterator extends UnmodifiableListIterator implements ResetableListIterator {
+            
+        /**
+         * Create a ResetableUnmodifiableListIterator.
+         *
+         * @param delegate  the delegate to pass all calls to
+         */
+        public ResetableUnmodifiableListIterator(ResetableListIterator delegate) {
+            super(delegate);
+        }
+    
+        /**
+         * Reset the iterator
+         */
+        public void reset() {
+            ((ResetableListIterator) delegate).reset();
+        }
+    
+    }
+        
 }
