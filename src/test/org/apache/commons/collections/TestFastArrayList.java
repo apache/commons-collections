@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
- * $Revision: 1.3 $
- * $Date: 2001/04/21 12:22:30 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.4 2002/02/26 17:31:51 morgand Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/02/26 17:31:51 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList.java,v 1.3 2001/04/21 12:22:30 craigmcc Exp $
+ * @version $Id: TestFastArrayList.java,v 1.4 2002/02/26 17:31:51 morgand Exp $
  */
 public class TestFastArrayList extends TestArrayList
 {
@@ -91,10 +91,10 @@ public class TestFastArrayList extends TestArrayList
 
     public void setUp()
     {
-        list = (ArrayList) makeList();
+        list = (ArrayList) makeEmptyList();
     }
 
-    public List makeList()
+    public List makeEmptyList()
     {
         FastArrayList fal = new FastArrayList();
         fal.setFast(false);
