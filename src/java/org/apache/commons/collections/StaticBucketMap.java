@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.14 2003/12/06 13:03:15 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.15 2003/12/14 16:10:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -131,7 +131,7 @@ import java.util.Set;
  *
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
- * @version $Revision: 1.14 $ $Date: 2003/12/06 13:03:15 $
+ * @version $Revision: 1.15 $ $Date: 2003/12/14 16:10:38 $
  * 
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
@@ -625,8 +625,11 @@ public final class StaticBucketMap implements Map {
             return false;
         }
 
-        public boolean remove(Object o) {
-            Map.Entry entry = (Map.Entry)o;
+        public boolean remove(Object obj) {
+            if (obj instanceof Map.Entry == false) {
+                return false;
+            }
+            Map.Entry entry = (Map.Entry) obj;
             int hash = getHash(entry.getKey());
             synchronized (m_locks[hash]) {
                 for (Node n = m_buckets[hash]; n != null; n = n.next) {
