@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.12 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.13 2003/09/21 16:26:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,13 +67,15 @@ import org.apache.commons.collections.decorators.TypedBag;
 import org.apache.commons.collections.decorators.TypedSortedBag;
 import org.apache.commons.collections.decorators.UnmodifiableBag;
 import org.apache.commons.collections.decorators.UnmodifiableSortedBag;
+import org.apache.commons.collections.observed.ModificationListener;
+import org.apache.commons.collections.observed.ObservableBag;
 
 /**
- * Provides utility methods and decorators for {@link Bag} 
- * and {@link SortedBag} instances.
+ * Provides utility methods and decorators for
+ * {@link Bag} and {@link SortedBag} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.12 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.13 $ $Date: 2003/09/21 16:26:08 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -185,6 +187,26 @@ public class BagUtils {
      */
     public static Bag transformedBag(Bag bag, Transformer transformer) {
         return TransformedBag.decorate(bag, transformer);
+    }
+    
+    /**
+     * Returns an observable bag where changes are notified to listeners.
+     * <p>
+     * This method creates an observable bag and attaches the specified listener.
+     * If more than one listener or other complex setup is required then the
+     * ObservableBag class should be accessed directly.
+     *
+     * @param bag  the bag to decorate, must not be null
+     * @param listener  bag listener, must not be null
+     * @return the observed bag
+     * @throws IllegalArgumentException if the bag or listener is null
+     * @throws IllegalArgumentException if there is no valid handler for the listener
+     */
+    public static ObservableBag observableBag(Bag bag, ModificationListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
+        return ObservableBag.decorate(bag, listener);
     }
     
     //-----------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.13 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.14 2003/09/21 16:26:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,12 +63,14 @@ import org.apache.commons.collections.decorators.SynchronizedBuffer;
 import org.apache.commons.collections.decorators.TransformedBuffer;
 import org.apache.commons.collections.decorators.TypedBuffer;
 import org.apache.commons.collections.decorators.UnmodifiableBuffer;
+import org.apache.commons.collections.observed.ModificationListener;
+import org.apache.commons.collections.observed.ObservableBuffer;
 
 /**
- * Contains static utility methods for operating on {@link Buffer} objects.
+ * Provides utility methods and decorators for {@link Buffer} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.13 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.14 $ $Date: 2003/09/21 16:26:08 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -78,7 +80,7 @@ public class BufferUtils {
     /**
      * An empty unmodifiable buffer.
      */
-    public static final Buffer EMPTY_BUFFER = UnmodifiableBuffer.decorate(new ArrayStack());
+    public static final Buffer EMPTY_BUFFER = UnmodifiableBuffer.decorate(new ArrayStack(1));
     
     /**
      * <code>BufferUtils</code> should not normally be instantiated.
@@ -86,6 +88,7 @@ public class BufferUtils {
     public BufferUtils() {
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized buffer backed by the given buffer.
      * Much like the synchronized collections returned by 
@@ -181,6 +184,26 @@ public class BufferUtils {
      */
     public static Buffer transformedBuffer(Buffer buffer, Transformer transformer) {
         return TransformedBuffer.decorate(buffer, transformer);
+    }
+    
+    /**
+     * Returns an observable buffer where changes are notified to listeners.
+     * <p>
+     * This method creates an observable buffer and attaches the specified listener.
+     * If more than one listener or other complex setup is required then the
+     * ObservableBuffer class should be accessed directly.
+     *
+     * @param buffer  the buffer to decorate, must not be null
+     * @param listener  buffer listener, must not be null
+     * @return the observed buffer
+     * @throws IllegalArgumentException if the buffer or listener is null
+     * @throws IllegalArgumentException if there is no valid handler for the listener
+     */
+    public static ObservableBuffer observableBuffer(Buffer buffer, ModificationListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
+        return ObservableBuffer.decorate(buffer, listener);
     }
     
 }

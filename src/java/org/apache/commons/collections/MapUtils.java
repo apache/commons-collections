@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.36 2003/09/20 12:03:52 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.37 2003/09/21 16:26:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,9 +80,12 @@ import org.apache.commons.collections.decorators.TransformedMap;
 import org.apache.commons.collections.decorators.TransformedSortedMap;
 import org.apache.commons.collections.decorators.TypedMap;
 import org.apache.commons.collections.decorators.TypedSortedMap;
+import org.apache.commons.collections.decorators.UnmodifiableMap;
+import org.apache.commons.collections.decorators.UnmodifiableSortedMap;
 
 /** 
- * Provides useful utility methods for {@link Map Map} instances.
+ * Provides utility methods and decorators for
+ * {@link Map} and {@link SortedMap} instances.
  * <p>
  * It contains various typesafe methods
  * as well as other useful features like deep copying.
@@ -105,7 +108,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.36 $ $Date: 2003/09/20 12:03:52 $
+ * @version $Revision: 1.37 $ $Date: 2003/09/21 16:26:08 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -890,14 +893,14 @@ public class MapUtils {
     /**
      * Returns an unmodifiable map backed by the given map.
      * <p>
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      *
      * @param map  the map to make unmodifiable, must not be null
      * @return an unmodifiable map backed by the given map
      * @throws IllegalArgumentException  if the map is null
      */
     public static Map unmodifiableMap(Map map) {
-        return Collections.unmodifiableMap(map);
+        return UnmodifiableMap.decorate(map);
     }
 
     /**
@@ -1065,14 +1068,14 @@ public class MapUtils {
     /**
      * Returns an unmodifiable sorted map backed by the given sorted map.
      * <p>
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      *
      * @param map  the sorted map to make unmodifiable, must not be null
      * @return an unmodifiable map backed by the given map
      * @throws IllegalArgumentException  if the map is null
      */
     public static Map unmodifiableSortedMap(SortedMap map) {
-        return Collections.unmodifiableSortedMap(map);
+        return UnmodifiableSortedMap.decorate(map);
     }
 
     /**

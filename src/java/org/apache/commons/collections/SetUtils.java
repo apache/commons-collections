@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.16 2003/09/09 22:28:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.17 2003/09/21 16:26:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,17 +67,23 @@ import java.util.TreeSet;
 import org.apache.commons.collections.decorators.OrderedSet;
 import org.apache.commons.collections.decorators.PredicatedSet;
 import org.apache.commons.collections.decorators.PredicatedSortedSet;
+import org.apache.commons.collections.decorators.SynchronizedSet;
+import org.apache.commons.collections.decorators.SynchronizedSortedSet;
 import org.apache.commons.collections.decorators.TransformedSet;
 import org.apache.commons.collections.decorators.TransformedSortedSet;
 import org.apache.commons.collections.decorators.TypedSet;
 import org.apache.commons.collections.decorators.TypedSortedSet;
+import org.apache.commons.collections.decorators.UnmodifiableSet;
+import org.apache.commons.collections.decorators.UnmodifiableSortedSet;
+import org.apache.commons.collections.observed.ModificationListener;
+import org.apache.commons.collections.observed.ObservableSet;
 
 /**
- * Provides static utility methods and decorators for {@link Set} 
- * and {@link SortedSet} instances.
+ * Provides utility methods and decorators for
+ * {@link Set} and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.16 $ $Date: 2003/09/09 22:28:36 $
+ * @version $Revision: 1.17 $ $Date: 2003/09/21 16:26:08 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -190,27 +196,27 @@ public class SetUtils {
      * }
      * </pre>
      * 
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      * 
      * @param set  the set to synchronize, must not be null
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
     public static Set synchronizedSet(Set set) {
-        return Collections.synchronizedSet(set);
+        return SynchronizedSet.decorate(set);
     }
 
     /**
      * Returns an unmodifiable set backed by the given set.
      * <p>
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      *
      * @param set  the set to make unmodifiable, must not be null
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
     public static Set unmodifiableSet(Set set) {
-        return Collections.unmodifiableSet(set);
+        return UnmodifiableSet.decorate(set);
     }
 
     /**
@@ -257,6 +263,25 @@ public class SetUtils {
         return TransformedSet.decorate(set, transformer);
     }
     
+    /**
+     * Returns an observable set where changes are notified to listeners.
+     * <p>
+     * This method creates an observable set and attaches the specified listener.
+     * If more than one listener or other complex setup is required then the
+     * ObservableSet class should be accessed directly.
+     *
+     * @param set  the set to decorate, must not be null
+     * @param listener  set listener, must not be null
+     * @return the observed set
+     * @throws IllegalArgumentException if the set or listener is null
+     * @throws IllegalArgumentException if there is no valid handler for the listener
+     */
+    public static ObservableSet observableSet(Set set, ModificationListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
+        return ObservableSet.decorate(set, listener);
+    }
     
     /**
      * Returns a set that maintains the order of elements that are added
@@ -290,27 +315,27 @@ public class SetUtils {
      * }
      * </pre>
      * 
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      * 
      * @param set  the sorted set to synchronize, must not be null
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
     public static SortedSet synchronizedSortedSet(SortedSet set) {
-        return Collections.synchronizedSortedSet(set);
+        return SynchronizedSortedSet.decorate(set);
     }
 
     /**
      * Returns an unmodifiable sorted set backed by the given sorted set.
      * <p>
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      *
      * @param set  the sorted set to make unmodifiable, must not be null
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
     public static SortedSet unmodifiableSortedSet(SortedSet set) {
-        return Collections.unmodifiableSortedSet(set);
+        return UnmodifiableSortedSet.decorate(set);
     }
 
     /**

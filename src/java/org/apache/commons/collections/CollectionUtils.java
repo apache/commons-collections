@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.41 2003/09/09 21:53:04 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.42 2003/09/21 16:26:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,17 +70,21 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.decorators.PredicatedCollection;
+import org.apache.commons.collections.decorators.SynchronizedCollection;
 import org.apache.commons.collections.decorators.TransformedCollection;
 import org.apache.commons.collections.decorators.TypedCollection;
 import org.apache.commons.collections.decorators.UnmodifiableBoundedCollection;
+import org.apache.commons.collections.decorators.UnmodifiableCollection;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
+import org.apache.commons.collections.observed.ModificationListener;
+import org.apache.commons.collections.observed.ObservableCollection;
 
 /**
- * A set of {@link Collection} related utility methods.
+ * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.41 $ $Date: 2003/09/09 21:53:04 $
+ * @version $Revision: 1.42 $ $Date: 2003/09/21 16:26:08 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -911,27 +915,27 @@ public class CollectionUtils {
      * }
      * </pre>
      * 
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      * 
      * @param collection  the collection to synchronize, must not be null
      * @return a synchronized collection backed by the given collection
      * @throws IllegalArgumentException  if the collection is null
      */
     public static Collection synchronizedCollection(Collection collection) {
-        return Collections.synchronizedCollection(collection);
+        return SynchronizedCollection.decorate(collection);
     }
 
     /**
      * Returns an unmodifiable collection backed by the given collection.
      * <p>
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      *
      * @param collection  the collection to make unmodifiable, must not be null
      * @return an unmodifiable collection backed by the given collection
      * @throws IllegalArgumentException  if the collection is null
      */
     public static Collection unmodifiableCollection(Collection collection) {
-        return Collections.unmodifiableCollection(collection);
+        return UnmodifiableCollection.decorate(collection);
     }
 
     /**
@@ -979,6 +983,26 @@ public class CollectionUtils {
      */
     public static Collection transformedCollection(Collection collection, Transformer transformer) {
         return TransformedCollection.decorate(collection, transformer);
+    }
+    
+    /**
+     * Returns an observable collection where changes are notified to listeners.
+     * <p>
+     * This method creates an observable collection and attaches the specified listener.
+     * If more than one listener or other complex setup is required then the
+     * ObservableCollection class should be accessed directly.
+     *
+     * @param collection  the collection to decorate, must not be null
+     * @param listener  collection listener, must not be null
+     * @return the observed collection
+     * @throws IllegalArgumentException if the collection or listener is null
+     * @throws IllegalArgumentException if there is no valid handler for the listener
+     */
+    public static ObservableCollection observableCollection(Collection collection, ModificationListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
+        return ObservableCollection.decorate(collection, listener);
     }
     
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.20 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.21 2003/09/21 16:26:08 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,18 +66,21 @@ import java.util.List;
 import org.apache.commons.collections.decorators.FixedSizeList;
 import org.apache.commons.collections.decorators.LazyList;
 import org.apache.commons.collections.decorators.PredicatedList;
+import org.apache.commons.collections.decorators.SynchronizedList;
 import org.apache.commons.collections.decorators.TransformedList;
 import org.apache.commons.collections.decorators.TypedList;
+import org.apache.commons.collections.decorators.UnmodifiableList;
+import org.apache.commons.collections.observed.ModificationListener;
+import org.apache.commons.collections.observed.ObservableList;
 
 /**
- * Contains static utility methods and decorators for {@link List} 
- * instances.
+ * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.20 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.21 $ $Date: 2003/09/21 16:26:08 $
  * 
- * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
- * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
+ * @author Federico Barbieri
+ * @author Peter Donald
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Neil O'Toole
@@ -126,6 +129,7 @@ public class ListUtils {
     /**
      * Subtracts all elements in the second list from the first list,
      * placing the results in a new list.
+     * <p>
      * This differs from {@link List#removeAll(Collection)} in that
      * cardinality is respected; if <Code>list1</Code> contains two
      * occurrences of <Code>null</Code> and <Code>list2</Code> only
@@ -275,27 +279,27 @@ public class ListUtils {
      * }
      * </pre>
      * 
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      * 
      * @param list  the list to synchronize, must not be null
      * @return a synchronized list backed by the given list
      * @throws IllegalArgumentException  if the list is null
      */
     public static List synchronizedList(List list) {
-        return Collections.synchronizedList(list);
+        return SynchronizedList.decorate(list);
     }
 
     /**
      * Returns an unmodifiable list backed by the given list.
      * <p>
-     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * This method uses the implementation in the decorators subpackage.
      *
      * @param list  the list to make unmodifiable, must not be null
      * @return an unmodifiable list backed by the given list
      * @throws IllegalArgumentException  if the list is null
      */
     public static List unmodifiableList(List list) {
-        return Collections.unmodifiableList(list);
+        return UnmodifiableList.decorate(list);
     }
 
     /**
@@ -343,7 +347,27 @@ public class ListUtils {
     }
     
     /**
-     * Returns a "lazy" list whose elements will be created on demand.<P>
+     * Returns an observable list where changes are notified to listeners.
+     * <p>
+     * This method creates an observable list and attaches the specified listener.
+     * If more than one listener or other complex setup is required then the
+     * ObservableList class should be accessed directly.
+     *
+     * @param list  the list to decorate, must not be null
+     * @param listener  list listener, must not be null
+     * @return the observed list
+     * @throws IllegalArgumentException if the list or listener is null
+     * @throws IllegalArgumentException if there is no valid handler for the listener
+     */
+    public static ObservableList observableList(List list, ModificationListener listener) {
+        if (listener == null) {
+            throw new IllegalArgumentException("Listener must not be null");
+        }
+        return ObservableList.decorate(list, listener);
+    }
+    
+    /**
+     * Returns a "lazy" list whose elements will be created on demand.
      * <p>
      * When the index passed to the returned list's {@link List#get(int) get}
      * method is greater than the list's size, then the factory will be used
