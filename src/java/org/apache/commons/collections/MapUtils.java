@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.31 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.32 2003/08/31 17:52:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -105,7 +105,7 @@ import org.apache.commons.collections.decorators.TypedSortedMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.31 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.32 $ $Date: 2003/08/31 17:52:13 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -686,11 +686,11 @@ public class MapUtils {
      * When the value is a Map, recursive behaviour occurs.
      *
      * @param out  the stream to print to, must not be null
-     * @param label  the label to be applied to the output generated.  This 
-     *              may well be the key associated with this map within a 
-     *              surrounding map in which this is nested.  If the label is 
-     *              <code>null</code> then no label is output.
-     * @param map  the map to print, may be <code>null</code>
+     * @param label  The label to be used, may be <code>null</code>.
+     *  If <code>null</code>, the label is not output.
+     *  It typically represents the name of the property in a bean or similar.
+     * @param map  The map to print, may be <code>null</code>.
+     *  If <code>null</code>, the text 'null' is output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
     public static synchronized void verbosePrint(
@@ -710,11 +710,11 @@ public class MapUtils {
      * When the value is a Map, recursive behaviour occurs.
      *
      * @param out  the stream to print to, must not be null
-     * @param label  the label to be applied to the output generated.  This 
-     *              may well be the key associated with this map within a 
-     *              surrounding map in which this is nested.  If the label is 
-     *              <code>null</code> then no label is output.
-     * @param map  the map to print, may be <code>null</code>
+     * @param label  The label to be used, may be <code>null</code>.
+     *  If <code>null</code>, the label is not output.
+     *  It typically represents the name of the property in a bean or similar.
+     * @param map  The map to print, may be <code>null</code>.
+     *  If <code>null</code>, the text 'null' is output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
     public static synchronized void debugPrint(
@@ -756,11 +756,11 @@ public class MapUtils {
      * value.
      *
      * @param out  the stream to print to
-     * @param label  the label to be applied to the output generated.  This 
-     *              may well be the key associated with this map within a 
-     *              surrounding map in which this is nested.  If the label is 
-     *              <code>null</code>, then it is not output.
-     * @param map  the map to print, may be <code>null</code>
+     * @param label  The label to be used, may be <code>null</code>.
+     *  If <code>null</code>, the label is not output.
+     *  It typically represents the name of the property in a bean or similar.
+     * @param map  The map to print, may be <code>null</code>.
+     *  If <code>null</code>, the text 'null' is output.
      * @param debug flag indicating whether type names should be output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
@@ -772,13 +772,17 @@ public class MapUtils {
 
         printIndent(out);
 
+        if (map == null) {
+            if (label != null) {
+                out.print(label);
+                out.print(" = ");
+            }
+            out.println("null");
+            return;
+        }
         if (label != null) {
             out.print(label);
-            out.print(" = ");
-            out.println(map == null ? "null" : "");
-        }
-        if (map == null) {
-            return;
+            out.println(" = ");
         }
 
         printIndent(out);

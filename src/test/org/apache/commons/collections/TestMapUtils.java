@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.9 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.10 2003/08/31 17:52:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import junit.framework.Test;
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.9 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.10 $ $Date: 2003/08/31 17:52:13 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -400,17 +400,25 @@ public class TestMapUtils extends BulkTest {
     public void testVerbosePrintNullLabelAndMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
+        
+        outPrint.println("null");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
 
         MapUtils.verbosePrint(outPrint, null, null);
-        assertEquals("", out.toString());
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
     public void testDebugPrintNullLabelAndMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
 
+        outPrint.println("null");
+        final String EXPECTED_OUT = out.toString();
+        out.reset();
+
         MapUtils.debugPrint(outPrint, null, null);
-        assertEquals("", out.toString());
+        assertEquals(EXPECTED_OUT, out.toString());
     }
 
     public void testVerbosePrintNullStream() {
