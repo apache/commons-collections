@@ -25,7 +25,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.7 $ $Date: 2004/02/27 00:25:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -51,6 +51,14 @@ public class TestHashedMap extends AbstractTestIterableMap {
         return "3";
     }
 
+    public void testClone() {
+        HashedMap map = new HashedMap(10);
+        map.put("1", "1");
+        Map cloned = (Map) map.clone();
+        assertEquals(map.size(), cloned.size());
+        assertSame(map.get("1"), cloned.get("1"));
+    }
+    
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/HashedMap.emptyCollection.version3.obj");

@@ -27,7 +27,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
  * 
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.4 $ $Date: 2004/02/27 00:25:14 $
  * 
  * @author Commons-Collections team
  */
@@ -100,6 +100,14 @@ public class TestCaseInsensitiveMap extends AbstractTestIterableMap {
         assertEquals(caseInsensitiveMap.get(null), "Four");
     } 
 
+    public void testClone() {
+        CaseInsensitiveMap map = new CaseInsensitiveMap(10);
+        map.put("1", "1");
+        Map cloned = (Map) map.clone();
+        assertEquals(map.size(), cloned.size());
+        assertSame(map.get("1"), cloned.get("1"));
+    }
+    
     /*
     public void testCreate() throws Exception {
         resetEmpty();

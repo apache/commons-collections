@@ -30,7 +30,7 @@ import org.apache.commons.collections.ResettableIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.6 $ $Date: 2004/02/27 00:25:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -208,6 +208,14 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         it = map.values().iterator();
         assertSame(values[2], it.next());
         assertSame(values[3], it.next());
+    }
+    
+    public void testClone() {
+        LRUMap map = new LRUMap(10);
+        map.put("1", "1");
+        Map cloned = (Map) map.clone();
+        assertEquals(map.size(), cloned.size());
+        assertSame(map.get("1"), cloned.get("1"));
     }
     
 //    public void testCreate() throws Exception {

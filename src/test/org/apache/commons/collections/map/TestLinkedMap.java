@@ -32,7 +32,7 @@ import org.apache.commons.collections.list.AbstractTestList;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.7 $ $Date: 2004/02/27 00:25:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -255,6 +255,14 @@ public class TestLinkedMap extends AbstractTestOrderedMap {
 
     }
 
+    public void testClone() {
+        LinkedMap map = new LinkedMap(10);
+        map.put("1", "1");
+        Map cloned = (Map) map.clone();
+        assertEquals(map.size(), cloned.size());
+        assertSame(map.get("1"), cloned.get("1"));
+    }
+    
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/LinkedMap.emptyCollection.version3.obj");

@@ -30,7 +30,7 @@ import org.apache.commons.collections.IterableMap;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.7 $ $Date: 2004/02/27 00:25:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -125,6 +125,14 @@ public class TestIdentityMap extends AbstractTestObject {
         }
     }
 
+    public void testClone() {
+        IdentityMap map = new IdentityMap(10);
+        map.put("1", "1");
+        Map cloned = (Map) map.clone();
+        assertEquals(map.size(), cloned.size());
+        assertSame(map.get("1"), cloned.get("1"));
+    }
+    
 //    public void testCreate() throws Exception {
 //        Map map = new IdentityMap();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/IdentityMap.emptyCollection.version3.obj");
