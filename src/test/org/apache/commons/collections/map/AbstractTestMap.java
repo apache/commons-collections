@@ -117,7 +117,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.10 $ $Date: 2004/04/09 09:38:31 $
+ * @version $Revision: 1.11 $ $Date: 2004/04/09 14:45:38 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -1241,9 +1241,9 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
         public void testMapEntrySetIteratorEntrySetValue() {
             Object key1 = getSampleKeys()[0];
-            Object key2 = getSampleKeys()[1];
+            Object key2 = (getSampleKeys().length ==1 ? getSampleKeys()[0] : getSampleKeys()[1]);
             Object newValue1 = getNewSampleValues()[0];
-            Object newValue2 = getNewSampleValues()[1];
+            Object newValue2 = (getNewSampleValues().length ==1 ? getNewSampleValues()[0] : getNewSampleValues()[1]);
             
             resetFull();
             // explicitly get entries as sample values/keys are connected for some maps
