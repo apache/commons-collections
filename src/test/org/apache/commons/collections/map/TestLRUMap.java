@@ -30,7 +30,7 @@ import org.apache.commons.collections.ResettableIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.6 $ $Date: 2004/02/27 00:25:14 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/16 23:53:59 $
  * 
  * @author Stephen Colebourne
  */
@@ -216,6 +216,63 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         Map cloned = (Map) map.clone();
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
+    }
+    
+    public void testRemoveLRU() {
+        MockLRUMapSubclass map = new MockLRUMapSubclass(2);
+        assertNull(map.entry);
+        map.put("A", "a");
+        assertNull(map.entry);
+        map.put("B", "b");
+        assertNull(map.entry);
+        map.put("C", "c");  // removes oldest, which is A=a
+        assertNotNull(map.entry);
+        assertEquals("A", map.key);
+        assertEquals("a", map.value);
+        assertEquals("C", map.entry.getKey());  // entry is reused
+        assertEquals("c", map.entry.getValue());  // entry is reused
+        assertEquals(false, map.containsKey("A"));
+        assertEquals(true, map.containsKey("B"));
+        assertEquals(true, map.containsKey("C"));
+    }
+    
+    static class MockLRUMapSubclass extends LRUMap {
+        LinkEntry entry;
+        Object key;
+        Object value;
+        MockLRUMapSubclass(int size) {
+            super(size);
+        }
+        protected boolean removeLRU(LinkEntry entry) {
+            this.entry = entry;
+            this.key = entry.getKey();
+            this.value = entry.getValue();
+            return true;
+        }
+    }
+    
+    public void testRemoveLRUBlocksRemove() {
+        MockLRUMapSubclassBlocksRemove map = new MockLRUMapSubclassBlocksRemove(2);
+        assertEquals(0, map.size());
+        map.put("A", "a");
+        assertEquals(1, map.size());
+        map.put("B", "b");
+        assertEquals(2, map.size());
+        map.put("C", "c");  // should remove oldest, which is A=a, but this is blocked
+        assertEquals(3, map.size());
+        assertEquals(2, map.maxSize());
+        assertEquals(true, map.containsKey("A"));
+        assertEquals(true, map.containsKey("B"));
+        assertEquals(true, map.containsKey("C"));
+    }
+    
+    static class MockLRUMapSubclassBlocksRemove extends LRUMap {
+        MockLRUMapSubclassBlocksRemove(int size) {
+            super(size);
+        }
+        protected boolean removeLRU(LinkEntry entry) {
+            return false;
+        }
     }
     
 //    public void testCreate() throws Exception {

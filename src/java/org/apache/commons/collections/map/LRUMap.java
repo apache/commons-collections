@@ -41,7 +41,7 @@ import org.apache.commons.collections.BoundedMap;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * 
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision: 1.9 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.10 $ $Date: 2004/04/16 23:53:59 $
  *
  * @author James Strachan
  * @author Morgan Delagrange
@@ -169,7 +169,7 @@ public class LRUMap
      * @param value  the value to add
      */
     protected void addMapping(int hashIndex, int hashCode, Object key, Object value) {
-        if (size >= maxSize && removeLRU(header.before)) {
+        if (size >= maxSize && removeLRU(header.after)) {
             reuseMapping(header.after, hashIndex, hashCode, key, value);
         } else {
             super.addMapping(hashIndex, hashCode, key, value);
