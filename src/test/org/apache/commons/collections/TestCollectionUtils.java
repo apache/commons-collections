@@ -50,7 +50,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Phil Steitz
  * @author Steven Melzer
  * 
- * @version $Revision: 1.37 $ $Date: 2004/04/01 22:43:12 $
+ * @version $Revision: 1.38 $ $Date: 2004/04/27 20:00:18 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -113,17 +113,39 @@ public class TestCollectionUtils extends TestCase {
     }
 
     public void testCardinality() {
-        assertEquals(1,CollectionUtils.cardinality("a",collectionA));
-        assertEquals(2,CollectionUtils.cardinality("b",collectionA));
-        assertEquals(3,CollectionUtils.cardinality("c",collectionA));
-        assertEquals(4,CollectionUtils.cardinality("d",collectionA));
-        assertEquals(0,CollectionUtils.cardinality("e",collectionA));
+        assertEquals(1, CollectionUtils.cardinality("a", collectionA));
+        assertEquals(2, CollectionUtils.cardinality("b", collectionA));
+        assertEquals(3, CollectionUtils.cardinality("c", collectionA));
+        assertEquals(4, CollectionUtils.cardinality("d", collectionA));
+        assertEquals(0, CollectionUtils.cardinality("e", collectionA));
 
-        assertEquals(0,CollectionUtils.cardinality("a",collectionB));
-        assertEquals(4,CollectionUtils.cardinality("b",collectionB));
-        assertEquals(3,CollectionUtils.cardinality("c",collectionB));
-        assertEquals(2,CollectionUtils.cardinality("d",collectionB));
-        assertEquals(1,CollectionUtils.cardinality("e",collectionB));
+        assertEquals(0, CollectionUtils.cardinality("a", collectionB));
+        assertEquals(4, CollectionUtils.cardinality("b", collectionB));
+        assertEquals(3, CollectionUtils.cardinality("c", collectionB));
+        assertEquals(2, CollectionUtils.cardinality("d", collectionB));
+        assertEquals(1, CollectionUtils.cardinality("e", collectionB));
+
+        Set set = new HashSet();
+        set.add("A");
+        set.add("C");
+        set.add("E");
+        set.add("E");
+        assertEquals(1, CollectionUtils.cardinality("A", set));
+        assertEquals(0, CollectionUtils.cardinality("B", set));
+        assertEquals(1, CollectionUtils.cardinality("C", set));
+        assertEquals(0, CollectionUtils.cardinality("D", set));
+        assertEquals(1, CollectionUtils.cardinality("E", set));
+
+        Bag bag = new HashBag();
+        bag.add("A", 3);
+        bag.add("C");
+        bag.add("E");
+        bag.add("E");
+        assertEquals(3, CollectionUtils.cardinality("A", bag));
+        assertEquals(0, CollectionUtils.cardinality("B", bag));
+        assertEquals(1, CollectionUtils.cardinality("C", bag));
+        assertEquals(0, CollectionUtils.cardinality("D", bag));
+        assertEquals(2, CollectionUtils.cardinality("E", bag));
     }
     
     public void testCardinalityOfNull() {

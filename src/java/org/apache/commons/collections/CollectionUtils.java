@@ -38,7 +38,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.60 $ $Date: 2004/04/01 22:43:13 $
+ * @version $Revision: 1.61 $ $Date: 2004/04/27 20:00:18 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -50,6 +50,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Janek Bogucki
  * @author Phil Steitz
  * @author Steven Melzer
+ * @author Jon Schewe
  */
 public class CollectionUtils {
 
@@ -319,24 +320,29 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the number of occurrences of <i>obj</i>
-     * in <i>col</i>.
+     * Returns the number of occurrences of <i>obj</i> in <i>coll</i>.
      *
      * @param obj  the object to find the cardinality of
-     * @param col  the collection to search
-     * @return the the number of occurrences of obj in col
+     * @param coll  the collection to search
+     * @return the the number of occurrences of obj in coll
      */
-    public static int cardinality(Object obj, final Collection col) {
+    public static int cardinality(Object obj, final Collection coll) {
+        if (coll instanceof Set) {
+            return (coll.contains(obj) ? 1 : 0);
+        }
+        if (coll instanceof Bag) {
+            return ((Bag) coll).getCount(obj);
+        }
         int count = 0;
-        if(null == obj) {
-            for(Iterator it = col.iterator();it.hasNext();) {
-                if(null == it.next()) {
+        if (obj == null) {
+            for (Iterator it = coll.iterator();it.hasNext();) {
+                if (it.next() == null) {
                     count++;
                 }
             }
         } else {
-            for(Iterator it = col.iterator();it.hasNext();) {
-                if(obj.equals(it.next())) {
+            for (Iterator it = coll.iterator();it.hasNext();) {
+                if (obj.equals(it.next())) {
                     count++;
                 }
             }
