@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/13 00:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.5 2002/08/13 01:04:19 pjack Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/08/13 01:04:19 $
  *
  * ====================================================================
  *
@@ -99,7 +99,8 @@ import java.util.Set;
  *  Different types of references can be specified for keys
  *  and values.  The keys can be configured to be weak but
  *  the values hard, in which case this class will behave
- *  like a {@link java.util.WeakHashMap}.  However, you
+ *  like a <A HREF="http://java.sun.com/j2se/1.4/docs/api/java/util/WeakHashMap.html">
+ *  <Code>WeakHashMap</Code></A>.  However, you
  *  can also specify hard keys and weak values, or any other
  *  combination.  The default constructor uses hard keys
  *  and soft values, providing a memory-sensitive cache.<P>
@@ -120,7 +121,7 @@ import java.util.Set;
  *  provide synchronized access to a <Code>ReferenceMap</Code>.
  *
  *  @author Paul Jack 
- *  @version $Id: ReferenceMap.java,v 1.4 2002/08/13 00:46:25 pjack Exp $
+ *  @version $Id: ReferenceMap.java,v 1.5 2002/08/13 01:04:19 pjack Exp $
  *  @since 2.1
  *  @see java.lang.ref.Reference
  */
@@ -247,9 +248,9 @@ public class ReferenceMap extends AbstractMap implements Serializable {
      *  use the specified types of references.
      *
      *  @param keyType  the type of reference to use for keys;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link WEAK}
+     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
      *  @param valueType  the type of reference to use for values;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link WEAK}
+     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
      */
     public ReferenceMap(int keyType, int valueType) {
         this(keyType, valueType, 16, 0.75f);
@@ -262,9 +263,9 @@ public class ReferenceMap extends AbstractMap implements Serializable {
      *  capacity.
      *
      *  @param keyType  the type of reference to use for keys;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link WEAK}
+     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
      *  @param valueType  the type of reference to use for values;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link WEAK}
+     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
      *  @param capacity  the initial capacity for the map
      *  @param loadFactor  the load factor for the map
      */
