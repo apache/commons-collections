@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.5 2004/01/02 01:36:52 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/AbstractHashedMap.java,v 1.6 2004/01/03 05:15:00 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -88,7 +88,7 @@ import org.apache.commons.collections.MapIterator;
  * need for unusual subclasses is here.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/01/02 01:36:52 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/03 05:15:00 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -170,7 +170,7 @@ public class AbstractHashedMap implements IterableMap {
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
      * @throws IllegalArgumentException if the initial capacity is less than one
-     * @throws IllegalArgumentException if the load factor is less than zero
+     * @throws IllegalArgumentException if the load factor is less than or equal to zero
      */
     protected AbstractHashedMap(int initialCapacity, float loadFactor) {
         super();
@@ -383,8 +383,8 @@ public class AbstractHashedMap implements IterableMap {
      * The reverse conversion can be changed, if required, by overriding the
      * getKey() method in the hash entry.
      * 
-     * @param key  the key to get a hash code for
-     * @return the hash code
+     * @param key  the key convert
+     * @return the converted key
      */
     protected Object convertKey(Object key) {
         return (key == null ? NULL : key);
