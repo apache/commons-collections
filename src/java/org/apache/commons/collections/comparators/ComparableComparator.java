@@ -70,7 +70,7 @@ import java.util.Comparator;
  *
  * @since 2.0
  * @author bayard@generationjava.com
- * @version $Revision: 1.6 $ $Date: 2003/01/07 18:40:45 $
+ * @version $Revision: 1.7 $ $Date: 2003/01/07 18:49:01 $
  */
 public class ComparableComparator implements Comparator,Serializable {
 
@@ -164,8 +164,8 @@ public class ComparableComparator implements Comparator,Serializable {
      * contract.
      * @since Collections 2.2
      */
-    public boolean equals(Object obj) {
-        return (this == obj) || 
-               ((null != obj) && (obj.getClass().equals(this.getClass())));
+    public boolean equals(Object that) {
+        return (this == that) || 
+               ((null != that) && (that.getClass().equals(this.getClass())));
     }
 }
