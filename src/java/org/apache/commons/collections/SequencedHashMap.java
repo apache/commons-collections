@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.8 2002/02/22 04:58:17 mas Exp $
- * $Revision: 1.8 $
- * $Date: 2002/02/22 04:58:17 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.9 2002/05/09 03:20:59 mas Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/05/09 03:20:59 $
  *
  * ====================================================================
  *
@@ -77,6 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.NoSuchElementException;
+import java.util.ConcurrentModificationException;
 
 /**
  *  A map of objects whose mapping entries are sequenced based on the order in
@@ -190,6 +191,14 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
    *  Map of keys to entries
    **/
   private HashMap entries;
+
+  /**
+   *  Holds the number of modifications that have occurred to the map,
+   *  excluding modifications made through a collection view's iterator
+   *  (e.g. entrySet().iterator().remove()).  This is used to create a
+   *  fail-fast behavior with the iterators.
+   **/
+  private transient long modCount = 0;
 
   /**
    *  Construct a new sequenced hash map with default initial size and load
@@ -434,6 +443,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
 
   // per Map.put(Object,Object)
   public Object put(Object key, Object value) {
+    modCount++;
 
     Object oldValue = null;
 
@@ -468,6 +478,15 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
 
   // per Map.remove(Object)
   public Object remove(Object key) {
+    modCount++;
+    return removeImpl(key);
+  }
+  
+  /**
+   *  Removed an entry without changing the map's modification count.  This
+   *  method should only be called from a collection view's iterator
+   **/
+  private Object removeImpl(Object key) {
     Entry e = (Entry)entries.remove(key);
     if(e == null) return null;
     removeEntry(e);
@@ -494,6 +513,8 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
 
   // per Map.clear()
   public void clear() {
+    modCount++;
+
     // remove all from the underlying map
     entries.clear();
 
@@ -633,10 +654,17 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
     private int returnType;
 
     /**
-     *  Holds the "current" position in the iterator.  when pos.next is the
+     *  Holds the "current" position in the iterator.  When pos.next is the
      *  sentinel, we've reached the end of the list.
      **/
     private Entry pos = sentinel;
+
+    /**
+     *  Holds the expected modification count.  If the actual modification
+     *  count of the map differs from this value, then a concurrent
+     *  modification has occurred.
+     **/
+    private transient long expectedModCount = modCount;
     
     /**
      *  Construct an iterator over the sequenced elements in the order in which
@@ -676,8 +704,14 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
      *
      *  @exception NoSuchElementException if there are no more elements in the
      *  iterator.
+     *
+     *  @exception ConcurrentModificationException if a modification occurs in
+     *  the underlying map.
      **/
     public Object next() {
+      if(modCount != expectedModCount) {
+        throw new ConcurrentModificationException();
+      }
       if(pos.next == sentinel) {
         throw new NoSuchElementException();
       }
@@ -707,14 +741,21 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
      *  @exception IllegalStateException if there isn't a "last element" to be
      *  removed.  That is, if {@link #next()} has never been called, or if
      *  {@link #remove()} was already called on the element.
+     *
+     *  @exception ConcurrentModificationException if a modification occurs in
+     *  the underlying map.
      **/
     public void remove() {
       if((returnType & REMOVED_MASK) != 0) {
         throw new IllegalStateException("remove() must follow next()");
       }
+      if(modCount != expectedModCount) {
+        throw new ConcurrentModificationException();
+      }
 
-      // remove the entry
-      SequencedHashMap.this.remove(pos.getKey());
+      // remove the entry by calling the removeImpl method which does not
+      // update the mod count.  This allows the iterator to remain valid.
+      SequencedHashMap.this.removeImpl(pos.getKey());
 
       // set the removed flag
       returnType = returnType | REMOVED_MASK;

@@ -137,18 +137,20 @@ implements TestMap.SupportsPut, TestMap.EntrySetSupportsRemove
         SequencedHashMap clone = (SequencedHashMap) labRat.clone();
         assertEquals("Size of clone does not match original",
                      labRat.size(), clone.size());
-        Iterator origKeys = labRat.keySet().iterator();
-        Iterator copiedKeys = clone.keySet().iterator();
-        while (origKeys.hasNext()) {
-            Object origKey = origKeys.next();
-            Object copiedKey = copiedKeys.next();
-            assertEquals("Cloned key does not match orginal",
-                         origKey, copiedKey);
+        Iterator origEntries = labRat.entrySet().iterator();
+        Iterator copiedEntries = clone.entrySet().iterator();
+        while (origEntries.hasNext()) {
+            Map.Entry origEntry = (Map.Entry)origEntries.next();
+            Map.Entry copiedEntry = (Map.Entry)copiedEntries.next();
+            assertEquals("Cloned key does not match original",
+                         origEntry.getKey(), copiedEntry.getKey());
             assertEquals("Cloned value does not match original",
-                         labRat.get(origKey), clone.get(copiedKey));
+                         origEntry.getValue(), copiedEntry.getValue());
+            assertEquals("Cloned entry does not match orginal",
+                         origEntry, copiedEntry);
         }
         assertTrue("iterator() returned different number of elements than keys()",
-               !copiedKeys.hasNext());
+               !copiedEntries.hasNext());
 
         // Test sequence()
         List seq = labRat.sequence();

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.19 2002/05/08 17:34:17 morgand Exp $
- * $Revision: 1.19 $
- * $Date: 2002/05/08 17:34:17 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.20 2002/05/09 03:20:59 mas Exp $
+ * $Revision: 1.20 $
+ * $Date: 2002/05/09 03:20:59 $
  *
  * ====================================================================
  *
@@ -73,7 +73,7 @@ import java.util.HashMap;
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
- * @version $Id: TestLRUMap.java,v 1.19 2002/05/08 17:34:17 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.20 2002/05/09 03:20:59 mas Exp $
  */
 public class TestLRUMap extends TestSequencedHashMap
 {
@@ -93,13 +93,6 @@ public class TestLRUMap extends TestSequencedHashMap
     public Map makeEmptyMap() {
         LRUMap map = new LRUMap();
         return map;
-    }
-
-    // had to override from TestSequencedHashMap, because the test performs a get
-    // inside a loop.  Since get() alter the Map in this class, an infinite loop
-    // is produced
-    public void testSequenceMap() {
-        fail("trying to work out an infinite loop bug");
     }
 
     public void testRemoveLRU() {
