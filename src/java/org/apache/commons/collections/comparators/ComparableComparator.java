@@ -63,10 +63,12 @@ import java.lang.Comparable;
  * Comparable, or if they are null.
  * Throws ClassCastException if the compareTo of both 
  * objects do not provide an inverse result of each other 
- * as per the Comparable javadoc.
+ * as per the Comparable javadoc.  This Comparator is useful, for example,
+ * for enforcing the natural order in custom implementations
+ * of SortedSet and SortedMap.
  *
  * @author bayard@generationjava.com
- * @version $Id: ComparableComparator.java,v 1.1 2002/02/26 22:42:31 morgand Exp $
+ * @version $Id: ComparableComparator.java,v 1.2 2002/02/28 18:06:39 morgand Exp $
  */
 public class ComparableComparator implements Comparator {
 
