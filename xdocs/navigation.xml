@@ -30,6 +30,7 @@
 
     <menu name="Commons Collections">
       <item name="Overview" href="/index.html"/>
+      <item name="Download" href="http://jakarta.apache.org/site/sourceindex.cgi#commons-collections"/>
       <item name="Users guide" href="/userguide.html"/>
       <item name="History" href="/history.html"/>
       <item name="Javadoc (3.0 release)" href="apidocs-COLLECTIONS_3_0/index.html"/>
@@ -38,7 +39,7 @@
       <item name="Tasks" href="/tasks.html"/>
       <item name="CVS" href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/"/>
       <item name="Javadoc (CVS latest)" href="apidocs/index.html"/>
-      <item name="Javadoc (2.1 old)" href="apidocs-COLLECTIONS_2_1/index.html"/>
+      <item name="Javadoc (2.1.1 old)" href="apidocs-COLLECTIONS_2_1_1/index.html"/>
     </menu>
     
     &common-menus;

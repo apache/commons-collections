@@ -79,7 +79,17 @@ layout was chosen - one subpackage for each principal collections interface.
 <p>
 Essentially the 3.0 release represents the result of changing from a 'dumping ground'
 of re-used collections to a component <b>designed</b> for the purpose.
-Of course, backwards compatability has been retained during all transitions using deprecation.
+Of course, backwards compatibility has been retained during all transitions using deprecation.
+</p>
+
+<p>
+<b>Collections 2.1.1</b> is a patch release to v2.1.
+Unfortunately, v3.0 created a binary incompatibility in the IteratorUtils class.
+This patch was created as a work around, enabling v2.1.1 to be compatible with v3.1.
+</p>
+
+<p>
+<b>Collections 3.1</b> (due soon) fixes some bugs in v3.0 and adds a few new enhancements.
 </p>
 
 </section>

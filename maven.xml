@@ -158,8 +158,8 @@
   </postGoal>
 
   <postGoal name="site:run-reports"><!-- OLD MAVEN -->
-    <j:set var="collections.javadoc.tag" value="COLLECTIONS_2_1" />
-    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 2.1 release API" />
+    <j:set var="collections.javadoc.tag" value="COLLECTIONS_2_1_1" />
+    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 2.1.1 release API" />
     <attainGoal name="javadoc:generate" />
     <j:set var="collections.javadoc.tag" value="COLLECTIONS_3_0" />
     <j:set var="collections.javadoc.tag.windowtitle" value="Collections 3.0 release API" />
@@ -167,8 +167,8 @@
     <attainGoal name="javadoc:generate" />
   </postGoal>
   <postGoal name="site:generate"><!-- NEW MAVEN -->
-    <j:set var="collections.javadoc.tag" value="COLLECTIONS_2_1" />
-    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 2.1 release API" />
+    <j:set var="collections.javadoc.tag" value="COLLECTIONS_2_1_1" />
+    <j:set var="collections.javadoc.tag.windowtitle" value="Collections 2.1.1 release API" />
     <attainGoal name="javadoc:generate" />
     <j:set var="collections.javadoc.tag" value="COLLECTIONS_3_0" />
     <j:set var="collections.javadoc.tag.windowtitle" value="Collections 3.0 release API" />
