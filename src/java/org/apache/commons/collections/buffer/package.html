@@ -1,6 +1,6 @@
 <BODY>
 <p>
-This package contains implementations of the Set and SortedSet interfaces.
+This package contains implementations of the Buffer and PriorityQueue interfaces.
 <p>
 The implementations are in the form of direct implementations and decorators.
 A decorator wraps another implementation of the interface to add some
@@ -9,9 +9,13 @@ specific additional functionality.
 The following implementations are provided in the package:
 <ul>
 <li>BinaryHeap - implements both Buffer and PriorityQueue
-<li>Bounded - implements a buffer with a fixed size that throws exceptions when full
-<li>Circular - implements a buffer with a fixed size that discards oldest when full
-<li>Unbounded - implements a buffer that grows in size if necessary
+<li>BoundedBuffer - implements a buffer with a fixed size that throws exceptions when full
+<li>CircularBuffer - implements a buffer with a fixed size that discards oldest when full
+<li>UnboundedBuffer - implements a buffer that grows in size if necessary
+</ul>
+<p>
+The following decorators are provided in the package:
+<ul>
 <li>Synchronized - synchronizes method access for multi-threaded environments
 <li>Unmodifiable - ensures the collection cannot be altered
 <li>Predicated - ensures that only elements that are valid according to a predicate can be added
