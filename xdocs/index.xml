@@ -12,7 +12,7 @@
 <section name="The Collections Component">
 
 <p>
-The introduction of the <a href="http://java.sun.com/products/jdk/1.2/docs/guide/collections/">Collections API</a> by Sun in JDK 1.2 has been a
+The introduction of the <a href="http://java.sun.com/products/j2se/1.3/docs/guide/collections/">Collections API</a> by Sun in JDK 1.2 has been a
 boon to quick and effective Java programming.  Ready access to
 powerful data structures has accelerated development by reducing the
 need for custom container classes around each core object.  Most Java2
