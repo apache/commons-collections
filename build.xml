@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.41 2003/09/29 22:46:15 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.42 2003/10/01 20:03:35 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -71,7 +71,7 @@
       <property name="dest.doc.api" value="${dest.doc}/api"/>
       <property name="dest.jardir" value="${dest}"/>
       <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
-      <property name="dest.jardir.object-jar" value="${dest.jardir}/${name}.jar"/>
+      <property name="dest.jardir.object-jar" value="${dest.jardir}/${name}-object.jar"/>
       <property name="dest.jardir.primitive-jar" value="${dest.jardir}/${name}-primitive.jar"/>
       
       <property name="bin.name" value="${name}-${component.version}"/>
