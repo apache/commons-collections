@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.24 2002/03/19 04:34:18 mas Exp $
- * $Revision: 1.24 $
- * $Date: 2002/03/19 04:34:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.25 2002/04/10 16:33:23 morgand Exp $
+ * $Revision: 1.25 $
+ * $Date: 2002/04/10 16:33:23 $
  *
  * ====================================================================
  *
@@ -67,7 +67,7 @@ import junit.framework.*;
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.24 2002/03/19 04:34:18 mas Exp $
+ * @version $Id: TestAll.java,v 1.25 2002/04/10 16:33:23 morgand Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -96,12 +96,15 @@ public class TestAll extends TestCase {
         suite.addTest(TestFilterIterator.suite());
         suite.addTest(TestFilterListIterator.suite());
         suite.addTest(TestHashBag.suite());
+        suite.addTest(TestIteratorChain.suite());
+        suite.addTest(TestListIteratorWrapper.suite());
         suite.addTest(TestLRUMap.suite());
         suite.addTest(TestMultiHashMap.suite());
         suite.addTest(TestReverseComparator.suite());
         suite.addTest(TestSequencedHashMap.suite());
         suite.addTest(TestSingletonIterator.suite());
         suite.addTest(TestTreeBag.suite());
+        suite.addTest(TestUniqueFilterIterator.suite());
         return suite;
     }
         
