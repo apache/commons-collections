@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.8 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.8 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.9 2002/08/10 00:36:34 pjack Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/08/10 00:36:34 $
  *
  * ====================================================================
  *
@@ -78,7 +78,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  *
  * @since 1.0
- * @version $Id: CollectionUtils.java,v 1.8 2002/06/12 03:59:15 mas Exp $
+ * @version $Id: CollectionUtils.java,v 1.9 2002/08/10 00:36:34 pjack Exp $
  */
 public class CollectionUtils {
 
@@ -463,14 +463,7 @@ public class CollectionUtils {
         else if(obj instanceof Map) {
             Map map = (Map)obj;
             Iterator iterator = map.keySet().iterator();
-            while(iterator.hasNext()) {
-                idx--;
-                if(idx == -1) {
-                    return iterator.next();
-                } else {
-                    iterator.next();
-                }
-            }
+            return index(iterator, idx);
         } 
         else if(obj instanceof List) {
             return ((List)obj).get(idx);
@@ -490,17 +483,25 @@ public class CollectionUtils {
             }
         } 
         else if(obj instanceof Iterator) {
-            Iterator iterator = (Iterator)obj;
-            while(iterator.hasNext()) {
-                idx--;
-                if(idx == -1) {
-                    return iterator.next();
-                } else {
-                    iterator.next();
-                }
-            }
+            return index((Iterator)obj, idx);
+        }
+        else if(obj instanceof Collection) {
+            Iterator iterator = ((Collection)obj).iterator();
+            return index(iterator, idx);
         }
         return obj;
+    }
+
+    private static Object index(Iterator iterator, int idx) {
+        while(iterator.hasNext()) {
+            idx--;
+            if(idx == -1) {
+                return iterator.next();
+            } else {
+                iterator.next();
+            }
+        }
+        return iterator;
     }
 
     /** Returns an Iterator for the given object. Currently this method can handle

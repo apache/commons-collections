@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.2 2001/07/14 23:33:27 craigmcc Exp $
- * $Revision: 1.2 $
- * $Date: 2001/07/14 23:33:27 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.3 2002/08/10 00:36:34 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/10 00:36:34 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCollectionUtils.java,v 1.2 2001/07/14 23:33:27 craigmcc Exp $
+ * @version $Id: TestCollectionUtils.java,v 1.3 2002/08/10 00:36:34 pjack Exp $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -309,5 +309,23 @@ public class TestCollectionUtils extends TestCase {
         b.add("1");
         assertTrue(CollectionUtils.isEqualCollection(a,b));
         assertTrue(CollectionUtils.isEqualCollection(b,a));
+    }
+
+
+    public void testIndex() {
+        Map map = new HashMap();
+        map.put(new Integer(0), "element");
+        Object test = CollectionUtils.index(map, 0);
+        assertTrue(test.equals("element"));
+
+        List list = new ArrayList();
+        list.add("element");
+        test = CollectionUtils.index(list, 0);
+        assertTrue(test.equals("element"));
+
+        Bag bag = new HashBag();
+        bag.add("element", 1);
+        test = CollectionUtils.index(bag, 0);
+        assertTrue(test.equals("element"));
     }
 }
