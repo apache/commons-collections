@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.48 2003/10/27 16:17:26 rwaldhoff Exp $ -->
+<!-- $Id: build.xml,v 1.49 2003/10/27 23:08:21 rwaldhoff Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -36,6 +36,7 @@
    <!-- patternset describing test framework source -->
    <patternset id="patternset-testframework-source">
       <include name="**/Bag.java"/>
+      <include name="**/BidiMap.java"/>
       <include name="**/SortedBag.java"/>
       <include name="**/AbstractTest*.java"/>
       <include name="**/BulkTest*.java"/>
@@ -287,10 +288,6 @@
 
    <!-- validation build to ensure that testframework is independent -->
    <target name="validate-build-testframework" depends="init" if="available-src-test">
-      <echo message=" *** WARNING ***"/>
-      <echo message="This target temporarily disabled."/>
-      <echo message=" *** WARNING ***"/>
-      <!--
       <delete dir="${dest.classes.testframework}"/>
       <mkdir dir="${dest.classes.testframework}"/>
       <copy todir="${dest.classes.testframework}">
@@ -305,7 +302,6 @@
              debug="${javac.debug}"
              deprecation="${javac.deprecation}"
              optimize="${javac.optimize}"/>
-       -->             
    </target>
 
    <!-- ######################################################### -->
