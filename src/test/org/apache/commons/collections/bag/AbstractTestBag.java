@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.3 2003/12/02 23:36:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.4 2003/12/24 23:09:26 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,8 @@
  */
 package org.apache.commons.collections.bag;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
@@ -76,7 +78,7 @@ import org.apache.commons.collections.Bag;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Bag} fails.
  *
- * @version $Revision: 1.3 $ $Date: 2003/12/02 23:36:12 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/24 23:09:26 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -397,4 +399,65 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals(1, c);
     }
 
+    //-----------------------------------------------------------------------
+    public void testEmptyBagSerialization() throws IOException, ClassNotFoundException {
+        Bag bag = makeBag();
+        if (!(bag instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) bag);
+        Bag bag2 = (Bag) readExternalFormFromBytes(objekt);
+
+        assertEquals("Bag should be empty",0, bag.size());
+        assertEquals("Bag should be empty",0, bag2.size());
+    }
+
+    public void testFullBagSerialization() throws IOException, ClassNotFoundException {
+        Bag bag = makeBag();
+        bag.add("A");
+        bag.add("A");
+        bag.add("B");
+        bag.add("B");
+        bag.add("C");
+        int size = bag.size();
+        if (!(bag instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) bag);
+        Bag bag2 = (Bag) readExternalFormFromBytes(objekt);
+
+        assertEquals("Bag should be same size", size, bag.size());
+        assertEquals("Bag should be same size", size, bag2.size());
+    }
+
+    /**
+     * Compare the current serialized form of the Bag
+     * against the canonical version in CVS.
+     */
+    public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
+        // test to make sure the canonical form has been preserved
+        Bag bag = makeBag();
+        if(bag instanceof Serializable && !skipSerializedCanonicalTests()) {
+            Bag bag2 = (Bag) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
+            assertTrue("Bag is empty",bag2.size()  == 0);
+            assertEquals(bag, bag2);
+        }
+    }
+
+    /**
+     * Compare the current serialized form of the Bag
+     * against the canonical version in CVS.
+     */
+    public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
+        // test to make sure the canonical form has been preserved
+        Bag bag = makeBag();
+        bag.add("A");
+        bag.add("A");
+        bag.add("B");
+        bag.add("B");
+        bag.add("C");
+        if(bag instanceof Serializable && !skipSerializedCanonicalTests()) {
+            Bag bag2 = (Bag) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
+            assertEquals("Bag is the right size",bag.size(), bag2.size());
+            assertEquals(bag, bag2);
+        }
+    }
 }
