@@ -54,6 +54,8 @@ package org.apache.commons.collections;
  * <http://www.apache.org/>.
  */
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -175,6 +177,28 @@ implements TestMap.SupportsPut, TestMap.EntrySetSupportsRemove
         assertTrue("first key is correct",labRat.get(0).equals(new Integer(1)));
         labRat.put(new Integer(1),null);
         assertTrue("second key is reassigned to first",labRat.get(0).equals(new Integer(2)));
+    }
+
+    // override TestMap method with more specific tests
+    public void testFullMapSerialization() 
+    throws IOException, ClassNotFoundException {
+        SequencedHashMap map = (SequencedHashMap) makeFullMap();
+        if (!(map instanceof Serializable)) return;
+        
+        byte[] objekt = writeExternalFormToBytes((Serializable) map);
+        SequencedHashMap map2 = (SequencedHashMap) readExternalFormFromBytes(objekt);
+
+        assertEquals("Both maps are same size",map.size(), getSampleKeys().length);
+        assertEquals("Both maps are same size",map2.size(),getSampleKeys().length);
+
+        assertEquals("Both maps have the same first key",
+                     map.getFirstKey(),getSampleKeys()[0]);
+        assertEquals("Both maps have the same first key",
+                     map2.getFirstKey(),getSampleKeys()[0]);
+        assertEquals("Both maps have the same last key",
+                     map.getLastKey(),getSampleKeys()[0]);
+        assertEquals("Both maps have the same last key",
+                     map2.getLastKey(),getSampleKeys()[0]);
     }
 
     protected void tearDown() {
