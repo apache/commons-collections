@@ -36,7 +36,7 @@ import java.util.Collection;
  * <b>Note that this implementation is not synchronized.</b>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/02/18 01:12:26 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/20 23:46:50 $
  * 
  * @author Jeff Varszegi
  * @author Rich Dougherty
@@ -172,7 +172,7 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
         Node nextCachedNode = firstCachedNode;
         node.previous = null;
         node.next = nextCachedNode;
-        node.value = null;
+        node.setValue(null);
         firstCachedNode = node;
         cacheSize++;
     }
@@ -190,7 +190,7 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
         if (cachedNode == null) {
             return super.createNode(value);
         } else {
-            cachedNode.value = value;
+            cachedNode.setValue(value);
             return cachedNode;
         }
     }
