@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.10 2002/12/15 13:05:03 scolebourne Exp $
- * $Revision: 1.10 $
- * $Date: 2002/12/15 13:05:03 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.11 2003/05/09 18:41:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -60,21 +57,27 @@
  */
 package org.apache.commons.collections;
 
-import java.util.Collection;
+import org.apache.commons.collections.decorators.BlockingBuffer;
+import org.apache.commons.collections.decorators.PredicatedBuffer;
+import org.apache.commons.collections.decorators.SynchronizedBuffer;
+import org.apache.commons.collections.decorators.TypedBuffer;
+import org.apache.commons.collections.decorators.UnmodifiableBuffer;
+
 /**
  * Contains static utility methods for operating on {@link Buffer} objects.
  *
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.11 $ $Date: 2003/05/09 18:41:34 $
+ * 
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Id: BufferUtils.java,v 1.10 2002/12/15 13:05:03 scolebourne Exp $
- * @since 2.1
  */
 public class BufferUtils {
 
     /**
      * An empty unmodifiable buffer.
      */
-    public static final Buffer EMPTY_BUFFER = BufferUtils.unmodifiableBuffer(new ArrayStack());
+    public static final Buffer EMPTY_BUFFER = UnmodifiableBuffer.decorate(new ArrayStack());
     
     /**
      * <code>BufferUtils</code> should not normally be instantiated.
@@ -102,8 +105,8 @@ public class BufferUtils {
      * @return a synchronized buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static Buffer synchronizedBuffer(final Buffer buffer) {
-        return new SynchronizedBuffer(buffer);
+    public static Buffer synchronizedBuffer(Buffer buffer) {
+        return SynchronizedBuffer.decorate(buffer);
     }
 
     /**
@@ -119,42 +122,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer is null
      */
     public static Buffer blockingBuffer(Buffer buffer) {
-        return new SynchronizedBuffer(buffer) {
-
-            public synchronized boolean add(Object o) {
-                boolean r = collection.add(o);
-                notify();
-                return r;
-            }
-
-            public synchronized boolean addAll(Collection c) {
-                boolean r = collection.addAll(c);
-                notifyAll();
-                return r;
-            }
-
-            public synchronized Object get() {
-                while (collection.isEmpty()) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        throw new BufferUnderflowException();
-                    }
-                }
-                return ((Buffer)collection).get();
-            }
-
-            public synchronized Object remove() {
-                while (collection.isEmpty()) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        throw new BufferUnderflowException();
-                    }
-                }
-                return ((Buffer)collection).remove();
-            }
-        };
+        return BlockingBuffer.decorate(buffer);
     }
 
     /**
@@ -165,7 +133,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer is null
      */
     public static Buffer unmodifiableBuffer(Buffer buffer) {
-        return new UnmodifiableBuffer(buffer);
+        return UnmodifiableBuffer.decorate(buffer);
     }
 
     /**
@@ -180,66 +148,22 @@ public class BufferUtils {
      * @return a predicated buffer
      * @throws IllegalArgumentException  if the Buffer or Predicate is null
      */
-    public static Buffer predicatedBuffer(Buffer buffer, final Predicate predicate) {
-        return new PredicatedBuffer(buffer, predicate);
+    public static Buffer predicatedBuffer(Buffer buffer, Predicate predicate) {
+        return PredicatedBuffer.decorate(buffer, predicate);
     }
 
-
-
-    static class SynchronizedBuffer 
-            extends CollectionUtils.SynchronizedCollection
-            implements Buffer {
-
-        public SynchronizedBuffer(Buffer b) {
-            super(b);
-        }
-
-        public synchronized Object get() {
-            return ((Buffer)collection).get();
-        }
-
-        public synchronized Object remove() {
-            return ((Buffer)collection).remove();
-        }        
+    /**
+     * Returns a typed buffer backed by the given buffer.
+     * <p>
+     * Only elements of the specified type can be added to the buffer.
+     *
+     * @param buffer  the buffer to predicate, must not be null
+     * @param type  the type to allow into the buffer, must not be null
+     * @return a typed buffer
+     * @throws IllegalArgumentException  if the buffer or type is null
+     */
+    public static Buffer typedBuffer(Buffer buffer, Class type) {
+        return TypedBuffer.decorate(buffer, type);
     }
-
-
-    static class UnmodifiableBuffer 
-            extends CollectionUtils.UnmodifiableCollection
-            implements Buffer {
-
-        public UnmodifiableBuffer(Buffer b) {
-            super(b);
-        }
-
-        public Object get() {
-            return ((Buffer)collection).get();
-        }
-
-        public Object remove() {
-            throw new UnsupportedOperationException();
-        }
-
-    }
-
-
-    static class PredicatedBuffer 
-            extends CollectionUtils.PredicatedCollection
-            implements Buffer {
-
-        public PredicatedBuffer(Buffer b, Predicate p) {
-            super(b, p);
-        }
-
-        public Object get() {
-            return ((Buffer)collection).get();
-        }
-
-        public Object remove() {
-            return ((Buffer)collection).remove();
-        }
-
-    }
-
 
 }

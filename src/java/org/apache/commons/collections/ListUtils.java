@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.16 2003/04/09 23:37:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.17 2003/05/09 18:41:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -62,14 +62,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
+
+import org.apache.commons.collections.decorators.FixedSizeList;
+import org.apache.commons.collections.decorators.LazyList;
+import org.apache.commons.collections.decorators.PredicatedList;
+import org.apache.commons.collections.decorators.TypedList;
 
 /**
  * Contains static utility methods and decorators for {@link List} 
  * instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.16 $ $Date: 2003/04/09 23:37:54 $
+ * @version $Revision: 1.17 $ $Date: 2003/05/09 18:41:34 $
  * 
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
@@ -255,297 +259,6 @@ public class ListUtils {
 
     //-----------------------------------------------------------------------
     /**
-     * Implementation of a ListIterator that wraps an original.
-     */
-    static class ListIteratorWrapper 
-            implements ListIterator {
-
-        final protected ListIterator iterator;
-
-        public ListIteratorWrapper(ListIterator iterator) {
-            this.iterator = iterator;
-        }
-
-        public boolean hasNext() {
-            return iterator.hasNext();
-        }
-
-        public Object next() {
-            return iterator.next();
-        }
-
-        public boolean hasPrevious() {
-            return iterator.hasPrevious();
-        }
-
-        public Object previous() {
-            return iterator.previous();
-        }
-
-        public int nextIndex() {
-            return iterator.nextIndex();
-        }
-
-        public int previousIndex() {
-            return iterator.previousIndex();
-        }
-
-        public void remove() {
-            iterator.remove();
-        }
-
-        public void set(Object o) {
-            iterator.set(o);
-        }
-
-        public void add(Object o) {
-            iterator.add(o);
-        }
-
-    }
-
-    /**
-     * Implementation of a list that checks (predicates) each entry.
-     */
-    static class PredicatedList 
-            extends CollectionUtils.PredicatedCollection
-            implements List {
-
-        public PredicatedList(List list, Predicate p) {
-            super(list, p);
-        }
-
-        public boolean addAll(int i, Collection c) {
-            for (Iterator iter = c.iterator(); iter.hasNext(); ) {
-                validate(iter.next());
-            }
-            return getList().addAll(i, c);
-        }
-
-        public Object get(int i) {
-            return getList().get(i);
-        }
-
-        public Object set(int i, Object o) {
-            validate(o);
-            return getList().set(i, o);
-        }
-
-        public void add(int i, Object o) {
-            validate(o);
-            getList().add(i, o);
-        }
-
-        public Object remove(int i) {
-            return getList().remove(i);
-        }
-
-        public int indexOf(Object o) {
-            return getList().indexOf(o);
-        }
-
-        public int lastIndexOf(Object o) {
-            return getList().lastIndexOf(o);
-        }
-
-        public ListIterator listIterator() {
-            return listIterator(0);
-        }
-
-        public ListIterator listIterator(int i) {
-            return new ListIteratorWrapper(getList().listIterator(i)) {
-                public void add(Object o) {
-                    validate(o);
-                    iterator.add(o);
-                }
-
-                public void set(Object o) {
-                    validate(o);
-                    iterator.set(o);
-                }
-            };
-        }
-
-        public List subList(int i1, int i2) {
-            List sub = getList().subList(i1, i2);
-            return new PredicatedList(sub, predicate);
-        }
-
-        private List getList() {
-            return (List)collection;
-        }
-
-    }
-
-    /**
-     * Implementation of a list that has a fixed size.
-     */
-    static class FixedSizeList 
-            extends CollectionUtils.UnmodifiableCollection
-            implements List {
-
-        public FixedSizeList(List list) {
-            super(list);
-        }
-
-        public boolean addAll(int i, Collection c) {
-            throw new UnsupportedOperationException();
-        }
-
-        public Object get(int i) {
-            return getList().get(i);
-        }
-
-        public Object set(int i, Object o) {
-            return getList().set(i, o);
-        }
-
-        public void add(int i, Object o) {
-            throw new UnsupportedOperationException();
-        }
-
-        public Object remove(int i) {
-            throw new UnsupportedOperationException();
-        }
-
-        public int indexOf(Object o) {
-            return getList().indexOf(o);
-        }
-
-        public int lastIndexOf(Object o) {
-            return getList().lastIndexOf(o);
-        }
-
-        public ListIterator listIterator() {
-            return listIterator(0);
-        }
-
-        public ListIterator listIterator(int i) {
-            return new ListIteratorWrapper(getList().listIterator(i)) {
-                public void remove() {
-                    throw new UnsupportedOperationException();
-                }
-
-                public void add(Object o) {
-                    throw new UnsupportedOperationException();
-                }
-
-                public void remove(Object o) {
-                    throw new UnsupportedOperationException();
-                }
-            };
-        }
-
-        public List subList(int i1, int i2) {
-            List sub = getList().subList(i1, i2);
-            return new FixedSizeList(sub);
-        }
-
-        private List getList() {
-            return (List)collection;
-        }
-
-    }
-
-    /**
-     * Implementation of a list that creates objects on demand.
-     */
-    static class LazyList 
-            extends CollectionUtils.CollectionWrapper 
-            implements List {
-
-        protected final Factory factory;
-
-        public LazyList(List list, Factory factory) {
-            super(list);
-            if (factory == null) {
-                throw new IllegalArgumentException("Factory must not be null");
-            }
-            this.factory = factory;
-        }
-
-        
-        /* Proxy method to the impl's get method. With the exception that if it's out
-         * of bounds, then the collection will grow, leaving place-holders in its
-         * wake, so that an item can be set at any given index. Later the
-         * place-holders are removed to return to a pure collection.
-         *
-         * If there's a place-holder at the index, then it's replaced with a proper
-         * object to be used.
-         */
-        public Object get(int index) {
-            Object obj;
-            if (index < (getList().size())) {
-            /* within bounds, get the object */
-                obj = getList().get(index);
-                if (obj == null) {
-                    /* item is a place holder, create new one, set and return */
-                    obj = this.factory.create();
-                    this.getList().set(index, obj);
-                    return obj;
-                } else {
-                    /* good and ready to go */
-                    return obj;
-                }
-            } else {
-                /* we have to grow the list */
-                for (int i = getList().size(); i < index; i++) {
-                    getList().add(null);
-                }
-                /* create our last object, set and return */
-                obj = this.factory.create();
-                getList().add(obj);
-                return obj;
-            }
-        }
-
-
-        /* proxy the call to the provided list implementation. */
-        public List subList(int fromIndex, int toIndex) {
-            /* wrap the returned sublist so it can continue the functionality */
-            return new LazyList(getList().subList(fromIndex, toIndex), factory);
-        }
-
-        public boolean addAll(int i, Collection c) {
-            return getList().addAll(i, c);
-        }
-
-        public Object set(int i, Object o) {
-            return getList().set(i, o);
-        }
-
-        public void add(int i, Object o) {
-            getList().add(i, o);
-        }
-
-        public Object remove(int i) {
-            return getList().remove(i);
-        }
-
-        public int indexOf(Object o) {
-            return getList().indexOf(o);
-        }
-
-        public int lastIndexOf(Object o) {
-            return getList().lastIndexOf(o);
-        }
-
-        public ListIterator listIterator() {
-            return getList().listIterator();
-        }
-
-        public ListIterator listIterator(int i) {
-            return getList().listIterator(i);
-        }
-
-        private List getList() {
-            return (List)collection;
-        }
-
-    }
-
-    //-----------------------------------------------------------------------
-    /**
      * Returns a synchronized list backed by the given list.
      * <p>
      * You must manually synchronize on the returned buffer's iterator to 
@@ -596,7 +309,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the List or Predicate is null
      */
     public static List predicatedList(List list, Predicate predicate) {
-        return new PredicatedList(list, predicate);
+        return PredicatedList.decorate(list, predicate);
     }
 
     /**
@@ -609,7 +322,7 @@ public class ListUtils {
      * @return a typed list backed by the specified list
      */
     public static List typedList(List list, Class type) {
-        return predicatedList(list, new CollectionUtils.InstanceofPredicate(type));
+        return TypedList.decorate(list, type);
     }
     
     /**
@@ -642,7 +355,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the List or Factory is null
      */
     public static List lazyList(List list, Factory factory) {
-        return new LazyList(list, factory);
+        return LazyList.decorate(list, factory);
     }
 
     /**
@@ -656,7 +369,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the List is null
      */
     public static List fixedSizeList(List list) {
-        return new FixedSizeList(list);
+        return FixedSizeList.decorate(list);
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.29 2003/04/04 22:22:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.30 2003/05/09 18:41:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,7 +57,6 @@
  */
 package org.apache.commons.collections;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -71,6 +70,9 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.decorators.PredicatedCollection;
+import org.apache.commons.collections.decorators.TypedCollection;
+import org.apache.commons.collections.decorators.UnmodifiableBoundedCollection;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
 
@@ -78,7 +80,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.29 $ $Date: 2003/04/04 22:22:29 $
+ * @version $Revision: 1.30 $ $Date: 2003/05/09 18:41:34 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -828,9 +830,6 @@ public class CollectionUtils {
      * This method uses the {@link BoundedCollection} class to determine the
      * full status. If the collection does not implement this interface then
      * false is returned.
-     * <p>
-     * This method handles the synchronized, blocking, unmodifiable 
-     * and predicated decorators.
      *
      * @return  true if the Collection is full
      * @throws NullPointerException if the collection is null
@@ -839,24 +838,13 @@ public class CollectionUtils {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }
-        Collection unwrappedCollection = coll;
-        
-        // handle decorators
-        while (true) {
-            if (unwrappedCollection instanceof CollectionUtils.CollectionWrapper) {
-                unwrappedCollection = ((CollectionUtils.CollectionWrapper) unwrappedCollection).collection;
-            } else if (unwrappedCollection instanceof CollectionUtils.SynchronizedCollection) {
-                unwrappedCollection = ((CollectionUtils.SynchronizedCollection) unwrappedCollection).collection;
-            } else {
-                break;
-            }
+        try {
+            BoundedCollection bcoll = UnmodifiableBoundedCollection.decorateUsing(coll);
+            return bcoll.isFull();
+            
+        } catch (IllegalArgumentException ex) {
+            return false;
         }
-        
-        // is it full
-        if (unwrappedCollection instanceof BoundedCollection) {
-            return ((BoundedCollection) unwrappedCollection).isFull();
-        }
-        return false;
     }
 
     /**
@@ -865,9 +853,6 @@ public class CollectionUtils {
      * This method uses the {@link BoundedCollection} class to determine the
      * maximum size. If the collection does not implement this interface then
      * -1 is returned.
-     * <p>
-     * This method handles the synchronized, blocking, unmodifiable 
-     * and predicated decorators.
      *
      * @return the maximum size of the Collection, -1 if no maximum size
      * @throws NullPointerException if the collection is null
@@ -876,314 +861,12 @@ public class CollectionUtils {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }
-        Collection unwrappedCollection = coll;
-        
-        // handle decorators
-        while (true) {
-            if (unwrappedCollection instanceof CollectionUtils.CollectionWrapper) {
-                unwrappedCollection = ((CollectionUtils.CollectionWrapper) unwrappedCollection).collection;
-            } else if (unwrappedCollection instanceof CollectionUtils.SynchronizedCollection) {
-                unwrappedCollection = ((CollectionUtils.SynchronizedCollection) unwrappedCollection).collection;
-            } else {
-                break;
-            }
-        }
-        
-        // get max size
-        if (unwrappedCollection instanceof BoundedCollection) {
-            return ((BoundedCollection) unwrappedCollection).maxSize();
-        }
-        return -1;
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Base class for collection decorators.  I decided to do it this way
-     * because it seemed to result in the most reuse.  
-     * 
-     * Inner class tree looks like:
-     * <pre>
-     *       CollectionWrapper
-     *          PredicatedCollection
-     *             PredicatedSet
-     *             PredicatedList
-     *             PredicatedBag
-     *             PredicatedBuffer
-     *          UnmodifiableCollection
-     *             UnmodifiableBag
-     *             UnmodifiableBuffer
-     *          LazyCollection
-     *             LazyList
-     *             LazyBag
-     *       SynchronizedCollection
-     *          SynchronizedBuffer
-     *          SynchronizedBag
-     *          SynchronizedBuffer
-     * </pre>
-     */
-    static class CollectionWrapper 
-            implements Collection {
-
-        protected final Collection collection;
-
-        public CollectionWrapper(Collection collection) {
-            if (collection == null) {
-                throw new IllegalArgumentException("Collection must not be null");
-            }
-            this.collection = collection;
-        }
-
-        public int size() {
-            return collection.size();
-        }
-
-        public boolean isEmpty() {
-            return collection.isEmpty();
-        }
-
-        public boolean contains(Object o) {
-            return collection.contains(o);
-        }
-
-        public Iterator iterator() {
-            return collection.iterator();
-        }
-
-        public Object[] toArray() {
-            return collection.toArray();
-        }
-
-        public Object[] toArray(Object[] o) {
-            return collection.toArray(o);
-        }
-
-        public boolean add(Object o) {
-            return collection.add(o);
-        }
-
-        public boolean remove(Object o) {
-            return collection.remove(o);
-        }
-
-        public boolean containsAll(Collection c2) {
-            return collection.containsAll(c2);
-        }
-
-        public boolean addAll(Collection c2) {
-            return collection.addAll(c2);
-        }
-
-        public boolean removeAll(Collection c2) {
-            return collection.removeAll(c2);
-        }
-
-        public boolean retainAll(Collection c2) {
-            return collection.retainAll(c2);
-        }
-
-        public void clear() {
-            collection.clear();
-        }
-
-        public boolean equals(Object o) {
-            if (o == this) return true;
-            return collection.equals(o);
-        }
-
-        public int hashCode() {
-            return collection.hashCode();
-        }
-
-        public String toString() {
-            return collection.toString();
-        }
-
-    }
-
-    /**
-     * Implementation of a collection that checks entries.
-     */
-    static class PredicatedCollection 
-            extends CollectionWrapper {
-
-        protected final Predicate predicate;
-
-        public PredicatedCollection(Collection c, Predicate p) {
-            super(c);
-            if (p == null) {
-                throw new IllegalArgumentException("Predicate must not be null");
-            }
-            this.predicate = p;
-            for (Iterator iter = c.iterator(); iter.hasNext(); ) {
-                validate(iter.next());
-            }
-        }
-
-        public boolean add(Object o) {
-            validate(o);
-            return collection.add(o);
-        }
-
-        public boolean addAll(Collection c2) {
-            for (Iterator iter = c2.iterator(); iter.hasNext(); ) {
-                validate(iter.next());
-            }
-            return collection.addAll(c2);
-        }
-
-        protected void validate(Object o) {
-            if (!predicate.evaluate(o)) {
-                throw new IllegalArgumentException("Cannot add Object - Predicate rejected it");
-            }
-        }
-
-    }
-
-    /**
-     * Implementation of a collection that is unmodifiable.
-     */
-    static class UnmodifiableCollection 
-            extends CollectionWrapper {
-
-        public UnmodifiableCollection(Collection c) {
-            super(c);
-        }
-
-        public boolean add(Object o) {
-            throw new UnsupportedOperationException();
-        }
-
-        public boolean addAll(Collection c) {
-            throw new UnsupportedOperationException();
-        }
-
-        public boolean remove(Object o) {
-            throw new UnsupportedOperationException();
-        }
-
-        public boolean removeAll(Collection c) {
-            throw new UnsupportedOperationException();
-        }
-
-        public boolean retainAll(Collection c) {
-            throw new UnsupportedOperationException();
-        }
-
-        public void clear() {
-            throw new UnsupportedOperationException();
-        }
-
-        public Iterator iterator() {
-            return new IteratorUtils.UnmodifiableIterator(collection.iterator());
-        }
-
-    }
-
-    /**
-     * Implementation of a collection that is synchronized.
-     */
-    static class SynchronizedCollection {
-
-        protected final Collection collection;
-
-        public SynchronizedCollection(Collection collection) {
-            if (collection == null) {
-                throw new IllegalArgumentException("Collection must not be null");
-            }
-            this.collection = collection;
-        }
-
-        public synchronized int size() {
-            return collection.size();
-        }
-
-        public synchronized boolean isEmpty() {
-            return collection.isEmpty();
-        }
-
-        public synchronized boolean contains(Object o) {
-            return collection.contains(o);
-        }
-
-        public Iterator iterator() {
-            return collection.iterator();
-        }
-
-        public synchronized Object[] toArray() {
-            return collection.toArray();
-        }
-
-        public synchronized Object[] toArray(Object[] o) {
-            return collection.toArray(o);
-        }
-
-        public synchronized boolean add(Object o) {
-            return collection.add(o);
-        }
-
-        public synchronized boolean remove(Object o) {
-            return collection.remove(o);
-        }
-
-        public synchronized boolean containsAll(Collection c2) {
-            return collection.containsAll(c2);
-        }
-
-        public synchronized boolean addAll(Collection c2) {
-            return collection.addAll(c2);
-        }
-
-        public synchronized boolean removeAll(Collection c2) {
-            return collection.removeAll(c2);
-        }
-
-        public synchronized boolean retainAll(Collection c2) {
-            return collection.retainAll(c2);
-        }
-
-        public synchronized void clear() {
-            collection.clear();
-        }
-
-        public synchronized boolean equals(Object o) {
-            return collection.equals(o);
-        }
-
-        public synchronized int hashCode() {
-            return collection.hashCode();
-        }
-
-        public synchronized String toString() {
-            return collection.toString();
-        }
-
-    }
-
-    /**
-     * <code>Predicate</code> implementation that checks the type of an object.
-     * This class may eventually be replaced by 
-     * <code>org.apache.commons.lang.functor.PredicateUtils.instanceofPredicate()</code>.
-     */
-    static class InstanceofPredicate implements Predicate, Serializable {
-        private final Class type;
-
-        /**
-         * Constructor
-         */
-        public InstanceofPredicate(Class type) {
-            if (type == null) {
-                throw new IllegalArgumentException("Type must not be null");
-            }
-            this.type = type;
-        }
-
-        /**
-         * Return true if the object is an instanceof the type of the predicate.
-         * @param object an <code>Object</code>
-         * @return <code>true</code> if the object is an instanceof the type of the predicate
-         */
-        public boolean evaluate(Object object) {
-            return type.isInstance(object);
+        try {
+            BoundedCollection bcoll = UnmodifiableBoundedCollection.decorateUsing(coll);
+            return bcoll.maxSize();
+            
+        } catch (IllegalArgumentException ex) {
+            return -1;
         }
     }
 
@@ -1240,7 +923,7 @@ public class CollectionUtils {
      * @throws IllegalArgumentException  if the Collection is null
      */
     public static Collection predicatedCollection(Collection collection, Predicate predicate) {
-        return new PredicatedCollection(collection, predicate);
+        return PredicatedCollection.decorate(collection, predicate);
     }
 
     /**
@@ -1253,7 +936,7 @@ public class CollectionUtils {
      * @return a typed collection backed by the specified collection
      */
     public static Collection typedCollection(Collection collection, Class type) {
-        return predicatedCollection(collection, new InstanceofPredicate(type));
+        return TypedCollection.decorate(collection, type);
     }
     
 }

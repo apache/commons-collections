@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.22 2003/04/26 14:28:31 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.23 2003/05/09 18:41:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -20,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -33,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -61,16 +61,23 @@ import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
+import org.apache.commons.collections.decorators.FixedSizeMap;
+import org.apache.commons.collections.decorators.FixedSizeSortedMap;
+import org.apache.commons.collections.decorators.LazyMap;
+import org.apache.commons.collections.decorators.LazySortedMap;
+import org.apache.commons.collections.decorators.PredicatedMap;
+import org.apache.commons.collections.decorators.PredicatedSortedMap;
+import org.apache.commons.collections.decorators.TypedMap;
+import org.apache.commons.collections.decorators.TypedSortedMap;
 
 /** 
  * A helper class for using {@link Map Map} instances.
@@ -92,7 +99,7 @@ import java.util.TreeMap;
  *  </ul>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.22 $ $Date: 2003/04/26 14:28:31 $
+ * @version $Revision: 1.23 $ $Date: 2003/05/09 18:41:34 $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
@@ -802,413 +809,6 @@ public class MapUtils {
 
     //-----------------------------------------------------------------------
     /**
-     * Implementation of a map that checks (predicates) additions.
-     */
-    static class PredicatedMap 
-            extends ProxyMap {
-
-        protected final Predicate keyPredicate;
-        protected final Predicate valuePredicate;
-
-        public PredicatedMap(Map map, Predicate keyPred, Predicate valuePred) {
-            super(map);
-            if (map == null) {
-                throw new IllegalArgumentException("Map must not be null");
-            }
-            if (keyPred == null) {
-                throw new IllegalArgumentException("Key Predicate must not be null");
-            }
-            if (valuePred == null) {
-                throw new IllegalArgumentException("Value Predicate must not be null");
-            }
-            this.keyPredicate = keyPred;
-            this.valuePredicate = valuePred;
-            Iterator iter = map.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry entry = (Map.Entry)iter.next();
-                Object key = entry.getKey();
-                Object value = entry.getValue();
-                validate(key, value);
-            }
-        }
-
-        public Object put(Object key, Object value) {
-            validate(key, value);
-            return map.put(key, value);
-        }
-
-        public void putAll(Map m) {
-            Iterator iter = m.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry entry = (Map.Entry)iter.next();
-                Object key = entry.getKey();
-                Object value = entry.getValue();
-                validate(key, value);
-            }
-            map.putAll(m);
-        }
-
-        public Set entrySet() {
-            return new PredicatedMapEntrySet(map.entrySet(), valuePredicate);
-        }
-
-
-        private void validate(Object key, Object value) {
-            if (!keyPredicate.evaluate(key)) {
-                throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
-            }
-            if (!valuePredicate.evaluate(value)) {
-                throw new IllegalArgumentException("Cannot add value - Predicate rejected it");
-            }
-        }
-    }
-
-    /**
-     * Implementation of an entry set that checks (predicates) additions.
-     */
-    static class PredicatedMapEntrySet 
-            extends CollectionUtils.CollectionWrapper
-            implements Set {
-
-        private final Predicate predicate;
-
-        public PredicatedMapEntrySet(Set set, Predicate p) {
-            super(set);
-            this.predicate = p;
-        }
-
-        public Iterator iterator() {
-            final Iterator iterator = collection.iterator();
-            return new Iterator() {
-                public boolean hasNext() {
-                    return iterator.hasNext();
-                }
-
-                public Object next() {
-                    Map.Entry entry = (Map.Entry)iterator.next();
-                    return new PredicatedMapEntry(entry, predicate);
-                }
-
-                public void remove() {
-                    iterator.remove();
-                }
-            };
-        }
-    }
-
-    /**
-     * Implementation of a map entry that checks (predicates) additions.
-     */
-    static class PredicatedMapEntry 
-            implements Map.Entry {
-
-        private final Map.Entry entry;
-        private final Predicate predicate;
-
-
-        public PredicatedMapEntry(Map.Entry entry, Predicate p) {
-            if (entry == null) {
-                throw new IllegalArgumentException("Map.Entry must not be null");
-            }
-            if (p == null) {
-                throw new IllegalArgumentException("Predicate must not be null");
-            }
-            this.entry = entry;
-            this.predicate = p;
-        }
-
-        public boolean equals(Object o) {
-            return entry.equals(o);
-        }
-
-        public int hashCode() {
-            return entry.hashCode();
-        }
-
-        public String toString() {
-            return entry.toString();
-        }
-
-        public Object getKey() {
-            return entry.getKey();
-        }
-
-        public Object getValue() {
-            return entry.getValue();
-        }
-
-        public Object setValue(Object o) {
-            if (!predicate.evaluate(o)) {
-                throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
-            }
-            return entry.setValue(o);
-        }
-    }
-
-    /**
-     * Implementation of a map that is fixed in size.
-     */
-    static class FixedSizeMap 
-            extends ProxyMap {
-
-        public FixedSizeMap(Map map) {
-            super(map);
-            if (map == null) {
-                throw new IllegalArgumentException("Map must not be null");
-            }
-        }
-
-
-        public Object put(Object key, Object value) {
-            if (!map.containsKey(key)) {
-                throw new IllegalArgumentException("Cannot put new key/value pair - List is fixed size");
-            }
-            return map.put(key, value);
-        }
-
-
-        public void putAll(Map m) {
-            for (Iterator iter = m.keySet().iterator(); iter.hasNext(); ) {
-                if (!map.containsKey(iter.next())) {
-                    throw new IllegalArgumentException("Cannot put new key/value pair - List is fixed size");
-                }
-            }
-            map.putAll(m);
-        }
-
-    }
-
-    /**
-     * Implementation of a map that creates objects on demand.
-     */
-    static class LazyMap 
-            extends ProxyMap {
-
-        protected final Factory factory;
-
-        public LazyMap(Map map, Factory factory) {
-            super(map);
-            if (map == null) {
-                throw new IllegalArgumentException("Map must not be null");
-            }
-            if (factory == null) {
-                throw new IllegalArgumentException("Factory must not be null");
-            }
-            this.factory = factory;
-        }
-
-
-        public Object get(Object key) {
-            if (!map.containsKey(key)) {
-                Object value = factory.create();
-                map.put(key, value);
-                return value;
-            }
-            return map.get(key);
-        }
-
-    }
-
-    /**
-     * Implementation of a map that creates objects on demand.
-     */
-    static class LazyTransformerMap 
-            extends ProxyMap {
-
-        protected final Transformer transformer;
-
-        public LazyTransformerMap(Map map, Transformer transformer) {
-            super(map);
-            if (map == null) {
-                throw new IllegalArgumentException("Map must not be null");
-            }
-            if (transformer == null) {
-                throw new IllegalArgumentException("Transformer must not be null");
-            }
-            this.transformer = transformer;
-        }
-
-
-        public Object get(Object key) {
-            if (!map.containsKey(key)) {
-                Object value = transformer.transform(key);
-                map.put(key, value);
-                return value;
-            }
-            return map.get(key);
-        }
-
-    }
-
-    /**
-     * Implementation of a sorted map that checks additions.
-     */
-    static class PredicatedSortedMap 
-            extends PredicatedMap 
-            implements SortedMap {
-
-        public PredicatedSortedMap(SortedMap map, Predicate k, Predicate v) {
-            super(map, k, v);
-        }
-
-        public Object firstKey() {
-            return getSortedMap().firstKey();
-        }
-
-        public Object lastKey() {
-            return getSortedMap().lastKey();
-        }
-
-        public Comparator comparator() {
-            return getSortedMap().comparator();
-        }
-
-        public SortedMap subMap(Object o1, Object o2) {
-            SortedMap sub = getSortedMap().subMap(o1, o2);
-            return new PredicatedSortedMap(sub, keyPredicate, valuePredicate);
-        }
-
-        public SortedMap headMap(Object o1) {
-            SortedMap sub = getSortedMap().headMap(o1);
-            return new PredicatedSortedMap(sub, keyPredicate, valuePredicate);
-        }
-
-        public SortedMap tailMap(Object o1) {
-            SortedMap sub = getSortedMap().tailMap(o1);
-            return new PredicatedSortedMap(sub, keyPredicate, valuePredicate);
-        }
-
-        private SortedMap getSortedMap() {
-            return (SortedMap)map;
-        }
-
-    }
-
-    /**
-     * Implementation of a sorted map that is fixed in size.
-     */
-    static class FixedSizeSortedMap 
-            extends FixedSizeMap 
-            implements SortedMap {
-
-        public FixedSizeSortedMap(SortedMap m) {
-            super(m);
-        }
-
-        public Object firstKey() {
-            return getSortedMap().firstKey();
-        }
-
-        public Object lastKey() {
-            return getSortedMap().lastKey();
-        }
-
-        public Comparator comparator() {
-            return getSortedMap().comparator();
-        }
-
-        public SortedMap subMap(Object o1, Object o2) {
-            return new FixedSizeSortedMap(getSortedMap().subMap(o1, o2));
-        }
-
-        public SortedMap headMap(Object o1) {
-            return new FixedSizeSortedMap(getSortedMap().headMap(o1));
-        }
-
-        public SortedMap tailMap(Object o1) {
-            return new FixedSizeSortedMap(getSortedMap().tailMap(o1));
-        }
-
-        private SortedMap getSortedMap() {
-            return (SortedMap)map;
-        }
-
-    }
-
-    /**
-     * Implementation of a sorted map that creates objects on demand.
-     */
-    static class LazySortedMap 
-            extends LazyMap 
-            implements SortedMap {
-
-        public LazySortedMap(SortedMap m, Factory factory) {
-            super(m, factory);
-        }
-
-        public Object firstKey() {
-            return getSortedMap().firstKey();
-        }
-
-        public Object lastKey() {
-            return getSortedMap().lastKey();
-        }
-
-        public Comparator comparator() {
-            return getSortedMap().comparator();
-        }
-
-        public SortedMap subMap(Object o1, Object o2) {
-            return new LazySortedMap(getSortedMap().subMap(o1, o2), factory);
-        }
-
-        public SortedMap headMap(Object o1) {
-            return new LazySortedMap(getSortedMap().headMap(o1), factory);
-        }
-
-        public SortedMap tailMap(Object o1) {
-            return new LazySortedMap(getSortedMap().tailMap(o1), factory);
-        }
-
-        private SortedMap getSortedMap() {
-            return (SortedMap)map;
-        }
-
-    }
-
-    /**
-     * Implementation of a sorted map that creates objects on demand.
-     */
-    static class LazyTransformerSortedMap 
-            extends LazyTransformerMap 
-            implements SortedMap {
-
-        public LazyTransformerSortedMap(SortedMap m, Transformer transformer) {
-            super(m, transformer);
-        }
-
-        public Object firstKey() {
-            return getSortedMap().firstKey();
-        }
-
-        public Object lastKey() {
-            return getSortedMap().lastKey();
-        }
-
-        public Comparator comparator() {
-            return getSortedMap().comparator();
-        }
-
-        public SortedMap subMap(Object o1, Object o2) {
-            return new LazyTransformerSortedMap(getSortedMap().subMap(o1, o2), transformer);
-        }
-
-        public SortedMap headMap(Object o1) {
-            return new LazyTransformerSortedMap(getSortedMap().headMap(o1), transformer);
-        }
-
-        public SortedMap tailMap(Object o1) {
-            return new LazyTransformerSortedMap(getSortedMap().tailMap(o1), transformer);
-        }
-
-        private SortedMap getSortedMap() {
-            return (SortedMap)map;
-        }
-
-    }
-
-    //-----------------------------------------------------------------------
-    /**
      * Returns a synchronized map backed by the given map.
      * <p>
      * You must manually synchronize on the returned buffer's iterator to 
@@ -1261,7 +861,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map or Predicates are null
      */
     public static Map predicatedMap(Map map, Predicate keyPred, Predicate valuePred) {
-        return new PredicatedMap(map, keyPred, valuePred);
+        return PredicatedMap.decorate(map, keyPred, valuePred);
     }
 
     /**
@@ -1275,10 +875,7 @@ public class MapUtils {
      * @return a typed map backed by the specified map
      */
     public static Map typedMap(Map map, Class keyType, Class valueType) {
-        return predicatedMap(
-            map, 
-            new CollectionUtils.InstanceofPredicate(keyType),
-            new CollectionUtils.InstanceofPredicate(valueType));
+        return TypedMap.decorate(map, keyType, valueType);
     }
     
     /**
@@ -1292,7 +889,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map is null
      */
     public static Map fixedSizeMap(Map map) {
-        return new FixedSizeMap(map);
+        return FixedSizeMap.decorate(map);
     }
 
     /**
@@ -1324,7 +921,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map or Factory is null
      */
     public static Map lazyMap(Map map, Factory factory) {
-        return new LazyMap(map, factory);
+        return LazyMap.decorate(map, factory);
     }
 
     /**
@@ -1363,7 +960,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map or Transformer is null
      */
     public static Map lazyMap(Map map, Transformer transformerFactory) {
-        return new LazyTransformerMap(map, transformerFactory);
+        return LazyMap.decorate(map, transformerFactory);
     }
 
     //-----------------------------------------------------------------------
@@ -1420,7 +1017,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the SortedMap or Predicates are null
      */
     public static SortedMap predicatedSortedMap(SortedMap map, Predicate keyPred, Predicate valuePred) {
-        return new PredicatedSortedMap(map, keyPred, valuePred);
+        return PredicatedSortedMap.decorate(map, keyPred, valuePred);
     }
 
     /**
@@ -1434,10 +1031,7 @@ public class MapUtils {
      * @return a typed map backed by the specified map
      */
     public static SortedMap typedSortedMap(SortedMap map, Class keyType, Class valueType) {
-        return predicatedSortedMap(
-            map, 
-            new CollectionUtils.InstanceofPredicate(keyType),
-            new CollectionUtils.InstanceofPredicate(valueType));
+        return TypedSortedMap.decorate(map, keyType, valueType);
     }
     
     /**
@@ -1451,7 +1045,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the SortedMap is null
      */
     public static SortedMap fixedSizeSortedMap(SortedMap map) {
-        return new FixedSizeSortedMap(map);
+        return FixedSizeSortedMap.decorate(map);
     }
 
     /**
@@ -1484,7 +1078,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the SortedMap or Factory is null
      */
     public static SortedMap lazySortedMap(SortedMap map, Factory factory) {
-        return new LazySortedMap(map, factory);
+        return LazySortedMap.decorate(map, factory);
     }
     
     /**
@@ -1523,7 +1117,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map or Transformer is null
      */
     public static SortedMap lazySortedMap(SortedMap map, Transformer transformerFactory) {
-        return new LazyTransformerSortedMap(map, transformerFactory);
+        return LazySortedMap.decorate(map, transformerFactory);
     }
 
 }

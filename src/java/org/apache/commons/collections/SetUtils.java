@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.12 2003/04/09 23:37:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.13 2003/05/09 18:41:34 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -59,18 +59,22 @@ package org.apache.commons.collections;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.apache.commons.collections.decorators.PredicatedSet;
+import org.apache.commons.collections.decorators.PredicatedSortedSet;
+import org.apache.commons.collections.decorators.TypedSet;
+import org.apache.commons.collections.decorators.TypedSortedSet;
+
 /**
  * Provides static utility methods and decorators for {@link Set} 
  * and {@link SortedSet} instances.
  *
- * @version $Revision: 1.12 $ $Date: 2003/04/09 23:37:54 $
- * @since Commons Collection 2.1
+ * @since Commons Collections 2.1
+ * @version $Revision: 1.13 $ $Date: 2003/05/09 18:41:34 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -168,64 +172,6 @@ public class SetUtils {
     
     //-----------------------------------------------------------------------
     /**
-     * Implementation of a set that checks new entries.
-     */
-    static class PredicatedSet 
-            extends CollectionUtils.PredicatedCollection
-            implements Set {
-
-        public PredicatedSet(Set set, Predicate predicate) {
-            super(set, predicate);
-        }
-
-    }
-
-    /**
-     * Implementation of a sorted set that checks new entries.
-     */
-    static class PredicatedSortedSet 
-            extends PredicatedSet 
-            implements SortedSet {
-
-        public PredicatedSortedSet(SortedSet set, Predicate predicate) {
-            super(set, predicate);
-        }
-
-        public SortedSet subSet(Object o1, Object o2) {
-            SortedSet sub = getSortedSet().subSet(o1, o2);
-            return new PredicatedSortedSet(sub, predicate);
-        }
-
-        public SortedSet headSet(Object o1) {
-            SortedSet sub = getSortedSet().headSet(o1);
-            return new PredicatedSortedSet(sub, predicate);
-        }
-
-        public SortedSet tailSet(Object o1) {
-            SortedSet sub = getSortedSet().tailSet(o1);
-            return new PredicatedSortedSet(sub, predicate);
-        }
-
-        public Object first() {
-            return getSortedSet().first();
-        }
-
-        public Object last() {
-            return getSortedSet().last();
-        }
-
-        public Comparator comparator() {
-            return getSortedSet().comparator();
-        }
-
-        private SortedSet getSortedSet() {
-            return (SortedSet)collection;
-        }
-
-    }
-
-    //-----------------------------------------------------------------------
-    /**
      * Returns a synchronized set backed by the given set.
      * <p>
      * You must manually synchronize on the returned buffer's iterator to 
@@ -276,7 +222,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
     public static Set predicatedSet(Set set, Predicate predicate) {
-        return new PredicatedSet(set, predicate);
+        return PredicatedSet.decorate(set, predicate);
     }
 
     /**
@@ -289,7 +235,7 @@ public class SetUtils {
      * @return a typed set backed by the specified set
      */
     public static Set typedSet(Set set, Class type) {
-        return predicatedSet(set, new CollectionUtils.InstanceofPredicate(type));
+        return TypedSet.decorate(set, type);
     }
     
     //-----------------------------------------------------------------------
@@ -345,7 +291,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
     public static SortedSet predicatedSortedSet(SortedSet set, Predicate predicate) {
-        return new PredicatedSortedSet(set, predicate);
+        return PredicatedSortedSet.decorate(set, predicate);
     }
 
     /**
@@ -358,7 +304,7 @@ public class SetUtils {
      * @return a typed set backed by the specified set
      */
     public static SortedSet typedSortedSet(SortedSet set, Class type) {
-        return predicatedSortedSet(set, new CollectionUtils.InstanceofPredicate(type));
+        return TypedSortedSet.decorate(set, type);
     }
     
 }
