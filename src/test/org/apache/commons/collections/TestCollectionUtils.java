@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.21 2003/09/22 08:22:53 psteitz Exp $
- * $Revision: 1.21 $
- * $Date: 2003/09/22 08:22:53 $
+ * $Id: TestCollectionUtils.java,v 1.22 2003/09/25 07:19:42 psteitz Exp $
+ * $Revision: 1.22 $
+ * $Date: 2003/09/25 07:19:42 $
  *
  * ====================================================================
  *
@@ -71,6 +71,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.Vector;
 
 import junit.framework.Test;
@@ -91,7 +93,7 @@ import org.apache.commons.collections.decorators.UnmodifiableCollection;
  * @author Stephen Colebourne
  * @author Phil Steitz
  * 
- * @version $Revision: 1.21 $ $Date: 2003/09/22 08:22:53 $
+ * @version $Revision: 1.22 $ $Date: 2003/09/25 07:19:42 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -502,6 +504,21 @@ public class TestCollectionUtils extends TestCase {
         test = CollectionUtils.index(map, new Integer(4));         
         assertTrue((test instanceof Iterator) && !((Iterator) test).hasNext());  
 
+        // sorted map, integer not a key, valid index -- ith key returned
+        SortedMap map2 = new TreeMap();
+        map2.put(new Integer(23), "u");
+        map2.put(new Integer(21), "x");
+        map2.put(new Integer(17), "v");
+        map2.put(new Integer(42), "w");
+        Integer val = (Integer) CollectionUtils.index(map2, 0);
+        assertTrue(val.intValue() == 17);
+        val = (Integer) CollectionUtils.index(map2, 1);
+        assertTrue(val.intValue() == 21);
+        val = (Integer) CollectionUtils.index(map2, 2);
+        assertTrue(val.intValue() == 23);
+        val = (Integer) CollectionUtils.index(map2, 3);
+        assertTrue(val.intValue() == 42);   
+                
         // list, entry exists
         List list = new ArrayList();
         list.add("zero");
