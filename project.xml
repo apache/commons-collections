@@ -4,7 +4,7 @@
   <extend>../project.xml</extend>
   <name>Collections</name>
   <id>commons-collections</id>
-  <currentVersion>2.0</currentVersion>
+  <currentVersion>2.1</currentVersion>
   <inceptionYear>2002</inceptionYear>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
   <shortDescription>Commons Collections</shortDescription>
