@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestBidiMap.java,v 1.6 2003/12/03 12:59:36 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestBidiMap.java,v 1.7 2003/12/14 13:00:37 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/12/03 12:59:36 $
+ * @version $Revision: 1.7 $ $Date: 2003/12/14 13:00:37 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -277,7 +277,13 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiClear() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            try {
+                makeFullBidiMap().clear();
+                fail();
+            } catch(UnsupportedOperationException ex) {}
+            return;
+        }
 
         BidiMap map = makeFullBidiMap();
         map.clear();
@@ -294,13 +300,25 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public void testBidiRemove() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            try {
+                makeFullBidiMap().remove(entries[0][0]);
+                fail();
+            } catch(UnsupportedOperationException ex) {}
+            try {
+                makeFullBidiMap().removeValue(entries[0][1]);
+                fail();
+            } catch(UnsupportedOperationException ex) {}
+            return;
+        }
         
         remove(makeFullBidiMap(), entries[0][0]);
         remove(makeFullBidiMap().inverseBidiMap(), entries[0][1]);
 
         removeValue(makeFullBidiMap(), entries[0][1]);
         removeValue(makeFullBidiMap().inverseBidiMap(), entries[0][0]);
+        
+        assertEquals(null, makeFullBidiMap().removeValue("NotPresent"));
     }
 
     private final void remove(BidiMap map, Object key) {

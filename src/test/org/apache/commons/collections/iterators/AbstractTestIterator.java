@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.5 2003/11/18 22:37:14 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.6 2003/12/14 13:01:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/11/18 22:37:14 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/14 13:01:07 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -169,6 +169,8 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
         } catch (NoSuchElementException e) {
         }
         verify();
+        
+        assertNotNull(it.toString());
     }
 
     /**
@@ -203,6 +205,8 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
         } catch (NoSuchElementException e) {
         }
+        
+        assertNotNull(it.toString());
     }
 
     /**

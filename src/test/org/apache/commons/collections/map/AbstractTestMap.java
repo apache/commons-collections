@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.3 2003/12/07 01:21:51 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.4 2003/12/14 13:01:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -159,7 +159,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.3 $ $Date: 2003/12/07 01:21:51 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/14 13:01:07 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -1280,6 +1280,13 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             return entry;
         }
 
+        public void testMapEntrySetRemoveNonMapEntry() {
+            if (isRemoveSupported() == false) return;
+            resetFull();
+            assertEquals(false, getSet().remove(null));
+            assertEquals(false, getSet().remove(new Object()));
+        }
+        
         public void verify() {
             super.verify();
             AbstractTestMap.this.verify();
