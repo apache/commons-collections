@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntIteratorIterator.java,v 1.1 2003/01/05 03:03:42 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IteratorIntIterator.java,v 1.1 2003/01/09 13:40:11 rwaldhoff Exp $
  * $Revision: 1.1 $
- * $Date: 2003/01/05 03:03:42 $
+ * $Date: 2003/01/09 13:40:11 $
  *
  * ====================================================================
  *
@@ -59,20 +59,24 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import org.apache.commons.collections.primitives.IntIterator;
+
 /**
- * Adapts an {@link IntIterator} to the
- * {@link java.util.Iterator Iterator} interface.
+ * Adapts a {@link java.lang.Number Number}-valued 
+ * {@link java.util.Iterator Iterator} 
+ * to the {@link IntIterator} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/05 03:03:42 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/09 13:40:11 $
  * @author Rodney Waldhoff 
+ *  
  */
-public class IntIteratorIterator implements Iterator {
+public class IteratorIntIterator implements IntIterator {
     
-    public IntIteratorIterator(IntIterator iterator) {
+    public IteratorIntIterator(Iterator iterator) {
         _iterator = iterator;
     }
     
@@ -80,18 +84,18 @@ public class IntIteratorIterator implements Iterator {
         return _iterator.hasNext();
     }
     
-    public Object next() {
-        return new Integer(_iterator.next());
+    public int next() {
+        return ((Number)(_iterator.next())).intValue();
     }
     
     public void remove() {
         _iterator.remove();
     }
     
-    public static Iterator wrap(IntIterator iterator) {
-        return null == iterator ? null : new IntIteratorIterator(iterator);
+    public static IntIterator wrap(Iterator iterator) {
+        return null == iterator ? null : new IteratorIntIterator(iterator);
     }
-    
-    private IntIterator _iterator = null;
+
+    private Iterator _iterator = null;
 
 }

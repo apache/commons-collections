@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ListIntList.java,v 1.2 2003/01/07 13:24:52 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2003/01/07 13:24:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIteratorIntListIterator.java,v 1.1 2003/01/09 13:40:11 rwaldhoff Exp $
+ * $Revision: 1.1 $
+ * $Date: 2003/01/09 13:40:11 $
  *
  * ====================================================================
  *
@@ -59,76 +59,63 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
 
-import java.util.List;
+import java.util.ListIterator;
 
 /**
- * Adapts a {@link Number}-valued {@link java.util.List List} 
- * to the {@link IntList} interface.
+ * Adapts a {@link Number}-valued {@link java.util.ListIterator} 
+ * to the {@link IntListIterator} interface.
  *
- * @version $Revision: 1.2 $ $Date: 2003/01/07 13:24:52 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/09 13:40:11 $
  * @author Rodney Waldhoff 
  */
-public class ListIntList extends CollectionIntCollection implements IntList {
+public class ListIteratorIntListIterator implements IntListIterator {
     
-    public ListIntList(List list) {
-        super(list);        
-        _list = list;
+    public ListIteratorIntListIterator(ListIterator iterator) {
+        _iterator = iterator;
     }
     
-    public void add(int index, int element) {
-        _list.add(index,new Integer(element));
+    public int nextIndex() {
+        return _iterator.nextIndex();
     }
 
-    public boolean addAll(int index, IntCollection collection) {
-        return _list.addAll(index,IntCollectionCollection.wrap(collection));
+    public int previousIndex() {
+        return _iterator.previousIndex();
     }
 
-    public int get(int index) {
-        return ((Number)_list.get(index)).intValue();
+    public boolean hasNext() {
+        return _iterator.hasNext();
     }
 
-    public int indexOf(int element) {
-        return _list.indexOf(new Integer(element));
+    public boolean hasPrevious() {
+        return _iterator.hasPrevious();
+    }
+    
+    public int next() {
+        return ((Number)_iterator.next()).intValue();
     }
 
-    public int lastIndexOf(int element) {
-        return _list.lastIndexOf(new Integer(element));
+    public int previous() {
+        return ((Number)_iterator.previous()).intValue();
     }
 
-    public IntListIterator listIterator() {
-        return ListIteratorIntListIterator.wrap(_list.listIterator());
+    public void add(int element) {
+        _iterator.add(new Integer(element));
+    }
+      
+    public void set(int element) {
+        _iterator.set(new Integer(element));
     }
 
-    public IntListIterator listIterator(int index) {
-        return ListIteratorIntListIterator.wrap(_list.listIterator(index));
+    public void remove() {
+        _iterator.remove();
     }
-
-    public int removeElementAt(int index) {
-        return ((Number)_list.remove(index)).intValue();
+      
+    public static IntListIterator wrap(ListIterator iterator) {
+        return null == iterator ? null : new ListIteratorIntListIterator(iterator);
     }
-
-    public int set(int index, int element) {
-        return ((Number)_list.set(index,new Integer(element))).intValue();
-    }
-
-    public IntList subList(int fromIndex, int toIndex) {
-        return ListIntList.wrap(_list.subList(fromIndex,toIndex));
-    }
-
-    public boolean equals(Object that) {
-        if(that instanceof IntList) {
-            return _list.equals(IntListList.wrap((IntList)that));
-        } else {
-            return super.equals(that);
-        }
-    }
-        
-    public static IntList wrap(List list) {
-        return null == list ? null : new ListIntList(list);
-    }
-
-    private List _list = null;
+    
+    private ListIterator _iterator = null;
 
 }

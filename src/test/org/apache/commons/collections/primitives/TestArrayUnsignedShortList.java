@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.1 2003/01/07 18:04:52 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2003/01/07 18:04:52 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestArrayUnsignedShortList.java,v 1.2 2003/01/09 13:40:11 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2003/01/09 13:40:11 $
  *
  * ====================================================================
  *
@@ -68,9 +68,10 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.TestList;
+import org.apache.commons.collections.primitives.adapters.IntListList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/01/07 18:04:52 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/09 13:40:11 $
  * @author Rodney Waldhoff
  */
 public class TestArrayUnsignedShortList extends TestList {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/ListIteratorIntListIterator.java,v 1.1 2003/01/07 00:59:51 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/ListIntList.java,v 1.1 2003/01/09 13:40:11 rwaldhoff Exp $
  * $Revision: 1.1 $
- * $Date: 2003/01/07 00:59:51 $
+ * $Date: 2003/01/09 13:40:11 $
  *
  * ====================================================================
  *
@@ -59,63 +59,79 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
 
-import java.util.ListIterator;
+import java.util.List;
+
+import org.apache.commons.collections.primitives.IntCollection;
+import org.apache.commons.collections.primitives.IntList;
 
 /**
- * Adapts a {@link Number}-valued {@link java.util.ListIterator} 
- * to the {@link IntListIterator} interface.
+ * Adapts a {@link Number}-valued {@link java.util.List List} 
+ * to the {@link IntList} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/07 00:59:51 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/09 13:40:11 $
  * @author Rodney Waldhoff 
  */
-public class ListIteratorIntListIterator implements IntListIterator {
+public class ListIntList extends CollectionIntCollection implements IntList {
     
-    public ListIteratorIntListIterator(ListIterator iterator) {
-        _iterator = iterator;
-    }
-    
-    public int nextIndex() {
-        return _iterator.nextIndex();
-    }
-
-    public int previousIndex() {
-        return _iterator.previousIndex();
-    }
-
-    public boolean hasNext() {
-        return _iterator.hasNext();
-    }
-
-    public boolean hasPrevious() {
-        return _iterator.hasPrevious();
+    public ListIntList(List list) {
+        super(list);        
+        _list = list;
     }
     
-    public int next() {
-        return ((Number)_iterator.next()).intValue();
+    public void add(int index, int element) {
+        _list.add(index,new Integer(element));
     }
 
-    public int previous() {
-        return ((Number)_iterator.previous()).intValue();
+    public boolean addAll(int index, IntCollection collection) {
+        return _list.addAll(index,IntCollectionCollection.wrap(collection));
     }
 
-    public void add(int element) {
-        _iterator.add(new Integer(element));
-    }
-      
-    public void set(int element) {
-        _iterator.set(new Integer(element));
+    public int get(int index) {
+        return ((Number)_list.get(index)).intValue();
     }
 
-    public void remove() {
-        _iterator.remove();
+    public int indexOf(int element) {
+        return _list.indexOf(new Integer(element));
     }
-      
-    public static IntListIterator wrap(ListIterator iterator) {
-        return null == iterator ? null : new ListIteratorIntListIterator(iterator);
+
+    public int lastIndexOf(int element) {
+        return _list.lastIndexOf(new Integer(element));
     }
-    
-    private ListIterator _iterator = null;
+
+    public IntListIterator listIterator() {
+        return ListIteratorIntListIterator.wrap(_list.listIterator());
+    }
+
+    public IntListIterator listIterator(int index) {
+        return ListIteratorIntListIterator.wrap(_list.listIterator(index));
+    }
+
+    public int removeElementAt(int index) {
+        return ((Number)_list.remove(index)).intValue();
+    }
+
+    public int set(int index, int element) {
+        return ((Number)_list.set(index,new Integer(element))).intValue();
+    }
+
+    public IntList subList(int fromIndex, int toIndex) {
+        return ListIntList.wrap(_list.subList(fromIndex,toIndex));
+    }
+
+    public boolean equals(Object that) {
+        if(that instanceof IntList) {
+            return _list.equals(IntListList.wrap((IntList)that));
+        } else {
+            return super.equals(that);
+        }
+    }
+        
+    public static IntList wrap(List list) {
+        return null == list ? null : new ListIntList(list);
+    }
+
+    private List _list = null;
 
 }

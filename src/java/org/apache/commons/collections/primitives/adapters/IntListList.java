@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IteratorIntIterator.java,v 1.1 2003/01/05 03:03:42 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntListList.java,v 1.1 2003/01/09 13:40:11 rwaldhoff Exp $
  * $Revision: 1.1 $
- * $Date: 2003/01/05 03:03:42 $
+ * $Date: 2003/01/09 13:40:11 $
  *
  * ====================================================================
  *
@@ -59,41 +59,86 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
 
-import java.util.Iterator;
+import java.util.Collection;
+import java.util.List;
+import java.util.ListIterator;
+
+import org.apache.commons.collections.primitives.IntList;
 
 /**
- * Adapts a {@link java.lang.Number Number}-valued 
- * {@link java.util.Iterator Iterator} 
- * to the {@link IntIterator} interface.
+ * Adapts an {@link IntList} to the
+ * {@link java.util.List List} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/05 03:03:42 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/09 13:40:11 $
  * @author Rodney Waldhoff 
- *  
  */
-public class IteratorIntIterator implements IntIterator {
+public class IntListList extends IntCollectionCollection implements List {
     
-    public IteratorIntIterator(Iterator iterator) {
-        _iterator = iterator;
+    public IntListList(IntList list) {
+        super(list);        
+        _list = list;
     }
     
-    public boolean hasNext() {
-        return _iterator.hasNext();
-    }
-    
-    public int next() {
-        return ((Number)(_iterator.next())).intValue();
-    }
-    
-    public void remove() {
-        _iterator.remove();
-    }
-    
-    public static IntIterator wrap(Iterator iterator) {
-        return null == iterator ? null : new IteratorIntIterator(iterator);
+    public void add(int index, Object element) {
+        _list.add(index,((Number)element).intValue());
     }
 
-    private Iterator _iterator = null;
+    public boolean addAll(int index, Collection c) {
+        return _list.addAll(index,CollectionIntCollection.wrap(c));
+    }
+
+    public Object get(int index) {
+        return new Integer(_list.get(index));
+    }
+
+    public int indexOf(Object element) {
+        return _list.indexOf(((Number)element).intValue());
+    }
+
+    public int lastIndexOf(Object element) {
+        return _list.lastIndexOf(((Number)element).intValue());
+    }
+
+    public ListIterator listIterator() {
+        return IntListIteratorListIterator.wrap(_list.listIterator());
+    }
+
+    public ListIterator listIterator(int index) {
+        return IntListIteratorListIterator.wrap(_list.listIterator(index));
+    }
+
+    public Object remove(int index) {
+        return new Integer(_list.removeElementAt(index));
+    }
+
+    public Object set(int index, Object element) {
+        return new Integer(_list.set(index, ((Number)element).intValue() ));
+    }
+
+    public List subList(int fromIndex, int toIndex) {
+        return IntListList.wrap(_list.subList(fromIndex,toIndex));
+    }
+
+    public boolean equals(Object that) {
+        if(that instanceof List) {
+            try {
+                return _list.equals(ListIntList.wrap((List)that));
+            } catch(NullPointerException e) {
+                return false;
+            } catch(ClassCastException e) {
+                return false;
+            }
+        } else {
+            return super.equals(that);
+        }
+    }
+    
+    public static List wrap(IntList list) {
+        return null == list ? null : new IntListList(list);
+    }
+
+    private IntList _list = null;
 
 }

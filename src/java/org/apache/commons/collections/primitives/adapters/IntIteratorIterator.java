@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntListIterator.java,v 1.1 2003/01/04 15:00:57 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/adapters/Attic/IntIteratorIterator.java,v 1.1 2003/01/09 13:40:11 rwaldhoff Exp $
  * $Revision: 1.1 $
- * $Date: 2003/01/04 15:00:57 $
+ * $Date: 2003/01/09 13:40:11 $
  *
  * ====================================================================
  *
@@ -59,22 +59,41 @@
  *
  */
 
-package org.apache.commons.collections.primitives;
+package org.apache.commons.collections.primitives.adapters;
+
+import java.util.Iterator;
+
+import org.apache.commons.collections.primitives.IntIterator;
 
 /**
- * A {@link java.util.ListIterator list iterator} over int values.
+ * Adapts an {@link IntIterator} to the
+ * {@link java.util.Iterator Iterator} interface.
  *
- * @version $Revision: 1.1 $ $Date: 2003/01/04 15:00:57 $
+ * @version $Revision: 1.1 $ $Date: 2003/01/09 13:40:11 $
  * @author Rodney Waldhoff 
  */
-public interface IntListIterator extends IntIterator {
-    void add(int element);
-    boolean hasNext();
-    boolean hasPrevious();
-    int next();
-    int nextIndex();
-    int previous();
-    int previousIndex();
-    void remove();
-    void set(int element);
+public class IntIteratorIterator implements Iterator {
+    
+    public IntIteratorIterator(IntIterator iterator) {
+        _iterator = iterator;
+    }
+    
+    public boolean hasNext() {
+        return _iterator.hasNext();
+    }
+    
+    public Object next() {
+        return new Integer(_iterator.next());
+    }
+    
+    public void remove() {
+        _iterator.remove();
+    }
+    
+    public static Iterator wrap(IntIterator iterator) {
+        return null == iterator ? null : new IntIteratorIterator(iterator);
+    }
+    
+    private IntIterator _iterator = null;
+
 }

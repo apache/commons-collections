@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.3 2003/01/06 03:59:12 rwaldhoff Exp $
- * $Revision: 1.3 $
- * $Date: 2003/01/06 03:59:12 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.4 2003/01/09 13:40:10 rwaldhoff Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/01/09 13:40:10 $
  *
  * ====================================================================
  *
@@ -61,10 +61,12 @@
 
 package org.apache.commons.collections.primitives;
 
+import org.apache.commons.collections.primitives.adapters.IntListIterator;
+
 /**
  * An ordered collection (a {@link java.util.List}) of int values.
  *
- * @version $Revision: 1.3 $ $Date: 2003/01/06 03:59:12 $
+ * @version $Revision: 1.4 $ $Date: 2003/01/09 13:40:10 $
  * @author Rodney Waldhoff 
  */
 public interface IntList extends IntCollection {
