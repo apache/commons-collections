@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBag.java,v 1.2 2002/03/14 18:00:51 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/03/14 18:00:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBag.java,v 1.3 2002/03/14 18:10:33 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/03/14 18:10:33 $
  *
  * ====================================================================
  *
@@ -79,7 +79,7 @@ import java.util.List;
  * test case (method) your {@link Bag} fails.
  *
  * @author Chuck Burdick
- * @version $Id: TestBag.java,v 1.2 2002/03/14 18:00:51 morgand Exp $
+ * @version $Id: TestBag.java,v 1.3 2002/03/14 18:10:33 morgand Exp $
  */
 public abstract class TestBag extends TestCollection {
     public TestBag(String testName) {
@@ -222,11 +222,21 @@ public abstract class TestBag extends TestCollection {
       bag.add("B");
       assertEquals("Bag should have 3 items", 3, bag.size());
       Iterator i = bag.iterator();
-      assertEquals("First should be 'A'", "A", i.next());
-      assertEquals("Second should be 'A'", "A", i.next());
-      i.remove();
-      assertEquals("Third should be 'B'", "B", i.next());
-      assertTrue("Should have no more", !i.hasNext());
+
+      boolean foundA = false;
+      while (i.hasNext()) {
+          String element = (String) i.next();
+          // ignore the first A, remove the second via Iterator.remove()
+          if (element.equals("A")) {
+              if (foundA == false) {
+                  foundA = true;
+              } else {
+                  i.remove();
+              }
+          }
+      }
+
+      assertTrue("Bag should still contain 'A'", bag.contains("A"));
       assertEquals("Bag should have 2 items", 2, bag.size());
       assertEquals("Bag should have 1 'A'", 1, bag.getCount("A"));
    }
@@ -237,7 +247,7 @@ public abstract class TestBag extends TestCollection {
       bag.add("A");
       bag.add("B");
       Iterator i = bag.iterator();
-      assertEquals("First should be 'A'", "A", i.next());
+      i.next();
       bag.remove("A");
       try {
          i.next();
