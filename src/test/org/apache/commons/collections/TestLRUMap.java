@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.1 2001/05/06 11:10:36 jstrachan Exp $
- * $Revision: 1.1 $
- * $Date: 2001/05/06 11:10:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.2 2002/02/13 20:59:12 morgand Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/02/13 20:59:12 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.HashMap;
 
 /**
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @version $Id: TestLRUMap.java,v 1.1 2001/05/06 11:10:36 jstrachan Exp $
+ * @version $Id: TestLRUMap.java,v 1.2 2002/02/13 20:59:12 morgand Exp $
  */
 public class TestLRUMap extends TestHashMap
 {
@@ -93,6 +93,18 @@ public class TestLRUMap extends TestHashMap
 
     public void setUp() {
         map = (HashMap) makeMap();
+    }
+
+    public void testRemoveLRU() {
+        LRUMap map2 = new LRUMap(4);
+        map2.put(new Integer(1),"foo");
+        map2.put(new Integer(2),"foo");
+        map2.put(new Integer(3),"foo");
+        map2.put(new Integer(4),"foo");
+        map2.removeLRU();  // should be Integer(4)
+
+        assertTrue("Second to last value should exist",map2.get(new Integer(3)).equals("foo"));
+        assertTrue("Last value inserted should not exist", map2.get(new Integer(4)) == null);
     }
 
 }
