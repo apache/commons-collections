@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.7 2003/01/10 19:24:10 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/IntList.java,v 1.8 2003/01/10 21:13:19 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ package org.apache.commons.collections.primitives;
  * @see org.apache.commons.collections.primitives.adapters.ListIntList
  *
  * @since Commons Collections 2.2
- * @version $Revision: 1.7 $ $Date: 2003/01/10 19:24:10 $
+ * @version $Revision: 1.8 $ $Date: 2003/01/10 21:13:19 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -108,6 +108,23 @@ public interface IntList extends IntCollection {
      */
     boolean addAll(int index, IntCollection collection);
     
+    /**
+     * Returns <code>true</code> iff <i>that</i> is an <code>IntList</code>
+     * that contains the same elements in the same order as me.
+     * In other words, returns <code>true</code> iff <i>that</i> is
+     * an <code>IntList</code> that has the same {@link #size} as me,
+     * and for which the elements returned that its 
+     * {@link IntList#iterator iterator} are equal (<code>==</code>) to
+     * the corresponding elements within me.
+     * (This contract ensures that this method works properly across 
+     * different implementations of the <code>IntList</code> interface.
+     * 
+     * @param that the object to compare to me
+     * @return <code>true</code> iff <i>that</i> is an <code>IntList</code>
+     *         that contains the same elements in the same order as me
+     */
+    boolean equals(Object that);
+    
     /** 
      * Returns the element at the specified position within 
      * me. 
@@ -117,7 +134,25 @@ public interface IntList extends IntCollection {
      * @throws IndexOutOfBoundsException if the specified index is out of range
      */
     int get(int index);
-    
+        
+    /**
+     * Returns my hash code.
+     * <p>
+     * The hash code of an <code>IntList</code> is defined to be the
+     * result of the following calculation:
+     * <pre>int hash = 1;
+     * for(IntIterator iter = iterator(); iter.hasNext(); ) {
+     *   hash = 31*hash + iter.next();
+     * }</pre>
+     * <p>
+     * This contract ensures that this method is consistent with 
+     * {@link #equals} and with the {@link java.util.List#hashCode hashCode}
+     * method of a {@link java.util.List List} of {@link Integer}s. 
+     * 
+     * @return my hash code
+     */
+    int hashCode();
+
     /** 
      * Returns the index of the first occurrence 
      * of the specified element within me, 

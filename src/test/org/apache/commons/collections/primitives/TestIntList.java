@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.1 2003/01/10 13:27:55 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestIntList.java,v 1.2 2003/01/10 21:13:19 rwaldhoff Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import org.apache.commons.collections.primitives.adapters.IntListList;
 import org.apache.commons.collections.primitives.adapters.ListIntList;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/01/10 13:27:55 $
+ * @version $Revision: 1.2 $ $Date: 2003/01/10 21:13:19 $
  * @author Rodney Waldhoff
  */
 public abstract class TestIntList extends TestList {
@@ -139,6 +139,15 @@ public abstract class TestIntList extends TestList {
 
     // tests
     // ------------------------------------------------------------------------
+
+    public void testHashCodeSpecification() {
+        IntList list = makeFullIntList();
+        int hash = 1;
+        for(IntIterator iter = list.iterator(); iter.hasNext(); ) {
+            hash = 31*hash + iter.next();
+        }
+        assertEquals(hash,list.hashCode());
+    }
 
     public void testEqualsWithTwoIntLists() {
         IntList one = makeEmptyIntList();
