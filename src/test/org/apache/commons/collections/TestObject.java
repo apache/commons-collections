@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.9 2002/02/26 20:52:17 morgand Exp $
- * $Revision: 1.9 $
- * $Date: 2002/02/26 20:52:17 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.10 2002/03/01 18:36:21 morgand Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/03/01 18:36:21 $
  *
  * ====================================================================
  *
@@ -91,7 +91,7 @@ import java.util.NoSuchElementException;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.9 2002/02/26 20:52:17 morgand Exp $
+ * @version $Id: TestObject.java,v 1.10 2002/03/01 18:36:21 morgand Exp $
  */
 public abstract class TestObject extends TestCase {
     public TestObject(String testName) {
@@ -261,6 +261,27 @@ public abstract class TestObject extends TestCase {
         return retval.toString();
     }
 
+    /**
+     * Override this method if a subclass is testing a 
+     * Collections that cannot serialize an "empty" Collection
+     * (e.g. Comparators have no contents)
+     * 
+     * @return true
+     */
+    public boolean supportsEmptyCollections() {
+        return true;
+    }
+
+    /**
+     * Override this method if a subclass is testing a 
+     * Collections that cannot serialize a "full" Collection
+     * (e.g. Comparators have no contents)
+     * 
+     * @return true
+     */
+    public boolean supportsFullCollections() {
+        return true;
+    }
 
     /**
      * If the test object is serializable, confirm that 
@@ -268,6 +289,10 @@ public abstract class TestObject extends TestCase {
      * 
      */
     public void testCanonicalEmptyCollectionExists() {
+        if (!supportsEmptyCollections()) {
+            return;
+        }
+
         Object object = makeObject();
         if (!(object instanceof Serializable)) {
             return;
@@ -283,6 +308,10 @@ public abstract class TestObject extends TestCase {
      * 
      */
     public void testCanonicalFullCollectionExists() {
+        if (!supportsFullCollections()) {
+            return;
+        }
+        
         Object object = makeObject();
         if (!(object instanceof Serializable)) {
             return;

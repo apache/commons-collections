@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.20 2002/02/26 17:31:51 morgand Exp $
- * $Revision: 1.20 $
- * $Date: 2002/02/26 17:31:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.21 2002/03/01 18:36:21 morgand Exp $
+ * $Revision: 1.21 $
+ * $Date: 2002/03/01 18:36:21 $
  *
  * ====================================================================
  *
@@ -61,12 +61,13 @@
 
 package org.apache.commons.collections;
 
+import org.apache.commons.collections.comparators.*;
 import junit.framework.*;
 
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.20 2002/02/26 17:31:51 morgand Exp $
+ * @version $Id: TestAll.java,v 1.21 2002/03/01 18:36:21 morgand Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -80,6 +81,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestArrayStack.suite());
         suite.addTest(TestBeanMap.suite());
         suite.addTest(TestCollectionUtils.suite());
+        suite.addTest(TestComparableComparator.suite());
         suite.addTest(TestCursorableLinkedList.suite());
         suite.addTest(TestDoubleOrderedMap.suite());
         suite.addTest(TestExtendedProperties.suite());
