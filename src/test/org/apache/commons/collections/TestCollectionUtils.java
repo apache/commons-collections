@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.5 2002/08/18 15:26:43 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/18 15:26:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCollectionUtils.java,v 1.6 2002/09/07 19:49:49 rwaldhoff Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/09/07 19:49:49 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Rodney Waldhoff
- * @version $Id: TestCollectionUtils.java,v 1.5 2002/08/18 15:26:43 scolebourne Exp $
+ * @version $Id: TestCollectionUtils.java,v 1.6 2002/09/07 19:49:49 rwaldhoff Exp $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -139,6 +139,47 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(3,CollectionUtils.cardinality("c",_b));
         assertEquals(2,CollectionUtils.cardinality("d",_b));
         assertEquals(1,CollectionUtils.cardinality("e",_b));
+    }
+
+    public void testContainsAny() {
+        Collection empty = new ArrayList(0);
+        Collection one = new ArrayList(1);
+        one.add("1");
+        Collection two = new ArrayList(1);
+        two.add("2");
+        Collection three = new ArrayList(1);
+        three.add("3");
+        Collection odds = new ArrayList(2);
+        odds.add("1");
+        odds.add("3");
+        
+        assertTrue("containsAny({1},{1,3}) should return true.",
+            CollectionUtils.containsAny(one,odds));
+        assertTrue("containsAny({1,3},{1}) should return true.",
+            CollectionUtils.containsAny(odds,one));
+        assertTrue("containsAny({3},{1,3}) should return true.",
+            CollectionUtils.containsAny(three,odds));
+        assertTrue("containsAny({1,3},{3}) should return true.",
+            CollectionUtils.containsAny(odds,three));
+        assertTrue("containsAny({2},{2}) should return true.",
+            CollectionUtils.containsAny(two,two));
+        assertTrue("containsAny({1,3},{1,3}) should return true.",
+            CollectionUtils.containsAny(odds,odds));
+        
+        assertTrue("containsAny({2},{1,3}) should return false.",
+            !CollectionUtils.containsAny(two,odds));
+        assertTrue("containsAny({1,3},{2}) should return false.",
+            !CollectionUtils.containsAny(odds,two));
+        assertTrue("containsAny({1},{3}) should return false.",
+            !CollectionUtils.containsAny(one,three));
+        assertTrue("containsAny({3},{1}) should return false.",
+            !CollectionUtils.containsAny(three,one));
+        assertTrue("containsAny({1,3},{}) should return false.",
+            !CollectionUtils.containsAny(odds,empty));
+        assertTrue("containsAny({},{1,3}) should return false.",
+            !CollectionUtils.containsAny(empty,odds));
+        assertTrue("containsAny({},{}) should return false.",
+            !CollectionUtils.containsAny(empty,empty));
     }
 
     public void testUnion() {

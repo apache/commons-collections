@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.15 2002/08/18 20:11:37 pjack Exp $
- * $Revision: 1.15 $
- * $Date: 2002/08/18 20:11:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.16 2002/09/07 19:49:49 rwaldhoff Exp $
+ * $Revision: 1.16 $
+ * $Date: 2002/09/07 19:49:49 $
  *
  * ====================================================================
  *
@@ -83,7 +83,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: CollectionUtils.java,v 1.15 2002/08/18 20:11:37 pjack Exp $
+ * @version $Revision: 1.16 $ $Date: 2002/09/07 19:49:49 $
  */
 public class CollectionUtils {
 
@@ -134,6 +134,7 @@ public class CollectionUtils {
      * in the two given {@link Collection}s.
      *
      * @see Collection#retainAll
+     * @see #containsAny
      */
     public static Collection intersection(final Collection a, final Collection b) {
         ArrayList list = new ArrayList();
@@ -195,6 +196,30 @@ public class CollectionUtils {
             list.remove(it.next());
         }
         return list;
+    }
+
+    /**
+     * Returns <code>true</code> iff some element of <i>a</i>
+     * is also an element of <i>b</i> (or, equivalently, if 
+     * some element of <i>b</i> is also an element of <i>a</i>).
+     * In other words, this method returns <code>true</code>
+     * iff the {@link #intersection} of <i>a</i> and <i>b</i>
+     * is not empty.
+     * @since 2.1
+     * @param a a non-<code>null</code> Collection
+     * @param b a non-<code>null</code> Collection
+     * @return <code>true</code> iff the intersection of <i>a</i> and <i>b</i> is non-empty
+     * @see #intersection
+     */
+    public static boolean containsAny(final Collection a, final Collection b) {
+        // TO DO: we may be able to optimize this by ensuring either a or b
+        // is the larger of the two Collections, but I'm not sure which.
+        for(Iterator iter = a.iterator(); iter.hasNext();) {
+            if(b.contains(iter.next())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -689,6 +714,7 @@ public class CollectionUtils {
             i++;
         }
     }
+
     private static final int getFreq(final Object obj, final Map freqMap) {
         try {
             return ((Integer)(freqMap.get(obj))).intValue();
@@ -699,7 +725,6 @@ public class CollectionUtils {
         }
         return 0;
     }
-
 
     /**
      *  Base class for collection decorators.  I decided to do it this way
