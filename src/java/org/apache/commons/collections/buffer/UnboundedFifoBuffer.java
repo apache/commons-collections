@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.buffer;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -42,9 +46,11 @@ import org.apache.commons.collections.BufferUnderflowException;
  * </pre>
  * <p>
  * This buffer prevents null objects from being added.
+ * <p>
+ * This class is Serializable from Commons Collections 3.1.
  * 
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.8 $ $Date: 2004/05/15 12:33:23 $
+ * @version $Revision: 1.9 $ $Date: 2004/06/01 22:57:18 $
  *
  * @author Avalon
  * @author Federico Barbieri
@@ -52,14 +58,17 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
-    
+public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, Serializable {
+
+    /** Serialization vesrion */
+    private static final long serialVersionUID = -3482960336579541419L;
+
     /** The array of objects in the buffer. */
-    protected Object[] buffer;
+    protected transient Object[] buffer;
     /** The current head index. */
-    protected int head;
+    protected transient int head;
     /** The current tail index. */
-    protected int tail;
+    protected transient int tail;
 
     /**
      * Constructs an UnboundedFifoBuffer with the default number of elements.
@@ -89,6 +98,40 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
         tail = 0;
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Write the buffer out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(size());
+        for (Iterator it = iterator(); it.hasNext();) {
+            out.writeObject(it.next());
+        }
+    }
+
+    /**
+     * Read the buffer in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        int size = in.readInt();
+        buffer = new Object[size];
+        for (int i = 0; i < size; i++) {
+            buffer[i] = in.readObject();
+        }
+        head = 0;
+        tail = size;
+    }
+
+    //-----------------------------------------------------------------------
     /**
      * Returns the number of elements stored in the buffer.
      *
