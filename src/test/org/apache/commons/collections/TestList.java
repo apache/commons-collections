@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.14 2002/11/07 21:32:36 bayard Exp $
- * $Revision: 1.14 $
- * $Date: 2002/11/07 21:32:36 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestList.java,v 1.15 2003/01/25 12:55:43 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
+ * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -23,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,7 +55,6 @@
  * <http://www.apache.org/>.
  *
  */
-
 package org.apache.commons.collections;
 
 import java.io.IOException;
@@ -76,7 +72,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-
 /**
  * Tests base {@link java.util.List} methods and contracts.
  * <p>
@@ -87,9 +82,11 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
  *
+ * @version $Revision: 1.15 $ $Date: 2003/01/25 12:55:43 $
+ * 
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Id: TestList.java,v 1.14 2002/11/07 21:32:36 bayard Exp $
+ * @author Stephen Colebourne
  */
 public abstract class TestList extends TestCollection {
 
@@ -137,6 +134,18 @@ public abstract class TestList extends TestCollection {
      */
     final protected Collection makeFullCollection() {
         return makeFullList();
+    }
+
+
+    /**
+     *  Returns true if the collections produced by 
+     *  {@link #makeCollection()} and {@link #makeFullCollection()}
+     *  support the <code>set</code> operation.<p>
+     *  Default implementation returns true.  Override if your collection
+     *  class does not support set.
+     */
+    protected boolean isSetSupported() {
+        return true;
     }
 
 
@@ -496,6 +505,8 @@ public abstract class TestList extends TestCollection {
      *  empty list.
      */
     public void testListSetByIndexBoundsChecking() {
+        if (!isSetSupported()) return;
+
         List list = makeEmptyList();
         Object element = getOtherElements()[0];
 
@@ -543,6 +554,8 @@ public abstract class TestList extends TestCollection {
      *  full list.
      */
     public void testListSetByIndexBoundsChecking2() {
+        if (!isSetSupported()) return;
+
         List list = makeFullList();
         Object element = getOtherElements()[0];
 
@@ -582,6 +595,8 @@ public abstract class TestList extends TestCollection {
      *  Test {@link List#set(int,Object)}.
      */
     public void testListSetByIndex() {
+        if (!isSetSupported()) return;
+
         resetFull();
         Object[] elements = getFullElements();
         Object[] other = getOtherElements();
@@ -595,6 +610,26 @@ public abstract class TestList extends TestCollection {
         }
     }
 
+
+    /**
+     *  If {@link #isSetSupported()} returns false, tests that set operation
+     *  raises <Code>UnsupportedOperationException.
+     */
+    public void testUnsupportedSet() {
+        if (isSetSupported()) return;
+        
+        resetFull();
+        try {
+            ((List) collection).set(0, new Object());
+            fail("Emtpy collection should not support set.");
+        } catch (UnsupportedOperationException e) {
+            // expected
+        }
+        // make sure things didn't change even if the expected exception was
+        // thrown.
+        verify();
+    }
+    
 
     /**
      *  Tests bounds checking for {@link List#remove(int)} on an
@@ -834,7 +869,7 @@ public abstract class TestList extends TestCollection {
      *  iterator.
      */
     public void testListIteratorSet() {
-        if (!isAddSupported()) return;
+        if (!isSetSupported()) return;
 
         Object[] elements = getFullElements();
 
