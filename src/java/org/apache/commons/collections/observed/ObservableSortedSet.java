@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableSortedSet.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/observed/Attic/ObservableSortedSet.java,v 1.2 2003/09/28 21:49:50 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import java.util.SortedSet;
  * See this class for details of configuration available.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/28 21:49:50 $
  * 
  * @author Stephen Colebourne
  */
@@ -100,7 +100,7 @@ public class ObservableSortedSet extends ObservableSet implements SortedSet {
      * {@link org.apache.commons.collections.observed.standard.StandardModificationListener}
      * interface and pass it in as the second parameter.
      * <p>
-     * Internally, an <code>ObservableSet</code> relies on a {@link ModificationHandler}.
+     * Internally, an <code>ObservableSortedSet</code> relies on a {@link ModificationHandler}.
      * The handler receives all the events and processes them, typically by
      * calling listeners. Different handler implementations can be plugged in
      * to provide a flexible event system.
@@ -128,7 +128,7 @@ public class ObservableSortedSet extends ObservableSet implements SortedSet {
             final Object listener) {
         
         if (set == null) {
-            throw new IllegalArgumentException("Set must not be null");
+            throw new IllegalArgumentException("SortedSet must not be null");
         }
         return new ObservableSortedSet(set, listener);
     }
