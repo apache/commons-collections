@@ -33,7 +33,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * strategy is provided then add and remove are unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:58:53 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/15 12:39:13 $
  *
  * @author Brian McCallister
  * @author Stephen Colebourne
@@ -113,6 +113,7 @@ public class CompositeCollection implements Collection {
      * <p>
      * This implementation calls <code>contains()</code> on each collection.
      *
+     * @param obj  the object to search for
      * @return true if obj is contained in any of the contained collections
      */
     public boolean contains(Object obj) {
@@ -163,9 +164,10 @@ public class CompositeCollection implements Collection {
      * Returns an object array, populating the supplied array if possible.
      * See <code>Collection</code> interface for full details.
      *
+     * @param array  the array to use, populating if possible
      * @return an array of all the elements in the collection
      */
-    public Object[] toArray(Object array[]) {
+    public Object[] toArray(Object[] array) {
         int size = this.size();
         Object[] result = null;
         if (array.length >= size) {
@@ -338,13 +340,18 @@ public class CompositeCollection implements Collection {
     
     /**
      * Add an additional collection to this composite.
+     * 
+     * @param c  the collection to add
      */
     public void addComposited(Collection c) {
         this.addComposited(new Collection[]{c});
     }
     
     /**
-     * Add two additional collection to this composite.
+     * Add two additional collections to this composite.
+     * 
+     * @param c  the first collection to add
+     * @param d  the second collection to add
      */
     public void addComposited(Collection c, Collection d) {
         this.addComposited(new Collection[]{c, d});

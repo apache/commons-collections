@@ -31,7 +31,7 @@ import org.apache.commons.collections.Transformer;
  * use the Integer form to remove objects.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:58:53 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/15 12:39:13 $
  * 
  * @author Stephen Colebourne
  */
@@ -48,6 +48,7 @@ public class TransformedCollection extends AbstractCollectionDecorator {
      * 
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed collection
      * @throws IllegalArgumentException if collection or transformer is null
      */
     public static Collection decorate(Collection coll, Transformer transformer) {

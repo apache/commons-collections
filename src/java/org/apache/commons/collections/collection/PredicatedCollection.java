@@ -28,7 +28,7 @@ import org.apache.commons.collections.Predicate;
  * is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2004/02/18 00:58:53 $
+ * @version $Revision: 1.4 $ $Date: 2004/05/15 12:39:13 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -46,6 +46,7 @@ public class PredicatedCollection extends AbstractCollectionDecorator {
      * 
      * @param coll  the collection to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
+     * @return a new predicated collection
      * @throws IllegalArgumentException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */

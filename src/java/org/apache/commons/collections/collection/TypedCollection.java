@@ -27,7 +27,7 @@ import org.apache.commons.collections.functors.InstanceofPredicate;
  * collection, an IllegalArgumentException is thrown.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/05/07 23:28:38 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/15 12:39:13 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -42,6 +42,7 @@ public class TypedCollection {
      * 
      * @param coll  the collection to decorate, must not be null
      * @param type  the type to allow into the collection, must not be null
+     * @return a new typed collection
      * @throws IllegalArgumentException if collection or type is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
@@ -53,6 +54,7 @@ public class TypedCollection {
      * Restrictive constructor.
      */
     protected TypedCollection() {
+        super();
     }
 
 }

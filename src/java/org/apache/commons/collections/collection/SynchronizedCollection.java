@@ -31,7 +31,7 @@ import java.util.Iterator;
  * </pre>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2004/02/18 00:58:53 $
+ * @version $Revision: 1.5 $ $Date: 2004/05/15 12:39:13 $
  * 
  * @author Stephen Colebourne
  */
@@ -46,6 +46,7 @@ public class SynchronizedCollection implements Collection {
      * Factory method to create a synchronized collection.
      * 
      * @param coll  the collection to decorate, must not be null
+     * @return a new synchronized collection
      * @throws IllegalArgumentException if collection is null
      */
     public static Collection decorate(Collection coll) {

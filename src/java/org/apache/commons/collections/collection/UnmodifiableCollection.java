@@ -25,7 +25,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * Decorates another <code>Collection</code> to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 00:58:53 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/15 12:39:13 $
  * 
  * @author Stephen Colebourne
  */
@@ -33,8 +33,11 @@ public final class UnmodifiableCollection extends AbstractCollectionDecorator im
 
     /**
      * Factory method to create an unmodifiable collection.
+     * <p>
+     * If the collection passed in is already unmodifiable, it is returned.
      * 
      * @param coll  the collection to decorate, must not be null
+     * @return an unmodifiable collection
      * @throws IllegalArgumentException if collection is null
      */
     public static Collection decorate(Collection coll) {

@@ -32,7 +32,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * examining the package scope variables.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2004/04/14 20:11:45 $
+ * @version $Revision: 1.8 $ $Date: 2004/05/15 12:39:13 $
  * 
  * @author Stephen Colebourne
  */
@@ -42,6 +42,7 @@ public final class UnmodifiableBoundedCollection extends AbstractCollectionDecor
      * Factory method to create an unmodifiable bounded collection.
      * 
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
+     * @return a new unmodifiable bounded collection
      * @throws IllegalArgumentException if bag is null
      */
     public static BoundedCollection decorate(BoundedCollection coll) {
@@ -55,6 +56,7 @@ public final class UnmodifiableBoundedCollection extends AbstractCollectionDecor
      * to find a suitable BoundedCollection.
      * 
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
+     * @return a new unmodifiable bounded collection
      * @throws IllegalArgumentException if bag is null
      */
     public static BoundedCollection decorateUsing(Collection coll) {
