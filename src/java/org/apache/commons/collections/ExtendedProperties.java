@@ -165,10 +165,10 @@ import java.util.Vector;
  * @author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
  * @author <a href="mailto:leon@opticode.co.za">Leon Messerschmidt</a>
- * @author <a href="mailto:kjohnson@transparent.com>Kent Johnson</a>
- * @author <a href="mailto:dlr@finemaltcoding.com>Daniel Rall</a>
- * @author <a href="mailto:ipriha@surfeu.fi>Ilkka Priha</a>
- * @version $Id: ExtendedProperties.java,v 1.3 2001/05/10 00:40:08 geirm Exp $
+ * @author <a href="mailto:kjohnson@transparent.com">Kent Johnson</a>
+ * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
+ * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
+ * @version $Id: ExtendedProperties.java,v 1.4 2001/05/13 21:46:22 geirm Exp $
  */
 public class ExtendedProperties extends Hashtable
 {
