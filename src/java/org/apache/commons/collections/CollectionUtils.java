@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.2 2001/05/04 16:32:17 rwaldhoff Exp $
- * $Revision: 1.2 $
- * $Date: 2001/05/04 16:32:17 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.3 2001/05/06 11:04:25 jstrachan Exp $
+ * $Revision: 1.3 $
+ * $Date: 2001/05/06 11:04:25 $
  *
  * ====================================================================
  *
@@ -63,6 +63,7 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -75,7 +76,7 @@ import java.util.Set;
  *
  * @author Rodney Waldhoff
  *
- * @version $Id: CollectionUtils.java,v 1.2 2001/05/04 16:32:17 rwaldhoff Exp $
+ * @version $Id: CollectionUtils.java,v 1.3 2001/05/06 11:04:25 jstrachan Exp $
  */
 public class CollectionUtils {
     /**
@@ -283,6 +284,132 @@ public class CollectionUtils {
         return count;
     }
 
+    
+    
+    
+    /** Finds the first element in the given collection which matches the given predicate
+      *
+      * @return the first element of the collection which matches the predicate or null if none could be found
+      */
+    public static Object find( Collection collection, Predicate predicate ) {
+        if ( collection != null && predicate != null ) {            
+            for ( Iterator iter = collection.iterator(); iter.hasNext(); ) {
+                Object item = iter.next();
+                if ( predicate.evaluate( item ) ) {
+                    return item;
+                }
+            }
+        }
+        return null;
+    }
+    
+    /** Executes the given closure on each element in the colleciton
+      */
+    public static void forAllDo( Collection collection, Closure closure) {
+        if ( collection != null ) {
+            for ( Iterator iter = collection.iterator(); iter.hasNext(); ) {
+                Object element = iter.next();
+                closure.execute( element );
+            }
+        }
+    }
+
+    /** Selects all elements from inputCollection which match the given predicate
+      * into an output collection
+      */
+    public static Collection select( Collection inputCollection, Predicate predicate ) {
+        ArrayList answer = new ArrayList( inputCollection.size() );
+        select( inputCollection, predicate, answer );
+        return answer;
+    }
+    
+    /** Selects all elements from inputCollection which match the given predicate
+      * and adds them to outputCollection
+      *
+      * @return the outputCollection
+      */
+    public static Collection select( Collection inputCollection, Predicate predicate, Collection outputCollection ) {
+        if ( inputCollection != null && predicate != null ) {            
+            for ( Iterator iter = inputCollection.iterator(); iter.hasNext(); ) {
+                Object item = iter.next();
+                if ( predicate.evaluate( item ) ) {
+                    outputCollection.add( item );
+                }
+            }
+        }
+        return outputCollection;
+    }
+    
+    /** Transforms all elements from inputCollection with the given transformer 
+      * and adds them to the outputCollection
+      */
+    public static Collection collect( Collection inputCollection, Transformer transformer ) {
+        ArrayList answer = new ArrayList( inputCollection.size() );
+        collect( inputCollection, transformer, answer );
+        return answer;
+    }
+    
+    /** Transforms all elements from the inputIterator  with the given transformer 
+      * and adds them to the outputCollection
+      */
+    public static Collection collect( Iterator inputIterator, Transformer transformer ) {
+        ArrayList answer = new ArrayList();
+        collect( inputIterator, transformer, answer );
+        return answer;
+    }
+    
+    /** Transforms all elements from inputCollection with the given transformer 
+      * and adds them to the outputCollection
+      *
+      * @return the outputCollection
+      */
+    public static Collection collect( Collection inputCollection, final Transformer transformer, final Collection outputCollection ) {
+        if ( inputCollection != null ) {
+            return collect( inputCollection.iterator(), transformer, outputCollection );
+        }
+        return outputCollection;
+    }
+
+    /** Transforms all elements from the inputIterator with the given transformer 
+      * and adds them to the outputCollection
+      *
+      * @return the outputCollection
+      */
+    public static Collection collect( Iterator inputIterator, final Transformer transformer, final Collection outputCollection ) {
+        if ( inputIterator != null && transformer != null ) {            
+            while ( inputIterator.hasNext() ) {
+                Object item = inputIterator.next();
+                Object value = transformer.transform( item );
+                outputCollection.add( value );
+            }
+        }
+        return outputCollection;
+    }
+
+    /** Adds all elements in the iteration to the given collection 
+      */
+    public static void addAll( Collection collection, Iterator iterator ) {
+        while ( iterator.hasNext() ) {
+            collection.add( iterator.next() );
+        }
+    }
+    
+    /** Adds all elements in the enumeration to the given collection 
+      */
+    public static void addAll( Collection collection, Enumeration enumeration ) {
+        while ( enumeration.hasMoreElements() ) {
+            collection.add( enumeration.nextElement() );
+        }
+    }    
+    
+    /** Adds all elements in the array to the given collection 
+      */
+    public static void addAll( Collection collection, Object[] elements ) {
+        for ( int i = 0, size = elements.length; i < size; i++ ) {
+            collection.add( elements[i] );
+        }
+    }    
+    
     private static final int getFreq(final Object obj, final Map freqMap) {
         try {
             return ((Integer)(freqMap.get(obj))).intValue();
