@@ -4,7 +4,7 @@
   <extend>../project.xml</extend>
   <name>commons-collections</name>
   <id>commons-collections</id>
-  <currentVersion>1.0-dev</currentVersion>
+  <currentVersion>2.0</currentVersion>
   <inceptionYear>2002</inceptionYear>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
   <shortDescription>Commons Collections</shortDescription>
@@ -60,6 +60,37 @@
     <unitTest>
       <excludes>
         <exclude>**/TestAll.java</exclude>
+        <exclude>**/BulkTest.java</exclude>
+        <exclude>**/TestComparableComparator.java</exclude>
+        <exclude>**/TestComparatorChain.java</exclude>
+        <exclude>**/TestComparator.java</exclude>
+        <exclude>**/TestNullComparator.java</exclude>
+        <exclude>**/TestReverseComparator.java</exclude>
+        <exclude>**/LocalTestNode.java</exclude>
+        <exclude>**/TestAbstractIntArrayList.java</exclude>
+        <exclude>**/TestAbstractLongArrayList.java</exclude>
+        <exclude>**/TestAbstractShortArrayList.java</exclude>
+        <exclude>**/TestArrayList.java</exclude>
+        <exclude>**/TestArrayStack.java</exclude>
+        <exclude>**/TestBag.java</exclude>
+        <exclude>**/TestCollection.java</exclude>
+        <exclude>**/TestFastArrayList1.java</exclude>
+        <exclude>**/TestFastArrayList.java</exclude>
+        <exclude>**/TestFastHashMap1.java</exclude>
+        <exclude>**/TestFastHashMap.java</exclude>
+        <exclude>**/TestFastTreeMap1.java</exclude>
+        <exclude>**/TestFastTreeMap.java</exclude>
+        <exclude>**/TestIterator.java</exclude>
+        <exclude>**/TestList.java</exclude>
+        <exclude>**/TestLRUMap.java</exclude>
+        <exclude>**/TestMap.java</exclude>
+        <exclude>**/TestMultiHashMap.java</exclude>
+        <exclude>**/TestObject.java</exclude>
+        <exclude>**/TestProxyMap.java</exclude>
+        <exclude>**/TestSequencedHashMap.java</exclude>
+        <exclude>**/TestSoftRefHashMap.java</exclude>
+        <exclude>**/TestSet.java</exclude>
+        <exclude>**/TestTreeMap.java</exclude>
       </excludes>
     </unitTest>
 
