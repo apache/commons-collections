@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.10 2003/08/31 12:59:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntArrayList.java,v 1.11 2003/08/31 17:21:15 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -19,11 +19,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowledgment:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -63,7 +63,7 @@ package org.apache.commons.collections.primitives;
  * Abstract base class for lists of primitive <Code>int</Code> elements
  * backed by an array.<P>
  *
- * @version $Revision: 1.10 $ $Date: 2003/08/31 12:59:57 $
+ * @version $Revision: 1.11 $ $Date: 2003/08/31 17:21:15 $
  * @author Rodney Waldhoff 
  * 
  * @deprecated An {@link IntList} implementation, such as {@link ArrayIntList} 

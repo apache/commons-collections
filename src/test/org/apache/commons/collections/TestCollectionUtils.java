@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.16 2003/08/31 13:09:53 scolebourne Exp $
- * $Revision: 1.16 $
- * $Date: 2003/08/31 13:09:53 $
+ * $Id: TestCollectionUtils.java,v 1.17 2003/08/31 17:28:43 scolebourne Exp $
+ * $Revision: 1.17 $
+ * $Date: 2003/08/31 17:28:43 $
  *
  * ====================================================================
  *
@@ -23,11 +23,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -81,7 +81,7 @@ import junit.framework.TestSuite;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  * 
- * @version $Revision: 1.16 $ $Date: 2003/08/31 13:09:53 $
+ * @version $Revision: 1.17 $ $Date: 2003/08/31 17:28:43 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {

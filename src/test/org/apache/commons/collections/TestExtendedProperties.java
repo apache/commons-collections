@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.7 2003/08/31 13:09:53 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2003/08/31 13:09:53 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.8 2003/08/31 17:28:43 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2003/08/31 17:28:43 $
  *
  * ====================================================================
  *
@@ -23,11 +23,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -74,7 +74,7 @@ import java.io.*;
  * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
  * @author Mohan Kishore
  * @author Stephen Colebourne
- * @version $Id: TestExtendedProperties.java,v 1.7 2003/08/31 13:09:53 scolebourne Exp $
+ * @version $Id: TestExtendedProperties.java,v 1.8 2003/08/31 17:28:43 scolebourne Exp $
  */
 public class TestExtendedProperties extends TestCase {
     protected ExtendedProperties eprop = new ExtendedProperties();

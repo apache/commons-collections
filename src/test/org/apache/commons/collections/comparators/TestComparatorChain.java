@@ -1,5 +1,5 @@
 /* 
- * $Id: TestComparatorChain.java,v 1.5 2003/01/13 22:52:34 rwaldhoff Exp $
+ * $Id: TestComparatorChain.java,v 1.6 2003/08/31 17:28:46 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -19,11 +19,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ *    if any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "Apache" and "Apache Software Foundation" and
  *    "Apache Commons" must not be used to endorse or promote products

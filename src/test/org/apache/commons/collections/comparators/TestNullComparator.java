@@ -19,11 +19,11 @@ package org.apache.commons.collections.comparators;
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
+ *    if any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "Apache" and "Apache Software Foundation" and
  *    "Apache Commons" must not be used to endorse or promote products
@@ -65,7 +65,7 @@ import junit.framework.TestSuite;
  *  Test the NullComparator 
  *
  *  @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- *  @version $Id: TestNullComparator.java,v 1.4 2003/01/07 23:44:20 rwaldhoff Exp $
+ *  @version $Id: TestNullComparator.java,v 1.5 2003/08/31 17:28:46 scolebourne Exp $
  **/
 public abstract class TestNullComparator extends TestComparator {
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestCollectionCharCollection.java,v 1.1 2003/04/16 18:32:38 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestCollectionCharCollection.java,v 1.2 2003/08/31 17:28:38 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -19,11 +19,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowledgment:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -69,7 +69,7 @@ import org.apache.commons.collections.TestObject;
 import org.apache.commons.collections.primitives.CharCollection;
 
 /**
- * @version $Revision: 1.1 $ $Date: 2003/04/16 18:32:38 $
+ * @version $Revision: 1.2 $ $Date: 2003/08/31 17:28:38 $
  * @author Rodney Waldhoff
  */
 public class TestCollectionCharCollection extends TestObject {

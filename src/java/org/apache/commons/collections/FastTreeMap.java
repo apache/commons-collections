@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.12 2003/05/16 14:36:40 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.13 2003/08/31 17:26:43 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -20,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowledgment:
+ *    any, must include the following acknowledgement:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -101,7 +101,7 @@ import java.util.TreeMap;
  * Double-Checked Locking Idiom Is Broken Declartion</a>.</p>
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.12 $ $Date: 2003/05/16 14:36:40 $
+ * @version $Revision: 1.13 $ $Date: 2003/08/31 17:26:43 $
  * 
  * @author Craig R. McClanahan
  * @author Stephen Colebourne
