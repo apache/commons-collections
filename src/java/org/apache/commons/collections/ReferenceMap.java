@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.18 2003/12/05 20:23:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.19 2003/12/06 13:03:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -119,7 +119,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * 
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
- * @version $Revision: 1.18 $ $Date: 2003/12/05 20:23:57 $
+ * @version $Revision: 1.19 $ $Date: 2003/12/06 13:03:15 $
  * 
  * @author Paul Jack
  */
@@ -758,7 +758,7 @@ public class ReferenceMap extends AbstractMap {
 
     // If getKey() or getValue() returns null, it means
     // the mapping is stale and should be removed.
-    private class Entry implements Map.Entry {
+    private class Entry implements Map.Entry, KeyValue {
 
         Object key;
         Object value;

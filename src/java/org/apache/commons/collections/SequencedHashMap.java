@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.22 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.23 2003/12/06 13:03:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -91,7 +91,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  *
  * @see org.apache.commons.collections.set.ListOrderedSet
  * @since Commons Collections 2.0
- * @version $Revision: 1.22 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.23 $ $Date: 2003/12/06 13:03:15 $
  * 
  * @author Michael A. Smith
  * @author Daniel Rall
@@ -104,7 +104,7 @@ public class SequencedHashMap implements Map, Cloneable, Externalizable {
      * {@link java.util.Map.Entry} that doubles as a node in the linked list
      * of sequenced mappings.  
      */
-    private static class Entry implements Map.Entry {
+    private static class Entry implements Map.Entry, KeyValue {
         // Note: This class cannot easily be made clonable.  While the actual
         // implementation of a clone would be simple, defining the semantics is
         // difficult.  If a shallow clone is implemented, then entry.next.prev !=

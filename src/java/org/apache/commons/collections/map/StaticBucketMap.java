@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.1 2003/12/03 15:16:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.2 2003/12/06 13:03:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,6 +66,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.apache.commons.collections.KeyValue;
+
 /**
  * A StaticBucketMap is an efficient, thread-safe implementation of
  * <code>java.util.Map</code> that performs well in in a highly
@@ -130,7 +132,7 @@ import java.util.Set;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/03 15:16:49 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/06 13:03:15 $
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich
@@ -478,7 +480,7 @@ public final class StaticBucketMap implements Map {
     /**
      * The Map.Entry for the StaticBucketMap.
      */
-    private static final class Node implements Map.Entry {
+    private static final class Node implements Map.Entry, KeyValue {
         protected Object key;
         protected Object value;
         protected Node next;

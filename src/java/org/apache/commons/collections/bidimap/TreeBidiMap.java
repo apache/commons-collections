@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.5 2003/12/05 20:23:58 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/TreeBidiMap.java,v 1.6 2003/12/06 13:03:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,6 +67,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.KeyValue;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedBidiMap;
 import org.apache.commons.collections.OrderedIterator;
@@ -107,7 +108,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.5 $ $Date: 2003/12/05 20:23:58 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/06 13:03:15 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -1713,7 +1714,7 @@ public class TreeBidiMap implements OrderedBidiMap {
     /**
      * A node used to store the data.
      */
-    static class Node implements Map.Entry {
+    static class Node implements Map.Entry, KeyValue {
 
         private Comparable[] data;
         private Node[] leftNode;

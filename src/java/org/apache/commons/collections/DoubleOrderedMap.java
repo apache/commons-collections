@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.8 2003/11/29 18:05:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/DoubleOrderedMap.java,v 1.9 2003/12/06 13:03:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -141,7 +141,7 @@ import java.util.Set;
  * @see DualTreeBidiMap
  * @see DualHashBidiMap
  * @since Commons Collections 2.0
- * @version $Revision: 1.8 $ $Date: 2003/11/29 18:05:39 $
+ * @version $Revision: 1.9 $ $Date: 2003/12/06 13:03:15 $
  * 
  * @author Marc Johnson
  */
@@ -1794,7 +1794,7 @@ public final class DoubleOrderedMap extends AbstractMap {
     }    // end private abstract class DoubleOrderedMapIterator
 
     // final for performance
-    private static final class Node implements Map.Entry {
+    private static final class Node implements Map.Entry, KeyValue {
 
         private Comparable[] data;
         private Node[]       leftNode;

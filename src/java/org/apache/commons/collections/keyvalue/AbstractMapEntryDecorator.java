@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/AbstractMapEntryDecorator.java,v 1.1 2003/12/05 20:23:56 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/keyvalue/AbstractMapEntryDecorator.java,v 1.2 2003/12/06 13:03:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,16 +59,18 @@ package org.apache.commons.collections.keyvalue;
 
 import java.util.Map;
 
+import org.apache.commons.collections.KeyValue;
+
 /**
  * Provides a base decorator that allows additional functionality to be added
  * to a Map Entry.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/12/05 20:23:56 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/06 13:03:15 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractMapEntryDecorator implements Map.Entry {
+public abstract class AbstractMapEntryDecorator implements Map.Entry, KeyValue {
     
     /** The <code>Map.Entry</code> to decorate */
     protected final Map.Entry entry;
@@ -81,7 +83,7 @@ public abstract class AbstractMapEntryDecorator implements Map.Entry {
      */
     public AbstractMapEntryDecorator(Map.Entry entry) {
         if (entry == null) {
-            throw new IllegalArgumentException("Map entry must not be null");
+            throw new IllegalArgumentException("Map Entry must not be null");
         }
         this.entry = entry;
     }

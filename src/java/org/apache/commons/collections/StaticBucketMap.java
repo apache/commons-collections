@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.13 2003/12/03 15:16:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.14 2003/12/06 13:03:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -131,7 +131,7 @@ import java.util.Set;
  *
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
- * @version $Revision: 1.13 $ $Date: 2003/12/03 15:16:49 $
+ * @version $Revision: 1.14 $ $Date: 2003/12/06 13:03:15 $
  * 
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
@@ -491,7 +491,7 @@ public final class StaticBucketMap implements Map {
     /**
      * The Map.Entry for the StaticBucketMap.
      */
-    private static final class Node implements Map.Entry
+    private static final class Node implements Map.Entry, KeyValue
     {
         protected Object key;
         protected Object value;

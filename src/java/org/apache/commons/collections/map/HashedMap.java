@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.5 2003/12/03 19:04:41 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/HashedMap.java,v 1.6 2003/12/06 13:03:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,6 +72,7 @@ import java.util.Set;
 
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.KeyValue;
 import org.apache.commons.collections.MapIterator;
 
 /**
@@ -86,7 +87,7 @@ import org.apache.commons.collections.MapIterator;
  * methods exposed.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/03 19:04:41 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/06 13:03:15 $
  *
  * @author java util HashMap
  * @author Stephen Colebourne
@@ -853,7 +854,7 @@ public class HashedMap implements IterableMap, Serializable, Cloneable {
     /**
      * HashEntry
      */
-    protected static class HashEntry implements Map.Entry {
+    protected static class HashEntry implements Map.Entry, KeyValue {
         protected HashEntry next;
         protected int hashCode;
         protected Object key;
