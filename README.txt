@@ -30,22 +30,15 @@ the location of the junit.jar on your computer.
 Once you have Ant propertly installed, and the
 build.properties file correctly reflects the location
 of your junit.jar, you are ready to build and test.
+The major targets are:
 
-To compile and test the component :
-
-$ ant test
-
-To build a jar :
-
-$ ant dist-jar
-
-To build the API documentation :
-
-$ ant doc
-
-To build the jar and API doc at once :
-
-$ ant dist
+ant compile      - compile the code
+ant test         - test using junit
+ant jar          - create a jar file
+ant javadoc      - build the javadoc
+ant dist         - create folders as per a distribution
+ant tf.jar       - create the testframework jar file
+ant tf.javadoc   - build the testframework javadoc
 
 
 Maven
