@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.4 2002/02/13 21:03:20 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/13 21:03:20 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.5 2002/02/13 23:07:31 morgand Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/02/13 23:07:31 $
  *
  * ====================================================================
  *
@@ -178,19 +178,16 @@ public class LRUMap extends HashMap implements Externalizable {
         return pair.value;
     }
 
-    public Object put( Object key, Object value ) {
-        int i = size();
-        ValuePositionPair pair = new ValuePositionPair( value );
-        if ( i >= maximumSize ) {
+    public Object put( Object key, Object value ) {         ValuePositionPair pair = new ValuePositionPair( value );         int mapSize = size();         // check to see if the object already exists in         // our LRUMap, if it does then the position in the         // bubble sort is OK
+        int keyIndex = bubbleList.indexOf(key);         if (keyIndex != -1) {             pair.position = keyIndex;         } else if ( mapSize >= maximumSize ) {
             // lets retire the least recently used item in the cache
             int lastIndex = maximumSize - 1;
             pair.position = lastIndex;
             Object oldKey = bubbleList.set( lastIndex, key );
             super.remove( oldKey );
-        } 
-        else {
-            pair.position = i;
-            bubbleList.add( i, key );
+        } else {
+            pair.position = mapSize;
+            bubbleList.add( mapSize, key );
         }
         pair = (ValuePositionPair) putPair( key, pair );
         return ( pair != null ) ? pair.value : null;
