@@ -15,7 +15,6 @@
  */
 package org.apache.commons.collections.collection;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -25,31 +24,26 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.TransformerUtils;
 
 /**
  * Extension of {@link TestCollection} for exercising the {@link TransformedCollection}
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/02/18 01:20:40 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/10 22:22:57 $
  * 
  * @author Stephen Colebourne
  */
 public class TestTransformedCollection extends AbstractTestCollection {
     
-    private static class Noop implements Transformer, Serializable {
-        public Object transform(Object input) {
-            return input;
-        }
-    }
-    
-    private static class StringToInteger implements Transformer, Serializable {
+    private static class StringToInteger implements Transformer {
         public Object transform(Object input) {
             return new Integer((String) input);
         }
     }
     
-    public static final Transformer NOOP_TRANSFORMER = new Noop();
+    public static final Transformer NOOP_TRANSFORMER = TransformerUtils.nopTransformer();
     public static final Transformer STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
 
     public TestTransformedCollection(String testName) {

@@ -22,6 +22,7 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.TransformerUtils;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
@@ -29,7 +30,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/04/09 09:43:09 $
+ * @version $Revision: 1.7 $ $Date: 2004/04/10 22:22:56 $
  * 
  * @author Stephen Colebourne
  */
@@ -50,7 +51,7 @@ public class TestTransformedMap extends AbstractTestMap {
 
     //-----------------------------------------------------------------------
     public Map makeEmptyMap() {
-        return TransformedMap.decorate(new HashMap(), TestTransformedCollection.NOOP_TRANSFORMER, TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedMap.decorate(new HashMap(), TransformerUtils.nopTransformer(), TransformerUtils.nopTransformer());
     }
 
     //-----------------------------------------------------------------------

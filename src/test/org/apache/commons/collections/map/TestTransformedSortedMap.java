@@ -22,6 +22,7 @@ import java.util.TreeMap;
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.TransformerUtils;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
@@ -29,7 +30,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/09 09:43:09 $
+ * @version $Revision: 1.6 $ $Date: 2004/04/10 22:22:57 $
  * 
  * @author Stephen Colebourne
  */
@@ -50,7 +51,7 @@ public class TestTransformedSortedMap extends AbstractTestSortedMap {
 
     //-----------------------------------------------------------------------
     public Map makeEmptyMap() {
-        return TransformedSortedMap.decorate(new TreeMap(), TestTransformedCollection.NOOP_TRANSFORMER, TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSortedMap.decorate(new TreeMap(), TransformerUtils.nopTransformer(), TransformerUtils.nopTransformer());
     }
 
     public boolean isSubMapViewsSerializable() {
