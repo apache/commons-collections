@@ -1,6 +1,10 @@
-Extension-Name: org.apache.commons.collections
-Specification-Vendor: Apache Software Foundation
+Manifest-Version: 1.0
+Package: org.apache.commons.collections.*
+Extension-Name: commons-collections
 Specification-Version: 2.1
-Implementation-Vendor: Apache Software Foundation
+Specification-Vendor: Apache Software Foundation
+Specification-Title: Commons Collections
 Implementation-Version: 2.1
+Implementation-Vendor: Apache Software Foundation
+Implementation-Vendor-Id: 
 
