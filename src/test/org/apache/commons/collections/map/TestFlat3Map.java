@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestFlat3Map.java,v 1.3 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestFlat3Map.java,v 1.4 2003/12/02 23:51:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,11 +69,11 @@ import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/02 23:51:49 $
  * 
  * @author Stephen Colebourne
  */
-public class TestFlat3Map extends AbstractTestAMap {
+public class TestFlat3Map extends AbstractTestIterableMap {
 
     public TestFlat3Map(String testName) {
         super(testName);

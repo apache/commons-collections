@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestUnmodifiableMap.java,v 1.5 2003/12/01 22:34:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestUnmodifiableMap.java,v 1.6 2003/12/02 23:51:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,11 +70,11 @@ import org.apache.commons.collections.Unmodifiable;
  * {@link UnmodifiableMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/01 22:34:54 $
+ * @version $Revision: 1.6 $ $Date: 2003/12/02 23:51:49 $
  * 
  * @author Phil Steitz
  */
-public class TestUnmodifiableMap extends AbstractTestAMap{
+public class TestUnmodifiableMap extends AbstractTestIterableMap{
     
     public TestUnmodifiableMap(String testName) {
         super(testName);

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/Attic/AbstractTestAMap.java,v 1.2 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestIterableMap.java,v 1.1 2003/12/02 23:51:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,26 +61,26 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.collections.AMap;
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 
 /**
- * Abstract test class for {@link AMap} methods and contracts.
+ * Abstract test class for {@link IterableMap} methods and contracts.
  *
- * @version $Revision: 1.2 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/02 23:51:49 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestAMap extends AbstractTestMap {
+public abstract class AbstractTestIterableMap extends AbstractTestMap {
 
     /**
      * JUnit constructor.
      * 
      * @param testName  the test name
      */
-    public AbstractTestAMap(String testName) {
+    public AbstractTestIterableMap(String testName) {
         super(testName);
     }
     
@@ -159,40 +159,40 @@ public abstract class AbstractTestAMap extends AbstractTestMap {
         }
         
         public Object[] addSetValues() {
-            return AbstractTestAMap.this.getNewSampleValues();
+            return AbstractTestIterableMap.this.getNewSampleValues();
         }
         
         public boolean supportsRemove() {
-            return AbstractTestAMap.this.isRemoveSupported();
+            return AbstractTestIterableMap.this.isRemoveSupported();
         }
 
         public boolean supportsSetValue() {
-            return AbstractTestAMap.this.isSetValueSupported();
+            return AbstractTestIterableMap.this.isSetValueSupported();
         }
 
         public MapIterator makeEmptyMapIterator() {
             resetEmpty();
-            return ((AMap) AbstractTestAMap.this.map).mapIterator();
+            return ((IterableMap) AbstractTestIterableMap.this.map).mapIterator();
         }
 
         public MapIterator makeFullMapIterator() {
             resetFull();
-            return ((AMap) AbstractTestAMap.this.map).mapIterator();
+            return ((IterableMap) AbstractTestIterableMap.this.map).mapIterator();
         }
         
         public Map getMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractTestAMap.this.map;
+            return AbstractTestIterableMap.this.map;
         }
         
         public Map getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractTestAMap.this.confirmed;
+            return AbstractTestIterableMap.this.confirmed;
         }
         
         public void verify() {
             super.verify();
-            AbstractTestAMap.this.verify();
+            AbstractTestIterableMap.this.verify();
         }
     }
     

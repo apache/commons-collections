@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestHashedMap.java,v 1.1 2003/12/01 22:34:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestHashedMap.java,v 1.2 2003/12/02 23:51:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,11 +67,11 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/12/01 22:34:54 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/02 23:51:49 $
  * 
  * @author Stephen Colebourne
  */
-public class TestHashedMap extends AbstractTestAMap {
+public class TestHashedMap extends AbstractTestIterableMap {
 
     public TestHashedMap(String testName) {
         super(testName);

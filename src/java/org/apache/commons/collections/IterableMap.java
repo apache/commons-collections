@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AMap.java,v 1.2 2003/12/01 22:48:59 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IterableMap.java,v 1.1 2003/12/02 23:51:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import java.util.Map;
  * A map iterator is an efficient way of iterating over maps.
  * There is no need to access the entry set or cast to Map Entry objects.
  * <pre>
- * AMap map = new HashedMap();
+ * IterableMap map = new HashedMap();
  * MapIterator it = map.mapIterator();
  * while (it.hasNext()) {
  *   Object key = it.next();
@@ -75,11 +75,11 @@ import java.util.Map;
  * </pre>
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/12/01 22:48:59 $
+ * @version $Revision: 1.1 $ $Date: 2003/12/02 23:51:49 $
  *
  * @author Stephen Colebourne
  */
-public interface AMap extends Map {
+public interface IterableMap extends Map {
     
     /**
      * Obtains a <code>MapIterator</code> over the map.
@@ -87,7 +87,7 @@ public interface AMap extends Map {
      * A map iterator is an efficient way of iterating over maps.
      * There is no need to access the entry set or cast to Map Entry objects.
      * <pre>
-     * AMap map = new HashedMap();
+     * IterableMap map = new HashedMap();
      * MapIterator it = map.mapIterator();
      * while (it.hasNext()) {
      *   Object key = it.next();

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestIdentityMap.java,v 1.1 2003/12/02 21:57:08 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestIdentityMap.java,v 1.2 2003/12/02 23:51:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -64,13 +64,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
-import org.apache.commons.collections.AMap;
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.AbstractTestObject;
 
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/12/02 21:57:08 $
+ * @version $Revision: 1.2 $ $Date: 2003/12/02 23:51:49 $
  * 
  * @author Stephen Colebourne
  */
@@ -104,7 +104,7 @@ public class TestIdentityMap extends AbstractTestObject {
     
     //-----------------------------------------------------------------------
     public void testBasics() {
-        AMap map = new IdentityMap();
+        IterableMap map = new IdentityMap();
         assertEquals(0, map.size());
         
         map.put(I1A, I2A);
@@ -137,7 +137,7 @@ public class TestIdentityMap extends AbstractTestObject {
     
     //-----------------------------------------------------------------------
     public void testHashEntry() {
-        AMap map = new IdentityMap();
+        IterableMap map = new IdentityMap();
         
         map.put(I1A, I2A);
         map.put(I1B, I2A);
