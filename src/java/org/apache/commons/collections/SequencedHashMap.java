@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.4 2002/02/21 13:46:25 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/21 13:46:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SequencedHashMap.java,v 1.5 2002/02/22 02:34:59 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/02/22 02:34:59 $
  *
  * ====================================================================
  *
@@ -78,15 +78,6 @@ import java.util.NoSuchElementException;
  *  which they were added.  This data structure has fast <I>O(1)</I> search
  *  time, deletion time, and insertion time.
  *
- *  This class inherits from {@link java.util.HashMap} purely for backwards
- *  compatibility.  It should really be inheriting from {@link
- *  java.util.AbstractMap}, or with a tiny extra bit of work, implement the
- *  full map interface on its own. APIs should not rely on this class being an
- *  actual {@link java.util.HashMap}, and instead should recognize it only as a
- *  generic {@link java.util.Map} (unless, of course, you need the sequencing
- *  functionality, but even in that case, this class should not be referred to
- *  as a java.util.HashMap).
- *
  *  <P>Although this map is sequenced, it cannot implement {@link
  *  java.util.List} because of incompatible interface definitions.  The remove
  *  methods in List and Map have different return values (see: {@link
@@ -100,7 +91,7 @@ import java.util.NoSuchElementException;
  * @author <a href="mailto:dlr@collab.net">Daniel Rall</a>
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
-public class SequencedHashMap extends HashMap {
+public class SequencedHashMap implements Map, Cloneable {
 
   /**
    *  {@link java.util.Map.Entry} that doubles as a node in the linked list
@@ -734,8 +725,11 @@ public class SequencedHashMap extends HashMap {
    * <code>clone()</code>'d.  The cloned object maintains the same sequence.
    *
    * @return A clone of this instance.  
+   *
+   * @exception CloneNotSupportedException if clone is not supported by a
+   * subclass.
    */
-  public Object clone () {
+  public Object clone () throws CloneNotSupportException {
     // yes, calling super.clone() silly since we're just blowing away all
     // the stuff that super might be doing anyway, but for motivations on
     // this, see:
