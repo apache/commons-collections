@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.4 2001/04/22 17:05:03 rwaldhoff Exp $ -->
+<!-- $Id: build.xml,v 1.5 2001/04/30 18:16:02 craigmcc Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -58,9 +58,9 @@
       <property name="source.src.java" value="${source.src}/java"/>
       <property name="source.src.test" value="${source.src}/test"/>
       <property name="source.doc" value="${basedir}/doc"/>
-      <property name="dest" value="${basedir}/build"/>
+      <property name="dest" value="${basedir}/dist"/>
       <property name="dest.classes" value="${dest}/classes"/>
-      <property name="dest.doc" value="${dest}/doc"/>
+      <property name="dest.doc" value="${dest}/docs"/>
       <property name="dest.doc.api" value="${dest.doc}/api"/>
       <property name="dest.jardir" value="${dest}"/>
       <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
@@ -93,7 +93,7 @@
 
    <!-- ######################################################### -->
 
-   <target name="clean" depends="init,clean-doc,clean-build,clean-dist" description="removes generated files">
+   <target name="clean" depends="init" description="removes generated files">
       <delete dir="${dest}"/>
    </target>
 
@@ -115,7 +115,12 @@
 
    <!-- ######################################################### -->
 
-   <target name="doc" depends="init,doc-copy,doc-javadoc" description="generates javadocs and other documentation">
+   <target name="doc" depends="init,doc-top,doc-copy,doc-javadoc" description="generates javadocs and other documentation">
+   </target>
+
+   <target name="doc-top" depends="init">
+      <mkdir  dir="${dest}"/>
+      <copy todir="${dest}" file="../LICENSE"/>
    </target>
 
    <target name="doc-copy" depends="init" if="available-doc">
@@ -209,7 +214,7 @@
 
    <!-- ######################################################### -->
 
-   <target name="dist" depends="dist-jar" description="builds production jar"/>
+   <target name="dist" depends="dist-jar,doc" description="builds binary distribution"/>
 
    <target name="dist-jar" depends="build">
       <mkdir dir="${dest.jardir}"/>
