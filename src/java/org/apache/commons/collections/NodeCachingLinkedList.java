@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.7 2003/08/31 17:26:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/NodeCachingLinkedList.java,v 1.8 2003/10/05 06:41:08 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,10 +65,11 @@ import java.util.Collection;
  * improvement.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:26:44 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/05 06:41:08 $
  * 
  * @author Jeff Varszegi
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
+ * @author Phil Steitz
  */
 public class NodeCachingLinkedList extends CommonsLinkedList {
 
@@ -114,7 +115,7 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
     
     /**
      * Constructor that species the maximum cache size.
-     * 
+     *
      * @param maximumCacheSize  the maximum cache size
      */
     public NodeCachingLinkedList(int maximumCacheSize) {
@@ -153,7 +154,7 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
      * Gets a node from the cache. If a node is returned, then the value of
      * {@link #cacheSize} is decreased accordingly. The node that is returned
      * will have <code>null</code> values for next, previous and element.
-     * 
+     *
      * @return A node, or <code>null</code> if there are no nodes in the cache.
      */
     private Node getNodeFromCache() {
@@ -163,7 +164,7 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
         Node cachedNode = firstCachedNode;
         firstCachedNode = cachedNode.next;
         cachedNode.next = null; // This should be changed anyway, but defensively
-                                             // set it to null.
+                                // set it to null.                    
         cacheSize--;
         return cachedNode;
     }
@@ -205,12 +206,17 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
     }
     
     /**
-     * Create a node, getting it from the cache if possible.
+     * Creates a new node with the specified properties, using a cached Node
+     * if possible.
+     * 
+     * @param previous  node to precede the new node
+     * @param next  node to follow the new node
+     * @param element  element of the new node
      */
-    protected Node createNode(Node next, Node previous, Object element) {
+    protected Node createNode(Node previous, Node next, Object element) {
         Node cachedNode = getNodeFromCache();
         if (cachedNode == null) {
-            return super.createNode(next, previous, element);
+            return super.createNode(previous, next, element);
         } else {
             cachedNode.next = next;
             cachedNode.previous = previous;
@@ -224,7 +230,7 @@ public class NodeCachingLinkedList extends CommonsLinkedList {
      * <code>addNodeToCache</code> on the node which has 
      * been removed.
      * 
-     * @see CommonsLinkedList#removeNode
+     * @see CommonsLinkedList#removeNode(Node)
      */
     protected void removeNode(Node node) {
         super.removeNode(node);

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.7 2003/08/31 17:26:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/CommonsLinkedList.java,v 1.8 2003/10/05 06:41:08 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,9 +76,10 @@ import java.util.NoSuchElementException;
  * subclasses to extend.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.7 $ $Date: 2003/08/31 17:26:43 $
+ * @version $Revision: 1.8 $ $Date: 2003/10/05 06:41:08 $
  * 
  * @author <a href="mailto:rich@rd.gen.nz">Rich Dougherty</a>
+ * @author Phil Steitz
  */
 class CommonsLinkedList extends LinkedList
         implements List, Serializable {
@@ -325,14 +326,34 @@ class CommonsLinkedList extends LinkedList
 
     // Operations on nodes
 
+    /**
+     * Creates a new node with previous, next and element all set to null.
+     * 
+     * @return  newly created node
+     */
     protected Node createNode() {
         return new Node();
     }
 
-    protected Node createNode(Node next, Node previous, Object element) {
-        return new Node(next, previous, element);
+    /**
+     * Creates a new node with the specified properties.
+     * 
+     * @param previous  node to precede the new node
+     * @param next  node to follow the new node
+     * @param element  element of the new node
+     */
+    protected Node createNode(Node previous, Node next, Object element) {
+        return new Node(previous, next, element);
     }
 
+    /**
+     * Creates a new node with the specified object as its 
+     * <code>elemnent</code> and inserts it before <code>node</code>.
+     *
+     * @param node  node to insert before
+     * @param object  element of the newly added node
+     * @throws NullPointerException if <code>node</code> is null
+     */
     private void addNodeBefore(Node node, Object o) {
         Node newNode = createNode(node.previous, node, o);
         node.previous.next = newNode;
@@ -341,6 +362,14 @@ class CommonsLinkedList extends LinkedList
         modCount++;
     }
 
+    /**
+     * Creates a new node with the specified object as its 
+     * <code>elemnent</code> and inserts it after <code>node</code>.
+     * 
+     * @param node  node to insert after
+     * @param o  element of the newly added node
+     * @throws NullPointerException if <code>node</code> is null
+     */
     protected void addNodeAfter(Node node, Object o) {
         Node newNode = createNode(node, node.next, o);
         node.next.previous = newNode;
@@ -349,6 +378,12 @@ class CommonsLinkedList extends LinkedList
         modCount++;
     }
 
+    /**
+     * Removes the specified node.
+     *
+     * @param node  the node to remove
+     * @throws NullPointerException if <code>node</code> is null
+     */
     protected void removeNode(Node node) {
         node.previous.next = node.next;
         node.next.previous = node.previous;
@@ -356,6 +391,9 @@ class CommonsLinkedList extends LinkedList
         modCount++;
     }
 
+    /**
+     * Removes all nodes by resetting the circular list marker.
+     */
     protected void removeAllNodes() {
         marker.next = marker;
         marker.previous = marker;
@@ -367,7 +405,7 @@ class CommonsLinkedList extends LinkedList
      * Gets the node at a particular index.
      * 
      * @param index The index, starting from 0.
-     * @param endMarkerAllowd Whether or not the end marker can be returned if
+     * @param endMarkerAllowed Whether or not the end marker can be returned if
      * startIndex is set to the list's size.
      * @throws IndexOutOfBoundsException If the index is less than 0; equal to
      * the size of the list and endMakerAllowed is false; or greater than the

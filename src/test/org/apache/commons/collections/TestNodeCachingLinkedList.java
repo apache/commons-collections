@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestNodeCachingLinkedList.java,v 1.4 2003/08/31 17:28:43 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/08/31 17:28:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestNodeCachingLinkedList.java,v 1.5 2003/10/05 06:41:08 psteitz Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/10/05 06:41:08 $
  *
  * ====================================================================
  *
@@ -60,6 +60,7 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import junit.framework.Test;
@@ -67,9 +68,9 @@ import junit.framework.Test;
  * Test class for NodeCachingLinkedList, a performance optimised LinkedList.
  * 
  * @author Jeff Varszegi
+ * @author Phil Steitz
  */
-public class TestNodeCachingLinkedList extends TestLinkedList {
-    protected NodeCachingLinkedList list = null;
+public class TestNodeCachingLinkedList extends TestCommonsLinkedList {
 
     public TestNodeCachingLinkedList(String _testName) {
         super(_testName);
@@ -91,6 +92,20 @@ public class TestNodeCachingLinkedList extends TestLinkedList {
         return "2.2";
     }
     
+    public void testShrinkCache() {
+        list.addAll( Arrays.asList( new String[]{"1", "2", "3", "4"}));
+        list.removeAllNodes();        // Will dump all 4 elements into cache
+        ((NodeCachingLinkedList) list).setMaximumCacheSize(2); // shrink cache
+        list.addAll( Arrays.asList( new String[]{"1", "2", "3", "4"}));
+        checkNodes();
+        list.removeNode(list.getNode(0, false)); // no room in cache
+        list.removeNode(list.getNode(0, false)); 
+        list.removeNode(list.getNode(0, false)); 
+        checkNodes();    
+        list.addAll( Arrays.asList( new String[]{"1", "2", "3", "4"}));
+        checkNodes();     
+    }       
+          
     public static void compareSpeed() {
         NodeCachingLinkedList ncll = new NodeCachingLinkedList();
         LinkedList ll = new LinkedList();
