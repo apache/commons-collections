@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.2 2002/03/01 23:40:43 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/03/01 23:40:43 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.3 2002/03/01 23:48:59 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/03/01 23:48:59 $
  *
  * ====================================================================
  *
@@ -125,16 +125,14 @@ public class ComparatorChain implements Comparator,Serializable {
 
     /**
      * 
-     * @param list   WARNING: If this list is not modifiable, some
-     *               subsequent modifications
-     *               to the ComparatorChain can fail.  Also, if you intend
-     *               to serialize
-     *               this ComparatorChain, then this List must also
-     *               be Serializable.
+     * @param list   NOTE: This constructor performs a defensive
+     *                     copy of the list elements into a new
+     *                     List. 
      * @param bits
      */
     public ComparatorChain(List list, BitSet bits) {
-        comparatorChain = list;
+        comparatorChain = new ArrayList();
+        comparatorChain.addAll(list);
         orderingBits = bits;
     }
 
