@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestTreeBidiMap.java,v 1.3 2003/12/01 22:34:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestTreeBidiMap.java,v 1.4 2003/12/30 21:56:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,11 +69,11 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/12/01 22:34:54 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/30 21:56:17 $
  * 
  * @author Stephen Colebourne
  */
-public class TestTreeBidiMap extends AbstractTestBidiMap {
+public class TestTreeBidiMap extends AbstractTestOrderedBidiMap {
 
     public static void main(String[] args) {
         TestRunner.run(suite());
