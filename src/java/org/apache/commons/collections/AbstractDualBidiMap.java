@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/HashBidiMap.java,v 1.4 2003/10/05 20:40:52 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/AbstractDualBidiMap.java,v 1.1 2003/10/06 23:47:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -58,7 +58,6 @@
 package org.apache.commons.collections;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -68,72 +67,75 @@ import org.apache.commons.collections.decorators.AbstractIteratorDecorator;
 import org.apache.commons.collections.decorators.AbstractMapEntryDecorator;
 
 /**
- * Default implementation of <code>BidiMap</code>.
+ * Abstract <code>BidiMap</code> implemented using two maps.
+ * <p>
+ * An implementation can be written simply by implementing the
+ * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: HashBidiMap.java,v 1.4 2003/10/05 20:40:52 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.1 2003/10/06 23:47:17 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
+ * @author Stephen Colebourne
  */
-public class HashBidiMap implements BidiMap {
+public abstract class AbstractDualBidiMap implements BidiMap {
 
     /**
      * Delegate map array.  The first map contains standard entries, and the 
      * second contains inverses.
      */
-    protected final Map[] maps = new Map[2];
+    protected transient final Map[] maps = new Map[2];
     /**
      * Inverse view of this map.
      */
-    protected BidiMap inverseBidiMap = null;
+    protected transient BidiMap inverseBidiMap = null;
     /**
      * View of the keys.
      */
-    protected Set keySet = null;
-    /**
-     * View of the values.
-     */
-    protected Collection values = null;
+    protected transient Set keySet = null;
     /**
      * View of the entries.
      */
-    protected Set entrySet = null;
+    protected transient Set entrySet = null;
 
     /**
-     * Creates an empty <code>HashBidiMap</code>
+     * Creates an empty map.
+     * <p>
+     * The maps passed in are not validated, so subclasses need to ensure
+     * that they are non-null, empty and compatible.
+     * 
+     * @param normalMap  the normal direction map
+     * @param reverseMap  the reverse direction map
      */
-    public HashBidiMap() {
+    protected AbstractDualBidiMap(Map normalMap, Map reverseMap) {
         super();
-        maps[0] = new HashMap();
-        maps[1] = new HashMap();
+        maps[0] = normalMap;
+        maps[1] = reverseMap;
     }
 
     /** 
-     * Constructs a <code>HashBidiMap</code> and copies the mappings from
-     * specified <code>Map</code>.  
-     *
-     * @param map  the map whose mappings are to be placed in this map
-     */
-    public HashBidiMap(Map map) {
-        super();
-        maps[0] = new HashMap();
-        maps[1] = new HashMap();
-        putAll(map);
-    }
-
-    /** 
-     * Constructs a <code>HashBidiMap</code> that decorates the specified maps.
+     * Constructs a map that decorates the specified maps.
      *
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
      * @param inverseBidiMap  the inverse BidiMap
      */
-    protected HashBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
+    protected AbstractDualBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
         super();
         maps[0] = normalMap;
         maps[1] = reverseMap;
         this.inverseBidiMap = inverseBidiMap;
     }
+    
+    /**
+     * Creates a new instance of the subclass.
+     * 
+     * @param normalMap  the normal direction map
+     * @param reverseMap  the reverse direction map
+     * @param inverseMap  this map, which is the inverse in the new map
+     * @return the inverse map
+     */
+    protected abstract BidiMap createBidiMap(Map normalMap, Map reverseMap, BidiMap inverseMap);
 
     // Map delegation
     //-----------------------------------------------------------------------
@@ -221,11 +223,11 @@ public class HashBidiMap implements BidiMap {
 
     public BidiMap inverseBidiMap() {
         if (inverseBidiMap == null) {
-            inverseBidiMap = new HashBidiMap(maps[1], maps[0], this);
+            inverseBidiMap = createBidiMap(maps[1], maps[0], this);
         }
         return inverseBidiMap;
     }
-
+    
     // Map views
     //-----------------------------------------------------------------------
     public Set keySet() {
@@ -236,10 +238,7 @@ public class HashBidiMap implements BidiMap {
     }
 
     public Collection values() {
-        if (values == null) {
-            values = new Values(this);
-        }
-        return values;
+        return inverseBidiMap().keySet();
     }
 
     public Set entrySet() {
@@ -255,14 +254,17 @@ public class HashBidiMap implements BidiMap {
      */
     protected static abstract class View extends AbstractCollectionDecorator {
         
-        protected final HashBidiMap map;
+        protected final AbstractDualBidiMap map;
         
-        protected View(Collection coll, HashBidiMap map) {
+        protected View(Collection coll, AbstractDualBidiMap map) {
             super(coll);
             this.map = map;
         }
 
         public boolean removeAll(Collection coll) {
+            if (map.isEmpty() || coll.isEmpty()) {
+                return false;
+            }
             boolean modified = false;
             Iterator it = iterator();
             while (it.hasNext()) {
@@ -275,6 +277,13 @@ public class HashBidiMap implements BidiMap {
         }
 
         public boolean retainAll(Collection coll) {
+            if (map.isEmpty()) {
+                return false;
+            }
+            if (coll.isEmpty()) {
+                map.clear();
+                return true;
+            }
             boolean modified = false;
             Iterator it = iterator();
             while (it.hasNext()) {
@@ -296,25 +305,12 @@ public class HashBidiMap implements BidiMap {
      */
     protected static class KeySet extends View implements Set {
         
-        protected KeySet(HashBidiMap map) {
+        protected KeySet(AbstractDualBidiMap map) {
             super(map.maps[0].keySet(), map);
         }
 
         public Iterator iterator() {
-            return new AbstractIteratorDecorator(super.iterator()) {
-                private Object last;
-                
-                public Object next() {
-                    last = super.next();
-                    return last;
-                }
-
-                public void remove() {
-                    Object value = map.maps[0].get(last);
-                    super.remove();
-                    map.maps[1].remove(value);
-                }
-            };
+            return new KeySetIterator(super.iterator(), map);
         }
         
         public boolean remove(Object key) {
@@ -328,64 +324,42 @@ public class HashBidiMap implements BidiMap {
     }
     
     /**
-     * Inner class Values.
+     * Inner class KeySetIterator.
      */
-    protected static class Values extends View {
+    protected static class KeySetIterator extends AbstractIteratorDecorator {
         
-        protected Values(HashBidiMap map) {
-            super(map.maps[0].values(), map);
-        }
-
-        public Iterator iterator() {
-            return new AbstractIteratorDecorator(super.iterator()) {
-                private Object last;
-                
-                public Object next() {
-                    last = super.next();
-                    return last;
-                }
-
-                public void remove() {
-                    super.remove();
-                    map.maps[1].remove(last);
-                }
-            };
+        private final AbstractDualBidiMap map;
+        private Object last;
+        
+        protected KeySetIterator(Iterator iterator, AbstractDualBidiMap map) {
+            super(iterator);
+            this.map = map;
         }
         
-        public boolean remove(Object value) {
-            if (contains(value)) {
-                Object key = map.maps[1].remove(value);
-                map.maps[0].remove(key);
-                return true;
-            }
-            return false;
+        public Object next() {
+            last = super.next();
+            return last;
         }
         
+        public void remove() {
+            Object value = map.maps[0].get(last);
+            super.remove();
+            map.maps[1].remove(value);
+            last = null;
+        }
     }
-    
+
     /**
      * Inner class EntrySet.
      */
     protected static class EntrySet extends View implements Set {
         
-        protected EntrySet(HashBidiMap map) {
+        protected EntrySet(AbstractDualBidiMap map) {
             super(map.maps[0].entrySet(), map);
         }
 
         public Iterator iterator() {
-            return new AbstractIteratorDecorator(super.iterator()) {
-                private Map.Entry last;
-                
-                public Object next() {
-                    last = new MapEntry((Map.Entry) super.next(), map);
-                    return last;
-                }
-
-                public void remove() {
-                    super.remove();
-                    map.maps[0].remove(last.getValue());
-                }
-            };
+            return new EntrySetIterator(super.iterator(), map);
         }
         
         public boolean remove(Object obj) {
@@ -402,11 +376,39 @@ public class HashBidiMap implements BidiMap {
         }
     }
     
+    /**
+     * Inner class EntrySetIterator.
+     */
+    protected static class EntrySetIterator extends AbstractIteratorDecorator {
+        
+        private final AbstractDualBidiMap map;
+        private Map.Entry last;
+        
+        protected EntrySetIterator(Iterator iterator, AbstractDualBidiMap map) {
+            super(iterator);
+            this.map = map;
+        }
+        
+        public Object next() {
+            last = new MapEntry((Map.Entry) super.next(), map);
+            return last;
+        }
+        
+        public void remove() {
+            super.remove();
+            map.maps[1].remove(last.getValue());
+            last = null;
+        }
+    }
+
+    /**
+     * Inner class MapEntry.
+     */
     protected static class MapEntry extends AbstractMapEntryDecorator {
         
-        protected final HashBidiMap map;
+        protected final AbstractDualBidiMap map;
         
-        protected MapEntry(Map.Entry entry, HashBidiMap map) {
+        protected MapEntry(Map.Entry entry, AbstractDualBidiMap map) {
             super(entry);
             this.map = map;
         }

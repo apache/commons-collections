@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.4 2003/10/05 20:52:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.5 2003/10/06 23:47:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,7 +63,7 @@ import java.util.Map;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.4 $ $Date: 2003/10/05 20:52:29 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/06 23:47:17 $
  * 
  * @author Matthew Hawthorne
  */
@@ -132,13 +132,6 @@ public abstract class TestBidiMap extends AbstractTestMap {
         return false;
     }
     
-    /**
-     * Override to prevent infinite recursion of tests.
-     */
-    protected String[] ignoredTests() {
-        return new String[] {"TestHashBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
-    }
-    
     // BidiPut
     //-----------------------------------------------------------------------
     public void testBidiPut() {
@@ -172,6 +165,19 @@ public abstract class TestBidiMap extends AbstractTestMap {
         assertEquals("E", inverse.get("F"));
     }
 
+    /**
+     * Verifies that {@link #map} is still equal to {@link #confirmed}.
+     * <p>
+     * This implementation checks the inverse map as well.
+     */
+    protected void verify() {
+        // verify inverse
+        assertEquals(map.size(), ((BidiMap) map).inverseBidiMap().size());
+        
+        // verify fully
+        super.verify();
+    }
+    
     // testGetKey
     //-----------------------------------------------------------------------
     public void testBidiGetKey() {

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestHashBidiMap.java,v 1.2 2003/10/05 20:52:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/DualHashBidiMap.java,v 1.1 2003/10/06 23:47:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,32 +57,60 @@
  */
 package org.apache.commons.collections;
 
-import junit.framework.Test;
-import junit.textui.TestRunner;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * JUnit tests.
+ * Implementation of <code>BidiMap</code> that uses two <code>HashMap</code> instances.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/10/05 20:52:29 $
+ * @since Commons Collections 3.0
+ * @version $Id: DualHashBidiMap.java,v 1.1 2003/10/06 23:47:17 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
+ * @author Stephen Colebourne
  */
-public class TestHashBidiMap extends TestBidiMap {
+public class DualHashBidiMap extends AbstractDualBidiMap {
 
-    public static void main(String[] args) {
-        TestRunner.run(suite());
+    /**
+     * Creates an empty <code>HashBidiMap</code>
+     */
+    public DualHashBidiMap() {
+        super(new HashMap(), new HashMap());
+    }
+
+    /** 
+     * Constructs a <code>HashBidiMap</code> and copies the mappings from
+     * specified <code>Map</code>.  
+     *
+     * @param map  the map whose mappings are to be placed in this map
+     */
+    public DualHashBidiMap(Map map) {
+        super(new HashMap(), new HashMap());
+        putAll(map);
+    }
+
+    /** 
+     * Constructs a <code>HashBidiMap</code> that decorates the specified maps.
+     *
+     * @param normalMap  the normal direction map
+     * @param reverseMap  the reverse direction map
+     * @param inverseBidiMap  the inverse BidiMap
+     */
+    protected DualHashBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
+        super(normalMap, reverseMap, inverseBidiMap);
     }
     
-    public static Test suite() {
-        return BulkTest.makeSuite(TestHashBidiMap.class);
+    /**
+     * Creates a new instance of this object.
+     * 
+     * @param normalMap  the normal direction map
+     * @param reverseMap  the reverse direction map
+     * @param inverseBidiMap  the inverse BidiMap
+     * @return new bidi map
+     */
+    protected BidiMap createBidiMap(Map normalMap, Map reverseMap, BidiMap inverseMap) {
+        return new DualHashBidiMap(normalMap, reverseMap, inverseMap);
     }
 
-    public TestHashBidiMap(String testName) {
-        super(testName);
-    }
-
-    protected BidiMap makeEmptyBidiMap() {
-        return new HashBidiMap();
-    }
 
 }

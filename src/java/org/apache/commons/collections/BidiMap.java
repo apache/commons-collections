@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.2 2003/10/05 20:38:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BidiMap.java,v 1.3 2003/10/06 23:47:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,11 +62,20 @@ import java.util.Map;
 /**
  * Defines a map that allows bidirectional lookup between key and values.
  * <p>
+ * This extended <code>Map</code> represents a mapping where a key may
+ * lookup a value and a value may lookup a key with equal ease.
+ * Th interface extends <code>Map</code> and so may be used anywhere a map
+ * is required. The interface provides an inverse map view, enabling
+ * full access to both directions of the <code>BidiMap</code>.
+ * <p>
  * Implementations should allow a value to be looked up from a key and
  * a key to be looked up from a value with equal performance.
- *  
+ * It should be noted that the quickest way to implement the <code>values</code>
+ * method is usually to return <code>inverseBidiMap().keySet()</code>.
+ * 
+ * @see org.apache.commons.collections.DualHashBidiMap
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/10/05 20:38:55 $
+ * @version $Revision: 1.3 $ $Date: 2003/10/06 23:47:17 $
  *
  * @author Stephen Colebourne
  */
@@ -79,11 +88,11 @@ public interface BidiMap extends Map {
      * against a different key. That mapping is removed, to ensure that the
      * value only occurs once in the inverse map.
      * <pre>
-     *  BidiMap map1 = new HashBidiMap();
+     *  BidiMap map1 = new DualHashBidiMap();
      *  map.put("A","B");  // contains A mapped to B, as per Map
      *  map.put("A","C");  // contains A mapped to C, as per Map
      * 
-     *  BidiMap map2 = new HashBidiMap();
+     *  BidiMap map2 = new DualHashBidiMap();
      *  map.put("A","B");  // contains A mapped to B, as per Map
      *  map.put("C","B");  // contains C mapped to B, key A is removed
      * </pre>
@@ -100,7 +109,7 @@ public interface BidiMap extends Map {
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
      */
-    public Object put(Object key, Object value);
+    Object put(Object key, Object value);
     
     /**
      * Gets the key that is currently mapped to the specified value.
@@ -118,7 +127,7 @@ public interface BidiMap extends Map {
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
      */
-    public Object getKey(Object value);
+    Object getKey(Object value);
     
     /**
      * Removes the key-value pair that is currently mapped to the specified
@@ -139,7 +148,7 @@ public interface BidiMap extends Map {
      * @throws UnsupportedOperationException if this method is not supported
      *  by the implementation
      */
-    public Object removeKey(Object value);
+    Object removeKey(Object value);
     
     /**
      * Gets a view of this map where the keys and values are reversed.
@@ -153,6 +162,6 @@ public interface BidiMap extends Map {
      *
      * @return an inverted bidirectional map
      */
-    public BidiMap inverseBidiMap();
+    BidiMap inverseBidiMap();
     
 }
