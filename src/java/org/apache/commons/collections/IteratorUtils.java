@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.2 2002/08/17 22:14:22 scolebourne Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/17 22:14:22 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.3 2002/08/19 21:56:18 pjack Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/08/19 21:56:18 $
  *
  * ====================================================================
  *
@@ -91,7 +91,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * <code>org.apache.commons.collections.iterators</code> subpackage.
  *
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorUtils.java,v 1.2 2002/08/17 22:14:22 scolebourne Exp $
+ * @version $Id: IteratorUtils.java,v 1.3 2002/08/19 21:56:18 pjack Exp $
  * @since 2.1
  */
 public class IteratorUtils {
@@ -282,7 +282,7 @@ public class IteratorUtils {
      * contained in a collection of ordered {@link Iterator}s.
      * <p>
      * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
-     * the {@link #next} method will return the lesser of 
+     * the {@link Iterator#next()} method will return the lesser of 
      * <code>A.next()</code> and <code>B.next()</code>.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.
@@ -302,7 +302,7 @@ public class IteratorUtils {
      * contained in an array of {@link Iterator}s.
      * <p>
      * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
-     * the {@link #next} method will return the lesser of 
+     * the {@link Iterator#next()} method will return the lesser of 
      * <code>A.next()</code> and <code>B.next()</code> and so on.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.
@@ -321,7 +321,7 @@ public class IteratorUtils {
      * contained in a collection of {@link Iterator}s.
      * <p>
      * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
-     * the {@link #next} method will return the lesser of 
+     * the {@link Iterator#next()} method will return the lesser of 
      * <code>A.next()</code> and <code>B.next()</code> and so on.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonListIterator.java,v 1.1 2002/08/17 11:33:56 scolebourne Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/17 11:33:56 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/SingletonListIterator.java,v 1.2 2002/08/19 21:56:18 pjack Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/08/19 21:56:18 $
  *
  * ====================================================================
  *
@@ -68,7 +68,7 @@ import java.util.NoSuchElementException;
  *
  * @since 2.1
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: SingletonListIterator.java,v 1.1 2002/08/17 11:33:56 scolebourne Exp $
+ * @version $Id: SingletonListIterator.java,v 1.2 2002/08/19 21:56:18 pjack Exp $
  */
 public class SingletonListIterator implements ListIterator {
 
@@ -120,7 +120,7 @@ public class SingletonListIterator implements ListIterator {
 
     /**
      * Returns the index of the element that would be returned by a subsequent
-     * call to <tt>previous</tt>. -1 indicates that the iterator is currently at
+     * call to <tt>previous</tt>. A return value of -1 indicates that the iterator is currently at
      * the start.
      *
      * @return 0 or -1 depending on current state. 

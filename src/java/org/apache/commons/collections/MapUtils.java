@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.11 2002/08/18 20:11:37 pjack Exp $
- * $Revision: 1.11 $
- * $Date: 2002/08/18 20:11:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.12 2002/08/19 21:56:18 pjack Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/08/19 21:56:18 $
  *
  * ====================================================================
  *
@@ -73,7 +73,6 @@ import java.util.*;
   * It also provides the following decorators:
   *
   *  <UL>
-  *  <LI>{@link #boundedMap(Map,int)}
   *  <LI>{@link #fixedSizeMap(Map)}
   *  <LI>{@link #fixedSizeSortedMap(SortedMap)}
   *  <LI>{@link #lazyMap(Map,Factory)}
