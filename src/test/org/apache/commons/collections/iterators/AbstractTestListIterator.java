@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.5 2003/12/24 01:12:55 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.6 2004/01/04 00:21:58 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -71,7 +71,7 @@ import java.util.NoSuchElementException;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2003/12/24 01:12:55 $
+ * @version $Revision: 1.6 $ $Date: 2004/01/04 00:21:58 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -235,7 +235,7 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
         // add at start should be OK, added should be previous
         it = makeFullListIterator();
         it.add(addValue);
-        assertSame(addValue, it.previous());
+        assertEquals(addValue, it.previous());
 
         // add at start should be OK, added should not be next
         it = makeFullListIterator();
@@ -248,7 +248,7 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
             it.next();
             it.add(addValue);
             // check add OK
-            assertSame(addValue, it.previous());
+            assertEquals(addValue, it.previous());
             it.next();
         }        
     }
