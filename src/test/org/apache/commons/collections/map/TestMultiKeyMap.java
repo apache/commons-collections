@@ -27,7 +27,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2004/04/12 12:05:30 $
+ * @version $Revision: 1.2 $ $Date: 2004/04/30 23:51:36 $
  * 
  * @author Stephen Colebourne
  */
@@ -108,6 +108,27 @@ public class TestMultiKeyMap extends AbstractTestIterableMap {
     
     public boolean isAllowNullKey() {
         return false;
+    }
+
+    //-----------------------------------------------------------------------
+    public void testNullHandling() {
+        resetFull();
+        assertEquals(null, map.get(null));
+        assertEquals(false, map.containsKey(null));
+        assertEquals(false, map.containsValue(null));
+        assertEquals(null, map.remove(null));
+        assertEquals(false, map.entrySet().contains(null));
+        assertEquals(false, map.keySet().contains(null));
+        assertEquals(false, map.values().contains(null));
+        try {
+            map.put(null, null);
+            fail();
+        } catch (NullPointerException ex) {}
+        assertEquals(null, map.put(new MultiKey(null, null), null));
+        try {
+            map.put(null, new Object());
+            fail();
+        } catch (NullPointerException ex) {}
     }
 
     //-----------------------------------------------------------------------
@@ -390,6 +411,30 @@ public class TestMultiKeyMap extends AbstractTestIterableMap {
         assertSame(map.get(new MultiKey(I1, I2)), cloned.get(new MultiKey(I1, I2)));
     }
 
+    //-----------------------------------------------------------------------
+    public void testLRUMultiKeyMap() {
+        MultiKeyMap map = MultiKeyMap.decorate(new LRUMap(2));
+        map.put(I1, I2, "1-2");
+        map.put(I1, I3, "1-3");
+        assertEquals(2, map.size());
+        map.put(I1, I4, "1-4");
+        assertEquals(2, map.size());
+        assertEquals(true, map.containsKey(I1, I3));
+        assertEquals(true, map.containsKey(I1, I4));
+        assertEquals(false, map.containsKey(I1, I2));
+        
+        MultiKeyMap cloned = (MultiKeyMap) map.clone();
+        assertEquals(2, map.size());
+        assertEquals(true, cloned.containsKey(I1, I3));
+        assertEquals(true, cloned.containsKey(I1, I4));
+        assertEquals(false, cloned.containsKey(I1, I2));
+        cloned.put(I1, I5, "1-5");
+        assertEquals(2, cloned.size());
+        assertEquals(true, cloned.containsKey(I1, I4));
+        assertEquals(true, cloned.containsKey(I1, I5));
+    }
+
+    //-----------------------------------------------------------------------
     public String getCompatibilityVersion() {
         return "3.1";
     }

@@ -15,12 +15,13 @@
  */
 package org.apache.commons.collections.map;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.keyvalue.MultiKey;
 
@@ -33,14 +34,29 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * <code>remove</code> for individual keys which operate without extra object creation.
  * <p>
  * The additional methods are the main interface of this map.
- * As such, you will not mormally hold this map in a variable of type <code>Map</code>.
- * The normal map methods take in and return a {@link MultiKey}.
+ * As such, you will not normally hold this map in a variable of type <code>Map</code>.
  * <p>
- * As an example, consider a cache that uses a String airline code and a Locale
- * to lookup the airline's name:
+ * The normal map methods take in and return a {@link MultiKey}.
+ * If you try to use <code>put()</code> with any other object type a
+ * <code>ClassCastException</code> is thrown. If you try to use <code>null</code> as
+ * the key in <code>put()</code> a <code>NullPointerException</code> is thrown.
+ * <p>
+ * This map is implemented as a decorator of a <code>AbstractHashedMap</code> which
+ * enables extra behaviour to be added easily.
+ * <ul>
+ * <li><code>MultiKeyMap.decorate(new LinkedMap())</code> creates an ordered map.
+ * <li><code>MultiKeyMap.decorate(new LRUMap())</code> creates an least recently used map.
+ * <li><code>MultiKeyMap.decorate(new ReferenceMap())</code> creates a garbage collector sensitive map.
+ * </ul>
+ * Note that <code>IdentityMap</code> and <code>ReferenceIdentityMap</code> are unsuitable
+ * for use as the key comparison would work on the whole MultiKey, not the elements within.
+ * <p>
+ * As an example, consider a least recently used cache that uses a String airline code
+ * and a Locale to lookup the airline's name:
  * <pre>
+ * private MultiKeyMap cache = MultiKeyMap.decorate(new LRUMap(50));
+ * 
  * public String getAirlineName(String code, String locale) {
- *   MultiKeyMap cache = getCache();
  *   String name = (String) cache.get(code, locale);
  *   if (name == null) {
  *     name = getAirlineNameFromDB(code, locale);
@@ -51,80 +67,56 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * </pre>
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/04/12 12:05:30 $
+ * @version $Revision: 1.2 $ $Date: 2004/04/30 23:51:36 $
  *
  * @author Stephen Colebourne
  */
 public class MultiKeyMap
-        extends AbstractHashedMap implements Serializable, Cloneable {
+        implements IterableMap, Serializable {
 
     /** Serialisation version */
     private static final long serialVersionUID = -1788199231038721040L;
-    
-    /**
-     * Constructs a new empty map with default size and load factor.
-     */
-    public MultiKeyMap() {
-        super(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, DEFAULT_THRESHOLD);
-    }
 
-    /**
-     * Constructs a new, empty map with the specified initial capacity. 
-     *
-     * @param initialCapacity  the initial capacity
-     * @throws IllegalArgumentException if the initial capacity is less than one
-     */
-    public MultiKeyMap(int initialCapacity) {
-        super(initialCapacity);
-    }
-
-    /**
-     * Constructs a new, empty map with the specified initial capacity and
-     * load factor. 
-     *
-     * @param initialCapacity  the initial capacity
-     * @param loadFactor  the load factor
-     * @throws IllegalArgumentException if the initial capacity is less than one
-     * @throws IllegalArgumentException if the load factor is less than zero
-     */
-    public MultiKeyMap(int initialCapacity, float loadFactor) {
-        super(initialCapacity, loadFactor);
-    }
-
-    /**
-     * Constructor copying elements from another map.
-     *
-     * @param map  the map to copy
-     * @throws NullPointerException if the map is null
-     */
-    public MultiKeyMap(Map map) {
-        super(map);
-    }
+    /** The decorated map */
+    protected final AbstractHashedMap map;
 
     //-----------------------------------------------------------------------
     /**
-     * Clones the map without cloning the keys or values.
+     * Decorates the specified map to add the MultiKeyMap API and fast query.
+     * The map must not be null and must be empty.
      *
-     * @return a shallow clone
+     * @param map  the map to decorate, not null
+     * @throws IllegalArgumentException if the map is null or not empty
      */
-    public Object clone() {
-        return super.clone();
+    public static MultiKeyMap decorate(AbstractHashedMap map) {
+        if (map == null) {
+            throw new IllegalArgumentException("Map must not be null");
+        }
+        if (map.size() > 0) {
+            throw new IllegalArgumentException("Map must be empty");
+        }
+        return new MultiKeyMap(map);
     }
-    
+
+    //-----------------------------------------------------------------------    
     /**
-     * Write the map out using a custom routine.
+     * Constructs a new MultiKeyMap that decorates a <code>HashedMap</code>.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        doWriteObject(out);
+    public MultiKeyMap() {
+        super();
+        map = new HashedMap();
     }
 
     /**
-     * Read the map in using a custom routine.
+     * Constructor that decorates the specified map.
+     * The map must not be null and should be empty or only contain valid keys.
+     * This constructor performs no validation.
+     *
+     * @param map  the map to decorate
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject();
-        doReadObject(in);
+    protected MultiKeyMap(AbstractHashedMap map) {
+        super();
+        this.map = map;
     }
 
     //-----------------------------------------------------------------------
@@ -137,7 +129,7 @@ public class MultiKeyMap
      */
     public Object get(Object key1, Object key2) {
         int hashCode = hash(key1, key2);
-        HashEntry entry = data[hashIndex(hashCode, data.length)];
+        AbstractHashedMap.HashEntry entry = map.data[map.hashIndex(hashCode, map.data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
                 return entry.getValue();
@@ -156,7 +148,7 @@ public class MultiKeyMap
      */
     public boolean containsKey(Object key1, Object key2) {
         int hashCode = hash(key1, key2);
-        HashEntry entry = data[hashIndex(hashCode, data.length)];
+        AbstractHashedMap.HashEntry entry = map.data[map.hashIndex(hashCode, map.data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
                 return true;
@@ -176,18 +168,18 @@ public class MultiKeyMap
      */
     public Object put(Object key1, Object key2, Object value) {
         int hashCode = hash(key1, key2);
-        int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index];
+        int index = map.hashIndex(hashCode, map.data.length);
+        AbstractHashedMap.HashEntry entry = map.data[index];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
                 Object oldValue = entry.getValue();
-                updateEntry(entry, value);
+                map.updateEntry(entry, value);
                 return oldValue;
             }
             entry = entry.next;
         }
         
-        addMapping(index, hashCode, new MultiKey(key1, key2), value);
+        map.addMapping(index, hashCode, new MultiKey(key1, key2), value);
         return null;
     }
 
@@ -200,13 +192,13 @@ public class MultiKeyMap
      */
     public Object remove(Object key1, Object key2) {
         int hashCode = hash(key1, key2);
-        int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index];
-        HashEntry previous = null;
+        int index = map.hashIndex(hashCode, map.data.length);
+        AbstractHashedMap.HashEntry entry = map.data[index];
+        AbstractHashedMap.HashEntry previous = null;
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
                 Object oldValue = entry.getValue();
-                removeMapping(entry, index, previous);
+                map.removeMapping(entry, index, previous);
                 return oldValue;
             }
             previous = entry;
@@ -245,7 +237,7 @@ public class MultiKeyMap
      * @param key2  the second key
      * @return true if the key matches
      */
-    protected boolean isEqualKey(HashEntry entry, Object key1, Object key2) {
+    protected boolean isEqualKey(AbstractHashedMap.HashEntry entry, Object key1, Object key2) {
         MultiKey multi = (MultiKey) entry.getKey();
         return
             multi.size() == 2 &&
@@ -264,7 +256,7 @@ public class MultiKeyMap
      */
     public Object get(Object key1, Object key2, Object key3) {
         int hashCode = hash(key1, key2, key3);
-        HashEntry entry = data[hashIndex(hashCode, data.length)];
+        AbstractHashedMap.HashEntry entry = map.data[map.hashIndex(hashCode, map.data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
                 return entry.getValue();
@@ -284,7 +276,7 @@ public class MultiKeyMap
      */
     public boolean containsKey(Object key1, Object key2, Object key3) {
         int hashCode = hash(key1, key2, key3);
-        HashEntry entry = data[hashIndex(hashCode, data.length)];
+        AbstractHashedMap.HashEntry entry = map.data[map.hashIndex(hashCode, map.data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
                 return true;
@@ -305,18 +297,18 @@ public class MultiKeyMap
      */
     public Object put(Object key1, Object key2, Object key3, Object value) {
         int hashCode = hash(key1, key2, key3);
-        int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index];
+        int index = map.hashIndex(hashCode, map.data.length);
+        AbstractHashedMap.HashEntry entry = map.data[index];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
                 Object oldValue = entry.getValue();
-                updateEntry(entry, value);
+                map.updateEntry(entry, value);
                 return oldValue;
             }
             entry = entry.next;
         }
         
-        addMapping(index, hashCode, new MultiKey(key1, key2, key3), value);
+        map.addMapping(index, hashCode, new MultiKey(key1, key2, key3), value);
         return null;
     }
 
@@ -330,13 +322,13 @@ public class MultiKeyMap
      */
     public Object remove(Object key1, Object key2, Object key3) {
         int hashCode = hash(key1, key2, key3);
-        int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index];
-        HashEntry previous = null;
+        int index = map.hashIndex(hashCode, map.data.length);
+        AbstractHashedMap.HashEntry entry = map.data[index];
+        AbstractHashedMap.HashEntry previous = null;
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3)) {
                 Object oldValue = entry.getValue();
-                removeMapping(entry, index, previous);
+                map.removeMapping(entry, index, previous);
                 return oldValue;
             }
             previous = entry;
@@ -380,7 +372,7 @@ public class MultiKeyMap
      * @param key3  the third key
      * @return true if the key matches
      */
-    protected boolean isEqualKey(HashEntry entry, Object key1, Object key2, Object key3) {
+    protected boolean isEqualKey(AbstractHashedMap.HashEntry entry, Object key1, Object key2, Object key3) {
         MultiKey multi = (MultiKey) entry.getKey();
         return
             multi.size() == 3 &&
@@ -401,7 +393,7 @@ public class MultiKeyMap
      */
     public Object get(Object key1, Object key2, Object key3, Object key4) {
         int hashCode = hash(key1, key2, key3, key4);
-        HashEntry entry = data[hashIndex(hashCode, data.length)];
+        AbstractHashedMap.HashEntry entry = map.data[map.hashIndex(hashCode, map.data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
                 return entry.getValue();
@@ -422,7 +414,7 @@ public class MultiKeyMap
      */
     public boolean containsKey(Object key1, Object key2, Object key3, Object key4) {
         int hashCode = hash(key1, key2, key3, key4);
-        HashEntry entry = data[hashIndex(hashCode, data.length)];
+        AbstractHashedMap.HashEntry entry = map.data[map.hashIndex(hashCode, map.data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
                 return true;
@@ -444,18 +436,18 @@ public class MultiKeyMap
      */
     public Object put(Object key1, Object key2, Object key3, Object key4, Object value) {
         int hashCode = hash(key1, key2, key3, key4);
-        int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index];
+        int index = map.hashIndex(hashCode, map.data.length);
+        AbstractHashedMap.HashEntry entry = map.data[index];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
                 Object oldValue = entry.getValue();
-                updateEntry(entry, value);
+                map.updateEntry(entry, value);
                 return oldValue;
             }
             entry = entry.next;
         }
         
-        addMapping(index, hashCode, new MultiKey(key1, key2, key3, key4), value);
+        map.addMapping(index, hashCode, new MultiKey(key1, key2, key3, key4), value);
         return null;
     }
 
@@ -470,13 +462,13 @@ public class MultiKeyMap
      */
     public Object remove(Object key1, Object key2, Object key3, Object key4) {
         int hashCode = hash(key1, key2, key3, key4);
-        int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index];
-        HashEntry previous = null;
+        int index = map.hashIndex(hashCode, map.data.length);
+        AbstractHashedMap.HashEntry entry = map.data[index];
+        AbstractHashedMap.HashEntry previous = null;
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4)) {
                 Object oldValue = entry.getValue();
-                removeMapping(entry, index, previous);
+                map.removeMapping(entry, index, previous);
                 return oldValue;
             }
             previous = entry;
@@ -525,7 +517,7 @@ public class MultiKeyMap
      * @param key4  the fourth key
      * @return true if the key matches
      */
-    protected boolean isEqualKey(HashEntry entry, Object key1, Object key2, Object key3, Object key4) {
+    protected boolean isEqualKey(AbstractHashedMap.HashEntry entry, Object key1, Object key2, Object key3, Object key4) {
         MultiKey multi = (MultiKey) entry.getKey();
         return
             multi.size() == 4 &&
@@ -548,7 +540,7 @@ public class MultiKeyMap
      */
     public Object get(Object key1, Object key2, Object key3, Object key4, Object key5) {
         int hashCode = hash(key1, key2, key3, key4, key5);
-        HashEntry entry = data[hashIndex(hashCode, data.length)];
+        AbstractHashedMap.HashEntry entry = map.data[map.hashIndex(hashCode, map.data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
                 return entry.getValue();
@@ -570,7 +562,7 @@ public class MultiKeyMap
      */
     public boolean containsKey(Object key1, Object key2, Object key3, Object key4, Object key5) {
         int hashCode = hash(key1, key2, key3, key4, key5);
-        HashEntry entry = data[hashIndex(hashCode, data.length)];
+        AbstractHashedMap.HashEntry entry = map.data[map.hashIndex(hashCode, map.data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
                 return true;
@@ -593,18 +585,18 @@ public class MultiKeyMap
      */
     public Object put(Object key1, Object key2, Object key3, Object key4, Object key5, Object value) {
         int hashCode = hash(key1, key2, key3, key4, key5);
-        int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index];
+        int index = map.hashIndex(hashCode, map.data.length);
+        AbstractHashedMap.HashEntry entry = map.data[index];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
                 Object oldValue = entry.getValue();
-                updateEntry(entry, value);
+                map.updateEntry(entry, value);
                 return oldValue;
             }
             entry = entry.next;
         }
         
-        addMapping(index, hashCode, new MultiKey(key1, key2, key3, key4, key5), value);
+        map.addMapping(index, hashCode, new MultiKey(key1, key2, key3, key4, key5), value);
         return null;
     }
 
@@ -620,13 +612,13 @@ public class MultiKeyMap
      */
     public Object remove(Object key1, Object key2, Object key3, Object key4, Object key5) {
         int hashCode = hash(key1, key2, key3, key4, key5);
-        int index = hashIndex(hashCode, data.length);
-        HashEntry entry = data[index];
-        HashEntry previous = null;
+        int index = map.hashIndex(hashCode, map.data.length);
+        AbstractHashedMap.HashEntry entry = map.data[index];
+        AbstractHashedMap.HashEntry previous = null;
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2, key3, key4, key5)) {
                 Object oldValue = entry.getValue();
-                removeMapping(entry, index, previous);
+                map.removeMapping(entry, index, previous);
                 return oldValue;
             }
             previous = entry;
@@ -680,7 +672,7 @@ public class MultiKeyMap
      * @param key5  the fifth key
      * @return true if the key matches
      */
-    protected boolean isEqualKey(HashEntry entry, Object key1, Object key2, Object key3, Object key4, Object key5) {
+    protected boolean isEqualKey(AbstractHashedMap.HashEntry entry, Object key1, Object key2, Object key3, Object key4, Object key5) {
         MultiKey multi = (MultiKey) entry.getKey();
         return
             multi.size() == 5 &&
@@ -798,19 +790,119 @@ public class MultiKeyMap
 
     //-----------------------------------------------------------------------
     /**
-     * Override superclass to ensure that input keys are valid MultiKey objects.
+     * Check to ensure that input keys are valid MultiKey objects.
      * 
      * @param key  the key to check
-     * @return the validated key
      */
-    protected Object convertKey(Object key) {
+    protected void checkKey(Object key) {
         if (key == null) {
             throw new NullPointerException("Key must not be null");
         }
         if (key instanceof MultiKey == false) {
             throw new ClassCastException("Key must be a MultiKey");
         }
-        return key;
+    }
+
+    /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    public Object clone() {
+        return new MultiKeyMap((AbstractHashedMap) map.clone());
+    }
+
+    /**
+     * Puts the key and value into the map, where the key must be a non-null
+     * MultiKey object.
+     * 
+     * @param key  the non-null MultiKey object
+     * @param value  the value to store
+     * @return the previous value for the key
+     * @throws NullPointerException if the key is null
+     * @throws ClassCastException if the key is not a MultiKey
+     */
+    public Object put(Object key, Object value) {
+        checkKey(key);
+        return map.put(key, value);
+    }
+
+    /**
+     * Puts all the keys and values into this map.
+     * Each key must be non-null and a MultiKey object.
+     * 
+     * @param key  the non-null MultiKey object
+     * @param value  the value to store
+     * @return the previous value for the key
+     * @throws NullPointerException if the mapToCopy or any key within is null
+     * @throws ClassCastException if any key is not a MultiKey
+     */
+    public void putAll(Map mapToCopy) {
+        for (Iterator it = mapToCopy.keySet().iterator(); it.hasNext();) {
+            Object key = it.next();
+            checkKey(key);
+        }
+        map.putAll(mapToCopy);
+    }
+
+    //-----------------------------------------------------------------------
+    public MapIterator mapIterator() {
+        return map.mapIterator();
+    }
+
+    public int size() {
+        return map.size();
+    }
+
+    public boolean isEmpty() {
+        return map.isEmpty();
+    }
+
+    public boolean containsKey(Object key) {
+        return map.containsKey(key);
+    }
+
+    public boolean containsValue(Object value) {
+        return map.containsValue(value);
+    }
+
+    public Object get(Object key) {
+        return map.get(key);
+    }
+
+    public Object remove(Object key) {
+        return map.remove(key);
+    }
+
+    public void clear() {
+        map.clear();
+    }
+
+    public Set keySet() {
+        return map.keySet();
+    }
+
+    public Collection values() {
+        return map.values();
+    }
+
+    public Set entrySet() {
+        return map.entrySet();
+    }
+
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        return map.equals(obj);
+    }
+
+    public int hashCode() {
+        return map.hashCode();
+    }
+
+    public String toString() {
+        return map.toString();
     }
 
 }
