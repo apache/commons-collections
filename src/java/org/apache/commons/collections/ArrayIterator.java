@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.10 2002/03/19 00:05:10 morgand Exp $
- * $Revision: 1.10 $
- * $Date: 2002/03/19 00:05:10 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.11 2002/03/19 00:54:34 mas Exp $
+ * $Revision: 1.11 $
+ * $Date: 2002/03/19 00:54:34 $
  *
  * ====================================================================
  *
@@ -68,11 +68,13 @@ import java.util.NoSuchElementException;
   *
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
-  * @version $Revision: 1.10 $
+  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
+  * @version $Revision: 1.11 $
   */
 public class ArrayIterator implements Iterator {
     
     private Object array;
+    private int length = 0;
     private int index = 0;
   
     
@@ -80,13 +82,13 @@ public class ArrayIterator implements Iterator {
     }
     
     public ArrayIterator(Object array) {
-        this.array = array;
+        setArray( array );
     }
 
     // Iterator interface
     //-------------------------------------------------------------------------
     public boolean hasNext() {
-        return  index < Array.getLength( array );
+        return index < length;
     }
 
     public Object next() {
@@ -106,7 +108,16 @@ public class ArrayIterator implements Iterator {
         return array;
     }
     
+    /**
+     *  @exception IllegalArgumentException if <code>array</code> is not an
+     *  array.
+     **/
     public void setArray( Object array ) {
+        // Array.getLength throws IllegalArgumentException if the object is not
+        // an array.  This call is made before saving the array and resetting
+        // the index so that the array iterator remains in a consistent state
+        // if the argument is not an array.
+        this.length = Array.getLength( array );
         this.array = array;
         this.index = 0;
     }
