@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortListIteratorListIterator.java,v 1.1 2003/04/11 00:55:36 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestShortListIteratorListIterator.java,v 1.2 2003/04/13 23:26:09 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,21 +58,21 @@
 package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.TestIterator;
+import org.apache.commons.collections.iterators.TestListIterator;
 import org.apache.commons.collections.primitives.ArrayShortList;
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
- * @TODO should extend TestListIterator when there is one
- * @version $Revision: 1.1 $ $Date: 2003/04/11 00:55:36 $
+ * @version $Revision: 1.2 $ $Date: 2003/04/13 23:26:09 $
  * @author Rodney Waldhoff
  */
-public class TestShortListIteratorListIterator extends TestIterator {
+public class TestShortListIteratorListIterator extends TestListIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -92,11 +92,11 @@ public class TestShortListIteratorListIterator extends TestIterator {
         return makeFullIterator();
     }
     
-    public Iterator makeEmptyIterator() {
+    public ListIterator makeEmptyListIterator() {
         return ShortListIteratorListIterator.wrap(makeEmptyShortList().listIterator());
     }
     
-    public Iterator makeFullIterator() {
+    public ListIterator makeFullListIterator() {
         return ShortListIteratorListIterator.wrap(makeFullShortList().listIterator());
     }
 

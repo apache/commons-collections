@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListIteratorListIterator.java,v 1.3 2003/03/05 19:10:51 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/adapters/Attic/TestIntListIteratorListIterator.java,v 1.4 2003/04/13 23:26:09 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,21 +58,21 @@
 package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.TestIterator;
+import org.apache.commons.collections.iterators.TestListIterator;
 import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.collections.primitives.IntList;
 
 /**
- * @TODO should extend TestListIterator when there is one
- * @version $Revision: 1.3 $ $Date: 2003/03/05 19:10:51 $
+ * @version $Revision: 1.4 $ $Date: 2003/04/13 23:26:09 $
  * @author Rodney Waldhoff
  */
-public class TestIntListIteratorListIterator extends TestIterator {
+public class TestIntListIteratorListIterator extends TestListIterator {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -92,11 +92,11 @@ public class TestIntListIteratorListIterator extends TestIterator {
         return makeFullIterator();
     }
     
-    public Iterator makeEmptyIterator() {
+    public ListIterator makeEmptyListIterator() {
         return IntListIteratorListIterator.wrap(makeEmptyIntList().listIterator());
     }
     
-    public Iterator makeFullIterator() {
+    public ListIterator makeFullListIterator() {
         return IntListIteratorListIterator.wrap(makeFullIntList().listIterator());
     }
 
