@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiMap.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiMap.java,v 1.5 2002/11/24 19:33:19 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/11/24 19:33:19 $
  *
  * ====================================================================
  *
@@ -64,18 +64,39 @@ import java.util.Map;
 
 /** 
  * This is simply a Map with slightly different semantics.
- * Instead of returning an Object, it returns a Collection.
- * So for example, you can put( key, new Integer(1) ); 
- * and then a Object get( key ); will return you a Collection 
- * instead of an Integer.
- * Thus, this is simply a tag interface.
+ * <p>
+ * A <code>MultiMap</code> is a Map with slightly different semantics.
+ * Putting a value into the map will add the value to a Collection at that
+ * key. Getting a value will always return a Collection, holding all the
+ * values put to that key. This implementation uses an ArrayList as the 
+ * collection.
+ * <p>
+ * For example:
+ * <pre>
+ * MultiMap mhm = new MultiHashMap();
+ * mhm.put(key, "A");
+ * mhm.put(key, "B");
+ * mhm.put(key, "C");
+ * Collection coll = (Collection) mhm.get(key);</pre>
+ * <p>
+ * <code>coll</code> will be a list containing "A", "B", "C".
  *
  * @since 2.0
  * @author Christopher Berry
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author Stephen Colebourne
  */
 public interface MultiMap extends Map {
     
-    public Object remove( Object key, Object item );
+    /**
+     * Removes a specific value from map.
+     * <p>
+     * The item is removed from the collection mapped to the specified key.
+     * 
+     * @param key  the key to remove from
+     * @param value  the value to remove
+     * @return the value removed (which was passed in)
+     */
+    public Object remove(Object key, Object item);
    
 }
