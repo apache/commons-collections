@@ -25,11 +25,11 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Tests for ReferenceMap. 
  * 
- * @version $Revision: 1.3 $ $Date: 2004/02/18 01:20:38 $
+ * @version $Revision: 1.4 $ $Date: 2004/04/01 00:07:48 $
  *
  * @author Paul Jack
  */
-public class TestReferenceMap extends AbstractTestMap {
+public class TestReferenceMap extends AbstractTestIterableMap {
 
     public TestReferenceMap(String testName) {
         super(testName);
