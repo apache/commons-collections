@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.13 2002/10/13 13:55:35 scolebourne Exp $
- * $Revision: 1.13 $
- * $Date: 2002/10/13 13:55:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestObject.java,v 1.14 2003/01/04 13:10:27 rwaldhoff Exp $
+ * $Revision: 1.14 $
+ * $Date: 2003/01/04 13:10:27 $
  *
  * ====================================================================
  *
@@ -84,7 +84,7 @@ import java.io.Serializable;
  * test case (method) your {@link Object} fails.
  *
  * @author Rodney Waldhoff
- * @version $Id: TestObject.java,v 1.13 2002/10/13 13:55:35 scolebourne Exp $
+ * @version $Id: TestObject.java,v 1.14 2003/01/04 13:10:27 rwaldhoff Exp $
  */
 public abstract class TestObject extends BulkTest {
     public TestObject(String testName) {
@@ -291,7 +291,7 @@ public abstract class TestObject extends BulkTest {
             return;
         }
         String name = getCanonicalEmptyCollectionName(object);
-        assertTrue("Canonical empty collection is not in CVS",
+        assertTrue("Canonical empty collection (" + name + ") is not in CVS",
                    new File(name).exists());
     }
 
@@ -310,7 +310,7 @@ public abstract class TestObject extends BulkTest {
             return;
         }
         String name = getCanonicalFullCollectionName(object);
-        assertTrue("Canonical full collection is not in CVS",
+        assertTrue("Canonical full collection (" + name + ") is not in CVS",
                    new File(name).exists());
     }
 }
