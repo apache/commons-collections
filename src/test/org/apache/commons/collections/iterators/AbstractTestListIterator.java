@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.4 2003/11/18 22:37:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.5 2003/12/24 01:12:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import java.util.NoSuchElementException;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:13 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/24 01:12:55 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -223,21 +223,33 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
     public void testAdd() {
         ListIterator it = makeFullListIterator();
         
+        Object addValue = addSetValue();
         if (supportsAdd() == false) {
             // check for UnsupportedOperationException if not supported
             try {
-                it.add(addSetValue());
+                it.add(addValue);
             } catch (UnsupportedOperationException ex) {}
             return;
         }
         
-        // add at start should be OK
-        it.add(addSetValue());
+        // add at start should be OK, added should be previous
+        it = makeFullListIterator();
+        it.add(addValue);
+        assertSame(addValue, it.previous());
+
+        // add at start should be OK, added should not be next
+        it = makeFullListIterator();
+        it.add(addValue);
+        assertTrue(addValue != it.next());
 
         // add in middle and at end should be OK
+        it = makeFullListIterator();
         while (it.hasNext()) {
             it.next();
-            it.add(addSetValue());
+            it.add(addValue);
+            // check add OK
+            assertSame(addValue, it.previous());
+            it.next();
         }        
     }
     
