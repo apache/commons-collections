@@ -1,6 +1,6 @@
 Extension-Name: org.apache.commons.collections
 Specification-Vendor: Apache Software Foundation
-Specification-Version: 1.0
+Specification-Version: 2.1
 Implementation-Vendor: Apache Software Foundation
 Implementation-Version: 2.1
 
