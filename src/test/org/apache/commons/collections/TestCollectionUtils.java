@@ -50,7 +50,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Phil Steitz
  * @author Steven Melzer
  * 
- * @version $Revision: 1.40 $ $Date: 2004/07/17 21:38:33 $
+ * @version $Revision: 1.41 $ $Date: 2004/08/03 18:20:41 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -1159,7 +1159,18 @@ public class TestCollectionUtils extends TestCase {
             // expected
         }             
     }
-     
+
+    public void testTransformedCollection_2() {
+        List list = new ArrayList();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        Collection result = CollectionUtils.transformedCollection(list, TRANSFORM_TO_INTEGER);
+        assertEquals(true, result.contains("1"));  // untransformed
+        assertEquals(true, result.contains("2"));  // untransformed
+        assertEquals(true, result.contains("3"));  // untransformed
+    }
+
     public void testSynchronizedCollection() {
         Collection col = CollectionUtils.synchronizedCollection(new ArrayList());
         assertTrue("Returned object should be a SynchronizedCollection.",
