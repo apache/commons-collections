@@ -1,5 +1,6 @@
 package org.apache.commons.collections.comparators;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,6 +21,15 @@ public abstract class TestComparator extends TestObject {
 
     public Object makeObject() {
         return makeComparator();
+    }
+
+    /**
+     * There were no Comparators in version 1.x.
+     * 
+     * @return 2
+     */
+    public int getCompatibilityVersion() {
+        return 2;
     }
 
     public void reverseObjects(List list) {
@@ -77,6 +87,48 @@ public abstract class TestComparator extends TestObject {
         Comparator comparator = makeComparator();
         assertTrue("This comparator should be Serializable.",
                    comparator instanceof Serializable);
+    }
+
+    public String getCanonicalComparatorName(Object object) {
+        StringBuffer retval = new StringBuffer();
+        retval.append("data/test/");
+        String colName = object.getClass().getName();
+        colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
+        retval.append(colName);
+        retval.append(".version");
+        retval.append(getCompatibilityVersion());
+        retval.append(".obj");
+        return retval.toString();
+    }
+
+    /**
+     * Compare the current serialized form of the Comparator
+     * against the canonical version in CVS.
+     */
+    public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
+        Comparator comparator = null;
+        /*
+         * Create canonical objects with this code
+        comparator = makeComparator();
+        
+        writeExternalFormToDisk((Serializable) comparator, 
+                                getCanonicalComparatorName(comparator));
+        */
+
+        // test to make sure the canonical form has been preserved
+        comparator = 
+            (Comparator) readExternalFormFromDisk(getCanonicalComparatorName(makeComparator()));
+        
+        // make sure the canonical form produces the ordering we currently
+        // expect
+        List randomList = getComparableObjectsOrdered();
+        reverseObjects(randomList);
+        sortObjects(randomList,comparator);
+
+        List orderedList = getComparableObjectsOrdered();
+
+        assertTrue("Comparator did not reorder the List correctly",
+                   orderedList.equals(randomList));
     }
 
 }
