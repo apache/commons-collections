@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.27 2002/04/02 16:29:20 morgand Exp $ -->
+<!-- $Id: build.xml,v 1.28 2002/05/04 12:33:01 rwaldhoff Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -173,7 +173,7 @@
                destdir="${dest.doc.api}"
                windowtitle="${Name-Long}"
                doctitle="${Name-Long}"
-               bottom="&lt;small&gt;Copyright &amp;copy; 2001 Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
+               bottom="&lt;small&gt;Copyright &amp;copy; 2001-2002 Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
                protected="true"
                version="true"
                author="true"
