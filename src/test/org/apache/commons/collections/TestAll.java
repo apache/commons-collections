@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.8 2001/05/14 10:42:51 jstrachan Exp $
- * $Revision: 1.8 $
- * $Date: 2001/05/14 10:42:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.9 2001/08/22 10:05:38 jstrachan Exp $
+ * $Revision: 1.9 $
+ * $Date: 2001/08/22 10:05:38 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import junit.framework.*;
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.8 2001/05/14 10:42:51 jstrachan Exp $
+ * @version $Id: TestAll.java,v 1.9 2001/08/22 10:05:38 jstrachan Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -78,7 +78,9 @@ public class TestAll extends TestCase {
         suite.addTest(TestArrayIterator.suite());
         suite.addTest(TestArrayList.suite());
         suite.addTest(TestArrayStack.suite());
+        suite.addTest(TestCollectionUtils.suite());
         suite.addTest(TestCursorableLinkedList.suite());
+        suite.addTest(TestExtendedProperties.suite());
         suite.addTest(TestFastArrayList.suite());
         suite.addTest(TestFastArrayList1.suite());
         suite.addTest(TestFastHashMap.suite());
@@ -86,9 +88,8 @@ public class TestAll extends TestCase {
         suite.addTest(TestFastTreeMap.suite());
         suite.addTest(TestFastTreeMap1.suite());
         suite.addTest(TestHashMap.suite());
+        suite.addTest(TestSingletonIterator.suite());
         suite.addTest(TestTreeMap.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestExtendedProperties.suite());
         return suite;
     }
 
