@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.4 2003/08/31 17:28:43 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFactoryUtils.java,v 1.5 2003/10/05 21:11:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -70,7 +70,7 @@ import junit.textui.TestRunner;
  * Tests the org.apache.commons.collections.FactoryUtils class.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/08/31 17:28:43 $
+ * @version $Revision: 1.5 $ $Date: 2003/10/05 21:11:06 $
  *
  * @author Stephen Colebourne
  */

@@ -1,13 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.9 2003/09/20 17:02:03 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2003/09/20 17:02:03 $
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestExtendedProperties.java,v 1.10 2003/10/05 21:11:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 1999-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -69,15 +66,16 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests some basic functions of the ExtendedProperties
- * class
+ * Tests some basic functions of the ExtendedProperties class.
  * 
- * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
+ * @version $Revision: 1.10 $ $Date: 2003/10/05 21:11:06 $
+ * 
+ * @author Geir Magnusson Jr.
  * @author Mohan Kishore
  * @author Stephen Colebourne
- * @version $Id: TestExtendedProperties.java,v 1.9 2003/09/20 17:02:03 scolebourne Exp $
  */
 public class TestExtendedProperties extends TestCase {
+    
     protected ExtendedProperties eprop = new ExtendedProperties();
 
     public TestExtendedProperties(String testName) {
