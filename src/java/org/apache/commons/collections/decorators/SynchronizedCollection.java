@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SynchronizedCollection.java,v 1.2 2003/05/07 11:20:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SynchronizedCollection.java,v 1.3 2003/05/07 12:18:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,7 +62,7 @@ import java.util.Iterator;
 
 /**
  * <code>SynchronizedCollection</code> decorates another <code>Collection</code>
- * to synchronize the method calls.
+ * to synchronize its behaviour for a multi-threaded environment.
  * <p>
  * Iterators must be manually synchronized:
  * <pre>
@@ -72,7 +72,7 @@ import java.util.Iterator;
  * }
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/05/07 11:20:21 $
+ * @version $Revision: 1.3 $ $Date: 2003/05/07 12:18:55 $
  * 
  * @author Stephen Colebourne
  */

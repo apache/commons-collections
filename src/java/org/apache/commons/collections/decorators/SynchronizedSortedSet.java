@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SynchronizedSortedSet.java,v 1.1 2003/05/07 11:19:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/SynchronizedSortedSet.java,v 1.2 2003/05/07 12:18:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,12 +61,13 @@ import java.util.Comparator;
 import java.util.SortedSet;
 
 /**
- * <code>SynchronizedSortedSet</code> decorates another <code>SortedSet</code>.
+ * <code>SynchronizedSortedSet</code> decorates another <code>SortedSet</code>
+ * to synchronize its behaviour for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated set.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/07 11:19:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/07 12:18:55 $
  * 
  * @author Stephen Colebourne
  */

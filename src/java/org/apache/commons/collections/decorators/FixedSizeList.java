@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/FixedSizeList.java,v 1.3 2003/05/07 11:20:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/FixedSizeList.java,v 1.4 2003/05/07 12:18:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -62,14 +62,14 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * <code>FixedSizeList</code> decorates another <code>List</code> to
- * fix the size.
+ * <code>FixedSizeList</code> decorates another <code>List</code>
+ * to fix the size.
  * <p>
  * The add, remove, clear and retain operations are unsupported.
  * The set method is allowed (as it doesn't change the list size).
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/05/07 11:20:21 $
+ * @version $Revision: 1.4 $ $Date: 2003/05/07 12:18:55 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableCollection.java,v 1.3 2003/05/07 11:20:21 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/UnmodifiableCollection.java,v 1.4 2003/05/07 12:18:55 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,14 +63,11 @@ import java.util.Iterator;
 import org.apache.commons.collections.IteratorUtils;
 
 /**
- * <code>PredicatedCollection</code> decorates another <code>Collection</code>
- * to validate addition match a specified predicate.
- * <p>
- * If an object cannot be addded to the collection, an IllegalArgumentException
- * is thrown.
+ * <code>UnmodifiableCollection</code> decorates another <code>Collection</code>
+ * to ensure it can't be altered.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/05/07 11:20:21 $
+ * @version $Revision: 1.4 $ $Date: 2003/05/07 12:18:55 $
  * 
  * @author Stephen Colebourne
  */
