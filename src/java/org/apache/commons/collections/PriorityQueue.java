@@ -1,19 +1,19 @@
-/* 
- * Copyright (C) The Apache Software Foundation. All rights reserved. 
- * 
- * This software is published under the terms of the Apache Software License 
- * version 1.1, a copy of which has been included with this distribution in 
- * the LICENSE file. 
- */ 
+/*
+ * Copyright (C) The Apache Software Foundation. All rights reserved.
+ *
+ * This software is published under the terms of the Apache Software License
+ * version 1.1, a copy of which has been included with this distribution in
+ * the LICENSE file.
+ */
 package org.apache.commons.collections;
 
 import java.util.NoSuchElementException;
 
 /**
- * Iterface for priority queues.
+ * Interface for priority queues.
  * This interface does not dictate whether it is min or max heap.
  *
- * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a> 
+ * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  */
 public interface PriorityQueue
 {

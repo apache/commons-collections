@@ -1,22 +1,21 @@
-/* 
- * Copyright (C) The Apache Software Foundation. All rights reserved. 
- * 
- * This software is published under the terms of the Apache Software License 
- * version 1.1, a copy of which has been included with this distribution in 
- * the LICENSE file. 
- */ 
+/*
+ * Copyright (C) The Apache Software Foundation. All rights reserved.
+ *
+ * This software is published under the terms of the Apache Software License
+ * version 1.1, a copy of which has been included with this distribution in
+ * the LICENSE file.
+ */
 package org.apache.commons.collections;
 
 import java.util.NoSuchElementException;
 
 /**
- * Iterface for priority queues.
- * This interface does not dictate whether it is min or max heap.
+ * Binary heap implementation of {@link PriorityQueue}.
  *
- * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a> 
- * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a> 
+ * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
+ * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a>
  */
-public final class BinaryHeap 
+public final class BinaryHeap
     implements PriorityQueue
 {
     protected final static int      DEFAULT_CAPACITY   = 13;
@@ -114,7 +113,7 @@ public final class BinaryHeap
         final Comparable result = peek();
         m_elements[ 1 ] = m_elements[ m_size-- ];
 
-        //set the unused element to 'null' so that the garbage collector 
+        //set the unused element to 'null' so that the garbage collector
         //can free the object if not used anywhere else.(remove reference)
         m_elements[ m_size + 1 ] = null;
 
@@ -129,7 +128,7 @@ public final class BinaryHeap
     }
 
     /**
-     * Percolate element down heap from top. 
+     * Percolate element down heap from top.
      * Assume it is a maximum heap.
      *
      * @param element the element
@@ -146,7 +145,7 @@ public final class BinaryHeap
 
             //if we have a right child and that child can not be percolated
             //up then move onto other child
-            if( child != m_size && 
+            if( child != m_size &&
                 m_elements[ child + 1 ].compareTo( m_elements[ child ] ) < 0 )
             {
                 child++;
@@ -161,12 +160,12 @@ public final class BinaryHeap
             m_elements[ hole ] = m_elements[ child ];
             hole = child;
         }
-        
+
         m_elements[ hole ] = element;
     }
 
     /**
-     * Percolate element down heap from top. 
+     * Percolate element down heap from top.
      * Assume it is a maximum heap.
      *
      * @param element the element
@@ -183,7 +182,7 @@ public final class BinaryHeap
 
             //if we have a right child and that child can not be percolated
             //up then move onto other child
-            if( child != m_size && 
+            if( child != m_size &&
                 m_elements[ child + 1 ].compareTo( m_elements[ child ] ) > 0 )
             {
                 child++;
@@ -198,12 +197,12 @@ public final class BinaryHeap
             m_elements[ hole ] = m_elements[ child ];
             hole = child;
         }
-        
+
         m_elements[ hole ] = element;
     }
 
     /**
-     * Percolate element up heap from bottom. 
+     * Percolate element up heap from bottom.
      * Assume it is a maximum heap.
      *
      * @param element the element
@@ -211,7 +210,7 @@ public final class BinaryHeap
     protected void percolateUpMinHeap( final Comparable element )
     {
         int hole = ++m_size;
-        
+
         m_elements[ hole ] = element;
 
         while( hole > 1 &&
@@ -228,7 +227,7 @@ public final class BinaryHeap
     }
 
     /**
-     * Percolate element up heap from bottom. 
+     * Percolate element up heap from bottom.
      * Assume it is a maximum heap.
      *
      * @param element the element
@@ -252,8 +251,8 @@ public final class BinaryHeap
 
     protected void grow()
     {
-        final Comparable[] elements = 
-            new Comparable[ m_elements.length * 2 ]; 
+        final Comparable[] elements =
+            new Comparable[ m_elements.length * 2 ];
         System.arraycopy( m_elements, 0, elements, 0, m_elements.length );
         m_elements = elements;
     }

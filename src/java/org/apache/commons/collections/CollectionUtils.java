@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.1 2001/04/24 18:48:36 rwaldhoff Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/24 18:48:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.2 2001/05/04 16:32:17 rwaldhoff Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/05/04 16:32:17 $
  *
  * ====================================================================
  *
@@ -75,7 +75,7 @@ import java.util.Set;
  *
  * @author Rodney Waldhoff
  *
- * @version $Id: CollectionUtils.java,v 1.1 2001/04/24 18:48:36 rwaldhoff Exp $
+ * @version $Id: CollectionUtils.java,v 1.2 2001/05/04 16:32:17 rwaldhoff Exp $
  */
 public class CollectionUtils {
     /**
@@ -132,11 +132,11 @@ public class CollectionUtils {
 
     /**
      * Returns a {@link Collection} containing the exclusive disjunction
-     * (symmetric difference) of the given {@link Collection}.
+     * (symmetric difference) of the given {@link Collection}s.
      * <p>
      * The cardinality of each element <i>e</i> in the returned {@link Collection}
      * will be equal to
-     * <tt>Math.max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - Math.min(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>))</tt>.
+     * <tt>max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - min(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>))</tt>.
      * <p>
      * This is equivalent to
      * <tt>{@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})</tt>
