@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedSet.java,v 1.1 2003/09/21 20:01:53 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedSet.java,v 1.2 2003/09/24 08:23:56 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,11 +67,11 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.TestSortedSet;
 
 /**
- * Extension of {@link TestSet} for exercising the
- * {@link ObservedSet} implementation.
+ * Extension of {@link TestSortedSet} for exercising the
+ * {@link ObservedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/09/21 20:01:53 $
+ * @version $Revision: 1.2 $ $Date: 2003/09/24 08:23:56 $
  * 
  * @author Stephen Colebourne
  */
