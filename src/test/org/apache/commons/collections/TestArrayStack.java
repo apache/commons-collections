@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.6 2002/02/26 17:31:51 morgand Exp $
- * $Revision: 1.6 $
- * $Date: 2002/02/26 17:31:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestArrayStack.java,v 1.7 2002/06/21 03:33:28 mas Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/06/21 03:33:28 $
  *
  * ====================================================================
  *
@@ -66,7 +66,7 @@ import java.util.*;
 
 /**
  * @author Craig McClanahan
- * @version $Id: TestArrayStack.java,v 1.6 2002/02/26 17:31:51 morgand Exp $
+ * @version $Id: TestArrayStack.java,v 1.7 2002/06/21 03:33:28 mas Exp $
  */
 
 public class TestArrayStack extends TestArrayList {
@@ -76,7 +76,7 @@ public class TestArrayStack extends TestArrayList {
     }
 
     public static Test suite() {
-        return new TestSuite(TestArrayStack.class);
+        return BulkTest.makeSuite(TestArrayStack.class);
     }
 
     public static void main(String args[]) {

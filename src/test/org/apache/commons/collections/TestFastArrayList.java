@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.4 2002/02/26 17:31:51 morgand Exp $
- * $Revision: 1.4 $
- * $Date: 2002/02/26 17:31:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestFastArrayList.java,v 1.5 2002/06/21 03:33:28 mas Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/06/21 03:33:28 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.List;
 
 /**
  * @author <a href="mailto:jvanzyl@apache.org">Jason van Zyl</a>
- * @version $Id: TestFastArrayList.java,v 1.4 2002/02/26 17:31:51 morgand Exp $
+ * @version $Id: TestFastArrayList.java,v 1.5 2002/06/21 03:33:28 mas Exp $
  */
 public class TestFastArrayList extends TestArrayList
 {
@@ -80,7 +80,7 @@ public class TestFastArrayList extends TestArrayList
 
     public static Test suite()
     {
-        return new TestSuite(TestFastArrayList.class);
+        return BulkTest.makeSuite(TestFastArrayList.class);
     }
 
     public static void main(String args[])
