@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestAll.java,v 1.4 2003/12/01 22:34:54 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestAll.java,v 1.5 2003/12/02 00:44:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.TestSuite;
  * Entry point for tests.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/12/01 22:34:54 $
+ * @version $Revision: 1.5 $ $Date: 2003/12/02 00:44:13 $
  * 
  * @author Stephen Colebourne
  */
@@ -86,7 +86,8 @@ public class TestAll extends TestCase {
         suite.addTest(TestFixedSizeMap.suite());
         suite.addTest(TestFixedSizeSortedMap.suite());
         suite.addTest(TestFlat3Map.suite());
-        suite.addTest(TestHashedMap.suite());
+//        suite.addTest(TestHashedMap.suite());
+//        suite.addTest(TestIdentityMap.suite());
         suite.addTest(TestLazyMap.suite());
         suite.addTest(TestLazySortedMap.suite());
         suite.addTest(TestListOrderedMap.suite());
