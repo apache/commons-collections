@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.54 2003/12/13 23:28:43 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.55 2003/12/28 18:00:23 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -226,7 +226,7 @@
                protected="true"
                version="true"
                author="true"
-               overview="${source.src.java}/org/apache/commons/collections/package.html"
+               overview="${source.src.java}/org/apache/commons/collections/overview.html"
                splitindex="false"
                nodeprecated="true"
                nodeprecatedlist="true"

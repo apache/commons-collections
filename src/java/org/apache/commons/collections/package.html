@@ -1,144 +1,16 @@
-<!-- $Id: package.html,v 1.10 2003/12/13 23:51:28 scolebourne Exp $ -->
+<!-- $Id: package.html,v 1.11 2003/12/28 18:00:23 scolebourne Exp $ -->
 <body>
-  <p>
-     This package contains new interfaces to complement the Java Collections Framework,
-     and various utility classes.
-  <p>
-     The Apache Jakarta Commons Collections Framework extensions are implemented in
-     a number of packages.
-     <ul>
-     <li>The main package, described below, contains new collections
-     interfaces/implementations and new implementations of the standard interfaces.
-     <li>The <code>comparators</code> subpackage contains <code>Comparator</code> implementations.
-     <li>The <code>iterators</code> subpackage contains <code>Iterator</code> implementations.
-     <li>The <code>decorators</code> subpackage contains decorators that wrap other
-     implementations to add functionality such as validation or unmodifiability.
-     <li>The <code>primitives</code> subpackages contain implementations of collections
-     based around primitive types.
-     </ul>
-  </p>
-  <p>
-     See also the <tt>java.util</tt> package for the standard java collections.
-  </p>
-  <table border="1" cellspacing="0" cellpadding="3">
-  <tr bgcolor="#CCCCFF" class="TableHeadingColor">
-    <th>Category</th><th>Classes</th><th>Comments</th>
-  </tr>
-  <tr>
-    <td valign="top">List Implementations</td>
-    <td>
-      {@link org.apache.commons.collections.CursorableLinkedList}<br>
-      {@link org.apache.commons.collections.FastArrayList}<br>
-      {@link org.apache.commons.collections.NodeCachingLinkedList}<br>
-    </td>
-    <td valign="top">
-      Special-purpose implementations of the {@link
-      java.util.List} interface.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">Map Implementations</td>
-    <td>
-      {@link org.apache.commons.collections.BeanMap}<br>
-      {@link org.apache.commons.collections.DoubleOrderedMap}<br>
-      {@link org.apache.commons.collections.ExtendedProperties}<br>
-      {@link org.apache.commons.collections.FastHashMap}<br>
-      {@link org.apache.commons.collections.FastTreeMap}<br>
-      {@link org.apache.commons.collections.LRUMap}<br>
-      {@link org.apache.commons.collections.MultiHashMap}<br>
-      {@link org.apache.commons.collections.ReferenceMap}<br>
-      {@link org.apache.commons.collections.SequencedHashMap}<br>
-      {@link org.apache.commons.collections.StaticBucketMap}<br>
-    </td>
-    <td valign="top">
-      Special-purpose implementations of the {@link
-      java.util.Map} interface and associated classes.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">Bag Interface and Implementations</td>
-    <td>
-      {@link org.apache.commons.collections.Bag}<br>
-      {@link org.apache.commons.collections.DefaultMapBag}<br>
-      {@link org.apache.commons.collections.HashBag}<br>
-      {@link org.apache.commons.collections.SortedBag}<br>
-      {@link org.apache.commons.collections.TreeBag}<br>
-    </td>
-    <td valign="top">
-      New collections interface that keeps a count of its members.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">Buffer Interface and Implementations</td>
-    <td>
-      {@link org.apache.commons.collections.Buffer}<br>
-      {@link org.apache.commons.collections.ArrayStack}<br>
-      {@link org.apache.commons.collections.BinaryHeap}<br>
-      {@link org.apache.commons.collections.BoundedFifoBuffer}<br>
-      {@link org.apache.commons.collections.CircularFifoBuffer}<br>
-      {@link org.apache.commons.collections.UnboundedFifoBuffer}<br>
-    </td>
-    <td valign="top">
-      New collections interface that specifies a removal order for
-      the collection, used to implement queues and queue-like things.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">PriorityQueue Interface and Implementations</td>
-    <td>
-      {@link org.apache.commons.collections.PriorityQueue}<br>
-      {@link org.apache.commons.collections.BinaryHeap}<br>
-    </td>
-    <td valign="top">
-      New collections interface that defines a simple queue.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">Utilities</td>
-    <td valign="top">
-      {@link org.apache.commons.collections.BagUtils}<br>
-      {@link org.apache.commons.collections.BufferUtils}<br>
-      {@link org.apache.commons.collections.CollectionUtils}<br>
-      {@link org.apache.commons.collections.ComparatorUtils}<br>
-      {@link org.apache.commons.collections.IteratorUtils}<br>
-      {@link org.apache.commons.collections.ListUtils}<br>
-      {@link org.apache.commons.collections.MapUtils}<br>
-      {@link org.apache.commons.collections.PriorityQueueUtils}<br>
-      {@link org.apache.commons.collections.SetUtils}<br>
-    </td>
-    <td valign="top">
-      Manipulate collection objects, determine set theoretic
-      properties, ensure type-safety, provide decorators, etc.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">Functor Interfaces and Utilities</td>
-    <td valign="top">
-      {@link org.apache.commons.collections.Closure}<br>
-      {@link org.apache.commons.collections.ClosureUtils}<br>
-      {@link org.apache.commons.collections.Factory}<br>
-      {@link org.apache.commons.collections.FactoryUtils}<br>
-      {@link org.apache.commons.collections.Predicate}<br>
-      {@link org.apache.commons.collections.PredicateUtils}<br>
-      {@link org.apache.commons.collections.Transformer}<br>
-      {@link org.apache.commons.collections.TransformerUtils}<br>
-    </td>
-    <td valign="top">
-      Create views or functors on a collection. If your collection
-      represents <i>X</i>, these allow you to define and look at
-      <i>f(X)</i>. The utilities contain numerous implementations.
-    </td>
-  </tr>
-  <tr>
-    <td valign="top">Miscellaneous</td>
-    <td valign="top">
-      {@link org.apache.commons.collections.DefaultMapEntry}<br>
-      {@link org.apache.commons.collections.BoundedCollection}<br>
-      {@link org.apache.commons.collections.MultiKey}<br>
-    </td>
-    <td valign="top">
-      Other collection related classes.
-    </td>
-  </tr>
-  </table>
+<p>
+This package contains the interfaces and utilities shared across all the subpackages of this component.
+</p>
+<p>
+The following collection implementations are provided in the package:
+<ul>
+<li>ArrayStack - a non synchronized Stack that follows the same API as java util Stack
+<li>BeanMap - a map that wraps a JavaBean, representing its properties as map keys and values
+<li>ExtendedProperties - extends the Properties class to add extra functionality
+<li>MultiHashMap - an map that stores multiple values against each key
+</ul>
+<p>
+     
 </body>

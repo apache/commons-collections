@@ -1,0 +1,117 @@
+<!-- $Id: overview.html,v 1.1 2003/12/28 18:00:23 scolebourne Exp $ -->
+<body>
+  <p>
+     Commons-Collections contains implementations, enhancements and utilities
+     that complement the Java Collections Framework.
+  </p>
+  <p>
+     The Apache Jakarta Commons Collections Framework component adds a significant
+     amount of enhancements to the standard JDK collections. These enhancements
+     come in the form of new interfaces, new implementations and utility classes.
+  </p>
+  <p>
+     See also the <code>java.util</code> package for the standard Java collections.
+  </p>
+     
+  <h4>Main features</h4>
+  <p>
+     Commons-Collections defines a number of key interfaces:
+  </p>
+  <table border="1" cellspacing="0" cellpadding="3">
+  <tr bgcolor="#CCCCFF" class="TableHeadingColor">
+    <th>Interface</th><th>Description</th>
+  </tr>
+  <tr>
+    <td>
+      {@link org.apache.commons.collections.Bag}
+    </td>
+    <td valign="top">
+      A new <code>Collection</code> subinterface that stores each object together
+      with the number of occurances. Methods are provided to get the number of
+      occurances, and to add and remove a certain number of that object.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {@link org.apache.commons.collections.Buffer}
+    </td>
+    <td valign="top">
+      A new <code>Collection</code> subinterface that allows objects to be removed
+      in some well-defined order. Methods enable the next item to be peeked and removed.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {@link org.apache.commons.collections.BidiMap}
+    </td>
+    <td valign="top">
+      A new <code>Map</code> subinterface that allows lookup from key to value and
+      from value to key with equal ease.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {@link org.apache.commons.collections.OrderedMap}
+    </td>
+    <td valign="top">
+      A new <code>Map</code> subinterface that is used when a map has an order, but is
+      not sorted. Methods enable bidriectional iteration through the map.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {@link org.apache.commons.collections.MapIterator}
+    </td>
+    <td valign="top">
+      A new <code>Iterator</code> subinterface specially designed for maps. This iterator
+      avoids the need for entrySet iteration of a map, and is simpler to use.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {@link org.apache.commons.collections.ResettableIterator}
+    </td>
+    <td valign="top">
+      A new <code>Iterator</code> subinterface that allows the iteration to be reset back
+      to the start. Many iterators in this library have this functionality.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      {@link org.apache.commons.collections.Closure}<br />
+      {@link org.apache.commons.collections.Predicate}<br />
+      {@link org.apache.commons.collections.Transformer}<br />
+      {@link org.apache.commons.collections.Factory}<br />
+    </td>
+    <td valign="top">
+      A group of <i>functor</i> interfaces that provide plugin behaviour to various
+      collections and utilities.
+    </td>
+  </tr>
+  </table>
+  <p>
+     In addition to the interfaces, there are many implementations.
+     Consult each subpackage for full details of these.
+  </p>
+     
+  <h4>Version 3.0</h4>
+  <p>
+     Commons-Collections was originally created as a place to share collection
+     implementations created in various places around Jakarta. As a result, there
+     was no clear design or structure to the component. As from this 3.0 release,
+     that changes with a clear, consistent package structure being used
+  </p>
+  <p>
+     As a result of the new structure, several classes have moved packages.
+     When moving from a previous release to this one it is important to check all your code.
+     Some implementations that were moved were also optimised, and may contain API changes.
+  </p>
+  <p>
+     In addition to the new package structure, it was determined that collections was
+     getting too large.
+     As a result, two new code donations - primitive collections and event
+     notification collections - have been separated into their own projects within commons.
+     Primitives has already released a version 1.0, while Events resides in the sandbox at present.
+  </p>
+     
+</body>
