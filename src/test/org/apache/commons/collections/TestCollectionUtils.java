@@ -33,6 +33,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.bag.HashBag;
+import org.apache.commons.collections.buffer.BoundedFifoBuffer;
 import org.apache.commons.collections.collection.AbstractTestCollection;
 import org.apache.commons.collections.collection.PredicatedCollection;
 import org.apache.commons.collections.collection.SynchronizedCollection;
@@ -48,7 +50,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Phil Steitz
  * @author Steven Melzer
  * 
- * @version $Revision: 1.36 $ $Date: 2004/03/31 21:43:27 $
+ * @version $Revision: 1.37 $ $Date: 2004/04/01 22:43:12 $
  */
 public class TestCollectionUtils extends TestCase {
     
@@ -676,10 +678,33 @@ public class TestCollectionUtils extends TestCase {
         }
         
         {
+            // Primitive array, entry exists
+            int[] array = new int[2];
+            array[0] = 10;
+            array[1] = 20;
+            assertEquals(new Integer(10), CollectionUtils.get(array,0));
+            assertEquals(new Integer(20), CollectionUtils.get(array,1));
+        
+            // Object array, non-existent entry -- ArrayIndexOutOfBoundsException
+            try {
+                CollectionUtils.get(array,2);
+                fail("Expecting IndexOutOfBoundsException.");
+            } catch (IndexOutOfBoundsException ex) {
+                // expected
+            }
+        }
+        
+        {
             // Invalid object
             Object obj = new Object();
             try {
                 CollectionUtils.get(obj, 0);
+                fail("Expecting IllegalArgumentException.");
+            } catch (IllegalArgumentException e) {
+                // expected
+            }
+            try {
+                CollectionUtils.get(null, 0);
                 fail("Expecting IllegalArgumentException.");
             } catch (IllegalArgumentException e) {
                 // expected
@@ -714,6 +739,17 @@ public class TestCollectionUtils extends TestCase {
         stringArray[2] = "c";
         assertEquals(3, CollectionUtils.size(stringArray));
     }
+    public void testSize_PrimitiveArray() {
+        int[] intArray = new int[0];
+        assertEquals(0, CollectionUtils.size(intArray));
+        
+        double[] doubleArray = new double[3];
+        assertEquals(3, CollectionUtils.size(doubleArray));
+        doubleArray[0] = 0.0d;
+        doubleArray[1] = 1.0d;
+        doubleArray[2] = 2.5d;
+        assertEquals(3, CollectionUtils.size(doubleArray));
+    }
     public void testSize_Enumeration() {
         Vector list = new Vector();
         assertEquals(0, CollectionUtils.size(list.elements()));
@@ -737,10 +773,6 @@ public class TestCollectionUtils extends TestCase {
         } catch (IllegalArgumentException e) {}
         try {
             CollectionUtils.size("not a list");
-            fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException e) {}
-        try {
-            CollectionUtils.size(new int[0]);
             fail("Expecting IllegalArgumentException");
         } catch (IllegalArgumentException e) {}
     }

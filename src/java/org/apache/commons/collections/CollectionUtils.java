@@ -15,6 +15,7 @@
  */
 package org.apache.commons.collections;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
@@ -37,7 +38,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.59 $ $Date: 2004/04/01 20:12:00 $
+ * @version $Revision: 1.60 $ $Date: 2004/04/01 22:43:13 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -784,8 +785,8 @@ public class CollectionUtils {
      *      <code>index</code> in the map's <code>entrySet</code> iterator, 
      *      if there is such an entry.</li>
      * <li> List -- this method is equivalent to the list's get method.</li>
-     * <li> Object Array -- the <code>index</code>-th array entry is returned, 
-     *      if there is such an entry; otherwise an <code>ArrayIndexOutOfBoundsException</code>
+     * <li> Array -- the <code>index</code>-th array entry is returned, 
+     *      if there is such an entry; otherwise an <code>IndexOutOfBoundsException</code>
      *      is thrown.</li>
      * <li> Collection -- the value returned is the <code>index</code>-th object 
      *      returned by the collection's default iterator, if there is such an element.</li>
@@ -799,8 +800,8 @@ public class CollectionUtils {
      * @param object  the object to get a value from
      * @param index  the index to get
      * @return the object at the specified index
-     * @throws IndexOutOfBoundsException
-     * @throws IllegalArgumentException
+     * @throws IndexOutOfBoundsException if the index is invalid
+     * @throws IllegalArgumentException if the object type is invalid
      */
     public static Object get(Object object, int index) {
         if (index < 0) {
@@ -814,17 +815,6 @@ public class CollectionUtils {
             return ((List) object).get(index);
         } else if (object instanceof Object[]) {
             return ((Object[]) object)[index];
-        } else if (object instanceof Enumeration) {
-            Enumeration it = (Enumeration) object;
-            while (it.hasMoreElements()) {
-                index--;
-                if (index == -1) {
-                    return it.nextElement();
-                } else {
-                    it.nextElement();
-                }
-            }
-            throw new IndexOutOfBoundsException("Entry does not exist: " + index);
         } else if (object instanceof Iterator) {
             Iterator it = (Iterator) object;
             while (it.hasNext()) {
@@ -839,9 +829,25 @@ public class CollectionUtils {
         } else if (object instanceof Collection) {
             Iterator iterator = ((Collection) object).iterator();
             return get(iterator, index);
+        } else if (object instanceof Enumeration) {
+            Enumeration it = (Enumeration) object;
+            while (it.hasMoreElements()) {
+                index--;
+                if (index == -1) {
+                    return it.nextElement();
+                } else {
+                    it.nextElement();
+                }
+            }
+            throw new IndexOutOfBoundsException("Entry does not exist: " + index);
+        } else if (object == null) {
+            throw new IllegalArgumentException("Unsupported object type: null");
         } else {
-            throw new IllegalArgumentException("Unsupported object type: " +
-                (object == null ? "null" : object.getClass().getName()));
+            try {
+                return Array.get(object, index);
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
+            }
         }
     }
     
@@ -852,7 +858,7 @@ public class CollectionUtils {
      * <ul>
      * <li>Collection - the collection size
      * <li>Map - the map size
-     * <li>Object array - the array size
+     * <li>Array - the array size
      * <li>Iterator - the number of elements remaining in the iterator
      * <li>Enumeration - the number of elements remaining in the enumeration
      * </ul>
@@ -882,9 +888,14 @@ public class CollectionUtils {
                 total++;
                 it.nextElement();
             }
+        } else if (object == null) {
+            throw new IllegalArgumentException("Unsupported object type: null");
         } else {
-            throw new IllegalArgumentException("Unsupported object type: " +
-                (object == null ? "null" : object.getClass().getName()));
+            try {
+                total = Array.getLength(object);
+            } catch (IllegalArgumentException ex) {
+                throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
+            }
         }
         return total;
     }
