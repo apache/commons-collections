@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.10 2001/05/04 09:48:04 geirm Exp $ -->
+<!-- $Id: build.xml,v 1.11 2001/05/04 15:51:57 rwaldhoff Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -50,11 +50,11 @@
 
       <!-- The current version number of this component -->
       <property name="component.version"       value="0.02-dev"/>
-        
+
       <property name="test.entry" value="org.apache.commons.collections.TestAll"/>
-      <property name="test.failonerror" value="true" /> 
-      <property name="test.runner" value="junit.textui.TestRunner" /> 
-      
+      <property name="test.failonerror" value="true" />
+      <property name="test.runner" value="junit.textui.TestRunner" />
+
       <property name="workdir" value="${java.io.tmpdir}/buildtemp_${DSTAMP}${TSTAMP}"/>
       <property name="source" value="${basedir}"/>
       <property name="source.src" value="${basedir}/src"/>
@@ -69,8 +69,8 @@
       <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
 
       <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
-      <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->      
-      <available property="available-src-test" file="${source.src.test}"/> <!-- does this module have test src? -->      
+      <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->
+      <available property="available-src-test" file="${source.src.test}"/> <!-- does this module have test src? -->
 
    </target>
 
@@ -204,13 +204,13 @@
       	</classpath>
       </junit>
       -->
-      
+
       <java classname="${test.runner}" fork="yes" failonerror="${test.failonerror}">
-        <arg value="${test.entry}"/> 
+        <arg value="${test.entry}"/>
         <classpath>
-          <pathelement location="${dest.classes}" /> 
-          <pathelement path="${classpath}" /> 
-          <pathelement path="${java.class.path}" /> 
+          <pathelement location="${dest.classes}" />
+          <pathelement path="${classpath}" />
+          <pathelement path="${java.class.path}" />
         </classpath>
       </java>
    </target>
@@ -231,6 +231,7 @@
          <fileset dir="${workdir}"/>
       </jar>
       <delete dir="${workdir}"/>
+      <delete dir="${dest.classes}"/>
    </target>
 
    <!-- ######################################################### -->
