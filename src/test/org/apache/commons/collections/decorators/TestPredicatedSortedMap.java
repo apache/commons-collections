@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestAll.java,v 1.11 2003/09/13 16:12:47 psteitz Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/decorators/Attic/TestPredicatedSortedMap.java,v 1.1 2003/09/13 16:12:47 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -58,56 +58,94 @@
 package org.apache.commons.collections.decorators;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import java.util.Map;
+import java.util.Iterator;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+import org.apache.commons.collections.Predicate;
 
 /**
- * Entry point for all collections decorators tests.
- * 
+ * Extension of {@link TestPredicatedMap} for exercising the 
+ * {@link PredicatedSortedMap} implementation.
+ *
  * @since Commons Collections 3.0
- * @version $Revision: 1.11 $ $Date: 2003/09/13 16:12:47 $
+ * @version $Revision: 1.1 $ $Date: 2003/09/13 16:12:47 $
  * 
- * @author Stephen Colebourne
+ * @author Phil Steitz
  */
-public class TestAll extends TestCase {
+public class TestPredicatedSortedMap extends TestPredicatedMap{
     
-    public TestAll(String testName) {
+    public TestPredicatedSortedMap(String testName) {
         super(testName);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
     
     public static Test suite() {
-        TestSuite suite = new TestSuite();
+        return new TestSuite(TestPredicatedSortedMap.class);
+    }
+    
+    public static void main(String args[]) {
+        String[] testCaseName = { TestPredicatedSortedMap.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+    
+ //-------------------------------------------------------------------    
+    
+    protected SortedMap decorateMap(SortedMap map, Predicate keyPredicate, 
+        Predicate valuePredicate) {
+        return PredicatedSortedMap.decorate(map, keyPredicate, valuePredicate);
+    }
+    
+    public Map makeEmptyMap() {
+        return decorateMap(new TreeMap(), truePredicate, truePredicate);
+    }
+   
+    public Map makeTestMap() {
+        return decorateMap(new TreeMap(), testPredicate, testPredicate);
+    } 
+    
+    protected boolean useNullKey() {
+        return false;
+    }
+    
+//--------------------------------------------------------------------   
+    
+    public SortedMap makeTestSortedMap() {
+        return decorateMap(new TreeMap(), testPredicate, testPredicate);
+    }
+    
+    public void testSortOrder() {
+        SortedMap map = makeTestSortedMap();
+        map.put("A",  "a");
+        map.put("B", "b");
+        try {
+            map.put(null, "c");
+            fail("Null key should raise IllegalArgument");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        map.put("C", "c");
+        try {
+            map.put("D", null);
+            fail("Null value should raise IllegalArgument");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        assertEquals("First key should be A", map.firstKey(), "A");
+        assertEquals("Last key should be C", map.lastKey(), "C");
+        assertEquals("First key in tail map should be B", 
+            map.tailMap("B").firstKey(), "B");
+        assertEquals("Last key in head map should be B", 
+            map.headMap("C").lastKey(), "B");
+        assertEquals("Last key in submap should be B",
+           map.subMap("A","C").lastKey(), "B");
         
-        suite.addTest(TestFixedSizeList.suite());
-        suite.addTest(TestFixedSizeMap.suite());
-        suite.addTest(TestFixedSizeSortedMap.suite());
-        
-        suite.addTest(TestOrderedSet.suite());
-        
-        suite.addTest(TestTransformedBag.suite());
-        suite.addTest(TestTransformedBuffer.suite());
-        suite.addTest(TestTransformedCollection.suite());
-        suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTransformedMap.suite());
-        suite.addTest(TestTransformedSet.suite());
-        suite.addTest(TestTransformedSortedBag.suite());
-        suite.addTest(TestTransformedSortedMap.suite());
-        suite.addTest(TestTransformedSortedSet.suite());
-        suite.addTest(TestPredicatedBag.suite());
-        suite.addTest(TestPredicatedSortedBag.suite());
-        suite.addTest(TestPredicatedCollection.suite());
-        suite.addTest(TestPredicatedBuffer.suite());
-        suite.addTest(TestPredicatedList.suite());
-        suite.addTest(TestPredicatedSet.suite());
-        suite.addTest(TestPredicatedMap.suite());
-        suite.addTest(TestPredicatedSortedMap.suite());
-        
-        return suite;
+        Comparator c = map.comparator();
+        assertTrue("natural order, so comparator should be null", 
+            c == null);
     }
         
 }

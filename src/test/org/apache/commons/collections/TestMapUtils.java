@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.10 2003/08/31 17:52:13 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMapUtils.java,v 1.11 2003/09/13 16:12:47 psteitz Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,12 +68,14 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 
+import org.apache.commons.collections.decorators.PredicatedMap;
+
 import junit.framework.Test;
 
 /**
  * Tests for MapUtils.
  * 
- * @version $Revision: 1.10 $ $Date: 2003/08/31 17:52:13 $
+ * @version $Revision: 1.11 $ $Date: 2003/09/13 16:12:47 $
  * 
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
@@ -98,49 +100,17 @@ public class TestMapUtils extends BulkTest {
         };
     }
 
-
-    public void testPredicatedMapIllegalPut() {
+    public void testPredicatedMap() {
         Predicate p = getPredicate();
         Map map = MapUtils.predicatedMap(new HashMap(), p, p);
+        assertTrue("returned object should be a PredicatedMap",
+            map instanceof PredicatedMap);
         try {
-            map.put("Hi", new Integer(3));
-            fail("Illegal value should raise IllegalArgument");
+            map = MapUtils.predicatedMap(null, p, p);
+            fail("Expecting IllegalArgumentException for null map.");
         } catch (IllegalArgumentException e) {
             // expected
-        }
-
-        try {
-            map.put(new Integer(3), "Hi");
-            fail("Illegal key should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
-
-        assertTrue(!map.containsKey(new Integer(3)));
-        assertTrue(!map.containsValue(new Integer(3)));
-
-        Map map2 = new HashMap();
-        map2.put("A", "a");
-        map2.put("B", "b");
-        map2.put("C", "c");
-        map2.put("c", new Integer(3));
-
-        try {
-            map.putAll(map2);
-            fail("Illegal value should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
-
-        map.put("E", "e");
-        Iterator iterator = map.entrySet().iterator();
-        try {
-            Map.Entry entry = (Map.Entry)iterator.next();
-            entry.setValue(new Integer(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
+        }     
     }
 
     // Since a typed map is a predicated map, I copied the tests for predicated map
@@ -187,23 +157,6 @@ public class TestMapUtils extends BulkTest {
             // expected
         }
     
-    }
-
-    public BulkTest bulkTestPredicatedMap() {
-        return new TestMap("") {
-            public boolean useNullKey() {
-                return false;
-            }
-
-            public boolean useNullValue() {
-                return false;
-            }
-
-            public Map makeEmptyMap() {
-                Predicate p = getPredicate();
-                return MapUtils.predicatedMap(new HashMap(), p, p);
-            }
-        };
     }
     
     public BulkTest bulkTestTypedMap() {
