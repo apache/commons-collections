@@ -1,6 +1,6 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestAll.java,v 1.2 2002/06/04 16:50:09 rwaldhoff Exp $
- * $Revision: 1.2 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/primitives/Attic/TestFloatArrayList.java,v 1.1 2002/06/04 16:50:09 rwaldhoff Exp $
+ * $Revision: 1.1 $
  * $Date: 2002/06/04 16:50:09 $
  *
  * ====================================================================
@@ -64,31 +64,48 @@ package org.apache.commons.collections.primitives;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.commons.collections.TestList;
+import java.util.List;
 
 /**
- * @version $Revision: 1.2 $ $Date: 2002/06/04 16:50:09 $
+ * @version $Revision: 1.1 $ $Date: 2002/06/04 16:50:09 $
  * @author Rodney Waldhoff
  */
-public class TestAll extends TestCase {
-    public TestAll(String testName) {
+public class TestFloatArrayList extends /* TestList */ TestCase {
+
+    //------------------------------------------------------------ Conventional
+
+    public TestFloatArrayList(String testName) {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+    public static Test suite() {
+        TestSuite suite = new TestSuite(TestFloatArrayList.class);
+        return suite;
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestUnsignedByteArrayList.suite());
-        suite.addTest(TestShortArrayList.suite());
-        suite.addTest(TestUnsignedShortArrayList.suite());
-        suite.addTest(TestIntArrayList.suite());
-        suite.addTest(TestUnsignedIntArrayList.suite());
-        suite.addTest(TestLongArrayList.suite());
-        suite.addTest(TestFloatArrayList.suite());
-        return suite;
+    //--------------------------------------------------------------- Protected
+
+    protected FloatArrayList createList() {
+        return new FloatArrayList();
+    }
+
+    //------------------------------------------------------ TestList interface
+
+    public List makeEmptyList() {
+        return createList();
+    }
+
+    //------------------------------------------------------------------- Tests
+
+    public void testAddGet() {
+        FloatArrayList list = createList();
+        for(float i=0F;i<1000F;i++) {
+            list.addFloat(i);
+        }
+        for(int i=0;i<1000;i++) {
+            assertEquals((float)i,list.getFloat(i),Float.MAX_VALUE);
+        }
     }
 }
 
