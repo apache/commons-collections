@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <extend>../project.xml</extend>
+  <name>commons-collections</name>
+  <id>commons-collections</id>
+  <currentVersion>1.0-dev</currentVersion>
+  <inceptionYear>2002</inceptionYear>
+  <gumpRepositoryId>jakarta</gumpRepositoryId>
+  <shortDescription>Commons Collections</shortDescription>
+
+  <description>
+    Commons Collections
+  </description>
+  
+  <developers>
+    <developer>
+      <name>Morgan Delagrange</name>
+      <id></id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <name>Geir Magnusson</name>
+      <id></id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <name>Craig McClanahan</name>
+      <id></id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <name>Rodney Waldoff</name>
+      <id>rwaldof</id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
+      <name>David Weinrich</name>
+      <id></id>
+      <email></email>
+      <organization></organization>
+    </developer>
+  </developers>
+  
+  <dependencies>
+    
+    <dependency>
+      <id>junit</id>
+      <version>3.7</version>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    
+    <unitTest>
+      <excludes>
+        <exclude>**/TestAll.java</exclude>
+      </excludes>
+    </unitTest>
+
+  </build>
+
+</project>
