@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.6 2003/10/19 00:25:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.7 2003/10/31 01:23:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,6 +68,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+
+import org.apache.commons.collections.pairs.DefaultMapEntry;
 
 /**
  * Abstract test class for {@link java.util.Collection} methods and contracts.
@@ -146,7 +148,7 @@ import java.util.NoSuchElementException;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.6 $ $Date: 2003/10/19 00:25:11 $
+ * @version $Revision: 1.7 $ $Date: 2003/10/31 01:23:10 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -321,7 +323,8 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
             // no match found!
             if(!match) {
                 fail("Collection should not contain a value that the " +
-                     "confirmed collection does not have: " + o);
+                     "confirmed collection does not have: " + o +
+                     "\nTest: " + collection + "\nReal: " + confirmed);
             }
         }
         
@@ -329,8 +332,8 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
         for(int i = 0; i < confirmedSize; i++) {
             if(!matched[i]) {
                 // the collection didn't match all the confirmed values
-                fail("Collection should contain all values that are in the " +
-                     "confirmed collection");
+                fail("Collection should contain all values that are in the confirmed collection" +
+                     "\nTest: " + collection + "\nReal: " + confirmed);
             }
         }
     }
@@ -844,6 +847,11 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
         Iterator iter = collection.iterator();
         while (iter.hasNext()) {
             Object o = iter.next();
+            // TreeMap reuses the Map Entry, so the verify below fails
+            // Clone it here if necessary
+            if (o instanceof Map.Entry) {
+                o = new DefaultMapEntry((Map.Entry) o);
+            }
             iter.remove();
 
             // if the elements aren't distinguishable, we can just remove a
