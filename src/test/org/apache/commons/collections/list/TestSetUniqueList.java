@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.apache.commons.collections.list;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -29,9 +30,10 @@ import junit.textui.TestRunner;
  * JUnit tests.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2004/06/02 22:07:53 $
+ * @version $Revision: 1.6 $ $Date$
  * 
  * @author Matthew Hawthorne
+ * @author Tom Dunham
  */
 public class TestSetUniqueList extends AbstractTestList {
 
@@ -275,6 +277,135 @@ public class TestSetUniqueList extends AbstractTestList {
         assertEquals("Duplicate element was added", 2, lset.size());
     }
 
+    public void testUniqueListReInsert() {
+        List l = SetUniqueList.decorate(new LinkedList());
+        l.add(new Object());
+        l.add(new Object());
+        
+        Object a = l.get(0);
+        
+        // duplicate is removed
+        l.set(0, l.get(1)); 
+        assertEquals(1, l.size());
+        
+        // old object is added back in 
+        l.add(1, a); 
+        assertEquals(2, l.size());
+    }
+    
+    public void testUniqueListDoubleInsert() {
+        List l = SetUniqueList.decorate(new LinkedList());
+        l.add(new Object());
+        l.add(new Object());
+        
+        // duplicate is removed
+        l.set(0, l.get(1)); 
+        assertEquals(1, l.size());
+        
+        // duplicate should be removed again
+        l.add(1, l.get(0));
+        assertEquals(1, l.size());
+    }
+
+    public void testSetDownwardsInList() {
+        /*
+         * Checks the following semantics
+         * [a,b]
+         * set(0,b): [b]->a
+         * So UniqList contains [b] and a is returned
+         */
+        ArrayList l = new ArrayList();
+        HashSet s = new HashSet();
+        final SetUniqueList ul = new SetUniqueList(l, s);
+
+        Object a = new Object();
+        Object b = new Object();
+        ul.add(a);
+        ul.add(b);
+        assertEquals(a, l.get(0));
+        assertEquals(b, l.get(1));
+        assertTrue(s.contains(a)); 
+        assertTrue(s.contains(b));
+        
+        assertEquals(a, ul.set(0, b));
+        assertEquals(1, s.size());
+        assertEquals(1, l.size());
+        assertEquals(b, l.get(0));
+        assertTrue(s.contains(b));
+        assertFalse(s.contains(a));
+    }
+
+    public void testSetInBiggerList() {
+        /*
+         * Checks the following semantics
+         * [a,b,c]
+         * set(0,b): [b,c]->a
+         * So UniqList contains [b,c] and a is returned
+         */
+        ArrayList l = new ArrayList();
+        HashSet s = new HashSet();
+        final SetUniqueList ul = new SetUniqueList(l, s);
+
+        Object a = new Object();
+        Object b = new Object();
+        Object c = new Object();
+
+        ul.add(a);
+        ul.add(b);
+        ul.add(c);
+        assertEquals(a, l.get(0));
+        assertEquals(b, l.get(1));
+        assertEquals(c, l.get(2));
+        assertTrue(s.contains(a)); 
+        assertTrue(s.contains(b));
+        assertTrue(s.contains(c));
+        
+        assertEquals(a, ul.set(0, b));
+        assertEquals(2, s.size());
+        assertEquals(2, l.size());
+        assertEquals(b, l.get(0));
+        assertEquals(c, l.get(1));
+        assertFalse(s.contains(a));
+        assertTrue(s.contains(b));
+        assertTrue(s.contains(c));
+    }    
+
+    public void testSetUpwardsInList() {
+        /*
+         * Checks the following semantics
+         * [a,b,c]
+         * set(1,a): [a,c]->b
+         * So UniqList contains [a,c] and b is returned
+         */
+        ArrayList l = new ArrayList();
+        HashSet s = new HashSet();
+        final SetUniqueList ul = new SetUniqueList(l, s);
+
+        Object a = new String("A");
+        Object b = new String("B");
+        Object c = new String("C");
+
+        ul.add(a);
+        ul.add(b);
+        ul.add(c);
+        assertEquals(a, l.get(0));
+        assertEquals(b, l.get(1));
+        assertEquals(c, l.get(2));
+        assertTrue(s.contains(a)); 
+        assertTrue(s.contains(b));
+        assertTrue(s.contains(c));
+        
+        assertEquals(b, ul.set(1, a));
+        assertEquals(2, s.size());
+        assertEquals(2, l.size());
+        assertEquals(a, l.get(0));
+        assertEquals(c, l.get(1));
+        assertTrue(s.contains(a));
+        assertFalse(s.contains(b));
+        assertTrue(s.contains(c));
+    }
+
+    //-----------------------------------------------------------------------
     public String getCompatibilityVersion() {
         return "3.1";
     }
