@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/LazyMap.java,v 1.1 2003/05/09 16:42:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/LazyMap.java,v 1.2 2003/05/17 14:11:10 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -61,6 +61,7 @@ import java.util.Map;
 
 import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.TransformerUtils;
 
 /**
  * <code>LazyMap</code> decorates another <code>Map</code>
@@ -86,7 +87,7 @@ import org.apache.commons.collections.Transformer;
  * instance is mapped to the "NOW" key in the map.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/09 16:42:35 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/17 14:11:10 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -94,7 +95,7 @@ import org.apache.commons.collections.Transformer;
 public class LazyMap extends AbstractMapDecorator implements Map {
 
     /** The factory to use to construct elements */
-    protected final Object factory;
+    protected final Transformer factory;
 
     /**
      * Factory method to create a lazily instantiated map.
@@ -130,7 +131,7 @@ public class LazyMap extends AbstractMapDecorator implements Map {
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }
-        this.factory = factory;
+        this.factory = TransformerUtils.asTransformer(factory);
     }
 
     /**
@@ -152,15 +153,9 @@ public class LazyMap extends AbstractMapDecorator implements Map {
     public Object get(Object key) {
         // create value for key if key is not currently in the map
         if (map.containsKey(key) == false) {
-            if (factory instanceof Factory) {
-                Object value = ((Factory) factory).create();
-                map.put(key, value);
-                return value;
-            } else {
-                Object value = ((Transformer) factory).transform(key);
-                map.put(key, value);
-                return value;
-            }
+            Object value = factory.transform(key);
+            map.put(key, value);
+            return value;
         }
         return map.get(key);
     }

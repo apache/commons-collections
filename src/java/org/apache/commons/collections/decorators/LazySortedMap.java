@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/LazySortedMap.java,v 1.1 2003/05/09 16:42:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/decorators/Attic/LazySortedMap.java,v 1.2 2003/05/17 14:11:09 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -87,7 +87,7 @@ import org.apache.commons.collections.Transformer;
  * instance is mapped to the "NOW" key in the map.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/05/09 16:42:35 $
+ * @version $Revision: 1.2 $ $Date: 2003/05/17 14:11:09 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -162,29 +162,17 @@ public class LazySortedMap extends LazyMap implements SortedMap {
 
     public SortedMap subMap(Object fromKey, Object toKey) {
         SortedMap map = getSortedMap().subMap(fromKey, toKey);
-        if (factory instanceof Factory) {
-            return new LazySortedMap(map, (Factory) factory);
-        } else {
-            return new LazySortedMap(map, (Transformer) factory);
-        }
+        return new LazySortedMap(map, factory);
     }
 
     public SortedMap headMap(Object toKey) {
         SortedMap map = getSortedMap().headMap(toKey);
-        if (factory instanceof Factory) {
-            return new LazySortedMap(map, (Factory) factory);
-        } else {
-            return new LazySortedMap(map, (Transformer) factory);
-        }
+        return new LazySortedMap(map, factory);
     }
 
     public SortedMap tailMap(Object fromKey) {
         SortedMap map = getSortedMap().tailMap(fromKey);
-        if (factory instanceof Factory) {
-            return new LazySortedMap(map, (Factory) factory);
-        } else {
-            return new LazySortedMap(map, (Transformer) factory);
-        }
+        return new LazySortedMap(map, factory);
     }
 
 }
