@@ -1,2 +1,10 @@
 build.properties
 dist
+bin
+build
+release
+target
+.classpath
+.project
+*.log
+*.bat
