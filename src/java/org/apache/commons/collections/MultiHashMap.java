@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.5 2002/10/12 22:04:59 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/10/12 22:04:59 $
  *
  * ====================================================================
  *
@@ -62,13 +62,20 @@ package org.apache.commons.collections;
 
 import java.util.*;
 import java.io.*;
-
-/** see MultiMap for details of an important semantic difference
- * between this and a typical HashMap
+/** 
+ * <code>MultiHashMap</code> is the default implementation of the 
+ * {@link MultiMap} interface. A <code>MultiMap</code> is a Map
+ * with slightly different semantics.
+ * Instead of returning an Object, it returns a Collection.
+ * So for example, you can put( key, new Integer(1) ); 
+ * and then a Object get( key ); will return you a Collection 
+ * instead of an Integer.
  *
  * @since 2.0
  * @author Christopher Berry
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author Steve Downey
+ * @author Stephen Colebourne
  */
 public class MultiHashMap extends HashMap implements MultiMap
 {
@@ -186,8 +193,8 @@ public class MultiHashMap extends HashMap implements MultiMap
             ArrayList list = (ArrayList)(keyValuePair.getValue());
             
             Object[] values = list.toArray();
-            for( int ii=0; ii < values.length; ii++ ) {
-                boolean successfulAdd = returnList.add( values[ii] );
+            for ( int ii=0; ii < values.length; ii++ ) {
+                returnList.add( values[ii] );
             }
         }
         return returnList;
