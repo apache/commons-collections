@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.4 2003/12/05 20:23:58 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/bidimap/AbstractDualBidiMap.java,v 1.5 2003/12/14 12:59:38 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -76,7 +76,7 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * <code>createMap</code> method.
  * 
  * @since Commons Collections 3.0
- * @version $Id: AbstractDualBidiMap.java,v 1.4 2003/12/05 20:23:58 scolebourne Exp $
+ * @version $Id: AbstractDualBidiMap.java,v 1.5 2003/12/14 12:59:38 scolebourne Exp $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -616,7 +616,7 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         }
         
         public String toString() {
-            if (last == null) {
+            if (last != null) {
                 return "MapIterator[" + getKey() + "=" + getValue() + "]";
             } else {
                 return "MapIterator[]";
