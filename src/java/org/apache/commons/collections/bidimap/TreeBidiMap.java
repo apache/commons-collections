@@ -105,7 +105,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision: 1.10 $ $Date: 2004/01/29 21:13:05 $
+ * @version $Revision: 1.11 $ $Date: 2004/01/31 00:28:47 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -302,7 +302,7 @@ public class TreeBidiMap implements OrderedBidiMap {
     }
 
     /**
-     * Removes the mapping for this value from this map if present
+     * Removes the mapping for this value from this map if present.
      * <p>
      * The value must implement <code>Comparable</code>.
      *
