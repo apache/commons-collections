@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestIterator.java,v 1.3 2003/02/19 20:33:10 scolebourne Exp $
- * $Revision: 1.3 $
- * $Date: 2003/02/19 20:33:10 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/Attic/TestIterator.java,v 1.4 2003/08/31 14:31:12 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2003/08/31 14:31:12 $
  *
  * ====================================================================
  *
@@ -65,7 +65,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.TestObject;
 /**
- * Base class for tetsing Iterator interface
+ * Base class for testing Iterator interface
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne

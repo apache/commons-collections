@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterListIterator.java,v 1.4 2003/02/19 20:33:10 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/02/19 20:33:10 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestFilterListIterator.java,v 1.5 2003/08/31 14:31:12 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/08/31 14:31:12 $
  *
  * ====================================================================
  *
@@ -72,7 +72,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.Predicate;
 
 /**
- * @version $Revision: 1.4 $ $Date: 2003/02/19 20:33:10 $
+ * @version $Revision: 1.5 $ $Date: 2003/08/31 14:31:12 $
  * @author Rodney Waldhoff
  */
 public class TestFilterListIterator extends TestCase {
@@ -388,7 +388,7 @@ public class TestFilterListIterator extends TestCase {
         // walk all the way back
         walkBackward(expected,testing);
 
-        // forward,back,foward
+        // forward,back,forward
         while(expected.hasNext()) {
             assertEquals(expected.nextIndex(),testing.nextIndex());
             assertEquals(expected.previousIndex(),testing.previousIndex());
@@ -421,7 +421,7 @@ public class TestFilterListIterator extends TestCase {
                 assertTrue(testing.hasPrevious());
                 assertEquals(expected.previous(),testing.previous());
             }
-            // walk foward i/2
+            // walk forward i/2
             for(int j=0;j<i/2;j++) {
                 assertEquals(expected.nextIndex(),testing.nextIndex());
                 assertEquals(expected.previousIndex(),testing.previousIndex());
@@ -443,7 +443,7 @@ public class TestFilterListIterator extends TestCase {
         StringBuffer walkdescr = new StringBuffer(500);
         for(int i=0;i<500;i++) {
             if(random.nextBoolean()) {
-                // step foward
+                // step forward
                 walkdescr.append("+");
                 if(expected.hasNext()) {
                     assertEquals(walkdescr.toString(),expected.next(),testing.next());
