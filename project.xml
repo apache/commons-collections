@@ -57,6 +57,12 @@
       <organization></organization>
     </developer>
     <developer>
+      <name>Arun M. Thomas</name>
+      <id>amamment</id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    <developer>
       <name>Rodney Waldhoff</name>
       <id>rwaldhoff</id>
       <email></email>
@@ -71,12 +77,6 @@
     <developer>
       <name>Henri Yandell</name>
       <id>bayard</id>
-      <email></email>
-      <organization></organization>
-    </developer>
-    <developer>
-      <name>Arun M. Thomas</name>
-      <id>amamment</id>
       <email></email>
       <organization></organization>
     </developer>
@@ -214,9 +214,6 @@
     </contributor>
     <contributor>
       <name>Leo Sutic</name>
-    </contributor>
-    <contributor>
-      <name>Arun Mammen Thomas</name>
     </contributor>
     <contributor>
       <name>Neil O'Toole</name>
