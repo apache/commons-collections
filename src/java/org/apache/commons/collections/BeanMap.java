@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.7 2002/03/13 05:24:58 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/03/13 05:24:58 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BeanMap.java,v 1.8 2002/03/21 17:11:01 morgand Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/03/21 17:11:01 $
  *
  * ====================================================================
  *
@@ -339,10 +339,22 @@ public class BeanMap extends AbstractMap implements Cloneable {
     }
 
     
+    /**
+     * Get the keys for this BeanMap.
+     * 
+     * @return BeanMap keys.  Modifications to this Set (i.e. removes)
+     *         <i>will</i> be reflected in the BeanMap.
+     */
     public Set keySet() {
         return readMethods.keySet();
     }
 
+    /**
+     * Get the mappings for this BeanMap
+     * 
+     * @return BeanMap mappings.  The Set returned by this method
+     *         is not modifiable.
+     */
     public Set entrySet() {
         return Collections.unmodifiableSet(new AbstractSet() {
             public Iterator iterator() {
@@ -373,6 +385,12 @@ public class BeanMap extends AbstractMap implements Cloneable {
         });
     }
 
+    /**
+     * Returns the values for the BeanMap.
+     * 
+     * @return values for the BeanMap.  Modifications to this collection
+     *         do not alter the underlying BeanMap.
+     */
     public Collection values() {
         ArrayList answer = new ArrayList( readMethods.size() );
         for ( Iterator iter = valueIterator(); iter.hasNext(); ) {
