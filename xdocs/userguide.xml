@@ -118,11 +118,11 @@ These represent collections that have a well defined removal order.
 </p>
 <source>
 Buffer buffer = new UnboundedFifoBuffer();
-bidi.add("ONE");
-bidi.add("TWO");
-bidi.add("THREE");
-bidi.remove();  // removes and returns the next in order, "ONE" as this is a FIFO
-bidi.remove();  // removes and returns the next in order, "TWO" as this is a FIFO
+buffer.add("ONE");
+buffer.add("TWO");
+buffer.add("THREE");
+buffer.remove();  // removes and returns the next in order, "ONE" as this is a FIFO
+buffer.remove();  // removes and returns the next in order, "TWO" as this is a FIFO
 </source>
 <p>
 Implementations are provided for FIFO (queue), LIFO (stack) and Priority (removal in comparator order).
