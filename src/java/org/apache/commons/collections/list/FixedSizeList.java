@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/FixedSizeList.java,v 1.3 2003/12/25 00:46:02 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/list/FixedSizeList.java,v 1.4 2003/12/25 01:25:06 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,8 +63,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.commons.collections.BoundedCollection;
-import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
  * Decorates another <code>List</code> to fix the size preventing add/remove.
@@ -73,7 +73,7 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  * The set method is allowed (as it doesn't change the list size).
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/12/25 00:46:02 $
+ * @version $Revision: 1.4 $ $Date: 2003/12/25 01:25:06 $
  * 
  * @author Stephen Colebourne
  * @author Paul Jack
@@ -131,7 +131,7 @@ public class FixedSizeList extends AbstractListDecorator implements BoundedColle
     }
 
     public Iterator iterator() {
-        return IteratorUtils.unmodifiableIterator(getCollection().iterator());
+        return UnmodifiableIterator.decorate(getCollection().iterator());
     }
 
     public int lastIndexOf(Object object) {
