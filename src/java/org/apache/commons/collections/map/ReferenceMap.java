@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.17 2003/12/03 15:50:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/ReferenceMap.java,v 1.1 2003/12/03 15:50:12 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -55,7 +55,7 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.map;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -117,9 +117,8 @@ import org.apache.commons.collections.pairs.DefaultMapEntry;
  *
  * @see java.lang.ref.Reference
  * 
- * @deprecated Moved to map subpackage. Due to be removed in v4.0.
- * @since Commons Collections 2.1
- * @version $Revision: 1.17 $ $Date: 2003/12/03 15:50:12 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/12/03 15:50:12 $
  * 
  * @author Paul Jack
  */
@@ -128,25 +127,25 @@ public class ReferenceMap extends AbstractMap {
     /**
      *  For serialization.
      */
-    final private static long serialVersionUID = -3370601314380922368L;
+    private static final long serialVersionUID = -3370601314380922368L;
 
 
     /**
      *  Constant indicating that hard references should be used.
      */
-    final public static int HARD = 0;
+    public static final int HARD = 0;
 
 
     /**
      *  Constant indicating that soft references should be used.
      */
-    final public static int SOFT = 1;
+    public static final int SOFT = 1;
 
 
     /**
      *  Constant indicating that weak references should be used.
      */
-    final public static int WEAK = 2;
+    public static final int WEAK = 2;
 
 
     // --- serialized instance variables:
