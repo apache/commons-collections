@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.2 2003/09/26 23:28:43 matth Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestBidiMap.java,v 1.3 2003/09/29 23:24:18 matth Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import junit.framework.TestCase;
  * JUnit tests.
  * 
  * @author Matthew Hawthorne
- * @version $Id: TestBidiMap.java,v 1.2 2003/09/26 23:28:43 matth Exp $
+ * @version $Id: TestBidiMap.java,v 1.3 2003/09/29 23:24:18 matth Exp $
  * @see org.apache.commons.collections.BidiMap
  */
 public abstract class TestBidiMap extends TestCase {
@@ -155,8 +155,35 @@ public abstract class TestBidiMap extends TestCase {
         assertTrue(
             "Key/value pair was not removed on duplicate value.",
             !map.containsKey(key1));
-            
+
         assertEquals("Key/value mismatch", key2, map.getKey(value));
+    }
+
+    public void testModifyEntrySet() {
+        modifyEntrySet(createBidiMapWithData());
+        modifyEntrySet(createBidiMapWithData().inverseBidiMap());
+    }
+
+    private final void modifyEntrySet(BidiMap map) {
+        // Gets first entry
+        final Map.Entry entry = (Map.Entry)map.entrySet().iterator().next();
+
+        // Gets key and value
+        final Object key = entry.getKey();
+        final Object oldValue = entry.getValue();
+
+        // Sets new value
+        final Object newValue = "newValue";
+        entry.setValue(newValue);
+
+        assertEquals(
+            "Modifying entrySet did not affect underlying Map.",
+            newValue,
+            map.get(key));
+
+        assertNull(
+            "Modifying entrySet did not affect inverse Map.",
+            map.getKey(oldValue));
     }
 
     // ----------------------------------------------------------------

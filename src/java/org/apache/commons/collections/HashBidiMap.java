@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/HashBidiMap.java,v 1.2 2003/09/26 23:28:43 matth Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/HashBidiMap.java,v 1.3 2003/09/29 23:24:18 matth Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import java.util.Set;
  * Default implementation of <code>BidiMap</code>.
  * 
  * @since Commons Collections 3.0
- * @version $Id: HashBidiMap.java,v 1.2 2003/09/26 23:28:43 matth Exp $
+ * @version $Id: HashBidiMap.java,v 1.3 2003/09/29 23:24:18 matth Exp $
  * 
  * @author Matthew Hawthorne
  */
@@ -120,7 +120,7 @@ public class HashBidiMap extends AbstractMap implements BidiMap, Serializable {
         if (oldValue != null) {
             maps[0].remove(oldValue);
         }
-        
+
         final Object obj = maps[0].put(key, value);
         return obj;
     }
@@ -158,7 +158,31 @@ public class HashBidiMap extends AbstractMap implements BidiMap, Serializable {
 
                     public Object next() {
                         currentEntry = (Map.Entry)it.next();
-                        return currentEntry;
+
+                        // returns anonymous Map.Entry
+                        return new Map.Entry() {
+
+                            public Object getKey() {
+                                return currentEntry.getKey();
+                            }
+
+                            public Object getValue() {
+                                return currentEntry.getValue();
+                            }
+
+                            public Object setValue(Object value) {
+                                final Object oldValue =
+                                    currentEntry.setValue(value);
+
+                                // Gets old key and pairs with new value
+                                final Object inverseKey =
+                                    HashBidiMap.this.maps[1].remove(oldValue);
+                                HashBidiMap.this.maps[1].put(value, inverseKey);
+
+                                return oldValue;
+                            }
+
+                        }; // anonymous Map.Entry
                     };
                 }; // anonymous Iterator
             }
@@ -219,9 +243,37 @@ public class HashBidiMap extends AbstractMap implements BidiMap, Serializable {
 
                         public Object next() {
                             final Map.Entry entry = (Map.Entry)delegate.next();
-                            return new DefaultMapEntry(
-                                entry.getValue(),
-                                entry.getKey());
+
+                            // Returns anonymous Map.Entry
+                            return new Map.Entry() {
+
+                                public Object getKey() {
+                                    return entry.getValue();
+                                }
+
+                                public Object getValue() {
+                                    return entry.getKey();
+                                }
+
+                                public Object setValue(Object value) {
+                                    // This is confusing.  Basically, we are 
+                                    // setting a new key for existing value
+                                    
+                                    // Gets value for current key
+                                    final Object oldValue =
+                                        HashBidiMap.this.maps[0].remove(getValue());
+                                    
+                                    // Puts new key and value into map    
+                                    HashBidiMap.this.maps[0].put(
+                                        value,
+                                        oldValue);
+                                        
+                                    // Returns old value
+                                    return oldValue;
+                                }
+
+                            }; // anonymous Map.Entry
+
                         }
 
                         public void remove() {
