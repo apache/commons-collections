@@ -23,6 +23,13 @@
             <ant:include name="org/apache/commons/collections/primitives/**"/>
          </ant:fileset>
       </ant:jar>
+
+      <ant:jar jarfile="${maven.build.dir}/${pom.artifactId}-testframework-${pom.currentVersion}.jar" manifest="${workdir}/META-INF/MANIFEST.MF">
+         <ant:fileset dir="${maven.build.dir}/test-classes">
+            <ant:include name="**/AbstractTest*.class"/>
+            <ant:include name="**/BulkTest*.class"/>
+         </ant:fileset>
+      </ant:jar>
       
       <delete dir="${workdir}"/>
   </postGoal>
