@@ -10,7 +10,6 @@ bin
 junit*.properties
 *.bat
 jcoverage.ser
-target-site
-target-dist
+target-*
 build2.xml
 release
