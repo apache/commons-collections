@@ -115,7 +115,7 @@ public class ComparatorUtils {
      *  @return  a version of that comparator that allows nulls
      *  @see NullComparator
      */
-    public static Comparator nullFirst(Comparator comparator) {
+    public static Comparator nullLow(Comparator comparator) {
         if (comparator == null) comparator = NATURAL;
         return new NullComparator(comparator, false);
     }
@@ -132,7 +132,7 @@ public class ComparatorUtils {
      *  @return  a version of that comparator that allows nulls
      *  @see NullComparator
      */
-    public static Comparator nullLast(Comparator comparator) {
+    public static Comparator nullHigh(Comparator comparator) {
         if (comparator == null) comparator = NATURAL;
         return new NullComparator(comparator, true);
     }
