@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.14 2003/04/04 20:40:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.15 2003/04/04 22:22:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,13 +69,14 @@ import java.util.ListIterator;
  * instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.14 $ $Date: 2003/04/04 20:40:28 $
+ * @version $Revision: 1.15 $ $Date: 2003/04/04 22:22:29 $
  * 
  * @author  <a href="mailto:fede@apache.org">Federico Barbieri</a>
  * @author  <a href="mailto:donaldp@apache.org">Peter Donald</a>
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Neil O'Toole
+ * @author Matthew Hawthorne
  */
 public class ListUtils {
 
@@ -596,6 +597,19 @@ public class ListUtils {
         return new PredicatedList(list, predicate);
     }
 
+    /**
+     * Returns a typed list backed by the given list.
+     * <p>
+     * Only objects of the specified type can be added to the list.
+     * 
+     * @param list  the list to limit to a specific type, must not be null
+     * @param type  the type of objects which may be added to the list
+     * @return a typed list backed by the specified list
+     */
+    public static List typedList(List list, Class type) {
+        return predicatedList(list, new CollectionUtils.InstanceofPredicate(type));
+    }
+    
     /**
      * Returns a "lazy" list whose elements will be created on demand.<P>
      * <p>

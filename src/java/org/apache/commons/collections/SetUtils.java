@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.10 2003/04/04 20:40:28 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.11 2003/04/04 22:22:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,7 +57,6 @@
  */
 package org.apache.commons.collections;
 
-import java.util.Set;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -69,12 +68,13 @@ import java.util.TreeSet;
  * Provides static utility methods and decorators for {@link Set} 
  * and {@link SortedSet} instances.
  *
- * @version $Revision: 1.10 $ $Date: 2003/04/04 20:40:28 $
+ * @version $Revision: 1.11 $ $Date: 2003/04/04 22:22:29 $
  * @since Commons Collection 2.1
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Neil O'Toole
+ * @author Matthew Hawthorne
  */
 public class SetUtils {
 
@@ -277,6 +277,20 @@ public class SetUtils {
     }
 
     /**
+     * Returns a typed set backed by the given set.
+     * <p>
+     * Only objects of the specified type can be added to the set.
+     * 
+     * @param set  the set to limit to a specific type, must not be null
+     * @param type  the type of objects which may be added to the set
+     * @return a typed set backed by the specified set
+     */
+    public static Set typedSet(Set set, Class type) {
+        return predicatedSet(set, new CollectionUtils.InstanceofPredicate(type));
+    }
+    
+    //-----------------------------------------------------------------------
+    /**
      * Returns a synchronized sorted set backed by the given sorted set.
      * <p>
      * You must manually synchronize on the returned buffer's iterator to 
@@ -331,4 +345,17 @@ public class SetUtils {
         return new PredicatedSortedSet(set, predicate);
     }
 
+    /**
+     * Returns a typed sorted set backed by the given set.
+     * <p>
+     * Only objects of the specified type can be added to the set.
+     * 
+     * @param set  the set to limit to a specific type, must not be null
+     * @param type  the type of objects which may be added to the set
+     * @return a typed set backed by the specified set
+     */
+    public static SortedSet typedSortedSet(SortedSet set, Class type) {
+        return predicatedSortedSet(set, new CollectionUtils.InstanceofPredicate(type));
+    }
+    
 }

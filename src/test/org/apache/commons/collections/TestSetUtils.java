@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.4 2003/04/04 20:42:03 scolebourne Exp $
- * $Revision: 1.4 $
- * $Date: 2003/04/04 20:42:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSetUtils.java,v 1.5 2003/04/04 22:22:28 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2003/04/04 22:22:28 $
  *
  * ====================================================================
  *
@@ -73,6 +73,7 @@ import junit.framework.Test;
  * 
  * @author Stephen Colebourne
  * @author Neil O'Toole
+ * @author Matthew Hawthorne
  */
 public class TestSetUtils extends BulkTest {
 
@@ -114,6 +115,32 @@ public class TestSetUtils extends BulkTest {
         };
     }
 
+    public BulkTest bulkTestTypedSet() {
+        return new TestTypedCollection("") {
+
+            public Collection typedCollection() {
+                Class type = getType();
+                return SetUtils.typedSet(new HashSet(), type);
+            }
+
+            public BulkTest bulkTestAll() {
+                return new TestSet("") {
+                    public Set makeEmptySet() {
+                        return (Set)typedCollection();
+                    }
+
+                    public Object[] getFullElements() {
+                        return getFullNonNullStringElements();
+                    }
+
+                    public Object[] getOtherElements() {
+                        return getOtherNonNullStringElements();
+                    }
+                };
+            }
+        };
+    }
+     
     public void testEquals() {
         Collection data = Arrays.asList( new String[] { "a", "b", "c" });
         

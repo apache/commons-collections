@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.6 2003/04/04 20:42:02 scolebourne Exp $
- * $Revision: 1.6 $
- * $Date: 2003/04/04 20:42:02 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestListUtils.java,v 1.7 2003/04/04 22:22:28 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2003/04/04 22:22:28 $
  *
  * ====================================================================
  *
@@ -72,6 +72,7 @@ import junit.framework.Test;
  * 
  * @author Stephen Colebourne
  * @author Neil O'Toole
+ * @author Matthew Hawthorne
  */
 public class TestListUtils extends BulkTest {
 
@@ -98,6 +99,33 @@ public class TestListUtils extends BulkTest {
                 return new TestList("") {
                     public List makeEmptyList() {
                         return (List)predicatedCollection();
+                    }
+
+                    public Object[] getFullElements() {
+                        return getFullNonNullStringElements();
+                    }
+
+                    public Object[] getOtherElements() {
+                        return getOtherNonNullStringElements();
+                    }
+
+                };
+            }
+        };
+    }
+
+    public BulkTest bulkTestTypedList() {
+        return new TestTypedCollection("") {
+
+            public Collection typedCollection() {
+                Class type = getType();
+                return ListUtils.typedList(new ArrayList(), type);
+            }
+
+            public BulkTest bulkTestAll() {
+                return new TestList("") {
+                    public List makeEmptyList() {
+                        return (List)typedCollection();
                     }
 
                     public Object[] getFullElements() {

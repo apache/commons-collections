@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.8 2003/02/20 23:14:03 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.9 2003/04/04 22:22:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,11 +65,12 @@ import java.util.Set;
  * and {@link SortedBag} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.8 $ $Date: 2003/02/20 23:14:03 $
+ * @version $Revision: 1.9 $ $Date: 2003/04/04 22:22:29 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Andrew Freeman
+ * @author Matthew Hawthorne
  */
 public class BagUtils {
 
@@ -80,6 +81,7 @@ public class BagUtils {
     public BagUtils() {
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Implementation of a Bag that validates elements before they are added.
      */
@@ -266,35 +268,7 @@ public class BagUtils {
         }
     }
 
-
-    /**
-     * Returns a predicated bag backed by the given bag.  Only objects
-     * that pass the test in the given predicate can be added to the bag.
-     * It is important not to use the original bag after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
-     *
-     * @param bag  the bag to predicate, must not be null
-     * @param predicate  the predicate for the bag, must not be null
-     * @return a predicated bag backed by the given bag
-     * @throws IllegalArgumentException  if the Bag or Predicate is null
-     */
-    public static Bag predicatedBag(Bag bag, Predicate predicate) {
-        return new PredicatedBag(bag, predicate);
-    }
-
-    /**
-     * Returns an unmodifiable view of the given bag.  Any modification
-     * attempts to the returned bag will raise an 
-     * {@link UnsupportedOperationException}.
-     *
-     * @param bag  the bag whose unmodifiable view is to be returned, must not be null
-     * @return an unmodifiable view of that bag
-     * @throws IllegalArgumentException  if the Bag is null
-     */
-    public static Bag unmodifiableBag(Bag bag) {
-        return new UnmodifiableBag(bag);
-    }
-
+    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized (thread-safe) bag backed by the given bag.
      * In order to guarantee serial access, it is critical that all 
@@ -326,34 +300,47 @@ public class BagUtils {
     }
 
     /**
-     * Returns a predicated sorted bag backed by the given sorted bag.  
-     * Only objects that pass the test in the given predicate can be 
-     * added to the bag.
-     * It is important not to use the original bag after invoking this 
-     * method, as it is a backdoor for adding unvalidated objects.
-     *
-     * @param bag  the sorted bag to predicate, must not be null
-     * @param predicate  the predicate for the bag, must not be null
-     * @return a predicated bag backed by the given bag
-     * @throws IllegalArgumentException  if the SortedBag or Predicate is null
-     */
-    public static SortedBag predicatedSortedBag(SortedBag bag, Predicate predicate) {
-        return new PredicatedSortedBag(bag, predicate);
-    }
-
-    /**
-     * Returns an unmodifiable view of the given sorted bag.  Any modification
+     * Returns an unmodifiable view of the given bag.  Any modification
      * attempts to the returned bag will raise an 
      * {@link UnsupportedOperationException}.
      *
      * @param bag  the bag whose unmodifiable view is to be returned, must not be null
      * @return an unmodifiable view of that bag
-     * @throws IllegalArgumentException  if the SortedBag is null
+     * @throws IllegalArgumentException  if the Bag is null
      */
-    public static SortedBag unmodifiableSortedBag(SortedBag bag) {
-        return new UnmodifiableSortedBag(bag);
+    public static Bag unmodifiableBag(Bag bag) {
+        return new UnmodifiableBag(bag);
+    }
+    
+    /**
+     * Returns a predicated bag backed by the given bag.  Only objects
+     * that pass the test in the given predicate can be added to the bag.
+     * It is important not to use the original bag after invoking this 
+     * method, as it is a backdoor for adding unvalidated objects.
+     *
+     * @param bag  the bag to predicate, must not be null
+     * @param predicate  the predicate for the bag, must not be null
+     * @return a predicated bag backed by the given bag
+     * @throws IllegalArgumentException  if the Bag or Predicate is null
+     */
+    public static Bag predicatedBag(Bag bag, Predicate predicate) {
+        return new PredicatedBag(bag, predicate);
     }
 
+    /**
+     * Returns a typed bag backed by the given bag.
+     * <p>
+     * Only objects of the specified type can be added to the bag.
+     * 
+     * @param bag  the bag to limit to a specific type, must not be null
+     * @param type  the type of objects which may be added to the bag
+     * @return a typed bag backed by the specified bag
+     */
+    public static Bag typedBag(Bag bag, Class type) {
+        return predicatedBag(bag, new CollectionUtils.InstanceofPredicate(type));
+    }
+    
+    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized (thread-safe) sorted bag backed by the given 
      * sorted bag.
@@ -384,5 +371,47 @@ public class BagUtils {
     public static SortedBag synchronizedSortedBag(SortedBag bag) {
         return new SynchronizedSortedBag(bag);
     }
-
+    
+    /**
+     * Returns an unmodifiable view of the given sorted bag.  Any modification
+     * attempts to the returned bag will raise an 
+     * {@link UnsupportedOperationException}.
+     *
+     * @param bag  the bag whose unmodifiable view is to be returned, must not be null
+     * @return an unmodifiable view of that bag
+     * @throws IllegalArgumentException  if the SortedBag is null
+     */
+    public static SortedBag unmodifiableSortedBag(SortedBag bag) {
+        return new UnmodifiableSortedBag(bag);
+    }
+    
+    /**
+     * Returns a predicated sorted bag backed by the given sorted bag.  
+     * Only objects that pass the test in the given predicate can be 
+     * added to the bag.
+     * It is important not to use the original bag after invoking this 
+     * method, as it is a backdoor for adding unvalidated objects.
+     *
+     * @param bag  the sorted bag to predicate, must not be null
+     * @param predicate  the predicate for the bag, must not be null
+     * @return a predicated bag backed by the given bag
+     * @throws IllegalArgumentException  if the SortedBag or Predicate is null
+     */
+    public static SortedBag predicatedSortedBag(SortedBag bag, Predicate predicate) {
+        return new PredicatedSortedBag(bag, predicate);
+    }
+    
+    /**
+     * Returns a typed sorted bag backed by the given bag.
+     * <p>
+     * Only objects of the specified type can be added to the bag.
+     * 
+     * @param bag  the bag to limit to a specific type, must not be null
+     * @param type  the type of objects which may be added to the bag
+     * @return a typed bag backed by the specified bag
+     */
+    public static SortedBag typedSortedBag(SortedBag bag, Class type) {
+        return predicatedSortedBag(bag, new CollectionUtils.InstanceofPredicate(type));
+    }
+        
 }

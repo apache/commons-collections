@@ -1,7 +1,7 @@
 /*
- * $Id: TestCollectionUtils.java,v 1.14 2003/02/19 20:33:11 scolebourne Exp $
- * $Revision: 1.14 $
- * $Date: 2003/02/19 20:33:11 $
+ * $Id: TestCollectionUtils.java,v 1.15 2003/04/04 22:22:28 scolebourne Exp $
+ * $Revision: 1.15 $
+ * $Date: 2003/04/04 22:22:28 $
  *
  * ====================================================================
  *
@@ -75,8 +75,13 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
+ * Tests for CollectionUtils.
+ * 
  * @author Rodney Waldhoff
- * @version $Revision: 1.14 $ $Date: 2003/02/19 20:33:11 $
+ * @author Matthew Hawthorne
+ * @author Stephen Colebourne
+ * 
+ * @version $Revision: 1.15 $ $Date: 2003/04/04 22:22:28 $
  */
 public class TestCollectionUtils extends TestCase {
     public TestCollectionUtils(String testName) {
@@ -590,6 +595,43 @@ public class TestCollectionUtils extends TestCase {
         };
     }
 
+    public BulkTest bulkTestTypedCollection() {
+        return new TestTypedCollection("") {
+            public Collection typedCollection() {
+                return CollectionUtils.typedCollection(
+                    new ArrayList(),
+                    super.getType());
+            }
+ 
+            public BulkTest bulkTestAll() {
+                return new TestCollection("") {
+                    public Collection makeCollection() {
+                        return typedCollection();
+                    }
+ 
+                    public Collection makeConfirmedCollection() {
+                        return new ArrayList();
+                    }
+ 
+                    public Collection makeConfirmedFullCollection() {
+                        ArrayList list = new ArrayList();
+                        list.addAll(java.util.Arrays.asList(getFullElements()));
+                        return list;
+                    }
+ 
+                    public Object[] getFullElements() {
+                        return getFullNonNullStringElements();
+                    }
+ 
+                    public Object[] getOtherElements() {
+                        return getOtherNonNullStringElements();
+                    }
+ 
+                };
+            }
+        };
+    }
+    
     public void testIsFull() {
         Set set = new HashSet();
         set.add("1");

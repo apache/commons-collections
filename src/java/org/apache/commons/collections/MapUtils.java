@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.16 2003/02/19 20:14:25 scolebourne Exp $
- * $Revision: 1.16 $
- * $Date: 2003/02/19 20:14:25 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.17 2003/04/04 22:22:29 scolebourne Exp $
+ * $Revision: 1.17 $
+ * $Date: 2003/04/04 22:22:29 $
  *
  * ====================================================================
  *
@@ -61,6 +61,7 @@
 package org.apache.commons.collections;
 
 import java.io.PrintStream;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Collections;
@@ -80,14 +81,16 @@ import java.util.TreeMap;
  *
  * It also provides the following decorators:
  *
- *  <UL>
- *  <LI>{@link #fixedSizeMap(Map)}
- *  <LI>{@link #fixedSizeSortedMap(SortedMap)}
- *  <LI>{@link #lazyMap(Map,Factory)}
- *  <LI>{@link #lazySortedMap(SortedMap,Factory)}
- *  <LI>{@link #predicatedMap(Map,Predicate,Predicate)}
- *  <LI>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
- *  </UL>
+ *  <ul>
+ *  <li>{@link #fixedSizeMap(Map)}
+ *  <li>{@link #fixedSizeSortedMap(SortedMap)}
+ *  <li>{@link #lazyMap(Map,Factory)}
+ *  <li>{@link #typedMap(Map, Class, Class)}
+ *  <li>{@link #lazySortedMap(SortedMap,Factory)}
+ *  <li>{@link #predicatedMap(Map,Predicate,Predicate)}
+ *  <li>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
+ *  <li>{@link #typedSortedMap(Map, Class, Class)}
+ *  </ul>
  *
  * @since 1.0
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
@@ -95,6 +98,7 @@ import java.util.TreeMap;
  * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>
  * @author Paul Jack
  * @author Stephen Colebourne
+ * @author Matthew Hawthorne
  */
 public class MapUtils {
     
@@ -750,7 +754,7 @@ public class MapUtils {
         }
     }
 
-
+    //-----------------------------------------------------------------------
     static class PredicatedMap 
             extends ProxyMap {
 
@@ -1078,7 +1082,7 @@ public class MapUtils {
 
     }
 
-
+    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized map backed by the given map.
      * <p>
@@ -1136,6 +1140,23 @@ public class MapUtils {
     }
 
     /**
+     * Returns a typed map backed by the given map.
+     * <p>
+     * Only keys and values of the specified types can be added to the map.
+     * 
+     * @param map  the map to limit to a specific type, must not be null
+     * @param keyType  the type of keys which may be added to the map
+     * @param valueType  the type of values which may be added to the map
+     * @return a typed map backed by the specified map
+     */
+    public static Map typedMap(Map map, Class keyType, Class valueType) {
+        return predicatedMap(
+            map, 
+            new CollectionUtils.InstanceofPredicate(keyType),
+            new CollectionUtils.InstanceofPredicate(valueType));
+    }
+    
+    /**
      * Returns a fixed-sized map backed by the given map.
      * Elements may not be added or removed from the returned map, but 
      * existing elements can be changed (for instance, via the 
@@ -1182,6 +1203,7 @@ public class MapUtils {
         return new LazyMap(map, factory);
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized sorted map backed by the given sorted map.
      * <p>
@@ -1238,6 +1260,23 @@ public class MapUtils {
         return new PredicatedSortedMap(map, keyPred, valuePred);
     }
 
+    /**
+     * Returns a typed sorted map backed by the given map.
+     * <p>
+     * Only keys and values of the specified types can be added to the map.
+     * 
+     * @param map  the map to limit to a specific type, must not be null
+     * @param keyType  the type of keys which may be added to the map
+     * @param valueType  the type of values which may be added to the map
+     * @return a typed map backed by the specified map
+     */
+    public static SortedMap typedSortedMap(SortedMap map, Class keyType, Class valueType) {
+        return predicatedSortedMap(
+            map, 
+            new CollectionUtils.InstanceofPredicate(keyType),
+            new CollectionUtils.InstanceofPredicate(valueType));
+    }
+    
     /**
      * Returns a fixed-sized sorted map backed by the given sorted map.
      * Elements may not be added or removed from the returned map, but 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.28 2003/01/25 11:40:26 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.29 2003/04/04 22:22:29 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -57,6 +57,7 @@
  */
 package org.apache.commons.collections;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -77,7 +78,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * A set of {@link Collection} related utility methods.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.28 $ $Date: 2003/01/25 11:40:26 $
+ * @version $Revision: 1.29 $ $Date: 2003/04/04 22:22:29 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -85,6 +86,7 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Steve Downey
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
  * @author Peter KoBek
+ * @author Matthew Hawthorne
  */
 public class CollectionUtils {
 
@@ -894,6 +896,7 @@ public class CollectionUtils {
         return -1;
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Base class for collection decorators.  I decided to do it this way
      * because it seemed to result in the most reuse.  
@@ -997,7 +1000,9 @@ public class CollectionUtils {
 
     }
 
-
+    /**
+     * Implementation of a collection that checks entries.
+     */
     static class PredicatedCollection 
             extends CollectionWrapper {
 
@@ -1034,7 +1039,9 @@ public class CollectionUtils {
 
     }
 
-
+    /**
+     * Implementation of a collection that is unmodifiable.
+     */
     static class UnmodifiableCollection 
             extends CollectionWrapper {
 
@@ -1072,7 +1079,9 @@ public class CollectionUtils {
 
     }
 
-
+    /**
+     * Implementation of a collection that is synchronized.
+     */
     static class SynchronizedCollection {
 
         protected final Collection collection;
@@ -1150,7 +1159,35 @@ public class CollectionUtils {
 
     }
 
+    /**
+     * <code>Predicate</code> implementation that checks the type of an object.
+     * This class may eventually be replaced by 
+     * <code>org.apache.commons.lang.functor.PredicateUtils.instanceofPredicate()</code>.
+     */
+    static class InstanceofPredicate implements Predicate, Serializable {
+        private final Class type;
 
+        /**
+         * Constructor
+         */
+        public InstanceofPredicate(Class type) {
+            if (type == null) {
+                throw new IllegalArgumentException("Type must not be null");
+            }
+            this.type = type;
+        }
+
+        /**
+         * Return true if the object is an instanceof the type of the predicate.
+         * @param object an <code>Object</code>
+         * @return <code>true</code> if the object is an instanceof the type of the predicate
+         */
+        public boolean evaluate(Object object) {
+            return type.isInstance(object);
+        }
+    }
+
+    //-----------------------------------------------------------------------
     /**
      * Returns a synchronized collection backed by the given collection.
      * <p>
@@ -1206,4 +1243,17 @@ public class CollectionUtils {
         return new PredicatedCollection(collection, predicate);
     }
 
+    /**
+     * Returns a typed collection backed by the given collection.
+     * <p>
+     * Only objects of the specified type can be added to the collection.
+     * 
+     * @param collection  the collection to limit to a specific type, must not be null
+     * @param type  the type of objects which may be added to the collection
+     * @return a typed collection backed by the specified collection
+     */
+    public static Collection typedCollection(Collection collection, Class type) {
+        return predicatedCollection(collection, new InstanceofPredicate(type));
+    }
+    
 }
