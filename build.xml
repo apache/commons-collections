@@ -278,8 +278,8 @@
       <exclude name="org/apache/commons/collections/SynchronizedPriorityQueue*.class"/>
       <exclude name="org/apache/commons/collections/TreeBag*.class"/>
       <exclude name="org/apache/commons/collections/UnboundedFifoBuffer*.class"/>
-    </jar>
-  </target-->
+    </jar-->
+  </target>
 
 <!-- ====================================================================== -->
 
