@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.6 2003/12/29 15:26:39 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/map/StaticBucketMap.java,v 1.7 2004/01/02 02:13:07 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -132,7 +132,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision: 1.6 $ $Date: 2003/12/29 15:26:39 $
+ * @version $Revision: 1.7 $ $Date: 2004/01/02 02:13:07 $
  * 
  * @author Berin Loritsch
  * @author Gerhard Froehlich
@@ -144,8 +144,8 @@ import org.apache.commons.collections.KeyValue;
 public final class StaticBucketMap implements Map {
 
     private static final int DEFAULT_BUCKETS = 255;
-    private Node[] m_buckets;
-    private Lock[] m_locks;
+    private Node[] buckets;
+    private Lock[] locks;
 
     /**
      * Initializes the map with the default number of buckets (255).
@@ -172,11 +172,11 @@ public final class StaticBucketMap implements Map {
             size--;
         }
 
-        m_buckets = new Node[size];
-        m_locks = new Lock[size];
+        buckets = new Node[size];
+        locks = new Lock[size];
 
         for (int i = 0; i < size; i++) {
-            m_locks[i] = new Lock();
+            locks[i] = new Lock();
         }
     }
 
@@ -205,7 +205,7 @@ public final class StaticBucketMap implements Map {
         hash ^= (hash >>> 6);
         hash += ~(hash << 11);
         hash ^= (hash >>> 16);
-        hash %= m_buckets.length;
+        hash %= buckets.length;
         return (hash < 0) ? hash * -1 : hash;
     }
 
@@ -218,8 +218,8 @@ public final class StaticBucketMap implements Map {
     public int size() {
         int cnt = 0;
 
-        for (int i = 0; i < m_buckets.length; i++) {
-            cnt += m_locks[i].size;
+        for (int i = 0; i < buckets.length; i++) {
+            cnt += locks[i].size;
         }
         return cnt;
     }
@@ -242,8 +242,8 @@ public final class StaticBucketMap implements Map {
     public Object get(final Object key) {
         int hash = getHash(key);
 
-        synchronized (m_locks[hash]) {
-            Node n = m_buckets[hash];
+        synchronized (locks[hash]) {
+            Node n = buckets[hash];
 
             while (n != null) {
                 if (n.key == key || (n.key != null && n.key.equals(key))) {
@@ -265,8 +265,8 @@ public final class StaticBucketMap implements Map {
     public boolean containsKey(final Object key) {
         int hash = getHash(key);
 
-        synchronized (m_locks[hash]) {
-            Node n = m_buckets[hash];
+        synchronized (locks[hash]) {
+            Node n = buckets[hash];
 
             while (n != null) {
                 if (n.key == null || (n.key != null && n.key.equals(key))) {
@@ -286,9 +286,9 @@ public final class StaticBucketMap implements Map {
      * @return true if found
      */
     public boolean containsValue(final Object value) {
-        for (int i = 0; i < m_buckets.length; i++) {
-            synchronized (m_locks[i]) {
-                Node n = m_buckets[i];
+        for (int i = 0; i < buckets.length; i++) {
+            synchronized (locks[i]) {
+                Node n = buckets[i];
 
                 while (n != null) {
                     if (n.value == value || (n.value != null && n.value.equals(value))) {
@@ -313,15 +313,15 @@ public final class StaticBucketMap implements Map {
     public Object put(final Object key, final Object value) {
         int hash = getHash(key);
 
-        synchronized (m_locks[hash]) {
-            Node n = m_buckets[hash];
+        synchronized (locks[hash]) {
+            Node n = buckets[hash];
 
             if (n == null) {
                 n = new Node();
                 n.key = key;
                 n.value = value;
-                m_buckets[hash] = n;
-                m_locks[hash].size++;
+                buckets[hash] = n;
+                locks[hash].size++;
                 return null;
             }
 
@@ -344,7 +344,7 @@ public final class StaticBucketMap implements Map {
             newNode.key = key;
             newNode.value = value;
             n.next = newNode;
-            m_locks[hash].size++;
+            locks[hash].size++;
         }
         return null;
     }
@@ -358,8 +358,8 @@ public final class StaticBucketMap implements Map {
     public Object remove(Object key) {
         int hash = getHash(key);
 
-        synchronized (m_locks[hash]) {
-            Node n = m_buckets[hash];
+        synchronized (locks[hash]) {
+            Node n = buckets[hash];
             Node prev = null;
 
             while (n != null) {
@@ -367,12 +367,12 @@ public final class StaticBucketMap implements Map {
                     // Remove this node from the linked list of nodes.
                     if (null == prev) {
                         // This node was the head, set the next node to be the new head.
-                        m_buckets[hash] = n.next;
+                        buckets[hash] = n.next;
                     } else {
                         // Set the next node of the previous node to be the node after this one.
                         prev.next = n.next;
                     }
-                    m_locks[hash].size--;
+                    locks[hash].size--;
                     return n.value;
                 }
 
@@ -431,10 +431,10 @@ public final class StaticBucketMap implements Map {
      * Clears the map of all entries.
      */
     public void clear() {
-        for (int i = 0; i < m_buckets.length; i++) {
-            Lock lock = m_locks[i];
+        for (int i = 0; i < buckets.length; i++) {
+            Lock lock = locks[i];
             synchronized (lock) {
-                m_buckets[i] = null;
+                buckets[i] = null;
                 lock.size = 0;
             }
         }
@@ -465,9 +465,9 @@ public final class StaticBucketMap implements Map {
     public int hashCode() {
         int hashCode = 0;
 
-        for (int i = 0; i < m_buckets.length; i++) {
-            synchronized (m_locks[i]) {
-                Node n = m_buckets[i];
+        for (int i = 0; i < buckets.length; i++) {
+            synchronized (locks[i]) {
+                Node n = buckets[i];
 
                 while (n != null) {
                     hashCode += n.hashCode();
@@ -540,9 +540,9 @@ public final class StaticBucketMap implements Map {
 
         public boolean hasNext() {
             if (current.size() > 0) return true;
-            while (bucket < m_buckets.length) {
-                synchronized (m_locks[bucket]) {
-                    Node n = m_buckets[bucket];
+            while (bucket < buckets.length) {
+                synchronized (locks[bucket]) {
+                    Node n = buckets[bucket];
                     while (n != null) {
                         current.add(n);
                         n = n.next;
@@ -605,8 +605,8 @@ public final class StaticBucketMap implements Map {
         public boolean contains(Object obj) {
             Map.Entry entry = (Map.Entry) obj;
             int hash = getHash(entry.getKey());
-            synchronized (m_locks[hash]) {
-                for (Node n = m_buckets[hash]; n != null; n = n.next) {
+            synchronized (locks[hash]) {
+                for (Node n = buckets[hash]; n != null; n = n.next) {
                     if (n.equals(entry)) return true;
                 }
             }
@@ -619,8 +619,8 @@ public final class StaticBucketMap implements Map {
             }
             Map.Entry entry = (Map.Entry) obj;
             int hash = getHash(entry.getKey());
-            synchronized (m_locks[hash]) {
-                for (Node n = m_buckets[hash]; n != null; n = n.next) {
+            synchronized (locks[hash]) {
+                for (Node n = buckets[hash]; n != null; n = n.next) {
                     if (n.equals(entry)) {
                         StaticBucketMap.this.remove(n.getKey());
                         return true;
@@ -653,8 +653,8 @@ public final class StaticBucketMap implements Map {
 
         public boolean remove(Object obj) {
             int hash = getHash(obj);
-            synchronized (m_locks[hash]) {
-                for (Node n = m_buckets[hash]; n != null; n = n.next) {
+            synchronized (locks[hash]) {
+                for (Node n = buckets[hash]; n != null; n = n.next) {
                     Object k = n.getKey();
                     if ((k == obj) || ((k != null) && k.equals(obj))) {
                         StaticBucketMap.this.remove(k);
@@ -726,14 +726,13 @@ public final class StaticBucketMap implements Map {
     }
 
     private void atomic(Runnable r, int bucket) {
-        if (bucket >= m_buckets.length) {
+        if (bucket >= buckets.length) {
             r.run();
             return;
         }
-        synchronized (m_locks[bucket]) {
+        synchronized (locks[bucket]) {
             atomic(r, bucket + 1);
         }
     }
-
 
 }
