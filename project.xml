@@ -4,43 +4,43 @@
   <extend>../project.xml</extend>
   <name>Collections</name>
   <id>commons-collections</id>
-  <currentVersion>2.2-dev</currentVersion>
+  <currentVersion>3.0-dev</currentVersion>
   <inceptionYear>2001</inceptionYear>
   <gumpRepositoryId>jakarta</gumpRepositoryId>
   <shortDescription>Commons Collections</shortDescription>
 
   <description>
-    Commons Collections
+    Types that extend and augment the Java Collections Framework.
   </description>
   
   <developers>
     <developer>
       <name>Stephen Colebourne</name>
-      <id></id>
+      <id>scolebourne</id>
       <email></email>
       <organization></organization>
     </developer>
     <developer>
       <name>Morgan Delagrange</name>
-      <id></id>
+      <id>morgand</id>
       <email></email>
       <organization></organization>
     </developer>
     <developer>
       <name>Geir Magnusson</name>
-      <id></id>
+      <id>geirm</id>
       <email></email>
       <organization></organization>
     </developer>
     <developer>
       <name>Craig McClanahan</name>
-      <id></id>
+      <id>craigmcc</id>
       <email></email>
       <organization></organization>
     </developer>
     <developer>
       <name>Michael Smith</name>
-      <id></id>
+      <id>msmith</id>
       <email></email>
       <organization></organization>
     </developer>
@@ -52,13 +52,13 @@
     </developer>
     <developer>
       <name>David Weinrich</name>
-      <id></id>
+      <id>dweinr1</id>
       <email></email>
       <organization></organization>
     </developer>
     <developer>
       <name>Henri Yandell</name>
-      <id></id>
+      <id>bayard</id>
       <email></email>
       <organization></organization>
     </developer>
