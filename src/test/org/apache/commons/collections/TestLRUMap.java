@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.2 2002/02/13 20:59:12 morgand Exp $
- * $Revision: 1.2 $
- * $Date: 2002/02/13 20:59:12 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.3 2002/02/13 21:49:38 morgand Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/02/13 21:49:38 $
  *
  * ====================================================================
  *
@@ -69,7 +69,7 @@ import java.util.HashMap;
 
 /**
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @version $Id: TestLRUMap.java,v 1.2 2002/02/13 20:59:12 morgand Exp $
+ * @version $Id: TestLRUMap.java,v 1.3 2002/02/13 21:49:38 morgand Exp $
  */
 public class TestLRUMap extends TestHashMap
 {
@@ -105,6 +105,16 @@ public class TestLRUMap extends TestHashMap
 
         assertTrue("Second to last value should exist",map2.get(new Integer(3)).equals("foo"));
         assertTrue("Last value inserted should not exist", map2.get(new Integer(4)) == null);
+    }
+
+    public void testMultiplePuts() {
+        LRUMap map2 = new LRUMap(2);
+        map2.put(new Integer(4),"foo");
+        map2.put(new Integer(4),"bar");
+        map2.put(new Integer(4),"foo");
+        map2.put(new Integer(4),"bar");
+
+        assertTrue("same key different value",map2.get(new Integer(4)).equals("bar"));
     }
 
 }
