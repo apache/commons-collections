@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.16 2003/11/27 22:55:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.17 2004/01/04 18:03:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -63,14 +63,12 @@ import org.apache.commons.collections.buffer.SynchronizedBuffer;
 import org.apache.commons.collections.buffer.TransformedBuffer;
 import org.apache.commons.collections.buffer.TypedBuffer;
 import org.apache.commons.collections.buffer.UnmodifiableBuffer;
-import org.apache.commons.collections.observed.ModificationListener;
-import org.apache.commons.collections.observed.ObservableBuffer;
 
 /**
  * Provides utility methods and decorators for {@link Buffer} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.16 $ $Date: 2003/11/27 22:55:16 $
+ * @version $Revision: 1.17 $ $Date: 2004/01/04 18:03:41 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -184,27 +182,6 @@ public class BufferUtils {
      */
     public static Buffer transformedBuffer(Buffer buffer, Transformer transformer) {
         return TransformedBuffer.decorate(buffer, transformer);
-    }
-    
-    /**
-     * Returns an observable buffer where changes are notified to listeners.
-     * <p>
-     * This method creates an observable buffer and attaches the specified listener.
-     * If more than one listener or other complex setup is required then the
-     * ObservableBuffer class should be accessed directly.
-     *
-     * @deprecated TO BE REMOVED BEFORE v3.0
-     * @param buffer  the buffer to decorate, must not be null
-     * @param listener  buffer listener, must not be null
-     * @return the observed buffer
-     * @throws IllegalArgumentException if the buffer or listener is null
-     * @throws IllegalArgumentException if there is no valid handler for the listener
-     */
-    public static ObservableBuffer observableBuffer(Buffer buffer, ModificationListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        return ObservableBuffer.decorate(buffer, listener);
     }
     
 }

@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.23 2003/11/27 22:55:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.24 2004/01/04 18:03:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -70,14 +70,12 @@ import org.apache.commons.collections.list.SynchronizedList;
 import org.apache.commons.collections.list.TransformedList;
 import org.apache.commons.collections.list.TypedList;
 import org.apache.commons.collections.list.UnmodifiableList;
-import org.apache.commons.collections.observed.ModificationListener;
-import org.apache.commons.collections.observed.ObservableList;
 
 /**
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.23 $ $Date: 2003/11/27 22:55:16 $
+ * @version $Revision: 1.24 $ $Date: 2004/01/04 18:03:41 $
  * 
  * @author Federico Barbieri
  * @author Peter Donald
@@ -344,27 +342,6 @@ public class ListUtils {
      */
     public static List transformedList(List list, Transformer transformer) {
         return TransformedList.decorate(list, transformer);
-    }
-    
-    /**
-     * Returns an observable list where changes are notified to listeners.
-     * <p>
-     * This method creates an observable list and attaches the specified listener.
-     * If more than one listener or other complex setup is required then the
-     * ObservableList class should be accessed directly.
-     *
-     * @deprecated TO BE REMOVED BEFORE v3.0
-     * @param list  the list to decorate, must not be null
-     * @param listener  list listener, must not be null
-     * @return the observed list
-     * @throws IllegalArgumentException if the list or listener is null
-     * @throws IllegalArgumentException if there is no valid handler for the listener
-     */
-    public static ObservableList observableList(List list, ModificationListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        return ObservableList.decorate(list, listener);
     }
     
     /**

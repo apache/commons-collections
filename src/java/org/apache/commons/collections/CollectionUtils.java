@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.51 2003/12/11 23:01:02 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CollectionUtils.java,v 1.52 2004/01/04 18:03:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -76,14 +76,12 @@ import org.apache.commons.collections.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.iterators.ArrayIterator;
 import org.apache.commons.collections.iterators.EnumerationIterator;
-import org.apache.commons.collections.observed.ModificationListener;
-import org.apache.commons.collections.observed.ObservableCollection;
 
 /**
  * Provides utility methods and decorators for {@link Collection} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision: 1.51 $ $Date: 2003/12/11 23:01:02 $
+ * @version $Revision: 1.52 $ $Date: 2004/01/04 18:03:41 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -730,7 +728,7 @@ public class CollectionUtils {
      * @throws IndexOutOfBoundsException
      * @throws ArrayIndexOutOfBoundsException
      *
-     * @deprecated use {@link #get(Object, int)} instead
+     * @deprecated use {@link #get(Object, int)} instead. Will be removed in v4.0
      */
     public static Object index(Object obj, int idx) {
         return index(obj, new Integer(idx));
@@ -757,7 +755,7 @@ public class CollectionUtils {
      * @throws IndexOutOfBoundsException
      * @throws ArrayIndexOutOfBoundsException
      *
-     * @deprecated use {@link #get(Object, int)} instead
+     * @deprecated use {@link #get(Object, int)} instead. Will be removed in v4.0
      */
     public static Object index(Object obj, Object index) {
         if(obj instanceof Map) {
@@ -895,36 +893,6 @@ public class CollectionUtils {
             }
         }
         throw new IndexOutOfBoundsException("Entry does not exist.");
-    }
-
-    /** 
-     * Returns an Iterator for the given object. Currently this method can handle
-     * Iterator, Enumeration, Collection, Map, Object[] or array.
-     * 
-     * @deprecated use IteratorUtils version instead
-     */
-    public static Iterator getIterator(Object obj) {
-        if(obj instanceof Iterator) {
-            return (Iterator)obj;
-        } 
-        else if(obj instanceof Collection) {
-            return ((Collection)obj).iterator();
-        } 
-        else if(obj instanceof Object[]) {
-            return new ArrayIterator( obj );
-        } 
-        else if(obj instanceof Enumeration) {
-            return new EnumerationIterator( (Enumeration)obj );
-        } 
-        else if(obj instanceof Map) {
-            return ((Map)obj).values().iterator();
-        } 
-        else if(obj != null && obj.getClass().isArray()) {
-            return new ArrayIterator( obj );
-        }
-        else{
-            return null;
-        }
     }
 
     /** 
@@ -1101,27 +1069,6 @@ public class CollectionUtils {
      */
     public static Collection transformedCollection(Collection collection, Transformer transformer) {
         return TransformedCollection.decorate(collection, transformer);
-    }
-    
-    /**
-     * Returns an observable collection where changes are notified to listeners.
-     * <p>
-     * This method creates an observable collection and attaches the specified listener.
-     * If more than one listener or other complex setup is required then the
-     * ObservableCollection class should be accessed directly.
-     *
-     * @deprecated TO BE REMOVED BEFORE v3.0
-     * @param collection  the collection to decorate, must not be null
-     * @param listener  collection listener, must not be null
-     * @return the observed collection
-     * @throws IllegalArgumentException if the collection or listener is null
-     * @throws IllegalArgumentException if there is no valid handler for the listener
-     */
-    public static ObservableCollection observableCollection(Collection collection, ModificationListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        return ObservableCollection.decorate(collection, listener);
     }
     
 }

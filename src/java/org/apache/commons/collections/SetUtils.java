@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.21 2003/12/03 11:37:44 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.22 2004/01/04 18:03:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -64,9 +64,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.commons.collections.observed.ModificationListener;
-import org.apache.commons.collections.observed.ObservableSet;
-import org.apache.commons.collections.observed.ObservableSortedSet;
 import org.apache.commons.collections.set.ListOrderedSet;
 import org.apache.commons.collections.set.PredicatedSet;
 import org.apache.commons.collections.set.PredicatedSortedSet;
@@ -84,7 +81,7 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.21 $ $Date: 2003/12/03 11:37:44 $
+ * @version $Revision: 1.22 $ $Date: 2004/01/04 18:03:41 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -265,27 +262,6 @@ public class SetUtils {
     }
     
     /**
-     * Returns an observable set where changes are notified to listeners.
-     * <p>
-     * This method creates an observable set and attaches the specified listener.
-     * If more than one listener or other complex setup is required then the
-     * ObservableSet class should be accessed directly.
-     *
-     * @deprecated TO BE REMOVED BEFORE v3.0
-     * @param set  the set to decorate, must not be null
-     * @param listener  set listener, must not be null
-     * @return the observed set
-     * @throws IllegalArgumentException if the set or listener is null
-     * @throws IllegalArgumentException if there is no valid handler for the listener
-     */
-    public static ObservableSet observableSet(Set set, ModificationListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        return ObservableSet.decorate(set, listener);
-    }
-    
-    /**
      * Returns a set that maintains the order of elements that are added
      * backed by the given set.
      * <p>
@@ -383,27 +359,6 @@ public class SetUtils {
      */
     public static SortedSet transformedSortedSet(SortedSet set, Transformer transformer) {
         return TransformedSortedSet.decorate(set, transformer);
-    }
-    
-    /**
-     * Returns an observable sorted set where changes are notified to listeners.
-     * <p>
-     * This method creates an observable set and attaches the specified listener.
-     * If more than one listener or other complex setup is required then the
-     * ObservableSortedSet class should be accessed directly.
-     *
-     * @deprecated TO BE REMOVED BEFORE v3.0
-     * @param set  the set to decorate, must not be null
-     * @param listener  set listener, must not be null
-     * @return the observed set
-     * @throws IllegalArgumentException if the set or listener is null
-     * @throws IllegalArgumentException if there is no valid handler for the listener
-     */
-    public static ObservableSortedSet observableSortedSet(SortedSet set, ModificationListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        return ObservableSortedSet.decorate(set, listener);
     }
     
 }

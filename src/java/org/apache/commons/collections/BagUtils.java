@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.16 2003/11/27 22:55:16 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.17 2004/01/04 18:03:41 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2004 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,26 +57,25 @@
  */
 package org.apache.commons.collections;
 
+import org.apache.commons.collections.bag.HashBag;
 import org.apache.commons.collections.bag.PredicatedBag;
 import org.apache.commons.collections.bag.PredicatedSortedBag;
 import org.apache.commons.collections.bag.SynchronizedBag;
 import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.collections.bag.TransformedBag;
 import org.apache.commons.collections.bag.TransformedSortedBag;
+import org.apache.commons.collections.bag.TreeBag;
 import org.apache.commons.collections.bag.TypedBag;
 import org.apache.commons.collections.bag.TypedSortedBag;
 import org.apache.commons.collections.bag.UnmodifiableBag;
 import org.apache.commons.collections.bag.UnmodifiableSortedBag;
-import org.apache.commons.collections.observed.ModificationListener;
-import org.apache.commons.collections.observed.ObservableBag;
-import org.apache.commons.collections.observed.ObservableSortedBag;
 
 /**
  * Provides utility methods and decorators for
  * {@link Bag} and {@link SortedBag} instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision: 1.16 $ $Date: 2003/11/27 22:55:16 $
+ * @version $Revision: 1.17 $ $Date: 2004/01/04 18:03:41 $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -190,27 +189,6 @@ public class BagUtils {
         return TransformedBag.decorate(bag, transformer);
     }
     
-    /**
-     * Returns an observable bag where changes are notified to listeners.
-     * <p>
-     * This method creates an observable bag and attaches the specified listener.
-     * If more than one listener or other complex setup is required then the
-     * ObservableBag class should be accessed directly.
-     *
-     * @deprecated TO BE REMOVED BEFORE v3.0
-     * @param bag  the bag to decorate, must not be null
-     * @param listener  bag listener, must not be null
-     * @return the observed bag
-     * @throws IllegalArgumentException if the bag or listener is null
-     * @throws IllegalArgumentException if there is no valid handler for the listener
-     */
-    public static ObservableBag observableBag(Bag bag, ModificationListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        return ObservableBag.decorate(bag, listener);
-    }
-    
     //-----------------------------------------------------------------------
     /**
      * Returns a synchronized (thread-safe) sorted bag backed by the given 
@@ -301,25 +279,4 @@ public class BagUtils {
         return TransformedSortedBag.decorate(bag, transformer);
     }
     
-    /**
-     * Returns an observable sorted bag where changes are notified to listeners.
-     * <p>
-     * This method creates an observable sorted bag and attaches the specified listener.
-     * If more than one listener or other complex setup is required then the
-     * ObservableSortedBag class should be accessed directly.
-     *
-     * @deprecated TO BE REMOVED BEFORE v3.0
-     * @param bag  the bag to decorate, must not be null
-     * @param listener  bag listener, must not be null
-     * @return the observed bag
-     * @throws IllegalArgumentException if the bag or listener is null
-     * @throws IllegalArgumentException if there is no valid handler for the listener
-     */
-    public static ObservableSortedBag observableSortedBag(SortedBag bag, ModificationListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Listener must not be null");
-        }
-        return ObservableSortedBag.decorate(bag, listener);
-    }
-        
 }
