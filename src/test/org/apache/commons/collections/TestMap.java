@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.27 2003/10/02 03:42:03 bayard Exp $
- * $Revision: 1.27 $
- * $Date: 2003/10/02 03:42:03 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/TestMap.java,v 1.28 2003/10/02 04:04:22 bayard Exp $
+ * $Revision: 1.28 $
+ * $Date: 2003/10/02 04:04:22 $
  *
  * ====================================================================
  *
@@ -152,7 +152,7 @@ import java.util.Set;
  * @author Michael Smith
  * @author Rodney Waldhoff
  * @author Paul Jack
- * @version $Revision: 1.27 $ $Date: 2003/10/02 03:42:03 $
+ * @version $Revision: 1.28 $ $Date: 2003/10/02 04:04:22 $
  */
 public abstract class TestMap extends TestObject {
 
@@ -816,6 +816,34 @@ public abstract class TestMap extends TestObject {
             }
         }
     }
+
+    /**
+     * Tests that the {@link Map#keySet} set is backed by
+     * the underlying map by removing from the keySet set
+     * and testing if the key was removed from the map.
+     */
+    public void testValuesRemovedFromKeySetAreRemovedFromMap() {
+        resetFull();
+        Object[] sampleKeys = getSampleKeys();
+        Set keys = map.keySet();
+        for(int i=0;i<sampleKeys.length;i++) {
+            try {
+                keys.remove(sampleKeys[i]);
+            } catch(UnsupportedOperationException e) {
+                // if key.remove is unsupported, just skip this test
+                return;
+            }
+            assertTrue("Key should have been removed from the underlying map.",!map.containsKey(sampleKeys[i]));
+        }
+    }
+
+    // TODO: Need:
+    //    testValuesRemovedFromEntrySetAreRemovedFromMap
+    //    same for EntrySet/KeySet/values's
+    //      Iterator.remove, removeAll, retainAll, clear
+    // TODO: Also need:
+    //    Test that EntrySet/KeySet/values all do not allow add/addAll
+
 
     /**
      *  Utility methods to create an array of Map.Entry objects
