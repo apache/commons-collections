@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAllPackages.java,v 1.4 2003/10/01 22:36:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestAll.java,v 1.1 2003/10/01 22:36:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,39 +55,37 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.pairs;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Entry point for all Collections project tests.
+ * Entry point for key-value test cases.
  * 
- * @version $Revision: 1.4 $ $Date: 2003/10/01 22:36:49 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/10/01 22:36:49 $
  * 
- * @author Stephen Colebourne
+ * @author Neil O'Toole
  */
-public class TestAllPackages extends TestCase {
-    public TestAllPackages(String testName) {
+public class TestAll extends TestCase {
+    
+    public TestAll(String testName) {
         super(testName);
     }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(org.apache.commons.collections.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.decorators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.observed.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.pairs.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
-        return suite;
-    }
-        
     public static void main(String args[]) {
-        String[] testCaseName = { TestAllPackages.class.getName() };
+        String[] testCaseName = { TestAll.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
     }
     
+    public static Test suite() {
+        TestSuite suite = new TestSuite();
+        
+        suite.addTest(TestDefaultKeyValue.suite());
+        suite.addTest(TestDefaultMapEntry.suite());
+        return suite;
+    }
+        
 }

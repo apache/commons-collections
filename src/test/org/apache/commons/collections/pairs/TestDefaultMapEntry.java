@@ -1,10 +1,10 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAllPackages.java,v 1.4 2003/10/01 22:36:49 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/TestDefaultMapEntry.java,v 1.1 2003/10/01 22:36:49 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2003 The Apache Software Foundation.  All rights
+ * Copyright (c) 2001-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -55,39 +55,91 @@
  * <http://www.apache.org/>.
  *
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.pairs;
+
+import java.util.Map;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Entry point for all Collections project tests.
+ * Test the DefaultMapEntry class.
  * 
- * @version $Revision: 1.4 $ $Date: 2003/10/01 22:36:49 $
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.1 $ $Date: 2003/10/01 22:36:49 $
  * 
- * @author Stephen Colebourne
+ * @author Neil O'Toole
  */
-public class TestAllPackages extends TestCase {
-    public TestAllPackages(String testName) {
+public class TestDefaultMapEntry extends AbstractTestMapEntry {
+
+    public TestDefaultMapEntry(String testName) {
         super(testName);
+
+    }
+
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(TestDefaultMapEntry.class);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(org.apache.commons.collections.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.decorators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.observed.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.pairs.TestAll.suite());
-        suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
-        return suite;
+        return new TestSuite(TestDefaultMapEntry.class);
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAllPackages.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    //-----------------------------------------------------------------------
+    /**
+     * Make an instance of Map.Entry with the default (null) key and value.
+     * Subclasses should override this method to return a Map.Entry
+     * of the type being tested.
+     */
+    public Map.Entry makeMapEntry() {
+        return new DefaultMapEntry(null, null);
     }
-    
+
+    /**
+     * Make an instance of Map.Entry with the specified key and value.
+     * Subclasses should override this method to return a Map.Entry
+     * of the type being tested.
+     */
+    public Map.Entry makeMapEntry(Object key, Object value) {
+        return new DefaultMapEntry(key, value);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Subclasses should override this method.
+     *
+     */
+    public void testConstructors() {
+        // 1. test key-value constructor
+        Map.Entry entry = new DefaultMapEntry(key, value);
+        assertSame(key, entry.getKey());
+        assertSame(value, entry.getValue());
+
+        // 2. test pair constructor
+        KeyValue pair = new DefaultKeyValue(key, value);
+        assertSame(key, pair.getKey());
+        assertSame(value, pair.getValue());
+
+        // 3. test copy constructor
+        Map.Entry entry2 = new DefaultMapEntry(entry);
+        assertSame(key, entry2.getKey());
+        assertSame(value, entry2.getValue());
+
+        // test that the objects are independent
+        entry.setValue(null);
+        assertSame(value, entry2.getValue());
+    }
+
+    public void testSelfReferenceHandling() {
+        Map.Entry entry = makeMapEntry();
+
+        try {
+            entry.setValue(entry);
+            assertSame(entry, entry.getValue());
+
+        } catch (Exception e) {
+            fail("This Map.Entry implementation supports value self-reference.");
+        }
+    }
+
 }
