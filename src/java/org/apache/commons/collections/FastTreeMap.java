@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.1 2001/04/16 22:42:04 jvanzyl Exp $
- * $Revision: 1.1 $
- * $Date: 2001/04/16 22:42:04 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastTreeMap.java,v 1.2 2001/04/21 12:19:57 craigmcc Exp $
+ * $Revision: 1.2 $
+ * $Date: 2001/04/21 12:19:57 $
  *
  * ====================================================================
  *
@@ -68,6 +68,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -95,14 +96,11 @@ import java.util.TreeMap;
  * <code>java.util.TreeMap</code> directly (with no synchronization), for
  * maximum performance.</p>
  *
- * <p><strong>NOTE</strong>: The following methods are <strong>NOT</strong>
- * overridden:  clone(), equals(Object), hashCode().</p>
- *
  * @author Craig R. McClanahan
- * @version $Revision: 1.1 $ $Date: 2001/04/16 22:42:04 $
+ * @version $Revision: 1.2 $ $Date: 2001/04/21 12:19:57 $
  */
 
-public class FastTreeMap implements Map, Cloneable, Serializable {
+public class FastTreeMap extends TreeMap {
 
 
     // ----------------------------------------------------------- Constructors
@@ -210,6 +208,26 @@ public class FastTreeMap implements Map, Cloneable, Serializable {
 
 
     /**
+     * Return a shallow copy of this <code>FastTreeMap</code> instance.
+     * The keys and values themselves are not copied.
+     */
+    public Object clone() {
+
+        FastTreeMap results = null;
+        if (fast) {
+            results = new FastTreeMap(map);
+        } else {
+            synchronized (map) {
+                results = new FastTreeMap(map);
+            }
+        }
+        results.setFast(getFast());
+        return (results);
+
+    }
+
+
+    /**
      * Return the comparator used to order this map, or <code>null</code>
      * if this map uses its keys' natural order.
      */
@@ -282,6 +300,65 @@ public class FastTreeMap implements Map, Cloneable, Serializable {
 
 
     /**
+     * Compare the specified object with this list for equality.  This
+     * implementation uses exactly the code that is used to define the
+     * list equals function in the documentation for the
+     * <code>Map.equals</code> method.
+     *
+     * @param o Object to be compared to this list
+     */
+    public boolean equals(Object o) {
+
+        // Simple tests that require no synchronization
+        if (o == this)
+            return (true);
+        else if (!(o instanceof Map))
+            return (false);
+        Map mo = (Map) o;
+
+        // Compare the two maps for equality
+        if (fast) {
+            if (mo.size() != map.size())
+                return (false);
+            Iterator i = map.entrySet().iterator();
+            while (i.hasNext()) {
+                Entry e = (Entry) i.next();
+                Object key = e.getKey();
+                Object value = e.getValue();
+                if (value == null) {
+                    if (!(mo.get(key) == null && mo.containsKey(key)))
+                        return (false);
+                } else {
+                    if (!value.equals(mo.get(key)))
+                        return (false);
+                }
+            }
+            return (true);
+        } else {
+            synchronized (map) {
+                if (mo.size() != map.size())
+                    return (false);
+                Iterator i = map.entrySet().iterator();
+                while (i.hasNext()) {
+                    Entry e = (Entry) i.next();
+                    Object key = e.getKey();
+                    Object value = e.getValue();
+                    if (value == null) {
+                        if (!(mo.get(key) == null && mo.containsKey(key)))
+                            return (false);
+                    } else {
+                        if (!value.equals(mo.get(key)))
+                            return (false);
+                    }
+                }
+                return (true);
+            }
+        }
+
+    }
+
+
+    /**
      * Return the first (lowest) key currently in this sorted map.
      */
     public Object firstKey() {
@@ -312,6 +389,32 @@ public class FastTreeMap implements Map, Cloneable, Serializable {
         } else {
             synchronized (map) {
                 return (map.get(key));
+            }
+        }
+
+    }
+
+
+    /**
+     * Return the hash code value for this map.  This implementation uses
+     * exactly the code that is used to define the list hash function in the
+     * documentation for the <code>Map.hashCode</code> method.
+     */
+    public int hashCode() {
+
+        if (fast) {
+            int h = 0;
+            Iterator i = map.entrySet().iterator();
+            while (i.hasNext())
+                h += i.next().hashCode();
+            return (h);
+        } else {
+            synchronized (map) {
+                int h = 0;
+                Iterator i = map.entrySet().iterator();
+                while (i.hasNext())
+                    h += i.next().hashCode();
+                return (h);
             }
         }
 
