@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/TransformIterator.java,v 1.1 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.1 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/iterators/TransformIterator.java,v 1.2 2002/10/12 22:15:21 scolebourne Exp $
+ * $Revision: 1.2 $
+ * $Date: 2002/10/12 22:15:21 $
  *
  * ====================================================================
  *
@@ -60,7 +60,6 @@
  */
 package org.apache.commons.collections.iterators;
 
-import java.util.Enumeration;
 import java.util.Iterator;
 import org.apache.commons.collections.Transformer;
 

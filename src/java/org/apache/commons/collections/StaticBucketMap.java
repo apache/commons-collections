@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.4 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.4 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/StaticBucketMap.java,v 1.5 2002/10/12 22:15:19 scolebourne Exp $
+ * $Revision: 1.5 $
+ * $Date: 2002/10/12 22:15:19 $
  *
  * ====================================================================
  *
@@ -63,7 +63,6 @@ package org.apache.commons.collections;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -137,7 +136,7 @@ import java.util.NoSuchElementException;
  * @author  <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
  * @author  <a href="mailto:mas@apache.org">Michael A. Smith</a>
  * @author  Paul Jack
- * @version CVS $Revision: 1.4 $ $Date: 2002/08/15 20:04:31 $
+ * @version CVS $Revision: 1.5 $ $Date: 2002/10/12 22:15:19 $
  * @since Avalon 4.0
  */
 public final class StaticBucketMap implements Map

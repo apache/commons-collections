@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortArrayList.java,v 1.5 2002/08/22 01:50:54 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/22 01:50:54 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortArrayList.java,v 1.6 2002/10/12 22:15:20 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/10/12 22:15:20 $
  *
  * ====================================================================
  *
@@ -61,12 +61,7 @@
 
 package org.apache.commons.collections.primitives;
 
-import java.io.Serializable;
-import java.util.AbstractList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+
 
 /**
  * Abstract base class for lists of primitive <Code>short</Code> elements
@@ -77,7 +72,7 @@ import java.util.ListIterator;
  * primitive values will be stored in an underlying primitive array, and
  * provides methods for manipulating the capacity of that array.<P>
  *
- * @version $Revision: 1.5 $ $Date: 2002/08/22 01:50:54 $
+ * @version $Revision: 1.6 $ $Date: 2002/10/12 22:15:20 $
  * @author Rodney Waldhoff 
  */
 public abstract class AbstractShortArrayList extends AbstractShortList {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/UniqueFilterIterator.java,v 1.3 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/UniqueFilterIterator.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -62,14 +62,13 @@ package org.apache.commons.collections;
 
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /** A FilterIterator which only returns "unique" Objects.  Internally,
   * the Iterator maintains a Set of objects it has already encountered,
   * and duplicate Objects are skipped.
   *
   * @author Morgan Delagrange
-  * @version $Id: UniqueFilterIterator.java,v 1.3 2002/08/15 20:04:31 pjack Exp $
+  * @version $Id: UniqueFilterIterator.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
   * @since 2.1
   */
 

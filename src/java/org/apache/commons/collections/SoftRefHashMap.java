@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SoftRefHashMap.java,v 1.5 2002/08/12 18:24:33 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/12 18:24:33 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/SoftRefHashMap.java,v 1.6 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -60,9 +60,15 @@
  */
 package org.apache.commons.collections;
 
-import java.lang.ref.*;
-import java.lang.reflect.*;
-import java.util.*;
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /** <p>
   * HashMap with SoftReference links to values which allows the values of the Map

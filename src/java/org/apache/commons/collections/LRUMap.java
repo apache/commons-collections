@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.16 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.16 $
- * $Date: 2002/06/12 03:59:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/LRUMap.java,v 1.17 2002/10/12 22:15:19 scolebourne Exp $
+ * $Revision: 1.17 $
+ * $Date: 2002/10/12 22:15:19 $
  *
  * ====================================================================
  *
@@ -63,9 +63,7 @@ package org.apache.commons.collections;
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.util.Iterator;
 
 /**

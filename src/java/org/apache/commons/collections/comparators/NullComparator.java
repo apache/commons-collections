@@ -55,7 +55,6 @@ package org.apache.commons.collections.comparators;
  */
 
 import java.io.Serializable;
-import java.lang.Comparable;
 import java.util.Comparator;
 
 /**
@@ -63,7 +62,7 @@ import java.util.Comparator;
  *  other objects.
  *
  *  @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- *  @version $Id: NullComparator.java,v 1.3 2002/06/11 02:41:47 mas Exp $ 
+ *  @version $Id: NullComparator.java,v 1.4 2002/10/12 22:15:21 scolebourne Exp $ 
  **/
 public class NullComparator implements Comparator, Serializable {
 

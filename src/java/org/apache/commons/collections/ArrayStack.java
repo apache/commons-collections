@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.8 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.8 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ArrayStack.java,v 1.9 2002/10/12 22:15:19 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/10/12 22:15:19 $
  *
  * ====================================================================
  *
@@ -65,7 +65,6 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
-import java.util.Stack; // only used in javadoc comments, javadoc won't find it otherwise
 
 /**
  * An implementation of the {@link java.util.Stack} API that is based on an
@@ -82,7 +81,7 @@ import java.util.Stack; // only used in javadoc comments, javadoc won't find it 
  *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.8 $ $Date: 2002/08/15 20:04:31 $
+ * @version $Revision: 1.9 $ $Date: 2002/10/12 22:15:19 $
  * @see java.util.Stack
  */
 

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.5 2002/10/12 22:04:59 scolebourne Exp $
- * $Revision: 1.5 $
- * $Date: 2002/10/12 22:04:59 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiHashMap.java,v 1.6 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -60,12 +60,16 @@
  */
 package org.apache.commons.collections;
 
-import java.util.*;
-import java.io.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 /** 
  * <code>MultiHashMap</code> is the default implementation of the 
- * {@link MultiMap} interface. A <code>MultiMap</code> is a Map
- * with slightly different semantics.
+ * {@link org.apache.commons.collections.MultiMap MultiMap} interface.
+ * A <code>MultiMap</code> is a Map with slightly different semantics.
  * Instead of returning an Object, it returns a Collection.
  * So for example, you can put( key, new Integer(1) ); 
  * and then a Object get( key ); will return you a Collection 

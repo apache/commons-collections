@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.6 2002/08/19 19:44:59 pjack Exp $
- * $Revision: 1.6 $
- * $Date: 2002/08/19 19:44:59 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ReferenceMap.java,v 1.7 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -64,7 +64,6 @@ package org.apache.commons.collections;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.SoftReference;
@@ -75,7 +74,6 @@ import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
@@ -121,7 +119,7 @@ import java.util.Set;
  *  provide synchronized access to a <Code>ReferenceMap</Code>.
  *
  *  @author Paul Jack 
- *  @version $Id: ReferenceMap.java,v 1.6 2002/08/19 19:44:59 pjack Exp $
+ *  @version $Id: ReferenceMap.java,v 1.7 2002/10/12 22:15:18 scolebourne Exp $
  *  @since 2.1
  *  @see java.lang.ref.Reference
  */

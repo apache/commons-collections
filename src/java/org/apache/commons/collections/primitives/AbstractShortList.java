@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortList.java,v 1.3 2002/08/22 01:50:54 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/22 01:50:54 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractShortList.java,v 1.4 2002/10/12 22:15:20 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/10/12 22:15:20 $
  *
  * ====================================================================
  *
@@ -61,17 +61,12 @@
 
 package org.apache.commons.collections.primitives;
 
-import java.io.Serializable;
 import java.util.AbstractList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Abstract base class for lists of primitive <Code>short</Code> elements.<P>
  *
- * The {@link List} methods are all implemented, but they forward to 
+ * The {@link java.util.List List} methods are all implemented, but they forward to 
  * abstract methods that operate on <Code>short</Code> elements.  For 
  * instance, the {@link #get(int)} method simply forwards to 
  * {@link #getShort(int)}.  The primitive <Code>short</Code> that is 
@@ -90,7 +85,7 @@ import java.util.ListIterator;
  * {@link #removeShortAt(int)} and {@link #clear()} methods.  You may want 
  * to override the other methods to increase performance.<P>
  *
- * @version $Revision: 1.3 $ $Date: 2002/08/22 01:50:54 $
+ * @version $Revision: 1.4 $ $Date: 2002/10/12 22:15:20 $
  * @author Rodney Waldhoff 
  */
 public abstract class AbstractShortList extends AbstractList {

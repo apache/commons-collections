@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedByteArrayList.java,v 1.6 2002/09/07 20:33:32 rwaldhoff Exp $
- * $Revision: 1.6 $
- * $Date: 2002/09/07 20:33:32 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/UnsignedByteArrayList.java,v 1.7 2002/10/12 22:15:20 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/10/12 22:15:20 $
  *
  * ====================================================================
  *
@@ -65,11 +65,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.AbstractList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 /**
  * A list of unsigned 8-bit values backed by a <Code>byte</Code> array.
@@ -80,7 +75,7 @@ import java.util.ListIterator;
  * than a {@link java.util.ArrayList} and offers better compile-time type
  * checking.
  *
- * @version $Revision: 1.6 $ $Date: 2002/09/07 20:33:32 $
+ * @version $Revision: 1.7 $ $Date: 2002/10/12 22:15:20 $
  * @author Rodney Waldhoff 
  */
 public class UnsignedByteArrayList extends AbstractShortArrayList implements Serializable {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.16 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.16 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/ArrayIterator.java,v 1.17 2002/10/12 22:15:19 scolebourne Exp $
+ * $Revision: 1.17 $
+ * $Date: 2002/10/12 22:15:19 $
  *
  * ====================================================================
  *
@@ -60,17 +60,14 @@
  */
 package org.apache.commons.collections;
 
-import java.lang.reflect.Array;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
-/** Implements an {@link Iterator} over an array of objects.
+/** Implements an {@link java.util.Iterator} over an array of objects.
   *
   * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
   * @author Mauricio S. Moura
   * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
-  * @version $Revision: 1.16 $
+  * @version $Revision: 1.17 $
   * @deprecated this class has been moved to the iterators subpackage
   */
 public class ArrayIterator 

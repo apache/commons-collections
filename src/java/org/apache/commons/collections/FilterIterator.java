@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterIterator.java,v 1.7 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.7 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/FilterIterator.java,v 1.8 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -61,7 +61,6 @@
 package org.apache.commons.collections;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /** A Proxy {@link Iterator Iterator} which takes a {@link Predicate Predicate} instance to filter
   * out objects from an underlying {@link Iterator Iterator} instance.

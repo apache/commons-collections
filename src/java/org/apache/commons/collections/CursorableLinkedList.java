@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.9 2002/06/21 03:26:15 mas Exp $
- * $Revision: 1.9 $
- * $Date: 2002/06/21 03:26:15 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/CursorableLinkedList.java,v 1.10 2002/10/12 22:15:19 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/10/12 22:15:19 $
  *
  * ====================================================================
  *
@@ -75,8 +75,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.util.LinkedList; // only used in javadoc comments, javadoc won't find it otherwise
-import java.lang.UnsupportedOperationException; // stops a javadoc warning
 
 /**
  * A doubly-linked list implementation of the {@link List} interface,
@@ -92,7 +90,7 @@ import java.lang.UnsupportedOperationException; // stops a javadoc warning
  *
  * @since 1.0
  * @author Rodney Waldhoff
- * @version $Id: CursorableLinkedList.java,v 1.9 2002/06/21 03:26:15 mas Exp $
+ * @version $Id: CursorableLinkedList.java,v 1.10 2002/10/12 22:15:19 scolebourne Exp $
  * @see java.util.LinkedList
  */
 public class CursorableLinkedList implements List, Serializable {

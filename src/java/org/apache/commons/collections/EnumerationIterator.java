@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/EnumerationIterator.java,v 1.6 2002/08/15 23:13:51 pjack Exp $
- * $Revision: 1.6 $
- * $Date: 2002/08/15 23:13:51 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Attic/EnumerationIterator.java,v 1.7 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.7 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -62,10 +62,9 @@ package org.apache.commons.collections;
 
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.Iterator;
 
 /** Adapter to make {@link Enumeration Enumeration} instances appear
-  * to be {@link Iterator Iterator} instances.
+  * to be {@link java.util.Iterator Iterator} instances.
   *
   * @since 1.0
   * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>

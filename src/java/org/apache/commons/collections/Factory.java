@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.2 2002/08/15 20:09:37 pjack Exp $
- * $Revision: 1.2 $
- * $Date: 2002/08/15 20:09:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/Factory.java,v 1.3 2002/10/12 22:15:19 scolebourne Exp $
+ * $Revision: 1.3 $
+ * $Date: 2002/10/12 22:15:19 $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -59,8 +59,7 @@
  */
 package org.apache.commons.collections;
 
-import java.util.*;
-import java.lang.reflect.*;
+
 
 /**
  * Factory
@@ -68,7 +67,7 @@ import java.lang.reflect.*;
  * to create an object.
  *
  * @author Arron Bates
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.1
  */
 public interface Factory {

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.5 2002/08/18 20:11:37 pjack Exp $
- * $Revision: 1.5 $
- * $Date: 2002/08/18 20:11:37 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BagUtils.java,v 1.6 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -61,7 +61,6 @@
 package org.apache.commons.collections;
 
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Set;
 
@@ -71,7 +70,7 @@ import java.util.Set;
  *  and {@link SortedBag} instances.<P>
  *
  *  @author Paul Jack
- *  @version $Id: BagUtils.java,v 1.5 2002/08/18 20:11:37 pjack Exp $
+ *  @version $Id: BagUtils.java,v 1.6 2002/10/12 22:15:18 scolebourne Exp $
  *  @since 2.1
  */
 public class BagUtils {

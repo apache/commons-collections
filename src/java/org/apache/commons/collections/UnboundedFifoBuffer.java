@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.3 2002/07/03 02:16:48 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/07/03 02:16:48 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/UnboundedFifoBuffer.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -62,7 +62,6 @@ package org.apache.commons.collections;
 
 
 import java.util.AbstractCollection;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -90,7 +89,7 @@ import java.util.NoSuchElementException;
  * @author  <a href="fede@apache.org">Federico Barbieri</a>
  * @author  <a href="bloritsch@apache.org">Berin Loritsch</a>
  * @author Paul Jack
- * @version CVS $Revision: 1.3 $ $Date: 2002/07/03 02:16:48 $
+ * @version CVS $Revision: 1.4 $ $Date: 2002/10/12 22:15:18 $
  * @since Avalon 4.0
  */
 public final class UnboundedFifoBuffer extends AbstractCollection implements Buffer

@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.8 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.8 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastArrayList.java,v 1.9 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.9 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -63,7 +63,6 @@
 package org.apache.commons.collections;
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
@@ -108,7 +107,7 @@ import java.util.ListIterator;
  *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.8 $ $Date: 2002/08/15 20:04:31 $
+ * @version $Revision: 1.9 $ $Date: 2002/10/12 22:15:18 $
  */
 
 public class FastArrayList extends ArrayList {

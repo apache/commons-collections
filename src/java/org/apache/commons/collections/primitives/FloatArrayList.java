@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.5 2002/09/07 20:33:32 rwaldhoff Exp $
- * $Revision: 1.5 $
- * $Date: 2002/09/07 20:33:32 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/FloatArrayList.java,v 1.6 2002/10/12 22:15:20 scolebourne Exp $
+ * $Revision: 1.6 $
+ * $Date: 2002/10/12 22:15:20 $
  *
  * ====================================================================
  *
@@ -66,10 +66,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.AbstractList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * A list of <Code>float</Code> elements backed by a <Code>float</Code> array.
@@ -78,7 +75,7 @@ import java.util.ListIterator;
  * {@link java.util.ArrayList} of {@link Float} values and allows for
  * better compile-time type checking.<P>
  *
- * @version $Revision: 1.5 $ $Date: 2002/09/07 20:33:32 $
+ * @version $Revision: 1.6 $ $Date: 2002/10/12 22:15:20 $
  * @author Rodney Waldhoff 
  */
 public class FloatArrayList extends AbstractList implements List, Serializable {

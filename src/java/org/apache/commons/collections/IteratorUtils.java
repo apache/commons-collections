@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.3 2002/08/19 21:56:18 pjack Exp $
- * $Revision: 1.3 $
- * $Date: 2002/08/19 21:56:18 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/IteratorUtils.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.4 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -64,7 +64,6 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Dictionary;
 import java.util.Enumeration;
@@ -91,7 +90,7 @@ import org.apache.commons.collections.iterators.TransformIterator;
  * <code>org.apache.commons.collections.iterators</code> subpackage.
  *
  * @author <a href="mailto:scolebourne@joda.org">Stephen Colebourne</a>
- * @version $Id: IteratorUtils.java,v 1.3 2002/08/19 21:56:18 pjack Exp $
+ * @version $Id: IteratorUtils.java,v 1.4 2002/10/12 22:15:18 scolebourne Exp $
  * @since 2.1
  */
 public class IteratorUtils {

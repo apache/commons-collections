@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.9 2002/08/15 20:04:31 pjack Exp $
- * $Revision: 1.9 $
- * $Date: 2002/08/15 20:04:31 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/FastHashMap.java,v 1.10 2002/10/12 22:15:18 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/10/12 22:15:18 $
  *
  * ====================================================================
  *
@@ -63,13 +63,11 @@
 package org.apache.commons.collections;
 
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 
@@ -109,7 +107,7 @@ import java.util.Set;
  *
  * @since 1.0
  * @author Craig R. McClanahan
- * @version $Revision: 1.9 $ $Date: 2002/08/15 20:04:31 $
+ * @version $Revision: 1.10 $ $Date: 2002/10/12 22:15:18 $
  */
 
 public class FastHashMap extends HashMap {
