@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.50 2003/10/29 00:06:25 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.51 2003/11/16 21:39:42 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -38,7 +38,12 @@
       <include name="**/Bag.java"/>
       <include name="**/BidiMap.java"/>
       <include name="**/MapIterator.java"/>
+      <include name="**/OrderedBidiMap.java"/>
+      <include name="**/OrderedIterator.java"/>
+      <include name="**/map/OrderedMap.java"/>
+      <include name="**/OrderedMapIterator.java"/>
       <include name="**/SortedBag.java"/>
+      <include name="**/SortedBidiMap.java"/>
       <include name="**/AbstractTest*.java"/>
       <include name="**/BulkTest*.java"/>
    </patternset>

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestSortedBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestSortedBidiMap.java,v 1.2 2003/11/16 21:39:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,12 +71,11 @@ import java.util.TreeSet;
 
 import org.apache.commons.collections.AbstractTestSortedMap;
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.pairs.DefaultMapEntry;
 
 /**
- * Abstract test class for {@link BidiMap} methods and contracts.
+ * Abstract test class for {@link SortedBidiMap} methods and contracts.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/16 21:39:42 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -253,8 +252,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
         assertEquals(2, set.size());
         
         Iterator it2 = set.iterator();
-        Map.Entry firstEntry = new DefaultMapEntry((Map.Entry) it2.next());
-        Map.Entry secondEntry = new DefaultMapEntry((Map.Entry) it2.next());
+        Map.Entry firstEntry = cloneMapEntry((Map.Entry) it2.next());
+        Map.Entry secondEntry = cloneMapEntry((Map.Entry) it2.next());
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, set.contains(firstEntry));
@@ -418,8 +417,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
         Set set = sub.entrySet();
         Iterator it2 = set.iterator();
         Object fromEntry = it2.next();
-        Map.Entry firstEntry = new DefaultMapEntry((Map.Entry) it2.next());
-        Map.Entry secondEntry = new DefaultMapEntry((Map.Entry) it2.next());
+        Map.Entry firstEntry = cloneMapEntry((Map.Entry) it2.next());
+        Map.Entry secondEntry = cloneMapEntry((Map.Entry) it2.next());
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, set.contains(firstEntry));
@@ -601,8 +600,8 @@ public abstract class AbstractTestSortedBidiMap extends AbstractTestOrderedBidiM
         assertEquals(3, set.size());
         Iterator it2 = set.iterator();
         Object fromEntry = it2.next();
-        Map.Entry firstEntry = new DefaultMapEntry((Map.Entry) it2.next());
-        Map.Entry secondEntry = new DefaultMapEntry((Map.Entry) it2.next());
+        Map.Entry firstEntry = cloneMapEntry((Map.Entry) it2.next());
+        Map.Entry secondEntry = cloneMapEntry((Map.Entry) it2.next());
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, set.contains(firstEntry));

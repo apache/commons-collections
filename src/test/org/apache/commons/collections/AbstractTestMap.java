@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.12 2003/11/04 23:35:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestMap.java,v 1.13 2003/11/16 21:39:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -153,7 +153,7 @@ import java.util.Set;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.12 $ $Date: 2003/11/04 23:35:35 $
+ * @version $Revision: 1.13 $ $Date: 2003/11/16 21:39:42 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -433,6 +433,15 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      */
     protected Map makeConfirmedMap() {
         return new HashMap();
+    }
+
+    /**
+     * Creates a new Map Entry that is independent of the first and the map.
+     */
+    protected Map.Entry cloneMapEntry(Map.Entry entry) {
+        HashMap map = new HashMap();
+        map.put(entry.getKey(), entry.getValue());
+        return (Map.Entry) map.entrySet().iterator().next();
     }
 
     //-----------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.8 2003/11/04 23:34:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/Attic/AbstractTestCollection.java,v 1.9 2003/11/16 21:39:42 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -63,13 +63,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-
-import org.apache.commons.collections.pairs.DefaultMapEntry;
 
 /**
  * Abstract test class for {@link java.util.Collection} methods and contracts.
@@ -148,7 +147,7 @@ import org.apache.commons.collections.pairs.DefaultMapEntry;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.8 $ $Date: 2003/11/04 23:34:46 $
+ * @version $Revision: 1.9 $ $Date: 2003/11/16 21:39:42 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -403,6 +402,15 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      */
     protected Object makeObject() {
         return makeCollection();
+    }
+
+    /**
+     * Creates a new Map Entry that is independent of the first and the map.
+     */
+    protected Map.Entry cloneMapEntry(Map.Entry entry) {
+        HashMap map = new HashMap();
+        map.put(entry.getKey(), entry.getValue());
+        return (Map.Entry) map.entrySet().iterator().next();
     }
 
     //-----------------------------------------------------------------------
@@ -850,7 +858,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
             // TreeMap reuses the Map Entry, so the verify below fails
             // Clone it here if necessary
             if (o instanceof Map.Entry) {
-                o = new DefaultMapEntry((Map.Entry) o);
+                o = cloneMapEntry((Map.Entry) o);
             }
             iter.remove();
 
