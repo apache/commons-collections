@@ -1,4 +1,4 @@
-<!-- $Id: build.xml,v 1.42 2003/10/01 20:03:35 scolebourne Exp $ -->
+<!-- $Id: build.xml,v 1.43 2003/10/02 20:36:11 scolebourne Exp $ -->
 <project name="commons-collections" default="test" basedir=".">
 
    <!-- patternset describing files to be copied from the doc directory -->
@@ -55,7 +55,7 @@
       <property name="doc.release.notes" value="RELEASE-NOTES.html"/>
       <property name="doc.status" value="STATUS.html"/>
 
-      <property name="test.entry" value="org.apache.commons.collections.TestAll"/>
+      <property name="test.entry" value="org.apache.commons.collections.TestAllPackages"/>
       <property name="test.failonerror" value="true" />
       <property name="test.runner" value="junit.textui.TestRunner" />
 
