@@ -15,6 +15,10 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.Collection;
@@ -56,34 +60,37 @@ import org.apache.commons.collections.ResettableIterator;
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.13 $ $Date: 2004/02/18 01:13:19 $
+ * @version $Revision: 1.14 $ $Date: 2004/03/31 23:18:56 $
  *
  * @author Stephen Colebourne
  */
-public class Flat3Map implements IterableMap {
+public class Flat3Map implements IterableMap, Serializable, Cloneable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -6701087419741928296L;
 
     /** The size of the map, used while in flat mode */
-    private int size;
+    private transient int size;
     /** Hash, used while in flat mode */
-    private int hash1;
+    private transient int hash1;
     /** Hash, used while in flat mode */
-    private int hash2;
+    private transient int hash2;
     /** Hash, used while in flat mode */
-    private int hash3;
+    private transient int hash3;
     /** Key, used while in flat mode */
-    private Object key1;
+    private transient Object key1;
     /** Key, used while in flat mode */
-    private Object key2;
+    private transient Object key2;
     /** Key, used while in flat mode */
-    private Object key3;
+    private transient Object key3;
     /** Value, used while in flat mode */
-    private Object value1;
+    private transient Object value1;
     /** Value, used while in flat mode */
-    private Object value2;
+    private transient Object value2;
     /** Value, used while in flat mode */
-    private Object value3;
+    private transient Object value3;
     /** Map, used while in delegate mode */
-    private HashedMap delegateMap;
+    private transient HashedMap delegateMap;
 
     /**
      * Constructor.
@@ -344,7 +351,7 @@ public class Flat3Map implements IterableMap {
      * Converts the flat map data to a HashMap.
      */
     private void convertToMap() {
-        delegateMap = new HashedMap();
+        delegateMap = createDelegateMap();
         switch (size) {  // drop through
             case 3:
                 delegateMap.put(key3, value3);
@@ -358,6 +365,16 @@ public class Flat3Map implements IterableMap {
         hash1 = hash2 = hash3 = 0;
         key1 = key2 = key3 = null;
         value1 = value2 = value3 = null;
+    }
+
+    /**
+     * Create an instance of the map used for storage when in delegation mode.
+     * This can be overridden by subclasses.
+     *
+     * @return a new HashedMap or subclass
+     */
+    protected HashedMap createDelegateMap() {
+        return new HashedMap();
     }
 
     /**
@@ -945,8 +962,52 @@ public class Flat3Map implements IterableMap {
             return getValue();
         }
     }
-    
+
     //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeInt(size());
+        for (MapIterator it = mapIterator(); it.hasNext();) {
+            out.writeObject(it.next());  // key
+            out.writeObject(it.getValue());  // value
+        }
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        int count = in.readInt();
+        if (count > 3) {
+            delegateMap = createDelegateMap();
+        }
+        for (int i = count; i > 0; i--) {
+            put(in.readObject(), in.readObject());
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Clones the map without cloning the keys or values.
+     *
+     * @return a shallow clone
+     */
+    public Object clone() {
+        try {
+            Flat3Map cloned = (Flat3Map) super.clone();
+            if (cloned.delegateMap != null) {
+                cloned.delegateMap = (HashedMap) cloned.delegateMap.clone();
+            }
+            return cloned;
+        } catch (CloneNotSupportedException ex) {
+            throw new InternalError();
+        }
+    }
+
     /**
      * Compares this map with another.
      * 
