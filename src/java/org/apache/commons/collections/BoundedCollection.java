@@ -1,10 +1,10 @@
 /*
- *
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BoundedCollection.java,v 1.2 2003/05/09 18:36:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
  *
- * Copyright (c) 2002 The Apache Software Foundation.  All rights
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
  * reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -20,11 +20,11 @@
  *    distribution.
  *
  * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
+ *    any, must include the following acknowledgment:
  *       "This product includes software developed by the
  *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
+ *    Alternately, this acknowledgment may appear in the software itself,
+ *    if and wherever such third-party acknowledgments normally appear.
  *
  * 4. The names "The Jakarta Project", "Commons", and "Apache Software
  *    Foundation" must not be used to endorse or promote products derived
@@ -33,7 +33,7 @@
  *
  * 5. Products derived from this software may not be called "Apache"
  *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
+ *    permission of the Apache Software Foundation.
  *
  * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
  * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
@@ -58,6 +58,7 @@
 package org.apache.commons.collections;
 
 import java.util.Collection;
+
 /**
  * A BoundedCollection is a collection that is bounded in size.
  * <p>
@@ -65,10 +66,11 @@ import java.util.Collection;
  * maximum number of elements. This interface allows the querying of details
  * associated with the maximum number of elements.
  *
- * @since 2.2
+ * @since Commons Collections 3.0
+ * @version $Revision: 1.2 $ $Date: 2003/05/09 18:36:14 $
+ * 
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
  * @author Stephen Colebourne
- * @version $Id: BoundedCollection.java,v 1.1 2002/11/24 16:23:21 scolebourne Exp $
  */
 public interface BoundedCollection extends Collection {
 
