@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.34 2002/08/17 22:14:47 scolebourne Exp $
- * $Revision: 1.34 $
- * $Date: 2002/08/17 22:14:47 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestAll.java,v 1.35 2002/10/12 22:35:37 scolebourne Exp $
+ * $Revision: 1.35 $
+ * $Date: 2002/10/12 22:35:37 $
  *
  * ====================================================================
  *
@@ -61,13 +61,12 @@
 
 package org.apache.commons.collections;
 
-import org.apache.commons.collections.comparators.*;
 import junit.framework.*;
 
 /**
  * Entry point for all Collections tests.
  * @author Rodney Waldhoff
- * @version $Id: TestAll.java,v 1.34 2002/08/17 22:14:47 scolebourne Exp $
+ * @version $Id: TestAll.java,v 1.35 2002/10/12 22:35:37 scolebourne Exp $
  */
 public class TestAll extends TestCase {
     public TestAll(String testName) {
@@ -86,8 +85,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestSetUtils.suite());
         suite.addTest(TestListUtils.suite());
         suite.addTest(TestMapUtils.suite());
-        suite.addTest(TestComparableComparator.suite());
-        suite.addTest(TestComparatorChain.suite());
         suite.addTest(TestCursorableLinkedList.suite());
         suite.addTest(TestDoubleOrderedMap.suite());
         suite.addTest(TestExtendedProperties.suite());
@@ -100,14 +97,13 @@ public class TestAll extends TestCase {
         suite.addTest(TestHashBag.suite());
         suite.addTest(TestLRUMap.suite());
         suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestReverseComparator.suite());
-	suite.addTest(TestNullComparator.suite());
         suite.addTest(TestSequencedHashMap.suite());
         suite.addTest(TestStaticBucketMap.suite());
         suite.addTest(TestTreeBag.suite());
         suite.addTest(TestUnboundedFifoBuffer.suite());
         suite.addTest(TestReferenceMap.suite());
         suite.addTest(TestIteratorUtils.suite());
+        suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
         suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
         suite.addTest(org.apache.commons.collections.primitives.TestAll.suite());
         return suite;
