@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/AbstractTestMapEntry.java,v 1.2 2003/11/02 19:44:37 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/pairs/Attic/AbstractTestMapEntry.java,v 1.3 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import junit.framework.TestCase;
  * type being tested.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/02 19:44:37 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Neil O'Toole
  */
@@ -94,7 +94,7 @@ public abstract class AbstractTestMapEntry extends TestCase {
      * This implementation simply calls {@link #makeMapEntry(Object, Object)}
      * with null for key and value. Subclasses can override this method if desired.
      */
-    protected Map.Entry makeMapEntry() {
+    public Map.Entry makeMapEntry() {
         return makeMapEntry(null, null);
     }
 
@@ -103,19 +103,19 @@ public abstract class AbstractTestMapEntry extends TestCase {
      * Subclasses should override this method to return a Map.Entry
      * of the type being tested.
      */
-    protected abstract Map.Entry makeMapEntry(Object key, Object value);
+    public abstract Map.Entry makeMapEntry(Object key, Object value);
 
     /**
      * Makes a Map.Entry of a type that's known to work correctly.
      */
-    protected Map.Entry makeKnownMapEntry() {
+    public Map.Entry makeKnownMapEntry() {
         return makeKnownMapEntry(null, null);
     }
 
     /**
      * Makes a Map.Entry of a type that's known to work correctly.
      */
-    protected Map.Entry makeKnownMapEntry(Object key, Object value) {
+    public Map.Entry makeKnownMapEntry(Object key, Object value) {
         Map map = new HashMap(1);
         map.put(key, value);
         Map.Entry entry = (Map.Entry) map.entrySet().iterator().next();

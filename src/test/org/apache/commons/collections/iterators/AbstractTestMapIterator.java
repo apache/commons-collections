@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.3 2003/11/08 18:46:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestMapIterator.java,v 1.4 2003/11/18 22:37:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import java.util.Set;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/08 18:46:57 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -93,14 +93,14 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
      * 
      * @return an empty iterator
      */
-    protected abstract MapIterator makeEmptyMapIterator();
+    public abstract MapIterator makeEmptyMapIterator();
 
     /**
      * Implement this method to return a map iterator over a map with elements.
      * 
      * @return a full iterator
      */
-    protected abstract MapIterator makeFullMapIterator();
+    public abstract MapIterator makeFullMapIterator();
 
     /**
      * Implement this method to return the map which contains the same data as the
@@ -108,7 +108,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
      * 
      * @return a full map which can be updated
      */
-    protected abstract Map getMap();
+    public abstract Map getMap();
     
     /**
      * Implement this method to return the confirmed map which contains the same
@@ -116,14 +116,14 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
      * 
      * @return a full map which can be updated
      */
-    protected abstract Map getConfirmedMap();
+    public abstract Map getConfirmedMap();
     
     /**
      * Implements the abstract superclass method to return the list iterator.
      * 
      * @return an empty iterator
      */
-    protected final Iterator makeEmptyIterator() {
+    public final Iterator makeEmptyIterator() {
         return makeEmptyMapIterator();
     }
 
@@ -132,7 +132,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
      * 
      * @return a full iterator
      */
-    protected final Iterator makeFullIterator() {
+    public final Iterator makeFullIterator() {
         return makeFullMapIterator();
     }
 
@@ -142,7 +142,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
      * 
      * @return true if Iterator supports set
      */
-    protected boolean supportsSetValue() {
+    public boolean supportsSetValue() {
         return true;
     }
 
@@ -150,7 +150,7 @@ public abstract class AbstractTestMapIterator extends AbstractTestIterator {
      * The values to be used in the add and set tests.
      * Default is two strings.
      */
-    protected Object[] addSetValues() {
+    public Object[] addSetValues() {
         return new Object[] {"A", "B"};
     }
 

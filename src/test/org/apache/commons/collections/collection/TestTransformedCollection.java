@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/TestTransformedCollection.java,v 1.2 2003/11/16 22:15:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/TestTransformedCollection.java,v 1.3 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.Transformer;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:11 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Stephen Colebourne
  */
@@ -112,7 +112,7 @@ public class TestTransformedCollection extends AbstractTestCollection {
         return new ArrayList();
     }
 
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         List list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
@@ -122,18 +122,18 @@ public class TestTransformedCollection extends AbstractTestCollection {
         return TransformedCollection.decorate(new ArrayList(), NOOP_TRANSFORMER);
     }
 
-    protected Collection makeFullCollection() {
+    public Collection makeFullCollection() {
         List list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return TransformedCollection.decorate(list, NOOP_TRANSFORMER);
     }
     
     //-----------------------------------------------------------------------
-    protected Object[] getFullElements() {
+    public Object[] getFullElements() {
         return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
 
-    protected Object[] getOtherElements() {
+    public Object[] getOtherElements() {
         return new Object[] {"9", "88", "678", "87", "98", "78", "99"};
     }
 

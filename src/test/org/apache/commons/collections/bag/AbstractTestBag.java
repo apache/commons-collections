@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.1 2003/11/16 22:15:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/AbstractTestBag.java,v 1.2 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,7 +75,7 @@ import org.apache.commons.collections.Bag;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Bag} fails.
  *
- * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:10 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
@@ -101,14 +101,14 @@ public abstract class AbstractTestBag extends AbstractTestObject {
      * 
      * @return the bag to be tested
      */
-    protected abstract Bag makeBag();
+    public abstract Bag makeBag();
 
     /**
      * Implements the superclass method to return the Bag.
      * 
      * @return the bag to be tested
      */
-    protected Object makeObject() {
+    public Object makeObject() {
         return makeBag();
     }
 

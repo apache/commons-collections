@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.12 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestDoubleOrderedMap.java,v 1.13 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
  * Map that does not support duplicate keys, duplicate 
  * values, or null values.
  * 
- * @version $Revision: 1.12 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.13 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author Marc Johnson
  * @author Stephen Colebourne
@@ -107,7 +107,7 @@ public class TestDoubleOrderedMap extends AbstractTestMap  {
     /**
      *  The default comparator in double ordered map does not allow null keys.
      **/
-    protected boolean isAllowNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
 
@@ -115,14 +115,14 @@ public class TestDoubleOrderedMap extends AbstractTestMap  {
      *  The default comparator in double ordered map does not allow null keys,
      *  and values are keys in this map.
      **/
-    protected boolean isAllowNullValue() {
+    public boolean isAllowNullValue() {
         return false;
     }
 
     /**
      *  Double ordered map does not support duplicate values
      **/
-    protected boolean isAllowDuplicateValues() {
+    public boolean isAllowDuplicateValues() {
         return false;
     }
     
@@ -134,18 +134,18 @@ public class TestDoubleOrderedMap extends AbstractTestMap  {
      * differs from the standard Map contract which would replace the value
      * for that key and return it.
      */
-    protected boolean isPutChangeSupported() {
+    public boolean isPutChangeSupported() {
         return false;
     }
 
     /**
      * setValue() is not supported as it can change the map.
      */
-    protected boolean isSetValueSupported() {
+    public boolean isSetValueSupported() {
         return false;
     }
 
-    protected Map makeEmptyMap() {
+    public Map makeEmptyMap() {
         return new DoubleOrderedMap();
     }
 

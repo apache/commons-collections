@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedSet.java,v 1.6 2003/11/16 22:15:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSortedSet.java,v 1.7 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.set.AbstractTestSortedSet;
  * {@link ObservedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.6 $ $Date: 2003/11/16 22:15:12 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Stephen Colebourne
  */
@@ -92,11 +92,11 @@ public class TestObservableSortedSet extends AbstractTestSortedSet implements Ob
     }
 
     //-----------------------------------------------------------------------
-    protected Set makeEmptySet() {
+    public Set makeEmptySet() {
         return ObservableSortedSet.decorate(new TreeSet(), ObservedTestHelper.LISTENER);
     }
 
-    protected Set makeFullSet() {
+    public Set makeFullSet() {
         SortedSet set = new TreeSet();
         set.addAll(Arrays.asList(getFullElements()));
         return ObservableSortedSet.decorate(set, ObservedTestHelper.LISTENER);

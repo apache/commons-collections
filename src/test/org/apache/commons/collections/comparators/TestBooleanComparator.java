@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestBooleanComparator.java,v 1.6 2003/10/06 21:02:50 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestBooleanComparator.java,v 1.7 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for {@link BooleanComparator}.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/10/06 21:02:50 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Rodney Waldhoff
  */
@@ -87,11 +87,11 @@ public class TestBooleanComparator extends AbstractTestComparator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    protected Comparator makeComparator() {
+    public Comparator makeComparator() {
         return new BooleanComparator();
     }
 
-    protected List getComparableObjectsOrdered() {
+    public List getComparableObjectsOrdered() {
         List list = new ArrayList();
         list.add(new Boolean(false));
         list.add(Boolean.FALSE);

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSequencedHashMap.java,v 1.23 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestSequencedHashMap.java,v 1.24 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
  * Be sure to use the "labRat" instance whenever possible,
  * so that subclasses will be tested correctly.
  * 
- * @version $Revision: 1.23 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.24 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author Morgan Delagrange
  * @author Daniel Rall
@@ -112,7 +112,7 @@ public class TestSequencedHashMap extends AbstractTestMap {
         labRat = (SequencedHashMap) makeEmptyMap();
     }
 
-    protected Map makeEmptyMap() {
+    public Map makeEmptyMap() {
         return new SequencedHashMap();
     }
 
@@ -229,7 +229,7 @@ public class TestSequencedHashMap extends AbstractTestMap {
         assertEquals("test with non-existing key failed", -1, labRat.indexOf("NonExistingKey"));
     }
     
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         labRat = null;
     }
 }

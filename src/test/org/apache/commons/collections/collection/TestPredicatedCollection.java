@@ -69,7 +69,7 @@ import org.apache.commons.collections.PredicateUtils;
  * {@link PredicatedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:11 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Phil Steitz
  */
@@ -105,17 +105,17 @@ public class TestPredicatedCollection extends AbstractTestCollection {
         return new ArrayList();
     }
     
-    protected Object[] getFullElements() {
+    public Object[] getFullElements() {
         return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
     
-    protected Collection makeFullCollection() {
+    public Collection makeFullCollection() {
         List list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return decorateCollection(list, truePredicate);
     }
     
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         List list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return list;

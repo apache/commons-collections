@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestComparableComparator.java,v 1.3 2003/10/01 22:14:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestComparableComparator.java,v 1.4 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for ComparableComparator.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/10/01 22:14:48 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Unknown
  */
@@ -81,11 +81,11 @@ public class TestComparableComparator extends AbstractTestComparator {
         return new TestSuite(TestComparableComparator.class);
     }
 
-    protected Comparator makeComparator() {
+    public Comparator makeComparator() {
         return new ComparableComparator();
     }
 
-    protected List getComparableObjectsOrdered() {
+    public List getComparableObjectsOrdered() {
         List list = new LinkedList();
         list.add(new Integer(1));
         list.add(new Integer(2));

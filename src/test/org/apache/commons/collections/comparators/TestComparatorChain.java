@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestComparatorChain.java,v 1.7 2003/10/01 22:14:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestComparatorChain.java,v 1.8 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for ComparatorChain.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/10/01 22:14:48 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Unknown
  */
@@ -82,7 +82,7 @@ public class TestComparatorChain extends AbstractTestComparator {
         return new TestSuite(TestComparatorChain.class);
     }
 
-    protected Comparator makeComparator() {
+    public Comparator makeComparator() {
         ComparatorChain chain = new ComparatorChain(new ColumnComparator(0));
         chain.addComparator(new ColumnComparator(1),true); // reverse the second column
         chain.addComparator(new ColumnComparator(2),false);
@@ -159,7 +159,7 @@ public class TestComparatorChain extends AbstractTestComparator {
         assertTrue(chain.compare(new Integer(4), new Integer(4)) == 0);            
     }
 
-    protected List getComparableObjectsOrdered() {
+    public List getComparableObjectsOrdered() {
         List list = new LinkedList();
         // this is the correct order assuming a
         // "0th forward, 1st reverse, 2nd forward" sort

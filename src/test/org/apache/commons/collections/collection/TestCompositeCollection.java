@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/TestCompositeCollection.java,v 1.2 2003/11/16 22:15:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/TestCompositeCollection.java,v 1.3 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -68,7 +68,7 @@ import junit.framework.TestSuite;
  * {@link CompositeCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:11 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Brian McCallister
  * @author Phil Steitz
@@ -92,11 +92,11 @@ public class TestCompositeCollection extends AbstractTestCollection {
     /**
      * Run stock collection tests without Mutator, so turn off add, remove
      */
-    protected boolean isAddSupported() {
+    public boolean isAddSupported() {
         return false;
     }
     
-    protected boolean isRemoveSupported() {
+    public boolean isRemoveSupported() {
         return false;
     }
     
@@ -111,14 +111,14 @@ public class TestCompositeCollection extends AbstractTestCollection {
         return new HashSet();
     }
     
-    protected Object[] getFullElements() {
+    public Object[] getFullElements() {
         return new Object[] {"1", "2", "3", "4"};
     }
     
     /**
      * Full collection consists of 5 collections, each with one element
      */
-    protected Collection makeFullCollection() {
+    public Collection makeFullCollection() {
         CompositeCollection compositeCollection = new CompositeCollection();
         Object[] elements = getFullElements();
         for (int i = 0; i < elements.length; i++) {
@@ -132,7 +132,7 @@ public class TestCompositeCollection extends AbstractTestCollection {
     /**
      * Full collection should look like a collection with 5 elements
      */
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         Collection collection = new HashSet();
         collection.addAll(Arrays.asList(getFullElements()));
         return collection;

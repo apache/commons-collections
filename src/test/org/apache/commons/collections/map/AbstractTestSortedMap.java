@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestSortedMap.java,v 1.1 2003/11/16 22:15:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestSortedMap.java,v 1.2 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:11 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Stephen Colebourne
  */
@@ -91,7 +91,7 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
      * 
      * @return false
      */
-    protected boolean isAllowNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
 
@@ -100,7 +100,7 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
      * 
      * @return a map that is known to be valid
      */
-    protected Map makeConfirmedMap() {
+    public Map makeConfirmedMap() {
         return new TreeMap();
     }
 
@@ -147,17 +147,17 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             super(name);
             this.main = main;
         }
-        protected void resetEmpty() {
+        public void resetEmpty() {
             // needed to init verify correctly
             main.resetEmpty();
             super.resetEmpty();
         }
-        protected void resetFull() {
+        public void resetFull() {
             // needed to init verify correctly
             main.resetFull();
             super.resetFull();
         }
-        protected void verify() {
+        public void verify() {
             // cross verify changes on view with changes on main map
             super.verify();
             main.verify();
@@ -172,38 +172,38 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             return null;  // block infinite recursion
         }
         
-        protected Object[] getSampleKeys() {
+        public Object[] getSampleKeys() {
             return subSortedKeys.toArray();
         }
-        protected Object[] getSampleValues() {
+        public Object[] getSampleValues() {
             return subSortedValues.toArray();
         }
-        protected Object[] getNewSampleValues() {
+        public Object[] getNewSampleValues() {
             return subSortedNewValues.toArray();
         }
         
-        protected String getCompatibilityVersion() {
+        public String getCompatibilityVersion() {
             return main.getCompatibilityVersion();
         }
-        protected boolean isAllowNullKey() {
+        public boolean isAllowNullKey() {
             return main.isAllowNullKey();
         }
-        protected boolean isAllowNullValue() {
+        public boolean isAllowNullValue() {
             return main.isAllowNullValue();
         }
-        protected boolean isPutAddSupported() {
+        public boolean isPutAddSupported() {
             return main.isPutAddSupported();
         }
-        protected boolean isPutChangeSupported() {
+        public boolean isPutChangeSupported() {
             return main.isPutChangeSupported();
         }
-        protected boolean isRemoveSupported() {
+        public boolean isRemoveSupported() {
             return main.isRemoveSupported();
         }
-        protected boolean supportsEmptyCollections() {
+        public boolean supportsEmptyCollections() {
             return false;
         }
-        protected boolean supportsFullCollections() {
+        public boolean supportsFullCollections() {
             return false;
         }
     }
@@ -225,11 +225,11 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             this.subSortedValues.subList(SUBSIZE, this.subSortedValues.size()).clear();
             this.subSortedNewValues.addAll(Arrays.asList(main.getNewSampleValues()).subList(0, SUBSIZE));
         }
-        protected Map makeEmptyMap() {
+        public Map makeEmptyMap() {
             // done this way so toKey is correctly set in the returned map
             return ((SortedMap) main.makeEmptyMap()).headMap(toKey);
         }
-        protected Map makeFullMap() {
+        public Map makeFullMap() {
             return ((SortedMap) main.makeFullMap()).headMap(toKey);
         }
         public void testHeadMapOutOfRange() {
@@ -262,11 +262,11 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
             this.subSortedValues.subList(0, this.subSortedValues.size() - SUBSIZE).clear();
             this.subSortedNewValues.addAll(Arrays.asList(main.getNewSampleValues()).subList(0, SUBSIZE));
         }
-        protected Map makeEmptyMap() {
+        public Map makeEmptyMap() {
             // done this way so toKey is correctly set in the returned map
             return ((SortedMap) main.makeEmptyMap()).tailMap(fromKey);
         }
-        protected Map makeFullMap() {
+        public Map makeFullMap() {
             return ((SortedMap) main.makeFullMap()).tailMap(fromKey);
         }
         public void testTailMapOutOfRange() {
@@ -306,11 +306,11 @@ public abstract class AbstractTestSortedMap extends AbstractTestMap {
                 SUBSIZE, this.main.getNewSampleValues().length - SUBSIZE));
         }
         
-        protected Map makeEmptyMap() {
+        public Map makeEmptyMap() {
             // done this way so toKey is correctly set in the returned map
             return ((SortedMap) main.makeEmptyMap()).subMap(fromKey, toKey);
         }
-        protected Map makeFullMap() {
+        public Map makeFullMap() {
             return ((SortedMap) main.makeFullMap()).subMap(fromKey, toKey);
         }
         public void testSubMapOutOfRange() {

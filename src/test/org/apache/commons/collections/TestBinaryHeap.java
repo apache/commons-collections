@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.12 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBinaryHeap.java,v 1.13 2003/11/18 22:37:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * Tests the BinaryHeap.
  * 
- * @version $Revision: 1.12 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.13 $ $Date: 2003/11/18 22:37:16 $
  * 
  * @author Michael A. Smith
  */
@@ -88,7 +88,7 @@ public class TestBinaryHeap extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------  
-    protected void verify() {
+    public void verify() {
         super.verify();
         BinaryHeap heap = (BinaryHeap) collection;
 
@@ -115,16 +115,16 @@ public class TestBinaryHeap extends AbstractTestCollection {
      * Overridden because UnboundedFifoBuffer isn't fail fast.
      * @return false
      */
-    protected boolean isFailFastSupported() {
+    public boolean isFailFastSupported() {
         return false;
     }
 
     //-----------------------------------------------------------------------  
-    protected Collection makeConfirmedCollection() {
+    public Collection makeConfirmedCollection() {
         return new ArrayList();
     }
 
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         ArrayList list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
@@ -133,16 +133,16 @@ public class TestBinaryHeap extends AbstractTestCollection {
     /**
      * Return a new, empty {@link Object} to used for testing.
      */
-    protected Collection makeCollection() {
+    public Collection makeCollection() {
         return new BinaryHeap();
     }
 
     //-----------------------------------------------------------------------  
-    protected Object[] getFullElements() {
+    public Object[] getFullElements() {
         return getFullNonNullStringElements();
     }
 
-    protected Object[] getOtherElements() {
+    public Object[] getOtherElements() {
         return getOtherNonNullStringElements();
     }
 

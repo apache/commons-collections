@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/AbstractTestObject.java,v 1.1 2003/10/02 22:14:29 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/AbstractTestObject.java,v 1.2 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -79,7 +79,7 @@ import java.io.Serializable;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  *
- * @version $Revision: 1.1 $ $Date: 2003/10/02 22:14:29 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -105,7 +105,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * 
      * @return the object to test
      */
-    protected abstract Object makeObject();
+    public abstract Object makeObject();
 
     /**
      * Override this method if a subclass is testing an object
@@ -114,7 +114,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * 
      * @return true
      */
-    protected boolean supportsEmptyCollections() {
+    public boolean supportsEmptyCollections() {
         return true;
     }
 
@@ -125,7 +125,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * 
      * @return true
      */
-    protected boolean supportsFullCollections() {
+    public boolean supportsFullCollections() {
         return true;
     }
 
@@ -244,7 +244,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * @return The version, or <code>null</code> if this object shouldn't be
      * tested for compatibility with previous versions.
      */
-    protected String getCompatibilityVersion() {
+    public String getCompatibilityVersion() {
         return "1";
     }
 

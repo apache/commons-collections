@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/AbstractTestSortedSet.java,v 1.1 2003/11/16 22:15:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/AbstractTestSortedSet.java,v 1.2 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -74,7 +74,7 @@ import org.apache.commons.collections.BulkTest;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:10 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Stephen Colebourne
  * @author Dieter Wimberger
@@ -95,7 +95,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
      * Verification extension, will check the order of elements,
      * the sets should already be verified equal.
      */
-    protected void verify() {
+    public void verify() {
         super.verify();
         
         // Check that iterator returns elements in order and first() and last()
@@ -126,7 +126,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
      * Overridden because SortedSets don't allow null elements (normally).
      * @return false
      */
-    protected boolean isNullSupported() {
+    public boolean isNullSupported() {
         return false;
     }
 
@@ -136,7 +136,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
      *
      * @return a confirmed empty collection
      */
-    protected Collection makeConfirmedCollection() {
+    public Collection makeConfirmedCollection() {
         return new TreeSet();
     }
 
@@ -145,7 +145,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
      * Return the {@link AbstractTestCollection#confirmed} fixture, but cast as a
      * SortedSet.
      */
-    protected SortedSet getConfirmedSortedSet() {
+    public SortedSet getConfirmedSortedSet() {
         return (SortedSet) confirmed;
     }
 
@@ -153,7 +153,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
     /**
      * Override to return comparable objects.
      */
-    protected Object[] getFullNonNullElements() {
+    public Object[] getFullNonNullElements() {
         Object[] elements = new Object[30];
 
         for (int i = 0; i < 30; i++) {
@@ -165,7 +165,7 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
     /**
      * Override to return comparable objects.
      */
-    protected Object[] getOtherNonNullElements() {
+    public Object[] getOtherNonNullElements() {
         Object[] elements = new Object[30];
         for (int i = 0; i < 30; i++) {
             elements[i] = new Integer(i + i + 2);
@@ -283,16 +283,16 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
 
         } //TestSortedSetSubSet
 
-        protected boolean isNullSupported() {
+        public boolean isNullSupported() {
             return AbstractTestSortedSet.this.isNullSupported();
         } //useNullValue
 
-        protected Object[] getFullElements() {
+        public Object[] getFullElements() {
             //System.out.println("getFullElements()");
             return m_FullElements;
         }
 
-        protected Object[] getOtherElements() {
+        public Object[] getOtherElements() {
             return m_OtherElements;
         }
 
@@ -310,25 +310,25 @@ public abstract class AbstractTestSortedSet extends AbstractTestSet {
             }
         } //getSubSet
 
-        protected Set makeEmptySet() {
+        public Set makeEmptySet() {
             SortedSet s = (SortedSet) AbstractTestSortedSet.this.makeFullSet();
             s = getSubSet(s);
             s.clear();
             return s;
         } //makeEmptySet
 
-        protected Set makeFullSet() {
+        public Set makeFullSet() {
             SortedSet s = (SortedSet) AbstractTestSortedSet.this.makeFullCollection();
             return getSubSet(s);
         } //makeFullSet
 
-        protected void resetFull() {
+        public void resetFull() {
             AbstractTestSortedSet.this.resetFull();
             TestSortedSetSubSet.this.confirmed = getSubSet((SortedSet) AbstractTestSortedSet.this.confirmed);
             TestSortedSetSubSet.this.collection = getSubSet((SortedSet) AbstractTestSortedSet.this.collection);
         }
 
-        protected void resetEmpty() {
+        public void resetEmpty() {
             TestSortedSetSubSet.this.resetFull();
             TestSortedSetSubSet.this.confirmed.clear();
             TestSortedSetSubSet.this.collection.clear();

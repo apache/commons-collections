@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/AbstractTestCollection.java,v 1.1 2003/11/16 22:15:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/collection/AbstractTestCollection.java,v 1.2 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -78,7 +78,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to 
  * implement the {@link #makeCollection()} method.  You might want to 
- * override some of the additional protected methods as well:
+ * override some of the additional public methods as well:
  * <p>
  * <b>Element Population Methods</b>
  * <p>
@@ -149,7 +149,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:11 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -176,7 +176,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
     /** 
      *  A collection instance that will be used for testing.
      */
-    protected Collection collection;
+    public Collection collection;
 
     /** 
      *  Confirmed collection.  This is an instance of a collection that is
@@ -186,7 +186,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  collection, and then calling verify() to make sure your collection
      *  still matches the confirmed collection.
      */
-    protected Collection confirmed;
+    public Collection confirmed;
 
     /**
      * JUnit constructor.
@@ -220,7 +220,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  should provide additional tests on iterator.remove() to make sure the
      *  proper elements are removed when remove() is called on the iterator.
      **/
-    protected boolean areEqualElementsDistinguishable() {
+    public boolean areEqualElementsDistinguishable() {
         return false;
     }
 
@@ -232,7 +232,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  Default implementation returns true.  Override if your collection
      *  class does not support add or addAll.
      */
-    protected boolean isAddSupported() {
+    public boolean isAddSupported() {
         return true;
     }
 
@@ -245,7 +245,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  Default implementation returns true.  Override if your collection
      *  class does not support removal operations.
      */
-    protected boolean isRemoveSupported() {
+    public boolean isRemoveSupported() {
         return true;
     }
 
@@ -253,7 +253,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      * Returns true to indicate that the collection supports holding null.
      * The default implementation returns true;
      */
-    protected boolean isNullSupported() {
+    public boolean isNullSupported() {
         return true;
     }
 
@@ -261,7 +261,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      * Returns true to indicate that the collection supports fail fast iterators.
      * The default implementation returns true;
      */
-    protected boolean isFailFastSupported() {
+    public boolean isFailFastSupported() {
         return false;
     }
 
@@ -270,7 +270,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  Verifies that {@link #collection} and {@link #confirmed} have 
      *  identical state.
      */
-    protected void verify() {
+    public void verify() {
         int confirmedSize = confirmed.size();
         assertEquals("Collection size should match confirmed collection's",
                      confirmedSize, collection.size());
@@ -345,7 +345,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  collections.  Invoke this method before performing a modification
      *  test.
      */
-    protected void resetEmpty() {
+    public void resetEmpty() {
         this.collection = makeCollection();
         this.confirmed = makeConfirmedCollection();
     }
@@ -355,7 +355,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  collections.  Invoke this method before performing a modification
      *  test.
      */
-    protected void resetFull() {
+    public void resetFull() {
         this.collection = makeFullCollection();
         this.confirmed = makeConfirmedFullCollection();
     }
@@ -368,7 +368,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *
      *  @return a confirmed empty collection
      */
-    protected abstract Collection makeConfirmedCollection();
+    public abstract Collection makeConfirmedCollection();
 
     /**
      *  Returns a confirmed full collection.
@@ -378,12 +378,12 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *
      *  @return a confirmed full collection
      */
-    protected abstract Collection makeConfirmedFullCollection();
+    public abstract Collection makeConfirmedFullCollection();
 
     /**
      * Return a new, empty {@link Collection} to be used for testing.
      */
-    protected abstract Collection makeCollection();
+    public abstract Collection makeCollection();
 
     /**
      *  Returns a full collection to be used for testing.  The collection
@@ -393,7 +393,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  the results of {@link #getFullElements()}.  Override this default
      *  if your collection doesn't support addAll.
      */
-    protected Collection makeFullCollection() {
+    public Collection makeFullCollection() {
         Collection c = makeCollection();
         c.addAll(Arrays.asList(getFullElements()));
         return c;
@@ -402,14 +402,14 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
     /**
      *  Returns an empty collection for Object tests.
      */
-    protected Object makeObject() {
+    public Object makeObject() {
         return makeCollection();
     }
 
     /**
      * Creates a new Map Entry that is independent of the first and the map.
      */
-    protected Map.Entry cloneMapEntry(Map.Entry entry) {
+    public Map.Entry cloneMapEntry(Map.Entry entry) {
         HashMap map = new HashMap();
         map.put(entry.getKey(), entry.getValue());
         return (Map.Entry) map.entrySet().iterator().next();
@@ -426,7 +426,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  override {@link #makeFullCollection()}, you <I>must</I> override
      *  this method to reflect the contents of a full collection.
      */
-    protected Object[] getFullElements() {
+    public Object[] getFullElements() {
         if (isNullSupported()) {
             ArrayList list = new ArrayList();
             list.addAll(Arrays.asList(getFullNonNullElements()));
@@ -446,7 +446,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  to an empty or full collection, so if your collection restricts
      *  certain kinds of elements, you should override this method.
      */
-    protected Object[] getOtherElements() {
+    public Object[] getOtherElements() {
         return getOtherNonNullElements();
     }
     
@@ -459,7 +459,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  the results of this method if your collection does not support
      *  the null element.
      */
-    protected Object[] getFullNonNullElements() {
+    public Object[] getFullNonNullElements() {
         return new Object[] {
             new String(""),
             new String("One"),
@@ -487,7 +487,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  {@link #getOtherElements()}.  Includes many objects
      *  of different types.
      */
-    protected Object[] getOtherNonNullElements() {
+    public Object[] getOtherNonNullElements() {
         return new Object[] {
             new Integer(0),
             new Float(0),
@@ -507,7 +507,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  the results of this method if your collection does not support
      *  heterogenous elements or the null element.
      */
-    protected Object[] getFullNonNullStringElements() {
+    public Object[] getFullNonNullStringElements() {
         return new Object[] {
             "If","the","dull","substance","of","my","flesh","were","thought",
             "Injurious","distance","could","not","stop","my","way",
@@ -520,7 +520,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
      *  the results of this method if your collection does not support
      *  heterogenous elements or the null element.
      */
-    protected Object[] getOtherNonNullStringElements() {
+    public Object[] getOtherNonNullStringElements() {
         return new Object[] {
             "For","then","despite",/* of */"space","I","would","be","brought",
             "From","limits","far","remote","where","thou","dost","stay"

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestFixedSizeMap.java,v 1.2 2003/11/16 22:15:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestFixedSizeMap.java,v 1.3 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import junit.framework.TestSuite;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:11 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Stephen Colebourne
  */
@@ -87,21 +87,21 @@ public class TestFixedSizeMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    protected Map makeEmptyMap() {
+    public Map makeEmptyMap() {
         return FixedSizeMap.decorate(new HashMap());
     }
 
-    protected Map makeFullMap() {
+    public Map makeFullMap() {
         Map map = new HashMap();
         addSampleMappings(map);
         return FixedSizeMap.decorate(map);
     }
     
-    protected boolean isPutAddSupported() {
+    public boolean isPutAddSupported() {
         return false;
     }
 
-    protected boolean isRemoveSupported() {
+    public boolean isRemoveSupported() {
         return false;
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSet.java,v 1.3 2003/11/16 22:15:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableSet.java,v 1.4 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * {@link ObservedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/16 22:15:12 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Stephen Colebourne
  */
@@ -91,11 +91,11 @@ public class TestObservableSet extends AbstractTestSet implements ObservedTestHe
     }
 
     //-----------------------------------------------------------------------
-    protected Set makeEmptySet() {
+    public Set makeEmptySet() {
         return ObservableSet.decorate(new HashSet(), ObservedTestHelper.LISTENER);
     }
 
-    protected Set makeFullSet() {
+    public Set makeFullSet() {
         Set set = new HashSet();
         set.addAll(Arrays.asList(getFullElements()));
         return ObservableSet.decorate(set, ObservedTestHelper.LISTENER);

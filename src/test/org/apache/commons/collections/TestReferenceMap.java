@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.14 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestReferenceMap.java,v 1.15 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Tests for ReferenceMap. 
  * 
- * @version $Revision: 1.14 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.15 $ $Date: 2003/11/18 22:37:15 $
  *
  * @author Paul Jack
  */
@@ -86,7 +86,7 @@ public class TestReferenceMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    protected Map makeEmptyMap() {
+    public Map makeEmptyMap() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         return map;
     }

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestBidiMap.java,v 1.2 2003/11/16 22:15:11 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/AbstractTestBidiMap.java,v 1.3 2003/11/18 22:37:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  * 
- * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:11 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:16 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -109,14 +109,14 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
      * 
      * @return an empty <code>BidiMap</code> implementation.
      */
-    protected abstract BidiMap makeEmptyBidiMap();
+    public abstract BidiMap makeEmptyBidiMap();
 
     /**
      * Override to create a full <code>BidiMap</code> other than the default.
      * 
      * @return a full <code>BidiMap</code> implementation.
      */
-    protected BidiMap makeFullBidiMap() {
+    public BidiMap makeFullBidiMap() {
         final BidiMap map = makeEmptyBidiMap();
         for (int i = 0; i < entries.length; i++) {
             map.put(entries[i][0], entries[i][1]);
@@ -127,21 +127,21 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
     /**
      * Override to return the empty BidiMap.
      */
-    protected final  Map makeEmptyMap() {
+    public final  Map makeEmptyMap() {
         return makeEmptyBidiMap();
     }
 
     /**
      * Override to indicate to AbstractTestMap this is a BidiMap.
      */
-    protected boolean isAllowDuplicateValues() {
+    public boolean isAllowDuplicateValues() {
         return false;
     }
     
     /**
      * Override as DualHashBidiMap didn't exist until version 3.
      */
-    protected String getCompatibilityVersion() {
+    public String getCompatibilityVersion() {
         return "3";
     }
 
@@ -183,12 +183,12 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
      * <p>
      * This implementation checks the inverse map as well.
      */
-    protected void verify() {
+    public void verify() {
         verifyInverse();
         super.verify();
     }
 
-    protected void verifyInverse() {
+    public void verifyInverse() {
         assertEquals(map.size(), ((BidiMap) map).inverseBidiMap().size());
         Map map1 = new HashMap(map);
         Map map2 = new HashMap(((BidiMap) map).inverseBidiMap());
@@ -441,38 +441,38 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
             super();
             this.main = main;
         }
-        protected BidiMap makeEmptyBidiMap() {
+        public BidiMap makeEmptyBidiMap() {
             return main.makeEmptyBidiMap().inverseBidiMap();
         }
-        protected BidiMap makeFullBidiMap() {
+        public BidiMap makeFullBidiMap() {
             return main.makeFullBidiMap().inverseBidiMap();
         }
-        protected Object[] getSampleKeys() {
+        public Object[] getSampleKeys() {
             return main.getSampleValues();
         }
-        protected Object[] getSampleValues() {
+        public Object[] getSampleValues() {
             return main.getSampleKeys();
         }
         
-        protected String getCompatibilityVersion() {
+        public String getCompatibilityVersion() {
             return main.getCompatibilityVersion();
         }
-        protected boolean isAllowNullKey() {
+        public boolean isAllowNullKey() {
             return main.isAllowNullKey();
         }
-        protected boolean isAllowNullValue() {
+        public boolean isAllowNullValue() {
             return main.isAllowNullValue();
         }
-        protected boolean isPutAddSupported() {
+        public boolean isPutAddSupported() {
             return main.isPutAddSupported();
         }
-        protected boolean isPutChangeSupported() {
+        public boolean isPutChangeSupported() {
             return main.isPutChangeSupported();
         }
-        protected boolean isSetValueSupported() {
+        public boolean isSetValueSupported() {
             return main.isSetValueSupported();
         }
-        protected boolean isRemoveSupported() {
+        public boolean isRemoveSupported() {
             return main.isRemoveSupported();
         }
 
@@ -488,39 +488,39 @@ public abstract class AbstractTestBidiMap extends AbstractTestMap {
             super("TestBidiMapIterator");
         }
         
-        protected Object[] addSetValues() {
+        public Object[] addSetValues() {
             return AbstractTestBidiMap.this.getNewSampleValues();
         }
         
-        protected boolean supportsRemove() {
+        public boolean supportsRemove() {
             return AbstractTestBidiMap.this.isRemoveSupported();
         }
 
-        protected boolean supportsSetValue() {
+        public boolean supportsSetValue() {
             return AbstractTestBidiMap.this.isSetValueSupported();
         }
 
-        protected MapIterator makeEmptyMapIterator() {
+        public MapIterator makeEmptyMapIterator() {
             resetEmpty();
             return ((BidiMap) AbstractTestBidiMap.this.map).mapIterator();
         }
 
-        protected MapIterator makeFullMapIterator() {
+        public MapIterator makeFullMapIterator() {
             resetFull();
             return ((BidiMap) AbstractTestBidiMap.this.map).mapIterator();
         }
         
-        protected Map getMap() {
+        public Map getMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestBidiMap.this.map;
         }
         
-        protected Map getConfirmedMap() {
+        public Map getConfirmedMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestBidiMap.this.confirmed;
         }
         
-        protected void verify() {
+        public void verify() {
             super.verify();
             AbstractTestBidiMap.this.verify();
         }

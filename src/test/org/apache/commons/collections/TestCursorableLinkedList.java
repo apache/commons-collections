@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.15 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.16 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.list.AbstractTestList;
 /**
  * Test class.
  * 
- * @version $Revision: 1.15 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.16 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author Rodney Waldhoff
  * @author Simon Kitching
@@ -1058,7 +1058,7 @@ public class TestCursorableLinkedList extends AbstractTestList {
      *
      *  @return an array of sublist serialization test names 
      */
-    protected String[] ignoredTests() {
+    public String[] ignoredTests() {
         ArrayList list = new ArrayList();
         String prefix = "TestCursorableLinkedList";
         String bulk = ".bulkTestSubList";

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.3 2003/10/09 20:18:25 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestListIterator.java,v 1.4 2003/11/18 22:37:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import java.util.NoSuchElementException;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/10/09 20:18:25 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:13 $
  * 
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
@@ -93,21 +93,21 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
      * 
      * @return an empty iterator
      */
-    protected abstract ListIterator makeEmptyListIterator();
+    public abstract ListIterator makeEmptyListIterator();
 
     /**
      * Implement this method to return a list iterator over a collection with elements.
      * 
      * @return a full iterator
      */
-    protected abstract ListIterator makeFullListIterator();
+    public abstract ListIterator makeFullListIterator();
 
     /**
      * Implements the abstract superclass method to return the list iterator.
      * 
      * @return an empty iterator
      */
-    protected Iterator makeEmptyIterator() {
+    public Iterator makeEmptyIterator() {
         return makeEmptyListIterator();
     }
 
@@ -116,7 +116,7 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
      * 
      * @return a full iterator
      */
-    protected Iterator makeFullIterator() {
+    public Iterator makeFullIterator() {
         return makeFullListIterator();
     }
 
@@ -126,7 +126,7 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
      * 
      * @return true if Iterator supports add
      */
-    protected boolean supportsAdd() {
+    public boolean supportsAdd() {
         return true;
     }
 
@@ -136,7 +136,7 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
      * 
      * @return true if Iterator supports set
      */
-    protected boolean supportsSet() {
+    public boolean supportsSet() {
         return true;
     }
 
@@ -144,7 +144,7 @@ public abstract class AbstractTestListIterator extends AbstractTestIterator {
      * The value to be used in the add and set tests.
      * Default is null.
      */
-    protected Object addSetValue() {
+    public Object addSetValue() {
         return null;
     }
 

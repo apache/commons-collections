@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/TestFixedSizeList.java,v 1.2 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/TestFixedSizeList.java,v 1.3 2003/11/18 22:37:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import junit.framework.TestSuite;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:14 $
  * 
  * @author Stephen Colebourne
  */
@@ -92,17 +92,17 @@ public class TestFixedSizeList extends AbstractTestList {
         return FixedSizeList.decorate(new ArrayList());
     }
 
-    protected List makeFullList() {
+    public List makeFullList() {
         List list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return FixedSizeList.decorate(list);
     }
     
-    protected boolean isAddSupported() {
+    public boolean isAddSupported() {
         return false;
     }
 
-    protected boolean isRemoveSupported() {
+    public boolean isRemoveSupported() {
         return false;
     }
 

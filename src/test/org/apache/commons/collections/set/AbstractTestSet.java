@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/AbstractTestSet.java,v 1.1 2003/11/16 22:15:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/AbstractTestSet.java,v 1.2 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -80,7 +80,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:10 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Paul Jack
  */
@@ -99,7 +99,7 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
     /**
      * Provides additional verifications for sets.
      */
-    protected void verify() {
+    public void verify() {
         super.verify();
         
         assertEquals("Sets should be equal", confirmed, collection);
@@ -119,7 +119,7 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return a confirmed empty collection
      */
-    protected Collection makeConfirmedCollection() {
+    public Collection makeConfirmedCollection() {
         return new HashSet();
     }
 
@@ -128,7 +128,7 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return a confirmed full collection
      */
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         Collection set = makeConfirmedCollection();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
@@ -139,7 +139,7 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return an empty set
      */
-    protected abstract Set makeEmptySet();
+    public abstract Set makeEmptySet();
 
     /**
      * Makes a full set by first creating an empty set and then adding
@@ -149,7 +149,7 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return a full set
      */
-    protected Set makeFullSet() {
+    public Set makeFullSet() {
         Set set = makeEmptySet();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
@@ -160,7 +160,7 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return an empty collection
      */
-    protected final Collection makeCollection() {
+    public final Collection makeCollection() {
         return makeEmptySet();
     }
 
@@ -169,7 +169,7 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return a full collection
      */
-    protected final Collection makeFullCollection() {
+    public final Collection makeFullCollection() {
         return makeFullSet();
     }
 
@@ -177,14 +177,14 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
     /**
      * Return the {@link AbstractTestCollection#collection} fixture, but cast as a Set.  
      */
-    protected Set getSet() {
+    public Set getSet() {
         return (Set)collection;
     }
 
     /**
      * Return the {@link AbstractTestCollection#confirmed} fixture, but cast as a Set.
      */
-    protected Set getConfirmedSet() {
+    public Set getConfirmedSet() {
         return (Set)confirmed;
     }
 

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestPredicatedSortedMap.java,v 1.1 2003/11/16 00:05:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/TestPredicatedSortedMap.java,v 1.2 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.Predicate;
  * {@link PredicatedSortedMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $ $Date: 2003/11/16 00:05:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Phil Steitz
  */
@@ -106,7 +106,7 @@ public class TestPredicatedSortedMap extends TestPredicatedMap{
         return decorateMap(new TreeMap(), testPredicate, testPredicate);
     } 
     
-    protected boolean isAllowNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
     

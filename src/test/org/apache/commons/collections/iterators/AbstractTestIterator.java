@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.4 2003/11/08 18:46:57 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/AbstractTestIterator.java,v 1.5 2003/11/18 22:37:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -71,7 +71,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * overriding the supportsXxx() methods if necessary.
  * 
  * @since Commons Collections 3.0
- * @version $Revision: 1.4 $ $Date: 2003/11/08 18:46:57 $
+ * @version $Revision: 1.5 $ $Date: 2003/11/18 22:37:14 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -93,21 +93,21 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
      * 
      * @return an empty iterator
      */
-    protected abstract Iterator makeEmptyIterator();
+    public abstract Iterator makeEmptyIterator();
 
     /**
      * Implement this method to return an iterator over a collection with elements.
      * 
      * @return a full iterator
      */
-    protected abstract Iterator makeFullIterator();
+    public abstract Iterator makeFullIterator();
 
     /**
      * Implements the abstract superclass method to return the full iterator.
      * 
      * @return a full iterator
      */
-    protected Object makeObject() {
+    public Object makeObject() {
         return makeFullIterator();
     }
 
@@ -117,7 +117,7 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
      * 
      * @return true if Iterator can be empty
      */
-    protected boolean supportsEmptyIterator() {
+    public boolean supportsEmptyIterator() {
         return true;
     }
 
@@ -127,7 +127,7 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
      * 
      * @return true if Iterator can be full
      */
-    protected boolean supportsFullIterator() {
+    public boolean supportsFullIterator() {
         return true;
     }
 
@@ -137,14 +137,14 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
      * 
      * @return true if Iterator supports remove
      */
-    protected boolean supportsRemove() {
+    public boolean supportsRemove() {
         return true;
     }
 
     /**
      * Allows subclasses to add complex cross verification
      */
-    protected void verify() {
+    public void verify() {
         // do nothing
     }
 

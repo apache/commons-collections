@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestNullComparator.java,v 1.6 2003/10/01 22:14:48 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/TestNullComparator.java,v 1.7 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -67,7 +67,7 @@ import junit.framework.TestSuite;
 /**
  * Test the NullComparator.
  * 
- * @version $Revision: 1.6 $ $Date: 2003/10/01 22:14:48 $
+ * @version $Revision: 1.7 $ $Date: 2003/11/18 22:37:18 $
  * 
  * @author Michael A. Smith
  */
@@ -93,11 +93,11 @@ public abstract class TestNullComparator extends AbstractTestComparator {
 	    super(testName);
 	}
 
-    protected Comparator makeComparator() {
+    public Comparator makeComparator() {
 	    return new NullComparator();
 	}
 	
-    protected List getComparableObjectsOrdered() {
+    public List getComparableObjectsOrdered() {
         List list = new LinkedList();
 	    list.add(new Integer(1));
 	    list.add(new Integer(2));

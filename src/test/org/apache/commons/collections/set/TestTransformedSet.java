@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/TestTransformedSet.java,v 1.2 2003/11/16 22:15:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/set/TestTransformedSet.java,v 1.3 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:10 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Stephen Colebourne
  */
@@ -91,21 +91,21 @@ public class TestTransformedSet extends AbstractTestSet {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    protected Collection makeConfirmedCollection() {
+    public Collection makeConfirmedCollection() {
         return new HashSet();
     }
 
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         Set set = new HashSet();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
     }
     
-    protected Set makeEmptySet() {
+    public Set makeEmptySet() {
         return TransformedSet.decorate(new HashSet(), TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
-    protected Set makeFullSet() {
+    public Set makeFullSet() {
         Set list = new HashSet();
         list.addAll(Arrays.asList(getFullElements()));
         return TransformedSet.decorate(list, TestTransformedCollection.NOOP_TRANSFORMER);

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.1 2003/11/16 22:15:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/map/AbstractTestMap.java,v 1.2 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -158,7 +158,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:10 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:17 $
  */
 public abstract class AbstractTestMap extends AbstractTestObject {
 
@@ -204,7 +204,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Default implementation returns true.
      * Override if your collection class does not support put adding.
      */
-    protected boolean isPutAddSupported() {
+    public boolean isPutAddSupported() {
         return true;
     }
 
@@ -217,7 +217,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Default implementation returns true.
      * Override if your collection class does not support put changing.
      */
-    protected boolean isPutChangeSupported() {
+    public boolean isPutChangeSupported() {
         return true;
     }
 
@@ -230,7 +230,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Override if your collection class does not support setValue but does
      * support put changing.
      */
-    protected boolean isSetValueSupported() {
+    public boolean isSetValueSupported() {
         return isPutChangeSupported();
     }
 
@@ -242,7 +242,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Default implementation returns true.
      * Override if your collection class does not support removal operations.
      */
-    protected boolean isRemoveSupported() {
+    public boolean isRemoveSupported() {
         return true;
     }
 
@@ -254,7 +254,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Default implementation returns true.
      * Override if your collection class does not support null keys.
      */
-    protected boolean isAllowNullKey() {
+    public boolean isAllowNullKey() {
         return true;
     }
 
@@ -266,7 +266,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Default implementation returns true.
      * Override if your collection class does not support null values.
      */
-    protected boolean isAllowNullValue() {
+    public boolean isAllowNullValue() {
         return true;
     }
 
@@ -278,7 +278,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Default implementation returns true.
      * Override if your collection class does not support duplicate values.
      */
-    protected boolean isAllowDuplicateValues() {
+    public boolean isAllowDuplicateValues() {
         return true;
     }
 
@@ -289,7 +289,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      *  default implementation constructs a set of String keys, and includes a
      *  single null key if {@link #isAllowNullKey()} returns <code>true</code>.
      */
-    protected Object[] getSampleKeys() {
+    public Object[] getSampleKeys() {
         Object[] result = new Object[] {
             "blah", "foo", "bar", "baz", "tmp", "gosh", "golly", "gee", 
             "hello", "goodbye", "we'll", "see", "you", "all", "again",
@@ -301,11 +301,11 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     }
 
 
-    protected Object[] getOtherKeys() {
+    public Object[] getOtherKeys() {
         return getOtherNonNullStringElements();
     }
 
-    protected Object[] getOtherValues() {
+    public Object[] getOtherValues() {
         return getOtherNonNullStringElements();
     }
 
@@ -317,7 +317,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * collection does not support heterogenous elements or the null element.
      * </p>
      */
-    protected Object[] getOtherNonNullStringElements() {
+    public Object[] getOtherNonNullStringElements() {
         return new Object[] {
             "For","then","despite",/* of */"space","I","would","be","brought",
             "From","limits","far","remote","where","thou","dost","stay"
@@ -333,7 +333,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * two values that are the same if {@link #isAllowDuplicateValues()} returns
      * <code>true</code>.
      */
-    protected Object[] getSampleValues() {
+    public Object[] getSampleValues() {
         Object[] result = new Object[] {
             "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev",
             "hellov", "goodbyev", "we'llv", "seev", "youv", "allv", "againv",
@@ -355,7 +355,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * that are the same if {@link #isAllowDuplicateValues()} returns
      * <code>true</code>.  
      */
-    protected Object[] getNewSampleValues() {
+    public Object[] getNewSampleValues() {
         Object[] result = new Object[] {
             (isAllowNullValue() && isAllowDuplicateValues()) ? null : "newnonnullvalue",
             "newvalue",
@@ -371,7 +371,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      *  Helper method to add all the mappings described by {@link
      *  #getSampleKeys()} and {@link #getSampleValues()}.
      */
-    protected void addSampleMappings(Map m) {
+    public void addSampleMappings(Map m) {
 
         Object[] keys = getSampleKeys();
         Object[] values = getSampleValues();
@@ -405,7 +405,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * 
      * @return the map to be tested
      */
-    protected abstract Map makeEmptyMap();
+    public abstract Map makeEmptyMap();
 
     /**
      * Return a new, populated map.  The mappings in the map should match the
@@ -416,7 +416,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * 
      * @return the map to be tested
      */
-    protected Map makeFullMap() {
+    public Map makeFullMap() {
         Map m = makeEmptyMap();
         addSampleMappings(m);
         return m;
@@ -436,14 +436,14 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * 
      * @return a map that is known to be valid
      */
-    protected Map makeConfirmedMap() {
+    public Map makeConfirmedMap() {
         return new HashMap();
     }
 
     /**
      * Creates a new Map Entry that is independent of the first and the map.
      */
-    protected Map.Entry cloneMapEntry(Map.Entry entry) {
+    public Map.Entry cloneMapEntry(Map.Entry entry) {
         HashMap map = new HashMap();
         map.put(entry.getKey(), entry.getValue());
         return (Map.Entry) map.entrySet().iterator().next();
@@ -452,7 +452,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     /**
      * Gets the compatability version, needed for package access.
      */
-    protected String getCompatibilityVersion() {
+    public String getCompatibilityVersion() {
         return super.getCompatibilityVersion();
     }
     //-----------------------------------------------------------------------
@@ -1130,49 +1130,49 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         }
 
         // Have to implement manually; entrySet doesn't support addAll
-        protected Object[] getFullElements() {
+        public Object[] getFullElements() {
             Object[] k = getSampleKeys();
             Object[] v = getSampleValues();
             return makeEntryArray(k, v);
         }
         
         // Have to implement manually; entrySet doesn't support addAll
-        protected Object[] getOtherElements() {
+        public Object[] getOtherElements() {
             Object[] k = getOtherKeys();
             Object[] v = getOtherValues();
             return makeEntryArray(k, v);
         }
         
-        protected Set makeEmptySet() {
+        public Set makeEmptySet() {
             return makeEmptyMap().entrySet();
         }
         
-        protected Set makeFullSet() {
+        public Set makeFullSet() {
             return makeFullMap().entrySet();
         }
         
-        protected boolean isAddSupported() {
+        public boolean isAddSupported() {
             // Collection views don't support add operations.
             return false;
         }
-        protected boolean isRemoveSupported() {
+        public boolean isRemoveSupported() {
             // Entry set should only support remove if map does
             return AbstractTestMap.this.isRemoveSupported();
         }
-        protected boolean supportsEmptyCollections() {
+        public boolean supportsEmptyCollections() {
             return AbstractTestMap.this.supportsEmptyCollections();
         }
-        protected boolean supportsFullCollections() {
+        public boolean supportsFullCollections() {
             return AbstractTestMap.this.supportsFullCollections();
         }
         
-        protected void resetFull() {
+        public void resetFull() {
             AbstractTestMap.this.resetFull();
             collection = map.entrySet();
             TestMapEntrySet.this.confirmed = AbstractTestMap.this.confirmed.entrySet();
         }
         
-        protected void resetEmpty() {
+        public void resetEmpty() {
             AbstractTestMap.this.resetEmpty();
             collection = map.entrySet();
             TestMapEntrySet.this.confirmed = AbstractTestMap.this.confirmed.entrySet();
@@ -1244,7 +1244,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             verify();
         }
         
-        protected Map.Entry getEntry(Iterator itConfirmed, Object key) {
+        public Map.Entry getEntry(Iterator itConfirmed, Object key) {
             Map.Entry entry = null;
             while (itConfirmed.hasNext()) {
                 Map.Entry temp = (Map.Entry) itConfirmed.next();
@@ -1262,7 +1262,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             return entry;
         }
 
-        protected void verify() {
+        public void verify() {
             super.verify();
             AbstractTestMap.this.verify();
         }
@@ -1285,51 +1285,51 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         public TestMapKeySet() {
             super("");
         }
-        protected Object[] getFullElements() {
+        public Object[] getFullElements() {
             return getSampleKeys();
         }
         
-        protected Object[] getOtherElements() {
+        public Object[] getOtherElements() {
             return getOtherKeys();
         }
         
-        protected Set makeEmptySet() {
+        public Set makeEmptySet() {
             return makeEmptyMap().keySet();
         }
         
-        protected Set makeFullSet() {
+        public Set makeFullSet() {
             return makeFullMap().keySet();
         }
         
-        protected boolean isNullSupported() {
+        public boolean isNullSupported() {
             return AbstractTestMap.this.isAllowNullKey();
         }
-        protected boolean isAddSupported() {
+        public boolean isAddSupported() {
             return false;
         }
-        protected boolean isRemoveSupported() {
+        public boolean isRemoveSupported() {
             return AbstractTestMap.this.isRemoveSupported();
         }
-        protected boolean supportsEmptyCollections() {
+        public boolean supportsEmptyCollections() {
             return AbstractTestMap.this.supportsEmptyCollections();
         }
-        protected boolean supportsFullCollections() {
+        public boolean supportsFullCollections() {
             return AbstractTestMap.this.supportsFullCollections();
         }
         
-        protected void resetEmpty() {
+        public void resetEmpty() {
             AbstractTestMap.this.resetEmpty();
             collection = map.keySet();
             TestMapKeySet.this.confirmed = AbstractTestMap.this.confirmed.keySet();
         }
         
-        protected void resetFull() {
+        public void resetFull() {
             AbstractTestMap.this.resetFull();
             collection = map.keySet();
             TestMapKeySet.this.confirmed = AbstractTestMap.this.confirmed.keySet();
         }
         
-        protected void verify() {
+        public void verify() {
             super.verify();
             AbstractTestMap.this.verify();
         }
@@ -1354,67 +1354,67 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             super("");
         }
 
-        protected Object[] getFullElements() {
+        public Object[] getFullElements() {
             return getSampleValues();
         }
         
-        protected Object[] getOtherElements() {
+        public Object[] getOtherElements() {
             return getOtherValues();
         }
         
-        protected Collection makeCollection() {
+        public Collection makeCollection() {
             return makeEmptyMap().values();
         }
         
-        protected Collection makeFullCollection() {
+        public Collection makeFullCollection() {
             return makeFullMap().values();
         }
         
-        protected boolean isNullSupported() {
+        public boolean isNullSupported() {
             return AbstractTestMap.this.isAllowNullKey();
         }
-        protected boolean isAddSupported() {
+        public boolean isAddSupported() {
             return false;
         }
-        protected boolean isRemoveSupported() {
+        public boolean isRemoveSupported() {
             return AbstractTestMap.this.isRemoveSupported();
         }
-        protected boolean supportsEmptyCollections() {
+        public boolean supportsEmptyCollections() {
             return AbstractTestMap.this.supportsEmptyCollections();
         }
-        protected boolean supportsFullCollections() {
+        public boolean supportsFullCollections() {
             return AbstractTestMap.this.supportsFullCollections();
         }
 
-        protected boolean areEqualElementsDistinguishable() {
+        public boolean areEqualElementsDistinguishable() {
             // equal values are associated with different keys, so they are
             // distinguishable.  
             return true;
         }
 
-        protected Collection makeConfirmedCollection() {
+        public Collection makeConfirmedCollection() {
             // never gets called, reset methods are overridden
             return null;
         }
         
-        protected Collection makeConfirmedFullCollection() {
+        public Collection makeConfirmedFullCollection() {
             // never gets called, reset methods are overridden
             return null;
         }
         
-        protected void resetFull() {
+        public void resetFull() {
             AbstractTestMap.this.resetFull();
             collection = map.values();
             TestMapValues.this.confirmed = AbstractTestMap.this.confirmed.values();
         }
         
-        protected void resetEmpty() {
+        public void resetEmpty() {
             AbstractTestMap.this.resetEmpty();
             collection = map.values();
             TestMapValues.this.confirmed = AbstractTestMap.this.confirmed.values();
         }
 
-        protected void verify() {
+        public void verify() {
             super.verify();
             AbstractTestMap.this.verify();
         }
@@ -1429,7 +1429,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Resets the {@link #map}, {@link #entrySet}, {@link #keySet},
      * {@link #values} and {@link #confirmed} fields to empty.
      */
-    protected void resetEmpty() {
+    public void resetEmpty() {
         this.map = makeEmptyMap();
         views();
         this.confirmed = makeConfirmedMap();
@@ -1439,7 +1439,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * Resets the {@link #map}, {@link #entrySet}, {@link #keySet},
      * {@link #values} and {@link #confirmed} fields to full.
      */
-    protected void resetFull() {
+    public void resetFull() {
         this.map = makeFullMap();
         views();
         this.confirmed = makeConfirmedMap();
@@ -1471,14 +1471,14 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * compared; and <Code>containsAll</Code> tests are run on the 
      * collection views.
      */
-    protected void verify() {
+    public void verify() {
         verifyMap();
         verifyEntrySet();
         verifyKeySet();
         verifyValues();
     }
 
-    protected void verifyMap() {
+    public void verifyMap() {
         int size = confirmed.size();
         boolean empty = confirmed.isEmpty();
         assertEquals("Map should be same size as HashMap", 
@@ -1498,7 +1498,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         // causing LRUMap to change).
     }
 
-    protected void verifyEntrySet() {
+    public void verifyEntrySet() {
         int size = confirmed.size();
         boolean empty = confirmed.isEmpty();
         assertEquals("entrySet should be same size as HashMap's" +
@@ -1517,7 +1517,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                      confirmed.entrySet(), entrySet);
     }
 
-    protected void verifyKeySet() { 
+    public void verifyKeySet() { 
         int size = confirmed.size();
         boolean empty = confirmed.isEmpty();
         assertEquals("keySet should be same size as HashMap's" +
@@ -1536,7 +1536,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
                      confirmed.keySet(), keySet);
     }
 
-    protected void verifyValues() {
+    public void verifyValues() {
         List known = new ArrayList(confirmed.values());
         List test = new ArrayList(values);
 
@@ -1566,7 +1566,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
     /**
      * Erases any leftover instance variables by setting them to null.
      */
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         map = null;
         keySet = null;
         entrySet = null;

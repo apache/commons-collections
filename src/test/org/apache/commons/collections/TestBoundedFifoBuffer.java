@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.10 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBoundedFifoBuffer.java,v 1.11 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for BoundedFifoBuffer.
  * 
- * @version $Revision: 1.10 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.11 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author Paul Jack
  */
@@ -88,7 +88,7 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      *  the buffer contains the same elements in the same sequence as the
      *  list.
      */
-    protected void verify() {
+    public void verify() {
         super.verify();
         Iterator iterator1 = collection.iterator();
         Iterator iterator2 = confirmed.iterator();
@@ -105,7 +105,7 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      * Overridden because UnboundedFifoBuffer doesn't allow null elements.
      * @return false
      */
-    protected boolean isNullSupported() {
+    public boolean isNullSupported() {
         return false;
     }
 
@@ -113,7 +113,7 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      * Overridden because UnboundedFifoBuffer isn't fail fast.
      * @return false
      */
-    protected boolean isFailFastSupported() {
+    public boolean isFailFastSupported() {
         return false;
     }
 
@@ -123,7 +123,7 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      *
      *  @return an empty ArrayList
      */
-    protected Collection makeConfirmedCollection() {
+    public Collection makeConfirmedCollection() {
         return new ArrayList();
     }
 
@@ -132,7 +132,7 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      *
      *  @return a full ArrayList
      */
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         Collection c = makeConfirmedCollection();
         c.addAll(java.util.Arrays.asList(getFullElements()));
         return c;
@@ -143,7 +143,7 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      *  
      *  @return an empty BoundedFifoBuffer
      */
-    protected Collection makeCollection() {
+    public Collection makeCollection() {
         return new BoundedFifoBuffer(100);
     }
 

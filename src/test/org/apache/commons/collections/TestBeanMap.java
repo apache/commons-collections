@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.15 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestBeanMap.java,v 1.16 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -69,7 +69,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Test cases for BeanMap
  * 
- * @version $Revision: 1.15 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.16 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author Morgan Delagrange
  * @author Stephen Colebourne
@@ -200,7 +200,7 @@ public class TestBeanMap extends AbstractTestMap {
     //
     // Then, I manually added the "class" key, which is a property that exists for
     // all beans (and all objects for that matter.
-    protected Object[] getSampleKeys() {
+    public Object[] getSampleKeys() {
         Object[] keys = new Object[] {
             "someIntValue",
             "someLongValue",
@@ -226,7 +226,7 @@ public class TestBeanMap extends AbstractTestMap {
     private Object objectInFullMap = new Object();
 
     // note to self: the sample values were created manually
-    protected Object[] getSampleValues() {
+    public Object[] getSampleValues() {
         Object[] values = new Object[] {
             new Integer(1234),
             new Long(1298341928234L),
@@ -243,7 +243,7 @@ public class TestBeanMap extends AbstractTestMap {
         return values;
     }
 
-    protected Object[] getNewSampleValues() {
+    public Object[] getNewSampleValues() {
         Object[] values = new Object[] {
             new Integer(223),
             new Long(23341928234L),
@@ -263,7 +263,7 @@ public class TestBeanMap extends AbstractTestMap {
     /**
      * Values is a dead copy in BeanMap, so refresh each time.
      */
-    protected void verifyValues() {
+    public void verifyValues() {
         values = map.values();
         super.verifyValues();
     }
@@ -273,7 +273,7 @@ public class TestBeanMap extends AbstractTestMap {
      * bean has.  Adding and removing mappings is not possible, thus this
      * method is overridden to return false.
      */
-    protected boolean isPutAddSupported() {
+    public boolean isPutAddSupported() {
         return false;
     }
 
@@ -282,11 +282,11 @@ public class TestBeanMap extends AbstractTestMap {
      * bean has.  Adding and removing mappings is not possible, thus this
      * method is overridden to return false.
      */
-    protected boolean isRemoveSupported() {
+    public boolean isRemoveSupported() {
         return false;
     }
 
-    protected Map makeFullMap() {
+    public Map makeFullMap() {
         // note: These values must match (i.e. .equals() must return true)
         // those returned from getSampleValues().
         BeanWithProperties bean = new BeanWithProperties();
@@ -303,11 +303,11 @@ public class TestBeanMap extends AbstractTestMap {
         return new BeanMap(bean);
     }
 
-    protected Map makeEmptyMap() {
+    public Map makeEmptyMap() {
         return new BeanMap();
     }
 
-    protected String[] ignoredTests() {
+    public String[] ignoredTests() {
         // Ignore the serialization tests on collection views.
         return new String[] {
          "TestBeanMap.bulkTestMapEntrySet.testCanonicalEmptyCollectionExists",

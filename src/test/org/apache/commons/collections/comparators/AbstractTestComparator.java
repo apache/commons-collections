@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/AbstractTestComparator.java,v 1.2 2003/10/02 22:14:35 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/comparators/AbstractTestComparator.java,v 1.3 2003/11/18 22:37:18 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -92,14 +92,14 @@ public abstract class AbstractTestComparator extends AbstractTestObject {
      * 
      * @return the comparator to test
      */
-    protected abstract Comparator makeComparator();
+    public abstract Comparator makeComparator();
     
     /**
      * Implement this method to return a list of sorted objects.
      * 
      * @return sorted objects
      */
-    protected abstract List getComparableObjectsOrdered();
+    public abstract List getComparableObjectsOrdered();
 
     //-----------------------------------------------------------------------
     /**
@@ -107,7 +107,7 @@ public abstract class AbstractTestComparator extends AbstractTestObject {
      * 
      * @return a full iterator
      */
-    protected Object makeObject() {
+    public Object makeObject() {
         return makeComparator();
     }
 
@@ -129,7 +129,7 @@ public abstract class AbstractTestComparator extends AbstractTestObject {
      * Overrides superclass to set the compatability to version 2
      * as there were no Comparators in version 1.x.
      */
-    protected String getCompatibilityVersion() {
+    public String getCompatibilityVersion() {
         return "2";
     }
 

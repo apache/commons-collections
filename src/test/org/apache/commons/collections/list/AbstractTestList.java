@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/AbstractTestList.java,v 1.1 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/list/AbstractTestList.java,v 1.2 2003/11/18 22:37:14 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -86,7 +86,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * test case (method) your {@link List} fails or override one of the
  * protected methods from AbstractTestCollection.
  *
- * @version $Revision: 1.1 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:14 $
  * 
  * @author Rodney Waldhoff
  * @author Paul Jack
@@ -112,7 +112,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
      *  Default implementation returns true.  Override if your collection
      *  class does not support set.
      */
-    protected boolean isSetSupported() {
+    public boolean isSetSupported() {
         return true;
     }
 
@@ -121,7 +121,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
      *  Verifies that the test list implementation matches the confirmed list
      *  implementation.
      */
-    protected void verify() {
+    public void verify() {
         super.verify();
 
         List list1 = getList();
@@ -153,7 +153,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     /**
      * Returns an empty {@link ArrayList}.
      */
-    protected Collection makeConfirmedCollection() {
+    public Collection makeConfirmedCollection() {
         ArrayList list = new ArrayList();
         return list;
     }
@@ -161,7 +161,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     /**
      * Returns a full {@link ArrayList}.
      */
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         ArrayList list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
@@ -172,14 +172,14 @@ public abstract class AbstractTestList extends AbstractTestCollection {
      *
      * @return an empty list for testing.
      */
-    protected abstract List makeEmptyList();
+    public abstract List makeEmptyList();
 
     /**
      * Return a new, full {@link List} to be used for testing.
      *
      * @return a full list for testing
      */
-    protected List makeFullList() {
+    public List makeFullList() {
         // only works if list supports optional "addAll(Collection)" 
         List list = makeEmptyList();
         list.addAll(Arrays.asList(getFullElements()));
@@ -191,7 +191,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
      *
      * @return an empty list to be used for testing
      */
-    protected final Collection makeCollection() {
+    public final Collection makeCollection() {
         return makeEmptyList();
     }
 
@@ -200,7 +200,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
      *
      * @return a full list to be used for testing
      */
-    protected final Collection makeFullCollection() {
+    public final Collection makeFullCollection() {
         return makeFullList();
     }
 
@@ -210,7 +210,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
      *
      * @return the collection field as a List
      */
-    protected List getList() {
+    public List getList() {
         return (List) collection;
     }
 
@@ -219,7 +219,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
      *
      * @return the confirmed field as a List
      */
-    protected List getConfirmedList() {
+    public List getConfirmedList() {
         return (List) confirmed;
     }
 
@@ -1028,7 +1028,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     }
 
 
-   static class BulkTestSubList extends AbstractTestList {
+   public static class BulkTestSubList extends AbstractTestList {
 
        private AbstractTestList outer;
 
@@ -1039,48 +1039,48 @@ public abstract class AbstractTestList extends AbstractTestCollection {
        }
 
 
-       protected Object[] getFullElements() {
+       public Object[] getFullElements() {
            List l = Arrays.asList(outer.getFullElements());
            return l.subList(3, l.size() - 3).toArray();
        }
 
 
-       protected Object[] getOtherElements() {
+       public Object[] getOtherElements() {
            return outer.getOtherElements();
        }
 
 
-       protected boolean isAddSupported() {
+       public boolean isAddSupported() {
            return outer.isAddSupported();
        }
 
-       protected boolean isSetSupported() {
+       public boolean isSetSupported() {
            return outer.isSetSupported();
        }
 
-       protected boolean isRemoveSupported() {
+       public boolean isRemoveSupported() {
            return outer.isRemoveSupported();
        }
 
 
-       protected List makeEmptyList() { 
+       public List makeEmptyList() { 
            return outer.makeFullList().subList(4, 4); 
        }
 
 
-       protected List makeFullList() {
+       public List makeFullList() {
            int size = getFullElements().length;
            return outer.makeFullList().subList(3, size - 3);
        }
 
 
-       protected void resetEmpty() {
+       public void resetEmpty() {
            outer.resetFull();
            this.collection = outer.getList().subList(4, 4);
            this.confirmed = outer.getConfirmedList().subList(4, 4);
        }
 
-       protected void resetFull() {
+       public void resetFull() {
            outer.resetFull();
            int size = outer.confirmed.size();
            this.collection = outer.getList().subList(3, size - 3);
@@ -1088,7 +1088,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
        }
 
 
-       protected void verify() {
+       public void verify() {
            super.verify();
            outer.verify();
        }

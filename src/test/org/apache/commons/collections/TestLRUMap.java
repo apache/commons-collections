@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.26 2003/11/01 18:47:18 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestLRUMap.java,v 1.27 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -68,7 +68,7 @@ import junit.framework.Test;
 /**
  * Tests LRUMap.
  * 
- * @version $Revision: 1.26 $ $Date: 2003/11/01 18:47:18 $
+ * @version $Revision: 1.27 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author James Strachan
  * @author Morgan Delagrange
@@ -98,7 +98,7 @@ public class TestLRUMap extends TestSequencedHashMap {
     /**
      * Override as test uses iterator() and getKey() in combination which doesn't work.
      */
-    protected String[] ignoredTests() {
+    public String[] ignoredTests() {
         return new String[] {"TestLRUMap.bulkTestMapEntrySet.testMapEntrySetIteratorEntry"};
     }
 

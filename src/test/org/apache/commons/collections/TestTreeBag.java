@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeBag.java,v 1.7 2003/11/16 22:15:09 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestTreeBag.java,v 1.8 2003/11/18 22:37:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -66,7 +66,7 @@ import org.apache.commons.collections.bag.AbstractTestBag;
  * Extension of {@link TestBag} for exercising the {@link TreeBag}
  * implementation.
  * 
- * @version $Revision: 1.7 $ $Date: 2003/11/16 22:15:09 $
+ * @version $Revision: 1.8 $ $Date: 2003/11/18 22:37:16 $
  *
  * @author Chuck Burdick
  */
@@ -85,7 +85,7 @@ public class TestTreeBag extends AbstractTestBag {
       junit.textui.TestRunner.main(testCaseName);
    }
 
-   protected Bag makeBag() {
+   public Bag makeBag() {
       return new TreeBag();
    }
 

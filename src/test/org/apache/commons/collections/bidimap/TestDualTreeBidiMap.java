@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestDualTreeBidiMap.java,v 1.1 2003/11/16 20:35:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bidimap/TestDualTreeBidiMap.java,v 1.2 2003/11/18 22:37:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -65,7 +65,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  * 
- * @version $Revision: 1.1 $ $Date: 2003/11/16 20:35:46 $
+ * @version $Revision: 1.2 $ $Date: 2003/11/18 22:37:16 $
  * 
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -84,14 +84,14 @@ public class TestDualTreeBidiMap extends AbstractTestSortedBidiMap {
         super(testName);
     }
 
-    protected BidiMap makeEmptyBidiMap() {
+    public BidiMap makeEmptyBidiMap() {
         return new DualTreeBidiMap();
     }
 
     /**
      * Override to prevent infinite recursion of tests.
      */
-    protected String[] ignoredTests() {
+    public String[] ignoredTests() {
         return new String[] {"TestDualTreeBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }
     

@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableMapIterator.java,v 1.3 2003/11/16 20:35:47 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/iterators/TestUnmodifiableMapIterator.java,v 1.4 2003/11/18 22:37:13 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -70,7 +70,7 @@ import org.apache.commons.collections.bidimap.DualHashBidiMap;
 /**
  * Tests the UnmodifiableMapIterator.
  * 
- * @version $Revision: 1.3 $ $Date: 2003/11/16 20:35:47 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:13 $
  * 
  * @author Stephen Colebourne
  */
@@ -92,7 +92,7 @@ public class TestUnmodifiableMapIterator extends AbstractTestMapIterator {
         return UnmodifiableMapIterator.decorate(((BidiMap) getMap()).mapIterator());
     }
     
-    protected Map getMap() {
+    public Map getMap() {
         Map testMap = new DualHashBidiMap();
         testMap.put("A", "a");
         testMap.put("B", "b");
@@ -100,7 +100,7 @@ public class TestUnmodifiableMapIterator extends AbstractTestMapIterator {
         return testMap;
     }
 
-    protected Map getConfirmedMap() {
+    public Map getConfirmedMap() {
         Map testMap = new HashMap();
         testMap.put("A", "a");
         testMap.put("B", "b");

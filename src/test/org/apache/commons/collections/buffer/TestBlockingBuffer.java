@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestBlockingBuffer.java,v 1.1 2003/11/16 00:05:46 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/buffer/TestBlockingBuffer.java,v 1.2 2003/11/18 22:37:16 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -75,7 +75,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * 
  * @author Janek Bogucki
  * @author Phil Steitz
@@ -95,7 +95,7 @@ public class TestBlockingBuffer extends AbstractTestObject {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    protected Object makeObject() {
+    public Object makeObject() {
         return BlockingBuffer.decorate(new MyBuffer());
     }
 

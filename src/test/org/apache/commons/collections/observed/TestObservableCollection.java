@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableCollection.java,v 1.3 2003/11/16 22:15:12 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/observed/Attic/TestObservableCollection.java,v 1.4 2003/11/18 22:37:17 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -72,7 +72,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * {@link ObservedCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.3 $ $Date: 2003/11/16 22:15:12 $
+ * @version $Revision: 1.4 $ $Date: 2003/11/18 22:37:17 $
  * 
  * @author Stephen Colebourne
  */
@@ -96,7 +96,7 @@ public class TestObservableCollection extends AbstractTestCollection implements 
         return new ArrayList();
     }
 
-    protected Collection makeConfirmedFullCollection() {
+    public Collection makeConfirmedFullCollection() {
         List list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
@@ -106,7 +106,7 @@ public class TestObservableCollection extends AbstractTestCollection implements 
         return ObservableCollection.decorate(new ArrayList(), ObservedTestHelper.LISTENER);
     }
 
-    protected Collection makeFullCollection() {
+    public Collection makeFullCollection() {
         List list = new ArrayList();
         list.addAll(Arrays.asList(getFullElements()));
         return ObservableCollection.decorate(list, ObservedTestHelper.LISTENER);

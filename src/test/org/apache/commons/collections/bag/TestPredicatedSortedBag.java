@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestPredicatedSortedBag.java,v 1.2 2003/11/16 22:15:10 scolebourne Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/bag/TestPredicatedSortedBag.java,v 1.3 2003/11/18 22:37:15 scolebourne Exp $
  * ====================================================================
  *
  * The Apache Software License, Version 1.1
@@ -73,7 +73,7 @@ import org.apache.commons.collections.TreeBag;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.2 $ $Date: 2003/11/16 22:15:10 $
+ * @version $Revision: 1.3 $ $Date: 2003/11/18 22:37:15 $
  * 
  * @author Phil Steitz
  */
@@ -111,7 +111,7 @@ public class TestPredicatedSortedBag extends AbstractTestSortedBag {
         return PredicatedSortedBag.decorate(bag, predicate);
     }
     
-    protected Bag makeBag() {
+    public Bag makeBag() {
         return decorateBag(emptyBag, truePredicate);
     }
     
