@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntCollection.java,v 1.3 2003/01/11 21:28:02 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractIntCollection.java,v 1.4 2003/01/13 23:07:08 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -58,14 +58,41 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * @version $Revision: 1.3 $ $Date: 2003/01/11 21:28:02 $
+ * Abstract base class for {@link IntCollection}s.
+ * <p />
+ * Read-only subclasses must override {@link #iterator}
+ * and {@link #size}.  Mutable subclasses
+ * should also override {@link #add} and 
+ * {@link IntIterator#remove IntIterator.remove}.
+ * All other methods have at least some base implementation 
+ * derived from these.  Subclasses may choose to override 
+ * these methods to provide a more efficient implementation. 
+ * 
+ * @since Commons Collections 2.2
+ * @version $Revision: 1.4 $ $Date: 2003/01/13 23:07:08 $
+ * 
  * @author Rodney Waldhoff 
  */
-abstract class AbstractIntCollection implements IntCollection {
+public abstract class AbstractIntCollection implements IntCollection {
     public abstract IntIterator iterator();
     public abstract int size();
           
     protected AbstractIntCollection() { }
+
+    /** 
+     * Constructs a collection containing the elements of 
+     * the given collection, added in the order they are 
+     * returned by that collection's iterator.
+     * 
+     * @see #addAll
+     * @param that the non-<code>null</code> collection of <code>int</code>s 
+     *        to add
+     * @throws NullPointerException if <i>that</i> is <code>null</code>
+     * @throws UnsupportedOperationException if {@link #addAll addAll} does
+     */
+    protected AbstractIntCollection(IntCollection that) { 
+        addAll(that);
+    }    
               
     /** Unsupported in this base implementation. */
     public boolean add(int element) {

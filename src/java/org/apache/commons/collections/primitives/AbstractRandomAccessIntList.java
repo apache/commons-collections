@@ -1,5 +1,5 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.9 2003/01/13 21:52:28 rwaldhoff Exp $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/primitives/Attic/AbstractRandomAccessIntList.java,v 1.10 2003/01/13 23:07:08 rwaldhoff Exp $
  * ====================================================================
  * The Apache Software License, Version 1.1
  *
@@ -74,7 +74,7 @@ import java.util.NoSuchElementException;
  * to provide a more efficient implementation.
  * 
  * @since Commons Collections 2.2
- * @version $Revision: 1.9 $ $Date: 2003/01/13 21:52:28 $
+ * @version $Revision: 1.10 $ $Date: 2003/01/13 23:07:08 $
  * 
  * @author Rodney Waldhoff 
  */
@@ -98,7 +98,7 @@ public abstract class AbstractRandomAccessIntList extends AbstractIntCollection 
      * @throws UnsupportedOperationException if {@link #addAll addAll} does
      */
     protected AbstractRandomAccessIntList(IntCollection that) { 
-        addAll(that);
+        super(that);
     }    
 
     // fully abstract methods
