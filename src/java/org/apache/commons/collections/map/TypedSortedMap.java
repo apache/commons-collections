@@ -17,7 +17,7 @@ package org.apache.commons.collections.map;
 
 import java.util.SortedMap;
 
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.InstanceofPredicate;
 
 /**
  * Decorates another <code>SortedMap</code> to validate that elements added
@@ -30,7 +30,7 @@ import org.apache.commons.collections.PredicateUtils;
  * The returned implementation is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 1.5 $ $Date: 2004/04/09 14:57:10 $
+ * @version $Revision: 1.6 $ $Date: 2004/05/07 23:18:26 $
  * 
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
@@ -52,8 +52,8 @@ public class TypedSortedMap {
     public static SortedMap decorate(SortedMap map, Class keyType, Class valueType) {
         return new PredicatedSortedMap(
             map,
-            PredicateUtils.instanceofPredicate(keyType),
-            PredicateUtils.instanceofPredicate(valueType)
+            InstanceofPredicate.getInstance(keyType),
+            InstanceofPredicate.getInstance(valueType)
         );
     }
 
