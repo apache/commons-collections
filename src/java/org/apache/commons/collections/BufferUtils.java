@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.9 2002/10/13 00:38:36 scolebourne Exp $
- * $Revision: 1.9 $
- * $Date: 2002/10/13 00:38:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.10 2002/12/15 13:05:03 scolebourne Exp $
+ * $Revision: 1.10 $
+ * $Date: 2002/12/15 13:05:03 $
  *
  * ====================================================================
  *
@@ -66,17 +66,21 @@ import java.util.Collection;
  *
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Id: BufferUtils.java,v 1.9 2002/10/13 00:38:36 scolebourne Exp $
+ * @version $Id: BufferUtils.java,v 1.10 2002/12/15 13:05:03 scolebourne Exp $
  * @since 2.1
  */
 public class BufferUtils {
 
     /**
-     * Restrictive constructor
+     * An empty unmodifiable buffer.
      */
-    private BufferUtils() {
+    public static final Buffer EMPTY_BUFFER = BufferUtils.unmodifiableBuffer(new ArrayStack());
+    
+    /**
+     * <code>BufferUtils</code> should not normally be instantiated.
+     */
+    public BufferUtils() {
     }
-
 
     /**
      * Returns a synchronized buffer backed by the given buffer.

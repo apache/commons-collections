@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.11 2002/10/13 00:38:36 scolebourne Exp $
- * $Revision: 1.11 $
- * $Date: 2002/10/13 00:38:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/ListUtils.java,v 1.12 2002/12/15 13:05:03 scolebourne Exp $
+ * $Revision: 1.12 $
+ * $Date: 2002/12/15 13:05:03 $
  *
  * ====================================================================
  *
@@ -62,6 +62,7 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -78,7 +79,14 @@ import java.util.ListIterator;
 public class ListUtils {
 
     /**
-     *  Please don't ever instantiate a <Code>ListUtils</Code>.
+     * An empty unmodifiable list.
+     * This uses the {@link #java.util.Collections Collections} implementation 
+     * and is provided for completeness.
+     */
+    public static final List EMPTY_LIST = Collections.EMPTY_LIST;
+    
+    /**
+     * <code>ListUtils</code> should not normally be instantiated.
      */
     public ListUtils() {
     }
@@ -443,6 +451,45 @@ public class ListUtils {
 
     }
 
+
+    /**
+     * Returns a synchronized list backed by the given list.
+     * <p>
+     * You must manually synchronize on the returned buffer's iterator to 
+     * avoid non-deterministic behavior:
+     *  
+     * <pre>
+     * List list = ListUtils.synchronizedList(myList);
+     * synchronized (list) {
+     *     Iterator i = list.iterator();
+     *     while (i.hasNext()) {
+     *         process (i.next());
+     *     }
+     * }
+     * </pre>
+     * 
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * 
+     * @param list  the list to synchronize, must not be null
+     * @return a synchronized list backed by the given list
+     * @throws IllegalArgumentException  if the list is null
+     */
+    public static List synchronizedList(List list) {
+        return Collections.synchronizedList(list);
+    }
+
+    /**
+     * Returns an unmodifiable list backed by the given list.
+     * <p>
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     *
+     * @param list  the list to make unmodifiable, must not be null
+     * @return an unmodifiable list backed by the given list
+     * @throws IllegalArgumentException  if the list is null
+     */
+    public static List unmodifiableList(List list) {
+        return Collections.unmodifiableList(list);
+    }
 
     /**
      * Returns a predicated list backed by the given list.  Only objects

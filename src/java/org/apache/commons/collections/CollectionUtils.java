@@ -1,7 +1,7 @@
 /*
- * $Id: CollectionUtils.java,v 1.23 2002/12/11 19:05:14 scolebourne Exp $
- * $Revision: 1.23 $
- * $Date: 2002/12/11 19:05:14 $
+ * $Id: CollectionUtils.java,v 1.24 2002/12/15 13:05:03 scolebourne Exp $
+ * $Revision: 1.24 $
+ * $Date: 2002/12/15 13:05:03 $
  *
  * ====================================================================
  *
@@ -62,6 +62,7 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,10 +85,18 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  * @author Steve Downey
  * @author <a href="herve.quiroz@esil.univ-mrs.fr">Herve Quiroz</a>
  * @author BluePhelix@web.de (Peter)
- * @version $Revision: 1.23 $ $Date: 2002/12/11 19:05:14 $
+ * @author Stephen Colebourne
+ * @version $Revision: 1.24 $ $Date: 2002/12/15 13:05:03 $
  */
 public class CollectionUtils {
 
+    /**
+     * An empty unmodifiable collection.
+     * The JDK provides empty Set and List implementations which could be used for
+     * this purpose. However they could be cast to Set or List which might be
+     * undesirable. This implementation only implements Collection.
+     */
+    public static final Collection EMPTY_COLLECTION = Collections.unmodifiableCollection(new ArrayList());
     /**
      * The empty iterator (immutable).
      * @deprecated use IteratorUtils.EMPTY_ITERATOR
@@ -95,7 +104,7 @@ public class CollectionUtils {
     public static final Iterator EMPTY_ITERATOR = IteratorUtils.EMPTY_ITERATOR;
 
     /**
-     * Please don't ever instantiate a <code>CollectionUtils</code>.
+     * <code>CollectionUtils</code> should not normally be instantiated.
      */
     public CollectionUtils() {
     }
@@ -1120,6 +1129,45 @@ public class CollectionUtils {
 
     }
 
+
+    /**
+     * Returns a synchronized collection backed by the given collection.
+     * <p>
+     * You must manually synchronize on the returned buffer's iterator to 
+     * avoid non-deterministic behavior:
+     *  
+     * <pre>
+     * Collection c = CollectionUtils.synchronizedCollection(myCollection);
+     * synchronized (c) {
+     *     Iterator i = c.iterator();
+     *     while (i.hasNext()) {
+     *         process (i.next());
+     *     }
+     * }
+     * </pre>
+     * 
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * 
+     * @param collection  the collection to synchronize, must not be null
+     * @return a synchronized collection backed by the given collection
+     * @throws IllegalArgumentException  if the collection is null
+     */
+    public static Collection synchronizedCollection(Collection collection) {
+        return Collections.synchronizedCollection(collection);
+    }
+
+    /**
+     * Returns an unmodifiable collection backed by the given collection.
+     * <p>
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     *
+     * @param collection  the collection to make unmodifiable, must not be null
+     * @return an unmodifiable collection backed by the given collection
+     * @throws IllegalArgumentException  if the collection is null
+     */
+    public static Collection unmodifiableCollection(Collection collection) {
+        return Collections.unmodifiableCollection(collection);
+    }
 
     /**
      * Returns a predicated collection backed by the given collection.

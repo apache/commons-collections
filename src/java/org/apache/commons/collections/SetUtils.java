@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.7 2002/10/13 00:38:36 scolebourne Exp $
- * $Revision: 1.7 $
- * $Date: 2002/10/13 00:38:36 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SetUtils.java,v 1.8 2002/12/15 13:05:03 scolebourne Exp $
+ * $Revision: 1.8 $
+ * $Date: 2002/12/15 13:05:03 $
  *
  * ====================================================================
  *
@@ -60,24 +60,38 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 /**
  * Provides static utility methods and decorators for {@link Set} 
  * and {@link SortedSet} instances.
  *
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Id: SetUtils.java,v 1.7 2002/10/13 00:38:36 scolebourne Exp $
+ * @version $Id: SetUtils.java,v 1.8 2002/12/15 13:05:03 scolebourne Exp $
  * @since 2.1
  */
 public class SetUtils {
 
     /**
-     * Prevents instantiation.
+     * An empty unmodifiable set.
+     * This uses the {@link #java.util.Collections Collections} implementation 
+     * and is provided for completeness.
      */
-    private SetUtils() {
+    public static final Set EMPTY_SET = Collections.EMPTY_SET;
+    /**
+     * An empty unmodifiable sorted set.
+     * This is not provided in the JDK.
+     */
+    public static final SortedSet EMPTY_SORTED_SET = Collections.unmodifiableSortedSet(new TreeSet());
+
+    /**
+     * <code>SetUtils</code> should not normally be instantiated.
+     */
+    public SetUtils() {
     }
 
 
@@ -134,6 +148,45 @@ public class SetUtils {
     }
 
     /**
+     * Returns a synchronized set backed by the given set.
+     * <p>
+     * You must manually synchronize on the returned buffer's iterator to 
+     * avoid non-deterministic behavior:
+     *  
+     * <pre>
+     * Set s = SetUtils.synchronizedSet(mySet);
+     * synchronized (s) {
+     *     Iterator i = s.iterator();
+     *     while (i.hasNext()) {
+     *         process (i.next());
+     *     }
+     * }
+     * </pre>
+     * 
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * 
+     * @param set  the set to synchronize, must not be null
+     * @return a synchronized set backed by the given set
+     * @throws IllegalArgumentException  if the set is null
+     */
+    public static Set synchronizedSet(Set set) {
+        return Collections.synchronizedSet(set);
+    }
+
+    /**
+     * Returns an unmodifiable set backed by the given set.
+     * <p>
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     *
+     * @param set  the set to make unmodifiable, must not be null
+     * @return an unmodifiable set backed by the given set
+     * @throws IllegalArgumentException  if the set is null
+     */
+    public static Set unmodifiableSet(Set set) {
+        return Collections.unmodifiableSet(set);
+    }
+
+    /**
      * Returns a predicated set backed by the given set.  Only objects
      * that pass the test in the given predicate can be added to the set.
      * It is important not to use the original set after invoking this 
@@ -146,6 +199,45 @@ public class SetUtils {
      */
     public static Set predicatedSet(Set set, Predicate predicate) {
         return new PredicatedSet(set, predicate);
+    }
+
+    /**
+     * Returns a synchronized sorted set backed by the given sorted set.
+     * <p>
+     * You must manually synchronize on the returned buffer's iterator to 
+     * avoid non-deterministic behavior:
+     *  
+     * <pre>
+     * Set s = SetUtils.synchronizedSet(mySet);
+     * synchronized (s) {
+     *     Iterator i = s.iterator();
+     *     while (i.hasNext()) {
+     *         process (i.next());
+     *     }
+     * }
+     * </pre>
+     * 
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * 
+     * @param set  the sorted set to synchronize, must not be null
+     * @return a synchronized set backed by the given set
+     * @throws IllegalArgumentException  if the set is null
+     */
+    public static SortedSet synchronizedSortedSet(SortedSet set) {
+        return Collections.synchronizedSortedSet(set);
+    }
+
+    /**
+     * Returns an unmodifiable sorted set backed by the given sorted set.
+     * <p>
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     *
+     * @param set  the sorted set to make unmodifiable, must not be null
+     * @return an unmodifiable set backed by the given set
+     * @throws IllegalArgumentException  if the set is null
+     */
+    public static SortedSet unmodifiableSortedSet(SortedSet set) {
+        return Collections.unmodifiableSortedSet(set);
     }
 
     /**

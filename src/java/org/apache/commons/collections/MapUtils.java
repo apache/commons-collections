@@ -1,7 +1,7 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.14 2002/10/13 22:31:35 scolebourne Exp $
- * $Revision: 1.14 $
- * $Date: 2002/10/13 22:31:35 $
+ * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MapUtils.java,v 1.15 2002/12/15 13:05:03 scolebourne Exp $
+ * $Revision: 1.15 $
+ * $Date: 2002/12/15 13:05:03 $
  *
  * ====================================================================
  *
@@ -89,11 +89,22 @@ import java.util.*;
  * @author Stephen Colebourne
  */
 public class MapUtils {
+    
+    /**
+     * An empty unmodifiable map.
+     * This was not provided in JDK1.2.
+     */
+    public static final Map EMPTY_MAP = Collections.unmodifiableMap(new HashMap(1));
+    /**
+     * An empty unmodifiable sorted map.
+     * This is not provided in the JDK.
+     */
+    public static final SortedMap EMPTY_SORTED_MAP = Collections.unmodifiableSortedMap(new TreeMap());
 
     private static int debugIndent = 0;
 
     /**
-     *  Please don't instantiate a <Code>MapUtils</Code>.
+     * <code>MapUtils</code> should not normally be instantiated.
      */
     public MapUtils() {
     }    
@@ -1061,6 +1072,46 @@ public class MapUtils {
 
 
     /**
+     * Returns a synchronized map backed by the given map.
+     * <p>
+     * You must manually synchronize on the returned buffer's iterator to 
+     * avoid non-deterministic behavior:
+     *  
+     * <pre>
+     * Map m = MapUtils.synchronizedMap(myMap);
+     * Set s = m.keySet();  // outside synchronized block
+     * synchronized (m) {  // synchronized on MAP!
+     *     Iterator i = s.iterator();
+     *     while (i.hasNext()) {
+     *         process (i.next());
+     *     }
+     * }
+     * </pre>
+     * 
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * 
+     * @param map  the map to synchronize, must not be null
+     * @return a synchronized map backed by the given map
+     * @throws IllegalArgumentException  if the map is null
+     */
+    public static Map synchronizedMap(Map map) {
+        return Collections.synchronizedMap(map);
+    }
+
+    /**
+     * Returns an unmodifiable map backed by the given map.
+     * <p>
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     *
+     * @param map  the map to make unmodifiable, must not be null
+     * @return an unmodifiable map backed by the given map
+     * @throws IllegalArgumentException  if the map is null
+     */
+    public static Map unmodifiableMap(Map map) {
+        return Collections.unmodifiableMap(map);
+    }
+
+    /**
      * Returns a predicated map backed by the given map.  Only keys and
      * values that pass the given predicates can be added to the map.
      * It is important not to use the original map after invoking this 
@@ -1121,6 +1172,46 @@ public class MapUtils {
      */
     public static Map lazyMap(Map map, Factory factory) {
         return new LazyMap(map, factory);
+    }
+
+    /**
+     * Returns a synchronized sorted map backed by the given sorted map.
+     * <p>
+     * You must manually synchronize on the returned buffer's iterator to 
+     * avoid non-deterministic behavior:
+     *  
+     * <pre>
+     * Map m = MapUtils.synchronizedSortedMap(myMap);
+     * Set s = m.keySet();  // outside synchronized block
+     * synchronized (m) {  // synchronized on MAP!
+     *     Iterator i = s.iterator();
+     *     while (i.hasNext()) {
+     *         process (i.next());
+     *     }
+     * }
+     * </pre>
+     * 
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     * 
+     * @param map  the map to synchronize, must not be null
+     * @return a synchronized map backed by the given map
+     * @throws IllegalArgumentException  if the map is null
+     */
+    public static Map synchronizedSortedMap(SortedMap map) {
+        return Collections.synchronizedSortedMap(map);
+    }
+
+    /**
+     * Returns an unmodifiable sorted map backed by the given sorted map.
+     * <p>
+     * This method uses the implementation in {@link java.util.Collections Collections}.
+     *
+     * @param map  the sorted map to make unmodifiable, must not be null
+     * @return an unmodifiable map backed by the given map
+     * @throws IllegalArgumentException  if the map is null
+     */
+    public static Map unmodifiableSortedMap(SortedMap map) {
+        return Collections.unmodifiableSortedMap(map);
     }
 
     /**
