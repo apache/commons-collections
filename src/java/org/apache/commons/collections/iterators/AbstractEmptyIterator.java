@@ -21,11 +21,11 @@ import java.util.NoSuchElementException;
  * Provides an implementation of an empty iterator.
  *
  * @since Commons Collections 3.1
- * @version $Revision: 1.1 $ $Date: 2004/05/22 09:46:39 $
+ * @version $Revision: 1.2 $ $Date: 2004/05/26 20:57:43 $
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractEmptyIterator {
+abstract class AbstractEmptyIterator {
  
     /**
      * Constructor.
