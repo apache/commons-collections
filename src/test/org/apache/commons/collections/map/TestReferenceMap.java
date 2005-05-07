@@ -28,6 +28,7 @@ import org.apache.commons.collections.BulkTest;
  * @version $Revision$ $Date$
  *
  * @author Paul Jack
+ * @author Guilhem Lavaux
  */
 public class TestReferenceMap extends AbstractTestIterableMap {
 
@@ -196,26 +197,30 @@ public class TestReferenceMap extends AbstractTestIterableMap {
     }
 */
 
-    /** Tests whether purge values setting works */
-    public void testPurgeValues() throws Exception {
-        // many thanks to Juozas Baliuka for suggesting this method
+    WeakReference keyReference;
+    WeakReference valueReference;
+
+    public Map buildRefMap() {
         Object key = new Object();
         Object value = new Object();
         
-        WeakReference keyReference = new WeakReference(key);
-        WeakReference valueReference = new WeakReference(value);
+        keyReference = new WeakReference(key);
+        valueReference = new WeakReference(value);
         
         Map testMap = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.HARD, true);
         testMap.put(key, value);
-        
+ 
         assertEquals("In map", value, testMap.get(key));
         assertNotNull("Weak reference released early (1)", keyReference.get());
         assertNotNull("Weak reference released early (2)", valueReference.get());
-        
-        // dereference strong references
-        key = null;
-        value = null;
-        
+        return testMap;
+    }
+
+    /** Tests whether purge values setting works */
+    public void testPurgeValues() throws Exception {
+        // many thanks to Juozas Baliuka for suggesting this method
+        Map testMap = buildRefMap();
+
         int iterations = 0;
         int bytz = 2;
         while(true) {
