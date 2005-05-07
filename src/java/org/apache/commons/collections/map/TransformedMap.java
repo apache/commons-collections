@@ -150,6 +150,9 @@ public class TransformedMap
      * @throws the transformed object
      */
     protected Map transformMap(Map map) {
+        if (map.isEmpty()) {
+            return map;
+        }
         Map result = new LinkedMap(map.size());
         for (Iterator it = map.entrySet().iterator(); it.hasNext(); ) {
             Map.Entry entry = (Map.Entry) it.next();

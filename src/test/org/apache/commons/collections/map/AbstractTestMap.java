@@ -907,23 +907,46 @@ public abstract class AbstractTestMap extends AbstractTestObject {
             return;
         }
 
+        // check putAll OK adding empty map to empty map
         resetEmpty();
+        assertEquals(0, map.size());
+        map.putAll(new HashMap());
+        assertEquals(0, map.size());
 
+        // check putAll OK adding empty map to non-empty map
+        resetFull();
+        int size = map.size();
+        map.putAll(new HashMap());
+        assertEquals(size, map.size());
+
+        // check putAll OK adding non-empty map to empty map
+        resetEmpty();
         Map m2 = makeFullMap();
-
         map.putAll(m2);
         confirmed.putAll(m2);
         verify();
 
+        // check putAll OK adding non-empty JDK map to empty map
         resetEmpty();
-
         m2 = makeConfirmedMap();
         Object[] keys = getSampleKeys();
         Object[] values = getSampleValues();
         for(int i = 0; i < keys.length; i++) {
             m2.put(keys[i], values[i]);
         }
+        map.putAll(m2);
+        confirmed.putAll(m2);
+        verify();
 
+        // check putAll OK adding non-empty JDK map to non-empty map
+        resetEmpty();
+        m2 = makeConfirmedMap();
+        map.put(keys[0], values[0]);
+        confirmed.put(keys[0], values[0]);
+        verify();
+        for(int i = 1; i < keys.length; i++) {
+            m2.put(keys[i], values[i]);
+        }
         map.putAll(m2);
         confirmed.putAll(m2);
         verify();
