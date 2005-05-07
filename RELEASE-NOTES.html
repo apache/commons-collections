@@ -64,6 +64,7 @@ If this causes major headaches to anyone please contact commons-dev at jakarta.a
 <li>AbstractLinkedMap.init() - Now calls createEntry() to create the map entry object [33706]</li>
 <li>BeanMap.initialize() - Internal variable now correctly initialised with only write methods that actually exist [15895]</li>
 <li>TransformedMap.putAll - Now allows putAll of an empty map [34686]</li>
+<li>AbstractHashedMap deserialization - Fix to prevent doubling of internal data array [34265]</li>
 </ul>
 
 <center><h3>JAVADOC</h3></center>

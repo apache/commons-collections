@@ -1204,13 +1204,13 @@ public class AbstractHashedMap extends AbstractMap implements IterableMap {
         int capacity = in.readInt();
         int size = in.readInt();
         init();
+        threshold = calculateThreshold(capacity, loadFactor);
         data = new HashEntry[capacity];
         for (int i = 0; i < size; i++) {
             Object key = in.readObject();
             Object value = in.readObject();
             put(key, value);
         }
-        threshold = calculateThreshold(data.length, loadFactor);
     }
     
     //-----------------------------------------------------------------------
