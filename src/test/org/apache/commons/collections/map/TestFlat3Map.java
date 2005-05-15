@@ -59,6 +59,26 @@ public class TestFlat3Map extends AbstractTestIterableMap {
     }
 
     //-----------------------------------------------------------------------
+    public void testEquals1() {
+        Flat3Map map1 = new Flat3Map();
+        map1.put("a", "testA");
+        map1.put("b", "testB");
+        Flat3Map map2 = new Flat3Map();
+        map2.put("a", "testB");
+        map2.put("b", "testA");
+        assertEquals(false, map1.equals(map2));
+    }
+
+    public void testEquals2() {
+        Flat3Map map1 = new Flat3Map();
+        map1.put("a", "testA");
+        map1.put("b", "testB");
+        Flat3Map map2 = new Flat3Map();
+        map2.put("a", "testB");
+        map2.put("c", "testA");
+        assertEquals(false, map1.equals(map2));
+    }
+
     public void testClone2() {
         Flat3Map map = new Flat3Map();
         assertEquals(0, map.size());

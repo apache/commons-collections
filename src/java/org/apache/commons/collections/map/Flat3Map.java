@@ -1041,24 +1041,27 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             switch (size) {  // drop through
                 case 3:
                     if (other.containsKey(key3) == false) {
-                        otherValue = other.get(key3);
-                        if (value3 == null ? otherValue != null : !value3.equals(otherValue)) {
-                            return false;
-                        }
+                        return false;
+                    }
+                    otherValue = other.get(key3);
+                    if (value3 == null ? otherValue != null : !value3.equals(otherValue)) {
+                        return false;
                     }
                 case 2:
                     if (other.containsKey(key2) == false) {
-                        otherValue = other.get(key2);
-                        if (value2 == null ? otherValue != null : !value2.equals(otherValue)) {
-                            return false;
-                        }
+                        return false;
+                    }
+                    otherValue = other.get(key2);
+                    if (value2 == null ? otherValue != null : !value2.equals(otherValue)) {
+                        return false;
                     }
                 case 1:
                     if (other.containsKey(key1) == false) {
-                        otherValue = other.get(key1);
-                        if (value1 == null ? otherValue != null : !value1.equals(otherValue)) {
-                            return false;
-                        }
+                        return false;
+                    }
+                    otherValue = other.get(key1);
+                    if (value1 == null ? otherValue != null : !value1.equals(otherValue)) {
+                        return false;
                     }
             }
         }
