@@ -15,6 +15,8 @@
  */
 package org.apache.commons.collections.buffer;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Collection;
 
 import org.apache.commons.collections.Buffer;
@@ -78,7 +80,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
             return result;
         }
     }
-    
+
     public boolean addAll(Collection c) {
         synchronized (lock) {
             boolean result = collection.addAll(c);
@@ -86,31 +88,35 @@ public class BlockingBuffer extends SynchronizedBuffer {
             return result;
         }
     }
-    
+
     public Object get() {
         synchronized (lock) {
             while (collection.isEmpty()) {
                 try {
                     wait();
                 } catch (InterruptedException e) {
-                    throw new BufferUnderflowException();
+                    PrintWriter out = new PrintWriter(new StringWriter());
+                    e.printStackTrace(out);
+                    throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
             }
             return getBuffer().get();
         }
     }
-    
+
     public Object remove() {
         synchronized (lock) {
             while (collection.isEmpty()) {
                 try {
                     wait();
                 } catch (InterruptedException e) {
-                    throw new BufferUnderflowException();
+                    PrintWriter out = new PrintWriter(new StringWriter());
+                    e.printStackTrace(out);
+                    throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
             }
             return getBuffer().remove();
         }
     }
-    
+
 }
