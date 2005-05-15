@@ -46,6 +46,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestTreeList.suite());
         
         suite.addTest(TestFixedSizeList.suite());
+        suite.addTest(TestGrowthList.suite());
         suite.addTest(TestPredicatedList.suite());
         suite.addTest(TestSetUniqueList.suite());
         suite.addTest(TestSynchronizedList.suite());

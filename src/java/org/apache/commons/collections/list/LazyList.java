@@ -46,8 +46,13 @@ import org.apache.commons.collections.Factory;
  * instance is the fourth element in the list.  The first, second, 
  * and third element are all set to <code>null</code>.
  * <p>
+ * This class differs from {@link GrowthList} because here growth occurs on
+ * get, where <code>GrowthList</code> grows on set and add. However, they
+ * could easily be used together by decorating twice.
+ * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @see GrowthList
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  * 
