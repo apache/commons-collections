@@ -40,10 +40,10 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * <p>
  * NOTE: As from version 3.0, the IteratorChain may contain no
  * iterators. In this case the class will function as an empty iterator.
- * 
+ *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
@@ -80,7 +80,7 @@ public class IteratorChain implements Iterator {
 
     /**
      * Construct an IteratorChain with a single Iterator.
-     * 
+     *
      * @param iterator first Iterator in the IteratorChain
      * @throws NullPointerException if the iterator is null
      */
@@ -135,8 +135,8 @@ public class IteratorChain implements Iterator {
     
     //-----------------------------------------------------------------------
     /**
-     * Add an Iterator to the end of the chain 
-     * 
+     * Add an Iterator to the end of the chain
+     *
      * @param iterator Iterator to add
      * @throws IllegalStateException if I've already started iterating
      * @throws NullPointerException if the iterator is null
@@ -150,8 +150,8 @@ public class IteratorChain implements Iterator {
     }
 
     /**
-     * Set the Iterator at the given index     
-     * 
+     * Set the Iterator at the given index
+     *
      * @param index      index of the Iterator to replace
      * @param iterator   Iterator to place at the given index
      * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt; size()
@@ -168,7 +168,7 @@ public class IteratorChain implements Iterator {
 
     /**
      * Get the list of Iterators (unmodifiable)
-     * 
+     *
      * @return the unmodifiable list of iterators added
      */
     public List getIterators() {
@@ -177,7 +177,7 @@ public class IteratorChain implements Iterator {
 
     /**
      * Number of Iterators in the current IteratorChain.
-     * 
+     *
      * @return Iterator count
      */
     public int size() {
@@ -188,8 +188,8 @@ public class IteratorChain implements Iterator {
      * Determine if modifications can still be made to the IteratorChain.
      * IteratorChains cannot be modified once they have executed a method
      * from the Iterator interface.
-     * 
-     * @return true if IteratorChain cannot be modified, false if it can 
+     *
+     * @return true if IteratorChain cannot be modified, false if it can
      */
     public boolean isLocked() {
         return isLocked;
@@ -239,7 +239,7 @@ public class IteratorChain implements Iterator {
     //-----------------------------------------------------------------------
     /**
      * Return true if any Iterator in the IteratorChain has a remaining element.
-     * 
+     *
      * @return true if elements remain
      */
     public boolean hasNext() {
@@ -252,7 +252,7 @@ public class IteratorChain implements Iterator {
 
     /**
      * Returns the next Object of the current Iterator
-     * 
+     *
      * @return Object from the current Iterator
      * @throws java.util.NoSuchElementException if all the Iterators are exhausted
      */
@@ -265,13 +265,13 @@ public class IteratorChain implements Iterator {
     }
 
     /**
-     * Removes from the underlying collection the last element 
+     * Removes from the underlying collection the last element
      * returned by the Iterator.  As with next() and hasNext(),
      * this method calls remove() on the underlying Iterator.
-     * Therefore, this method may throw an 
+     * Therefore, this method may throw an
      * UnsupportedOperationException if the underlying
-     * Iterator does not support this method. 
-     * 
+     * Iterator does not support this method.
+     *
      * @throws UnsupportedOperationException
      *   if the remove operator is not supported by the underlying Iterator
      * @throws IllegalStateException
@@ -280,8 +280,9 @@ public class IteratorChain implements Iterator {
      */
     public void remove() {
         lockChain();
-        updateCurrentIterator();
-
+        if( currentIterator == null ) {
+            updateCurrentIterator();
+        }
         lastUsedIterator.remove();
     }
 

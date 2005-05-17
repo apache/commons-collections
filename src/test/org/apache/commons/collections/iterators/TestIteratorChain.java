@@ -19,9 +19,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.LinkedList;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.Predicate;
 
 /**
  * Tests the IteratorChain class.
@@ -95,6 +99,38 @@ public class TestIteratorChain extends AbstractTestIterator {
         }
     }
 
+    public void testRemoveFromFilteredIterator() {
+
+        final Predicate myPredicate = new Predicate() {
+            public boolean evaluate( Object object ) {
+                Integer i = (Integer) object;
+                if (i.compareTo(new Integer(4)) < 0)
+                    return true;
+                return false;
+            }
+        };
+
+        List list1 = new ArrayList();
+        List list2 = new ArrayList();
+
+        list1.add(new Integer(1));
+        list1.add(new Integer(2));
+        list2.add(new Integer(3));
+        list2.add(new Integer(4)); // will be ignored by the predicate
+
+        Iterator it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate );
+        Iterator it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate );
+
+        Iterator it = IteratorUtils.chainedIterator(it1, it2);
+        while (it.hasNext()) {
+            it.next();
+            it.remove();
+        }
+        assertEquals( 0, list1.size() );
+        assertEquals( 1, list2.size() );
+
+    }
+    
     public void testRemove() {
         Iterator iter = (Iterator) makeFullIterator();
 
