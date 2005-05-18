@@ -41,6 +41,7 @@ import org.apache.commons.collections.map.TypedMap;
 import org.apache.commons.collections.map.TypedSortedMap;
 import org.apache.commons.collections.map.UnmodifiableMap;
 import org.apache.commons.collections.map.UnmodifiableSortedMap;
+import org.apache.commons.collections.map.MultiValueMap;
 
 /** 
  * Provides utility methods and decorators for
@@ -64,6 +65,9 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  <li>{@link #transformedSortedMap(SortedMap, Transformer, Transformer)}
  *  <li>{@link #typedMap(Map, Class, Class)}
  *  <li>{@link #typedSortedMap(SortedMap, Class, Class)}
+ *  <li>{@link #multiValueMap( Map )}
+ *  <li>{@link #multiValueMap( Map, Class )}
+ *  <li>{@link #multiValueMap( Map, Factory )}
  *  </ul>
  *
  * @since Commons Collections 1.0
@@ -79,6 +83,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  * @author Janek Bogucki
  * @author Max Rydahl Andersen
  * @author <a href="mailto:equinus100@hotmail.com">Ashwin S</a>
+ * @author <a href="mailto:jcarman@apache.org">James Carman</a>
  * @author Neil O'Toole
  */
 public class MapUtils {
@@ -1550,5 +1555,47 @@ public class MapUtils {
     public static SortedMap lazySortedMap(SortedMap map, Transformer transformerFactory) {
         return LazySortedMap.decorate(map, transformerFactory);
     }
+
+    /**
+     * Creates a mult-value map backed by the given map which returns ArrayLists.
+     * @param map the map to decorate
+     * @return a multi-value map backed by the given map which returns ArrayLists of values.
+     * @see MultiValueMap
+     * @since Commons Collections 3.2
+     */
+    public static Map multiValueMap( Map map ) {
+        return MultiValueMap.decorate( map );
+    }
+
+    /**
+     * Creates a multi-value map backed by the given map which returns collections of
+     * the specified type.
+     * @param map the map to decorate
+     * @param collectionClass the type of collections to return from the map (must contain public no-arg constructor
+     * and extend Collection).
+     * @return a multi-value map backed by the given map which returns collections of the specified type
+     * @see MultiValueMap
+     * @since Commons Collections 3.2
+     */
+    public static Map multiValueMap( Map map, Class collectionClass ) {
+        return MultiValueMap.decorate( map, collectionClass );
+    }
+
+    /**
+     * Creates a multi-value map backed by the given map which returns collections
+     * created by the specified collection factory.
+     * @param map the map to decorate
+     * @param collectionFactory a factor which creates collection objects
+     * @return a multi-value map backed by the given map which returns collections
+     * created by the specified collection factory
+     * @see MultiValueMap
+     * @since Commons Collections 3.2
+     */
+    public static Map multiValueMap( Map map, Factory collectionFactory ) {
+        return MultiValueMap.decorate( map, collectionFactory );
+    }
+
+
+
 
 }
