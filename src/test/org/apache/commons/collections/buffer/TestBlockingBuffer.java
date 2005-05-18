@@ -364,7 +364,26 @@ public class TestBlockingBuffer extends AbstractTestObject {
         }
         
     }
-    
+
+    public void testTimeoutGet() {
+        final BlockingBuffer buffer = new BlockingBuffer(new MyBuffer());
+        try {
+            buffer.get( 100 );
+            fail( "Get should have timed out." );
+        }
+        catch( BufferUnderflowException e ){
+        }
+    }
+
+    public void testTimeoutRemove() {
+        final BlockingBuffer buffer = new BlockingBuffer(new MyBuffer());
+        try {
+            buffer.remove( 100 );
+            fail( "Get should have timed out." );
+        }
+        catch( BufferUnderflowException e ){
+        }
+    }
     protected static class DelayedAdd extends Thread {
 
         Buffer buffer;
