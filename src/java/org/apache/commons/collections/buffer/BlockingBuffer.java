@@ -25,17 +25,17 @@ import org.apache.commons.collections.BufferUnderflowException;
 /**
  * Decorates another <code>Buffer</code> to make {@link #get()} and
  * {@link #remove()} block when the <code>Buffer</code> is empty.
- * <p/>
+ * <p>
  * If either <code>get</code> or <code>remove</code> is called on an empty
  * <code>Buffer</code>, the calling thread waits for notification that
  * an <code>add</code> or <code>addAll</code> operation has completed.
- * <p/>
+ * <p>
  * When one or more entries are added to an empty <code>Buffer</code>,
  * all threads blocked in <code>get</code> or <code>remove</code> are notified.
  * There is no guarantee that concurrent blocked <code>get</code> or
  * <code>remove</code> requests will be "unblocked" and receive data in the
  * order that they arrive.
- * <p/>
+ * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
  * @author Stephen Colebourne
@@ -74,7 +74,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
 
     //-----------------------------------------------------------------------
     public boolean add(Object o) {
-        synchronized(lock) {
+        synchronized (lock) {
             boolean result = collection.add(o);
             notifyAll();
             return result;
@@ -82,7 +82,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
     }
 
     public boolean addAll(Collection c) {
-        synchronized(lock) {
+        synchronized (lock) {
             boolean result = collection.addAll(c);
             notifyAll();
             return result;
@@ -90,12 +90,11 @@ public class BlockingBuffer extends SynchronizedBuffer {
     }
 
     public Object get() {
-        synchronized(lock) {
-            while(collection.isEmpty()) {
+        synchronized (lock) {
+            while (collection.isEmpty()) {
                 try {
                     wait();
-                }
-                catch(InterruptedException e) {
+                } catch (InterruptedException e) {
                     PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
@@ -106,21 +105,20 @@ public class BlockingBuffer extends SynchronizedBuffer {
     }
 
     public Object get(final long timeout) {
-        synchronized(lock) {
+        synchronized (lock) {
             final long expiration = System.currentTimeMillis() + timeout;
             long timeLeft = expiration - System.currentTimeMillis();
-            while(timeLeft > 0 && collection.isEmpty()) {
+            while (timeLeft > 0 && collection.isEmpty()) {
                 try {
                     wait(timeLeft);
                     timeLeft = expiration - System.currentTimeMillis();
-                }
-                catch(InterruptedException e) {
+                } catch(InterruptedException e) {
                     PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
             }
-            if(collection.isEmpty()) {
+            if (collection.isEmpty()) {
                 throw new BufferUnderflowException("Timeout expired.");
             }
             return getBuffer().get();
@@ -128,12 +126,11 @@ public class BlockingBuffer extends SynchronizedBuffer {
     }
 
     public Object remove() {
-        synchronized(lock) {
-            while(collection.isEmpty()) {
+        synchronized (lock) {
+            while (collection.isEmpty()) {
                 try {
                     wait();
-                }
-                catch(InterruptedException e) {
+                } catch (InterruptedException e) {
                     PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
@@ -144,24 +141,24 @@ public class BlockingBuffer extends SynchronizedBuffer {
     }
 
     public Object remove(final long timeout) {
-        synchronized(lock) {
+        synchronized (lock) {
             final long expiration = System.currentTimeMillis() + timeout;
             long timeLeft = expiration - System.currentTimeMillis();
-            while(timeLeft > 0 && collection.isEmpty()) {
+            while (timeLeft > 0 && collection.isEmpty()) {
                 try {
                     wait(timeLeft);
                     timeLeft = expiration - System.currentTimeMillis();
-                }
-                catch(InterruptedException e) {
+                } catch(InterruptedException e) {
                     PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
             }
-            if(collection.isEmpty()) {
+            if (collection.isEmpty()) {
                 throw new BufferUnderflowException("Timeout expired.");
             }
             return getBuffer().remove();
         }
     }
+
 }
