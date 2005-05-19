@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2005 The Apache Software Foundation
+ *  Copyright 2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import java.util.Collection;
 import org.apache.commons.collections.IteratorUtils;
 
 /**
- * TestMultiValueMap
+ * TestMultiValueMap.
  *
  * @author <a href="mailto:jcarman@apache.org">James Carman</a>
  * @since Commons Collections 3.2
@@ -93,7 +93,7 @@ public class TestMultiValueMap extends TestCase {
     }
 
     private MultiValueMap createTestMap(Class collectionClass) {
-        final MultiValueMap map = new MultiValueMap(new HashMap(), collectionClass);
+        final MultiValueMap map = MultiValueMap.decorate(new HashMap(), collectionClass);
         map.put("one", "uno");
         map.put("one", "un");
         map.put("two", "dos");
