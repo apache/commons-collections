@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -1377,7 +1377,50 @@ public class MapUtils {
     public static Map orderedMap(Map map) {
         return ListOrderedMap.decorate(map);
     }
-    
+
+    /**
+     * Creates a mult-value map backed by the given map which returns
+     * collections of type ArrayList.
+     *
+     * @param map  the map to decorate
+     * @return a multi-value map backed by the given map which returns ArrayLists of values.
+     * @see MultiValueMap
+     * @since Commons Collections 3.2
+     */
+    public static Map multiValueMap(Map map) {
+        return MultiValueMap.decorate(map);
+    }
+
+    /**
+     * Creates a multi-value map backed by the given map which returns
+     * collections of the specified type.
+     *
+     * @param map  the map to decorate
+     * @param collectionClass  the type of collections to return from the map (must contain public no-arg constructor
+     *  and extend Collection).
+     * @return a multi-value map backed by the given map which returns collections of the specified type
+     * @see MultiValueMap
+     * @since Commons Collections 3.2
+     */
+    public static Map multiValueMap(Map map, Class collectionClass) {
+        return MultiValueMap.decorate(map, collectionClass);
+    }
+
+    /**
+     * Creates a multi-value map backed by the given map which returns
+     * collections created by the specified collection factory.
+     *
+     * @param map  the map to decorate
+     * @param collectionFactory  a factor which creates collection objects
+     * @return a multi-value map backed by the given map which returns collections
+     * created by the specified collection factory
+     * @see MultiValueMap
+     * @since Commons Collections 3.2
+     */
+    public static Map multiValueMap(Map map, Factory collectionFactory) {
+        return MultiValueMap.decorate(map, collectionFactory);
+    }
+
     // SortedMap decorators
     //-----------------------------------------------------------------------
     /**
@@ -1555,47 +1598,5 @@ public class MapUtils {
     public static SortedMap lazySortedMap(SortedMap map, Transformer transformerFactory) {
         return LazySortedMap.decorate(map, transformerFactory);
     }
-
-    /**
-     * Creates a mult-value map backed by the given map which returns ArrayLists.
-     * @param map the map to decorate
-     * @return a multi-value map backed by the given map which returns ArrayLists of values.
-     * @see MultiValueMap
-     * @since Commons Collections 3.2
-     */
-    public static Map multiValueMap( Map map ) {
-        return MultiValueMap.decorate( map );
-    }
-
-    /**
-     * Creates a multi-value map backed by the given map which returns collections of
-     * the specified type.
-     * @param map the map to decorate
-     * @param collectionClass the type of collections to return from the map (must contain public no-arg constructor
-     * and extend Collection).
-     * @return a multi-value map backed by the given map which returns collections of the specified type
-     * @see MultiValueMap
-     * @since Commons Collections 3.2
-     */
-    public static Map multiValueMap( Map map, Class collectionClass ) {
-        return MultiValueMap.decorate( map, collectionClass );
-    }
-
-    /**
-     * Creates a multi-value map backed by the given map which returns collections
-     * created by the specified collection factory.
-     * @param map the map to decorate
-     * @param collectionFactory a factor which creates collection objects
-     * @return a multi-value map backed by the given map which returns collections
-     * created by the specified collection factory
-     * @see MultiValueMap
-     * @since Commons Collections 3.2
-     */
-    public static Map multiValueMap( Map map, Factory collectionFactory ) {
-        return MultiValueMap.decorate( map, collectionFactory );
-    }
-
-
-
 
 }
