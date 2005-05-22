@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -56,6 +56,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  *
  * @author java util HashMap
  * @author Stephen Colebourne
+ * @author Christian Siefkes
  */
 public class AbstractHashedMap extends AbstractMap implements IterableMap {
     
@@ -145,8 +146,8 @@ public class AbstractHashedMap extends AbstractMap implements IterableMap {
             throw new IllegalArgumentException("Load factor must be greater than 0");
         }
         this.loadFactor = loadFactor;
-        this.threshold = calculateThreshold(initialCapacity, loadFactor);
         initialCapacity = calculateNewCapacity(initialCapacity);
+        this.threshold = calculateThreshold(initialCapacity, loadFactor);
         this.data = new HashEntry[initialCapacity];
         init();
     }

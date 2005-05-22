@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -58,7 +58,16 @@ public class TestHashedMap extends AbstractTestIterableMap {
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
     }
-    
+
+    public void testInternalState() {
+        HashedMap map = new HashedMap(42, 0.75f);
+        assertEquals(0.75f, map.loadFactor, 0.1f);
+        assertEquals(0, map.size);
+        assertEquals(64, map.data.length);
+        assertEquals(48, map.threshold);
+        assertEquals(0, map.modCount);
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/HashedMap.emptyCollection.version3.obj");
