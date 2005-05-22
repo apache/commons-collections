@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -137,6 +137,7 @@ import java.util.Vector;
  * @author Janek Bogucki
  * @author Mohan Kishore
  * @author Stephen Colebourne
+ * @author Shinobu Kawai
  */
 public class ExtendedProperties extends Hashtable {
     
@@ -1610,6 +1611,9 @@ public class ExtendedProperties extends Hashtable {
 
     /**
      * Convert a standard properties class into a configuration class.
+     * <p>
+     * NOTE: From Commons Collections 3.2 this method will pick up
+     * any default parent Properties of the specified input object.
      *
      * @param props  the properties object to convert
      * @return new ExtendedProperties created from props
@@ -1617,12 +1621,12 @@ public class ExtendedProperties extends Hashtable {
     public static ExtendedProperties convertProperties(Properties props) {
         ExtendedProperties c = new ExtendedProperties();
 
-        for (Enumeration e = props.keys(); e.hasMoreElements();) {
+        for (Enumeration e = props.propertyNames(); e.hasMoreElements();) {
             String s = (String) e.nextElement();
             c.setProperty(s, props.getProperty(s));
         }
 
         return c;
     }
-    
+
 }

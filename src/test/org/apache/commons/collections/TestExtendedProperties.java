@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package org.apache.commons.collections;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -31,6 +32,7 @@ import junit.framework.TestSuite;
  * @author Geir Magnusson Jr.
  * @author Mohan Kishore
  * @author Stephen Colebourne
+ * @author Shinobu Kawai
  */
 public class TestExtendedProperties extends TestCase {
     
@@ -251,5 +253,18 @@ public class TestExtendedProperties extends TestCase {
         assertEquals("c", ep1.getVector("one").get(2));
         assertEquals("d", ep1.getVector("one").get(3));
     }
-    
+
+    public void testInheritDefaultProperties() {
+        Properties defaults = new Properties();
+        defaults.setProperty("resource.loader", "class");
+
+        Properties properties = new Properties(defaults);
+        properties.setProperty("test", "foo");
+
+        ExtendedProperties extended = ExtendedProperties.convertProperties(properties);
+
+        assertEquals("foo", extended.getString("test"));
+        assertEquals("class", extended.getString("resource.loader"));
+    }
+
 }
