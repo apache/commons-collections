@@ -61,6 +61,7 @@ If this causes major headaches to anyone please contact commons-dev at jakarta.a
 <center><h3>BUG FIXES</h3></center>
 <ul>
 <li>FastArrayList - Fix iterators and views to work better in multithreaded environments</li>
+<li>FastArrayList - Fix iterator remove where ConcurrentModificationException not as expected [34690]</li>
 <li>BoundedFifoBuffer/CircularFifoBuffer - Fix serialization to work in case where buffer serialized when full [31433]</li>
 <li>BoundedFifoBuffer - Fix iterator remove bug causing ArrayIndexOutOfBounds error [33071]</li>
 <li>MultiHashMap.remove(key, item) - Was returning the item even when nothing was removed [32366]</li>

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
+import java.util.ListIterator;
 
 import junit.framework.Test;
 
@@ -50,6 +52,113 @@ public class TestFastArrayList extends TestArrayList {
         FastArrayList fal = new FastArrayList();
         fal.setFast(false);
         return (fal);
+    }
+
+    public void testConcurrentModification_alwaysFast() {
+        FastArrayList list = new FastArrayList();
+        list.setFast(true);
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        ListIterator iter = list.listIterator();
+        assertEquals("a", iter.next());
+        assertEquals("b", iter.next());
+        iter.remove();  // checking for no ConcurrentModificationException
+        assertEquals("c", iter.next());
+        assertEquals(false, iter.hasNext());
+        assertEquals("c", iter.previous());
+        assertEquals("a", iter.previous());
+        assertEquals(false, iter.hasPrevious());
+    }
+
+    public void testConcurrentModification_alwaysFastModError() {
+        FastArrayList list = new FastArrayList();
+        list.setFast(true);
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        ListIterator iter = list.listIterator();
+        assertEquals("a", iter.next());
+        assertEquals("b", iter.next());
+        list.remove(1);
+        try {
+            iter.remove();
+        } catch (ConcurrentModificationException ex) {
+            // expected
+        }
+        // iterator state now invalid
+    }
+
+    public void testConcurrentModification_delayedFast() {
+        FastArrayList list = new FastArrayList();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        ListIterator iter = list.listIterator();
+        assertEquals("a", iter.next());
+        assertEquals("b", iter.next());
+        list.setFast(true);
+        iter.remove();  // checking for no ConcurrentModificationException
+        assertEquals("c", iter.next());
+        assertEquals(false, iter.hasNext());
+        assertEquals("c", iter.previous());
+        assertEquals("a", iter.previous());
+        assertEquals(false, iter.hasPrevious());
+    }
+
+    public void testConcurrentModification_delayedFastModError() {
+        FastArrayList list = new FastArrayList();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        ListIterator iter = list.listIterator();
+        assertEquals("a", iter.next());
+        assertEquals("b", iter.next());
+        list.setFast(true);
+        list.remove(1);
+        try {
+            iter.remove();
+        } catch (ConcurrentModificationException ex) {
+            // expected
+        }
+        // iterator state now invalid
+    }
+
+    public void testConcurrentModification_alwaysFastPrevious() {
+        FastArrayList list = new FastArrayList();
+        list.setFast(true);
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        ListIterator iter = list.listIterator();
+        assertEquals("a", iter.next());
+        assertEquals("b", iter.next());
+        assertEquals("b", iter.previous());
+        iter.remove();  // checking for no ConcurrentModificationException
+        assertEquals("c", iter.next());
+        assertEquals(false, iter.hasNext());
+        assertEquals("c", iter.previous());
+        assertEquals("a", iter.previous());
+        assertEquals(false, iter.hasPrevious());
+    }
+
+    public void testConcurrentModification_alwaysFastModErrorPrevious() {
+        FastArrayList list = new FastArrayList();
+        list.setFast(true);
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        ListIterator iter = list.listIterator();
+        assertEquals("a", iter.next());
+        assertEquals("b", iter.next());
+        assertEquals("b", iter.previous());
+        list.remove(1);
+        try {
+            iter.remove();
+        } catch (ConcurrentModificationException ex) {
+            // expected
+        }
+        // iterator state now invalid
     }
 
 }
