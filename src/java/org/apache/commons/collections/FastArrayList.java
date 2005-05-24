@@ -1219,7 +1219,7 @@ public class FastArrayList extends ArrayList {
             get().remove(lastReturnedIndex);
             last--;
             expected = list;
-            iter = get().listIterator(previousIndex());
+            iter = get().listIterator(lastReturnedIndex);
             lastReturnedIndex = -1;
         }
 
