@@ -122,6 +122,13 @@
       <email></email>
       <organization></organization>
     </developer>
+    <developer>
+      <name>James Carman</name>
+      <id>jcarman</id>
+      <email></email>
+      <organization></organization>
+    </developer>
+    
   </developers>
   
   <contributors>
