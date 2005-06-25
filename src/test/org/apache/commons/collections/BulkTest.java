@@ -354,7 +354,7 @@ class BulkTestSuiteMaker {
         
         BulkTest bulk2;
         try {
-            bulk2 = (BulkTest)m.invoke(bulk, null);
+            bulk2 = (BulkTest)m.invoke(bulk, (Object[]) null);
             if (bulk2 == null) return;
         } catch (InvocationTargetException ex) {
             ex.getTargetException().printStackTrace();
@@ -412,7 +412,7 @@ class BulkTestSuiteMaker {
     private static BulkTest makeTestCase(Class c, Method m) {
         Constructor con = getTestCaseConstructor(c);
         try {
-            return (BulkTest)con.newInstance(new String[] { m.getName() });
+            return (BulkTest)con.newInstance(new Object[] {m.getName()});
         } catch (InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException(); // FIXME;

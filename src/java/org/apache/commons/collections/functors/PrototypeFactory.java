@@ -59,7 +59,7 @@ public class PrototypeFactory {
             return ConstantFactory.NULL_INSTANCE;
         }
         try {
-            Method method = prototype.getClass().getMethod("clone", null);
+            Method method = prototype.getClass().getMethod("clone", (Class[]) null);
             return new PrototypeCloneFactory(prototype, method);
 
         } catch (NoSuchMethodException ex) {
@@ -116,7 +116,7 @@ public class PrototypeFactory {
          */
         private void findCloneMethod() {
             try {
-                iCloneMethod = iPrototype.getClass().getMethod("clone", null);
+                iCloneMethod = iPrototype.getClass().getMethod("clone", (Class[]) null);
 
             } catch (NoSuchMethodException ex) {
                 throw new IllegalArgumentException("PrototypeCloneFactory: The clone method must exist and be public ");
@@ -135,7 +135,7 @@ public class PrototypeFactory {
             }
 
             try {
-                return iCloneMethod.invoke(iPrototype, null);
+                return iCloneMethod.invoke(iPrototype, (Object[])null);
 
             } catch (IllegalAccessException ex) {
                 throw new FunctorException("PrototypeCloneFactory: Clone method must be public", ex);

@@ -330,7 +330,7 @@ public class TestBeanMap extends AbstractTestMap {
 
     public void testMethodAccessor() throws Exception {
         BeanMap map = (BeanMap) makeFullMap();
-        Method method = BeanWithProperties.class.getDeclaredMethod("getSomeIntegerValue", null);
+        Method method = BeanWithProperties.class.getDeclaredMethod("getSomeIntegerValue", (Class[]) null);
         assertEquals(method, map.getReadMethod("someIntegerValue"));
     }
     

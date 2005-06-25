@@ -21,6 +21,11 @@
 <center><h2>RELEASE NOTES: COLLECTIONS 3.2</h2></center>
 
 <p>
+Commons collections is a project to develop and maintain collection classes
+based on and inspired by the JDK collection framework.
+This project is JDK1.2 compatible, and does not use JDK1.5 generics.
+</p>
+<p>
 This release adds various new classes and fixes a number of bugs.
 All feedback should be directed to commons-user at jakarta.apache.org.
 </p>
@@ -74,6 +79,7 @@ If this causes major headaches to anyone please contact commons-dev at jakarta.a
 <li>BoundedFifoBuffer - Fix iterator remove bug causing ArrayIndexOutOfBounds error [33071]</li>
 <li>IteratorChain.remove() - Fix to avoid IllegalStateException when one of the underlying iterators is a FilterIterator [34267]</li>
 <li>ExtendedProperties.convertProperties() - Fix to handle default properties maps correctly [32204]</li>
+<li>Add casts to avoid some JDK1.5 compilation warnings [35474]</li>
 </ul>
 
 <center><h3>JAVADOC</h3></center>
