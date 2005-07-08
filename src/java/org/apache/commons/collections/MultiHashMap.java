@@ -51,6 +51,9 @@ import org.apache.commons.collections.iterators.EmptyIterator;
  * <p>
  * <code>list</code> will be a list containing "A", "B", "C".
  *
+ * @deprecated Class now available as MultiValueMap in map subpackage.
+ * This version is due to be removed in collections v4.0.
+ *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
  * 

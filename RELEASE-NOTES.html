@@ -38,11 +38,18 @@ This release is fully source and binary compatible with v3.1.
 Please check the bug fixes to ensure you weren't relying on the behaviour of a bug.
 </p>
 <p>
-There is one new <i>deprecation</i>:<br />
+There are two new <i>deprecations</i>:<br />
 BeanMap is now deprecated and will be removed in v4.0.
 The class is now available in commons-beanutils (full jar version).
 This change was made to ensure that all bean related collections were in one place (ie. beanutils).
-If this causes major headaches to anyone please contact commons-dev at jakarta.apache.org
+If this causes major headaches to anyone please contact commons-dev at jakarta.apache.org.
+</p>
+<p>
+MultiHashMap is now deprecated and will be removed in v4.0.
+The class is now available as MultiValueMap in the map subpackage.
+This new version of the class is a decorator and can wrap maps other than HashMap
+making it much more flexible.
+If this causes major headaches to anyone please contact commons-dev at jakarta.apache.org.
 </p>
 
 <center><h3>NEW CLASSES</h3></center>
