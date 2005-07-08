@@ -61,6 +61,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestLazySortedMap.suite());
         suite.addTest(TestListOrderedMap.suite());
         suite.addTest(TestListOrderedMap2.suite());
+        suite.addTest(TestMultiValueMap.suite());
         suite.addTest(TestPredicatedMap.suite());
         suite.addTest(TestPredicatedSortedMap.suite());
         suite.addTest(TestTransformedMap.suite());
@@ -71,5 +72,5 @@ public class TestAll extends TestCase {
         
         return suite;
     }
-        
+
 }
