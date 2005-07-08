@@ -105,22 +105,15 @@ public class MultiHashMap extends HashMap implements MultiMap {
      * <p>
      * NOTE: From Commons Collections 3.1 this method correctly copies a MultiMap
      * to form a truly independent new map.
+     * NOTE: From Commons Collections 3.2 this method delegates to the newly
+     * added putAll(Map) override method.
      * 
      * @param mapToCopy  a Map to copy
      */
     public MultiHashMap(Map mapToCopy) {
         // be careful of JDK 1.3 vs 1.4 differences
         super((int) (mapToCopy.size() * 1.4f));
-        if (mapToCopy instanceof MultiMap) {
-            for (Iterator it = mapToCopy.entrySet().iterator(); it.hasNext();) {
-                Map.Entry entry = (Map.Entry) it.next();
-                Collection coll = (Collection) entry.getValue();
-                Collection newColl = createCollection(coll);
-                super.put(entry.getKey(), newColl);
-            }
-        } else {
-            putAll(mapToCopy);
-        }
+        putAll(mapToCopy);
     }
 
     /**
@@ -229,6 +222,30 @@ public class MultiHashMap extends HashMap implements MultiMap {
         }
         boolean results = coll.add(value);
         return (results ? value : null);
+    }
+
+    /**
+     * Override superclass to ensure that MultiMap instances are
+     * correctly handled.
+     * <p>
+     * NOTE: Prior to version 3.2, putAll(map) did not work properly
+     * when passed a MultiMap.
+     * 
+     * @param map  the map to copy (either a normal or multi map)
+     */
+    public void putAll(Map map) {
+        if (map instanceof MultiMap) {
+            for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+                Map.Entry entry = (Map.Entry) it.next();
+                Collection coll = (Collection) entry.getValue();
+                putAll(entry.getKey(), coll);
+            }
+        } else {
+            for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+                Map.Entry entry = (Map.Entry) it.next();
+                put(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     /**

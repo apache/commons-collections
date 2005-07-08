@@ -15,25 +15,45 @@
  */
 package org.apache.commons.collections.map;
 
-import junit.framework.TestCase;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import org.apache.commons.collections.IteratorUtils;
+import org.apache.commons.collections.MultiMap;
+import org.apache.commons.collections.TestMultiHashMap;
 
 /**
  * TestMultiValueMap.
  *
  * @author <a href="mailto:jcarman@apache.org">James Carman</a>
+ * @author Stephen Colebourne
  * @since Commons Collections 3.2
  */
 public class TestMultiValueMap extends TestCase {
+
+    public TestMultiValueMap(String testName) {
+        super(testName);
+    }
+
+    public static Test suite() {
+        return new TestSuite(TestMultiHashMap.class);
+    }
+
+    public static void main(String args[]) {
+        String[] testCaseName = { TestMultiHashMap.class.getName()};
+        junit.textui.TestRunner.main(testCaseName);
+    }
+
     public void testNoMappingReturnsNull() {
         final MultiValueMap map = createTestMap();
         assertNull(map.get("whatever"));
@@ -130,7 +150,188 @@ public class TestMultiValueMap extends TestCase {
         assertEquals(4, map.totalSize());
     }
 
-    public void testTotalSize() {
+    public void testTotalSizeA() {
         assertEquals(6, createTestMap().totalSize());
     }
+
+    //-----------------------------------------------------------------------
+    public void testMapEquals() {
+        MultiValueMap one = new MultiValueMap();
+        Integer value = new Integer(1);
+        one.put("One", value);
+        one.remove("One", value);
+        
+        MultiValueMap two = new MultiValueMap();
+        assertEquals(two, one);
+    }
+
+    //-----------------------------------------------------------------------
+    public void testGetCollection() {
+        MultiValueMap map = new MultiValueMap();
+        map.put("A", "AA");
+        assertSame(map.get("A"), map.getCollection("A"));
+    }
+    
+    public void testTotalSize() {
+        MultiValueMap map = new MultiValueMap();
+        assertEquals(0, map.totalSize());
+        map.put("A", "AA");
+        assertEquals(1, map.totalSize());
+        map.put("B", "BA");
+        assertEquals(2, map.totalSize());
+        map.put("B", "BB");
+        assertEquals(3, map.totalSize());
+        map.put("B", "BC");
+        assertEquals(4, map.totalSize());
+        map.remove("A");
+        assertEquals(3, map.totalSize());
+        map.remove("B", "BC");
+        assertEquals(2, map.totalSize());
+    }
+    
+    public void testSize() {
+        MultiValueMap map = new MultiValueMap();
+        assertEquals(0, map.size());
+        map.put("A", "AA");
+        assertEquals(1, map.size());
+        map.put("B", "BA");
+        assertEquals(2, map.size());
+        map.put("B", "BB");
+        assertEquals(2, map.size());
+        map.put("B", "BC");
+        assertEquals(2, map.size());
+        map.remove("A");
+        assertEquals(2, map.size());
+        map.remove("B", "BC");
+        assertEquals(2, map.size());
+    }
+    
+    public void testSize_Key() {
+        MultiValueMap map = new MultiValueMap();
+        assertEquals(0, map.size("A"));
+        assertEquals(0, map.size("B"));
+        map.put("A", "AA");
+        assertEquals(1, map.size("A"));
+        assertEquals(0, map.size("B"));
+        map.put("B", "BA");
+        assertEquals(1, map.size("A"));
+        assertEquals(1, map.size("B"));
+        map.put("B", "BB");
+        assertEquals(1, map.size("A"));
+        assertEquals(2, map.size("B"));
+        map.put("B", "BC");
+        assertEquals(1, map.size("A"));
+        assertEquals(3, map.size("B"));
+        map.remove("A");
+        assertEquals(0, map.size("A"));
+        assertEquals(3, map.size("B"));
+        map.remove("B", "BC");
+        assertEquals(0, map.size("A"));
+        assertEquals(2, map.size("B"));
+    }
+    
+    public void testIterator_Key() {
+        MultiValueMap map = new MultiValueMap();
+        assertEquals(false, map.iterator("A").hasNext());
+        map.put("A", "AA");
+        Iterator it = map.iterator("A");
+        assertEquals(true, it.hasNext());
+        it.next();
+        assertEquals(false, it.hasNext());
+    }
+    
+    public void testContainsValue_Key() {
+        MultiValueMap map = new MultiValueMap();
+        assertEquals(false, map.containsValue("A", "AA"));
+        assertEquals(false, map.containsValue("B", "BB"));
+        map.put("A", "AA");
+        assertEquals(true, map.containsValue("A", "AA"));
+        assertEquals(false, map.containsValue("A", "AB"));
+    }
+
+    public void testPutAll_Map1() {
+        MultiMap original = new MultiValueMap();
+        original.put("key", "object1");
+        original.put("key", "object2");
+
+        MultiValueMap test = new MultiValueMap();
+        test.put("keyA", "objectA");
+        test.put("key", "object0");
+        test.putAll(original);
+
+        assertEquals(2, test.size());
+        assertEquals(4, test.totalSize());
+        assertEquals(1, test.getCollection("keyA").size());
+        assertEquals(3, test.getCollection("key").size());
+        assertEquals(true, test.containsValue("objectA"));
+        assertEquals(true, test.containsValue("object0"));
+        assertEquals(true, test.containsValue("object1"));
+        assertEquals(true, test.containsValue("object2"));
+    }
+
+    public void testPutAll_Map2() {
+        Map original = new HashMap();
+        original.put("keyX", "object1");
+        original.put("keyY", "object2");
+
+        MultiValueMap test = new MultiValueMap();
+        test.put("keyA", "objectA");
+        test.put("keyX", "object0");
+        test.putAll(original);
+
+        assertEquals(3, test.size());
+        assertEquals(4, test.totalSize());
+        assertEquals(1, test.getCollection("keyA").size());
+        assertEquals(2, test.getCollection("keyX").size());
+        assertEquals(1, test.getCollection("keyY").size());
+        assertEquals(true, test.containsValue("objectA"));
+        assertEquals(true, test.containsValue("object0"));
+        assertEquals(true, test.containsValue("object1"));
+        assertEquals(true, test.containsValue("object2"));
+    }
+
+    public void testPutAll_KeyCollection() {
+        MultiValueMap map = new MultiValueMap();
+        Collection coll = Arrays.asList(new Object[] {"X", "Y", "Z"});
+        
+        assertEquals(true, map.putAll("A", coll));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        assertEquals(false, map.putAll("A", null));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        assertEquals(false, map.putAll("A", new ArrayList()));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        coll = Arrays.asList(new Object[] {"M"});
+        assertEquals(true, map.putAll("A", coll));
+        assertEquals(4, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        assertEquals(true, map.containsValue("A", "M"));
+    }
+
+    public void testRemove_KeyItem() {
+        MultiValueMap map = new MultiValueMap();
+        map.put("A", "AA");
+        map.put("A", "AB");
+        map.put("A", "AC");
+        assertEquals(null, map.remove("C", "CA"));
+        assertEquals(null, map.remove("A", "AD"));
+        assertEquals("AC", map.remove("A", "AC"));
+        assertEquals("AB", map.remove("A", "AB"));
+        assertEquals("AA", map.remove("A", "AA"));
+        assertEquals(new MultiValueMap(), map);
+    }
+
 }

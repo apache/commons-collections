@@ -314,7 +314,48 @@ public class TestMultiHashMap extends AbstractTestMap {
         assertEquals(true, map.containsValue("A", "AA"));
         assertEquals(false, map.containsValue("A", "AB"));
     }
-    
+
+    public void testPutAll_Map1() {
+        MultiMap original = new MultiHashMap();
+        original.put("key", "object1");
+        original.put("key", "object2");
+
+        MultiHashMap test = new MultiHashMap();
+        test.put("keyA", "objectA");
+        test.put("key", "object0");
+        test.putAll(original);
+
+        assertEquals(2, test.size());
+        assertEquals(4, test.totalSize());
+        assertEquals(1, test.getCollection("keyA").size());
+        assertEquals(3, test.getCollection("key").size());
+        assertEquals(true, test.containsValue("objectA"));
+        assertEquals(true, test.containsValue("object0"));
+        assertEquals(true, test.containsValue("object1"));
+        assertEquals(true, test.containsValue("object2"));
+    }
+
+    public void testPutAll_Map2() {
+        Map original = new HashMap();
+        original.put("keyX", "object1");
+        original.put("keyY", "object2");
+
+        MultiHashMap test = new MultiHashMap();
+        test.put("keyA", "objectA");
+        test.put("keyX", "object0");
+        test.putAll(original);
+
+        assertEquals(3, test.size());
+        assertEquals(4, test.totalSize());
+        assertEquals(1, test.getCollection("keyA").size());
+        assertEquals(2, test.getCollection("keyX").size());
+        assertEquals(1, test.getCollection("keyY").size());
+        assertEquals(true, test.containsValue("objectA"));
+        assertEquals(true, test.containsValue("object0"));
+        assertEquals(true, test.containsValue("object1"));
+        assertEquals(true, test.containsValue("object2"));
+    }
+
     public void testPutAll_KeyCollection() {
         MultiHashMap map = new MultiHashMap();
         Collection coll = Arrays.asList(new Object[] {"X", "Y", "Z"});

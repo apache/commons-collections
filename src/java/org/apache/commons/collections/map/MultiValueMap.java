@@ -213,6 +213,32 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
     }
 
     /**
+     * Override superclass to ensure that MultiMap instances are
+     * correctly handled.
+     * <p>
+     * If you call this method with a normal map, each entry is
+     * added using <code>put(Object,Object)</code>.
+     * If you call this method with a multi map, each entry is
+     * added using <code>putAll(Object,Collection)</code>.
+     *
+     * @param map  the map to copy (either a normal or multi map)
+     */
+    public void putAll(Map map) {
+        if (map instanceof MultiMap) {
+            for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+                Map.Entry entry = (Map.Entry) it.next();
+                Collection coll = (Collection) entry.getValue();
+                putAll(entry.getKey(), coll);
+            }
+        } else {
+            for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+                Map.Entry entry = (Map.Entry) it.next();
+                put(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+
+    /**
      * Gets a collection containing all the values in the map.
      * <p>
      * This returns a collection containing the combination of values from all keys.
