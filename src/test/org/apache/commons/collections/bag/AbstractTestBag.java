@@ -319,6 +319,27 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals(1, bag.size());
     }
     
+    public void testIteratorRemoveProtectsInvariants() {
+        Bag bag = makeBag();
+        bag.add("A");
+        bag.add("A");
+        assertEquals(2, bag.size());
+        Iterator it = bag.iterator();
+        assertEquals("A", it.next());
+        assertEquals(true, it.hasNext());
+        it.remove();
+        assertEquals(1, bag.size());
+        assertEquals(true, it.hasNext());
+        assertEquals("A", it.next());
+        assertEquals(false, it.hasNext());
+        it.remove();
+        assertEquals(0, bag.size());
+        assertEquals(false, it.hasNext());
+        
+        Iterator it2 = bag.iterator();
+        assertEquals(false, it2.hasNext());
+    }
+    
     public void testToArray() {
         Bag bag = makeBag();
         bag.add("A");

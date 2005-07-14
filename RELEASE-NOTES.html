@@ -83,6 +83,7 @@ If this causes major headaches to anyone please contact commons-dev at jakarta.a
 <li>MultiHashMap.putAll(multimap) - Was adding the collection as a single item rather than individually [35631]</li>
 <li>Flat3Map.equals() - Fix to make flat mode comparison actually work [34917]</li>
 <li>TransformedMap.putAll - Now allows putAll of an empty map [34686]</li>
+<li>AbstractMapBag.BagIterator.remove - Removing the last entry used to break the class invariants [35747]</li>
 <li>BoundedFifoBuffer/CircularFifoBuffer - Fix serialization to work in case where buffer serialized when full [31433]</li>
 <li>BoundedFifoBuffer - Fix iterator remove bug causing ArrayIndexOutOfBounds error [33071]</li>
 <li>IteratorChain.remove() - Fix to avoid IllegalStateException when one of the underlying iterators is a FilterIterator [34267]</li>

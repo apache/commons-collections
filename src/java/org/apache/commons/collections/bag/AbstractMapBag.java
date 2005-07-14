@@ -43,6 +43,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * @author Michael A. Smith
  * @author Stephen Colebourne
  * @author Janek Bogucki
+ * @author Steve Clark
  */
 public abstract class AbstractMapBag implements Bag {
     
@@ -221,12 +222,12 @@ public abstract class AbstractMapBag implements Bag {
                 throw new IllegalStateException();
             }
             MutableInteger mut = (MutableInteger) current.getValue();
-            if (mut.value > 0) {
+            if (mut.value > 1) {
                 mut.value--;
-                parent.size--;
             } else {
                 entryIterator.remove();
             }
+            parent.size--;
             canRemove = false;
         }
     }
