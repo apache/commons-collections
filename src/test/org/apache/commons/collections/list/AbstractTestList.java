@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -796,10 +796,11 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         }
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Tests remove on list iterator is correct.
      */
-    public void testListListIteratorPreviousRemove() {
+    public void testListListIteratorPreviousRemoveNext() {
         if (isRemoveSupported() == false) return;
         resetFull();
         ListIterator it = getList().listIterator();
@@ -813,11 +814,91 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         assertSame(zero, getList().get(0));
         assertSame(one, getList().get(1));
         assertSame(two, getList().get(2));
-        it.remove();
+        
+        it.remove(); // removed element at index 1 (one)
         assertSame(zero, getList().get(0));
         assertSame(two, getList().get(1));
+        Object two3 = it.next();  // do next after remove
+        assertSame(two, two3);
+        assertEquals(collection.size() > 2, it.hasNext());
+        assertEquals(true, it.hasPrevious());
     }
 
+    /**
+     * Tests remove on list iterator is correct.
+     */
+    public void testListListIteratorPreviousRemovePrevious() {
+        if (isRemoveSupported() == false) return;
+        resetFull();
+        ListIterator it = getList().listIterator();
+        Object zero = it.next();
+        Object one = it.next();
+        Object two = it.next();
+        Object two2 = it.previous();
+        Object one2 = it.previous();
+        assertSame(one, one2);
+        assertSame(two, two2);
+        assertSame(zero, getList().get(0));
+        assertSame(one, getList().get(1));
+        assertSame(two, getList().get(2));
+        
+        it.remove(); // removed element at index 1 (one)
+        assertSame(zero, getList().get(0));
+        assertSame(two, getList().get(1));
+        Object zero3 = it.previous();  // do previous after remove
+        assertSame(zero, zero3);
+        assertEquals(false, it.hasPrevious());
+        assertEquals(collection.size() > 2, it.hasNext());
+    }
+
+    /**
+     * Tests remove on list iterator is correct.
+     */
+    public void testListListIteratorNextRemoveNext() {
+        if (isRemoveSupported() == false) return;
+        resetFull();
+        ListIterator it = getList().listIterator();
+        Object zero = it.next();
+        Object one = it.next();
+        Object two = it.next();
+        assertSame(zero, getList().get(0));
+        assertSame(one, getList().get(1));
+        assertSame(two, getList().get(2));
+        Object three = getList().get(3);
+        
+        it.remove(); // removed element at index 2 (two)
+        assertSame(zero, getList().get(0));
+        assertSame(one, getList().get(1));
+        Object three2 = it.next();  // do next after remove
+        assertSame(three, three2);
+        assertEquals(collection.size() > 3, it.hasNext());
+        assertEquals(true, it.hasPrevious());
+    }
+
+    /**
+     * Tests remove on list iterator is correct.
+     */
+    public void testListListIteratorNextRemovePrevious() {
+        if (isRemoveSupported() == false) return;
+        resetFull();
+        ListIterator it = getList().listIterator();
+        Object zero = it.next();
+        Object one = it.next();
+        Object two = it.next();
+        assertSame(zero, getList().get(0));
+        assertSame(one, getList().get(1));
+        assertSame(two, getList().get(2));
+        
+        it.remove(); // removed element at index 2 (two)
+        assertSame(zero, getList().get(0));
+        assertSame(one, getList().get(1));
+        Object one2 = it.previous();  // do previous after remove
+        assertSame(one, one2);
+        assertEquals(true, it.hasNext());
+        assertEquals(true, it.hasPrevious());
+    }
+
+    //-----------------------------------------------------------------------
     /**
      *  Traverses to the end of the given iterator.
      *

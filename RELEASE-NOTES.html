@@ -75,6 +75,7 @@ If this causes major headaches to anyone please contact commons-dev at jakarta.a
 <li>FastArrayList - Fix iterators and views to work better in multithreaded environments</li>
 <li>FastArrayList - Fix iterator remove where ConcurrentModificationException not as expected [34690]</li>
 <li>CursorableLinkedList (list subpackage) - Fix iterator remove/set not throwing IllegalStateException after next-previous-removeByIndex [35766]</li>
+<li>TreeList/CursorableLinkedList/NodeCachingLinkedList/AbstractLinkedList - Fix iterator remove not working properly when called after previous [35258]</li>
 <li>SetUniqueList.set(int,Object) - Destroyed set status in certain circumstances [33294]</li>
 <li>AbstractLinkedMap.init() - Now calls createEntry() to create the map entry object [33706]</li>
 <li>AbstractHashedMap deserialization - Fix to prevent doubling of internal data array [34265]</li>

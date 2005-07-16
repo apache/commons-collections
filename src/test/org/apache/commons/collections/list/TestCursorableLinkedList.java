@@ -460,8 +460,17 @@ public class TestCursorableLinkedList extends TestAbstractLinkedList {
         
         assertEquals(true, c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
+        assertEquals(true, c1.currentRemovedByAnother);
         assertEquals(null, c1.current);
         assertEquals("C", c1.next.value);
+        
+        assertEquals("[A, C]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[A, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
     }
 
     public void testInternalState_CursorNextRemoveIndex1ByList() {
@@ -476,8 +485,17 @@ public class TestCursorableLinkedList extends TestAbstractLinkedList {
         
         assertEquals(true, c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
+        assertEquals(false, c1.currentRemovedByAnother);
         assertEquals("A", c1.current.value);
         assertEquals("C", c1.next.value);
+        
+        assertEquals("[A, C]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
     }
 
     public void testInternalState_CursorNextNextRemoveIndex1ByList() {
@@ -493,8 +511,17 @@ public class TestCursorableLinkedList extends TestAbstractLinkedList {
         
         assertEquals(true, c1.nextIndexValid);
         assertEquals(1, c1.nextIndex);
+        assertEquals(true, c1.currentRemovedByAnother);
         assertEquals(null, c1.current);
         assertEquals("C", c1.next.value);
+        
+        assertEquals("[A, C]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[A, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
     }
 
     public void testInternalState_CursorNextNextNextRemoveIndex1ByList() {
@@ -511,8 +538,267 @@ public class TestCursorableLinkedList extends TestAbstractLinkedList {
         assertEquals("B", list.remove(1));
         
         assertEquals(false, c1.nextIndexValid);
+        assertEquals(false, c1.currentRemovedByAnother);
         assertEquals("C", c1.current.value);
         assertEquals("D", c1.next.value);
+        
+        assertEquals("[A, C, D]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[A, D]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
+    public void testInternalState_CursorNextNextPreviousRemoveByIterator() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        assertEquals("B", c1.previous());
+        
+        c1.remove();
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals(false, c1.currentRemovedByAnother);
+        assertEquals(null, c1.current);
+        assertEquals("C", c1.next.value);
+        
+        assertEquals("[A, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    public void testInternalState_CursorNextNextRemoveByIterator() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        
+        c1.remove();
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals(false, c1.currentRemovedByAnother);
+        assertEquals(null, c1.current);
+        assertEquals("C", c1.next.value);
+        
+        assertEquals("[A, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
+    public void testInternalState_CursorNextNextPreviousAddIndex1ByList() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        assertEquals("B", c1.previous());
+        
+        list.add(1, "Z");
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals("B", c1.current.value);
+        assertEquals("Z", c1.next.value);
+        
+        assertEquals("[A, Z, B, C]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[A, Z, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    public void testInternalState_CursorNextAddIndex1ByList() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        
+        list.add(1, "Z");
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals("A", c1.current.value);
+        assertEquals("Z", c1.next.value);
+        
+        assertEquals("[A, Z, B, C]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[Z, B, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    public void testInternalState_CursorNextNextAddIndex1ByList() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        
+        list.add(1, "Z");
+        
+        assertEquals(false, c1.nextIndexValid);
+        assertEquals("B", c1.current.value);
+        assertEquals("C", c1.next.value);
+        
+        assertEquals("[A, Z, B, C]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[A, Z, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
+    public void testInternalState_CursorNextNextPreviousAddByIterator() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        assertEquals("B", c1.previous());
+        
+        c1.add("Z");
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(2, c1.nextIndex);
+        assertEquals(null, c1.current);
+        assertEquals("B", c1.next.value);
+        
+        assertEquals("[A, Z, B, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    public void testInternalState_CursorNextNextAddByIterator() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        
+        c1.add("Z");
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(3, c1.nextIndex);
+        assertEquals(false, c1.currentRemovedByAnother);
+        assertEquals(null, c1.current);
+        assertEquals("C", c1.next.value);
+        
+        assertEquals("[A, B, Z, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
+    public void testInternalState_CursorNextNextRemoveByListSetByIterator() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        
+        list.remove(1);
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals(null, c1.current);
+        assertEquals("C", c1.next.value);
+        assertEquals("[A, C]", list.toString());
+        
+        try {
+            c1.set("Z");
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
+    public void testInternalState_CursorNextNextPreviousSetByIterator() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        assertEquals("B", c1.previous());
+        
+        c1.set("Z");
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals("Z", c1.current.value);
+        assertEquals("Z", c1.next.value);
+        
+        assertEquals("[A, Z, C]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[A, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
+    }
+
+    public void testInternalState_CursorNextNextSetByIterator() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        
+        c1.set("Z");
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(2, c1.nextIndex);
+        assertEquals("Z", c1.current.value);
+        assertEquals("C", c1.next.value);
+        
+        assertEquals("[A, Z, C]", list.toString());
+        c1.remove();  // works ok
+        assertEquals("[A, C]", list.toString());
+        try {
+            c1.remove();
+            fail();
+        } catch (IllegalStateException ex) {}
     }
 
     //-----------------------------------------------------------------------

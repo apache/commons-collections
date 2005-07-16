@@ -1,5 +1,5 @@
 /*
- *  Copyright 2002-2004 The Apache Software Foundation
+ *  Copyright 2002-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import java.util.ListIterator;
  * methods provides access to a <code>Cursor</code> instance which extends
  * <code>ListIterator</code>. The cursor allows changes to the list concurrent
  * with changes to the iterator. Note that the {@link #iterator()} method and
- * sublists  do <b>not</b> provide this cursor behaviour.
+ * sublists do <b>not</b> provide this cursor behaviour.
  * <p>
  * The <code>Cursor</code> class is provided partly for backwards compatibility
  * and partly because it allows the cursor to be directly closed. Closing the
@@ -376,6 +376,19 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
 
     //-----------------------------------------------------------------------
     /**
+     * Creates a list iterator for the sublist.
+     * 
+     * @param subList  the sublist to get an iterator for
+     * @param fromIndex  the index to start from, relative to the sublist
+     */
+    protected ListIterator createSubListListIterator(LinkedSubList subList, int fromIndex) {
+        SubCursor cursor = new SubCursor(subList, fromIndex);
+        registerCursor(cursor);
+        return cursor;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
      * An extended <code>ListIterator</code> that allows concurrent changes to
      * the underlying list.
      */
@@ -384,6 +397,8 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
         boolean valid = true;
         /** Is the next index valid */
         boolean nextIndexValid = true;
+        /** Flag to indicate if the current element was removed by another object. */
+        boolean currentRemovedByAnother = false;
         
         /**
          * Constructs a new cursor.
@@ -394,7 +409,33 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
             super(parent, index);
             valid = true;
         }
-        
+
+        /**
+         * Removes the item last returned by this iterator.
+         * <p>
+         * There may have been subsequent alterations to the list
+         * since you obtained this item, however you can still remove it.
+         * You can even remove it if the item is no longer in the main list.
+         * However, you can't call this method on the same iterator more
+         * than once without calling next() or previous().
+         *
+         * @throws IllegalStateException if there is no item to remove
+         */
+        public void remove() {
+            // overridden, as the nodeRemoved() method updates the iterator
+            // state in the parent.removeNode() call below
+            if (current == null && currentRemovedByAnother) {
+                // quietly ignore, as the last returned node was removed
+                // by the list or some other iterator
+                // by ignoring it, we keep this iterator independent from
+                // other changes as much as possible
+            } else {
+                checkModCount();
+                parent.removeNode(getLastNodeReturned());
+            }
+            currentRemovedByAnother = false;
+        }
+
         /**
          * Adds an object to the list.
          * The object added here will be the new 'previous' in the iterator.
@@ -402,10 +443,17 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          * @param obj  the object to add
          */
         public void add(Object obj) {
+            // overridden, as the nodeInserted() method updates the iterator state
             super.add(obj);
-            // add on iterator does not return the added element
+            // matches the (next.previous == node) clause in nodeInserted()
+            // thus next gets changed - reset it again here
             next = next.next;
         }
+        
+        // set is not overridden, as it works ok
+        // note that we want it to throw an exception if the element being
+        // set has been removed from the real list (compare this with the
+        // remove method where we silently ignore this case)
 
         /**
          * Gets the index of the next element to be returned.
@@ -449,17 +497,21 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
                 // state where next() followed by previous()
                 next = node.next;
                 current = null;
+                currentRemovedByAnother = true;
             } else if (node == next) {
                 // state where next() not followed by previous()
                 // and we are matching next node
                 next = node.next;
+                currentRemovedByAnother = false;
             } else if (node == current) {
                 // state where next() not followed by previous()
                 // and we are matching current (last returned) node
                 current = null;
+                currentRemovedByAnother = true;
                 nextIndex--;
             } else {
                 nextIndexValid = false;
+                currentRemovedByAnother = false;
             }
         }
 
@@ -502,4 +554,49 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
             }
         }
     }
+
+    //-----------------------------------------------------------------------
+    /**
+     * A cursor for the sublist based on LinkedSubListIterator.
+     */
+    protected static class SubCursor extends Cursor {
+
+        /** The parent list */
+        protected final LinkedSubList sub;
+
+        /**
+         * Constructs a new cursor.
+         * 
+         * @param index  the index to start from
+         */
+        protected SubCursor(LinkedSubList sub, int index) {
+            super((CursorableLinkedList) sub.parent, index + sub.offset);
+            this.sub = sub;
+        }
+
+        public boolean hasNext() {
+            return (nextIndex() < sub.size);
+        }
+
+        public boolean hasPrevious() {
+            return (previousIndex() >= 0);
+        }
+
+        public int nextIndex() {
+            return (super.nextIndex() - sub.offset);
+        }
+
+        public void add(Object obj) {
+            super.add(obj);
+            sub.expectedModCount = parent.modCount;
+            sub.size++;
+        }
+
+        public void remove() {
+            super.remove();
+            sub.expectedModCount = parent.modCount;
+            sub.size--;
+        }
+    }
+
 }

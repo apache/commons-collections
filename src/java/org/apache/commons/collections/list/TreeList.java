@@ -749,23 +749,20 @@ public class TreeList extends AbstractList {
         /** The parent list */
         protected final TreeList parent;
         /**
-         * The node that will be returned by {@link #next()}. If this is equal
-         * to {@link AbstractLinkedList#header} then there are no more values to return.
+         * Cache of the next node that will be returned by {@link #next()}.
          */
         protected AVLNode next;
         /**
-         * The index of {@link #next}.
+         * The index of the next node to be returned.
          */
         protected int nextIndex;
         /**
-         * The last node that was returned by {@link #next()} or {@link
-         * #previous()}. Set to <code>null</code> if {@link #next()} or {@link
-         * #previous()} haven't been called, or if the node has been removed
-         * with {@link #remove()} or a new node added with {@link #add(Object)}.
+         * Cache of the last node that was returned by {@link #next()}
+         * or {@link #previous()}.
          */
         protected AVLNode current;
         /**
-         * The index of {@link #current}.
+         * The index of the last node that was returned.
          */
         protected int currentIndex;
         /**
@@ -788,6 +785,7 @@ public class TreeList extends AbstractList {
             this.expectedModCount = parent.modCount;
             this.next = (parent.root == null ? null : parent.root.get(fromIndex));
             this.nextIndex = fromIndex;
+            this.currentIndex = -1;
         }
 
         /**
@@ -852,13 +850,20 @@ public class TreeList extends AbstractList {
 
         public void remove() {
             checkModCount();
-            if (current == null) {
+            if (currentIndex == -1) {
                 throw new IllegalStateException();
             }
-            parent.remove(currentIndex);
+            if (nextIndex == currentIndex) {
+                // remove() following previous()
+                next = next.next();
+                parent.remove(currentIndex);
+            } else {
+                // remove() following next()
+                parent.remove(currentIndex);
+                nextIndex--;
+            }
             current = null;
             currentIndex = -1;
-            nextIndex--;
             expectedModCount++;
         }
 

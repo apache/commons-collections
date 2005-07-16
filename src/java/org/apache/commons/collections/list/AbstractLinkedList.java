@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -819,9 +819,16 @@ public abstract class AbstractLinkedList implements List {
 
         public void remove() {
             checkModCount();
-            parent.removeNode(getLastNodeReturned());
+            if (current == next) {
+                // remove() following previous()
+                next = next.next;
+                parent.removeNode(getLastNodeReturned());
+            } else {
+                // remove() following next()
+                parent.removeNode(getLastNodeReturned());
+                nextIndex--;
+            }
             current = null;
-            nextIndex--;
             expectedModCount++;
         }
 
@@ -885,13 +892,13 @@ public abstract class AbstractLinkedList implements List {
      */
     protected static class LinkedSubList extends AbstractList {
         /** The main list */
-        private AbstractLinkedList parent;
+        AbstractLinkedList parent;
         /** Offset from the main list */
-        private int offset;
+        int offset;
         /** Sublist size */
-        private int size;
+        int size;
         /** Sublist modCount */
-        private int expectedModCount;
+        int expectedModCount;
 
         protected LinkedSubList(AbstractLinkedList parent, int fromIndex, int toIndex) {
             if (fromIndex < 0) {
