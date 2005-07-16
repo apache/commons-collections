@@ -294,15 +294,10 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
                 }
 
                 // Other elements require us to shift the subsequent elements
-                int i = lastReturnedIndex + 1;
+                int i = increment(lastReturnedIndex);
                 while (i != tail) {
-                    if (i >= buffer.length) {
-                        buffer[i - 1] = buffer[0];
-                        i = 0;
-                    } else {
-                        buffer[i - 1] = buffer[i];
-                        i++;
-                    }
+                    buffer[decrement(i)] = buffer[i];
+                    i = increment(i);
                 }
 
                 lastReturnedIndex = -1;

@@ -49,6 +49,7 @@ import java.util.NoSuchElementException;
  * @author Berin Loritsch
  * @author Paul Jack
  * @author Stephen Colebourne
+ * @author Andreas Schlosser
  */
 public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
     
@@ -254,15 +255,10 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer {
                 }
 
                 // Other elements require us to shift the subsequent elements
-                int i = lastReturnedIndex + 1;
+                int i = increment(lastReturnedIndex);
                 while (i != m_tail) {
-                    if (i >= m_buffer.length) {
-                        m_buffer[i - 1] = m_buffer[0];
-                        i = 0;
-                    } else {
-                        m_buffer[i - 1] = m_buffer[i];
-                        i++;
-                    }
+                    m_buffer[decrement(i)] = m_buffer[i];
+                    i = increment(i);
                 }
 
                 lastReturnedIndex = -1;

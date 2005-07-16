@@ -142,5 +142,272 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         }
         fail();
     }
-}
 
+    //-----------------------------------------------------------------------
+    public void testInternalStateAdd() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(2);
+        assertEquals(3, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(0, test.m_tail);
+        test.add("A");
+        assertEquals(3, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(1, test.m_tail);
+        test.add("B");
+        assertEquals(3, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(2, test.m_tail);
+        test.add("C");  // forces m_buffer increase
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(3, test.m_tail);
+        test.add("D");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(4, test.m_tail);
+    }
+
+    public void testInternalStateAddWithWrap() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(0, test.m_tail);
+        test.add("A");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(1, test.m_tail);
+        test.add("B");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(2, test.m_tail);
+        test.add("C");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(3, test.m_tail);
+        test.remove("A");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(3, test.m_tail);
+        test.remove("B");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(3, test.m_tail);
+        test.add("D");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(0, test.m_tail);
+        test.add("E");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(1, test.m_tail);
+    }
+
+    public void testInternalStateRemove1() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(4);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(3, test.m_tail);
+        
+        test.remove("A");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(3, test.m_tail);
+        
+        test.add("D");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(4, test.m_tail);
+    }
+
+    public void testInternalStateRemove2() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(4);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(3, test.m_tail);
+        
+        test.remove("B");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(2, test.m_tail);
+        
+        test.add("D");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(3, test.m_tail);
+    }
+
+    public void testInternalStateIteratorRemove1() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(4);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(3, test.m_tail);
+        
+        Iterator it = test.iterator();
+        it.next();
+        it.remove();
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(3, test.m_tail);
+        
+        test.add("D");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(4, test.m_tail);
+    }
+
+    public void testInternalStateIteratorRemove2() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(4);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        
+        Iterator it = test.iterator();
+        it.next();
+        it.next();
+        it.remove();
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(2, test.m_tail);
+        
+        test.add("D");
+        assertEquals(5, test.m_buffer.length);
+        assertEquals(0, test.m_head);
+        assertEquals(3, test.m_tail);
+    }
+
+    public void testInternalStateIteratorRemoveWithTailAtEnd1() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        test.remove("A");
+        test.add("D");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(0, test.m_tail);
+        
+        Iterator it = test.iterator();
+        assertEquals("B", it.next());
+        it.remove();
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(0, test.m_tail);
+    }
+
+    public void testInternalStateIteratorRemoveWithTailAtEnd2() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        test.remove("A");
+        test.add("D");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(0, test.m_tail);
+        
+        Iterator it = test.iterator();
+        assertEquals("B", it.next());
+        assertEquals("C", it.next());
+        it.remove();
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(3, test.m_tail);
+    }
+
+    public void testInternalStateIteratorRemoveWithTailAtEnd3() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        test.remove("A");
+        test.add("D");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(0, test.m_tail);
+        
+        Iterator it = test.iterator();
+        assertEquals("B", it.next());
+        assertEquals("C", it.next());
+        assertEquals("D", it.next());
+        it.remove();
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(1, test.m_head);
+        assertEquals(3, test.m_tail);
+    }
+
+    public void testInternalStateIteratorRemoveWithWrap1() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        test.remove("A");
+        test.remove("B");
+        test.add("D");
+        test.add("E");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(1, test.m_tail);
+        
+        Iterator it = test.iterator();
+        assertEquals("C", it.next());
+        it.remove();
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(3, test.m_head);
+        assertEquals(1, test.m_tail);
+    }
+
+    public void testInternalStateIteratorRemoveWithWrap2() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        test.remove("A");
+        test.remove("B");
+        test.add("D");
+        test.add("E");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(1, test.m_tail);
+        
+        Iterator it = test.iterator();
+        assertEquals("C", it.next());
+        assertEquals("D", it.next());
+        it.remove();
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(0, test.m_tail);
+    }
+
+    public void testInternalStateIteratorRemoveWithWrap3() {
+        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
+        test.add("A");
+        test.add("B");
+        test.add("C");
+        test.remove("A");
+        test.remove("B");
+        test.add("D");
+        test.add("E");
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(1, test.m_tail);
+        
+        Iterator it = test.iterator();
+        assertEquals("C", it.next());
+        assertEquals("D", it.next());
+        assertEquals("E", it.next());
+        it.remove();
+        assertEquals(4, test.m_buffer.length);
+        assertEquals(2, test.m_head);
+        assertEquals(0, test.m_tail);
+    }
+
+}
