@@ -58,6 +58,8 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Andreas Schlosser
+ * @author Thomas Knych
+ * @author Jordan Krey
  */
 public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, Serializable {
     // invariant: buffer.length > size()
