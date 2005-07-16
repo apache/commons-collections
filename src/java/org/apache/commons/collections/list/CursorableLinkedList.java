@@ -445,9 +445,17 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          * @param node  the node that was removed
          */
         protected void nodeRemoved(Node node) {
-            if (node == next) {
+            if (node == next && node == current) {
+                // state where next() followed by previous()
+                next = node.next;
+                current = null;
+            } else if (node == next) {
+                // state where next() not followed by previous()
+                // and we are matching next node
                 next = node.next;
             } else if (node == current) {
+                // state where next() not followed by previous()
+                // and we are matching current (last returned) node
                 current = null;
                 nextIndex--;
             } else {

@@ -444,7 +444,78 @@ public class TestCursorableLinkedList extends TestAbstractLinkedList {
         assertEquals(1, c1.nextIndex());
         assertEquals("0", c1.next());
     }
-    
+
+    //-----------------------------------------------------------------------
+    public void testInternalState_CursorNextNextPreviousRemoveIndex1ByList() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        assertEquals("B", c1.previous());
+        
+        assertEquals("B", list.remove(1));
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals(null, c1.current);
+        assertEquals("C", c1.next.value);
+    }
+
+    public void testInternalState_CursorNextRemoveIndex1ByList() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        
+        assertEquals("B", list.remove(1));
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals("A", c1.current.value);
+        assertEquals("C", c1.next.value);
+    }
+
+    public void testInternalState_CursorNextNextRemoveIndex1ByList() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        
+        assertEquals("B", list.remove(1));
+        
+        assertEquals(true, c1.nextIndexValid);
+        assertEquals(1, c1.nextIndex);
+        assertEquals(null, c1.current);
+        assertEquals("C", c1.next.value);
+    }
+
+    public void testInternalState_CursorNextNextNextRemoveIndex1ByList() {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        list.add("D");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        assertEquals("A", c1.next());
+        assertEquals("B", c1.next());
+        assertEquals("C", c1.next());
+        
+        assertEquals("B", list.remove(1));
+        
+        assertEquals(false, c1.nextIndexValid);
+        assertEquals("C", c1.current.value);
+        assertEquals("D", c1.next.value);
+    }
+
+    //-----------------------------------------------------------------------
     public void testEqualsAndHashCode() {
         assertTrue(list.equals(list));
         assertEquals(list.hashCode(),list.hashCode());
