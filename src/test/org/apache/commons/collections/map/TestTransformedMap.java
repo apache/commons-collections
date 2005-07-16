@@ -97,6 +97,38 @@ public class TestTransformedMap extends AbstractTestMap {
         assertEquals(new Integer(88), map.get(entry.getKey()));
     }
 
+    //-----------------------------------------------------------------------
+    public void testFactory_Decorate() {
+        Map base = new HashMap();
+        base.put("A", "1");
+        base.put("B", "2");
+        base.put("C", "3");
+        
+        Map trans = TransformedMap.decorate(base, null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(3, trans.size());
+        assertEquals("1", trans.get("A"));
+        assertEquals("2", trans.get("B"));
+        assertEquals("3", trans.get("C"));
+        trans.put("D", "4");
+        assertEquals(new Integer(4), trans.get("D"));
+    }
+
+    public void testFactory_decorateTransform() {
+        Map base = new HashMap();
+        base.put("A", "1");
+        base.put("B", "2");
+        base.put("C", "3");
+        
+        Map trans = TransformedMap.decorateTransform(base, null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(3, trans.size());
+        assertEquals(new Integer(1), trans.get("A"));
+        assertEquals(new Integer(2), trans.get("B"));
+        assertEquals(new Integer(3), trans.get("C"));
+        trans.put("D", "4");
+        assertEquals(new Integer(4), trans.get("D"));
+    }
+
+    //-----------------------------------------------------------------------
     public String getCompatibilityVersion() {
         return "3.1";
     }

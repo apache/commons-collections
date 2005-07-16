@@ -1264,11 +1264,19 @@ public class MapUtils {
     /**
      * Returns a transformed map backed by the given map.
      * <p>
+     * This method returns a new map (decorating the specified map) that
+     * will transform any new entries added to it.
+     * Existing entries in the specified map will not be transformed.
+     * If you want that behaviour, see {@link TransformedMap#decorateTransform}.
+     * <p>
      * Each object is passed through the transformers as it is added to the
      * Map. It is important not to use the original map after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
+     * <p>
+     * If there are any elements already in the map being decorated, they
+     * are NOT transformed.
      *
-     * @param map  the map to transform, must not be null
+     * @param map  the map to transform, must not be null, typically empty
      * @param keyTransformer  the transformer for the map keys, null means no transformation
      * @param valueTransformer  the transformer for the map values, null means no transformation
      * @return a transformed map backed by the given map
@@ -1499,11 +1507,19 @@ public class MapUtils {
     /**
      * Returns a transformed sorted map backed by the given map.
      * <p>
+     * This method returns a new sorted map (decorating the specified map) that
+     * will transform any new entries added to it.
+     * Existing entries in the specified map will not be transformed.
+     * If you want that behaviour, see {@link TransformedSortedMap#decorateTransform}.
+     * <p>
      * Each object is passed through the transformers as it is added to the
      * Map. It is important not to use the original map after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
+     * <p>
+     * If there are any elements already in the map being decorated, they
+     * are NOT transformed.
      *
-     * @param map  the map to transform, must not be null
+     * @param map  the map to transform, must not be null, typically empty
      * @param keyTransformer  the transformer for the map keys, null means no transformation
      * @param valueTransformer  the transformer for the map values, null means no transformation
      * @return a transformed map backed by the given map

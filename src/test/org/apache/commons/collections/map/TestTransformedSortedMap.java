@@ -17,6 +17,7 @@ package org.apache.commons.collections.map;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 import junit.framework.Test;
@@ -108,6 +109,38 @@ public class TestTransformedSortedMap extends AbstractTestSortedMap {
         assertEquals(new Integer(88), map.get(entry.getKey()));
     }
 
+    //-----------------------------------------------------------------------
+    public void testFactory_Decorate() {
+        SortedMap base = new TreeMap();
+        base.put("A", "1");
+        base.put("B", "2");
+        base.put("C", "3");
+        
+        SortedMap trans = TransformedSortedMap.decorate(base, null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(3, trans.size());
+        assertEquals("1", trans.get("A"));
+        assertEquals("2", trans.get("B"));
+        assertEquals("3", trans.get("C"));
+        trans.put("D", "4");
+        assertEquals(new Integer(4), trans.get("D"));
+    }
+
+    public void testFactory_decorateTransform() {
+        SortedMap base = new TreeMap();
+        base.put("A", "1");
+        base.put("B", "2");
+        base.put("C", "3");
+        
+        SortedMap trans = TransformedSortedMap.decorateTransform(base, null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(3, trans.size());
+        assertEquals(new Integer(1), trans.get("A"));
+        assertEquals(new Integer(2), trans.get("B"));
+        assertEquals(new Integer(3), trans.get("C"));
+        trans.put("D", "4");
+        assertEquals(new Integer(4), trans.get("D"));
+    }
+
+    //-----------------------------------------------------------------------
     public String getCompatibilityVersion() {
         return "3.1";
     }

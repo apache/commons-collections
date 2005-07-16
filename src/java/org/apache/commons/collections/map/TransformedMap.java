@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -56,14 +56,38 @@ public class TransformedMap
      * <p>
      * If there are any elements already in the map being decorated, they
      * are NOT transformed.
+     * Constrast this with {@link #decorateTransform}.
      * 
      * @param map  the map to decorate, must not be null
-     * @param keyTransformer  the transformer to use for key conversion, null means no conversion
-     * @param valueTransformer  the transformer to use for value conversion, null means no conversion
+     * @param keyTransformer  the transformer to use for key conversion, null means no transformation
+     * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
      */
     public static Map decorate(Map map, Transformer keyTransformer, Transformer valueTransformer) {
         return new TransformedMap(map, keyTransformer, valueTransformer);
+    }
+
+    /**
+     * Factory method to create a transforming map that will transform
+     * existing contents of the specified map.
+     * <p>
+     * If there are any elements already in the map being decorated, they
+     * will be transformed by this method.
+     * Constrast this with {@link #decorate}.
+     * 
+     * @param map  the map to decorate, must not be null
+     * @param keyTransformer  the transformer to use for key conversion, null means no transformation
+     * @param valueTransformer  the transformer to use for value conversion, null means no transformation
+     * @throws IllegalArgumentException if map is null
+     */
+    public static Map decorateTransform(Map map, Transformer keyTransformer, Transformer valueTransformer) {
+        TransformedMap decorated = new TransformedMap(map, keyTransformer, valueTransformer);
+        if (map.size() > 0) {
+            Map transformed = decorated.transformMap(map);
+            decorated.clear();
+            decorated.getMap().putAll(transformed);  // avoids double transformation
+        }
+        return decorated;
     }
 
     //-----------------------------------------------------------------------
