@@ -57,8 +57,11 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Berin Loritsch
  * @author Paul Jack
  * @author Stephen Colebourne
+ * @author Andreas Schlosser
  */
 public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, Serializable {
+    // invariant: buffer.length > size()
+    //   ie.buffer always has at least one empty entry
 
     /** Serialization vesrion */
     private static final long serialVersionUID = -3482960336579541419L;
@@ -123,7 +126,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         int size = in.readInt();
-        buffer = new Object[size+1];
+        buffer = new Object[size + 1];
         for (int i = 0; i < size; i++) {
             buffer[i] = in.readObject();
         }
@@ -171,30 +174,24 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
         }
 
         if (size() + 1 >= buffer.length) {
+            // copy contents to a new buffer array
             Object[] tmp = new Object[((buffer.length - 1) * 2) + 1];
-
             int j = 0;
+            // move head to element zero in the new array
             for (int i = head; i != tail;) {
                 tmp[j] = buffer[i];
                 buffer[i] = null;
 
                 j++;
-                i++;
-                if (i == buffer.length) {
-                    i = 0;
-                }
+                i = increment(i);
             }
-
             buffer = tmp;
             head = 0;
             tail = j;
         }
 
         buffer[tail] = obj;
-        tail++;
-        if (tail >= buffer.length) {
-            tail = 0;
-        }
+        tail = increment(tail);
         return true;
     }
 
@@ -224,16 +221,10 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
         }
 
         Object element = buffer[head];
-
-        if (null != element) {
+        if (element != null) {
             buffer[head] = null;
-
-            head++;
-            if (head >= buffer.length) {
-                head = 0;
-            }
+            head = increment(head);
         }
-
         return element;
     }
 
@@ -322,5 +313,5 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
 
         };
     }
-    
+
 }
