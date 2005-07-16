@@ -82,6 +82,7 @@ public class BoundedFifoBuffer extends AbstractCollection
      */
     private transient int end = 0;
     
+    /** Flag to indicate if the buffer is currently full. */
     private transient boolean full = false;
     
     /** Capacity of the buffer */
