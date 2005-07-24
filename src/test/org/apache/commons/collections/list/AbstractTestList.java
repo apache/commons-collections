@@ -803,23 +803,24 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     public void testListListIteratorPreviousRemoveNext() {
         if (isRemoveSupported() == false) return;
         resetFull();
+        if (collection.size() < 4) return;
         ListIterator it = getList().listIterator();
         Object zero = it.next();
         Object one = it.next();
         Object two = it.next();
         Object two2 = it.previous();
         Object one2 = it.previous();
-        assertSame(one, one2);
-        assertSame(two, two2);
-        assertSame(zero, getList().get(0));
-        assertSame(one, getList().get(1));
-        assertSame(two, getList().get(2));
+        assertEquals(one, one2);
+        assertEquals(two, two2);
+        assertEquals(zero, getList().get(0));
+        assertEquals(one, getList().get(1));
+        assertEquals(two, getList().get(2));
         
         it.remove(); // removed element at index 1 (one)
-        assertSame(zero, getList().get(0));
-        assertSame(two, getList().get(1));
+        assertEquals(zero, getList().get(0));
+        assertEquals(two, getList().get(1));
         Object two3 = it.next();  // do next after remove
-        assertSame(two, two3);
+        assertEquals(two, two3);
         assertEquals(collection.size() > 2, it.hasNext());
         assertEquals(true, it.hasPrevious());
     }
@@ -830,23 +831,24 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     public void testListListIteratorPreviousRemovePrevious() {
         if (isRemoveSupported() == false) return;
         resetFull();
+        if (collection.size() < 4) return;
         ListIterator it = getList().listIterator();
         Object zero = it.next();
         Object one = it.next();
         Object two = it.next();
         Object two2 = it.previous();
         Object one2 = it.previous();
-        assertSame(one, one2);
-        assertSame(two, two2);
-        assertSame(zero, getList().get(0));
-        assertSame(one, getList().get(1));
-        assertSame(two, getList().get(2));
+        assertEquals(one, one2);
+        assertEquals(two, two2);
+        assertEquals(zero, getList().get(0));
+        assertEquals(one, getList().get(1));
+        assertEquals(two, getList().get(2));
         
         it.remove(); // removed element at index 1 (one)
-        assertSame(zero, getList().get(0));
-        assertSame(two, getList().get(1));
+        assertEquals(zero, getList().get(0));
+        assertEquals(two, getList().get(1));
         Object zero3 = it.previous();  // do previous after remove
-        assertSame(zero, zero3);
+        assertEquals(zero, zero3);
         assertEquals(false, it.hasPrevious());
         assertEquals(collection.size() > 2, it.hasNext());
     }
@@ -857,20 +859,21 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     public void testListListIteratorNextRemoveNext() {
         if (isRemoveSupported() == false) return;
         resetFull();
+        if (collection.size() < 4) return;
         ListIterator it = getList().listIterator();
         Object zero = it.next();
         Object one = it.next();
         Object two = it.next();
-        assertSame(zero, getList().get(0));
-        assertSame(one, getList().get(1));
-        assertSame(two, getList().get(2));
+        assertEquals(zero, getList().get(0));
+        assertEquals(one, getList().get(1));
+        assertEquals(two, getList().get(2));
         Object three = getList().get(3);
         
         it.remove(); // removed element at index 2 (two)
-        assertSame(zero, getList().get(0));
-        assertSame(one, getList().get(1));
+        assertEquals(zero, getList().get(0));
+        assertEquals(one, getList().get(1));
         Object three2 = it.next();  // do next after remove
-        assertSame(three, three2);
+        assertEquals(three, three2);
         assertEquals(collection.size() > 3, it.hasNext());
         assertEquals(true, it.hasPrevious());
     }
@@ -881,19 +884,20 @@ public abstract class AbstractTestList extends AbstractTestCollection {
     public void testListListIteratorNextRemovePrevious() {
         if (isRemoveSupported() == false) return;
         resetFull();
+        if (collection.size() < 4) return;
         ListIterator it = getList().listIterator();
         Object zero = it.next();
         Object one = it.next();
         Object two = it.next();
-        assertSame(zero, getList().get(0));
-        assertSame(one, getList().get(1));
-        assertSame(two, getList().get(2));
+        assertEquals(zero, getList().get(0));
+        assertEquals(one, getList().get(1));
+        assertEquals(two, getList().get(2));
         
         it.remove(); // removed element at index 2 (two)
-        assertSame(zero, getList().get(0));
-        assertSame(one, getList().get(1));
+        assertEquals(zero, getList().get(0));
+        assertEquals(one, getList().get(1));
         Object one2 = it.previous();  // do previous after remove
-        assertSame(one, one2);
+        assertEquals(one, one2);
         assertEquals(true, it.hasNext());
         assertEquals(true, it.hasPrevious());
     }
