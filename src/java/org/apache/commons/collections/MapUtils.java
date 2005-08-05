@@ -18,6 +18,7 @@ package org.apache.commons.collections;
 import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -1183,6 +1184,33 @@ public class MapUtils {
             }
         }
         return map;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Null-safe check if the specified map is empty.
+     * <p>
+     * Null returns true.
+     * 
+     * @param map  the map to check, may be null
+     * @return true if empty or null
+     * @since Commons Collections 3.2
+     */
+    public static boolean isEmpty(Map map) {
+        return (map == null || map.isEmpty());
+    }
+
+    /**
+     * Null-safe check if the specified map is not empty.
+     * <p>
+     * Null returns false.
+     * 
+     * @param map  the map to check, may be null
+     * @return true if non-null and non-empty
+     * @since Commons Collections 3.2
+     */
+    public static boolean isNotEmpty(Map map) {
+        return !MapUtils.isEmpty(map);
     }
 
     // Map decorators

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -771,4 +771,37 @@ public class TestMapUtils extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
     
+    //-----------------------------------------------------------------------
+    public void testIsEmptyWithEmptyMap() {
+        Map map = new HashMap();
+        assertEquals(true, MapUtils.isEmpty(map));
+    }
+
+    public void testIsEmptyWithNonEmptyMap() {
+        Map map = new HashMap();
+        map.put("item", "value");
+        assertEquals(false, MapUtils.isEmpty(map));
+    }
+
+    public void testIsEmptyWithNull() {
+        Map map = null;
+        assertEquals(true, MapUtils.isEmpty(map));
+    }
+
+    public void testIsNotEmptyWithEmptyMap() {
+        Map map = new HashMap();
+        assertEquals(false, MapUtils.isNotEmpty(map));
+    }
+
+    public void testIsNotEmptyWithNonEmptyMap() {
+        Map map = new HashMap();
+        map.put("item", "value");
+        assertEquals(true, MapUtils.isNotEmpty(map));
+    }
+
+    public void testIsNotEmptyWithNull() {
+        Map map = null;
+        assertEquals(false, MapUtils.isNotEmpty(map));
+    }
+
 }

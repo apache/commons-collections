@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -50,6 +50,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Phil Steitz
  * @author Steven Melzer
  * @author Neil O'Toole
+ * @author Stephen Smith
  * 
  * @version $Revision$ $Date$
  */
@@ -735,6 +736,7 @@ public class TestCollectionUtils extends TestCase {
         }
     }
 
+    //-----------------------------------------------------------------------
     public void testSize_List() {
         List list = new ArrayList();
         assertEquals(0, CollectionUtils.size(list));
@@ -799,7 +801,104 @@ public class TestCollectionUtils extends TestCase {
             fail("Expecting IllegalArgumentException");
         } catch (IllegalArgumentException e) {}
     }
-    
+
+    //-----------------------------------------------------------------------
+    public void testSizeIsEmpty_List() {
+        List list = new ArrayList();
+        assertEquals(true, CollectionUtils.sizeIsEmpty(list));
+        list.add("a");
+        assertEquals(false, CollectionUtils.sizeIsEmpty(list));
+    }
+    public void testSizeIsEmpty_Map() {
+        Map map = new HashMap();
+        assertEquals(true, CollectionUtils.sizeIsEmpty(map));
+        map.put("1", "a");
+        assertEquals(false, CollectionUtils.sizeIsEmpty(map));
+    }
+    public void testSizeIsEmpty_Array() {
+        Object[] objectArray = new Object[0];
+        assertEquals(true, CollectionUtils.sizeIsEmpty(objectArray));
+        
+        String[] stringArray = new String[3];
+        assertEquals(false, CollectionUtils.sizeIsEmpty(stringArray));
+        stringArray[0] = "a";
+        stringArray[1] = "b";
+        stringArray[2] = "c";
+        assertEquals(false, CollectionUtils.sizeIsEmpty(stringArray));
+    }
+    public void testSizeIsEmpty_PrimitiveArray() {
+        int[] intArray = new int[0];
+        assertEquals(true, CollectionUtils.sizeIsEmpty(intArray));
+        
+        double[] doubleArray = new double[3];
+        assertEquals(false, CollectionUtils.sizeIsEmpty(doubleArray));
+        doubleArray[0] = 0.0d;
+        doubleArray[1] = 1.0d;
+        doubleArray[2] = 2.5d;
+        assertEquals(false, CollectionUtils.sizeIsEmpty(doubleArray));
+    }
+    public void testSizeIsEmpty_Enumeration() {
+        Vector list = new Vector();
+        assertEquals(true, CollectionUtils.sizeIsEmpty(list.elements()));
+        list.add("a");
+        assertEquals(false, CollectionUtils.sizeIsEmpty(list.elements()));
+        Enumeration en = list.elements();
+        en.nextElement();
+        assertEquals(true, CollectionUtils.sizeIsEmpty(en));
+    }
+    public void testSizeIsEmpty_Iterator() {
+        List list = new ArrayList();
+        assertEquals(true, CollectionUtils.sizeIsEmpty(list.iterator()));
+        list.add("a");
+        assertEquals(false, CollectionUtils.sizeIsEmpty(list.iterator()));
+        Iterator it = list.iterator();
+        it.next();
+        assertEquals(true, CollectionUtils.sizeIsEmpty(it));
+    }
+    public void testSizeIsEmpty_Other() {
+        try {
+            CollectionUtils.sizeIsEmpty(null);
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {}
+        try {
+            CollectionUtils.sizeIsEmpty("not a list");
+            fail("Expecting IllegalArgumentException");
+        } catch (IllegalArgumentException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
+    public void testIsEmptyWithEmptyCollection() {
+        Collection coll = new ArrayList();
+        assertEquals(true, CollectionUtils.isEmpty(coll));
+    }
+
+    public void testIsEmptyWithNonEmptyCollection() {
+        Collection coll = new ArrayList();
+        coll.add("item");
+        assertEquals(false, CollectionUtils.isEmpty(coll));
+    }
+
+    public void testIsEmptyWithNull() {
+        Collection coll = null;
+        assertEquals(true, CollectionUtils.isEmpty(coll));
+    }
+
+    public void testIsNotEmptyWithEmptyCollection() {
+        Collection coll = new ArrayList();
+        assertEquals(false, CollectionUtils.isNotEmpty(coll));
+    }
+
+    public void testIsNotEmptyWithNonEmptyCollection() {
+        Collection coll = new ArrayList();
+        coll.add("item");
+        assertEquals(true, CollectionUtils.isNotEmpty(coll));
+    }
+
+    public void testIsNotEmptyWithNull() {
+        Collection coll = null;
+        assertEquals(false, CollectionUtils.isNotEmpty(coll));
+    }
+
     //-----------------------------------------------------------------------
     private static Predicate EQUALS_TWO = new Predicate() {
         public boolean evaluate(Object input) {
