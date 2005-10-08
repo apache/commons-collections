@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.Factory;
+import org.apache.commons.collections.FunctorException;
 import org.apache.commons.collections.MultiMap;
 import org.apache.commons.collections.iterators.EmptyIterator;
 import org.apache.commons.collections.iterators.IteratorChain;
@@ -425,7 +426,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
             try {
                 return clazz.newInstance();
             } catch (Exception ex) {
-                throw new RuntimeException("Cannot instantiate class: " + clazz, ex);
+                throw new FunctorException("Cannot instantiate class: " + clazz, ex);
             }
         }
     }
