@@ -15,6 +15,7 @@
  */
 package org.apache.commons.collections.buffer;
 
+import java.io.Serializable;
 import java.util.AbstractCollection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -57,8 +58,13 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Michael A. Smith
  * @author Paul Jack
  * @author Stephen Colebourne
+ * @author Steve Phelps
  */
-public class PriorityBuffer extends AbstractCollection implements Buffer {
+public class PriorityBuffer extends AbstractCollection
+        implements Buffer, Serializable {
+
+    /** Serialization lock. */
+    private static final long serialVersionUID = 6891186490470027896L;
 
     /**
      * The default capacity for the buffer.

@@ -15,10 +15,12 @@
  */
 package org.apache.commons.collections.buffer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Random;
 
 import junit.framework.Test;
@@ -37,6 +39,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * @version $Revision$ $Date$
  * 
  * @author Michael A. Smith
+ * @author Steve Phelps
  */
 public class TestPriorityBuffer extends AbstractTestCollection {
 
@@ -306,7 +309,6 @@ public class TestPriorityBuffer extends AbstractTestCollection {
     protected void checkOrder(PriorityBuffer h) {
         Integer lastNum = null;
         Integer num = null;
-        boolean fail = false;
         while (!h.isEmpty()) {
             num = (Integer) h.remove();
             if (h.ascendingOrder) {
@@ -336,5 +338,70 @@ public class TestPriorityBuffer extends AbstractTestCollection {
         }
         return buffer.toString();
     }
-    
+
+    /**
+     * Generates 500 randomly initialized heaps of size 100
+     * and tests that after serializing and restoring them to a byte array
+     * that the following conditions hold:
+     * 
+     *  - the size of the restored heap is the same 
+     *      as the size of the orignal heap
+     *  
+     *  - all elements in the original heap are present in the restored heap
+     *  
+     *  - the heap order of the restored heap is intact as 
+     *      verified by checkOrder()
+     */
+    public void testSerialization() {
+        int iterations = 500;
+        int heapSize = 100;
+        PriorityBuffer h;
+        Random randGenerator = new Random();
+        for (int i = 0; i < iterations; i++) {
+            if (i < iterations / 2) {
+                h = new PriorityBuffer(true);
+            } else {
+                h = new PriorityBuffer(false);
+            }
+            for (int r = 0; r < heapSize; r++) {
+                h.add(new Integer(randGenerator.nextInt(heapSize)));
+            }
+            assertTrue(h.size() == heapSize);
+            PriorityBuffer h1 = serializeAndRestore(h);
+            assertTrue(h1.size() == heapSize);
+            Iterator hit = h.iterator();
+            while (hit.hasNext()) {
+                Integer n = (Integer) hit.next();
+                assertTrue(h1.contains(n));
+            }
+            checkOrder(h1);
+        }
+    }
+
+    public PriorityBuffer serializeAndRestore(PriorityBuffer h) {
+        PriorityBuffer h1 = null;
+        try {
+            byte[] objekt = writeExternalFormToBytes(h);
+            h1 = (PriorityBuffer) readExternalFormFromBytes(objekt);
+        } catch (IOException e) {
+            e.printStackTrace();
+            fail(e.toString());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            fail(e.toString());
+        }
+        return h1;
+    }
+
+    public String getCompatibilityVersion() {
+        return "3.2";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "C:/commons/collections/data/test/PriorityBuffer.emptyCollection.version3.2.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "C:/commons/collections/data/test/PriorityBuffer.fullCollection.version3.2.obj");
+//    }
+
 }
