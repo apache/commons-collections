@@ -41,6 +41,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Stephen Colebourne
  * @author Janek Bogucki
  * @author Phil Steitz
+ * @author Sebastian Bazley
  * @version $Revision$ $Date$
  * @since Commons Collections 3.0
  */
@@ -76,7 +77,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
     public boolean add(Object o) {
         synchronized (lock) {
             boolean result = collection.add(o);
-            notifyAll();
+            lock.notifyAll();
             return result;
         }
     }
@@ -84,7 +85,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
     public boolean addAll(Collection c) {
         synchronized (lock) {
             boolean result = collection.addAll(c);
-            notifyAll();
+            lock.notifyAll();
             return result;
         }
     }
@@ -93,7 +94,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
         synchronized (lock) {
             while (collection.isEmpty()) {
                 try {
-                    wait();
+                    lock.wait();
                 } catch (InterruptedException e) {
                     PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
@@ -110,7 +111,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
             long timeLeft = expiration - System.currentTimeMillis();
             while (timeLeft > 0 && collection.isEmpty()) {
                 try {
-                    wait(timeLeft);
+                    lock.wait(timeLeft);
                     timeLeft = expiration - System.currentTimeMillis();
                 } catch(InterruptedException e) {
                     PrintWriter out = new PrintWriter(new StringWriter());
@@ -129,7 +130,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
         synchronized (lock) {
             while (collection.isEmpty()) {
                 try {
-                    wait();
+                    lock.wait();
                 } catch (InterruptedException e) {
                     PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
@@ -146,7 +147,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
             long timeLeft = expiration - System.currentTimeMillis();
             while (timeLeft > 0 && collection.isEmpty()) {
                 try {
-                    wait(timeLeft);
+                    lock.wait(timeLeft);
                     timeLeft = expiration - System.currentTimeMillis();
                 } catch(InterruptedException e) {
                     PrintWriter out = new PrintWriter(new StringWriter());
