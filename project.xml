@@ -16,7 +16,8 @@
   -->
 <project>
   <pomVersion>3</pomVersion>
-  <id>commons-collections</id>
+  <groupId>commons-collections</groupId>
+  <artifactId>commons-collections</artifactId>
   <currentVersion>3.2-dev</currentVersion>
   <inceptionYear>2001</inceptionYear>
   <name>Collections</name>
@@ -364,8 +365,12 @@
 
   <dependencies>
     <dependency>
-      <id>junit</id>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
       <version>3.8.1</version>
+      <properties>
+        <scope>test</scope>
+      </properties>
     </dependency>
   </dependencies>
 
