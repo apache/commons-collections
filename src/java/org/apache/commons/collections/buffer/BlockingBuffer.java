@@ -41,7 +41,6 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Stephen Colebourne
  * @author Janek Bogucki
  * @author Phil Steitz
- * @author Sebastian Bazley
  * @version $Revision$ $Date$
  * @since Commons Collections 3.0
  */
