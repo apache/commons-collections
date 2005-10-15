@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -123,6 +123,33 @@ public class TestListOrderedMap extends AbstractTestOrderedMap {
         }
     }
 
+    public void testSetValueByIndex() {
+        resetEmpty();
+        ListOrderedMap lom = (ListOrderedMap) map;
+        try {
+            lom.setValue(0, "");
+        } catch (IndexOutOfBoundsException ex) {}
+        try {
+            lom.setValue(-1, "");
+        } catch (IndexOutOfBoundsException ex) {}
+        
+        resetFull();
+        lom = (ListOrderedMap) map;
+        try {
+            lom.setValue(-1, "");
+        } catch (IndexOutOfBoundsException ex) {}
+        try {
+            lom.setValue(lom.size(), "");
+        } catch (IndexOutOfBoundsException ex) {}
+        
+        for (int i = 0; i < lom.size(); i++) {
+            Object value = lom.getValue(i);
+            Object input = new Integer(i);
+            assertEquals(value, lom.setValue(i, input));
+            assertEquals(input, lom.getValue(i));
+        }
+    }
+
     public void testRemoveByIndex() {
         resetEmpty();
         ListOrderedMap lom = (ListOrderedMap) map;
@@ -154,25 +181,60 @@ public class TestListOrderedMap extends AbstractTestOrderedMap {
             assertEquals(false, lom.containsKey(key));
         }
     }
-    
-    public BulkTest bulkTestListView() {
-        return new TestListView();
+
+    //-----------------------------------------------------------------------
+    public void testValueList_getByIndex() {
+        resetFull();
+        ListOrderedMap lom = (ListOrderedMap) map;
+        for (int i = 0; i < lom.size(); i++) {
+            Object expected = lom.getValue(i);
+            assertEquals(expected, lom.valueList().get(i));
+        }
     }
-    
-    public class TestListView extends AbstractTestList {
-        
-        TestListView() {
-            super("TestListView");
+
+    public void testValueList_setByIndex() {
+        resetFull();
+        ListOrderedMap lom = (ListOrderedMap) map;
+        for (int i = 0; i < lom.size(); i++) {
+            Object input = new Integer(i);
+            Object expected = lom.getValue(i);
+            assertEquals(expected, lom.valueList().set(i, input));
+            assertEquals(input, lom.getValue(i));
+            assertEquals(input, lom.valueList().get(i));
+        }
+    }
+
+    public void testValueList_removeByIndex() {
+        resetFull();
+        ListOrderedMap lom = (ListOrderedMap) map;
+        while (lom.size() > 1) {
+            Object expected = lom.getValue(1);
+            assertEquals(expected, lom.valueList().remove(1));
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    public BulkTest bulkTestKeyListView() {
+        return new TestKeyListView();
+    }
+
+    public BulkTest bulkTestValueListView() {
+        return new TestValueListView();
+    }
+
+    //-----------------------------------------------------------------------
+    public class TestKeyListView extends AbstractTestList {
+        TestKeyListView() {
+            super("TestKeyListView");
         }
 
         public List makeEmptyList() {
-            return ((ListOrderedMap) TestListOrderedMap.this.makeEmptyMap()).asList();
+            return ((ListOrderedMap) TestListOrderedMap.this.makeEmptyMap()).keyList();
         }
-        
         public List makeFullList() {
-            return ((ListOrderedMap) TestListOrderedMap.this.makeFullMap()).asList();
+            return ((ListOrderedMap) TestListOrderedMap.this.makeFullMap()).keyList();
         }
-        
+
         public Object[] getFullElements() {
             return TestListOrderedMap.this.getSampleKeys();
         }
@@ -193,6 +255,40 @@ public class TestListOrderedMap extends AbstractTestOrderedMap {
         }
     }
 
+    //-----------------------------------------------------------------------
+    public class TestValueListView extends AbstractTestList {
+        TestValueListView() {
+            super("TestValueListView");
+        }
+
+        public List makeEmptyList() {
+            return ((ListOrderedMap) TestListOrderedMap.this.makeEmptyMap()).valueList();
+        }
+        public List makeFullList() {
+            return ((ListOrderedMap) TestListOrderedMap.this.makeFullMap()).valueList();
+        }
+
+        public Object[] getFullElements() {
+            return TestListOrderedMap.this.getSampleValues();
+        }
+        public boolean isAddSupported() {
+            return false;
+        }
+        public boolean isRemoveSupported() {
+            return true;
+        }
+        public boolean isSetSupported() {
+            return true;
+        }
+        public boolean isNullSupported() {
+            return TestListOrderedMap.this.isAllowNullKey();
+        }
+        public boolean isTestSerialization() {
+            return false;
+        }
+    }
+
+    //-----------------------------------------------------------------------
     public String getCompatibilityVersion() {
         return "3.1";
     }
