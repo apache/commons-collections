@@ -21,6 +21,7 @@ import org.apache.commons.collections.buffer.SynchronizedBuffer;
 import org.apache.commons.collections.buffer.TransformedBuffer;
 import org.apache.commons.collections.buffer.TypedBuffer;
 import org.apache.commons.collections.buffer.UnmodifiableBuffer;
+import org.apache.commons.collections.buffer.TimeoutBuffer;
 
 /**
  * Provides utility methods and decorators for {@link Buffer} instances.
@@ -37,7 +38,7 @@ public class BufferUtils {
      * An empty unmodifiable buffer.
      */
     public static final Buffer EMPTY_BUFFER = UnmodifiableBuffer.decorate(new ArrayStack(1));
-    
+
     /**
      * <code>BufferUtils</code> should not normally be instantiated.
      */
@@ -85,6 +86,22 @@ public class BufferUtils {
         return BlockingBuffer.decorate(buffer);
     }
 
+    /**
+     * Returns a synchronized buffer backed by the given buffer that will
+     * block on {@link Buffer#get()} and {@link Buffer#remove()} operations until
+     * <code>timeout</code> expires.  If the buffer is empty, then the
+     * {@link Buffer#get()} and {@link Buffer#remove()} operations will block
+     * until new elements are added to the buffer, rather than immediately throwing a
+     * <code>BufferUnderflowException</code>.
+     *
+     * @param buffer  the buffer to synchronize, must not be null
+     * @return a blocking buffer backed by that buffer
+     * @throws IllegalArgumentException  if the Buffer is null
+     */
+    public static Buffer timeoutBuffer(Buffer buffer, long timeout) {
+        return TimeoutBuffer.decorate(buffer, timeout);
+    }
+    
     /**
      * Returns an unmodifiable buffer backed by the given buffer.
      *
@@ -142,5 +159,5 @@ public class BufferUtils {
     public static Buffer transformedBuffer(Buffer buffer, Transformer transformer) {
         return TransformedBuffer.decorate(buffer, transformer);
     }
-    
+
 }
