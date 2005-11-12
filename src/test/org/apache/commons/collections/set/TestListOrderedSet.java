@@ -130,7 +130,6 @@ public class TestListOrderedSet extends AbstractTestSet {
     
     public void testListAddIndexed() {
         ListOrderedSet set = (ListOrderedSet) makeEmptySet();
-        List view = set.asList();
         set.add(ZERO);
         set.add(TWO);
         
@@ -164,6 +163,38 @@ public class TestListOrderedSet extends AbstractTestSet {
         assertSame(THREE, set.get(1));
         assertSame(TWO, set.get(2));
         assertSame(ONE, set.get(3));
+    }
+
+    public void testListAddReplacing() {
+        ListOrderedSet set = (ListOrderedSet) makeEmptySet();
+        A a = new A();
+        B b = new B();
+        set.add(a);
+        assertEquals(1, set.size());
+        set.add(b);  // will match but not replace A as equal
+        assertEquals(1, set.size());
+        assertSame(a, set.getSet().iterator().next());
+        assertSame(a, set.iterator().next());
+        assertSame(a, set.get(0));
+        assertSame(a, set.asList().get(0));
+    }
+
+    static class A {
+        public boolean equals(Object obj) {
+            return (obj instanceof A || obj instanceof B);
+        }
+        public int hashCode() {
+            return 1;
+        }
+    }
+
+    static class B {
+        public boolean equals(Object obj) {
+            return (obj instanceof A || obj instanceof B);
+        }
+        public int hashCode() {
+            return 1;
+        }
     }
 
     public void testDecorator() {
