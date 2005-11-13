@@ -17,8 +17,8 @@
 
 <!-- ========== Properties ================================================ -->
 
+  <!-- This can be used to define 'junit.jar' property if necessary -->
   <property file="build.properties"/>
-
 
 <!-- ========== Component Declarations ==================================== -->
 
@@ -61,7 +61,7 @@
   <property name="build.dist.bin"       value="${build.home}/bin"/>
   <property name="build.dist.bin.work"  value="${build.dist.bin}/${component.name}-${component.version}"/>
   <property name="build.dist.src"       value="${build.home}/src"/>
-  <property name="build.dist.src.work"  value="${build.dist.src}/${component.name}-${component.version}"/>
+  <property name="build.dist.src.work"  value="${build.dist.src}/${component.name}-${component.version}-src"/>
   <property name="build.dist"           value="${build.home}/dist"/>
   <property name="build.bin.tar.name"   value="${build.dist}/${component.name}-${component.version}.tar"/>
   <property name="build.bin.gz.name"    value="${build.dist}/${component.name}-${component.version}.tar.gz"/>
@@ -532,7 +532,6 @@
         <include name="DEVELOPERS-GUIDE.html"/>
         <include name="PROPOSAL.html"/>
         <include name="STATUS.html"/>
-        <include name="build.properties.sample"/>
         <include name="build.xml"/>
         <include name="maven.xml"/>
         <include name="project.xml"/>
@@ -564,39 +563,57 @@
   
   <target name="zip.bin">
     <mkdir dir="${build.dist}"/>
+  	<fixcrlf srcdir="${build.dist.bin.work}" eol="lf" includes="*.txt" />
     <tar longfile="gnu" tarfile="${build.bin.tar.name}">
       <tarfileset dir="${build.dist.bin}"/>
     </tar>
     <gzip zipfile="${build.bin.gz.name}" src="${build.bin.tar.name}"/>
     <delete file="${build.bin.tar.name}" />
+    <antcall target="internal-md5">
+      <param name="path" value="${build.bin.gz.name}"/>
+    </antcall>
     
+  	<fixcrlf srcdir="${build.dist.bin.work}" eol="crlf" includes="*.txt" />
     <zip zipfile="${build.bin.zip.name}" >
       <zipfileset dir="${build.dist.bin}"/>
     </zip>
-      
-    <checksum file="${build.bin.gz.name}"/>
-    <checksum file="${build.bin.zip.name}"/>
+    <antcall target="internal-md5">
+      <param name="path" value="${build.bin.zip.name}"/>
+    </antcall>
   </target>
 
   <target name="zip.src">
     <mkdir dir="${build.dist}"/>
+  	<fixcrlf srcdir="${build.dist.src.work}" eol="lf" includes="*.txt,*.properties" />
     <tar longfile="gnu" tarfile="${build.src.tar.name}">
       <tarfileset dir="${build.dist.src}"/>
     </tar>
     <gzip zipfile="${build.src.gz.name}" src="${build.src.tar.name}"/>
     <delete file="${build.src.tar.name}" />
+    <antcall target="internal-md5">
+      <param name="path" value="${build.src.gz.name}"/>
+    </antcall>
     
+  	<fixcrlf srcdir="${build.dist.src.work}" eol="crlf" includes="*.txt,*.properties" />
     <zip zipfile="${build.src.zip.name}" >
       <zipfileset dir="${build.dist.src}"/>
     </zip>
-      
-    <checksum file="${build.src.gz.name}"/>
-    <checksum file="${build.src.zip.name}"/>
+    <antcall target="internal-md5">
+      <param name="path" value="${build.src.zip.name}"/>
+    </antcall>
   </target>
 
+  <target name="internal-md5">
+    <basename property="_base" file="${path}"/>
+    <checksum file="${path}" property="md5"/>
+   	<echo message="${md5} *${_base}" file="${path}.md5"/>
+  </target>
+
+<!-- ====================================================================== -->
+
   <target name="clirr">
-    <property name="jar.baseline" value="commons-collections-2.1.1.jar" />
-    <property name="jar.current" value="commons-collections-3.1.jar" />
+    <property name="jar.baseline" value="commons-collections-3.1.jar" />
+    <property name="jar.current" value="commons-collections-3.2.jar" />
 
     <taskdef resource="clirrtask.properties">
       <classpath path="/clirr/clirr-0.3.jar;/clirr/bcel-5.1.jar;" />
