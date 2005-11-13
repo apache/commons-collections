@@ -18,15 +18,15 @@
   <pomVersion>3</pomVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <currentVersion>3.2-dev</currentVersion>
+  <currentVersion>3.2-SNAPSHOT</currentVersion>
   <inceptionYear>2001</inceptionYear>
   <name>Collections</name>
   <shortDescription>Commons Collections</shortDescription>
   <description>Types that extend and augment the Java Collections Framework.</description>
   <logo>/images/logo.png</logo>
    
-  <url>http://jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</url>
-  <package>org.apache.commons.${pom.artifactId.substring(8)}</package>
+  <url>http://jakarta.apache.org/commons/collections/</url>
+  <package>org.apache.commons.collections</package>
 
   <organization>
     <name>The Apache Software Foundation</name>
@@ -44,13 +44,13 @@
   
   <gumpRepositoryId>jakarta</gumpRepositoryId>
   <issueTrackingUrl>http://issues.apache.org/bugzilla/</issueTrackingUrl>
-  <siteAddress>jakarta.apache.org</siteAddress>
-  <siteDirectory>/www/jakarta.apache.org/commons/${pom.artifactId.substring(8)}/</siteDirectory>
-  <distributionDirectory>/www/jakarta.apache.org/builds/jakarta-commons/${pom.artifactId.substring(8)}/</distributionDirectory>
+  <siteAddress>people.apache.org</siteAddress>
+  <siteDirectory>/www/jakarta.apache.org/commons/collections/</siteDirectory>
+  <distributionDirectory>/www/jakarta.apache.org/builds/jakarta-commons/collections/</distributionDirectory>
   
   <repository>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</connection>
-    <url>http://svn.apache.org/repos/asf/jakarta/commons/proper/${pom.artifactId.substring(8)}/trunk</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/collections/trunk</connection>
+    <url>http://svn.apache.org/repos/asf/jakarta/commons/proper/collections/trunk</url>
   </repository>
   
   <mailingLists>
@@ -129,7 +129,6 @@
       <email></email>
       <organization></organization>
     </developer>
-    
   </developers>
   
   <contributors>
@@ -375,35 +374,44 @@
   </dependencies>
 
   <build>
-    	<nagEmailAddress>commons-dev@jakarta.apache.org</nagEmailAddress>
-    	<sourceDirectory>src/java</sourceDirectory>
-    	<unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-    	<integrationUnitTestSourceDirectory/>
-    	<aspectSourceDirectory/>
-
-    	<!-- Unit test classes -->
-    	<unitTest>
-      		<includes>
-        		<include>org/apache/commons/collections/TestAllPackages.java</include>
-      		</includes>
-   		</unitTest>
-  	</build>
+    <nagEmailAddress>commons-dev@jakarta.apache.org</nagEmailAddress>
+    <sourceDirectory>src/java</sourceDirectory>
+    <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+    <integrationUnitTestSourceDirectory/>
+    <aspectSourceDirectory/>
+    <unitTest>
+      <includes>
+        <include>org/apache/commons/collections/TestAllPackages.java</include>
+      </includes>
+   	</unitTest>
+    <resources>
+      <resource>
+        <directory>.</directory>
+        <targetPath>META-INF</targetPath>
+        <includes>
+          <include>NOTICE.txt</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
 
   <reports>
-     <report>maven-changelog-plugin</report>
-     <report>maven-changes-plugin</report>
-     <!--report>maven-checkstyle-plugin</report-->
-     <!--report>maven-clover-plugin</report-->
-     <report>maven-developer-activity-plugin</report>
-     <report>maven-file-activity-plugin</report>
-     <report>maven-javadoc-plugin</report>
-     <!--report>maven-jellydoc-plugin</report-->
-     <report>maven-junit-report-plugin</report>
-     <report>maven-jxr-plugin</report>
-     <report>maven-license-plugin</report>
-     <!--report>maven-linkcheck-plugin</report-->
-     <!--report>maven-statcvs-plugin</report-->
-     <!--report>maven-tasklist-plugin</report-->
+    <report>maven-changelog-plugin</report>
+    <report>maven-changes-plugin</report>
+    <!--report>maven-checkstyle-plugin</report-->
+    <!--report>maven-jcoverage-plugin</report-->
+    <!--report>maven-clover-plugin</report-->
+    <report>maven-developer-activity-plugin</report>
+    <report>maven-file-activity-plugin</report>
+    <report>maven-javadoc-plugin</report>
+    <report>maven-jdepend-plugin</report>
+    <report>maven-junit-report-plugin</report>
+    <report>maven-jxr-plugin</report>
+    <report>maven-license-plugin</report>
+    <report>maven-jdiff-plugin</report>
+    <!--report>maven-linkcheck-plugin</report-->
+    <!--report>maven-statcvs-plugin</report-->
+    <!--report>maven-tasklist-plugin</report-->
   </reports>
 
 </project>
