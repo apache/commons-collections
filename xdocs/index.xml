@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
  <!--
-   Copyright 2002-2004 The Apache Software Foundation
+   Copyright 2002-2005 The Apache Software Foundation
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,18 +14,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
   -->
-
 <document>
-
  <properties>
   <title>Commons Collections</title>
   <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
  </properties>
-
- <body>
-
+<body>
+<!-- ================================================== -->
 <section name="Commons Collections">
-
 <p>
 The <a href="http://java.sun.com/products/j2se/1.4/docs/guide/collections/">Java Collections Framework</a>
 was a major addition in JDK 1.2.
@@ -57,11 +53,11 @@ Version 3.1 and patch version 2.1.1 have just been released.
 These provides a work around to a <a href="compatibility.html">version compatibility</a> issue between v2.1 and v3.0.
 </p>
 </section>
-
-
+<!-- ================================================== -->
 <section name="Documentation">
 <p>
-A getting started<span> </span><a href="userguide.html">User's Guide</a> is available.
+A getting started<span> </span><a href="userguide.html">User's Guide</a> is available
+as are various <a href="maven-reports.html">project reports</a>.
 </p>
 <p>
 The JavaDoc API documents are available online:
@@ -75,36 +71,32 @@ The JavaDoc API documents are available online:
 The <a href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/">CVS repository</a> can be browsed.
 </p>
 </section>
-
-
+<!-- ================================================== -->
 <section name="Releases">
 <p>
-Version 3.1/2.1.1 - 
- <a href="http://jakarta.apache.org/site/binindex.cgi#commons-collections">Binary</a> - 
- <a href="http://jakarta.apache.org/site/sourceindex.cgi#commons-collections">Source</a>
+The latest version is v3.1. - 
+<a href="http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi">Download now!</a><br />
+<!--The <a href="upgradeto3_2.html">upgrade notes</a> are also available.-->
 </p>
 <p>
- For previous releases, see the <a href="http://archive.apache.org/dist/jakarta/commons/collections/">Apache Archive</a>
+For previous releases, see the <a href="http://archive.apache.org/dist/jakarta/commons/collections/">Apache Archive</a>
 </p>
 </section>
-
-<section name="Bugs">
+<!-- ================================================== -->
+<section name="Support">
 <p>
-Bugs may be reported via the Bugzilla Management system. The following links may prove useful:
+The <a href="mail-lists.html">commons mailing lists</a> act as the main support forum.
+The user list is suitable for most library usage queries.
+The dev list is intended for the development discussion.
+Please remember that the lists are shared between all commons components,
+so prefix your email by [collections].
 </p>
-<ul>
- <li><a href="http://issues.apache.org/bugzilla/createaccount.cgi">Create a Bugzilla account</a></li>
- <li><a href="http://issues.apache.org/bugzilla/enter_bug.cgi?product=Commons&amp;component=Collections&amp;version=3.0%20Final">Submit a bug report</a></li>
- <li><a href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Commons&amp;component=Collections&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time">All open Collections bugs</a></li>
- <li><a href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;bug_status=RESOLVED&amp;bug_status=VERIFIED&amp;bug_status=CLOSED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Commons&amp;component=Collections&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;newqueryname=&amp;order=Reuse+same+sort+as+last+time">All Collections bugs</a></li>
-</ul>
+<p>
+Issues may be reported via <a href="issue-tracking.html">ASF Bugzilla</a>.
+Please remember that Bugzilla is shared between all commons components,
+so prefix your issue by [collections].
+</p>
 </section>
-
+<!-- ================================================== -->
 </body>
 </document>
-
-
-
-
-
-

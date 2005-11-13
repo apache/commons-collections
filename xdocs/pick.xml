@@ -168,7 +168,7 @@ The <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/Map.html">Map</a> i
 </tr>
 <tr>
 <td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/Flat3Map.html">Flat3Map</a></td>
-<td>This map is optimised to store one, two or three key-value pairs and outperforms HashMap at these sizes. For size four and above performance is about 5% slower than HashMap. This map also has good garbage collection characteristics when below size four. It provides a MapIterator. This map should be used if are 99% sure that the map will be size four or less.</td>
+<td>This map is optimised to store one, two or three key-value pairs and outperforms HashMap at these sizes. For size four and above performance is about 5% slower than HashMap. This map also has good garbage collection characteristics when below size four. It provides a MapIterator. This map should be used if are 99% sure that the map will be size three or less.</td>
 </tr>
 <tr>
 <td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/StaticBucketMap.html">StaticBucketMap</a></td>

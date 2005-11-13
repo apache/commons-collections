@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
  <!--
-   Copyright 2002-2004 The Apache Software Foundation
+   Copyright 2002-2005 The Apache Software Foundation
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -30,19 +30,22 @@
 
     <menu name="Commons Collections">
       <item name="Overview" href="/index.html"/>
-      <item name="Download" href="http://jakarta.apache.org/site/sourceindex.cgi#commons-collections"/>
+      <item name="Download" href="http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi"/>
       <item name="Users guide" href="/userguide.html"/>
       <item name="History" href="/history.html"/>
-      <item name="Javadoc (3.1 release)" href="apidocs-COLLECTIONS_3_1/index.html"/>
+      <item name="Javadoc (3.1 release)" href="api-release/index.html"/>
+    </menu>
+
+    <menu name="Development">
+      <item name="Building" href="/building.html"/>
       <item name="Mailing lists" href="/mail-lists.html"/>
       <item name="Team" href="/team-list.html"/>
       <item name="Tasks" href="/tasks.html"/>
-      <item name="CVS" href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/"/>
-      <item name="Javadoc (CVS latest)" href="apidocs/index.html"/>
-      <item name="Javadoc (3.0 old)" href="apidocs-COLLECTIONS_3_0/index.html"/>
-      <item name="Javadoc (2.1.1 old)" href="apidocs-COLLECTIONS_2_1_1/index.html"/>
+      <item name="Proposal" href="/proposal.html"/>
+      <item name="SVN repository" href="http://svn.apache.org/viewcvs.cgi/jakarta/commons/proper/collections/trunk/"/>
+      <item name="Javadoc (SVN latest)" href="apidocs/index.html"/>
     </menu>
-    
+
     &common-menus;
 
   </body>
