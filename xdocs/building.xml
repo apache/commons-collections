@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+Copyright 2005 The Apache Software Foundation.
+ 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific iouage governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Building</title>
+  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Building Commons Collections">
+<p>
+  Commons Collections uses <a href="http://ant.apache.org">Ant</a> as its
+  primary build system, however <a href="http://maven.apache.org">Maven</a>
+  is used for site generation.
+</p>
+<!--p>
+  You may also be interested in the <a href="upgradeto1_1.html">upgrade notes</a>.
+</p-->
+</section>
+<!-- ================================================== -->
+<section name="Ant Goals">
+  <p>
+    To build a jar file, change into Collection's root directory and run "ant jar".
+    The result will be in the "build" subdirectory.
+  </p>
+  <p>
+    To build the Javadocs, run "ant javadoc".
+    The result will be in "build/docs/apidocs".
+  </p>
+</section>
+<!-- ================================================== -->
+<section name="Maven Goals">
+  <p>
+    To build the Javadocs, change into Collection's root directory and run "maven javadoc".
+    The result will be in "target/docs/apidocs".
+  </p>
+  <p>
+    To build the full website, run "maven site".
+    The result will be in "target/docs".
+  </p>
+</section>
+<!-- ================================================== -->
+</body>
+</document>
