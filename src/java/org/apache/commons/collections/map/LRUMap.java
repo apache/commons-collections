@@ -191,6 +191,9 @@ public class LRUMap
             entry.before = header.before;
             header.before.after = entry;
             header.before = entry;
+        } else if (entry == header) {
+            throw new IllegalStateException("Can't move header to MRU" +
+                " (please report this to commons-dev@jakarta.apache.org)");
         }
     }
     
@@ -228,18 +231,32 @@ public class LRUMap
             LinkEntry reuse = header.after;
             boolean removeLRUEntry = false;
             if (scanUntilRemovable) {
-                while (reuse != header) {
+                while (reuse != header && reuse != null) {
                     if (removeLRU(reuse)) {
                         removeLRUEntry = true;
                         break;
                     }
                     reuse = reuse.after;
                 }
+                if (reuse == null) {
+                    throw new IllegalStateException(
+                        "Entry.after=null, header.after" + header.after + " header.before" + header.before +
+                        " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
+                        " Please check that your keys are immutable, and that you have used synchronization properly." +
+                        " If so, then please report this to commons-dev@jakarta.apache.org as a bug.");
+                }
             } else {
                 removeLRUEntry = removeLRU(reuse);
             }
             
             if (removeLRUEntry) {
+                if (reuse == null) {
+                    throw new IllegalStateException(
+                        "reuse=null, header.after=" + header.after + " header.before" + header.before +
+                        " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
+                        " Please check that your keys are immutable, and that you have used synchronization properly." +
+                        " If so, then please report this to commons-dev@jakarta.apache.org as a bug.");
+                }
                 reuseMapping(reuse, hashIndex, hashCode, key, value);
             } else {
                 super.addMapping(hashIndex, hashCode, key, value);
@@ -264,19 +281,35 @@ public class LRUMap
         // find the entry before the entry specified in the hash table
         // remember that the parameters (except the first) refer to the new entry,
         // not the old one
-        int removeIndex = hashIndex(entry.hashCode, data.length);
-        HashEntry loop = data[removeIndex];
-        HashEntry previous = null;
-        while (loop != entry) {
-            previous = loop;
-            loop = loop.next;
+        try {
+            int removeIndex = hashIndex(entry.hashCode, data.length);
+            HashEntry[] tmp = data;  // may protect against some sync issues
+            HashEntry loop = tmp[removeIndex];
+            HashEntry previous = null;
+            while (loop != entry && loop != null) {
+                previous = loop;
+                loop = loop.next;
+            }
+            if (loop == null) {
+                throw new IllegalStateException(
+                    "Entry.next=null, data[removeIndex]=" + data[removeIndex] + " previous=" + previous +
+                    " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
+                    " Please check that your keys are immutable, and that you have used synchronization properly." +
+                    " If so, then please report this to commons-dev@jakarta.apache.org as a bug.");
+            }
+            
+            // reuse the entry
+            modCount++;
+            removeEntry(entry, removeIndex, previous);
+            reuseEntry(entry, hashIndex, hashCode, key, value);
+            addEntry(entry, hashIndex);
+        } catch (NullPointerException ex) {
+            throw new IllegalStateException(
+                    "NPE, entry=" + entry + " entryIsHeader=" + (entry==header) +
+                    " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
+                    " Please check that your keys are immutable, and that you have used synchronization properly." +
+                    " If so, then please report this to commons-dev@jakarta.apache.org as a bug.");
         }
-        
-        // reuse the entry
-        modCount++;
-        removeEntry(entry, removeIndex, previous);
-        reuseEntry(entry, hashIndex, hashCode, key, value);
-        addEntry(entry, hashIndex);
     }
     
     /**
