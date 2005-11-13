@@ -48,10 +48,6 @@ There are many features, including:
 <li>Utilities to test or create typical set-theory properties of collections such as union, intersection, and closure</li>
 </ul>
 </p>
-<p>
-Version 3.1 and patch version 2.1.1 have just been released.
-These provides a work around to a <a href="compatibility.html">version compatibility</a> issue between v2.1 and v3.0.
-</p>
 </section>
 <!-- ================================================== -->
 <section name="Documentation">
