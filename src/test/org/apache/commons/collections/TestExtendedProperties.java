@@ -33,6 +33,7 @@ import junit.framework.TestSuite;
  * @author Mohan Kishore
  * @author Stephen Colebourne
  * @author Shinobu Kawai
+ * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public class TestExtendedProperties extends TestCase {
     
@@ -65,14 +66,15 @@ public class TestExtendedProperties extends TestCase {
         assertEquals("This returns '1'", eprop.getString("number"), "1");
 
         /*
-         * now add another and get a Vector
+         * now add another and get a Vector/list
          */
         eprop.addProperty("number", "2");
         assertTrue("This returns array", (eprop.getVector("number") instanceof java.util.Vector));
+        assertTrue("This returns array", (eprop.getList("number") instanceof java.util.List));
 
         /*
          *  now test dan's new fix where we get the first scalar 
-         *  when we access a vector valued
+         *  when we access a vector/list valued
          *  property
          */
         assertTrue("This returns scalar", (eprop.getString("number") instanceof String));
@@ -83,6 +85,7 @@ public class TestExtendedProperties extends TestCase {
         String prop = "hey, that's a test";
         eprop.setProperty("prop.string", prop);
         assertTrue("This returns vector", (eprop.getVector("prop.string") instanceof java.util.Vector));
+        assertTrue("This returns list", (eprop.getList("prop.string") instanceof java.util.List));
 
         String prop2 = "hey\\, that's a test";
         eprop.remove("prop.string");
@@ -99,6 +102,7 @@ public class TestExtendedProperties extends TestCase {
         assertTrue("Returns the full string", subEprop.getString("string").equals(prop));
         assertTrue("This returns string for subset", (subEprop.getString("string") instanceof java.lang.String));
         assertTrue("This returns array for subset", (subEprop.getVector("string") instanceof java.util.Vector));
+        assertTrue("This returns array for subset", (subEprop.getList("string") instanceof java.util.List));
 
     }
 
@@ -133,6 +137,13 @@ public class TestExtendedProperties extends TestCase {
                     "Hello", ep1.getVector("three").get(0));
             assertEquals("Commas not interpreted properly", 
                     "World", ep1.getVector("three").get(1));
+
+            assertEquals("Commas not interpreted properly", 
+                    2, ep1.getList("three").size());
+            assertEquals("Commas not interpreted properly", 
+                    "Hello", ep1.getList("three").get(0));
+            assertEquals("Commas not interpreted properly", 
+                    "World", ep1.getList("three").get(1));
                     
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ep1.save(baos, null);
@@ -186,10 +197,16 @@ public class TestExtendedProperties extends TestCase {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         ep1.load(bais);
         assertEquals(1, ep1.size());
+
         assertEquals(3, ep1.getVector("one").size());
         assertEquals("a", ep1.getVector("one").get(0));
         assertEquals("b", ep1.getVector("one").get(1));
         assertEquals("c", ep1.getVector("one").get(2));
+
+        assertEquals(3, ep1.getList("one").size());
+        assertEquals("a", ep1.getList("one").get(0));
+        assertEquals("b", ep1.getList("one").get(1));
+        assertEquals("c", ep1.getList("one").get(2));
     }
     
     public void testMultipleSameKey2() throws Exception {
@@ -205,11 +222,18 @@ public class TestExtendedProperties extends TestCase {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         ep1.load(bais);
         assertEquals(1, ep1.size());
+
         assertEquals(4, ep1.getVector("one").size());
         assertEquals("a", ep1.getVector("one").get(0));
         assertEquals("b", ep1.getVector("one").get(1));
         assertEquals("c", ep1.getVector("one").get(2));
         assertEquals("d", ep1.getVector("one").get(3));
+
+        assertEquals(4, ep1.getList("one").size());
+        assertEquals("a", ep1.getList("one").get(0));
+        assertEquals("b", ep1.getList("one").get(1));
+        assertEquals("c", ep1.getList("one").get(2));
+        assertEquals("d", ep1.getList("one").get(3));
     }
     
     public void testMultipleSameKey3() throws Exception {
@@ -225,10 +249,16 @@ public class TestExtendedProperties extends TestCase {
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         ep1.load(bais);
         assertEquals(1, ep1.size());
+
         assertEquals(3, ep1.getVector("one").size());
         assertEquals("a", ep1.getVector("one").get(0));
         assertEquals("b", ep1.getVector("one").get(1));
         assertEquals("c", ep1.getVector("one").get(2));
+
+        assertEquals(3, ep1.getList("one").size());
+        assertEquals("a", ep1.getList("one").get(0));
+        assertEquals("b", ep1.getList("one").get(1));
+        assertEquals("c", ep1.getList("one").get(2));
     }
     
     public void testMultipleSameKeyByCode() throws Exception {
@@ -236,22 +266,38 @@ public class TestExtendedProperties extends TestCase {
 
         ep1.addProperty("one", "a");
         assertEquals(1, ep1.size());
+
         assertEquals(1, ep1.getVector("one").size());
         assertEquals("a", ep1.getVector("one").get(0));
+
+        assertEquals(1, ep1.getList("one").size());
+        assertEquals("a", ep1.getList("one").get(0));
         
         ep1.addProperty("one", Boolean.TRUE);
         assertEquals(1, ep1.size());
+
         assertEquals(2, ep1.getVector("one").size());
         assertEquals("a", ep1.getVector("one").get(0));
         assertEquals(Boolean.TRUE, ep1.getVector("one").get(1));
+
+        assertEquals(2, ep1.getList("one").size());
+        assertEquals("a", ep1.getList("one").get(0));
+        assertEquals(Boolean.TRUE, ep1.getList("one").get(1));
         
         ep1.addProperty("one", "c,d");
         assertEquals(1, ep1.size());
+
         assertEquals(4, ep1.getVector("one").size());
         assertEquals("a", ep1.getVector("one").get(0));
         assertEquals(Boolean.TRUE, ep1.getVector("one").get(1));
         assertEquals("c", ep1.getVector("one").get(2));
         assertEquals("d", ep1.getVector("one").get(3));
+
+        assertEquals(4, ep1.getList("one").size());
+        assertEquals("a", ep1.getList("one").get(0));
+        assertEquals(Boolean.TRUE, ep1.getList("one").get(1));
+        assertEquals("c", ep1.getList("one").get(2));
+        assertEquals("d", ep1.getList("one").get(3));
     }
 
     public void testInheritDefaultProperties() {

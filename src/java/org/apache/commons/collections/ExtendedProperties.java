@@ -138,6 +138,7 @@ import java.util.Vector;
  * @author Mohan Kishore
  * @author Stephen Colebourne
  * @author Shinobu Kawai
+ * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public class ExtendedProperties extends Hashtable {
     
@@ -691,14 +692,14 @@ public class ExtendedProperties extends Hashtable {
 
         if (current instanceof String) {
             // one object already in map - convert it to a vector
-            Vector v = new Vector(2);
-            v.addElement(current);
-            v.addElement(value);
-            put(key, v);
+            List values = new Vector(2);
+            values.add(current);
+            values.add(value);
+            put(key, values);
             
-        } else if (current instanceof Vector) {
-            // already a vector - just add the new token
-            ((Vector) current).addElement(value);
+        } else if (current instanceof List) {
+            // already a list - just add the new token
+            ((List) current).add(value);
             
         } else {
             // brand new key - store in keysAsListed to retain order
@@ -752,11 +753,10 @@ public class ExtendedProperties extends Hashtable {
                     currentOutput.append(escape((String) value));
                     theWrtr.println(currentOutput.toString());
                     
-                } else if (value instanceof Vector) {
-                    Vector values = (Vector) value;
-                    Enumeration valuesEnum = values.elements();
-                    while (valuesEnum.hasMoreElements()) {
-                        String currentElement = (String) valuesEnum.nextElement();
+                } else if (value instanceof List) {
+                    List values = (List) value;
+                    for (Iterator it = values.iterator(); it.hasNext(); ) {
+                        String currentElement = (String) it.next();
                         StringBuffer currentOutput = new StringBuffer();
                         currentOutput.append(key);
                         currentOutput.append("=");
@@ -931,8 +931,8 @@ public class ExtendedProperties extends Hashtable {
             } else {
                 return interpolate(defaultValue);
             }
-        } else if (value instanceof Vector) {
-            return interpolate((String) ((Vector) value).get(0));
+        } else if (value instanceof List) {
+            return interpolate((String) ((List) value).get(0));
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a String object");
         }
@@ -945,7 +945,7 @@ public class ExtendedProperties extends Hashtable {
      * @param key The configuration key.
      * @return The associated properties if key is found.
      * @throws ClassCastException is thrown if the key maps to an
-     * object that is not a String/Vector.
+     * object that is not a String/List.
      * @throws IllegalArgumentException if one of the tokens is
      * malformed (does not contain an equals sign).
      */
@@ -960,7 +960,7 @@ public class ExtendedProperties extends Hashtable {
      * @param key The configuration key.
      * @return The associated properties if key is found.
      * @throws ClassCastException is thrown if the key maps to an
-     * object that is not a String/Vector.
+     * object that is not a String/List.
      * @throws IllegalArgumentException if one of the tokens is
      * malformed (does not contain an equals sign).
      */
@@ -993,19 +993,18 @@ public class ExtendedProperties extends Hashtable {
      * @param key The configuration key.
      * @return The associated string array if key is found.
      * @throws ClassCastException is thrown if the key maps to an
-     * object that is not a String/Vector.
+     * object that is not a String/List.
      */
     public String[] getStringArray(String key) {
         Object value = get(key);
 
-        // What's your vector, Victor?
-        Vector vector;
+        List values;
         if (value instanceof String) {
-            vector = new Vector(1);
-            vector.addElement(value);
+            values = new Vector(1);
+            values.add(value);
             
-        } else if (value instanceof Vector) {
-            vector = (Vector) value;
+        } else if (value instanceof List) {
+            values = (List) value;
             
         } else if (value == null) {
             if (defaults != null) {
@@ -1014,12 +1013,12 @@ public class ExtendedProperties extends Hashtable {
                 return new String[0];
             }
         } else {
-            throw new ClassCastException('\'' + key + "' doesn't map to a String/Vector object");
+            throw new ClassCastException('\'' + key + "' doesn't map to a String/List object");
         }
 
-        String[] tokens = new String[vector.size()];
+        String[] tokens = new String[values.size()];
         for (int i = 0; i < tokens.length; i++) {
-            tokens[i] = (String) vector.elementAt(i);
+            tokens[i] = (String) values.get(i);
         }
 
         return tokens;
@@ -1039,8 +1038,10 @@ public class ExtendedProperties extends Hashtable {
     }
 
     /**
-     * Get a Vector of strings associated with the given configuration
-     * key.
+     * Get a Vector of strings associated with the given configuration key.
+     * <p>
+     * The list is a copy of the internal data of this object, and as
+     * such you may alter it freely.
      *
      * @param key The configuration key.
      * @param defaultValue The default value.
@@ -1051,14 +1052,14 @@ public class ExtendedProperties extends Hashtable {
     public Vector getVector(String key, Vector defaultValue) {
         Object value = get(key);
 
-        if (value instanceof Vector) {
-            return (Vector) value;
+        if (value instanceof List) {
+            return new Vector((List) value);
             
         } else if (value instanceof String) {
-            Vector v = new Vector(1);
-            v.addElement(value);
-            put(key, v);
-            return v;
+            Vector values = new Vector(1);
+            values.add(value);
+            put(key, values);
+            return values;
             
         } else if (value == null) {
             if (defaults != null) {
@@ -1068,6 +1069,56 @@ public class ExtendedProperties extends Hashtable {
             }
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a Vector object");
+        }
+    }
+
+    /**
+     * Get a List of strings associated with the given configuration key.
+     * <p>
+     * The list is a copy of the internal data of this object, and as
+     * such you may alter it freely.
+     *
+     * @param key The configuration key.
+     * @return The associated List object.
+     * @throws ClassCastException is thrown if the key maps to an
+     * object that is not a List.
+     */
+    public List getList(String key) {
+        return getList(key, null);
+    }
+
+    /**
+     * Get a List of strings associated with the given configuration key.
+     * <p>
+     * The list is a copy of the internal data of this object, and as
+     * such you may alter it freely.
+     *
+     * @param key The configuration key.
+     * @param defaultValue The default value.
+     * @return The associated List.
+     * @throws ClassCastException is thrown if the key maps to an
+     * object that is not a List.
+     */
+    public List getList(String key, List defaultValue) {
+        Object value = get(key);
+
+        if (value instanceof List) {
+            return new ArrayList((List) value);
+            
+        } else if (value instanceof String) {
+            List values = new ArrayList(1);
+            values.add(value);
+            put(key, values);
+            return values;
+            
+        } else if (value == null) {
+            if (defaults != null) {
+                return defaults.getList(key, defaultValue);
+            } else {
+                return ((defaultValue == null) ? new ArrayList() : defaultValue);
+            }
+        } else {
+            throw new ClassCastException('\'' + key + "' doesn't map to a List object");
         }
     }
 
