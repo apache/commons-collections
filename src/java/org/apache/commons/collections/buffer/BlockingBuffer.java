@@ -89,6 +89,12 @@ public class BlockingBuffer extends SynchronizedBuffer {
         }
     }
 
+    /**
+     * Gets the next value from the buffer, waiting until an object is
+     * added if the buffer is empty.
+     *
+     * @throws BufferUnderflowException if an interrupt is received
+     */
     public Object get() {
         synchronized (lock) {
             while (collection.isEmpty()) {
@@ -104,6 +110,14 @@ public class BlockingBuffer extends SynchronizedBuffer {
         }
     }
 
+    /**
+     * Gets the next value from the buffer, waiting until an object is
+     * added for up to the specified timeout value if the buffer is empty.
+     *
+     * @param timeout  the timeout value in milliseconds
+     * @throws BufferUnderflowException if an interrupt is received
+     * @throws BufferUnderflowException if the timeout expires
+     */
     public Object get(final long timeout) {
         synchronized (lock) {
             final long expiration = System.currentTimeMillis() + timeout;
@@ -125,6 +139,12 @@ public class BlockingBuffer extends SynchronizedBuffer {
         }
     }
 
+    /**
+     * Removes the next value from the buffer, waiting until an object is
+     * added if the buffer is empty.
+     *
+     * @throws BufferUnderflowException if an interrupt is received
+     */
     public Object remove() {
         synchronized (lock) {
             while (collection.isEmpty()) {
@@ -140,6 +160,14 @@ public class BlockingBuffer extends SynchronizedBuffer {
         }
     }
 
+    /**
+     * Removes the next value from the buffer, waiting until an object is
+     * added for up to the specified timeout value if the buffer is empty.
+     *
+     * @param timeout  the timeout value in milliseconds
+     * @throws BufferUnderflowException if an interrupt is received
+     * @throws BufferUnderflowException if the timeout expires
+     */
     public Object remove(final long timeout) {
         synchronized (lock) {
             final long expiration = System.currentTimeMillis() + timeout;
