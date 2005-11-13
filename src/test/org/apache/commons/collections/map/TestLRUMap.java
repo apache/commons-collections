@@ -322,6 +322,137 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         }
     }
 
+    //-----------------------------------------------------------------------
+    static class SingleHashCode {
+        private final String code;
+        SingleHashCode(String code) {
+            this.code = code;
+        }
+        public int hashCode() {
+            // always return the same hashcode
+            // that way, it will end up in the same bucket
+            return 12;
+        }
+        public String toString() {
+            return "SingleHashCode:" + code;
+        }
+    }
+
+    public void testInternalState_Buckets() {
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        SingleHashCode one = new SingleHashCode("1");
+        SingleHashCode two = new SingleHashCode("2");
+        SingleHashCode three = new SingleHashCode("3");
+        SingleHashCode four = new SingleHashCode("4");
+        SingleHashCode five = new SingleHashCode("5");
+        SingleHashCode six = new SingleHashCode("6");
+
+        LRUMap map = new LRUMap(3, 1.0f);
+        int hashIndex = map.hashIndex(map.hash(one), 4);
+        map.put(one, "A");
+        map.put(two, "B");
+        map.put(three, "C");
+        
+        assertEquals(4, map.data.length);
+        assertEquals(3, map.size);
+        assertEquals(null, map.header.next);
+        assertEquals(one, map.header.after.key);  // LRU
+        assertEquals(two, map.header.after.after.key);
+        assertEquals(three, map.header.after.after.after.key);  // MRU
+        assertEquals(three, map.data[hashIndex].key);
+        assertEquals(two, map.data[hashIndex].next.key);
+        assertEquals(one, map.data[hashIndex].next.next.key);
+        
+        map.put(four, "D");  // reuses last in next list
+        
+        assertEquals(4, map.data.length);
+        assertEquals(3, map.size);
+        assertEquals(null, map.header.next);
+        assertEquals(two, map.header.after.key);  // LRU
+        assertEquals(three, map.header.after.after.key);
+        assertEquals(four, map.header.after.after.after.key);  // MRU
+        assertEquals(four, map.data[hashIndex].key);
+        assertEquals(three, map.data[hashIndex].next.key);
+        assertEquals(two, map.data[hashIndex].next.next.key);
+        
+        map.get(three);
+        
+        assertEquals(4, map.data.length);
+        assertEquals(3, map.size);
+        assertEquals(null, map.header.next);
+        assertEquals(two, map.header.after.key);  // LRU
+        assertEquals(four, map.header.after.after.key);
+        assertEquals(three, map.header.after.after.after.key);  // MRU
+        assertEquals(four, map.data[hashIndex].key);
+        assertEquals(three, map.data[hashIndex].next.key);
+        assertEquals(two, map.data[hashIndex].next.next.key);
+        
+        map.put(five, "E");  // reuses last in next list
+        
+        assertEquals(4, map.data.length);
+        assertEquals(3, map.size);
+        assertEquals(null, map.header.next);
+        assertEquals(four, map.header.after.key);  // LRU
+        assertEquals(three, map.header.after.after.key);
+        assertEquals(five, map.header.after.after.after.key);  // MRU
+        assertEquals(five, map.data[hashIndex].key);
+        assertEquals(four, map.data[hashIndex].next.key);
+        assertEquals(three, map.data[hashIndex].next.next.key);
+        
+        map.get(three);
+        map.get(five);
+        
+        assertEquals(4, map.data.length);
+        assertEquals(3, map.size);
+        assertEquals(null, map.header.next);
+        assertEquals(four, map.header.after.key);  // LRU
+        assertEquals(three, map.header.after.after.key);
+        assertEquals(five, map.header.after.after.after.key);  // MRU
+        assertEquals(five, map.data[hashIndex].key);
+        assertEquals(four, map.data[hashIndex].next.key);
+        assertEquals(three, map.data[hashIndex].next.next.key);
+        
+        map.put(six, "F");  // reuses middle in next list
+        
+        assertEquals(4, map.data.length);
+        assertEquals(3, map.size);
+        assertEquals(null, map.header.next);
+        assertEquals(three, map.header.after.key);  // LRU
+        assertEquals(five, map.header.after.after.key);
+        assertEquals(six, map.header.after.after.after.key);  // MRU
+        assertEquals(six, map.data[hashIndex].key);
+        assertEquals(five, map.data[hashIndex].next.key);
+        assertEquals(three, map.data[hashIndex].next.next.key);
+    }
+
+    public void testInternalState_getEntry_int() {
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        SingleHashCode one = new SingleHashCode("1");
+        SingleHashCode two = new SingleHashCode("2");
+        SingleHashCode three = new SingleHashCode("3");
+        SingleHashCode four = new SingleHashCode("4");
+        SingleHashCode five = new SingleHashCode("5");
+        SingleHashCode six = new SingleHashCode("6");
+
+        LRUMap map = new LRUMap(3, 1.0f);
+        int hashIndex = map.hashIndex(map.hash(one), 4);
+        map.put(one, "A");
+        map.put(two, "B");
+        map.put(three, "C");
+        
+        assertEquals(one, map.getEntry(0).key);
+        assertEquals(two, map.getEntry(1).key);
+        assertEquals(three, map.getEntry(2).key);
+        try {
+            map.getEntry(-1);
+            fail();
+        } catch (IndexOutOfBoundsException ex) {}
+        try {
+            map.getEntry(3);
+            fail();
+        } catch (IndexOutOfBoundsException ex) {}
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/LRUMap.emptyCollection.version3.obj");
