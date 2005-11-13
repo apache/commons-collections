@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2005 The Apache Software Foundation
+ *  Copyright 2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,88 +16,96 @@
 package org.apache.commons.collections.buffer;
 
 import org.apache.commons.collections.Buffer;
+import org.apache.commons.collections.BufferUnderflowException;
 
 /**
  * Decorates another <code>Buffer</code> to make {@link #get()} and
- * {@link #remove()} block (until timeout expires) when the <code>Buffer</code> is empty.
+ * {@link #remove()} block (until timeout expires) when the <code>Buffer</code>
+ * is empty.
  * <p>
  * If either <code>get</code> or <code>remove</code> is called on an empty
- * <code>Buffer</code>, the calling thread waits (until timeout expires) for notification that
- * an <code>add</code> or <code>addAll</code> operation has completed.
+ * <code>Buffer</code>, the calling thread waits (until timeout expires) for
+ * notification that an <code>add</code> or <code>addAll</code> operation
+ * has completed.
  * <p>
- * When one or more entries are added to an empty <code>Buffer</code>,
- * all threads blocked in <code>get</code> or <code>remove</code> are notified.
+ * When one or more entries are added to an empty <code>Buffer</code>, all
+ * threads blocked in <code>get</code> or <code>remove</code> are notified.
  * There is no guarantee that concurrent blocked <code>get</code> or
  * <code>remove</code> requests will be "unblocked" and receive data in the
  * order that they arrive.
- * <p>
- * This class is Serializable from Commons Collections 3.2.
- *
+ * 
  * @author James Carman
- * @version $Revision$ $Date$
+ * @version $Revision: $ $Date: $
  * @since Commons Collections 3.2
  */
 public class TimeoutBuffer extends BlockingBuffer {
-//----------------------------------------------------------------------------------------------------------------------
-// Fields
-//----------------------------------------------------------------------------------------------------------------------
+
+    /** The serialization lock. */
     private static final long serialVersionUID = 1719328905017860541L;
 
+    /** The timeout length. */
     private final long timeout;
 
-//----------------------------------------------------------------------------------------------------------------------
-// Static Methods
-//----------------------------------------------------------------------------------------------------------------------
-
-    public static Buffer decorate( Buffer buffer, long timeout ) {
-        return new TimeoutBuffer( buffer, timeout );
+    /**
+     * Decorates the specified buffer adding timeout behaviour.
+     *
+     * @param buffer  the buffer to decorate, must not be null
+     * @param timeout  the timeout value in milliseconds
+     * @return the decorated buffer
+     * @throws IllegalArgumentException if the buffer is null
+     * @throws IllegalArgumentException if the timeout is negative
+     */
+    public static Buffer decorate(Buffer buffer, long timeout) {
+        return new TimeoutBuffer(buffer, timeout);
     }
 
-//----------------------------------------------------------------------------------------------------------------------
-// Constructors
-//----------------------------------------------------------------------------------------------------------------------
-
-    public TimeoutBuffer( Buffer buffer, long timeout ) {
-        super( buffer );
+    //-----------------------------------------------------------------------
+    /**
+     * Constructor that wraps (not copies).
+     * 
+     * @param buffer  the buffer to decorate, must not be null
+     * @param timeout  the timeout value in milliseconds
+     * @throws IllegalArgumentException if the buffer is null
+     * @throws IllegalArgumentException if the timeout is negative
+     */
+    protected TimeoutBuffer(Buffer buffer, long timeout) {
+        super(buffer);
+        if (timeout < 0) {
+            throw new IllegalArgumentException("The timeout cannot be negative");
+        }
         this.timeout = timeout;
     }
 
+    /**
+     * Gets the length of the timeout.
+     *
+     * @return the timeout value
+     */
     public long getTimeout() {
         return timeout;
     }
-//----------------------------------------------------------------------------------------------------------------------
-// Buffer Implementation
-//----------------------------------------------------------------------------------------------------------------------
 
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the next value from the buffer, waiting until an object is
+     * added for up to the specified timeout value if the buffer is empty.
+     *
+     * @throws BufferUnderflowException if an interrupt is received
+     * @throws BufferUnderflowException if the timeout expires
+     */
     public Object get() {
-        return get( timeout );
+        return get(timeout);
     }
 
+    /**
+     * Removes the next value from the buffer, waiting until an object is
+     * added for up to the specified timeout value if the buffer is empty.
+     *
+     * @throws BufferUnderflowException if an interrupt is received
+     * @throws BufferUnderflowException if the timeout expires
+     */
     public Object remove() {
-        return remove( timeout );
+        return remove(timeout);
     }
 
-    public boolean equals( Object o ) {
-        if( this == o ) {
-            return true;
-        }
-        if( o == null || getClass() != o.getClass() ) {
-            return false;
-        }
-        if( !super.equals( o ) ) {
-            return false;
-        }
-        final TimeoutBuffer that = ( TimeoutBuffer ) o;
-        if( timeout != that.timeout ) {
-            return false;
-        }
-        return true;
-    }
-
-    public int hashCode() {
-        int result = super.hashCode();
-        result = 29 * result + ( int ) ( timeout ^ ( timeout >>> 32 ) );
-        return result;
-    }
 }
-

@@ -55,6 +55,20 @@ public class TestTimeoutBuffer extends AbstractTestObject {
 //----------------------------------------------------------------------------------------------------------------------
 // Other Methods
 //----------------------------------------------------------------------------------------------------------------------
+    public void testDecorationExceptions() {
+        try {
+            TimeoutBuffer.decorate((Buffer) null, 1);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+        try {
+            TimeoutBuffer.decorate(new CircularFifoBuffer(4), -1);
+            fail();
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+    }
 
     public String getCompatibilityVersion() {
         return "3.2";
