@@ -129,6 +129,10 @@
       <email></email>
       <organization></organization>
     </developer>
+    <developer>
+      <name>Robert Burrell Donkin</name>
+      <id>rdonkin</id>
+    </developer>
   </developers>
   
   <contributors>

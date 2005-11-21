@@ -39,6 +39,11 @@ import org.apache.commons.collections.BoundedMap;
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * <p>
+ * <strong>Note</strong> as is the usual convention, this map must be protected
+ * from concurrent access by multiple threads for example by calling 
+ * <code>Collections.synchronizeMap</code>. This class may throw 
+ * <code>NullPointerException</code>'s when accessed by concurrent threads.
  * 
  * @since Commons Collections 3.0 (previously in main package v1.0)
  * @version $Revision$ $Date$
