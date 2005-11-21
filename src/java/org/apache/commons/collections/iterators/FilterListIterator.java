@@ -21,13 +21,11 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections.Predicate;
 
 /** 
- * A proxy {@link ListIterator ListIterator} which 
- * takes a {@link Predicate Predicate} instance to filter
- * out objects from an underlying <code>ListIterator</code> 
- * instance. Only objects for which the specified 
- * <code>Predicate</code> evaluates to <code>true</code> are
- * returned by the iterator.
- * 
+ * Decorates another {@link ListIterator} using a predicate to filter elements.
+ * <p>
+ * This iterator decorates the underlying iterator, only allowing through
+ * those elements that match the specified {@link Predicate Predicate}.
+ *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
  * 
@@ -72,10 +70,9 @@ public class FilterListIterator implements ListIterator {
     
     //-----------------------------------------------------------------------
     /**
-     *  Constructs a new <code>FilterListIterator</code> that will not 
-     *  function until 
-     *  {@link ProxyListIterator#setListIterator(ListIterator) setListIterator}
-     *  and {@link #setPredicate(Predicate) setPredicate} are invoked.
+     * Constructs a new <code>FilterListIterator</code> that will not function
+     * until {@link #setListIterator(ListIterator) setListIterator}
+     * and {@link #setPredicate(Predicate) setPredicate} are invoked.
      */
     public FilterListIterator() {
         super();
@@ -105,10 +102,8 @@ public class FilterListIterator implements ListIterator {
     }
 
     /**
-     * Constructs a new <code>FilterListIterator</code> that will not 
-     * function until 
-     * {@link ProxyListIterator#setListIterator(ListIterator) setListIterator}
-     * is invoked.
+     * Constructs a new <code>FilterListIterator</code> that will not function
+     * until {@link #setListIterator(ListIterator) setListIterator} is invoked.
      *
      * @param predicate  the predicate to use.
      */

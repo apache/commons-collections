@@ -21,8 +21,10 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections.Predicate;
 
 /** 
- * Decorates an iterator such that only elements matching a predicate filter
- * are returned.
+ * Decorates another {@link Iterator} using a predicate to filter elements.
+ * <p>
+ * This iterator decorates the underlying iterator, only allowing through
+ * those elements that match the specified {@link Predicate Predicate}.
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
