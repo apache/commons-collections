@@ -55,6 +55,12 @@ import java.lang.ref.Reference;
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * <p>
+ * <strong>Note that ReferenceIdentityMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedMap}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
  *
  * @see java.lang.ref.Reference
  * 

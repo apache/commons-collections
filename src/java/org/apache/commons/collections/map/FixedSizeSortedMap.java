@@ -42,6 +42,12 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * succeed if the mapping's key already exists in the map, so the put method
  * is not always unsupported.
  * <p>
+ * <strong>Note that FixedSizeSortedMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0

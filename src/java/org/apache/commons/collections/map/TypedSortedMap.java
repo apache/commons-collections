@@ -27,6 +27,12 @@ import org.apache.commons.collections.functors.InstanceofPredicate;
  * a specified <code>Class</code>. If an object cannot be added to the
  * collection, an IllegalArgumentException is thrown.
  * <p>
+ * <strong>Note that TypedSortedMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ * <p>
  * The returned implementation is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0

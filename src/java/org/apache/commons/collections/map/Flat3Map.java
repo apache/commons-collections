@@ -59,7 +59,13 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * This is because it contains no complex objects or arrays which slow the progress.
  * <p>
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
- * 
+ * <p>
+ * <strong>Note that Flat3Map is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

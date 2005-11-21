@@ -65,6 +65,11 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  *   return name;
  * }
  * </pre>
+ * <p>
+ * <strong>Note that MultiKeyMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. This class may throw exceptions when accessed
+ * by concurrent threads without synchronization.
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$

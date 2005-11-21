@@ -31,6 +31,12 @@ import org.apache.commons.collections.Predicate;
  * One usage would be to ensure that no null keys are added to the map.
  * <pre>SortedMap map = PredicatedSortedSet.decorate(new TreeMap(), NotNullPredicate.INSTANCE, null);</pre>
  * <p>
+ * <strong>Note that PredicatedSortedMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0

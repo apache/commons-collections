@@ -43,6 +43,12 @@ import org.apache.commons.collections.Transformer;
  * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
  * instance is mapped to the "NOW" key in the map.
  * <p>
+ * <strong>Note that LazySortedMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0

@@ -44,7 +44,13 @@ import java.util.Map;
  * <code>map.get(null)</code> returns <code>"Three"</code> and <code>map.get("ONE")</code>
  * returns <code>"Four".</code>  The <code>Set</code> returned by <code>keySet()</code>
  * equals <code>{"one", "two", null}.</code>
- * 
+ * <p>
+ * <strong>Note that CaseInsensitiveMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

@@ -49,7 +49,13 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * <p>
  * The implementation is also designed to be subclassed, with lots of useful
  * methods exposed.
- * 
+ * <p>
+ * <strong>Note that LinkedMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

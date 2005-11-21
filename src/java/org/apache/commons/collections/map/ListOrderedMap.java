@@ -52,6 +52,12 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * If an object is added to the Map for a second time, it will remain in the
  * original position in the iteration.
  * <p>
+ * <strong>Note that ListOrderedMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0

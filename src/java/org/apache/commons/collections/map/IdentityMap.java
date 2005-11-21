@@ -27,7 +27,13 @@ import java.util.Map;
  * <p>
  * This map will violate the detail of various Map and map view contracts.
  * As a general rule, don't compare this map to other maps.
- * 
+ * <p>
+ * <strong>Note that IdentityMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

@@ -54,6 +54,12 @@ import java.io.Serializable;
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * <p>
+ * <strong>Note that ReferenceMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedMap}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ * <p>
  * NOTE: As from Commons Collections 3.1 this map extends <code>AbstractReferenceMap</code>
  * (previously it extended AbstractMap). As a result, the implementation is now
  * extensible and provides a <code>MapIterator</code>.

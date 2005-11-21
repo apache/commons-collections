@@ -44,6 +44,11 @@ import org.apache.commons.collections.iterators.IteratorChain;
  * for the values to be controlled. By default, an <code>ArrayList</code>
  * is used, however a <code>Class</code> to instantiate may be specified,
  * or a factory that returns a <code>Collection</code> instance.
+ * <p>
+ * <strong>Note that MultiValueMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. This class may throw exceptions when accessed
+ * by concurrent threads without synchronization.
  *
  * @author James Carman
  * @author Christopher Berry

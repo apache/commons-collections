@@ -29,6 +29,12 @@ import org.apache.commons.collections.Transformer;
  * For example, if the transformation converts Strings to Integers, you must
  * use the Integer form to remove objects.
  * <p>
+ * <strong>Note that TransformedSortedMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0

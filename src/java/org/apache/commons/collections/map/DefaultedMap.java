@@ -48,7 +48,13 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  * // obj == "NULL"
  * </pre>
  * After the above code is executed the map is still empty.
- * 
+ * <p>
+ * <strong>Note that DefaultedMap is not synchronized and is not thread-safe.</strong>
+ * If you wish to use this map from multiple threads concurrently, you must use
+ * appropriate synchronization. The simplest approach is to wrap this map
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * exceptions when accessed by concurrent threads without synchronization.
+ *
  * @since Commons Collections 3.2
  * @version $Revision: 1.7 $ $Date$
  * 
