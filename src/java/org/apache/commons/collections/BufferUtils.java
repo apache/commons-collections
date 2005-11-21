@@ -97,6 +97,7 @@ public class BufferUtils {
      * @param buffer  the buffer to synchronize, must not be null
      * @return a blocking buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
+     * @since Commons Collections 3.2
      */
     public static Buffer timeoutBuffer(Buffer buffer, long timeout) {
         return TimeoutBuffer.decorate(buffer, timeout);

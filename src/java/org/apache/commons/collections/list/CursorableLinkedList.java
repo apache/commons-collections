@@ -558,6 +558,8 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
     //-----------------------------------------------------------------------
     /**
      * A cursor for the sublist based on LinkedSubListIterator.
+     *
+     * @since Commons Collections 3.2
      */
     protected static class SubCursor extends Cursor {
 

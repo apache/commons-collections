@@ -85,6 +85,7 @@ public class TransformedMap
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
+     * @since Commons Collections 3.2
      */
     public static Map decorateTransform(Map map, Transformer keyTransformer, Transformer valueTransformer) {
         TransformedMap decorated = new TransformedMap(map, keyTransformer, valueTransformer);

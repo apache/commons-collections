@@ -643,6 +643,7 @@ public class CollectionUtils {
      * @param object  the object to add, if null it will not be added
      * @return true if the collection changed
      * @throws NullPointerException if the collection is null
+     * @since Commons Collections 3.2
      */
     public static boolean addIgnoreNull(Collection collection, Object object) {
         return (object == null ? false : collection.add(object));
@@ -1082,6 +1083,46 @@ public class CollectionUtils {
 
     //-----------------------------------------------------------------------
     /**
+     * Returns a collection containing all the elements in <code>collection</code>
+     * that are also in <code>retain</code>. The cardinality of an element <code>e</code>
+     * in the returned collection is the same as the cardinality of <code>e</code>
+     * in <code>collection</code> unless <code>retain</code> does not contain <code>e</code>, in which
+     * case the cardinality is zero. This method is useful if you do not wish to modify
+     * the collection <code>c</code> and thus cannot call <code>c.retainAll(retain);</code>.
+     * 
+     * @param collection  the collection whose contents are the target of the #retailAll operation
+     * @param retain  the collection containing the elements to be retained in the returned collection
+     * @return a <code>Collection</code> containing all the elements of <code>collection</code>
+     * that occur at least once in <code>retain</code>.
+     * @throws NullPointerException if either parameter is null
+     * @since Commons Collections 3.2
+     */
+    public static Collection retainAll(Collection collection, Collection retain) {
+        return ListUtils.retainAll(collection, retain);
+    }
+
+    /**
+     * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
+     * method returns a collection containing all the elements in <code>c</code>
+     * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
+     * in the returned collection is the same as the cardinality of <code>e</code>
+     * in <code>collection</code> unless <code>remove</code> contains <code>e</code>, in which
+     * case the cardinality is zero. This method is useful if you do not wish to modify
+     * the collection <code>c</code> and thus cannot call <code>collection.removeAll(remove);</code>.
+     * 
+     * @param collection  the collection from which items are removed (in the returned collection)
+     * @param remove  the items to be removed from the returned <code>collection</code>
+     * @return a <code>Collection</code> containing all the elements of <code>collection</code> except
+     * any elements that also occur in <code>remove</code>.
+     * @throws NullPointerException if either parameter is null
+     * @since Commons Collections 3.2
+     */
+    public static Collection removeAll(Collection collection, Collection remove) {
+        return ListUtils.retainAll(collection, remove);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
      * Returns a synchronized collection backed by the given collection.
      * <p>
      * You must manually synchronize on the returned buffer's iterator to 
@@ -1164,43 +1205,6 @@ public class CollectionUtils {
      */
     public static Collection transformedCollection(Collection collection, Transformer transformer) {
         return TransformedCollection.decorate(collection, transformer);
-    }
-   
-    /**
-     * Returns a collection containing all the elements in <code>collection</code>
-     * that are also in <code>retain</code>. The cardinality of an element <code>e</code>
-     * in the returned collection is the same as the cardinality of <code>e</code>
-     * in <code>collection</code> unless <code>retain</code> does not contain <code>e</code>, in which
-     * case the cardinality is zero. This method is useful if you do not wish to modify
-     * the collection <code>c</code> and thus cannot call <code>c.retainAll(retain);</code>.
-     * 
-     * @param collection  the collection whose contents are the target of the #retailAll operation
-     * @param retain  the collection containing the elements to be retained in the returned collection
-     * @return a <code>Collection</code> containing all the elements of <code>collection</code>
-     * that occur at least once in <code>retain</code>.
-     * @throws NullPointerException if either parameter is null
-     */
-    public static Collection retainAll(Collection collection, Collection retain) {
-        return ListUtils.retainAll(collection, retain);
-    }
-
-    /**
-     * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
-     * method returns a collection containing all the elements in <code>c</code>
-     * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
-     * in the returned collection is the same as the cardinality of <code>e</code>
-     * in <code>collection</code> unless <code>remove</code> contains <code>e</code>, in which
-     * case the cardinality is zero. This method is useful if you do not wish to modify
-     * the collection <code>c</code> and thus cannot call <code>collection.removeAll(remove);</code>.
-     * 
-     * @param collection  the collection from which items are removed (in the returned collection)
-     * @param remove  the items to be removed from the returned <code>collection</code>
-     * @return a <code>Collection</code> containing all the elements of <code>collection</code> except
-     * any elements that also occur in <code>remove</code>.
-     * @throws NullPointerException if either parameter is null
-     */
-    public static Collection removeAll(Collection collection, Collection remove) {
-        return ListUtils.retainAll(collection, remove);
     }
 
 }

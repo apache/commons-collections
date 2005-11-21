@@ -117,6 +117,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
      * @param timeout  the timeout value in milliseconds
      * @throws BufferUnderflowException if an interrupt is received
      * @throws BufferUnderflowException if the timeout expires
+     * @since Commons Collections 3.2
      */
     public Object get(final long timeout) {
         synchronized (lock) {
@@ -167,6 +168,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
      * @param timeout  the timeout value in milliseconds
      * @throws BufferUnderflowException if an interrupt is received
      * @throws BufferUnderflowException if the timeout expires
+     * @since Commons Collections 3.2
      */
     public Object remove(final long timeout) {
         synchronized (lock) {

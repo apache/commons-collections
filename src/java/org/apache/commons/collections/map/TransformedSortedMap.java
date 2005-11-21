@@ -77,6 +77,7 @@ public class TransformedSortedMap
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
+     * @since Commons Collections 3.2
      */
     public static SortedMap decorateTransform(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
         TransformedSortedMap decorated = new TransformedSortedMap(map, keyTransformer, valueTransformer);

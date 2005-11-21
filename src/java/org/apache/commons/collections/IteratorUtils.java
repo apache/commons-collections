@@ -695,6 +695,7 @@ public class IteratorUtils {
      * @param list  the list to iterate over, not null
      * @return a new looping iterator
      * @throws NullPointerException if the list is null
+     * @since Commons Collections 3.2
      */
     public static ResettableIterator loopingListIterator(List list) {
         if (list == null) {

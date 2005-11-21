@@ -1082,6 +1082,7 @@ public class ExtendedProperties extends Hashtable {
      * @return The associated List object.
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a List.
+     * @since Commons Collections 3.2
      */
     public List getList(String key) {
         return getList(key, null);
@@ -1098,6 +1099,7 @@ public class ExtendedProperties extends Hashtable {
      * @return The associated List.
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a List.
+     * @since Commons Collections 3.2
      */
     public List getList(String key, List defaultValue) {
         Object value = get(key);
