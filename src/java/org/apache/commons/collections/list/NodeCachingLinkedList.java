@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ import java.util.Collection;
 public class NodeCachingLinkedList extends AbstractLinkedList implements Serializable {
 
     /** Serialization version */
-    static final long serialVersionUID = 6897789178562232073L;
+    private static final long serialVersionUID = 6897789178562232073L;
 
     /**
      * The default value for {@link #maximumCacheSize}.
