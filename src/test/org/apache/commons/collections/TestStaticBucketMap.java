@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import junit.framework.Test;
 import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
- * Unit tests 
+ * Unit tests.
  * {@link org.apache.commons.collections.StaticBucketMap}.
  * 
  * @version $Revision$ $Date$
@@ -57,4 +57,39 @@ public class TestStaticBucketMap extends AbstractTestMap {
             pre + "Values" + post
         };
     }   
+
+    // Bugzilla 37567
+    public void test_get_nullMatchesIncorrectly() {
+        StaticBucketMap map = new StaticBucketMap(17);
+        map.put(null, "A");
+        assertEquals("A", map.get(null));
+        // loop so we find a string that is in the same bucket as the null
+        for (int i = 'A'; i <= 'Z'; i++) {
+            String str = String.valueOf((char) i);
+            assertEquals("String: " + str, null, map.get(str));
+        }
+    }
+
+    public void test_containsKey_nullMatchesIncorrectly() {
+        StaticBucketMap map = new StaticBucketMap(17);
+        map.put(null, "A");
+        assertEquals(true, map.containsKey(null));
+        // loop so we find a string that is in the same bucket as the null
+        for (int i = 'A'; i <= 'Z'; i++) {
+            String str = String.valueOf((char) i);
+            assertEquals("String: " + str, false, map.containsKey(str));
+        }
+    }
+
+    public void test_containsValue_nullMatchesIncorrectly() {
+        StaticBucketMap map = new StaticBucketMap(17);
+        map.put("A", null);
+        assertEquals(true, map.containsValue(null));
+        // loop so we find a string that is in the same bucket as the null
+        for (int i = 'A'; i <= 'Z'; i++) {
+            String str = String.valueOf((char) i);
+            assertEquals("String: " + str, false, map.containsValue(str));
+        }
+    }
+
 }
