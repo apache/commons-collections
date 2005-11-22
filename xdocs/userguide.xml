@@ -30,10 +30,38 @@
 Commons-Collections provides a large number of classes to aid day to day programming.
 This document highlights some key features to get you started.
 </p>
+  <ul>
+    <li><a href='#Utilities'>Utilities</a> for the standard collections.</li>
+    <li><a href='#Maps'>Maps</a>
+      <ul>
+         <li><a href='#Map%20Iteration'>Map Iteration</a></li>
+         <li><a href='#Ordered%20Maps'>Ordered Maps</a></li>
+         <li><a href='#Bidirectional%20Maps'>Bidirectional Maps</a></li>
+      </ul>
+    </li>
+    <li><a href='#Queues%20and%20Buffers'>Queues and Buffers</a></li>
+    <li><a href='#Bags'>Bags</a></li>
+  </ul>
+<subsection name='Note On Synchronization'>
+  <p>
+Commons-collections uses a design approach to synchronization similar 
+to the standard Java collections. The majority of the various implementations 
+of collections, maps and bags are not thread safe without additional 
+synchronization. The appropriate <code>synchronizeXXX</code> method on <code>Collections</code> is one way that these implementations can be synchronized for use in a 
+multithreaded application. 
+  </p>
+  <p>
+The class level javadocs should indicate whether a particular 
+implementation is safe for multithreaded access without additional
+synchronization. Where there is no expicit indication that the implementation
+is thread safe then it should be assumed that synchronization is required. 
+Please report the missing documentation to the commons development team.  
+</p>
+</subsection>
 
 </section>
 
-<section name="Utils classes">
+<section name="Utilities">
 
 <p>
 A Utility class is provided for each major collection interface.
@@ -50,7 +78,8 @@ The utility classes also provide access to collection decorator classes in a way
 
 </section>
 
-<section name="Map iteration">
+<section name='Maps'>
+<subsection name="Map Iteration">
 
 <p>
 The JDK <code>Map</code> interface always suffered from being difficult to iterate over.
@@ -68,9 +97,9 @@ while (it.hasNext()) {
 }
 </source>
 
-</section>
+</subsection>
 
-<section name="Ordered maps">
+<subsection name="Ordered Maps">
 
 <p>
 A new interface is provided for maps that have an order but are not sorted - <code>OrderedMap.</code>
@@ -87,9 +116,9 @@ map.nextKey("FIVE");  // returns "SIX"
 map.nextKey("SIX");  // returns "SEVEN"
 </source>
 
-</section>
+</subsection>
 
-<section name="Bidirectional maps">
+<subsection name="Bidirectional Maps">
 
 <p>
 A new interface hierarchy has been added to support bidirectional maps - <code>BidiMap.</code>
@@ -108,9 +137,10 @@ Additional interfaces are provided for ordered and sorted bidirectional maps.
 Implementations are provided for each bidirectional map type.
 </p>
 
+</subsection>
 </section>
 
-<section name="Queues and buffers">
+<section name="Queues and Buffers">
 
 <p>
 A new interface hierarchy has been added to support queues and buffers - <code>Buffer.</code>
