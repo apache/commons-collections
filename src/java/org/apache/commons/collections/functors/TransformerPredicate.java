@@ -32,7 +32,7 @@ import org.apache.commons.collections.Transformer;
 public final class TransformerPredicate implements Predicate, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -2407966402920578741L;
+    private static final long serialVersionUID = -2407966402920578741L;
     
     /** The transformer to call */
     private final Transformer iTransformer;

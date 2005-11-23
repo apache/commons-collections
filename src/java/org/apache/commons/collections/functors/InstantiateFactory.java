@@ -33,7 +33,7 @@ import org.apache.commons.collections.FunctorException;
 public class InstantiateFactory implements Factory, Serializable {
 
     /** The serial version */
-    static final long serialVersionUID = -7732226881069447957L;
+    private static final long serialVersionUID = -7732226881069447957L;
 
     /** The class to create */
     private final Class iClassToInstantiate;

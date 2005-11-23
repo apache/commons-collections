@@ -804,4 +804,9 @@ public class TestMapUtils extends BulkTest {
         assertEquals(false, MapUtils.isNotEmpty(map));
     }
 
+
+    public void testPopulateMap() {
+        Map map = new HashMap();
+        
+    }
 }

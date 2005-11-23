@@ -33,7 +33,7 @@ import org.apache.commons.collections.Predicate;
 public final class UniquePredicate implements Predicate, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -3319417438027438040L;
+    private static final long serialVersionUID = -3319417438027438040L;
     
     /** The set of previously seen objects */
     private final Set iSet = new HashSet();

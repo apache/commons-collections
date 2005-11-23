@@ -30,7 +30,7 @@ import org.apache.commons.collections.Predicate;
 public final class NullIsTruePredicate implements Predicate, PredicateDecorator, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -7625133768987126273L;
+    private static final long serialVersionUID = -7625133768987126273L;
     
     /** The predicate to decorate */
     private final Predicate iPredicate;

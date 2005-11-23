@@ -30,7 +30,7 @@ import org.apache.commons.collections.Predicate;
 public final class NullPredicate implements Predicate, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 7533784454832764388L;
+    private static final long serialVersionUID = 7533784454832764388L;
     
     /** Singleton predicate instance */
     public static final Predicate INSTANCE = new NullPredicate();

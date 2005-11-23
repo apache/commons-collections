@@ -31,7 +31,7 @@ import org.apache.commons.collections.Predicate;
 public final class EqualPredicate implements Predicate, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 5633766978029907089L;
+    private static final long serialVersionUID = 5633766978029907089L;
 
     /** The value to compare to */
     private final Object iValue;

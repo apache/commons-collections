@@ -32,7 +32,7 @@ import org.apache.commons.collections.Transformer;
 public class TransformerClosure implements Closure, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -5194992589193388969L;
+    private static final long serialVersionUID = -5194992589193388969L;
 
     /** The transformer to wrap */
     private final Transformer iTransformer;

@@ -32,7 +32,7 @@ import org.apache.commons.collections.Predicate;
 public class WhileClosure implements Closure, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -3110538116913760108L;
+    private static final long serialVersionUID = -3110538116913760108L;
 
     /** The test condition */
     private final Predicate iPredicate;

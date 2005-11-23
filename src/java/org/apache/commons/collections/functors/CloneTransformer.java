@@ -32,7 +32,7 @@ import org.apache.commons.collections.Transformer;
 public class CloneTransformer implements Transformer, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -8188742709499652567L;
+    private static final long serialVersionUID = -8188742709499652567L;
 
     /** Singleton predicate instance */
     public static final Transformer INSTANCE = new CloneTransformer();

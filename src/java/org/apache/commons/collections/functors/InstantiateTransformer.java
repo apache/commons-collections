@@ -33,7 +33,7 @@ import org.apache.commons.collections.Transformer;
 public class InstantiateTransformer implements Transformer, Serializable {
 
     /** The serial version */
-    static final long serialVersionUID = 3786388740793356347L;
+    private static final long serialVersionUID = 3786388740793356347L;
     
     /** Singleton instance that uses the no arg constructor */
     public static final Transformer NO_ARG_INSTANCE = new InstantiateTransformer();

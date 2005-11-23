@@ -34,7 +34,7 @@ import org.apache.commons.collections.Transformer;
 public class SwitchTransformer implements Transformer, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -6404460890903469332L;
+    private static final long serialVersionUID = -6404460890903469332L;
 
     /** The tests to consider */
     private final Predicate[] iPredicates;

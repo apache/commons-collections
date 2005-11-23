@@ -34,7 +34,7 @@ import org.apache.commons.collections.Predicate;
 public class SwitchClosure implements Closure, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 3518477308466486130L;
+    private static final long serialVersionUID = 3518477308466486130L;
 
     /** The tests to consider */
     private final Predicate[] iPredicates;

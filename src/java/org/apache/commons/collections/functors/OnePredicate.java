@@ -31,7 +31,7 @@ import org.apache.commons.collections.Predicate;
 public final class OnePredicate implements Predicate, PredicateDecorator, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -8125389089924745785L;
+    private static final long serialVersionUID = -8125389089924745785L;
     
     /** The array of predicates to call */
     private final Predicate[] iPredicates;

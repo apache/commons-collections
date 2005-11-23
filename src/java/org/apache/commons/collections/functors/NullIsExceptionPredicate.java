@@ -31,7 +31,7 @@ import org.apache.commons.collections.Predicate;
 public final class NullIsExceptionPredicate implements Predicate, PredicateDecorator, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 3243449850504576071L;
+    private static final long serialVersionUID = 3243449850504576071L;
     
     /** The predicate to decorate */
     private final Predicate iPredicate;

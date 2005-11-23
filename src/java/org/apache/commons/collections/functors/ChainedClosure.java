@@ -32,7 +32,7 @@ import org.apache.commons.collections.Closure;
 public class ChainedClosure implements Closure, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -3520677225766901240L;
+    private static final long serialVersionUID = -3520677225766901240L;
 
     /** The closures to call in turn */
     private final Closure[] iClosures;

@@ -34,7 +34,7 @@ import org.apache.commons.collections.Factory;
 public class ConstantFactory implements Factory, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -3520677225766901240L;
+    private static final long serialVersionUID = -3520677225766901240L;
     
     /** Returns null each time */
     public static final Factory NULL_INSTANCE = new ConstantFactory(null);

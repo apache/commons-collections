@@ -31,7 +31,7 @@ import org.apache.commons.collections.FunctorException;
 public final class ExceptionFactory implements Factory, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 7179106032121985545L;
+    private static final long serialVersionUID = 7179106032121985545L;
     
 
     /** Singleton predicate instance */

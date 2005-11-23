@@ -31,7 +31,7 @@ import org.apache.commons.collections.Predicate;
 public final class ExceptionPredicate implements Predicate, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 7179106032121985545L;
+    private static final long serialVersionUID = 7179106032121985545L;
     
     /** Singleton predicate instance */
     public static final Predicate INSTANCE = new ExceptionPredicate();

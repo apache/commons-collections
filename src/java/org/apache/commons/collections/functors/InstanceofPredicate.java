@@ -31,7 +31,7 @@ import org.apache.commons.collections.Predicate;
 public final class InstanceofPredicate implements Predicate, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -6682656911025165584L;
+    private static final long serialVersionUID = -6682656911025165584L;
 
     /** The type to compare to */
     private final Class iType;

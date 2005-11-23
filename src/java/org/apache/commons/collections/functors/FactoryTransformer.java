@@ -31,7 +31,7 @@ import org.apache.commons.collections.Transformer;
 public class FactoryTransformer implements Transformer, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -6817674502475353160L;
+    private static final long serialVersionUID = -6817674502475353160L;
 
     /** The factory to wrap */
     private final Factory iFactory;

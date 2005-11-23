@@ -30,7 +30,7 @@ import org.apache.commons.collections.Closure;
 public class ForClosure implements Closure, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -1190120533393621674L;
+    private static final long serialVersionUID = -1190120533393621674L;
 
     /** The number of times to loop */
     private final int iCount;

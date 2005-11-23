@@ -33,7 +33,7 @@ import org.apache.commons.collections.Transformer;
 public class InvokerTransformer implements Transformer, Serializable {
 
     /** The serial version */
-    static final long serialVersionUID = -8653385846894047688L;
+    private static final long serialVersionUID = -8653385846894047688L;
     
     /** The method name to call */
     private final String iMethodName;

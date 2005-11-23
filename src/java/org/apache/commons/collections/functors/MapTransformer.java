@@ -32,7 +32,7 @@ import org.apache.commons.collections.Transformer;
 public final class MapTransformer implements Transformer, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 862391807045468939L;
+    private static final long serialVersionUID = 862391807045468939L;
     
     /** The map of data to lookup in */
     private final Map iMap;

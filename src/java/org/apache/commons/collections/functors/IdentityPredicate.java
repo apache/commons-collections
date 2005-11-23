@@ -31,7 +31,7 @@ import org.apache.commons.collections.Predicate;
 public final class IdentityPredicate implements Predicate, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = -89901658494523293L;
+    private static final long serialVersionUID = -89901658494523293L;
 
     
     /** The value to compare to */

@@ -34,7 +34,7 @@ import org.apache.commons.collections.Transformer;
 public class ConstantTransformer implements Transformer, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 6374440726369055124L;
+    private static final long serialVersionUID = 6374440726369055124L;
     
     /** Returns null each time */
     public static final Transformer NULL_INSTANCE = new ConstantTransformer(null);

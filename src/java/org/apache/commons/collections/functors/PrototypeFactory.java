@@ -95,7 +95,7 @@ public class PrototypeFactory {
     static class PrototypeCloneFactory implements Factory, Serializable {
         
         /** The serial version */
-        static final long serialVersionUID = 5604271422565175555L;
+        private static final long serialVersionUID = 5604271422565175555L;
         
         /** The object to clone each time */
         private final Object iPrototype;
@@ -153,7 +153,7 @@ public class PrototypeFactory {
     static class PrototypeSerializationFactory implements Factory, Serializable {
         
         /** The serial version */
-        static final long serialVersionUID = -8704966966139178833L;
+        private static final long serialVersionUID = -8704966966139178833L;
         
         /** The object to clone via serialization each time */
         private final Serializable iPrototype;

@@ -86,7 +86,7 @@ public class ReferenceMap extends AbstractMap {
     /**
      *  For serialization.
      */
-    final private static long serialVersionUID = -3370601314380922368L;
+    private static final long serialVersionUID = -3370601314380922368L;
 
 
     /**

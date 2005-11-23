@@ -30,7 +30,7 @@ import org.apache.commons.collections.Transformer;
 public class NOPTransformer implements Transformer, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 2133891748318574490L;
+    private static final long serialVersionUID = 2133891748318574490L;
 
     /** Singleton predicate instance */
     public static final Transformer INSTANCE = new NOPTransformer();

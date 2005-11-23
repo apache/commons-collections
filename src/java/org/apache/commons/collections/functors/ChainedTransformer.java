@@ -35,7 +35,7 @@ import org.apache.commons.collections.Transformer;
 public class ChainedTransformer implements Transformer, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 3514945074733160196L;
+    private static final long serialVersionUID = 3514945074733160196L;
 
     /** The transformers to call in turn */
     private final Transformer[] iTransformers;

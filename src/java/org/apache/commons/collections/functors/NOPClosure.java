@@ -30,7 +30,7 @@ import org.apache.commons.collections.Closure;
 public class NOPClosure implements Closure, Serializable {
 
     /** Serial version UID */
-    static final long serialVersionUID = 3518477308466486130L;
+    private static final long serialVersionUID = 3518477308466486130L;
 
     /** Singleton predicate instance */
     public static final Closure INSTANCE = new NOPClosure();
