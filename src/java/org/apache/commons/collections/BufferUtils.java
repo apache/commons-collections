@@ -21,6 +21,7 @@ import org.apache.commons.collections.buffer.SynchronizedBuffer;
 import org.apache.commons.collections.buffer.TransformedBuffer;
 import org.apache.commons.collections.buffer.TypedBuffer;
 import org.apache.commons.collections.buffer.UnmodifiableBuffer;
+import org.apache.commons.collections.buffer.BoundedBuffer;
 
 /**
  * Provides utility methods and decorators for {@link Buffer} instances.
@@ -102,6 +103,33 @@ public class BufferUtils {
         return BlockingBuffer.decorate(buffer, timeout);
     }
 
+    /**
+     * Returns a synchronized buffer backed by the given buffer that will block on {@link Buffer#add(Object)} and
+     * {@link Buffer#addAll(java.util.Collection)} until enough object(s) are removed from the buffer to allow
+     * the object(s) to be added and still maintain the maximum size.
+     * @param buffer the buffer to make bounded
+     * @param maximumSize the maximum size
+     * @return a bounded buffer backed by the given buffer
+     * @throws IllegalArgumentException if the given buffer is null
+     */
+    public static Buffer boundedBuffer( Buffer buffer, int maximumSize ) {
+        return BoundedBuffer.decorate( buffer, maximumSize );
+    }
+
+    /**
+     * Returns a synchronized buffer backed by the given buffer that will block on {@link Buffer#add(Object)} and
+     * {@link Buffer#addAll(java.util.Collection)} until enough object(s) are removed from the buffer to allow
+     * the object(s) to be added and still maintain the maximum size or the timeout expires.
+     * @param buffer the buffer to make bounded
+     * @param maximumSize the maximum size
+     * @param timeout the maximum time to wait
+     * @return a bounded buffer backed by the given buffer
+     * @throws IllegalArgumentException if the given buffer is null
+     */
+    public static Buffer boundedBuffer( Buffer buffer, int maximumSize, long timeout ) {
+        return BoundedBuffer.decorate( buffer, maximumSize, timeout );
+    }
+    
     /**
      * Returns an unmodifiable buffer backed by the given buffer.
      *
