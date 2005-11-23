@@ -52,7 +52,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestSynchronizedBuffer.suite());
         suite.addTest(TestTransformedBuffer.suite());
         suite.addTest(TestUnmodifiableBuffer.suite());
-        suite.addTest(TestTimeoutBuffer.suite());
         return suite;
     }
         
