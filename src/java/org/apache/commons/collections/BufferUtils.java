@@ -21,14 +21,13 @@ import org.apache.commons.collections.buffer.SynchronizedBuffer;
 import org.apache.commons.collections.buffer.TransformedBuffer;
 import org.apache.commons.collections.buffer.TypedBuffer;
 import org.apache.commons.collections.buffer.UnmodifiableBuffer;
-import org.apache.commons.collections.buffer.TimeoutBuffer;
 
 /**
  * Provides utility methods and decorators for {@link Buffer} instances.
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Paul Jack
  * @author Stephen Colebourne
  */
@@ -48,10 +47,10 @@ public class BufferUtils {
     //-----------------------------------------------------------------------
     /**
      * Returns a synchronized buffer backed by the given buffer.
-     * Much like the synchronized collections returned by 
-     * {@link java.util.Collections}, you must manually synchronize on 
+     * Much like the synchronized collections returned by
+     * {@link java.util.Collections}, you must manually synchronize on
      * the returned buffer's iterator to avoid non-deterministic behavior:
-     *  
+     *
      * <pre>
      * Buffer b = BufferUtils.synchronizedBuffer(myBuffer);
      * synchronized (b) {
@@ -73,9 +72,9 @@ public class BufferUtils {
     /**
      * Returns a synchronized buffer backed by the given buffer that will
      * block on {@link Buffer#get()} and {@link Buffer#remove()} operations.
-     * If the buffer is empty, then the {@link Buffer#get()} and 
+     * If the buffer is empty, then the {@link Buffer#get()} and
      * {@link Buffer#remove()} operations will block until new elements
-     * are added to the buffer, rather than immediately throwing a 
+     * are added to the buffer, rather than immediately throwing a
      * <code>BufferUnderflowException</code>.
      *
      * @param buffer  the buffer to synchronize, must not be null
@@ -99,10 +98,10 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer is null
      * @since Commons Collections 3.2
      */
-    public static Buffer timeoutBuffer(Buffer buffer, long timeout) {
-        return TimeoutBuffer.decorate(buffer, timeout);
+    public static Buffer blockingBuffer(Buffer buffer, long timeout) {
+        return BlockingBuffer.decorate(buffer, timeout);
     }
-    
+
     /**
      * Returns an unmodifiable buffer backed by the given buffer.
      *
