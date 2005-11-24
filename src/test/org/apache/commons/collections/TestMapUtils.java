@@ -36,9 +36,9 @@ import org.apache.commons.collections.map.TestPredicatedMap;
 
 /**
  * Tests for MapUtils.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas
  * @author Max Rydahl Andersen
@@ -74,13 +74,13 @@ public class TestMapUtils extends BulkTest {
             fail("Expecting IllegalArgumentException for null map.");
         } catch (IllegalArgumentException e) {
             // expected
-        }     
+        }
     }
 
     // Since a typed map is a predicated map, I copied the tests for predicated map
     public void testTypedMapIllegalPut() {
         final Map map = MapUtils.typedMap(new HashMap(), String.class, String.class);
-        
+
         try {
             map.put("Hi", new Integer(3));
             fail("Illegal value should raise IllegalArgument");
@@ -120,9 +120,9 @@ public class TestMapUtils extends BulkTest {
         } catch (IllegalArgumentException e) {
             // expected
         }
-    
+
     }
-    
+
     public BulkTest bulkTestTypedMap() {
         return new TestPredicatedMap("") {
             public boolean isAllowNullKey() {
@@ -141,8 +141,8 @@ public class TestMapUtils extends BulkTest {
 
     public void testLazyMapFactory() {
         Factory factory = FactoryUtils.constantFactory(new Integer(5));
-        Map map = MapUtils.lazyMap(new HashMap(), factory);       
-        assertTrue(map instanceof LazyMap);        
+        Map map = MapUtils.lazyMap(new HashMap(), factory);
+        assertTrue(map instanceof LazyMap);
         try {
             map = MapUtils.lazyMap(new HashMap(), (Factory) null);
             fail("Expecting IllegalArgumentException for null factory");
@@ -156,8 +156,8 @@ public class TestMapUtils extends BulkTest {
             // expected
         }
         Transformer transformer = TransformerUtils.asTransformer(factory);
-        map = MapUtils.lazyMap(new HashMap(), transformer);       
-        assertTrue(map instanceof LazyMap);  
+        map = MapUtils.lazyMap(new HashMap(), transformer);
+        assertTrue(map instanceof LazyMap);
          try {
             map = MapUtils.lazyMap(new HashMap(), (Transformer) null);
             fail("Expecting IllegalArgumentException for null transformer");
@@ -169,7 +169,7 @@ public class TestMapUtils extends BulkTest {
             fail("Expecting IllegalArgumentException for null map");
         } catch (IllegalArgumentException e) {
             // expected
-        }              
+        }
     }
 
     public void testLazyMapTransformer() {
@@ -199,18 +199,18 @@ public class TestMapUtils extends BulkTest {
         in.put( "3" , "C" );
         in.put( "4" , "D" );
         in.put( "5" , "E" );
-    
+
         final Set inKeySet = new HashSet( in.keySet() );
         final Set inValSet = new HashSet( in.values() );
-        
+
         final Map out =  MapUtils.invertMap(in);
 
         final Set outKeySet = new HashSet( out.keySet() );
         final Set outValSet = new HashSet( out.values() );
-        
+
         assertTrue( inKeySet.equals( outValSet ));
         assertTrue( inValSet.equals( outKeySet ));
-        
+
         assertEquals( out.get("A"), "1" );
         assertEquals( out.get("B"), "2" );
         assertEquals( out.get("C"), "3" );
@@ -227,10 +227,10 @@ public class TestMapUtils extends BulkTest {
             MapUtils.putAll(null, new Object[0]);
             fail();
         } catch (NullPointerException ex) {}
-        
+
         Map test = MapUtils.putAll(new HashMap(), new String[0]);
         assertEquals(0, test.size());
-        
+
         // sub array
         test = MapUtils.putAll(new HashMap(), new String[][] {
             {"RED", "#FF0000"},
@@ -244,7 +244,7 @@ public class TestMapUtils extends BulkTest {
         assertEquals(true, test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
-        
+
         try {
             MapUtils.putAll(new HashMap(), new String[][] {
                 {"RED", "#FF0000"},
@@ -253,7 +253,7 @@ public class TestMapUtils extends BulkTest {
             });
             fail();
         } catch (IllegalArgumentException ex) {}
-        
+
         try {
             MapUtils.putAll(new HashMap(), new String[][] {
                 {"RED", "#FF0000"},
@@ -262,7 +262,7 @@ public class TestMapUtils extends BulkTest {
             });
             fail();
         } catch (IllegalArgumentException ex) {}
-        
+
         try {
             MapUtils.putAll(new HashMap(), new String[][] {
                 {"RED", "#FF0000"},
@@ -271,7 +271,7 @@ public class TestMapUtils extends BulkTest {
             });
             fail();
         } catch (IllegalArgumentException ex) {}
-        
+
         // flat array
         test = MapUtils.putAll(new HashMap(), new String[] {
             "RED", "#FF0000",
@@ -285,7 +285,7 @@ public class TestMapUtils extends BulkTest {
         assertEquals(true, test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
-        
+
         test = MapUtils.putAll(new HashMap(), new String[] {
             "RED", "#FF0000",
             "GREEN", "#00FF00",
@@ -299,7 +299,7 @@ public class TestMapUtils extends BulkTest {
         assertEquals(true, test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
-        
+
         // map entry
         test = MapUtils.putAll(new HashMap(), new Object[] {
             new DefaultMapEntry("RED", "#FF0000"),
@@ -313,7 +313,7 @@ public class TestMapUtils extends BulkTest {
         assertEquals(true, test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
-        
+
         // key value
         test = MapUtils.putAll(new HashMap(), new Object[] {
             new DefaultKeyValue("RED", "#FF0000"),
@@ -336,7 +336,7 @@ public class TestMapUtils extends BulkTest {
         in.put( "3" , "C" );
         in.put( "4" , "D" );
         in.put( "5" , "E" );
-    
+
         ResourceBundle b = new ListResourceBundle() {
             public Object[][] getContents() {
                 final Object[][] contents = new Object[ in.size() ][2];
@@ -352,8 +352,8 @@ public class TestMapUtils extends BulkTest {
                 return contents;
             }
         };
-        
-        final Map out = MapUtils.toMap(b); 
+
+        final Map out = MapUtils.toMap(b);
 
         assertTrue( in.equals(out));
     }
@@ -367,10 +367,10 @@ public class TestMapUtils extends BulkTest {
         outer.put( new Integer(0) , inner );
         outer.put( new Integer(1) , "A");
 
- 
+
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
-        
+
         try {
             MapUtils.debugPrint(outPrint, "Print Map", outer);
         } catch (final ClassCastException e) {
@@ -386,13 +386,13 @@ public class TestMapUtils extends BulkTest {
         outPrint.println(LABEL + " = " + String.valueOf((Object) null));
         final String EXPECTED_OUT = out.toString();
 
-        out.reset();            
+        out.reset();
 
         MapUtils.debugPrint(outPrint, LABEL, null);
         assertEquals(EXPECTED_OUT, out.toString());
-        
+
         out.reset();
-        
+
         MapUtils.verbosePrint(outPrint, LABEL, null);
         assertEquals(EXPECTED_OUT, out.toString());
     }
@@ -407,7 +407,7 @@ public class TestMapUtils extends BulkTest {
         map.put( new Integer(2) , "B" );
         map.put( new Integer(3) , "C" );
         map.put( new Integer(4) , null );
-        
+
         outPrint.println("{");
         outPrint.println(INDENT + "2 = B");
         outPrint.println(INDENT + "3 = C");
@@ -419,7 +419,7 @@ public class TestMapUtils extends BulkTest {
         MapUtils.verbosePrint(outPrint, null, map);
         assertEquals(EXPECTED_OUT, out.toString());
     }
-            
+
     public void testDebugPrintNullLabel() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -430,7 +430,7 @@ public class TestMapUtils extends BulkTest {
         map.put( new Integer(2) , "B" );
         map.put( new Integer(3) , "C" );
         map.put( new Integer(4) , null );
-    
+
         outPrint.println("{");
         outPrint.println(INDENT + "2 = B " + String.class.getName());
         outPrint.println(INDENT + "3 = C " + String.class.getName());
@@ -438,7 +438,7 @@ public class TestMapUtils extends BulkTest {
         outPrint.println("} " + TreeMap.class.getName());
         final String EXPECTED_OUT = out.toString();
         out.reset();
-        
+
         MapUtils.debugPrint(outPrint, null, map);
         assertEquals(EXPECTED_OUT, out.toString());
     }
@@ -446,7 +446,7 @@ public class TestMapUtils extends BulkTest {
     public void testVerbosePrintNullLabelAndMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
-        
+
         outPrint.println("null");
         final String EXPECTED_OUT = out.toString();
         out.reset();
@@ -474,7 +474,7 @@ public class TestMapUtils extends BulkTest {
         } catch (NullPointerException expected) {
         }
     }
-    
+
     public void testDebugPrintNullStream() {
         try {
             MapUtils.debugPrint(null, "Map", new HashMap());
@@ -482,7 +482,7 @@ public class TestMapUtils extends BulkTest {
         } catch (NullPointerException expected) {
         }
     }
-    
+
     public void testDebugPrintNullKey() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -491,13 +491,13 @@ public class TestMapUtils extends BulkTest {
 
         final Map map = new HashMap();
         map.put( null , "A" );
-    
+
         outPrint.println("{");
         outPrint.println(INDENT + "null = A " + String.class.getName());
         outPrint.println("} " + HashMap.class.getName());
         final String EXPECTED_OUT = out.toString();
         out.reset();
-        
+
         MapUtils.debugPrint(outPrint, null, map);
         assertEquals(EXPECTED_OUT, out.toString());
     }
@@ -510,13 +510,13 @@ public class TestMapUtils extends BulkTest {
 
         final Map map = new HashMap();
         map.put( null , "A" );
-    
+
         outPrint.println("{");
         outPrint.println(INDENT + "null = A");
         outPrint.println("}");
         final String EXPECTED_OUT = out.toString();
         out.reset();
-        
+
         MapUtils.verbosePrint(outPrint, null, map);
         assertEquals(EXPECTED_OUT, out.toString());
     }
@@ -529,13 +529,13 @@ public class TestMapUtils extends BulkTest {
 
         final Map map = new HashMap();
         map.put( null , map );
-    
+
         outPrint.println("{");
         outPrint.println(INDENT + "null = (this Map) " + HashMap.class.getName());
         outPrint.println("} " + HashMap.class.getName());
         final String EXPECTED_OUT = out.toString();
         out.reset();
-        
+
         MapUtils.debugPrint(outPrint, null, map);
         assertEquals(EXPECTED_OUT, out.toString());
     }
@@ -548,16 +548,16 @@ public class TestMapUtils extends BulkTest {
 
         final Map map = new HashMap();
         map.put( null , map );
-    
+
         outPrint.println("{");
         outPrint.println(INDENT + "null = (this Map)");
         outPrint.println("}");
         final String EXPECTED_OUT = out.toString();
         out.reset();
-        
+
         MapUtils.verbosePrint(outPrint, null, map);
         assertEquals(EXPECTED_OUT, out.toString());
-    }    
+    }
 
     public void testDebugPrintNullKeyToMap2() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -569,7 +569,7 @@ public class TestMapUtils extends BulkTest {
         final Map map2= new HashMap();
         map.put( null , map2 );
         map2.put( "2", "B" );
-    
+
         outPrint.println("{");
         outPrint.println(INDENT + "null = ");
         outPrint.println(INDENT + "{");
@@ -578,7 +578,7 @@ public class TestMapUtils extends BulkTest {
         outPrint.println("} " + HashMap.class.getName());
         final String EXPECTED_OUT = out.toString();
         out.reset();
-        
+
         MapUtils.debugPrint(outPrint, null, map);
         assertEquals(EXPECTED_OUT, out.toString());
     }
@@ -593,7 +593,7 @@ public class TestMapUtils extends BulkTest {
         final Map map2= new HashMap();
         map.put( null , map2 );
         map2.put( "2", "B" );
-    
+
         outPrint.println("{");
         outPrint.println(INDENT + "null = ");
         outPrint.println(INDENT + "{");
@@ -602,18 +602,18 @@ public class TestMapUtils extends BulkTest {
         outPrint.println("}");
         final String EXPECTED_OUT = out.toString();
         out.reset();
-        
+
         MapUtils.verbosePrint(outPrint, null, map);
         assertEquals(EXPECTED_OUT, out.toString());
-    }    
+    }
 
     public void testVerbosePrint() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
-        
+
         final String LABEL = "Print Map";
         final String INDENT = "    ";
-        
+
         outPrint.println(LABEL + " = ");
         outPrint.println("{");
         outPrint.println(INDENT + "0 = A");
@@ -624,10 +624,10 @@ public class TestMapUtils extends BulkTest {
         outPrint.println(INDENT + "}");
         outPrint.println(INDENT + "7 = (this Map)");
         outPrint.println("}");
-        
+
         final String EXPECTED_OUT = out.toString();
 
-        out.reset();            
+        out.reset();
 
         final Map inner = new TreeMap();  // treeMap guarantees order across JDKs for test
         inner.put( new Integer(2) , "B" );
@@ -645,10 +645,10 @@ public class TestMapUtils extends BulkTest {
     public void testDebugPrint() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
-        
+
         final String LABEL = "Print Map";
         final String INDENT = "    ";
-        
+
         outPrint.println(LABEL + " = ");
         outPrint.println("{");
         outPrint.println(INDENT + "0 = A " + String.class.getName());
@@ -659,10 +659,10 @@ public class TestMapUtils extends BulkTest {
         outPrint.println(INDENT + "} " + TreeMap.class.getName());
         outPrint.println(INDENT + "7 = (this Map) " + TreeMap.class.getName());
         outPrint.println("} " + TreeMap.class.getName());
-        
+
         final String EXPECTED_OUT = out.toString();
 
-        out.reset();            
+        out.reset();
 
         final Map inner = new TreeMap();  // treeMap guarantees order across JDKs for test
         inner.put( new Integer(2) , "B" );
@@ -683,23 +683,23 @@ public class TestMapUtils extends BulkTest {
 
         final String LABEL = "Print Map";
         final String INDENT = "    ";
-        
+
 
         final Map grandfather = new TreeMap();// treeMap guarantees order across JDKs for test
         final Map father = new TreeMap();
         final Map son    = new TreeMap();
-        
+
         grandfather.put( new Integer(0), "A" );
         grandfather.put( new Integer(1), father );
-        
+
         father.put( new Integer(2), "B" );
         father.put( new Integer(3), grandfather);
         father.put( new Integer(4), son);
-        
+
         son.put( new Integer(5), "C");
         son.put( new Integer(6), grandfather);
         son.put( new Integer(7), father);
-        
+
         outPrint.println(LABEL + " = ");
         outPrint.println("{");
         outPrint.println(INDENT + "0 = A");
@@ -723,30 +723,30 @@ public class TestMapUtils extends BulkTest {
 
         assertEquals(EXPECTED_OUT, out.toString());
     }
-    
+
     public void testDebugPrintSelfReference() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
-    
+
         final String LABEL = "Print Map";
         final String INDENT = "    ";
-        
-    
+
+
         final Map grandfather = new TreeMap();// treeMap guarantees order across JDKs for test
         final Map father = new TreeMap();
         final Map son    = new TreeMap();
-        
+
         grandfather.put( new Integer(0), "A" );
         grandfather.put( new Integer(1), father );
-        
+
         father.put( new Integer(2), "B" );
         father.put( new Integer(3), grandfather);
         father.put( new Integer(4), son);
-        
+
         son.put( new Integer(5), "C");
         son.put( new Integer(6), grandfather);
         son.put( new Integer(7), father);
-        
+
         outPrint.println(LABEL + " = ");
         outPrint.println("{");
         outPrint.println(INDENT + "0 = A " + String.class.getName());
@@ -762,15 +762,15 @@ public class TestMapUtils extends BulkTest {
         outPrint.println(INDENT + INDENT + "} " + TreeMap.class.getName());
         outPrint.println(INDENT + "} " + TreeMap.class.getName());
         outPrint.println("} " + TreeMap.class.getName());
-    
+
         final String EXPECTED_OUT = out.toString();
-    
+
         out.reset();
         MapUtils.debugPrint(outPrint, "Print Map", grandfather);
-    
+
         assertEquals(EXPECTED_OUT, out.toString());
     }
-    
+
     //-----------------------------------------------------------------------
     public void testIsEmptyWithEmptyMap() {
         Map map = new HashMap();
@@ -804,9 +804,4 @@ public class TestMapUtils extends BulkTest {
         assertEquals(false, MapUtils.isNotEmpty(map));
     }
 
-
-    public void testPopulateMap() {
-        Map map = new HashMap();
-        
-    }
 }
