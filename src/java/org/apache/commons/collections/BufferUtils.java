@@ -1,5 +1,5 @@
 /*
- *  Copyright 2002-2004 The Apache Software Foundation
+ *  Copyright 2002-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -88,48 +88,57 @@ public class BufferUtils {
 
     /**
      * Returns a synchronized buffer backed by the given buffer that will
-     * block on {@link Buffer#get()} and {@link Buffer#remove()} operations until
-     * <code>timeout</code> expires.  If the buffer is empty, then the
+     * block on {@link Buffer#get()} and {@link Buffer#remove()} operations
+     * until <code>timeout</code> expires.  If the buffer is empty, then the
      * {@link Buffer#get()} and {@link Buffer#remove()} operations will block
-     * until new elements are added to the buffer, rather than immediately throwing a
-     * <code>BufferUnderflowException</code>.
+     * until new elements are added to the buffer, rather than immediately
+     * throwing a <code>BufferUnderflowException</code>.
      *
      * @param buffer  the buffer to synchronize, must not be null
+     * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a blocking buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
      * @since Commons Collections 3.2
      */
-    public static Buffer blockingBuffer(Buffer buffer, long timeout) {
-        return BlockingBuffer.decorate(buffer, timeout);
+    public static Buffer blockingBuffer(Buffer buffer, long timeoutMillis) {
+        return BlockingBuffer.decorate(buffer, timeoutMillis);
     }
 
     /**
-     * Returns a synchronized buffer backed by the given buffer that will block on {@link Buffer#add(Object)} and
-     * {@link Buffer#addAll(java.util.Collection)} until enough object(s) are removed from the buffer to allow
-     * the object(s) to be added and still maintain the maximum size.
-     * @param buffer the buffer to make bounded
-     * @param maximumSize the maximum size
+     * Returns a synchronized buffer backed by the given buffer that will
+     * block on {@link Buffer#add(Object)} and
+     * {@link Buffer#addAll(java.util.Collection)} until enough object(s) are
+     * removed from the buffer to allow the object(s) to be added and still
+     * maintain the maximum size.
+     *
+     * @param buffer  the buffer to make bounded,  must not be null
+     * @param maximumSize  the maximum size
      * @return a bounded buffer backed by the given buffer
      * @throws IllegalArgumentException if the given buffer is null
+     * @since Commons Collections 3.2
      */
-    public static Buffer boundedBuffer( Buffer buffer, int maximumSize ) {
-        return BoundedBuffer.decorate( buffer, maximumSize );
+    public static Buffer boundedBuffer(Buffer buffer, int maximumSize) {
+        return BoundedBuffer.decorate(buffer, maximumSize);
     }
 
     /**
-     * Returns a synchronized buffer backed by the given buffer that will block on {@link Buffer#add(Object)} and
-     * {@link Buffer#addAll(java.util.Collection)} until enough object(s) are removed from the buffer to allow
-     * the object(s) to be added and still maintain the maximum size or the timeout expires.
-     * @param buffer the buffer to make bounded
+     * Returns a synchronized buffer backed by the given buffer that will
+     * block on {@link Buffer#add(Object)} and
+     * {@link Buffer#addAll(java.util.Collection)} until enough object(s) are
+     * removed from the buffer to allow the object(s) to be added and still
+     * maintain the maximum size or the timeout expires.
+     *
+     * @param buffer the buffer to make bounded, must not be null
      * @param maximumSize the maximum size
-     * @param timeout the maximum time to wait
+     * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a bounded buffer backed by the given buffer
      * @throws IllegalArgumentException if the given buffer is null
+     * @since Commons Collections 3.2
      */
-    public static Buffer boundedBuffer( Buffer buffer, int maximumSize, long timeout ) {
-        return BoundedBuffer.decorate( buffer, maximumSize, timeout );
+    public static Buffer boundedBuffer(Buffer buffer, int maximumSize, long timeoutMillis) {
+        return BoundedBuffer.decorate(buffer, maximumSize, timeoutMillis);
     }
-    
+
     /**
      * Returns an unmodifiable buffer backed by the given buffer.
      *

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2005 The Apache Software Foundation
+ *  Copyright 2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import java.util.Arrays;
 
 public class TestBoundedBuffer extends AbstractTestObject {
 
-    public TestBoundedBuffer( String testName ) {
-        super( testName );
+    public TestBoundedBuffer(String testName) {
+        super(testName);
     }
 
     public String getCompatibilityVersion() {
@@ -38,33 +38,31 @@ public class TestBoundedBuffer extends AbstractTestObject {
     }
 
     public Object makeObject() {
-        return BoundedBuffer.decorate( new UnboundedFifoBuffer(), 1 );
+        return BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
     }
 
     public void testAddToFullBufferNoTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate( new UnboundedFifoBuffer(), 1 );
+        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
         bounded.add( "Hello" );
         try {
-            bounded.add( "World" );
+            bounded.add("World");
             fail();
-        }
-        catch( BufferOverflowException e ) {
+        } catch (BufferOverflowException e) {
         }
     }
 
     public void testAddAllToFullBufferNoTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate( new UnboundedFifoBuffer(), 1 );
+        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
         bounded.add( "Hello" );
         try {
-            bounded.addAll( Collections.singleton( "World" ) );
+            bounded.addAll(Collections.singleton("World"));
             fail();
-        }
-        catch( BufferOverflowException e ) {
+        } catch (BufferOverflowException e) {
         }
     }
 
     public void testAddToFullBufferRemoveViaIterator() {
-        final Buffer bounded = BoundedBuffer.decorate( new UnboundedFifoBuffer(), 1, 500 );
+        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1, 500);
         bounded.add( "Hello" );
         new DelayedIteratorRemove( bounded, 200 ).start();
         bounded.add( "World" );
@@ -74,7 +72,7 @@ public class TestBoundedBuffer extends AbstractTestObject {
     }
 
     public void testAddAllToFullBufferRemoveViaIterator() {
-        final Buffer bounded = BoundedBuffer.decorate( new UnboundedFifoBuffer(), 2, 500 );
+        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 2, 500);
         bounded.add( "Hello" );
         bounded.add( "World" );
         new DelayedIteratorRemove( bounded, 200, 2 ).start();
@@ -85,7 +83,7 @@ public class TestBoundedBuffer extends AbstractTestObject {
     }
 
     public void testAddToFullBufferWithTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate( new UnboundedFifoBuffer(), 1, 500 );
+        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1, 500);
         bounded.add( "Hello" );
         new DelayedRemove( bounded, 200 ).start();
         bounded.add( "World" );
@@ -100,7 +98,7 @@ public class TestBoundedBuffer extends AbstractTestObject {
     }
 
     public void testAddAllToFullBufferWithTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate( new UnboundedFifoBuffer(), 2, 500 );
+        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 2, 500);
         bounded.add( "Hello" );
         bounded.add( "World" );
         new DelayedRemove( bounded, 200, 2 ).start();
@@ -124,27 +122,26 @@ public class TestBoundedBuffer extends AbstractTestObject {
 
         private final int nToRemove;
 
-        public DelayedIteratorRemove( Buffer buffer, long delay, int nToRemove ) {
+        public DelayedIteratorRemove(Buffer buffer, long delay, int nToRemove) {
             this.buffer = buffer;
             this.delay = delay;
             this.nToRemove = nToRemove;
         }
 
-        public DelayedIteratorRemove( Buffer buffer, long delay ) {
-            this( buffer, delay, 1 );
+        public DelayedIteratorRemove(Buffer buffer, long delay) {
+            this(buffer, delay, 1);
         }
 
         public void run() {
             try {
-                Thread.sleep( delay );
+                Thread.sleep(delay);
                 Iterator iter = buffer.iterator();
-                for( int i = 0; i < nToRemove; ++i ) {
+                for (int i = 0; i < nToRemove; ++i) {
                     iter.next();
                     iter.remove();
                 }
 
-            }
-            catch( InterruptedException e ) {
+            } catch (InterruptedException e) {
             }
         }
     }
@@ -157,24 +154,23 @@ public class TestBoundedBuffer extends AbstractTestObject {
 
         private final int nToRemove;
 
-        public DelayedRemove( Buffer buffer, long delay, int nToRemove ) {
+        public DelayedRemove(Buffer buffer, long delay, int nToRemove) {
             this.buffer = buffer;
             this.delay = delay;
             this.nToRemove = nToRemove;
         }
 
-        public DelayedRemove( Buffer buffer, long delay ) {
-            this( buffer, delay, 1 );
+        public DelayedRemove(Buffer buffer, long delay) {
+            this(buffer, delay, 1);
         }
 
         public void run() {
             try {
-                Thread.sleep( delay );
-                for( int i = 0; i < nToRemove; ++i ) {
+                Thread.sleep(delay);
+                for (int i = 0; i < nToRemove; ++i) {
                     buffer.remove();
                 }
-            }
-            catch( InterruptedException e ) {
+            } catch (InterruptedException e) {
             }
         }
     }
