@@ -181,7 +181,7 @@ public abstract class DefaultMapBag implements Bag {
             return false;
         }
         for (Iterator it = _map.keySet().iterator(); it.hasNext();) {
-            Object element = (Object) it.next();
+            Object element = it.next();
             if (other.getCount(element) != getCount(element)) {
                 return false;
             }

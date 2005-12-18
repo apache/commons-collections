@@ -18,7 +18,6 @@ package org.apache.commons.collections;
 import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -34,6 +33,7 @@ import org.apache.commons.collections.map.FixedSizeSortedMap;
 import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.collections.map.LazySortedMap;
 import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections.map.MultiValueMap;
 import org.apache.commons.collections.map.PredicatedMap;
 import org.apache.commons.collections.map.PredicatedSortedMap;
 import org.apache.commons.collections.map.TransformedMap;
@@ -42,7 +42,6 @@ import org.apache.commons.collections.map.TypedMap;
 import org.apache.commons.collections.map.TypedSortedMap;
 import org.apache.commons.collections.map.UnmodifiableMap;
 import org.apache.commons.collections.map.UnmodifiableSortedMap;
-import org.apache.commons.collections.map.MultiValueMap;
 
 /** 
  * Provides utility methods and decorators for
@@ -1065,8 +1064,7 @@ public class MapUtils {
      * If the input map had multiple entries with the same value mapped to
      * different keys, the returned map will map one of those keys to the 
      * value, but the exact key which will be mapped is undefined.
-     * 
-     * @see DoubleOrderedMap
+     *
      * @param map  the map to invert, may not be null
      * @return a new HashMap containing the inverted data
      * @throws NullPointerException if the map is null

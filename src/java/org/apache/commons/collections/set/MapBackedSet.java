@@ -114,7 +114,7 @@ public final class MapBackedSet implements Set, Serializable {
     public boolean addAll(Collection coll) {
         int size = map.size();
         for (Iterator it = coll.iterator(); it.hasNext();) {
-            Object obj = (Object) it.next();
+            Object obj = it.next();
             map.put(obj, dummyValue);
         }
         return (map.size() != size);
