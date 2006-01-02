@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2005 The Apache Software Foundation
+ *  Copyright 2003-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -65,6 +65,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
+ * @author Matt Benson
  */
 public class ListOrderedMap
         extends AbstractMapDecorator
@@ -375,6 +376,44 @@ public class ListOrderedMap
     public Object setValue(int index, Object value) {
         Object key = insertOrder.get(index);
         return put(key, value);
+    }
+
+    /**
+     * Puts a key-value mapping into the map at the specified index.
+     * <p>
+     * If the map already contains the key, then the original mapping
+     * is removed and the new mapping added at the specified index.
+     * The remove may change the effect of the index. The index is
+     * always calculated relative to the original state of the map.
+     * <p>
+     * Thus the steps are: (1) remove the existing key-value mapping,
+     * then (2) insert the new key-value mapping at the position it
+     * would have been inserted had the remove not ocurred.
+     *
+     * @param index  the index at which the mapping should be inserted
+     * @param key  the key
+     * @param value  the value
+     * @return the value previously mapped to the key
+     * @throws IndexOutOfBoundsException if the index is out of range
+     * @since Commons Collections 3.2
+     */
+    public Object put(int index, Object key, Object value) {
+        Map m = getMap();
+        if (m.containsKey(key)) {
+            Object result = m.remove(key);
+            int pos = insertOrder.indexOf(key);
+            insertOrder.remove(pos);
+            if (pos < index) {
+                index--;
+            }
+            insertOrder.add(index, key);
+            m.put(key, value);
+            return result;
+        } else {
+            insertOrder.add(index, key);
+            m.put(key, value);
+            return null;
+        }
     }
 
     /**

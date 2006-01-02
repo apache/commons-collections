@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2005 The Apache Software Foundation
+ *  Copyright 2001-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  * 
  * @author Henri Yandell
  * @author Stephen Colebourne
+ * @author Matt Benson
  */
 public class TestListOrderedMap extends AbstractTestOrderedMap {
 
@@ -180,6 +181,122 @@ public class TestListOrderedMap extends AbstractTestOrderedMap {
             list.remove(i);
             assertEquals(false, lom.containsKey(key));
         }
+    }
+
+    public void testPut_intObjectObject() {
+        resetEmpty();
+        ListOrderedMap lom = (ListOrderedMap) map;
+        
+        try {
+            lom.put(1, "testInsert1", "testInsert1v");
+            fail("should not be able to insert at pos 1 in empty Map");
+        } catch (IndexOutOfBoundsException ex) {}
+        try {
+            lom.put(-1, "testInsert-1", "testInsert-1v");
+            fail("should not be able to insert at pos -1 in empty Map");
+        } catch (IndexOutOfBoundsException ex) {}
+        
+        // put where key doesn't exist
+        lom.put(0, "testInsert1", "testInsert1v");
+        assertEquals("testInsert1v", lom.getValue(0));
+        
+        lom.put("testInsertPut", "testInsertPutv");
+        assertEquals("testInsert1v", lom.getValue(0));
+        assertEquals("testInsertPutv", lom.getValue(1));
+        
+        lom.put(0, "testInsert0", "testInsert0v");
+        assertEquals("testInsert0v", lom.getValue(0));
+        assertEquals("testInsert1v", lom.getValue(1));
+        assertEquals("testInsertPutv", lom.getValue(2));
+        
+        lom.put(3, "testInsert3", "testInsert3v");
+        assertEquals("testInsert0v", lom.getValue(0));
+        assertEquals("testInsert1v", lom.getValue(1));
+        assertEquals("testInsertPutv", lom.getValue(2));
+        assertEquals("testInsert3v", lom.getValue(3));
+        
+        // put in a full map        
+        resetFull();
+        lom = (ListOrderedMap) map;
+        ListOrderedMap lom2 = new ListOrderedMap();
+        lom2.putAll(lom);
+        
+        lom2.put(0, "testInsert0", "testInsert0v");
+        assertEquals("testInsert0v", lom2.getValue(0));
+        for (int i = 0; i < lom.size(); i++) {
+            assertEquals(lom2.getValue(i + 1), lom.getValue(i));
+        }
+        
+        // put where key does exist
+        Integer i1 = new Integer(1);
+        Integer i1b = new Integer(1);
+        Integer i2 = new Integer(2);
+        Integer i3 = new Integer(3);
+        
+        resetEmpty();
+        lom = (ListOrderedMap) map;
+        lom.put(i1, "1");
+        lom.put(i2, "2");
+        lom.put(i3, "3");
+        lom.put(0, i1, "One");
+        assertEquals(3, lom.size());
+        assertEquals(3, lom.map.size());
+        assertEquals(3, lom.insertOrder.size());
+        assertEquals("One", lom.getValue(0));
+        assertSame(i1, lom.get(0));
+        
+        resetEmpty();
+        lom = (ListOrderedMap) map;
+        lom.put(i1, "1");
+        lom.put(i2, "2");
+        lom.put(i3, "3");
+        lom.put(0, i1b, "One");
+        assertEquals(3, lom.size());
+        assertEquals(3, lom.map.size());
+        assertEquals(3, lom.insertOrder.size());
+        assertEquals("One", lom.getValue(0));
+        assertEquals("2", lom.getValue(1));
+        assertEquals("3", lom.getValue(2));
+        assertSame(i1b, lom.get(0));
+        
+        resetEmpty();
+        lom = (ListOrderedMap) map;
+        lom.put(i1, "1");
+        lom.put(i2, "2");
+        lom.put(i3, "3");
+        lom.put(1, i1b, "One");
+        assertEquals(3, lom.size());
+        assertEquals(3, lom.map.size());
+        assertEquals(3, lom.insertOrder.size());
+        assertEquals("One", lom.getValue(0));
+        assertEquals("2", lom.getValue(1));
+        assertEquals("3", lom.getValue(2));
+        
+        resetEmpty();
+        lom = (ListOrderedMap) map;
+        lom.put(i1, "1");
+        lom.put(i2, "2");
+        lom.put(i3, "3");
+        lom.put(2, i1b, "One");
+        assertEquals(3, lom.size());
+        assertEquals(3, lom.map.size());
+        assertEquals(3, lom.insertOrder.size());
+        assertEquals("2", lom.getValue(0));
+        assertEquals("One", lom.getValue(1));
+        assertEquals("3", lom.getValue(2));
+        
+        resetEmpty();
+        lom = (ListOrderedMap) map;
+        lom.put(i1, "1");
+        lom.put(i2, "2");
+        lom.put(i3, "3");
+        lom.put(3, i1b, "One");
+        assertEquals(3, lom.size());
+        assertEquals(3, lom.map.size());
+        assertEquals(3, lom.insertOrder.size());
+        assertEquals("2", lom.getValue(0));
+        assertEquals("3", lom.getValue(1));
+        assertEquals("One", lom.getValue(2));
     }
 
     //-----------------------------------------------------------------------
