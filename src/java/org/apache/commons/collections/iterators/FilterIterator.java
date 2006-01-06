@@ -1,5 +1,5 @@
 /*
- *  Copyright 1999-2004 The Apache Software Foundation
+ *  Copyright 1999-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -83,7 +83,8 @@ public class FilterIterator implements Iterator {
      * Returns true if the underlying iterator contains an object that 
      * matches the predicate.
      *
-     * @return true if there is another object that matches the predicate 
+     * @return true if there is another object that matches the predicate
+     * @throws NullPointerException if either the iterator or predicate are null
      */
     public boolean hasNext() {
         if (nextObjectSet) {
@@ -95,8 +96,9 @@ public class FilterIterator implements Iterator {
 
     /** 
      * Returns the next object that matches the predicate.
-     * 
+     *
      * @return the next object which matches the given predicate
+     * @throws NullPointerException if either the iterator or predicate are null
      * @throws NoSuchElementException if there are no more elements that
      *  match the predicate 
      */
@@ -117,7 +119,7 @@ public class FilterIterator implements Iterator {
      * if <code>next()</code> was called, but not after
      * <code>hasNext()</code>, because the <code>hasNext()</code> call
      * changes the base iterator.
-     * 
+     *
      * @throws IllegalStateException if <code>hasNext()</code> has already
      *  been called.
      */
@@ -131,8 +133,8 @@ public class FilterIterator implements Iterator {
     //-----------------------------------------------------------------------
     /** 
      * Gets the iterator this iterator is using.
-     * 
-     * @return the iterator.
+     *
+     * @return the iterator
      */
     public Iterator getIterator() {
         return iterator;
@@ -141,7 +143,7 @@ public class FilterIterator implements Iterator {
     /** 
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
-     * 
+     *
      * @param iterator  the iterator to use
      */
     public void setIterator(Iterator iterator) {
@@ -151,8 +153,8 @@ public class FilterIterator implements Iterator {
     //-----------------------------------------------------------------------
     /** 
      * Gets the predicate this iterator is using.
-     * 
-     * @return the predicate.
+     *
+     * @return the predicate
      */
     public Predicate getPredicate() {
         return predicate;
@@ -160,8 +162,8 @@ public class FilterIterator implements Iterator {
 
     /** 
      * Sets the predicate this the iterator to use.
-     * 
-     * @param predicate  the transformer to use
+     *
+     * @param predicate  the predicate to use
      */
     public void setPredicate(Predicate predicate) {
         this.predicate = predicate;
@@ -183,4 +185,5 @@ public class FilterIterator implements Iterator {
         }
         return false;
     }
+
 }
