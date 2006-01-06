@@ -148,6 +148,8 @@ public class FilterIterator implements Iterator {
      */
     public void setIterator(Iterator iterator) {
         this.iterator = iterator;
+        nextObject = null;
+        nextObjectSet = false;
     }
 
     //-----------------------------------------------------------------------
@@ -167,6 +169,8 @@ public class FilterIterator implements Iterator {
      */
     public void setPredicate(Predicate predicate) {
         this.predicate = predicate;
+        nextObject = null;
+        nextObjectSet = false;
     }
 
     //-----------------------------------------------------------------------

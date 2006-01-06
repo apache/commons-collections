@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package org.apache.commons.collections.iterators;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,14 +26,17 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.functors.NotNullPredicate;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * Test the filter iterator.
  *
  * @version $Revision$ $Date$
  * 
- * @author  Jan Sorensen
+ * @author Jan Sorensen
  * @author Ralph Wagner
+ * @author Huw Roberts
  */
 public class TestFilterIterator extends AbstractTestIterator {
 
@@ -109,6 +113,41 @@ public class TestFilterIterator extends AbstractTestIterator {
         verifyElementsInPredicate(new String[] { "a", "c" });
         verifyElementsInPredicate(new String[] { "b", "c" });
         verifyElementsInPredicate(new String[] { "a", "b", "c" });
+    }
+
+    /**
+     * Test that when the iterator is changed, the hasNext method returns the
+     * correct response for the new iterator.
+     */
+    public void testSetIterator() {
+        Iterator iter1 = Collections.singleton(new Object()).iterator();
+        Iterator iter2 = Collections.EMPTY_LIST.iterator();
+        
+        FilterIterator filterIterator = new FilterIterator(iter1);
+        filterIterator.setPredicate(TruePredicate.getInstance());
+        // this iterator has elements
+        assertEquals(true, filterIterator.hasNext());
+        
+        // this iterator has no elements
+        filterIterator.setIterator(iter2);
+        assertEquals(false, filterIterator.hasNext());
+    }
+
+    /**
+     * Test that when the predicate is changed, the hasNext method returns the
+     * correct response for the new predicate.
+     */
+    public void testSetPredicate() {
+        Iterator iter = Collections.singleton(null).iterator();
+
+        FilterIterator filterIterator = new FilterIterator(iter);
+        filterIterator.setPredicate(TruePredicate.getInstance());
+        // this predicate matches
+        assertEquals(true, filterIterator.hasNext());
+        
+        // this predicate doesn't match
+        filterIterator.setPredicate(NotNullPredicate.getInstance());
+        assertEquals(false, filterIterator.hasNext());
     }
 
     private void verifyNoMoreElements() {
