@@ -564,7 +564,14 @@ public class TreeList extends AbstractList {
                 if (rightIsNext) {
                     right = leftMax.right;
                 }
+                AVLNode leftPrevious = left.left;
                 left = left.removeMax();
+                if (left == null) {
+                    // special case where left that was deleted was a double link
+                    // only occurs when height difference is equal
+                    left = leftPrevious;
+                    leftIsPrevious = true;
+                }
                 if (relativePosition > 0) {
                     relativePosition--;
                 }

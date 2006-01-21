@@ -1,5 +1,5 @@
 /*
- *  Copyright 2004 The Apache Software Foundation
+ *  Copyright 2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package org.apache.commons.collections.list;
 
 import java.util.List;
+import java.util.ListIterator;
 
 import junit.framework.Test;
 
@@ -52,7 +53,6 @@ public class TestTreeList extends AbstractTestList {
     }
 
     public static void benchmark(List l) {
-        StringBuffer sb = new StringBuffer();
         long start = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             l.add(new Integer(i));
@@ -210,4 +210,35 @@ public class TestTreeList extends AbstractTestList {
 //        l.add("A5");
 //        l.add("A6");
 //    }
+
+    public void testBug35258() {
+        Object objectToRemove = new Integer(3);
+        
+        List treelist = new TreeList();
+        treelist.add(new Integer(0));
+        treelist.add(new Integer(1));
+        treelist.add(new Integer(2));
+        treelist.add(new Integer(3));
+        treelist.add(new Integer(4));
+        
+        // this cause inconsistence of ListIterator()
+        treelist.remove(objectToRemove);
+        
+        ListIterator li = treelist.listIterator();
+        assertEquals(new Integer(0), li.next());
+        assertEquals(new Integer(0), li.previous());
+        assertEquals(new Integer(0), li.next());
+        assertEquals(new Integer(1), li.next());
+        // this caused error in bug 35258
+        assertEquals(new Integer(1), li.previous());
+        assertEquals(new Integer(1), li.next());
+        assertEquals(new Integer(2), li.next());
+        assertEquals(new Integer(2), li.previous());
+        assertEquals(new Integer(2), li.next());
+        assertEquals(new Integer(4), li.next());
+        assertEquals(new Integer(4), li.previous());
+        assertEquals(new Integer(4), li.next());
+        assertEquals(false, li.hasNext());
+    }
+
 }
