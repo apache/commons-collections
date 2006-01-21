@@ -1,5 +1,5 @@
 /*
- *  Copyright 2004-2005 The Apache Software Foundation
+ *  Copyright 2004-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -524,9 +524,15 @@ public class TreeList extends AbstractList {
             return balance();
         }
 
+        /**
+         * Removes this node from the tree.
+         *
+         * @return the node that replaces this one in the parent
+         */
         private AVLNode removeSelf() {
-            if (getRightSubTree() == null && getLeftSubTree() == null)
+            if (getRightSubTree() == null && getLeftSubTree() == null) {
                 return null;
+            }
             if (getRightSubTree() == null) {
                 if (relativePosition > 0) {
                     left.relativePosition += relativePosition + (relativePosition > 0 ? 0 : 1);
@@ -541,6 +547,7 @@ public class TreeList extends AbstractList {
             }
 
             if (heightRightMinusLeft() > 0) {
+                // more on the right, so delete from the right
                 AVLNode rightMin = right.min();
                 value = rightMin.value;
                 if (leftIsPrevious) {
@@ -551,6 +558,7 @@ public class TreeList extends AbstractList {
                     relativePosition++;
                 }
             } else {
+                // more on the left or equal, so delete from the left
                 AVLNode leftMax = left.max();
                 value = leftMax.value;
                 if (rightIsNext) {
@@ -669,12 +677,24 @@ public class TreeList extends AbstractList {
             return newTop;
         }
 
+        /**
+         * Sets the left field to the node, or the previous node if that is null
+         *
+         * @param node  the new left subtree node
+         * @param previous  the previous node in the linked list
+         */
         private void setLeft(AVLNode node, AVLNode previous) {
             leftIsPrevious = (node == null);
             left = (leftIsPrevious ? previous : node);
             recalcHeight();
         }
 
+        /**
+         * Sets the right field to the node, or the next node if that is null
+         *
+         * @param node  the new left subtree node
+         * @param next  the next node in the linked list
+         */
         private void setRight(AVLNode node, AVLNode next) {
             rightIsNext = (node == null);
             right = (rightIsNext ? next : node);
