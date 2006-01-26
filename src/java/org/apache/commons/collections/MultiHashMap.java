@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2005 The Apache Software Foundation
+ *  Copyright 2001-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -63,6 +63,7 @@ import org.apache.commons.collections.iterators.EmptyIterator;
  * @author Stephen Colebourne
  * @author Julien Buret
  * @author Serhiy Yevtushenko
+ * @author Robert Ribnitz
  */
 public class MultiHashMap extends HashMap implements MultiMap {
     
@@ -375,6 +376,15 @@ public class MultiHashMap extends HashMap implements MultiMap {
         return (vs != null ? vs : (values = new Values()));
     }
 
+    /**
+     * Gets the values iterator from the superclass, as used by inner class.
+     *
+     * @return iterator
+     */
+    Iterator superValuesIterator() {
+        return super.values().iterator();
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Inner class to view the elements.
@@ -409,7 +419,7 @@ public class MultiHashMap extends HashMap implements MultiMap {
         private Iterator tempIterator;
 
         private ValueIterator() {
-            backedIterator = MultiHashMap.super.values().iterator();
+            backedIterator = MultiHashMap.this.superValuesIterator();
         }
 
         private boolean searchNextIterator() {
