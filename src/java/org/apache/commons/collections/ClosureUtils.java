@@ -1,5 +1,5 @@
 /*
- *  Copyright 2002-2004 The Apache Software Foundation
+ *  Copyright 2002-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -51,6 +51,7 @@ import org.apache.commons.collections.functors.WhileClosure;
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
+ * @author Matt Benson
  */
 public class ClosureUtils {
 
@@ -224,6 +225,23 @@ public class ClosureUtils {
      */
     public static Closure chainedClosure(Collection closures) {
         return ChainedClosure.getInstance(closures);
+    }
+
+    /**
+     * Create a new Closure that calls another closure based on the
+     * result of the specified predicate.
+     * 
+     * @see org.apache.commons.collections.functors.IfClosure
+     * 
+     * @param predicate  the validating predicate
+     * @param trueClosure  the closure called if the predicate is true
+     * @return the <code>if</code> closure
+     * @throws IllegalArgumentException if the predicate is null
+     * @throws IllegalArgumentException if the closure is null
+     * @since Commons Collections 3.2
+     */
+    public static Closure ifClosure(Predicate predicate, Closure trueClosure) {
+        return IfClosure.getInstance(predicate, trueClosure);
     }
 
     /**

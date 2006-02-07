@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -37,9 +37,7 @@ import org.apache.commons.collections.functors.NOPClosure;
  */
 public class TestClosureUtils extends junit.framework.TestCase {
 
-    private static final Object cObject = new Object();
     private static final Object cString = "Hello";
-    private static final Object cInteger = new Integer(6);
 
     /**
      * Construct
@@ -244,12 +242,21 @@ public class TestClosureUtils extends junit.framework.TestCase {
         } catch (IllegalArgumentException ex) {}
     }
     
-    // switchClosure
+    // ifClosure
     //------------------------------------------------------------------
 
-    public void testSwitchClosure() {
+    public void testIfClosure() {
         MockClosure a = new MockClosure();
-        MockClosure b = new MockClosure();
+        MockClosure b = null;
+        ClosureUtils.ifClosure(PredicateUtils.truePredicate(), a).execute(null);
+        assertEquals(1, a.count);
+
+        a = new MockClosure();
+        ClosureUtils.ifClosure(PredicateUtils.falsePredicate(), a).execute(null);
+        assertEquals(0, a.count);
+
+        a = new MockClosure();
+        b = new MockClosure();
         ClosureUtils.ifClosure(PredicateUtils.truePredicate(), a, b).execute(null);
         assertEquals(1, a.count);
         assertEquals(0, b.count);
@@ -259,9 +266,14 @@ public class TestClosureUtils extends junit.framework.TestCase {
         ClosureUtils.ifClosure(PredicateUtils.falsePredicate(), a, b).execute(null);
         assertEquals(0, a.count);
         assertEquals(1, b.count);
-        
-        a = new MockClosure();
-        b = new MockClosure();
+    }        
+
+    // switchClosure
+    //------------------------------------------------------------------
+
+    public void testSwitchClosure() {
+        MockClosure a = new MockClosure();
+        MockClosure b = new MockClosure();
         ClosureUtils.switchClosure(
             new Predicate[] {PredicateUtils.equalPredicate("HELLO"), PredicateUtils.equalPredicate("THERE")}, 
             new Closure[] {a, b}).execute("WELL");
