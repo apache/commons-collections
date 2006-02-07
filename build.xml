@@ -176,13 +176,6 @@
       <include name="**/BufferUtils*.class"/>
       <include name="**/buffer/*.class"/>
     </jar>
-    <jar    jarfile="${build.home}/${component.name}-comparators-${component.version}.jar"
-            basedir="${build.classes}"
-           manifest="${build.conf}/MANIFEST.MF">
-      <include name="**/META-INF/*"/>
-      <include name="**/ComparatorUtils*.class"/>
-      <include name="**/comparators/*.class"/>
-    </jar>
     <jar    jarfile="${build.home}/${component.name}-functors-${component.version}.jar"
             basedir="${build.classes}"
            manifest="${build.conf}/MANIFEST.MF">
@@ -193,14 +186,13 @@
       <include name="**/TransformerUtils*.class"/>
       <include name="**/functors/*.class"/>
     </jar>
-    <jar    jarfile="${build.home}/${component.name}-main-${component.version}.jar"
+    <jar    jarfile="${build.home}/${component.name}-core-${component.version}.jar"
             basedir="${build.classes}"
            manifest="${build.conf}/MANIFEST.MF">
       <include name="**/META-INF/*"/>
       <include name="**/*"/>
       <exclude name="**/BagUtils*.class"/>
       <exclude name="**/BufferUtils*.class"/>
-      <exclude name="**/ComparatorUtils*.class"/>
       <exclude name="**/ClosureUtils*.class"/>
       <exclude name="**/FactoryUtils*.class"/>
       <exclude name="**/PredicateUtils*.class"/>
@@ -208,10 +200,11 @@
       <exclude name="**/bag/*.class"/>
       <exclude name="**/bidimap/*.class"/>
       <exclude name="**/buffer/*.class"/>
-      <exclude name="**/comparators/*.class"/>
       <exclude name="**/functors/*.class"/>
       <exclude name="**/iterators/ProxyIterator*.class"/>
       <exclude name="**/iterators/ProxyListIterator*.class"/>
+      <exclude name="**/map/*.class"/>
+      <exclude name="org/apache/commons/collections/BeanMap*.class"/>
       <exclude name="org/apache/commons/collections/BinaryHeap*.class"/>
       <exclude name="org/apache/commons/collections/BoundedFifoBuffer*.class"/>
       <exclude name="org/apache/commons/collections/CursorableLinkedList*.class"/>
@@ -221,6 +214,7 @@
       <exclude name="org/apache/commons/collections/DoubleOrderedMap*.class"/>
       <exclude name="org/apache/commons/collections/HashBag*.class"/>
       <exclude name="org/apache/commons/collections/LRUMap*.class"/>
+      <exclude name="org/apache/commons/collections/MultiHashMap*.class"/>
       <exclude name="org/apache/commons/collections/PriorityQueue*.class"/>
       <exclude name="org/apache/commons/collections/ProxyMap*.class"/>
       <exclude name="org/apache/commons/collections/ReferenceMap*.class"/>
@@ -236,6 +230,7 @@
       <include name="**/META-INF/*"/>
       <include name="**/iterators/ProxyIterator*.class"/>
       <include name="**/iterators/ProxyListIterator*.class"/>
+      <include name="org/apache/commons/collections/BeanMap*.class"/>
       <include name="org/apache/commons/collections/BinaryHeap*.class"/>
       <include name="org/apache/commons/collections/BoundedFifoBuffer*.class"/>
       <include name="org/apache/commons/collections/CursorableLinkedList*.class"/>
@@ -245,6 +240,7 @@
       <include name="org/apache/commons/collections/DoubleOrderedMap*.class"/>
       <include name="org/apache/commons/collections/HashBag*.class"/>
       <include name="org/apache/commons/collections/LRUMap*.class"/>
+      <include name="org/apache/commons/collections/MultiHashMap*.class"/>
       <include name="org/apache/commons/collections/PriorityQueue*.class"/>
       <include name="org/apache/commons/collections/ProxyMap*.class"/>
       <include name="org/apache/commons/collections/ReferenceMap*.class"/>
@@ -255,31 +251,6 @@
       <include name="org/apache/commons/collections/UnboundedFifoBuffer*.class"/>
     </jar>
 
-    <!--jar    jarfile="${build.home}/${component.name}-nodeprecated-${component.version}.jar"
-            basedir="${build.classes}"
-           manifest="${build.conf}/MANIFEST.MF">
-      <include name="**/META-INF/*"/>
-      <include name="**/*"/>
-      <exclude name="**/iterators/ProxyIterator*.class"/>
-      <exclude name="**/iterators/ProxyListIterator*.class"/>
-      <exclude name="org/apache/commons/collections/BinaryHeap*.class"/>
-      <exclude name="org/apache/commons/collections/BoundedFifoBuffer*.class"/>
-      <exclude name="org/apache/commons/collections/CursorableLinkedList*.class"/>
-      <exclude name="org/apache/commons/collections/CursorableSubList*.class"/>
-      <exclude name="org/apache/commons/collections/DefaultMapBag*.class"/>
-      <exclude name="org/apache/commons/collections/DefaultMapEntry*.class"/>
-      <exclude name="org/apache/commons/collections/DoubleOrderedMap*.class"/>
-      <exclude name="org/apache/commons/collections/HashBag*.class"/>
-      <exclude name="org/apache/commons/collections/LRUMap*.class"/>
-      <exclude name="org/apache/commons/collections/PriorityQueue*.class"/>
-      <exclude name="org/apache/commons/collections/ProxyMap*.class"/>
-      <exclude name="org/apache/commons/collections/ReferenceMap*.class"/>
-      <exclude name="org/apache/commons/collections/SequencedHashMap*.class"/>
-      <exclude name="org/apache/commons/collections/StaticBucketMap*.class"/>
-      <exclude name="org/apache/commons/collections/SynchronizedPriorityQueue*.class"/>
-      <exclude name="org/apache/commons/collections/TreeBag*.class"/>
-      <exclude name="org/apache/commons/collections/UnboundedFifoBuffer*.class"/>
-    </jar-->
   </target>
 
 <!-- ====================================================================== -->
