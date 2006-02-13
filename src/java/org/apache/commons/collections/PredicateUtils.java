@@ -1,5 +1,5 @@
 /*
- *  Copyright 2002-2004 The Apache Software Foundation
+ *  Copyright 2002-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -264,13 +264,13 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true only if all of the specified
      * predicates are true.
+     * If the array of predicates is empty, then this predicate returns true.
      * 
      * @see org.apache.commons.collections.functors.AllPredicate
      * 
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if the predicates array has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate allPredicate(Predicate[] predicates) {
@@ -280,13 +280,13 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true only if all of the specified
      * predicates are true. The predicates are checked in iterator order.
+     * If the collection of predicates is empty, then this predicate returns true.
      * 
      * @see org.apache.commons.collections.functors.AllPredicate
      * 
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
-     * @throws IllegalArgumentException if the predicates collection has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
     public static Predicate allPredicate(Collection predicates) {
@@ -311,13 +311,13 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if any of the specified
      * predicates are true.
+     * If the array of predicates is empty, then this predicate returns false.
      * 
      * @see org.apache.commons.collections.functors.AnyPredicate
      * 
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if the predicates array has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate anyPredicate(Predicate[] predicates) {
@@ -327,13 +327,13 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if any of the specified
      * predicates are true. The predicates are checked in iterator order.
+     * If the collection of predicates is empty, then this predicate returns false.
      * 
      * @see org.apache.commons.collections.functors.AnyPredicate
      * 
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
-     * @throws IllegalArgumentException if the predicates collection has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
     public static Predicate anyPredicate(Collection predicates) {
@@ -358,13 +358,13 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if only one of the specified
      * predicates are true.
+     * If the array of predicates is empty, then this predicate returns false.
      * 
      * @see org.apache.commons.collections.functors.OnePredicate
      * 
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if the predicates array has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate onePredicate(Predicate[] predicates) {
@@ -374,13 +374,13 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if only one of the specified
      * predicates are true. The predicates are checked in iterator order.
+     * If the collection of predicates is empty, then this predicate returns false.
      * 
      * @see org.apache.commons.collections.functors.OnePredicate
      * 
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
-     * @throws IllegalArgumentException if the predicates collection has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
     public static Predicate onePredicate(Collection predicates) {
@@ -405,13 +405,13 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if none of the specified
      * predicates are true.
+     * If the array of predicates is empty, then this predicate returns true.
      * 
      * @see org.apache.commons.collections.functors.NonePredicate
      * 
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>none</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if the predicates array has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate nonePredicate(Predicate[] predicates) {
@@ -421,13 +421,13 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true if none of the specified
      * predicates are true. The predicates are checked in iterator order.
+     * If the collection of predicates is empty, then this predicate returns true.
      * 
      * @see org.apache.commons.collections.functors.NonePredicate
      * 
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>none</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
-     * @throws IllegalArgumentException if the predicates collection has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
     public static Predicate nonePredicate(Collection predicates) {

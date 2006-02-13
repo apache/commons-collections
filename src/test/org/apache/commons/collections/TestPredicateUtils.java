@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import junit.textui.TestRunner;
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
+ * @author Matt Benson
  */
 public class TestPredicateUtils extends junit.framework.TestCase {
 
@@ -237,6 +238,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         coll.add(PredicateUtils.falsePredicate());
         coll.add(PredicateUtils.falsePredicate());
         assertEquals(false, PredicateUtils.allPredicate(coll).evaluate(null));
+        coll.clear();
+        coll.add(PredicateUtils.falsePredicate());
+        assertFalse(PredicateUtils.allPredicate(coll).evaluate(null));
+        coll.clear();
+        coll.add(PredicateUtils.truePredicate());
+        assertTrue(PredicateUtils.allPredicate(coll).evaluate(null));
+        coll.clear();
+        assertTrue(PredicateUtils.allPredicate(coll).evaluate(null));
     }
 
     public void testAllPredicateEx1() {
@@ -276,12 +285,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     }
     
     public void testAllPredicateEx5() {
-        try {
-            PredicateUtils.allPredicate(Collections.EMPTY_LIST);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        PredicateUtils.allPredicate(Collections.EMPTY_LIST);
     }
     
     public void testAllPredicateEx6() {
@@ -347,6 +351,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         coll.add(PredicateUtils.falsePredicate());
         coll.add(PredicateUtils.falsePredicate());
         assertEquals(false, PredicateUtils.anyPredicate(coll).evaluate(null));
+        coll.clear();
+        coll.add(PredicateUtils.falsePredicate());
+        assertFalse(PredicateUtils.anyPredicate(coll).evaluate(null));
+        coll.clear();
+        coll.add(PredicateUtils.truePredicate());
+        assertTrue(PredicateUtils.anyPredicate(coll).evaluate(null));
+        coll.clear();
+        assertFalse(PredicateUtils.anyPredicate(coll).evaluate(null));
     }
 
     public void testAnyPredicateEx1() {
@@ -386,12 +398,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     }
     
     public void testAnyPredicateEx5() {
-        try {
-            PredicateUtils.anyPredicate(Collections.EMPTY_LIST);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        PredicateUtils.anyPredicate(Collections.EMPTY_LIST);
     }
     
     public void testAnyPredicateEx6() {
@@ -461,6 +468,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         coll.add(PredicateUtils.falsePredicate());
         coll.add(PredicateUtils.falsePredicate());
         assertEquals(false, PredicateUtils.onePredicate(coll).evaluate(null));
+        coll.clear();
+        coll.add(PredicateUtils.falsePredicate());
+        assertFalse(PredicateUtils.onePredicate(coll).evaluate(null));
+        coll.clear();
+        coll.add(PredicateUtils.truePredicate());
+        assertTrue(PredicateUtils.onePredicate(coll).evaluate(null));
+        coll.clear();
+        assertFalse(PredicateUtils.onePredicate(coll).evaluate(null));
     }
 
     public void testOnePredicateEx1() {
@@ -500,12 +515,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     }
     
     public void testOnePredicateEx5() {
-        try {
-            PredicateUtils.onePredicate(Collections.EMPTY_LIST);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        PredicateUtils.onePredicate(Collections.EMPTY_LIST);
     }
     
     public void testOnePredicateEx6() {
@@ -571,6 +581,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         coll.add(PredicateUtils.falsePredicate());
         coll.add(PredicateUtils.falsePredicate());
         assertEquals(true, PredicateUtils.nonePredicate(coll).evaluate(null));
+        coll.clear();
+        coll.add(PredicateUtils.falsePredicate());
+        assertTrue(PredicateUtils.nonePredicate(coll).evaluate(null));
+        coll.clear();
+        coll.add(PredicateUtils.truePredicate());
+        assertFalse(PredicateUtils.nonePredicate(coll).evaluate(null));
+        coll.clear();
+        assertTrue(PredicateUtils.nonePredicate(coll).evaluate(null));
     }
 
     public void testNonePredicateEx1() {
@@ -610,12 +628,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     }
     
     public void testNonePredicateEx5() {
-        try {
-            PredicateUtils.nonePredicate(Collections.EMPTY_LIST);
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+        PredicateUtils.nonePredicate(Collections.EMPTY_LIST);
     }
     
     public void testNonePredicateEx6() {

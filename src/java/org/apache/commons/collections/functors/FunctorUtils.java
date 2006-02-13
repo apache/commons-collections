@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import org.apache.commons.collections.Transformer;
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
+ * @author Matt Benson
  */
 class FunctorUtils {
     
@@ -72,35 +73,11 @@ class FunctorUtils {
      * Validate the predicates to ensure that all is well.
      * 
      * @param predicates  the predicates to validate
-     */
-    static void validateMin2(Predicate[] predicates) {
-        if (predicates == null) {
-            throw new IllegalArgumentException("The predicate array must not be null");
-        }
-        if (predicates.length < 2) {
-            throw new IllegalArgumentException(
-                "At least 2 predicates must be specified in the predicate array, size was " + predicates.length);
-        }
-        for (int i = 0; i < predicates.length; i++) {
-            if (predicates[i] == null) {
-                throw new IllegalArgumentException("The predicate array must not contain a null predicate, index " + i + " was null");
-            }
-        }
-    }
-
-    /**
-     * Validate the predicates to ensure that all is well.
-     * 
-     * @param predicates  the predicates to validate
      * @return predicate array
      */
     static Predicate[] validate(Collection predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate collection must not be null");
-        }
-        if (predicates.size() < 2) {
-            throw new IllegalArgumentException(
-                "At least 2 predicates must be specified in the predicate collection, size was " + predicates.size());
         }
         // convert to array like this to guarantee iterator() ordering
         Predicate[] preds = new Predicate[predicates.size()];

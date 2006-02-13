@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,12 +21,15 @@ import java.util.Collection;
 import org.apache.commons.collections.Predicate;
 
 /**
- * Predicate implementation that returns true if any of the predicates return true.
+ * Predicate implementation that returns true if any of the
+ * predicates return true.
+ * If the array of predicates is empty, then this predicate returns false.
  * 
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
+ * @author Matt Benson
  */
 public final class AnyPredicate implements Predicate, PredicateDecorator, Serializable {
 
@@ -42,11 +45,10 @@ public final class AnyPredicate implements Predicate, PredicateDecorator, Serial
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if the predicates array has less than 2 elements
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static Predicate getInstance(Predicate[] predicates) {
-        FunctorUtils.validateMin2(predicates);
+        FunctorUtils.validate(predicates);
         predicates = FunctorUtils.copy(predicates);
         return new AnyPredicate(predicates);
     }
@@ -58,7 +60,6 @@ public final class AnyPredicate implements Predicate, PredicateDecorator, Serial
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
-     * @throws IllegalArgumentException if the predicates array has less than 2 elements
      */
     public static Predicate getInstance(Collection predicates) {
         Predicate[] preds = FunctorUtils.validate(predicates);
