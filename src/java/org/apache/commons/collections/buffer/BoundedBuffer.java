@@ -1,5 +1,5 @@
 /*
- *  Copyright 2005 The Apache Software Foundation
+ *  Copyright 2005-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,24 +15,33 @@
  */
 package org.apache.commons.collections.buffer;
 
-import org.apache.commons.collections.Buffer;
-import org.apache.commons.collections.BufferOverflowException;
-import org.apache.commons.collections.BufferUnderflowException;
-import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Iterator;
 
+import org.apache.commons.collections.BoundedCollection;
+import org.apache.commons.collections.Buffer;
+import org.apache.commons.collections.BufferOverflowException;
+import org.apache.commons.collections.BufferUnderflowException;
+import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
+
 /**
- * A wrapper class for buffers which makes them bounded.
+ * Decorates another <code>Buffer</code> to ensure a fixed maximum size.
+ * <p>
+ * Note: This class should only be used if you need to add bounded
+ * behaviour to another buffer. If you just want a bounded buffer then
+ * you should use {@link BoundedFifoBuffer} or {@link CircularFifoBuffer}.
+ * <p>
+ * The decoration methods allow you to specify a timeout value, which
+ * causes the add methods to wait for up to the specified wait period.
  *
  * @author James Carman
- * @version $Revision: $ $Date: $
+ * @author Stephen Colebourne
+ * @version $Revision$ $Date$
  * @since Commons Collections 3.2
  */
-public class BoundedBuffer extends SynchronizedBuffer {
+public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollection {
 
     /** The serialization version. */
     private static final long serialVersionUID = 1536432911093974264L;
@@ -132,6 +141,14 @@ public class BoundedBuffer extends SynchronizedBuffer {
                 throw new BufferOverflowException("Timeout expired");
             }
         }
+    }
+
+    public boolean isFull() {
+        return (collection.size() == maxSize());
+    }
+
+    public int maxSize() {
+        return maximumSize;
     }
 
     //-----------------------------------------------------------------------

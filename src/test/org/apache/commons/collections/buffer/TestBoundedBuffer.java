@@ -1,5 +1,5 @@
 /*
- *  Copyright 2005 The Apache Software Foundation
+ *  Copyright 2005-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package org.apache.commons.collections.buffer;
 
 import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.BoundedCollection;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferOverflowException;
 
@@ -23,10 +24,22 @@ import java.util.Iterator;
 import java.util.Collections;
 import java.util.Arrays;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
 public class TestBoundedBuffer extends AbstractTestObject {
 
     public TestBoundedBuffer(String testName) {
         super(testName);
+    }
+
+    public static Test suite() {
+        return new TestSuite(TestBoundedBuffer.class);
+    }
+
+    public static void main(String args[]) {
+        String[] testCaseName = { TestBoundedBuffer.class.getName() };
+        junit.textui.TestRunner.main(testCaseName);
     }
 
     public String getCompatibilityVersion() {
@@ -39,6 +52,20 @@ public class TestBoundedBuffer extends AbstractTestObject {
 
     public Object makeObject() {
         return BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
+    }
+
+    //-----------------------------------------------------------------------
+    public void testMaxSize() {
+        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 2, 500);
+        BoundedCollection bc = (BoundedCollection) bounded;
+        assertEquals(2, bc.maxSize());
+        assertEquals(false, bc.isFull());
+        bounded.add("A");
+        assertEquals(false, bc.isFull());
+        bounded.add("B");
+        assertEquals(true, bc.isFull());
+        bounded.remove();
+        assertEquals(false, bc.isFull());
     }
 
     public void testAddToFullBufferNoTimeout() {

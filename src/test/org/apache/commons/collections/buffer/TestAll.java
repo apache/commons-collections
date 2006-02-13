@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -48,6 +48,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestUnboundedFifoBuffer.suite());
         
         suite.addTest(TestBlockingBuffer.suite());
+        suite.addTest(TestBoundedBuffer.suite());
         suite.addTest(TestPredicatedBuffer.suite());
         suite.addTest(TestSynchronizedBuffer.suite());
         suite.addTest(TestTransformedBuffer.suite());
