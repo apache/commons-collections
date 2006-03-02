@@ -49,6 +49,12 @@ public final class AllPredicate implements Predicate, PredicateDecorator, Serial
      */
     public static Predicate getInstance(Predicate[] predicates) {
         FunctorUtils.validate(predicates);
+        if (predicates.length == 0) {
+            return TruePredicate.INSTANCE;
+        }
+        if (predicates.length == 1) {
+            return predicates[0];
+        }
         predicates = FunctorUtils.copy(predicates);
         return new AllPredicate(predicates);
     }
@@ -63,6 +69,12 @@ public final class AllPredicate implements Predicate, PredicateDecorator, Serial
      */
     public static Predicate getInstance(Collection predicates) {
         Predicate[] preds = FunctorUtils.validate(predicates);
+        if (preds.length == 0) {
+            return TruePredicate.INSTANCE;
+        }
+        if (preds.length == 1) {
+            return preds[0];
+        }
         return new AllPredicate(preds);
     }
 

@@ -210,6 +210,8 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testAllPredicate() {
+        assertTrue(PredicateUtils.allPredicate(
+            new Predicate[] {}).evaluate(null));
         assertEquals(true, PredicateUtils.allPredicate(new Predicate[] {
             PredicateUtils.truePredicate(), PredicateUtils.truePredicate(), PredicateUtils.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.allPredicate(new Predicate[] {
@@ -323,6 +325,8 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testAnyPredicate() {
+        assertFalse(PredicateUtils.anyPredicate(
+            new Predicate[] {}).evaluate(null));
         assertEquals(true, PredicateUtils.anyPredicate(new Predicate[] {
             PredicateUtils.truePredicate(), PredicateUtils.truePredicate(), PredicateUtils.truePredicate()}).evaluate(null));
         assertEquals(true, PredicateUtils.anyPredicate(new Predicate[] {
@@ -436,6 +440,8 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testOnePredicate() {
+        assertFalse(PredicateUtils.onePredicate(
+            new Predicate[] {}).evaluate(null));
         assertEquals(false, PredicateUtils.onePredicate(new Predicate[] {
             PredicateUtils.truePredicate(), PredicateUtils.truePredicate(), PredicateUtils.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.onePredicate(new Predicate[] {
@@ -553,6 +559,8 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testNonePredicate() {
+        assertTrue(PredicateUtils.nonePredicate(
+            new Predicate[] {}).evaluate(null));
         assertEquals(false, PredicateUtils.nonePredicate(new Predicate[] {
             PredicateUtils.truePredicate(), PredicateUtils.truePredicate(), PredicateUtils.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.nonePredicate(new Predicate[] {

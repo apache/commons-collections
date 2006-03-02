@@ -49,6 +49,12 @@ public final class OnePredicate implements Predicate, PredicateDecorator, Serial
      */
     public static Predicate getInstance(Predicate[] predicates) {
         FunctorUtils.validate(predicates);
+        if (predicates.length == 0) {
+            return FalsePredicate.INSTANCE;
+        }
+        if (predicates.length == 1) {
+            return predicates[0];
+        }
         predicates = FunctorUtils.copy(predicates);
         return new OnePredicate(predicates);
     }

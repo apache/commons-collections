@@ -49,6 +49,9 @@ public final class NonePredicate implements Predicate, PredicateDecorator, Seria
      */
     public static Predicate getInstance(Predicate[] predicates) {
         FunctorUtils.validate(predicates);
+        if (predicates.length == 0) {
+            return TruePredicate.INSTANCE;
+        }
         predicates = FunctorUtils.copy(predicates);
         return new NonePredicate(predicates);
     }
@@ -63,6 +66,9 @@ public final class NonePredicate implements Predicate, PredicateDecorator, Seria
      */
     public static Predicate getInstance(Collection predicates) {
         Predicate[] preds = FunctorUtils.validate(predicates);
+        if (preds.length == 0) {
+            return TruePredicate.INSTANCE;
+        }
         return new NonePredicate(preds);
     }
 
