@@ -415,14 +415,30 @@
   </contributors>
 
   <dependencies>
-    <!--dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <properties>
-        <scope>test</scope>
+       <scope>test</scope>
+       <comment>
+        Required only for testing.
+       </comment>
       </properties>
-    </dependency-->
+    </dependency>
+    <dependency>
+      <groupId>maven-plugins</groupId>
+      <artifactId>maven-cobertura-plugin</artifactId>
+      <version>1.1.1</version>
+      <url>http://maven-plugins.sourceforge.net/maven-cobertura-plugin/</url>
+      <type>plugin</type>
+      <properties>
+       <scope>test</scope>
+       <comment>
+        Required only for generating test coverage reports.
+       </comment>
+      </properties>
+    </dependency>
   </dependencies>
 
   <build>
@@ -448,22 +464,18 @@
   </build>
 
   <reports>
-    <report>maven-changelog-plugin</report>
-    <report>maven-changes-plugin</report>
+    <!--report>maven-changelog-plugin</report-->
+    <!--report>maven-changes-plugin</report-->
+    <!--report>maven-developer-activity-plugin</report-->
+    <!--report>maven-file-activity-plugin</report-->
     <!--report>maven-checkstyle-plugin</report-->
-    <!--report>maven-jcoverage-plugin</report-->
-    <!--report>maven-clover-plugin</report-->
-    <report>maven-developer-activity-plugin</report>
-    <report>maven-file-activity-plugin</report>
     <report>maven-javadoc-plugin</report>
     <report>maven-jdepend-plugin</report>
     <report>maven-junit-report-plugin</report>
     <report>maven-jxr-plugin</report>
     <report>maven-license-plugin</report>
+    <report>maven-cobertura-plugin</report>
     <report>maven-jdiff-plugin</report>
-    <!--report>maven-linkcheck-plugin</report-->
-    <!--report>maven-statcvs-plugin</report-->
-    <!--report>maven-tasklist-plugin</report-->
   </reports>
 
 </project>
