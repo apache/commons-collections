@@ -15,9 +15,9 @@
    limitations under the License.
   -->
 <!DOCTYPE org.apache.commons.menus SYSTEM 'http://jakarta.apache.org/commons/build/maven-build.dtd'>
-<project name="Collections">
+<project name="Commons Collections">
 
-  <title>Collections</title>
+  <title>Commons Collections</title>
 
   <body>
     <links>
@@ -27,7 +27,7 @@
     <menu name="Commons Collections">
       <item name="Overview" href="/index.html"/>
       <item name="Download" href="http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi"/>
-      <item name="Users guide" href="/userguide.html"/>
+      <item name="User guide" href="/userguide.html"/>
       <item name="History" href="/history.html"/>
       <item name="Javadoc (3.1 release)" href="api-release/index.html"/>
     </menu>
