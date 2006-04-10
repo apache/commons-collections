@@ -48,7 +48,7 @@ public class SwitchTransformer implements Transformer, Serializable {
      * 
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls
-     * @param defaultTransformer  the transformer to use if no match, null means nop
+     * @param defaultTransformer  the transformer to use if no match, null means return null
      * @return the <code>chained</code> transformer
      * @throws IllegalArgumentException if array is null
      * @throws IllegalArgumentException if any element in the array is null
@@ -117,7 +117,7 @@ public class SwitchTransformer implements Transformer, Serializable {
      * 
      * @param predicates  array of predicates, not cloned, no nulls
      * @param transformers  matching array of transformers, not cloned, no nulls
-     * @param defaultTransformer  the transformer to use if no match, null means nop
+     * @param defaultTransformer  the transformer to use if no match, null means return null
      */
     public SwitchTransformer(Predicate[] predicates, Transformer[] transformers, Transformer defaultTransformer) {
         super();
