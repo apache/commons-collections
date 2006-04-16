@@ -59,8 +59,8 @@ as are various <a href="maven-reports.html">project reports</a>.
 The JavaDoc API documents are available online:
 </p>
 <ul>
-<li>The <a href="apidocs-COLLECTIONS_3_1/index.html">current release 3.1</a></li>
-<li>The <a href="apidocs-COLLECTIONS_2_1_1/index.html">previous version 2.1.1</a></li>
+<li>The <a href="api-release/index.html">current release 3.1</a></li>
+<li>The <a href="api-2.1.1/index.html">previous version 2.1.1</a></li>
 <li>The <a href="apidocs/index.html">latest SVN</a></li>
 </ul>
 <p>
