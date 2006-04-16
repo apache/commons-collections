@@ -61,10 +61,11 @@ The JavaDoc API documents are available online:
 <ul>
 <li>The <a href="apidocs-COLLECTIONS_3_1/index.html">current release 3.1</a></li>
 <li>The <a href="apidocs-COLLECTIONS_2_1_1/index.html">previous version 2.1.1</a></li>
-<li>The <a href="apidocs/index.html">latest CVS</a></li>
+<li>The <a href="apidocs/index.html">latest SVN</a></li>
 </ul>
 <p>
-The <a href="http://cvs.apache.org/viewcvs/jakarta-commons/collections/">CVS repository</a> can be browsed.
+The <a href="cvs-usage.html">subversion repository</a> can be
+<a href="http://svn.apache.org/viewcvs.cgi/jakarta/commons/proper/collections/trunk/">browsed</a>.
 </p>
 </section>
 <!-- ================================================== -->
