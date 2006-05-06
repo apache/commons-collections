@@ -1,5 +1,5 @@
  <!--
-   Copyright 2001-2004 The Apache Software Foundation
+   Copyright 2001-2006 The Apache Software Foundation
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -52,9 +52,11 @@
   <property name="build.classes"           value="${build.home}/classes"/>
   <property name="build.tests"             value="${build.home}/tests"/>
   <property name="build.docs"              value="${build.home}/docs/apidocs"/>
+  <property name="build.src"               value="${build.home}/src-ide" />
   
   <!-- The name/location of the jar file to build -->
-  <property name="jar.name"             value="${component.name}-${component.version}.jar"/>
+  <property name="final.name"           value="${component.name}-${component.version}"/>
+  <property name="jar.name"             value="${final.name}.jar"/>
   <property name="build.jar.name"       value="${build.home}/${jar.name}"/>
   
   <!-- The name/location of the zip files to build -->
@@ -85,6 +87,9 @@
 
   <!-- JUnit -->
   <property name="test.failonerror"        value="true"/>
+
+  <!-- Maven -->
+  <property name="maven.repo"  value="${user.home}/.maven/repository" />
 
 
 <!-- ====================================================================== -->
@@ -462,7 +467,7 @@
 <!-- ====================================================================== -->
 
   <!-- Target needed for nightly builds -->
-  <target name="dist" depends="dist.create"
+  <target name="dist" depends="javadoc,dist.create"
           description="Create distribution folders">
     <delete dir="${dist.home}"/>
     <mkdir dir="${dist.home}" />
@@ -471,10 +476,21 @@
 	</copy>
   </target>
 
-  <target name="dist.create" depends="jar,testjar,javadoc,tf.validate,tf.jar,dist.bin,dist.src">
+  <target name="dist.create" depends="jar,testjar,tf.validate,tf.jar,dist.bin,dist.src">
   </target>
 
   <target name="dist.bin">
+    <copy todir="${build.src}">
+      <fileset dir="${basedir}/src/java" includes="**/*.java" />
+    </copy>
+    <copy todir="${build.src}/META-INF">
+      <fileset dir="${basedir}" includes="LICENSE*, NOTICE*" />
+    </copy>
+    <jar jarfile="${build.home}/${final.name}-src-ide.zip" basedir="${build.src}" />
+    <antcall target="internal-md5">
+      <param name="path" value="${build.home}/${final.name}.jar"/>
+    </antcall>
+  	
     <mkdir      dir="${build.dist.bin.work}"/>
     <copy     todir="${build.dist.bin.work}">
       <fileset dir=".">
@@ -511,7 +527,7 @@
     </copy>
     <copy     todir="${build.dist.src.work}">
       <fileset dir="${build.home}">
-        <include name="*.jar"/>
+        <include name="${final.name}.jar"/>
       </fileset>
     </copy>
     <copy     todir="${build.dist.src.work}">
@@ -527,6 +543,11 @@
 
   <target name="release" depends="dist.create,zip"
           description="Create release">
+  	<!-- POM -->
+  	<copy file="project.xml" tofile="${build.home}/${final.name}.pom" />
+    <antcall target="internal-md5">
+      <param name="path" value="${build.home}/${final.name}.pom"/>
+    </antcall>
   </target>
 
   <target name="zip" depends="zip.bin,zip.src">
@@ -581,20 +602,15 @@
   </target>
 
 <!-- ====================================================================== -->
-
   <target name="clirr">
-    <property name="jar.baseline" value="commons-collections-3.1.jar" />
-    <property name="jar.current" value="commons-collections-3.2.jar" />
-
     <taskdef resource="clirrtask.properties">
-      <classpath path="/clirr/clirr-0.3.jar;/clirr/bcel-5.1.jar;" />
+      <classpath path="${maven.repo}/clirr/jars/clirr-core-0.6-uber.jar;" />
     </taskdef>
-
     <clirr>
-      <origfiles dir="." includes="${jar.baseline}"/>
-      <newfiles dir="." includes="${jar.current}" />
-      <formatter type="plain" outfile="clirr.txt" />
+      <origfiles dir="${maven.repo}/commons-collections/jars" includes="commons-collections-3.1.jar"/>
+      <newfiles dir="${build.home}" includes="${final.name}.jar" />
+      <formatter type="plain" outfile="${build.home}/clirr.txt" />
     </clirr>
-
   </target>
+
 </project>
