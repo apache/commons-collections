@@ -1,5 +1,5 @@
 /*
- *  Copyright 1999-2004 The Apache Software Foundation
+ *  Copyright 1999-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,10 +15,12 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+
+import org.apache.commons.collections.ResettableListIterator;
 
 /**
  * Converts an iterator into a list iterator by caching the returned entries.
@@ -37,7 +39,7 @@ import java.util.NoSuchElementException;
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public class ListIteratorWrapper implements ListIterator {
+public class ListIteratorWrapper implements ResettableListIterator {
 
     /** Message used when remove, set or add are called. */
     private static final String UNSUPPORTED_OPERATION_MESSAGE =
@@ -46,7 +48,7 @@ public class ListIteratorWrapper implements ListIterator {
     /** The underlying iterator being decorated. */
     private final Iterator iterator;
     /** The list being used to cache the iterator. */
-    private final LinkedList list = new LinkedList();
+    private final List list = new ArrayList();
 
     /** The current index of this iterator. */
     private int currentIndex = 0;
@@ -174,6 +176,16 @@ public class ListIteratorWrapper implements ListIterator {
      */
     public void set(Object obj) throws UnsupportedOperationException {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
+    }
+
+    // ResettableIterator interface
+    //-------------------------------------------------------------------------
+    /**
+     * Resets this iterator back to the position at which the iterator
+     * was created.
+     */
+    public void reset()  {
+        currentIndex = 0;
     }
 
 }

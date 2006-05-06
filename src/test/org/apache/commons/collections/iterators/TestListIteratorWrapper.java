@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@ import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.apache.commons.collections.ResettableListIterator;
 
 /**
  * Tests the ListIteratorWrapper to insure that it simulates
@@ -81,7 +82,7 @@ public class TestListIteratorWrapper extends AbstractTestIterator {
         assertTrue("Iterator should now be empty", ! iter.hasNext() );
 
         try {
-            Object testValue = iter.next();
+            iter.next();
         } catch (Exception e) {
             assertTrue("NoSuchElementException must be thrown", 
                        e.getClass().equals((new NoSuchElementException()).getClass()));
@@ -96,7 +97,7 @@ public class TestListIteratorWrapper extends AbstractTestIterator {
         }
 
         try {
-            Object testValue = iter.previous();
+            iter.previous();
         } catch (Exception e) {
             assertTrue("NoSuchElementException must be thrown", 
                        e.getClass().equals((new NoSuchElementException()).getClass()));
@@ -124,5 +125,27 @@ public class TestListIteratorWrapper extends AbstractTestIterator {
 
     }
 
-}
+    public void testReset() {
+        ResettableListIterator iter = (ResettableListIterator) makeFullIterator();
+        Object first = iter.next();
+        Object second = iter.next();
+        
+        iter.reset();
+        
+        // after reset, there shouldn't be any previous elements
+        assertFalse("No previous elements after reset()", iter.hasPrevious());
 
+        // after reset, the results should be the same as before
+        assertEquals("First element should be the same", first, iter.next());
+        assertEquals("Second elment should be the same", second, iter.next());
+        
+        // after passing the point, where we resetted, continuation should work as expected
+        for (int i = 2; i < testArray.length; i++) {
+            Object testValue = testArray[i];
+            Object iterValue = iter.next();
+
+            assertEquals("Iteration value is correct", testValue, iterValue);
+        }
+    }
+
+}
