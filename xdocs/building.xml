@@ -38,6 +38,10 @@ limitations under the License.
     The result will be in the "build" subdirectory.
   </p>
   <p>
+    All tests can be run with "ant test".
+    A single test can be run with "ant -Dtestcase=org.apache.commons.collections.TestXxx test".
+  </p>
+  <p>
     To build the Javadocs, run "ant javadoc".
     The result will be in "build/docs/apidocs".
   </p>

@@ -277,9 +277,12 @@
 
 <!-- ====================================================================== -->
 
-  <!-- Used to obtain more detailed info on test failures -->
-  <target name="test"  depends="compile.tests"
-          description="Run all unit test cases">
+  <!-- Tests collections, either running all or one test -->
+  <target name="test" depends="-test-all,-test-single"
+          description="Run unit tests" />
+
+  <!-- Runs all tests -->
+  <target name="-test-all" depends="compile.tests" unless="testcase">
     <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
       <formatter type="brief" />
       <classpath>
@@ -301,6 +304,22 @@
         </fileset>
         <formatter type="brief" usefile="false" />
       </batchtest>
+    </junit>
+  </target>
+
+  <!-- Runs a single test -->
+  <target name="-test-single" depends="compile.tests" if="testcase">
+    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+      <formatter type="brief" />
+      <classpath>
+        <pathelement location="${build.classes}"/>
+        <pathelement location="${build.tests}"/>
+        <pathelement location="${junit.jar}"/>
+      </classpath>
+
+      <test name="${testcase}" fork="yes">
+        <formatter type="brief" usefile="false" />
+      </test>
     </junit>
   </target>
 
