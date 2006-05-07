@@ -66,6 +66,14 @@ public class TestBoundedBuffer extends AbstractTestObject {
         assertEquals(true, bc.isFull());
         bounded.remove();
         assertEquals(false, bc.isFull());
+        try {
+            BoundedBuffer.decorate(new UnboundedFifoBuffer(), 0);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            BoundedBuffer.decorate(new UnboundedFifoBuffer(), -1);
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
 
     public void testAddToFullBufferNoTimeout() {
@@ -83,6 +91,15 @@ public class TestBoundedBuffer extends AbstractTestObject {
         bounded.add( "Hello" );
         try {
             bounded.addAll(Collections.singleton("World"));
+            fail();
+        } catch (BufferOverflowException e) {
+        }
+    }
+
+    public void testAddAllToEmptyBufferExceedMaxSizeNoTimeout() {
+        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
+        try {
+            bounded.addAll(Collections.nCopies(2, "test"));
             fail();
         } catch (BufferOverflowException e) {
         }

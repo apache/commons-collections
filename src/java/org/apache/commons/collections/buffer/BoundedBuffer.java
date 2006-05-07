@@ -45,6 +45,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
 
     /** The serialization version. */
     private static final long serialVersionUID = 1536432911093974264L;
+
     /** The maximum size. */
     private final int maximumSize;
     /** The timeout milliseconds. */
@@ -52,13 +53,17 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
 
     /**
      * Factory method to create a bounded buffer.
+     * <p>
+     * When the buffer is full, it will immediately throw a
+     * <code>BufferOverflowException</code> on calling <code>add()</code>.
      *
      * @param buffer  the buffer to decorate, must not be null
-     * @param maximumSize  the maximum size
+     * @param maximumSize  the maximum size, must be size one or greater
      * @return a new bounded buffer
      * @throws IllegalArgumentException if the buffer is null
+     * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    public static Buffer decorate(Buffer buffer, int maximumSize) {
+    public static BoundedBuffer decorate(Buffer buffer, int maximumSize) {
         return new BoundedBuffer(buffer, maximumSize, 0L);
     }
 
@@ -67,26 +72,32 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
      * amount of time.
      *
      * @param buffer  the buffer to decorate, must not be null
-     * @param maximumSize  the maximum size
+     * @param maximumSize  the maximum size, must be size one or greater
      * @param timeout  the maximum amount of time to wait in milliseconds
      * @return a new bounded buffer
      * @throws IllegalArgumentException if the buffer is null
+     * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    public static Buffer decorate(Buffer buffer, int maximumSize, long timeout) {
+    public static BoundedBuffer decorate(Buffer buffer, int maximumSize, long timeout) {
         return new BoundedBuffer(buffer, maximumSize, timeout);
     }
 
     //-----------------------------------------------------------------------
     /**
-     * Constructor that wraps (not copies) another buffer, making it bounded waiting only up to
-     * a maximum amount of time.
-     * @param buffer the buffer to wrap, must not be null
-     * @param maximumSize the maximum size of the buffer
-     * @param timeout the maximum amount of time to wait
+     * Constructor that wraps (not copies) another buffer, making it bounded
+     * waiting only up to a maximum amount of time.
+     *
+     * @param buffer  the buffer to wrap, must not be null
+     * @param maximumSize  the maximum size, must be size one or greater
+     * @param timeout  the maximum amount of time to wait
      * @throws IllegalArgumentException if the buffer is null
+     * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    protected BoundedBuffer( Buffer buffer, int maximumSize, long timeout ) {
-        super( buffer );
+    protected BoundedBuffer(Buffer buffer, int maximumSize, long timeout) {
+        super(buffer);
+        if (maximumSize < 1) {
+            throw new IllegalArgumentException();
+        }
         this.maximumSize = maximumSize;
         this.timeout = timeout;
     }
@@ -119,32 +130,40 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
     }
 
     private void timeoutWait(final int nAdditions) {
-        synchronized (lock) {
-            if (timeout < 0 && getBuffer().size() + nAdditions > maximumSize) {
-                throw new BufferOverflowException(
+        // method synchronized by callers
+        if (nAdditions > maximumSize) {
+            throw new BufferOverflowException(
                     "Buffer size cannot exceed " + maximumSize);
-            }
-            final long expiration = System.currentTimeMillis() + timeout;
-            long timeLeft = expiration - System.currentTimeMillis();
-            while (timeLeft > 0 && getBuffer().size() + nAdditions > maximumSize) {
-                try {
-                    lock.wait(timeLeft);
-                    timeLeft = expiration - System.currentTimeMillis();
-                } catch (InterruptedException e) {
-                    PrintWriter out = new PrintWriter(new StringWriter());
-                    e.printStackTrace(out);
-                    throw new BufferUnderflowException(
-                        "Caused by InterruptedException: " + out.toString());
-                }
-            }
+        }
+        if (timeout <= 0) {
+            // no wait period (immediate timeout)
             if (getBuffer().size() + nAdditions > maximumSize) {
-                throw new BufferOverflowException("Timeout expired");
+                throw new BufferOverflowException(
+                        "Buffer size cannot exceed " + maximumSize);
             }
+            return;
+        }
+        final long expiration = System.currentTimeMillis() + timeout;
+        long timeLeft = expiration - System.currentTimeMillis();
+        while (timeLeft > 0 && getBuffer().size() + nAdditions > maximumSize) {
+            try {
+                lock.wait(timeLeft);
+                timeLeft = expiration - System.currentTimeMillis();
+            } catch (InterruptedException ex) {
+                PrintWriter out = new PrintWriter(new StringWriter());
+                ex.printStackTrace(out);
+                throw new BufferUnderflowException(
+                    "Caused by InterruptedException: " + out.toString());
+            }
+        }
+        if (getBuffer().size() + nAdditions > maximumSize) {
+            throw new BufferOverflowException("Timeout expired");
         }
     }
 
     public boolean isFull() {
-        return (collection.size() == maxSize());
+        // size() is synchronized
+        return (size() == maxSize());
     }
 
     public int maxSize() {
