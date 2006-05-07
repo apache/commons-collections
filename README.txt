@@ -27,7 +27,7 @@ build.properties,  and modify to reflect
 the location of the junit.jar on your computer.
 
 
-Once you have Ant propertly installed, and the
+Once you have Ant properly installed, and the
 build.properties file correctly reflects the location
 of your junit.jar, you are ready to build and test.
 The major targets are:
