@@ -27,7 +27,7 @@
 <section name="Version compatibility of Commons Collections">
 
 <p>
-This page details the compatibiilty of different collections releases.
+This page details the compatibility of different collections releases.
 </p>
 
 <p>
@@ -88,7 +88,7 @@ The following deprecations must be resolved in v2.1.1 to allow compatibiilty wit
 
 <p>
 For the future, a new tool <a href="http://clirr.sourceforge.net">clirr</a> is being developed
-to help spot binary incompatibiilty before release.
+to help spot binary incompatibility before release.
 </p>
 
 </section>

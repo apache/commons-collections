@@ -35,7 +35,7 @@ This page documents some of the key stages.
 <b>Collections 1.0</b> was a gathering of different Collection, Comparator, Iterator and
 Utility classes written elsewhere in Jakarta.
 At this stage, the component focussed mainly on getting re-use of code by making
-everything avaialable together.
+everything available together.
 </p>
 <p>
 All classes were placed in one package except the comparators, which had their own subpackage.

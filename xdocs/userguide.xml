@@ -122,7 +122,7 @@ map.nextKey("SIX");  // returns "SEVEN"
 
 <p>
 A new interface hierarchy has been added to support bidirectional maps - <code>BidiMap.</code>
-These represent maps where the the key can lookup the value and the value can lookup the key with equal ease.
+These represent maps where the key can lookup the value and the value can lookup the key with equal ease.
 </p>
 <source>
 BidiMap bidi = new TreeBidiMap();
