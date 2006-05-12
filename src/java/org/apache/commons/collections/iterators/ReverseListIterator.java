@@ -34,6 +34,7 @@ import org.apache.commons.collections.ResettableListIterator;
  *
  * @author Serge Knystautas
  * @author Stephen Colebourne
+ * @since Commons Collections 3.2
  * @version $Revision: $ $Date$
  */
 public class ReverseListIterator implements ResettableListIterator {

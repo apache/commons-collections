@@ -32,6 +32,8 @@ import org.apache.commons.collections.ResettableListIterator;
  * of as the underlying iterator is traversed.
  * <p>
  * The optional operations of <code>ListIterator</code> are not supported.
+ * <p>
+ * This class implements ResettableListIterator from Commons Collections 3.2.
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
@@ -183,6 +185,8 @@ public class ListIteratorWrapper implements ResettableListIterator {
     /**
      * Resets this iterator back to the position at which the iterator
      * was created.
+     *
+     * @since Commons Collections 3.2
      */
     public void reset()  {
         currentIndex = 0;
