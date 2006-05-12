@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.ResettableIterator;
+import org.apache.commons.collections.ResettableListIterator;
 
 /**
  * A ListIterator that restarts when it reaches the end or when it
@@ -38,7 +38,7 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @author Eric Crampton <ccesc@eonomine.com>
  */
-public class LoopingListIterator implements ResettableIterator {
+public class LoopingListIterator implements ResettableListIterator {
 
     /** The list to base the iterator on */
     private List list;

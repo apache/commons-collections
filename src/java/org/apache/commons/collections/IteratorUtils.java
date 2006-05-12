@@ -697,7 +697,7 @@ public class IteratorUtils {
      * @throws NullPointerException if the list is null
      * @since Commons Collections 3.2
      */
-    public static ResettableIterator loopingListIterator(List list) {
+    public static ResettableListIterator loopingListIterator(List list) {
         if (list == null) {
             throw new NullPointerException("List must not be null");
         }
