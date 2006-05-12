@@ -33,8 +33,11 @@ import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
  * behaviour to another buffer. If you just want a bounded buffer then
  * you should use {@link BoundedFifoBuffer} or {@link CircularFifoBuffer}.
  * <p>
- * The decoration methods allow you to specify a timeout value, which
- * causes the add methods to wait for up to the specified wait period.
+ * The decoration methods allow you to specify a timeout value.
+ * This alters the behaviour of the add methods when the buffer is full.
+ * Normally, when the buffer is full, the add method will throw an exception.
+ * With a timeout, the add methods will wait for up to the timeout period
+ * to try and add the elements.
  *
  * @author James Carman
  * @author Stephen Colebourne

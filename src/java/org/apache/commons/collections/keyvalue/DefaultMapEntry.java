@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import org.apache.commons.collections.KeyValue;
 
 /**
  * A restricted implementation of {@link java.util.Map.Entry} that prevents
- * the MapEntry contract from being broken.
+ * the <code>Map.Entry</code> contract from being broken.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
@@ -32,7 +32,7 @@ import org.apache.commons.collections.KeyValue;
  * @author Stephen Colebourne
  */
 public final class DefaultMapEntry extends AbstractMapEntry {
-    
+
     /**
      * Constructs a new entry with the specified key and given value.
      *
@@ -44,7 +44,7 @@ public final class DefaultMapEntry extends AbstractMapEntry {
     }
 
     /**
-     * Constructs a new entry from the specified KeyValue.
+     * Constructs a new entry from the specified <code>KeyValue</code>.
      *
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
@@ -54,7 +54,7 @@ public final class DefaultMapEntry extends AbstractMapEntry {
     }
 
     /**
-     * Constructs a new entry from the specified MapEntry.
+     * Constructs a new entry from the specified <code>Map.Entry</code>.
      *
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -18,7 +18,8 @@ package org.apache.commons.collections.keyvalue;
 import org.apache.commons.collections.KeyValue;
 
 /**
- * Abstract pair class to assist with creating KeyValue and MapEntry implementations.
+ * Abstract pair class to assist with creating <code>KeyValue</code>
+ * and {@link java.util.Map.Entry Map.Entry} implementations.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
@@ -29,12 +30,12 @@ import org.apache.commons.collections.KeyValue;
  * @author Stephen Colebourne
  */
 public abstract class AbstractKeyValue implements KeyValue {
-    
+
     /** The key */
     protected Object key;
     /** The value */
     protected Object value;
-    
+
     /**
      * Constructs a new pair with the specified key and given value.
      *

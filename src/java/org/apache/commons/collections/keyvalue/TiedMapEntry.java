@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.util.Map;
 import org.apache.commons.collections.KeyValue;
 
 /**
- * A Map Entry tied to a map underneath.
+ * A {@link java.util.Map.Entry Map.Entry} tied to a map underneath.
  * <p>
  * This can be used to enable a map entry to make changes on the underlying
  * map, however this will probably mess up any iterators.
@@ -40,7 +40,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
     private final Map map;
     /** The key */
     private final Object key;
-    
+
     /**
      * Constructs a new entry with the given Map and key.
      *
@@ -88,7 +88,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
     }
 
     /**
-     * Compares this Map Entry with another Map Entry.
+     * Compares this <code>Map.Entry</code> with another <code>Map.Entry</code>.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
      * 
@@ -108,7 +108,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
             (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
             (value == null ? other.getValue() == null : value.equals(other.getValue()));
     }
-     
+
     /**
      * Gets a hashCode compatible with the equals method.
      * <p>
@@ -121,7 +121,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
         return (getKey() == null ? 0 : getKey().hashCode()) ^
                (value == null ? 0 : value.hashCode()); 
     }
-    
+
     /**
      * Gets a string version of the entry.
      * 

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ import org.apache.commons.collections.KeyValue;
 import org.apache.commons.collections.Unmodifiable;
 
 /**
- * A {@link java.util.Map.Entry} that throws UnsupportedOperationException
- * when <code>setValue</code> is called.
+ * A {@link java.util.Map.Entry Map.Entry} that throws
+ * UnsupportedOperationException when <code>setValue</code> is called.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
@@ -30,7 +30,7 @@ import org.apache.commons.collections.Unmodifiable;
  * @author Stephen Colebourne
  */
 public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmodifiable {
-    
+
     /**
      * Constructs a new entry with the specified key and given value.
      *
@@ -42,7 +42,7 @@ public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmo
     }
 
     /**
-     * Constructs a new entry from the specified KeyValue.
+     * Constructs a new entry from the specified <code>KeyValue</code>.
      *
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
@@ -52,7 +52,7 @@ public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmo
     }
 
     /**
-     * Constructs a new entry from the specified MapEntry.
+     * Constructs a new entry from the specified <code>Map.Entry</code>.
      *
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
@@ -60,7 +60,7 @@ public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmo
     public UnmodifiableMapEntry(final Map.Entry entry) {
         super(entry.getKey(), entry.getValue());
     }
-    
+
     /**
      * Throws UnsupportedOperationException.
      * 

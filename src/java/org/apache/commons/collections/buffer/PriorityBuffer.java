@@ -45,10 +45,11 @@ import org.apache.commons.collections.BufferUnderflowException;
  * {@link org.apache.commons.collections.BufferUtils#synchronizedBuffer(Buffer)} or
  * {@link org.apache.commons.collections.buffer.SynchronizedBuffer#decorate(Buffer)}
  * to provide synchronized access to a <code>PriorityBuffer</code>:
- *
  * <pre>
  * Buffer heap = SynchronizedBuffer.decorate(new PriorityBuffer());
  * </pre>
+ * <p>
+ * This class is Serializable from Commons Collections 3.2.
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
  * @version $Revision$ $Date$

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2005 The Apache Software Foundation
+ *  Copyright 2005-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Decorates another <code>List</code> to make it seemlessly grow when
+ * Decorates another <code>List</code> to make it seamlessly grow when
  * indices larger than the list size are used on add and set,
  * avoiding most IndexOutOfBoundsExceptions.
  * <p>
@@ -34,7 +34,7 @@ import java.util.List;
  * not to use excessively large indices, as the internal list will grow to
  * match.
  * <p>
- * Trying to use any method other than add or set with an invalid inde will
+ * Trying to use any method other than add or set with an invalid index will
  * call the underlying list and probably result in an IndexOutOfBoundsException.
  * <p>
  * Take care when using this list with <code>null</code> values, as
@@ -45,12 +45,12 @@ import java.util.List;
  * <p>
  * This class differs from {@link LazyList} because here growth occurs on
  * set and add, where <code>LazyList</code> grows on get. However, they
- * could easily be used together by decorating twice.
+ * can be used together by decorating twice.
  *
  * @see LazyList
  * @since Commons Collections 3.2
  * @version $Revision: 155406 $ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Paul Legato
  */

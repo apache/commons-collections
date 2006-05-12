@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,8 +20,9 @@ import java.io.Serializable;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Transformer implementation that returns the <code>String.valueOf</code>.
- * 
+ * Transformer implementation that returns the result of calling
+ * <code>String.valueOf</code> on the input object.
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

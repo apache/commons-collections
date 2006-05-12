@@ -1,5 +1,5 @@
 /*
- *  Copyright 2002-2004 The Apache Software Foundation
+ *  Copyright 2002-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ import org.apache.commons.collections.BufferUnderflowException;
 
 /**
  * The BoundedFifoBuffer is a very efficient implementation of
- * Buffer that does not alter the size of the buffer at runtime.
+ * <code>Buffer</code> that is of a fixed size.
  * <p>
  * The removal order of a <code>BoundedFifoBuffer</code> is based on the 
  * insertion order; elements are removed in the same order in which they

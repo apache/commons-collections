@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,7 +20,8 @@ import java.util.Map;
 import org.apache.commons.collections.KeyValue;
 
 /**
- * A mutable KeyValue pair that does not implement MapEntry.
+ * A mutable <code>KeyValue</code> pair that does not implement
+ * {@link java.util.Map.Entry Map.Entry}.
  * <p>
  * Note that a <code>DefaultKeyValue</code> instance may not contain
  * itself as a key or value.
@@ -53,7 +54,7 @@ public class DefaultKeyValue extends AbstractKeyValue {
     }
 
     /**
-     * Constructs a new pair from the specified KeyValue.
+     * Constructs a new pair from the specified <code>KeyValue</code>.
      *
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
@@ -63,7 +64,7 @@ public class DefaultKeyValue extends AbstractKeyValue {
     }
 
     /**
-     * Constructs a new pair from the specified MapEntry.
+     * Constructs a new pair from the specified <code>Map.Entry</code>.
      *
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
@@ -119,7 +120,7 @@ public class DefaultKeyValue extends AbstractKeyValue {
 
     //-----------------------------------------------------------------------
     /**
-     * Compares this Map Entry with another Map Entry.
+     * Compares this <code>Map.Entry</code> with another <code>Map.Entry</code>.
      * <p>
      * Returns true if the compared object is also a <code>DefaultKeyValue</code>,
      * and its key and value are equal to this object's key and value.

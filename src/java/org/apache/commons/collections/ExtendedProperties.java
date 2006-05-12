@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2005 The Apache Software Foundation
+ *  Copyright 2001-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -69,7 +69,7 @@ import java.util.Vector;
  *  </li>
  *  <li>
  *   If a <i>key</i> is used more than once, the values are appended
- *   like if they were on the same line separated with commas.
+ *   as if they were on the same line separated with commas.
  *  </li>
  *  <li>
  *   Blank lines and lines starting with character '#' are skipped.

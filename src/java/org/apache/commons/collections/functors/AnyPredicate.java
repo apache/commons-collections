@@ -41,7 +41,10 @@ public final class AnyPredicate implements Predicate, PredicateDecorator, Serial
     
     /**
      * Factory to create the predicate.
-     * 
+     * <p>
+     * If the array is size zero, the predicate always returns false.
+     * If the array is size one, then that predicate is returned.
+     *
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
@@ -60,7 +63,10 @@ public final class AnyPredicate implements Predicate, PredicateDecorator, Serial
 
     /**
      * Factory to create the predicate.
-     * 
+     * <p>
+     * If the collection is size zero, the predicate always returns false.
+     * If the collection is size one, then that predicate is returned.
+     *
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null

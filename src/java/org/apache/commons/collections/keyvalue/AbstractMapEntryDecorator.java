@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import java.util.Map;
 import org.apache.commons.collections.KeyValue;
 
 /**
- * Provides a base decorator that allows additional functionality to be added
- * to a Map Entry.
+ * Provides a base decorator that allows additional functionality to be
+ * added to a {@link java.util.Map.Entry Map.Entry}.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$

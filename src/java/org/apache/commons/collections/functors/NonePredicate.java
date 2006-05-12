@@ -41,7 +41,9 @@ public final class NonePredicate implements Predicate, PredicateDecorator, Seria
     
     /**
      * Factory to create the predicate.
-     * 
+     * <p>
+     * If the array is size zero, the predicate always returns true.
+     *
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
@@ -58,7 +60,9 @@ public final class NonePredicate implements Predicate, PredicateDecorator, Seria
 
     /**
      * Factory to create the predicate.
-     * 
+     * <p>
+     * If the collection is size zero, the predicate always returns true.
+     *
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates array is null

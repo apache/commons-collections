@@ -1,5 +1,5 @@
 /*
- *  Copyright 2002-2004 The Apache Software Foundation
+ *  Copyright 2002-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,7 +27,8 @@ import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 
 /**
- * UnboundedFifoBuffer is a very efficient buffer implementation.
+ * UnboundedFifoBuffer is a very efficient implementation of
+ * <code>Buffer</code> that can grow to any size.
  * According to performance testing, it exhibits a constant access time, but it
  * also outperforms ArrayList when used for the same purpose.
  * <p>
