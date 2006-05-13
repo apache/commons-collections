@@ -24,7 +24,10 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if only one of the
  * predicates return true.
  * If the array of predicates is empty, then this predicate returns false.
- * 
+ * <p>
+ * NOTE: In versions prior to 3.2 an array size of zero or one
+ * threw an exception.
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
