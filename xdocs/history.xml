@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
  <!--
-   Copyright 2004 The Apache Software Foundation
+   Copyright 2004-2006 The Apache Software Foundation
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -60,8 +60,8 @@ Thus there were now three packages, main, comparator and iterator.
 </p>
 
 <p>
-<b>Collections 3.0</b> represents a re-birth of collections after an 18 month absence.
-Many, many classes had been added to CVS but not released including primitive and
+<b>Collections 3.0</b> represented a re-birth of collections after an 18 month absence.
+Many, many classes were added to CVS but not released including primitive and
 event-generating classes. In order to control the size of the collections distribution,
 these became two new projects - primitives and events.
 </p>
@@ -77,21 +77,26 @@ As a result of this, and the general ongoing growth in the component, a full sub
 layout was chosen - one subpackage for each principal collections interface.
 </p>
 <p>
-Essentially the 3.0 release represents the result of changing from a 'dumping ground'
+Essentially the 3.0 release represented the result of changing from a 'dumping ground'
 of re-used collections to a component <b>designed</b> for the purpose.
 Of course, backwards compatibility has been retained during all transitions using deprecation.
 </p>
 
 <p>
-<b>Collections 2.1.1</b> is a patch release to v2.1.
+<b>Collections 2.1.1</b> was a patch release to v2.1.
 Unfortunately, v3.0 created a <a href="compatibility.html">binary incompatibility</a> in the IteratorUtils class.
 This patch was created as a work around, enabling v2.1.1 to be compatible with v3.1.
 </p>
 
 <p>
-<b>Collections 3.1</b> fixes some bugs in v3.0 and adds a few new enhancements.
+<b>Collections 3.1</b> fixed some bugs in v3.0 and adds a few new enhancements.
 The most notable change is a new list implementation, TreeList, that is well balanced for insertions and removals at any index.
-Other changes include more classes implementing Serializable and a ReferenceIdentityMap.
+Other changes included more classes implementing Serializable and a ReferenceIdentityMap.
+</p>
+
+<p>
+<b>Collections 3.2</b> combined bug fixes and some new features.
+Notably MultiValueMap is a new more flexible implementation of MultiHashMap.
 </p>
 
 </section>

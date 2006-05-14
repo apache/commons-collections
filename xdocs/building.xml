@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-Copyright 2005 The Apache Software Foundation.
+Copyright 2005-2006 The Apache Software Foundation.
  
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,9 +27,9 @@ limitations under the License.
   primary build system, however <a href="http://maven.apache.org">Maven</a>
   is used for site generation.
 </p>
-<!--p>
-  You may also be interested in the <a href="upgradeto1_1.html">upgrade notes</a>.
-</p-->
+<p>
+  You may also be interested in the <a href="release_3_2.html">v3.2 release notes</a>.
+</p>
 </section>
 <!-- ================================================== -->
 <section name="Ant Goals">

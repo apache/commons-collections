@@ -29,7 +29,7 @@
       <item name="Download" href="http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi"/>
       <item name="User guide" href="/userguide.html"/>
       <item name="History" href="/history.html"/>
-      <item name="Javadoc (3.1 release)" href="api-release/index.html"/>
+      <item name="Javadoc (3.2 release)" href="api-release/index.html"/>
     </menu>
 
     <menu name="Development">
