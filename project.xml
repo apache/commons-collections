@@ -18,7 +18,7 @@
   <pomVersion>3</pomVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <currentVersion>3.2-SNAPSHOT</currentVersion>
+  <currentVersion>3.2</currentVersion>
   <inceptionYear>2001</inceptionYear>
   <name>Collections</name>
   <shortDescription>Commons Collections</shortDescription>
@@ -480,8 +480,8 @@
     <report>maven-junit-report-plugin</report>
     <report>maven-jxr-plugin</report>
     <report>maven-license-plugin</report>
-    <report>maven-cobertura-plugin</report>
-    <report>maven-jdiff-plugin</report>
+    <!--report>maven-cobertura-plugin</report>
+    <report>maven-jdiff-plugin</report-->
   </reports>
 
 </project>
