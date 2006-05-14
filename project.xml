@@ -18,7 +18,7 @@
   <pomVersion>3</pomVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <currentVersion>3.2</currentVersion>
+  <currentVersion>3.3-SNAPSHOT</currentVersion>
   <inceptionYear>2001</inceptionYear>
   <name>Collections</name>
   <shortDescription>Commons Collections</shortDescription>
@@ -98,6 +98,11 @@
       <id>3.1</id>
       <name>3.1</name>
       <tag>COLLECTIONS_3_1</tag>
+    </version>
+    <version>
+      <id>3.2</id>
+      <name>3.2</name>
+      <tag>COLLECTIONS_3_2</tag>
     </version>
   </versions>
 
