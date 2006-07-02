@@ -1,5 +1,5 @@
 /*
- *  Copyright 1999-2005 The Apache Software Foundation
+ *  Copyright 1999-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -80,8 +80,15 @@ public class IteratorChain implements Iterator {
 
     /**
      * Construct an IteratorChain with a single Iterator.
+     * <p>
+     * This method takes one iterator. The newly constructed iterator
+     * will iterate through that iterator. Thus calling this constructor
+     * on its own will have no effect other than decorating the input iterator.
+     * <p>
+     * You will normally use {@link #addIterator(Iterator)} to add
+     * some more iterators after using this constructor.
      *
-     * @param iterator first Iterator in the IteratorChain
+     * @param iterator  the first child iterator in the IteratorChain, not null
      * @throws NullPointerException if the iterator is null
      */
     public IteratorChain(Iterator iterator) {
@@ -92,47 +99,56 @@ public class IteratorChain implements Iterator {
     /**
      * Constructs a new <code>IteratorChain</code> over the two
      * given iterators.
+     * <p>
+     * This method takes two iterators. The newly constructed iterator
+     * will iterate through each one of the input iterators in turn.
      *
-     * @param a  the first child iterator
-     * @param b  the second child iterator
+     * @param first  the first child iterator in the IteratorChain, not null
+     * @param second  the second child iterator in the IteratorChain, not null
      * @throws NullPointerException if either iterator is null
      */
-    public IteratorChain(Iterator a, Iterator b) {
+    public IteratorChain(Iterator first, Iterator second) {
         super();
-        addIterator(a);
-        addIterator(b);
+        addIterator(first);
+        addIterator(second);
     }
 
     /**
      * Constructs a new <code>IteratorChain</code> over the array
      * of iterators.
+     * <p>
+     * This method takes an array of iterators. The newly constructed iterator
+     * will iterate through each one of the input iterators in turn.
      *
-     * @param iterators  the array of iterators
+     * @param iteratorChain  the array of iterators, not null
      * @throws NullPointerException if iterators array is or contains null
      */
-    public IteratorChain(Iterator[] iterators) {
+    public IteratorChain(Iterator[] iteratorChain) {
         super();
-        for (int i = 0; i < iterators.length; i++) {
-            addIterator(iterators[i]);
+        for (int i = 0; i < iteratorChain.length; i++) {
+            addIterator(iteratorChain[i]);
         }
     }
 
     /**
      * Constructs a new <code>IteratorChain</code> over the collection
      * of iterators.
+     * <p>
+     * This method takes a collection of iterators. The newly constructed iterator
+     * will iterate through each one of the input iterators in turn.
      *
-     * @param iterators  the collection of iterators
+     * @param iteratorChain  the collection of iterators, not null
      * @throws NullPointerException if iterators collection is or contains null
      * @throws ClassCastException if iterators collection doesn't contain an iterator
      */
-    public IteratorChain(Collection iterators) {
+    public IteratorChain(Collection iteratorChain) {
         super();
-        for (Iterator it = iterators.iterator(); it.hasNext();) {
+        for (Iterator it = iteratorChain.iterator(); it.hasNext();) {
             Iterator item = (Iterator) it.next();
             addIterator(item);
         }
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Add an Iterator to the end of the chain
