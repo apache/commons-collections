@@ -1,5 +1,5 @@
 /*
- *  Copyright 2003-2004 The Apache Software Foundation
+ *  Copyright 2003-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import java.util.Arrays;
  * A <code>MultiKey</code> allows multiple map keys to be merged together.
  * <p>
  * The purpose of this class is to avoid the need to write code to handle
- * maps of maps. An example might be the need to lookup a filename by 
+ * maps of maps. An example might be the need to look up a file name by 
  * key and locale. The typical solution might be nested maps. This class
  * can be used instead by creating an instance passing in the key and locale.
  * <p>
@@ -33,7 +33,7 @@ import java.util.Arrays;
  * MultiKey multiKey = new MultiKey(key, locale);
  * map.put(multiKey, localizedText);
  *
- * // later retireve the localized text
+ * // later retrieve the localized text
  * MultiKey multiKey = new MultiKey(key, locale);
  * String localizedText = (String) map.get(multiKey);
  * </pre>
