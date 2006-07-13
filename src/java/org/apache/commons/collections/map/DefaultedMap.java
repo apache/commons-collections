@@ -1,5 +1,5 @@
 /*
- *  Copyright 2005 The Apache Software Foundation
+ *  Copyright 2005-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -96,7 +96,7 @@ public class DefaultedMap
      * The result will be returned as the result of the map get(key) method.
      * 
      * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use, must not be null
+     * @param factory  the factory to use to create entries, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
     public static Map decorate(Map map, Factory factory) {
@@ -114,14 +114,14 @@ public class DefaultedMap
      * will be returned as the result of the map get(key) method.
      * 
      * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use, must not be null
+     * @param transformer  the transformer to use as a factory to create entries, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static Map decorate(Map map, Transformer factory) {
-        if (factory == null) {
+    public static Map decorate(Map map, Transformer transformer) {
+        if (transformer == null) {
            throw new IllegalArgumentException("Transformer must not be null");
        }
-       return new DefaultedMap(map, factory);
+       return new DefaultedMap(map, transformer);
     }
 
     //-----------------------------------------------------------------------
