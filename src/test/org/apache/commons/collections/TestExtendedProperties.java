@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2005 The Apache Software Foundation
+ *  Copyright 2001-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -311,6 +311,30 @@ public class TestExtendedProperties extends TestCase {
 
         assertEquals("foo", extended.getString("test"));
         assertEquals("class", extended.getString("resource.loader"));
+    }
+
+    public void testInclude() {
+        ExtendedProperties a = new ExtendedProperties();
+        ExtendedProperties b = new ExtendedProperties();
+        
+        assertEquals("include", a.getInclude());
+        assertEquals("include", b.getInclude());
+        
+        a.setInclude("import");
+        assertEquals("import", a.getInclude());
+        assertEquals("include", b.getInclude());
+        
+        a.setInclude("");
+        assertEquals(null, a.getInclude());
+        assertEquals("include", b.getInclude());
+        
+        a.setInclude("hi");
+        assertEquals("hi", a.getInclude());
+        assertEquals("include", b.getInclude());
+        
+        a.setInclude(null);
+        assertEquals(null, a.getInclude());
+        assertEquals("include", b.getInclude());
     }
 
 }

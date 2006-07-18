@@ -175,6 +175,15 @@ public class ExtendedProperties extends Hashtable {
      * This is the name of the property that can point to other
      * properties file for including other properties files.
      */
+    private String includePropertyName = null;
+
+    /**
+     * This is the default name of the property that can point to other
+     * properties file for including other properties files.
+     * 
+     * @deprecated Use getInclude() and setInclude() methods which operate
+     * on an instance variable from v3.3. Due to be removed in v4.0.
+     */
     protected static String include = "include";
 
     /**
@@ -491,21 +500,42 @@ public class ExtendedProperties extends Hashtable {
     /**
      * Gets the property value for including other properties files.
      * By default it is "include".
+     * <p>
+     * NOTE: Prior to v3.3 this method accessed a static variable.
+     * It now accesses an instance variable. For compatability, if the
+     * instance variable has not been set then the previous static
+     * variable is then accessed. However, the protected static variable
+     * can now only be set by subclasses.
+     * In v4.0, the static variable will be removed.
      *
-     * @return A String.
+     * @return the property name which includes another property
      */
     public String getInclude() {
-        return include;
+        if (includePropertyName == null) {
+            return include;  // backwards compatability
+        }
+        if ("".equals(includePropertyName)) {
+            return null;  // hack to allow backwards compatability
+        }
+        return includePropertyName;
     }
 
     /**
      * Sets the property value for including other properties files.
      * By default it is "include".
+     * <p>
+     * NOTE: Prior to v3.3 this method set a static variable and affected all
+     * users of the class. It now sets an instance variable.
+     * An empty string is also now converted to null internally.
+     * In v4.0, the static variable will be removed.
      *
-     * @param inc A String.
+     * @param inc  the property name which includes another property, empty converted to null
      */
     public void setInclude(String inc) {
-        include = inc;
+        if (inc == null) {
+            inc = "";  // hack to allow backwards compatability
+        }
+        includePropertyName = inc;
     }
 
     /**
@@ -549,6 +579,7 @@ public class ExtendedProperties extends Hashtable {
         }
 
         try {
+            String includeProperty = getInclude();
             while (true) {
                 String line = reader.readProperty();
                 if (line == null) {
@@ -565,7 +596,7 @@ public class ExtendedProperties extends Hashtable {
                         continue;
                     }
 
-                    if (getInclude() != null && key.equalsIgnoreCase(getInclude())) {
+                    if (includeProperty != null && key.equalsIgnoreCase(includeProperty)) {
                         // Recursively load properties files.
                         File file = null;
 
