@@ -1,5 +1,5 @@
 /*
- *  Copyright 2001-2004 The Apache Software Foundation
+ *  Copyright 2001-2004,2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -150,7 +150,7 @@ public class TestListUtils extends BulkTest {
         assertTrue(retained.equals(fullList));
         
         try {
-            List list = ListUtils.retainAll(null, null);
+            ListUtils.retainAll(null, null);
             fail("expecting NullPointerException");
         } catch(NullPointerException npe){} // this is what we want
     }
@@ -167,7 +167,7 @@ public class TestListUtils extends BulkTest {
         assertTrue(remainder.equals(fullList));
         
         try {
-            List list = ListUtils.removeAll(null, null);
+            ListUtils.removeAll(null, null);
             fail("expecting NullPointerException");
         } catch(NullPointerException npe) {} // this is what we want
     }
