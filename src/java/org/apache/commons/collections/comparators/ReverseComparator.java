@@ -1,78 +1,48 @@
-package org.apache.commons.collections.comparators;
-
-/* ====================================================================
- * The Apache Software License, Version 1.1
+/*
+ *  Copyright 2001-2004 The Apache Software Foundation
  *
- * Copyright (c) 2001 The Apache Software Foundation.  All rights
- * reserved.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. The end-user documentation included with the redistribution,
- *    if any, must include the following acknowledgment:
- *       "This product includes software developed by the
- *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowledgment may appear in the software itself,
- *    if and wherever such third-party acknowledgments normally appear.
- *
- * 4. The names "Apache" and "Apache Software Foundation" and
- *    "Apache Commons" must not be used to endorse or promote products
- *    derived from this software without prior written permission. For
- *    written permission, please contact apache@apache.org.
- *
- * 5. Products derived from this software may not be called "Apache",
- *    "Apache Turbine", nor may "Apache" appear in their name, without
- *    prior written permission of the Apache Software Foundation.
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- * ====================================================================
- *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * <http://www.apache.org/>.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
+package org.apache.commons.collections.comparators;
 
 import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * Reverses the order of another comparator.
+ * Reverses the order of another comparator by reversing the arguments
+ * to its {@link #compare(Object, Object) compare} method.
  * 
- * @since 2.0
- * @author bayard@generationjava.com
- * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>
- * @version $Id: ReverseComparator.java,v 1.8 2002/06/12 03:59:17 mas Exp $
+ * @since Commons Collections 2.0
+ * @version $Revision$ $Date$
+ *
+ * @author Henri Yandell
+ * @author Michael A. Smith
+ * 
+ * @see java.util.Collections#reverseOrder()
  */
-public class ReverseComparator implements Comparator,Serializable {
+public class ReverseComparator implements Comparator, Serializable {
 
+    /** Serialization version from Collections 2.0. */
+    private static final long serialVersionUID = 2858887242028539265L;
+
+    /** The comparator being decorated. */
     private Comparator comparator;
 
+    //-----------------------------------------------------------------------
     /**
      * Creates a comparator that compares objects based on the inverse of their
      * natural ordering.  Using this Constructor will create a ReverseComparator
-     * that is functionaly identical to the Comparator returned by
+     * that is functionally identical to the Comparator returned by
      * java.util.Collections.<b>reverseOrder()</b>.
      * 
      * @see java.util.Collections#reverseOrder()
@@ -82,11 +52,11 @@ public class ReverseComparator implements Comparator,Serializable {
     }
 
     /**
-     * Creates a reverse comparator that inverts the comparison
-     * of the passed in comparator.  If you pass in a null,
+     * Creates a comparator that inverts the comparison
+     * of the given comparator.  If you pass in <code>null</code>,
      * the ReverseComparator defaults to reversing the
      * natural order, as per 
-     * java.util.Collections.<b>reverseOrder()</b>.
+     * {@link java.util.Collections#reverseOrder()}</b>.
      * 
      * @param comparator Comparator to reverse
      */
@@ -98,8 +68,57 @@ public class ReverseComparator implements Comparator,Serializable {
         }
     }
 
-    public int compare(Object o1, Object o2) {
-        return comparator.compare(o2, o1);
+    //-----------------------------------------------------------------------
+    /**
+     * Compares two objects in reverse order.
+     * 
+     * @param obj1  the first object to compare
+     * @param obj2  the second object to compare
+     * @return negative if obj1 is less, positive if greater, zero if equal
+     */
+    public int compare(Object obj1, Object obj2) {
+        return comparator.compare(obj2, obj1);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     * 
+     * @return a suitable hash code
+     * @since Commons Collections 3.0
+     */
+    public int hashCode() {
+        return "ReverseComparator".hashCode() ^ comparator.hashCode();
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator} whose ordering is known to be 
+     * equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>object</i>.{@link Object#getClass() getClass()}</code>
+     * equals <code>this.getClass()</code>, and the underlying 
+     * comparators are equal.
+     * Subclasses may want to override this behavior to remain consistent
+     * with the {@link Comparator#equals(Object) equals} contract.
+     * 
+     * @param object  the object to compare to
+     * @return true if equal
+     * @since Commons Collections 3.0
+     */
+    public boolean equals(Object object) {
+        if(this == object) {
+            return true;
+        } else if(null == object) {
+            return false;
+        } else if(object.getClass().equals(this.getClass())) {
+            ReverseComparator thatrc = (ReverseComparator)object;
+            return comparator.equals(thatrc.comparator);
+        } else {
+            return false;
+        }
     }
 
 }

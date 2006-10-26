@@ -1,62 +1,17 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/SynchronizedPriorityQueue.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ *  Copyright 2001-2004 The Apache Software Foundation
  *
- * ====================================================================
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * The Apache Software License, Version 1.1
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
- * reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
- *       "This product includes software developed by the
- *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
- *
- * 4. The names "The Jakarta Project", "Commons", and "Apache Software
- *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written
- *    permission, please contact apache@apache.org.
- *
- * 5. Products derived from this software may not be called "Apache"
- *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- * ====================================================================
- *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * <http://www.apache.org/>.
- *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package org.apache.commons.collections;
 
@@ -67,24 +22,33 @@ import java.util.NoSuchElementException;
  * Provides synchronized wrapper methods for all the methods 
  * defined in the PriorityQueue interface.
  *
- * @since 1.0
- * @author  <a href="mailto:ram.chidambaram@telus.com">Ram Chidambaram</a> 
+ * @deprecated PriorityQueue is replaced by the Buffer interface, see buffer subpackage.
+ *  Due to be removed in v4.0.
+ * @since Commons Collections 1.0
+ * @version $Revision$ $Date$
+ * 
+ * @author Ram Chidambaram
  */
-public final class SynchronizedPriorityQueue 
-    implements PriorityQueue
-{
-    protected final PriorityQueue   m_priorityQueue;
+public final class SynchronizedPriorityQueue implements PriorityQueue {
 
-    public SynchronizedPriorityQueue( final PriorityQueue priorityQueue )
-    {
+    /**
+     * The underlying priority queue.
+     */
+    protected final PriorityQueue m_priorityQueue;
+
+    /**
+     * Constructs a new synchronized priority queue.
+     *
+     * @param priorityQueue  the priority queue to synchronize
+     */
+    public SynchronizedPriorityQueue(final PriorityQueue priorityQueue) {
         m_priorityQueue = priorityQueue;
     }
 
     /**
      * Clear all elements from queue.
      */
-    public synchronized void clear()
-    {
+    public synchronized void clear() {
         m_priorityQueue.clear();
     }
 
@@ -93,8 +57,7 @@ public final class SynchronizedPriorityQueue
      *
      * @return true if queue is empty else false.
      */
-    public synchronized boolean isEmpty()
-    {
+    public synchronized boolean isEmpty() {
         return m_priorityQueue.isEmpty();
     }
 
@@ -103,19 +66,17 @@ public final class SynchronizedPriorityQueue
      *
      * @param element the element to be inserted
      */
-    public synchronized void insert( final Object element )
-    {
-        m_priorityQueue.insert( element );
+    public synchronized void insert(final Object element) {
+        m_priorityQueue.insert(element);
     }
 
     /**
      * Return element on top of heap but don't remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if isEmpty() == true
+     * @throws NoSuchElementException if isEmpty() == true
      */
-    public synchronized Object peek() throws NoSuchElementException
-    {
+    public synchronized Object peek() throws NoSuchElementException {
         return m_priorityQueue.peek();
     }
 
@@ -123,15 +84,19 @@ public final class SynchronizedPriorityQueue
      * Return element on top of heap and remove it.
      *
      * @return the element at top of heap
-     * @exception NoSuchElementException if isEmpty() == true
+     * @throws NoSuchElementException if isEmpty() == true
      */
-    public synchronized Object pop() throws NoSuchElementException
-    {
+    public synchronized Object pop() throws NoSuchElementException {
         return m_priorityQueue.pop();
     }
 
-    public synchronized String toString()
-    {
+    /**
+     * Returns a string representation of the underlying queue.
+     *
+     * @return a string representation of the underlying queue
+     */
+    public synchronized String toString() {
         return m_priorityQueue.toString();
     }
+    
 }

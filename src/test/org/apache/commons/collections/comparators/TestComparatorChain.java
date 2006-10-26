@@ -1,16 +1,36 @@
+/*
+ *  Copyright 2001-2004 The Apache Software Foundation
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
 package org.apache.commons.collections.comparators;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class TestComparatorChain extends TestComparator {
+/**
+ * Tests for ComparatorChain.
+ * 
+ * @version $Revision$ $Date$
+ * 
+ * @author Unknown
+ */
+public class TestComparatorChain extends AbstractTestComparator {
 
     public TestComparatorChain(String testName) {
         super(testName);
@@ -20,10 +40,6 @@ public class TestComparatorChain extends TestComparator {
         return new TestSuite(TestComparatorChain.class);
     }
 
-    /**
-     * 
-     * @return 
-     */
     public Comparator makeComparator() {
         ComparatorChain chain = new ComparatorChain(new ColumnComparator(0));
         chain.addComparator(new ColumnComparator(1),true); // reverse the second column
@@ -75,6 +91,30 @@ public class TestComparatorChain extends TestComparator {
         } catch (UnsupportedOperationException e) {
 
         }
+    }
+
+
+    public void testComparatorChainOnMinvaluedCompatator() {
+        // -1 * Integer.MIN_VALUE is less than 0,
+        // test that ComparatorChain handles this edge case correctly
+        ComparatorChain chain = new ComparatorChain();
+        chain.addComparator(
+            new Comparator() {
+                public int compare(Object a, Object b) {
+                    int result = ((Comparable)a).compareTo(b);
+                    if(result < 0) {
+                        return Integer.MIN_VALUE;
+                    } else if(result > 0) {
+                        return Integer.MAX_VALUE;
+                    } else {
+                        return 0;
+                    }
+                }
+            }, true);
+
+        assertTrue(chain.compare(new Integer(4), new Integer(5)) > 0);            
+        assertTrue(chain.compare(new Integer(5), new Integer(4)) < 0);            
+        assertTrue(chain.compare(new Integer(4), new Integer(4)) == 0);            
     }
 
     public List getComparableObjectsOrdered() {
@@ -161,5 +201,19 @@ public class TestComparatorChain extends TestComparator {
 
             return 0;
         }
+        
+        public int hashCode() {
+            return colIndex;
+        }
+        
+        public boolean equals(Object that) {
+            if(that instanceof ColumnComparator) {
+                return colIndex == ((ColumnComparator)that).colIndex;
+            } else {
+                return false;
+            }
+        }
+        
+        private static final long serialVersionUID = -2284880866328872105L;
     }
 }

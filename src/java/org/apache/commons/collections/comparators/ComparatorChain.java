@@ -1,62 +1,17 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/comparators/ComparatorChain.java,v 1.7 2002/06/12 03:59:17 mas Exp $
- * $Revision: 1.7 $
- * $Date: 2002/06/12 03:59:17 $
+ *  Copyright 1999-2004 The Apache Software Foundation
  *
- * ====================================================================
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * The Apache Software License, Version 1.1
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
- * reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
- *       "This product includes software developed by the
- *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
- *
- * 4. The names "The Jakarta Project", "Commons", and "Apache Software
- *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written
- *    permission, please contact apache@apache.org.
- *
- * 5. Products derived from this software may not be called "Apache"
- *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- * ====================================================================
- *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * <http://www.apache.org/>.
- *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package org.apache.commons.collections.comparators;
 
@@ -94,19 +49,23 @@ import java.util.List;
  * it <i>is</i> thread-safe to perform multiple comparisons
  * after all the setup operations are complete.</p>
  * 
- * @since 2.0
+ * @since Commons Collections 2.0
  * @author Morgan Delagrange
+ * @version $Revision$ $Date$
  */
-public class ComparatorChain implements Comparator,Serializable {
+public class ComparatorChain implements Comparator, Serializable {
 
+    /** Serialization version from Collections 2.0. */
+    private static final long serialVersionUID = -721644942746081630L;
+    
+    /** The list of comparators in the chain. */
     protected List comparatorChain = null;
-    // 0 = ascend; 1 = descend
+    /** Order - false (clear) = ascend; true (set) = descend. */
     protected BitSet orderingBits = null;
-
-    // ComparatorChain is "locked" after the first time
-    // compare(Object,Object) is called
+   /** Whether the chain has been "locked". */
     protected boolean isLocked = false;
 
+    //-----------------------------------------------------------------------
     /**
      * Construct a ComparatorChain with no Comparators.
      * You must add at least one Comparator before calling
@@ -175,6 +134,7 @@ public class ComparatorChain implements Comparator,Serializable {
         orderingBits = bits;
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Add a Comparator to the end of the chain using the
      * forward sort order
@@ -208,7 +168,7 @@ public class ComparatorChain implements Comparator,Serializable {
      * @param index      index of the Comparator to replace
      * @param comparator Comparator to place at the given index
      * @exception IndexOutOfBoundsException
-     *                   if index < 0 or index > size()
+     *                   if index &lt; 0 or index &gt;= size()
      */
     public void setComparator(int index, Comparator comparator) 
     throws IndexOutOfBoundsException {
@@ -291,12 +251,13 @@ public class ComparatorChain implements Comparator,Serializable {
         }
     }
 
+    //-----------------------------------------------------------------------
     /**
-     * Perform comaparisons on the Objects as per
+     * Perform comparisons on the Objects as per
      * Comparator.compare(o1,o2).
      * 
-     * @param o1     object 1
-     * @param o2     object 2
+     * @param o1  the first object to compare
+     * @param o2  the second object to compare
      * @return -1, 0, or 1
      * @exception UnsupportedOperationException
      *                   if the ComparatorChain does not contain at least one
@@ -317,7 +278,11 @@ public class ComparatorChain implements Comparator,Serializable {
             if (retval != 0) {
                 // invert the order if it is a reverse sort
                 if (orderingBits.get(comparatorIndex) == true) {
-                    retval *= -1;
+                    if(Integer.MIN_VALUE == retval) {
+                        retval = Integer.MAX_VALUE;
+                    } else {                        
+                        retval *= -1;
+                    }
                 }
 
                 return retval;
@@ -327,6 +292,55 @@ public class ComparatorChain implements Comparator,Serializable {
 
         // if comparators are exhausted, return 0
         return 0;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     * 
+     * @return a suitable hash code
+     * @since Commons Collections 3.0
+     */
+    public int hashCode() {
+        int hash = 0;
+        if(null != comparatorChain) {
+            hash ^= comparatorChain.hashCode();
+        }
+        if(null != orderingBits) {
+            hash ^= orderingBits.hashCode();
+        }
+        return hash;
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator} whose ordering is known to be 
+     * equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>object</i>.{@link Object#getClass() getClass()}</code>
+     * equals <code>this.getClass()</code>, and the underlying 
+     * comparators and order bits are equal.
+     * Subclasses may want to override this behavior to remain consistent
+     * with the {@link Comparator#equals(Object)} contract.
+     * 
+     * @param object  the object to compare with
+     * @return true if equal
+     * @since Commons Collections 3.0
+     */
+    public boolean equals(Object object) {
+        if(this == object) {
+            return true;
+        } else if(null == object) {
+            return false;
+        } else if(object.getClass().equals(this.getClass())) {
+            ComparatorChain chain = (ComparatorChain)object;
+            return ( (null == orderingBits ? null == chain.orderingBits : orderingBits.equals(chain.orderingBits))
+                   && (null == comparatorChain ? null == chain.comparatorChain : comparatorChain.equals(chain.comparatorChain)) );
+        } else {
+            return false;
+        }
     }
 
 }

@@ -1,19 +1,36 @@
+ <!--
+   Copyright 2002-2004 The Apache Software Foundation
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
 <html>
 <head>
 <title>Developers guide for Jakarta Commons "Collections" Package</title>
-<head>
+</head>
 <body bgcolor="white">
 
 
 <div align="center">
 <h1>The Jakarta Commons <em>Collections</em> Package</h1>
 <h2>Developers Guide</h2>
-$Id: DEVELOPERS-GUIDE.html,v 1.2 2002/07/03 02:34:09 mas Exp $<br>
+$Id$<br />
 <a href="#Introduction">[Introduction]</a>
 <a href="#CollectionInterfaces">[Collection Interfaces]</a>
 <a href="#CollectionImplementations">[Collection Implementations]</a>
 <a href="#UtilityClasses">[Utility Classes]</a>
-<br><br>
+<a href="#CodingStandards">[Coding Standards]</a>
+<br />
+<br />
 </div>
 
 
@@ -89,13 +106,28 @@ Occasionally, such construct is awkward and a more suitable adjective can be
 used instead.  For example, <code>lazyList</code>,
 <code>unmodifiableList</code>.</p>
 
-<p>Typically, these decorators should be implemented as non-public, static,
-inner classes; however, if warranted due to maintenance or other reasons, these
-decorator classes may be moved to top-level classes in a subpackage.  The
-naming of such a subpackage should be discussed and agreed upon on the
-developers mailing list.</p>
+<p>These decorators should be implemented either as non-public, static,
+inner classes, or as public classes in a subpackage. If a subpackage is used,
+the constructors should be protected and a public static decorate() method
+provided on each class for construction.</p>
+
+<a name="CodingStandards"></a>
+<h3>5. CODING STANDARDS</h3>
+
+<p>Commons Collections follows similar style rules to many other Java open source
+projects, and the Sun conventions. Some specific conventions are:</p>
+
+<ul>
+<li>No tabs, 4 space indentations</li>
+<li>Curly brackets open at line end</li>
+<li>Else, catch and finally statements after the closing bracket</li>
+<li>Single space after keyword such as if</li>
+<li>Two spaces between parameter name and description in @param</li>
+<li>Generally copy the style of the surounding code</li>
+</ul>
+
+<p>And rememeber, the commons-dev mailing list is there for any discussions
+or queries about patches or new additions to collections.</p>
 
 </body>
 </html>
-
-

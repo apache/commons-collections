@@ -1,346 +1,635 @@
-<!-- $Id: build.xml,v 1.29 2002/07/25 18:08:05 costin Exp $ -->
-<project name="commons-collections" default="test" basedir=".">
+ <!--
+   Copyright 2001-2006 The Apache Software Foundation
 
-   <!-- patternset describing files to be copied from the doc directory -->
-   <patternset id="patternset-doc"/>
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
 
-   <!-- patternset describing test classes -->
-   <patternset id="patternset-test-classes">
-      <include name="**/Test*.class"/>
-   </patternset>
+       http://www.apache.org/licenses/LICENSE-2.0
 
-   <!-- patternset describing non test classes -->
-   <patternset id="patternset-non-test-classes">
-      <include name="**/*.class"/>
-      <exclude name="**/Test*.class"/>
-   </patternset>
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+<project name="commons-collections" default="compile" basedir=".">
 
-   <!-- patternset describing non test source files (*.java, *html, etc.) -->
-   <patternset id="patternset-javadocable-sources">
-      <include name="**/*"/>
-      <exclude name="**/Test*.java"/>
-   </patternset>
+<!-- ========== Properties ================================================ -->
 
-   <!-- ######################################################### -->
+  <!-- This can be used to define 'junit.jar' property if necessary -->
+  <property file="build.properties"/>
 
-   <target name="init">
-      <tstamp/>
+<!-- ========== Component Declarations ==================================== -->
 
-      <!-- read properties from the build.properties, if any -->
-      <property name="component-propfile" value="${basedir}/build.properties"/>
-      <property file="${component-propfile}"/>
+  <!-- The name of this component -->
+  <property name="component.name"          value="commons-collections"/>
 
-      <!-- read properties from the commons build.properties, if any -->
-      <property name="commons-propfile" value="${basedir}/../build.properties"/>
-      <property file="${commons-propfile}"/>
+  <!-- The primary package name of this component -->
+  <property name="component.package"       value="org.apache.commons.collections"/>
 
-      <!-- read properties from the ${user.home}/propfile, if any -->
-      <property name="user-propfile" value="${user.home}/build.properties"/>
-      <property file="${user-propfile}"/>
+  <!-- The short title of this component -->
+  <property name="component.title"         value="Commons Collections"/>
 
-      <!-- command line classpath, if any -->
-      <property name="cp" value=""/>
+  <!-- The full title of this component -->
+  <property name="component.title.full"    value="Apache Jakarta Commons Collections"/>
 
-      <!-- now combine the classpaths -->
-      <property name="classpath" value="${cp}:${junit.jar}"/>
+  <!-- The current version number of this component -->
+  <property name="component.version"       value="3.3-SNAPSHOT"/>
 
-      <property name="name" value="commons-collections"/>
-      <property name="Name" value="Commons-Collections"/>
-      <property name="Name-Long" value="Jakarta Commons Collections Package"/>
+  <!-- The base directory for component configuration files -->
+  <property name="source.conf"               value="src/conf"/>
 
-      <!-- The current version number of this component -->
-      <property name="component.version"       value="2.0"/>
-      <property name="doc.release.notes" value="RELEASE-NOTES-${component.version}.html"/>
-      <property name="doc.status" value="STATUS.html"/>
+  <!-- The base directory for component sources -->
+  <property name="source.java"             value="src/java"/>
 
-      <property name="test.entry" value="org.apache.commons.collections.TestAll"/>
-      <property name="test.failonerror" value="true" />
-      <property name="test.runner" value="junit.textui.TestRunner" />
+  <!-- The base directory for unit test sources -->
+  <property name="source.test"             value="src/test"/>
 
-      <property name="workdir" value="${java.io.tmpdir}/buildtemp_${DSTAMP}${TSTAMP}"/>
-      <property name="source" value="${basedir}"/>
-      <property name="source.src" value="${basedir}/src"/>
-      <property name="source.src.java" value="${source.src}/java"/>
-      <property name="source.src.test" value="${source.src}/test"/>
-      <property name="source.doc" value="${basedir}/doc"/>
-      <property name="dest" value="${basedir}/dist"/>
-      <property name="dest.classes" value="${dest}/classes"/>
-      <property name="dest.doc" value="${dest}/docs"/>
-      <property name="dest.doc.api" value="${dest.doc}/api"/>
-      <property name="dest.jardir" value="${dest}"/>
-      <property name="dest.jardir.jar" value="${dest.jardir}/${name}.jar"/>
-      
-      <property name="bin.name" value="${name}-${component.version}"/>
-      <property name="dest.bin.tar" value="${dest}/${bin.name}.tar"/>
-      <property name="dest.bin.tar.gz" value="${dest}/${bin.name}.tar.gz"/>
-      <property name="dest.bin.zip" value="${dest}/${bin.name}.zip"/>
-      
-      <property name="src.name" value="${bin.name}-src"/>
-      <property name="dest.src.tar"    value="${dest}/${src.name}.tar"/>
-      <property name="dest.src.tar.gz"    value="${dest}/${src.name}.tar.gz"/>
-      <property name="dest.src.zip" value="${dest}/${src.name}.zip"/>
-      
-      <patternset id="patternset-exclude-distros">
-        <exclude name="**/${bin.name}.tar.gz"/>
-        <exclude name="**/${bin.name}.zip"/>
-        <exclude name="**/${src.name}.tar.gz"/>
-        <exclude name="**/${src.name}.zip"/>
-      </patternset>
-      
-      <!-- set the cvs.root property in the build.properties file -->
-      <property name="cvs.tag" value="COLLECTIONS_2_0"/>      
-      
-      <available property="available-doc" file="${source.doc}"/> <!-- does this module have docs? -->
-      <available property="available-src-java" file="${source.src.java}"/> <!-- does this module have java src? -->
-      <available property="available-src-test" file="${source.src.test}"/> <!-- does this module have test src? -->
+  <!-- The directories for compilation targets -->
+  <property name="build.home"              value="build"/>
+  <property name="build.conf"              value="${build.home}/conf"/>
+  <property name="build.classes"           value="${build.home}/classes"/>
+  <property name="build.tests"             value="${build.home}/tests"/>
+  <property name="build.docs"              value="${build.home}/docs/apidocs"/>
+  <property name="build.src"               value="${build.home}/src-ide" />
+  
+  <!-- The name/location of the jar file to build -->
+  <property name="final.name"           value="${component.name}-${component.version}"/>
+  <property name="jar.name"             value="${final.name}.jar"/>
+  <property name="build.jar.name"       value="${build.home}/${jar.name}"/>
+  
+  <!-- The name/location of the zip files to build -->
+  <property name="build.dist.bin"       value="${build.home}/bin"/>
+  <property name="build.dist.bin.work"  value="${build.dist.bin}/${component.name}-${component.version}"/>
+  <property name="build.dist.src"       value="${build.home}/src"/>
+  <property name="build.dist.src.work"  value="${build.dist.src}/${component.name}-${component.version}-src"/>
+  <property name="build.dist"           value="${build.home}/dist"/>
+  <property name="build.bin.tar.name"   value="${build.dist}/${component.name}-${component.version}.tar"/>
+  <property name="build.bin.gz.name"    value="${build.dist}/${component.name}-${component.version}.tar.gz"/>
+  <property name="build.bin.zip.name"   value="${build.dist}/${component.name}-${component.version}.zip"/>
+  <property name="build.src.tar.name"   value="${build.dist}/${component.name}-${component.version}-src.tar"/>
+  <property name="build.src.gz.name"    value="${build.dist}/${component.name}-${component.version}-src.tar.gz"/>
+  <property name="build.src.zip.name"   value="${build.dist}/${component.name}-${component.version}-src.zip"/>
+  <property name="dist.home"            value="dist"/> <!-- for nightly builds -->
 
-   </target>
 
-   <!-- ######################################################### -->
+<!-- ========== Settings ================================================== -->
 
-   <target name="copy-javadoc-source" depends="init" if="available-src-java">
-      <mkdir dir="${javadoc-source-dir}"/>
-      <copy todir="${javadoc-source-dir}" filtering="no">
-         <fileset dir="${source.src.java}">
-            <patternset refid="patternset-javadocable-sources"/>
-         </fileset>
-      </copy>
-   </target>
+  <!-- Javac -->
+  <property name="compile.debug"           value="true"/>
+  <property name="compile.deprecation"     value="true"/>
+  <property name="compile.optimize"        value="false"/>
 
-   <target name="copy-doc" depends="init" if="available-doc">
-      <mkdir dir="${doc-source-dir}/${name}"/>
-      <copy todir="${doc-source-dir}/${name}" filtering="no">
-         <fileset dir="${source.doc}">
-            <patternset refid="patternset-doc"/>
-         </fileset>
-      </copy>
-   </target>
+  <!-- Javadoc -->
+  <property name="javadoc.access"          value="protected"/>
+  <property name="javadoc.links"           value="http://java.sun.com/j2se/1.3/docs/api/"/>
 
-   <!-- ######################################################### -->
+  <!-- JUnit -->
+  <property name="test.failonerror"        value="true"/>
 
-   <target name="clean" depends="init" description="removes generated files">
-      <delete dir="${dest}"/>
-   </target>
+  <!-- Maven -->
+  <property name="maven.repo"  value="${user.home}/.maven/repository" />
 
-   <target name="clean-doc" depends="init,clean-javadoc">
-      <delete dir="${dest.doc}"/>
-   </target>
 
-   <target name="clean-javadoc" depends="init">
-      <delete dir="${dest.doc.api}"/>
-   </target>
+<!-- ====================================================================== -->
+<!-- ========== Executable Targets ======================================== -->
+<!-- ====================================================================== -->
 
-   <target name="clean-build" depends="init">
-      <delete dir="${dest.classes}"/>
-   </target>
+  <target name="clean"
+          description="Clean build and distribution directories">
+    <delete dir="${build.home}"/>
+  </target>
 
-   <target name="clean-dist" depends="init">
-      <delete file="${dest.jardir.jar}"/>
-   </target>
+<!-- ====================================================================== -->
 
-   <!-- ######################################################### -->
+  <target name="init"
+          description="Initialize and evaluate conditionals">
+    <echo message="-------- ${component.name} ${component.version} --------"/>
+  </target>
 
-   <target name="doc" depends="init,doc-top,doc-copy,doc-javadoc" description="generates javadocs and other documentation">
-   </target>
+<!-- ====================================================================== -->
 
-   <target name="doc-top" depends="init">
-      <mkdir  dir="${dest}"/>
-      <copy todir="${dest}" file="./LICENSE.txt"/>
-      <copy todir="${dest}" file="${doc.status}"/>
-      <copy todir="${dest}" file="${doc.release.notes}"/>
-   </target>
+  <target name="prepare" depends="init"
+          description="Prepare build directory">
+    <mkdir dir="${build.home}"/>
+  </target>
 
-   <target name="doc-copy" depends="init" if="available-doc">
-      <mkdir dir="${dest.doc}"/>
-      <copy todir="${dest.doc}">
-      <fileset dir="${source.doc}">
-         <patternset refid="patternset-doc"/>
-      </fileset>
-      </copy>
-   </target>
+<!-- ====================================================================== -->
 
-   <target name="doc-javadoc" depends="init" if="available-src-java">
-      <!-- copy all the non-test sources out to the work directory and javadoc that -->
-      <mkdir dir="${workdir}"/>
-      <copy todir="${workdir}">
-        <fileset dir="${source.src.java}">
-          <patternset refid="patternset-javadocable-sources"/>
-        </fileset>
-      </copy>
-      <mkdir dir="${dest.doc.api}"/>
-      <javadoc packagenames="org.*"
-               sourcepath="${workdir}"
-               destdir="${dest.doc.api}"
-               windowtitle="${Name-Long}"
-               doctitle="${Name-Long}"
-               bottom="&lt;small&gt;Copyright &amp;copy; 2001-2002 Apache Software Foundation. Documenation generated ${TODAY}&lt;/small&gt;."
-               protected="true"
-               version="true"
-               author="true"
-               overview="${source.src.java}/org/apache/commons/collections/package.html"
-               splitindex="false"
-               nodeprecated="true"
-               nodeprecatedlist="true"
-               notree="true"
-               noindex="false"
-               nohelp="true"
-               nonavbar="false"
-               serialwarn="false">
-          <group title="Jakarta-commons Collections" packages="org.apache.commons.collections"/>
-          <link href="http://java.sun.com/products/jdk/1.3/docs/api"/>
-      </javadoc>
-      <delete dir="${workdir}"/>
-   </target>
+  <target name="compile" depends="prepare"
+          description="Compile main code">
+    <mkdir dir="${build.classes}"/>
+    <javac  srcdir="${source.java}"
+           destdir="${build.classes}"
+             debug="${compile.debug}"
+       deprecation="${compile.deprecation}"
+          optimize="${compile.optimize}">
+    </javac>
+  </target>
 
-   <!-- ######################################################### -->
+<!-- ====================================================================== -->
 
-   <target name="build" depends="init,build-java" description="compiles source files"/>
-
-   <target name="build-java" depends="init" if="available-src-java">
-      <mkdir dir="${dest.classes}"/>
-      <javac destdir="${dest.classes}"
-             srcdir="${source.src.java}"
-             classpath="${classpath}"
-             debug="false"
-             deprecation="true"
-             optimize="true"/>
-   </target>
-
-   <target name="build-test" depends="init,build-java" if="available-src-test">
-      <mkdir dir="${dest.classes}"/>
-      <javac destdir="${dest.classes}"
-             srcdir="${source.src.test}"
-             classpath="${classpath}"
-             debug="false"
-             deprecation="true"
-             optimize="true"/>
-   </target>
-
-   <!-- ######################################################### -->
-
-   <target name="test" depends="build-test" if="test.entry" description="runs (junit) unit tests">
-      <!--
-      <junit printsummary="yes" fork="on" haltonfailure="yes">
-      	<formatter type="plain" usefile="false"/>
-      	<test name="${test.entry}"/>
-      	<classpath>
-      		<pathelement location="${dest.classes}" />
-      		<pathelement path="${classpath}" />
-      		<pathelement path="${java.class.path}" />
-      	</classpath>
-      </junit>
-      -->
-
-      <java classname="${test.runner}" fork="yes" failonerror="${test.failonerror}">
-        <arg value="${test.entry}"/>
-        <classpath>
-          <pathelement location="${dest.classes}" />
-          <pathelement path="${classpath}" />
-          <pathelement path="${java.class.path}" />
-        </classpath>
-      </java>
-   </target>
-
-   <!-- ######################################################### -->
-
-   <target name="dist" depends="dist-jar,doc,dist-tar,dist-zip" description="builds binary distribution"/>
-
-   <target name="dist-jar" depends="build">
-      <mkdir dir="${dest.jardir}"/>
-      <mkdir dir="${workdir}"/>
-      <copy todir="${workdir}">
-         <fileset dir="${dest.classes}">
-            <patternset refid="patternset-non-test-classes"/>
-         </fileset>
-      </copy>
-      
-      <mkdir dir="${workdir}/META-INF"/>
-      <copy todir="${workdir}/META-INF" file="./LICENSE.txt"/>
-      
-      <jar jarfile="${dest.jardir.jar}" manifest="${source.src}/conf/MANIFEST.MF">
-         <fileset dir="${workdir}"/>
-      </jar>
-      <delete dir="${workdir}"/>
-      <delete dir="${dest.classes}"/>
-      
-   </target>
-   
-   <target name="dist-tar" depends="dist-jar,doc">
-
-      <mkdir dir="${workdir}/${bin.name}"/>
-      <copy todir="${workdir}/${bin.name}">
-         <fileset dir="${dest}">         
-            <patternset refid="patternset-exclude-distros"/>
-         </fileset>
-      </copy>
-      
-      <!-- create tar.gz -->
-      <tar longfile="gnu" tarfile="${dest.bin.tar}">
-        <tarfileset dir="${workdir}"/>
-      </tar>
-      
-      <gzip zipfile="${dest.bin.tar.gz}"
-      	    src="${dest.bin.tar}">
-      </gzip>
-      <delete file="${dest.bin.tar}" />
-      
-      <delete dir="${workdir}"/>
-   
-   </target>  
-
-   <target name="dist-zip" depends="dist-jar,doc">
-
-      <mkdir dir="${workdir}/${bin.name}"/>
-      <copy todir="${workdir}/${bin.name}">
-         <fileset dir="${dest}">         
-            <patternset refid="patternset-exclude-distros"/>
-         </fileset>
-      </copy>
-            
-      <!-- create a zip file -->
-      <zip zipfile="${dest.bin.zip}" >
-        <zipfileset dir="${workdir}" />
-      </zip>
-      
-      <delete dir="${workdir}"/>
-   
-   </target>
-
-   <!-- ######################################################### -->
-
-   <target name="dist-src" depends="init">
-   
-      <!-- not executed in default dist, because it is configuration-rich
-        and requires an active network connection -->
-                       
-      <mkdir dir="${workdir}"/>
-      <mkdir dir="${dest.jardir}"/>
-
-      <cvs dest="${workdir}" cvsRoot="${cvs.root}" 
-          package="jakarta-commons" tag="${cvs.tag}"/>
-      <move toDir="${workdir}/${src.name}">
-        <fileset dir="${workdir}/jakarta-commons/collections"/>
-      </move>
-      <delete dir="${workdir}/jakarta-commons"/> 
-      <copy file="./LICENSE.txt" toDir="${workdir}/${src.name}"/>
-      
-      <!-- create tar.gz -->
-      <tar longfile="gnu" tarfile="${dest.src.tar}">
-        <tarfileset dir="${workdir}"/>
-      </tar>
-      
-      <gzip zipfile="${dest.src.tar.gz}"
-      	    src="${dest.src.tar}">
-      </gzip>
-      <delete file="${dest.src.tar}" />
-      
-      <!-- create a zip file -->
-      <zip zipfile="${dest.src.zip}" >
-        <zipfileset dir="${workdir}" />
-      </zip>
+  <target name="jar" depends="compile"
+          description="Create jar">
+    <mkdir      dir="${build.classes}/META-INF"/>
+    <copy      file="LICENSE.txt"
+             tofile="${build.classes}/META-INF/LICENSE.txt"/>
+    <copy      file="NOTICE.txt"
+             tofile="${build.classes}/META-INF/NOTICE.txt"/>
              
-      <delete dir="${workdir}"/>
+    <tstamp/>
+    <mkdir      dir="${build.conf}"/>
+    <copy     todir="${build.conf}" filtering="on">
+      <filterset>
+        <filter token="name"     value="${component.name}"/>
+        <filter token="title"    value="${component.title}"/>
+        <filter token="package"  value="${component.package}"/>
+        <filter token="version"  value="${component.version}"/>
+      </filterset>
+      <fileset dir="${source.conf}" includes="*.MF"/>
+    </copy>
+             
+    <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
+    <jar    jarfile="${build.jar.name}"
+            basedir="${build.classes}"
+           manifest="${build.conf}/MANIFEST.MF"/>
+  </target>
+
+<!-- ====================================================================== -->
+  <!-- Targets you might use to get smaller jar files - not recommended -->
+
+  <target name="splitjar" depends="jar"
+          description="Create split jar">
+    <jar    jarfile="${build.home}/${component.name}-bag-${component.version}.jar"
+            basedir="${build.classes}"
+           manifest="${build.conf}/MANIFEST.MF">
+      <include name="**/META-INF/*"/>
+      <include name="**/BagUtils*.class"/>
+      <include name="**/bag/*.class"/>
+    </jar>
+    <jar    jarfile="${build.home}/${component.name}-bidimap-${component.version}.jar"
+            basedir="${build.classes}"
+           manifest="${build.conf}/MANIFEST.MF">
+      <include name="**/META-INF/*"/>
+      <include name="**/bidimap/*.class"/>
+    </jar>
+    <jar    jarfile="${build.home}/${component.name}-buffer-${component.version}.jar"
+            basedir="${build.classes}"
+           manifest="${build.conf}/MANIFEST.MF">
+      <include name="**/META-INF/*"/>
+      <include name="**/BufferUtils*.class"/>
+      <include name="**/buffer/*.class"/>
+    </jar>
+    <jar    jarfile="${build.home}/${component.name}-functors-${component.version}.jar"
+            basedir="${build.classes}"
+           manifest="${build.conf}/MANIFEST.MF">
+      <include name="**/META-INF/*"/>
+      <include name="**/ClosureUtils*.class"/>
+      <include name="**/FactoryUtils*.class"/>
+      <include name="**/PredicateUtils*.class"/>
+      <include name="**/TransformerUtils*.class"/>
+      <include name="**/functors/*.class"/>
+    </jar>
+    <jar    jarfile="${build.home}/${component.name}-core-${component.version}.jar"
+            basedir="${build.classes}"
+           manifest="${build.conf}/MANIFEST.MF">
+      <include name="**/META-INF/*"/>
+      <include name="**/*"/>
+      <exclude name="**/BagUtils*.class"/>
+      <exclude name="**/BufferUtils*.class"/>
+      <exclude name="**/ClosureUtils*.class"/>
+      <exclude name="**/FactoryUtils*.class"/>
+      <exclude name="**/PredicateUtils*.class"/>
+      <exclude name="**/TransformerUtils*.class"/>
+      <exclude name="**/bag/*.class"/>
+      <exclude name="**/bidimap/*.class"/>
+      <exclude name="**/buffer/*.class"/>
+      <exclude name="**/functors/*.class"/>
+      <exclude name="**/iterators/ProxyIterator*.class"/>
+      <exclude name="**/iterators/ProxyListIterator*.class"/>
+      <exclude name="**/map/*.class"/>
+      <exclude name="org/apache/commons/collections/BeanMap*.class"/>
+      <exclude name="org/apache/commons/collections/BinaryHeap*.class"/>
+      <exclude name="org/apache/commons/collections/BoundedFifoBuffer*.class"/>
+      <exclude name="org/apache/commons/collections/CursorableLinkedList*.class"/>
+      <exclude name="org/apache/commons/collections/CursorableSubList*.class"/>
+      <exclude name="org/apache/commons/collections/DefaultMapBag*.class"/>
+      <exclude name="org/apache/commons/collections/DefaultMapEntry*.class"/>
+      <exclude name="org/apache/commons/collections/DoubleOrderedMap*.class"/>
+      <exclude name="org/apache/commons/collections/HashBag*.class"/>
+      <exclude name="org/apache/commons/collections/LRUMap*.class"/>
+      <exclude name="org/apache/commons/collections/MultiHashMap*.class"/>
+      <exclude name="org/apache/commons/collections/PriorityQueue*.class"/>
+      <exclude name="org/apache/commons/collections/ProxyMap*.class"/>
+      <exclude name="org/apache/commons/collections/ReferenceMap*.class"/>
+      <exclude name="org/apache/commons/collections/SequencedHashMap*.class"/>
+      <exclude name="org/apache/commons/collections/StaticBucketMap*.class"/>
+      <exclude name="org/apache/commons/collections/SynchronizedPriorityQueue*.class"/>
+      <exclude name="org/apache/commons/collections/TreeBag*.class"/>
+      <exclude name="org/apache/commons/collections/UnboundedFifoBuffer*.class"/>
+    </jar>
+    <jar    jarfile="${build.home}/${component.name}-deprecated-${component.version}.jar"
+            basedir="${build.classes}"
+           manifest="${build.conf}/MANIFEST.MF">
+      <include name="**/META-INF/*"/>
+      <include name="**/iterators/ProxyIterator*.class"/>
+      <include name="**/iterators/ProxyListIterator*.class"/>
+      <include name="org/apache/commons/collections/BeanMap*.class"/>
+      <include name="org/apache/commons/collections/BinaryHeap*.class"/>
+      <include name="org/apache/commons/collections/BoundedFifoBuffer*.class"/>
+      <include name="org/apache/commons/collections/CursorableLinkedList*.class"/>
+      <include name="org/apache/commons/collections/CursorableSubList*.class"/>
+      <include name="org/apache/commons/collections/DefaultMapBag*.class"/>
+      <include name="org/apache/commons/collections/DefaultMapEntry*.class"/>
+      <include name="org/apache/commons/collections/DoubleOrderedMap*.class"/>
+      <include name="org/apache/commons/collections/HashBag*.class"/>
+      <include name="org/apache/commons/collections/LRUMap*.class"/>
+      <include name="org/apache/commons/collections/MultiHashMap*.class"/>
+      <include name="org/apache/commons/collections/PriorityQueue*.class"/>
+      <include name="org/apache/commons/collections/ProxyMap*.class"/>
+      <include name="org/apache/commons/collections/ReferenceMap*.class"/>
+      <include name="org/apache/commons/collections/SequencedHashMap*.class"/>
+      <include name="org/apache/commons/collections/StaticBucketMap*.class"/>
+      <include name="org/apache/commons/collections/SynchronizedPriorityQueue*.class"/>
+      <include name="org/apache/commons/collections/TreeBag*.class"/>
+      <include name="org/apache/commons/collections/UnboundedFifoBuffer*.class"/>
+    </jar>
+
+  </target>
+
+<!-- ====================================================================== -->
+
+  <target name="compile.tests" depends="compile"
+          description="Compile unit test cases">
+    <mkdir dir="${build.tests}"/>
+    <javac  srcdir="${source.test}"
+           destdir="${build.tests}"
+             debug="true"
+       deprecation="false"
+          optimize="false">
+      <classpath>
+        <pathelement location="${build.classes}"/>
+        <pathelement location="${junit.jar}"/>
+      </classpath>
+    </javac>
+  </target>
+
+<!-- ====================================================================== -->
+
+  <!-- Tests collections, either running all or one test -->
+  <target name="test" depends="-test-all,-test-single"
+          description="Run unit tests" />
+
+  <!-- Runs all tests -->
+  <target name="-test-all" depends="compile.tests" unless="testcase">
+    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+      <formatter type="brief" />
+      <classpath>
+        <pathelement location="${build.classes}"/>
+        <pathelement location="${build.tests}"/>
+        <pathelement location="${junit.jar}"/>
+      </classpath>
+
+      <batchtest fork="yes">
+        <fileset dir="${source.test}">
+          <include name="**/Test*.java"/>
+          <exclude name="**/TestAll*.java"/>
+          <exclude name="**/TestAbstract*"/>
+          <exclude name="**/TestArrayList.java"/>
+          <exclude name="**/TestLinkedList.java"/>
+          <exclude name="**/TestHashMap.java"/>
+          <exclude name="**/TestTreeMap.java"/>
+          <exclude name="**/TestTypedCollection.java"/>
+        </fileset>
+        <formatter type="brief" usefile="false" />
+      </batchtest>
+    </junit>
+  </target>
+
+  <!-- Runs a single test -->
+  <target name="-test-single" depends="compile.tests" if="testcase">
+    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+      <formatter type="brief" />
+      <classpath>
+        <pathelement location="${build.classes}"/>
+        <pathelement location="${build.tests}"/>
+        <pathelement location="${junit.jar}"/>
+      </classpath>
+
+      <test name="${testcase}" fork="yes">
+        <formatter type="brief" usefile="false" />
+      </test>
+    </junit>
+  </target>
+
+<!-- ====================================================================== -->
+
+  <target name="testjar"  depends="compile.tests,jar"
+          description="Run all unit test cases">
+    <echo message="Running collections tests against built jar ..."/>
+    <junit printsummary="yes" haltonfailure="yes">
+      <classpath>
+        <pathelement location="${build.jar.name}"/>
+        <pathelement location="${build.tests}"/>
+        <pathelement location="${junit.jar}"/>
+      </classpath>
+
+      <batchtest fork="yes">
+        <fileset dir="${source.test}">
+          <include name="**/TestAllPackages.java"/>
+        </fileset>
+        <formatter type="brief" usefile="false" />
+      </batchtest>
+    </junit>
+  </target>
+
+<!-- ====================================================================== -->
+
+  <target name="javadoc" depends="prepare"
+          description="Create component Javadoc documentation">
+    <tstamp><format property="year" pattern="yyyy"/></tstamp>
+    <delete     dir="${build.docs}"/>
+    <mkdir      dir="${build.docs}"/>
+    <javadoc sourcepath="${source.java}"
+                destdir="${build.docs}"
+           packagenames="${component.package}.*"
+                 access="${javadoc.access}"
+                 author="true"
+                version="true"
+                    use="true"
+                   link="${javadoc.links}"
+               overview="${source.java}/org/apache/commons/collections/overview.html"
+               doctitle="${component.title} ${component.version} API;"
+            windowtitle="${component.title} ${component.version} API"
+                 bottom="Copyright &amp;copy; 2001-${year} Apache Software Foundation. All Rights Reserved.">
+    </javadoc>
+  </target>
+
+<!-- ====================================================================== -->
+<!-- ========== Test framework ============================================ -->
+<!-- ====================================================================== -->
    
-   </target>
+  <property name="tf.name"                 value="commons-collections-testframework"/>
+  <property name="tf.package"              value="org.apache.commons.collections"/>
+  <property name="tf.title"                value="Commons Collections Test Framework"/>
+  <property name="tf.title.full"           value="Apache Jakarta Commons Collections Test Framework"/>
+  <property name="tf.version"              value="${component.version}"/>
+
+  <property name="tf.build.conf"           value="${build.home}/tfconf"/>
+  <property name="tf.build.tf"             value="${build.home}/testframework"/>
+  <property name="tf.build.docs"           value="${build.home}/docs/testframework"/>
+  
+  <property name="tf.jar.name" value="${tf.name}-${tf.version}.jar"/>
+  <property name="tf.build.jar.name" value="${build.home}/${tf.jar.name}"/>
+
+
+<!-- ====================================================================== -->
+
+  <!-- patternset describing test framework source not dependent on collections jar -->
+  <patternset id="tf.patternset.validate">
+    <include name="**/AbstractTestObject.java"/>
+    <include name="**/AbstractTestCollection.java"/>
+    <include name="**/AbstractTestSet.java"/>
+    <include name="**/AbstractTestSortedSet.java"/>
+    <include name="**/AbstractTestList.java"/>
+    <include name="**/AbstractTestMap.java"/>
+    <include name="**/AbstractTestSortedMap.java"/>
+    <include name="**/AbstractTestComparator.java"/>
+    <include name="**/AbstractTestIterator.java"/>
+    <include name="**/AbstractTestListIterator.java"/>
+    <include name="**/AbstractTestMapEntry.java"/>
+    <include name="**/BulkTest.java"/>
+  </patternset>
+  
+  <target name="tf.validate" depends="prepare"
+          description="Testframework - Validate testframework independence">
+    <delete    dir="${tf.build.tf}"/>
+    <mkdir     dir="${tf.build.tf}"/>
+    <javac  srcdir="${source.test}"
+           destdir="${tf.build.tf}"
+             debug="true"
+       deprecation="false"
+          optimize="false">
+      <patternset refid="tf.patternset.validate" />
+      <classpath>
+        <pathelement location="${junit.jar}"/>
+      </classpath>
+    </javac>
+    <delete dir="${tf.build.tf}"/>
+  </target>
+
+<!-- ====================================================================== -->
+
+  <target name="tf.jar" depends="compile.tests"
+          description="Testframework - Create jar">
+    <mkdir      dir="${tf.build.tf}"/>
+    <copy     todir="${tf.build.tf}">
+      <fileset dir="${build.tests}">
+        <include name="**/AbstractTest*.class"/>
+        <include name="**/BulkTest*.class"/>
+      </fileset>
+    </copy>
+    
+    <mkdir      dir="${tf.build.tf}/META-INF"/>
+    <copy      file="LICENSE.txt"
+             tofile="${tf.build.tf}/META-INF/LICENSE.txt"/>
+    <copy      file="NOTICE.txt"
+             tofile="${tf.build.tf}/META-INF/NOTICE.txt"/>
+             
+    <tstamp/>
+    <mkdir      dir="${tf.build.conf}"/>
+    <copy     todir="${tf.build.conf}" filtering="on">
+      <filterset>
+        <filter token="name"     value="${tf.name}"/>
+        <filter token="title"    value="${tf.title}"/>
+        <filter token="package"  value="${tf.package}"/>
+        <filter token="version"  value="${tf.version}"/>
+      </filterset>
+      <fileset dir="${source.conf}" includes="*.MF"/>
+    </copy>
+             
+    <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
+    <jar    jarfile="${tf.build.jar.name}"
+            basedir="${tf.build.tf}"
+           manifest="${tf.build.conf}/MANIFEST.MF"/>
+  </target>
+
+<!-- ====================================================================== -->
+
+  <target name="tf.javadoc" depends="prepare"
+          description="Testframework - Create Javadoc documentation">
+    <tstamp><format property="year" pattern="yyyy"/></tstamp>
+    <delete     dir="${tf.build.docs}"/>
+    <mkdir      dir="${tf.build.docs}"/>
+    <javadoc    destdir="${tf.build.docs}"
+                 access="protected"
+                 author="false"
+                version="false"
+                   link="${javadoc.links}"
+               overview="${source.test}/org/apache/commons/collections/overview.html"
+               doctitle="${tf.title} ${tf.version} API;"
+            windowtitle="${tf.title} ${tf.version} API"
+                 bottom="Copyright &amp;copy; 2001-${year} Apache Software Foundation. All Rights Reserved.">
+      <fileset dir="${source.test}">
+        <include name="**/AbstractTest*.java"/>
+        <include name="**/BulkTest*.java"/>
+      </fileset>
+    </javadoc>
+  </target>
+
+
+<!-- ====================================================================== -->
+<!-- ========== Distributions ============================================= -->
+<!-- ====================================================================== -->
+   
+<!-- ====================================================================== -->
+
+  <!-- Target needed for nightly builds -->
+  <target name="dist" depends="javadoc,dist.create"
+          description="Create distribution folders">
+    <delete dir="${dist.home}"/>
+    <mkdir dir="${dist.home}" />
+    <copy todir="${dist.home}">
+      <fileset dir="${build.dist.bin}" />
+	</copy>
+  </target>
+
+  <target name="dist.create" depends="jar,testjar,tf.validate,tf.jar,dist.bin,dist.src">
+  </target>
+
+  <target name="dist.bin">
+    <copy todir="${build.src}">
+      <fileset dir="${basedir}/src/java" includes="**/*.java" />
+    </copy>
+    <copy todir="${build.src}/META-INF">
+      <fileset dir="${basedir}" includes="LICENSE*, NOTICE*" />
+    </copy>
+    <jar jarfile="${build.home}/${final.name}-src-ide.zip" basedir="${build.src}" />
+    <antcall target="internal-md5">
+      <param name="path" value="${build.home}/${final.name}.jar"/>
+    </antcall>
+  	
+    <mkdir      dir="${build.dist.bin.work}"/>
+    <copy     todir="${build.dist.bin.work}">
+      <fileset dir=".">
+        <include name="LICENSE.txt"/>
+        <include name="NOTICE.txt"/>
+        <include name="README.txt"/>
+        <include name="RELEASE-NOTES.html"/>
+      </fileset>
+    </copy>
+    <copy     todir="${build.dist.bin.work}">
+      <fileset dir="${build.home}">
+        <include name="*.jar"/>
+        <include name="docs/**"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="dist.src">
+    <mkdir      dir="${build.dist.src.work}"/>
+    <copy     todir="${build.dist.src.work}">
+      <fileset dir=".">
+        <include name="LICENSE.txt"/>
+        <include name="NOTICE.txt"/>
+        <include name="README.txt"/>
+        <include name="RELEASE-NOTES.html"/>
+        <include name="DEVELOPERS-GUIDE.html"/>
+        <include name="PROPOSAL.html"/>
+        <include name="STATUS.html"/>
+        <include name="build.xml"/>
+        <include name="maven.xml"/>
+        <include name="project.xml"/>
+        <include name="project.properties"/>
+      </fileset>
+    </copy>
+    <copy     todir="${build.dist.src.work}">
+      <fileset dir="${build.home}">
+        <include name="${final.name}.jar"/>
+      </fileset>
+    </copy>
+    <copy     todir="${build.dist.src.work}">
+      <fileset dir=".">
+        <include name="data/**"/>
+        <include name="src/**"/>
+        <include name="xdocs/**"/>
+      </fileset>
+    </copy>
+  </target>
+
+<!-- ====================================================================== -->
+
+  <target name="release" depends="dist.create,zip"
+          description="Create release">
+  	<!-- POM -->
+  	<copy file="project.xml" tofile="${build.home}/${final.name}.pom" />
+    <antcall target="internal-md5">
+      <param name="path" value="${build.home}/${final.name}.pom"/>
+    </antcall>
+  </target>
+
+  <target name="zip" depends="zip.bin,zip.src">
+  </target>
+  
+  <target name="zip.bin">
+    <mkdir dir="${build.dist}"/>
+  	<fixcrlf srcdir="${build.dist.bin.work}" eol="lf" includes="*.txt" />
+    <tar longfile="gnu" tarfile="${build.bin.tar.name}">
+      <tarfileset dir="${build.dist.bin}"/>
+    </tar>
+    <gzip zipfile="${build.bin.gz.name}" src="${build.bin.tar.name}"/>
+    <delete file="${build.bin.tar.name}" />
+    <antcall target="internal-md5">
+      <param name="path" value="${build.bin.gz.name}"/>
+    </antcall>
+    
+  	<fixcrlf srcdir="${build.dist.bin.work}" eol="crlf" includes="*.txt" />
+    <zip zipfile="${build.bin.zip.name}" >
+      <zipfileset dir="${build.dist.bin}"/>
+    </zip>
+    <antcall target="internal-md5">
+      <param name="path" value="${build.bin.zip.name}"/>
+    </antcall>
+  </target>
+
+  <target name="zip.src">
+    <mkdir dir="${build.dist}"/>
+  	<fixcrlf srcdir="${build.dist.src.work}" eol="lf" includes="*.txt,*.properties" />
+    <tar longfile="gnu" tarfile="${build.src.tar.name}">
+      <tarfileset dir="${build.dist.src}"/>
+    </tar>
+    <gzip zipfile="${build.src.gz.name}" src="${build.src.tar.name}"/>
+    <delete file="${build.src.tar.name}" />
+    <antcall target="internal-md5">
+      <param name="path" value="${build.src.gz.name}"/>
+    </antcall>
+    
+  	<fixcrlf srcdir="${build.dist.src.work}" eol="crlf" includes="*.txt,*.properties" />
+    <zip zipfile="${build.src.zip.name}" >
+      <zipfileset dir="${build.dist.src}"/>
+    </zip>
+    <antcall target="internal-md5">
+      <param name="path" value="${build.src.zip.name}"/>
+    </antcall>
+  </target>
+
+  <target name="internal-md5">
+    <basename property="_base" file="${path}"/>
+    <checksum file="${path}" property="md5"/>
+   	<echo message="${md5} *${_base}" file="${path}.md5"/>
+  </target>
+
+<!-- ====================================================================== -->
+  <target name="clirr">
+    <taskdef resource="clirrtask.properties">
+      <classpath path="${maven.repo}/clirr/jars/clirr-core-0.6-uber.jar;" />
+    </taskdef>
+    <clirr>
+      <origfiles dir="${maven.repo}/commons-collections/jars" includes="commons-collections-3.1.jar"/>
+      <newfiles dir="${build.home}" includes="${final.name}.jar" />
+      <formatter type="plain" outfile="${build.home}/clirr.txt" />
+    </clirr>
+  </target>
 
 </project>

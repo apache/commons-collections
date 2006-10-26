@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <!--
+   Copyright 2003-2004 The Apache Software Foundation
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+
+<document>
+
+ <properties>
+  <title>Choosing a collection</title>
+  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
+ </properties>
+
+ <body>
+
+<section name="Choosing a collection">
+
+<p>
+Commons-Collections and the Java Collections Framework provide a wide variety of collections to choose from. This choice can be bewildering, so this document seeks to help you choose.
+</p>
+
+<script>
+<![CDATA[
+function showHide(showObj,hideObj) {
+ if (document.getElementById) { // DOM3 = IE5, NS6 
+  document.getElementById(showObj).style.display='block';
+  document.getElementById(hideObj).style.display='none';
+ } else { 
+  if (document.layers) { // Netscape 4 
+   document.layers[showObj].display='block';
+   document.layers[hideObj].display='none';
+  } else { // IE 4
+   eval("document.all."+showObj+".style.display='block'");
+   eval("document.all."+hideObj+".style.display='none'");
+  } 
+ } 
+}
+function showMapMain() {
+ showHide('mapmain','collectionmain');
+}
+function showMap() {
+ showHide('map','bidimap');
+}
+function showBidiMap() {
+ showHide('bidimap','map');
+}
+function showCollectionMain() {
+ showHide('collectionmain','mapmain');
+}
+]]>
+</script>
+
+<!-- ========================================================================= -->
+<h3>Collection or Map</h3>
+
+<!-- ========================================================================= -->
+<p>
+Do you want to store a map of key-value pairs?
+Then use a <a href="#" onclick="showMapMain()">Map</a>.
+For example you could decode country codes, where 'FR' maps to 'France' and 'GB' maps to 'United Kingdom'.<br />
+Or do you want to store a simple collection of elements? Then use a <a href="#" onclick="showCollectionMain()">Collection</a>.
+For example you could store types of tree, 'Oak', 'Pine' and 'Birch'.<br />
+</p>
+
+<!-- ========================================================================= -->
+<div id="mapmain" style="display:none">
+<h3>Maps</h3>
+
+<p>
+Do you want to be able to access the key from the value as well as the value from the key? Then use a <a href="#" onclick="showBidiMap()">BidiMap</a>.
+For example you could convert country codes to text <i>and</i> text to country codes, allowing you to convert 'FR' to 'France' and 'France' to 'FR'.<br />
+Or do you just need a single direction lookup from key to value? Then use a <a href="#" onclick="showMap()">Map</a>.
+For example you could convert a country code to text <i>but not</i> text to country code.<br />
+</p>
+
+<!-- ========================================================================= -->
+<div id="bidimap" style="display:none">
+<h3>BidiMap interface</h3>
+
+<p>
+The <a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/BidiMap.html">BidiMap</a> interface and implementations in Commons Collections allow you to lookup data in both directions. There are three implementations:
+<table>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/DualHashBidiMap.html">DualHashBidiMap</a></td>
+<td>Uses two <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/HashMap.html">HashMap</a> objects internally. This implementation is a useful general purpose BidiMap that can store any object. The objects are stored in any order, and the order may change over time.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/DualTreeBidiMap.html">DualTreeBidiMap</a></td>
+<td>Uses two <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/TreeMap.html">TreeMap</a> objects internally which means that keys and values must implement <a href="http://java.sun.com/j2se/1.4/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. If considering this class, the TreeBidiMap is usually a better choice. However, this is the only implementation of the <a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/SortedBidiMap.html">SortedBidiMap</a> interface.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/TreeBidiMap.html">TreeBidiMap</a></td>
+<td>Dedicated implementation that requires keys and values to implement <a href="http://java.sun.com/j2se/1.4/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. This is an efficient implementation using a data structure that avoids duplicating data. The keys and values are held and viewed in sorted order, and the class implements the <a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/OrderedBidiMap.html">OrderedBidiMap</a> interface.</td>
+</tr>
+</table>
+</p>
+</div>
+
+<!-- ========================================================================= -->
+<div id="map" style="display:none">
+<h3>Map interface</h3>
+
+<p>
+The <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/Map.html">Map</a> interface and implementations in both the JDK and Commons Collections allow you to lookup data from a key to a value. This is one of the most powerful interfaces in the JDK, however it is very difficult to implement. These are the available implementations:
+<table>
+<tr>
+<td><a href="http://java.sun.com/j2se/1.4/docs/api/java/util/HashMap.html">HashMap</a> (JDK)</td>
+<td>This map is the most commonly used and fastest implementation. It is suitable for most situations and can store any object. Objects are stored in any order, and the order may change over time.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/HashedMap.html">HashedMap</a></td>
+<td>The Commons Collections hash map implementation which is very similar in design to HashMap, but also supports easy iteration via a <a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/MapIterator.html">MapIterator</a>. This implementation is also designed to be subclassed. Use this map if you want to use the extra iterator, or to subclass. Otherwise, there is no advantage (or disadvantage) compared to the JDK HashMap.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/IdentityMap.html">IdentityMap</a></td>
+<td>This map operates exactly as per HashedMap but compares keys and values using == not .equals().</td>
+</tr>
+<tr>
+<td><a href="http://java.sun.com/j2se/1.4/docs/api/java/util/IdentityHashMap.html">IdentityHashMap</a> (JDK)</td>
+<td>This map operates exactly as per HashMap but compares keys and values using == not .equals().</td>
+</tr>
+<tr>
+<td><a href="http://java.sun.com/j2se/1.4/docs/api/java/util/TreeMap.html">TreeMap</a> (JDK)</td>
+<td>This map ensures that the keys are always sorted, and iteration order is consistent. All keys must implement <a href="http://java.sun.com/j2se/1.4/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. This map should be used if you need the map to be sorted.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/LinkedMap.html">LinkedMap</a></td>
+<td>This map maintains the order that each object is added to the map. When the map is viewed via an iterator, the insertion order will be seen. This map should be used if you need to retain the insertion order.</td>
+</tr>
+<tr>
+<td><a href="http://java.sun.com/j2se/1.4/docs/api/java/util/LinkedHashMap.html">LinkedHashMap</a> (JDK)</td>
+<td>This map, available from JDK 1.4, maintains the order that each object is added to the map. When the map is viewed via an iterator, the insertion order will be seen. Commons collections' LinkedMap provides the same functionality for JDK1.2 onwards and provides a MapIterator.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ListOrderedMap.html">ListOrderedMap</a></td>
+<td>This map decorates another map to maintains the order that each object is added to the map. The order is maintained using a list. This map should be used if you need to retain the insertion order but you also need the special features of another map.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/LRUMap.html">LRUMap</a></td>
+<td>This map places a maximum size limit on the map and removes the least recently used (LRU) key-value when it is full. This map should be used for caches where you want to limit the maximum memory size used, and are happy with the least recently used algorithm for removals.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ReferenceMap.html">ReferenceMap</a></td>
+<td>This map enables keys and values to be garbage collected whilst still held in the map. This can be useful for building memory sensitive caches. This map should be used for caches where you want to allow garbage collection from the map.</td>
+</tr>
+<tr>
+<td><a href="http://java.sun.com/j2se/1.4/docs/api/java/util/WeakHashMap.html">WeakHashMap</a> (JDK)</td>
+<td>This map stores each key-value pair with a key that can be garbage collected. This can be useful for building memory sensitive caches. ReferenceMap provides the same functionality but with much more flexibility.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ReferenceIdentityMap.html">ReferenceIdentityMap</a></td>
+<td>This map operates exactly as per ReferenceMap but compares keys and values using == not .equals().</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/SingletonMap.html">SingletonMap</a></td>
+<td>This map is restricted to storing one key-value pair. It may contain no more than and no less than one pair. It provides a MapIterator. This map should be used if you want to return one key-value pair and must use the Map interface.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/Flat3Map.html">Flat3Map</a></td>
+<td>This map is optimised to store one, two or three key-value pairs and outperforms HashMap at these sizes. For size four and above performance is about 5% slower than HashMap. This map also has good garbage collection characteristics when below size four. It provides a MapIterator. This map should be used if are 99% sure that the map will be size three or less.</td>
+</tr>
+<tr>
+<td><a href="http://jakarta.apache.org/commons/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/StaticBucketMap.html">StaticBucketMap</a></td>
+<td>This map is optimised to work well in a heavily loaded multi-threaded environment. It provides synchronization internally, locking on a per 'bucket' basis, where the buckets are fixed at construction time. You should use this class if you can predict the size of the map and you are working in a very intensive multi-threaded environment.</td>
+</tr>
+</table>
+</p>
+</div>
+
+</div>
+
+<!-- ========================================================================= -->
+<div id="collectionmain" style="display:none">
+<h3>Collections</h3>
+
+<p>
+Do you want to access each element by index? Then use a <a href="#" onclick="showList()">List</a>.<br />
+Do you want to ensure that each element appears only once? Then use a <a href="#" onclick="showSet()">Set</a>.<br />
+Do you want to manage and keep count of multiple copies of the same element? Then use a <a href="#" onclick="showBag()">Bag</a>.<br />
+Do you want to be able to get or remove the next available object in the collection? Then use a <a href="#" onclick="showBuffer()">Buffer</a>.<br />
+Or do you want to just want an arbitrary collection of elements? Then use a <a href="#" onclick="showCollection()">Collection</a>.<br />
+</p>
+</div>
+
+</section>
+
+</body>
+</document>

@@ -1,66 +1,98 @@
 <?xml version="1.0"?>
+ <!--
+   Copyright 2002-2006 The Apache Software Foundation
 
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
 <document>
-
  <properties>
-  <title>Commons</title>
+  <title>Home</title>
   <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
  </properties>
-
- <body>
-
-<section name="The Collections Component">
-
+<body>
+<!-- ================================================== -->
+<section name="Commons Collections">
 <p>
-The introduction of the <a href="http://java.sun.com/products/jdk/1.2/docs/guide/collections/">Collections API</a> by Sun in JDK 1.2 has been a
-boon to quick and effective Java programming.  Ready access to
-powerful data structures has accelerated development by reducing the
-need for custom container classes around each core object.  Most Java2
-APIs are significantly easier to use because of the Collections API.
+The <a href="http://java.sun.com/products/j2se/1.4/docs/guide/collections/">Java Collections Framework</a>
+was a major addition in JDK 1.2.
+It added many powerful data structures that accelerate development of most significant Java applications.
+Since that time it has become the recognised standard for collection handling in Java.
 </p>
-
 <p>
-However, there are certain holes left unfilled by Sun's
-implementations, and the <a href="http://jakarta.apache.org/commons/">Jakarta-Commons</a> Collections Component strives
-to fulfill them. Among the features of this package are:
+Commons-Collections seek to build upon the JDK classes by providing new interfaces, implementations and utilities.
+There are many features, including:
 <ul>
-<li>Special-purpose implementations of Lists and Maps for fast
-access</li>
-<li>Adapter classes from Java1-style containers (arrays, enumerations)
-to Java2-style collections.</li>
-<li>Methods to test or create typical set-theory properties of
-collections such as union, intersection, and closure.</li>
+<li>Bag interface for collections that have a number of copies of each object</li>
+<li>Buffer interface for collections that have a well defined removal order, like FIFOs</li>
+<li>BidiMap interface for maps that can be looked up from value to key as well and key to value</li>
+<li>MapIterator interface to provide simple and quick iteration over maps</li>
+<li>Type checking decorators to ensure that only instances of a certain type can be added</li>
+<li>Transforming decorators that alter each object as it is added to the collection</li>
+<li>Composite collections that make multiple collections look like one</li>
+<li>Ordered maps and sets that retain the order elements are added in, including an LRU based map</li>
+<li>Identity map that compares objects based on their identity (==) instead of the equals method</li>
+<li>Reference map that allows keys and/or values to be garbage collected under close control</li>
+<li>Many comparator implementations</li>
+<li>Many iterator implementations</li>
+<li>Adapter classes from array and enumerations to collections</li>
+<li>Utilities to test or create typical set-theory properties of collections such as union, intersection, and closure</li>
 </ul>
 </p>
 </section>
-
+<!-- ================================================== -->
 <section name="Documentation">
 <p>
-An alphabetical list of the package can be found in the <a href="http://cvs.apache.org/viewcvs/~checkout~/jakarta-commons/collections/STATUS.html?rev=1.13">collections
-status document</a>.
+A getting started<span> </span><a href="userguide.html">User's Guide</a> is available
+as are various <a href="maven-reports.html">project reports</a>.
 </p>
-
 <p>
-The <a href="collections/api/index.html">JavaDoc API documents</a> are available online.
+The JavaDoc API documents are available online:
+</p>
+<ul>
+<li>The <a href="api-release/index.html">current release 3.2</a></li>
+<li>The latest 2.x release - <a href="api-2.1.1/index.html">version 2.1.1</a></li>
+<li>The <a href="apidocs/index.html">latest SVN</a></li>
+</ul>
+<p>
+The <a href="cvs-usage.html">subversion repository</a> can be
+<a href="http://svn.apache.org/viewcvs.cgi/jakarta/commons/proper/collections/trunk/">browsed</a>.
 </p>
 </section>
-
+<!-- ================================================== -->
 <section name="Releases">
-<ul>
-<li><a
-href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v2.0/">Version
-2.0</a></li>
-<li><a
-href="http://jakarta.apache.org/builds/jakarta-commons/release/commons-collections/v1.0/">Version
-1.0</a></li>
-</ul>
+<p>
+The latest version is v3.2. - 
+<a href="http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi">Download now!</a><br />
+The <a href="release_3_2.html">release notes</a> are also available.
+</p>
+<p>
+For previous releases, see the <a href="http://archive.apache.org/dist/jakarta/commons/collections/">Apache Archive</a>
+</p>
 </section>
-
+<!-- ================================================== -->
+<section name="Support">
+<p>
+The <a href="mail-lists.html">commons mailing lists</a> act as the main support forum.
+The user list is suitable for most library usage queries.
+The dev list is intended for the development discussion.
+Please remember that the lists are shared between all commons components,
+so prefix your email by [collections].
+</p>
+<p>
+Issues may be reported via <a href="issue-tracking.html">ASF JIRA</a>.
+Please read the instructions carefully to submit a useful bug report or enhancement request.
+</p>
+</section>
+<!-- ================================================== -->
 </body>
 </document>
-
-
-
-
-
-

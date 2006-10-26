@@ -1,98 +1,57 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestMultiHashMap.java,v 1.5 2002/06/18 03:28:35 mas Exp $
- * $Revision: 1.5 $
- * $Date: 2002/06/18 03:28:35 $
+ *  Copyright 2001-2005 The Apache Software Foundation
  *
- * ====================================================================
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * The Apache Software License, Version 1.1
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
- * reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
- *       "This product includes software developed by the
- *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
- *
- * 4. The names "The Jakarta Project", "Commons", and "Apache Software
- *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written
- *    permission, please contact apache@apache.org.
- *
- * 5. Products derived from this software may not be called "Apache"
- *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- * ====================================================================
- *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * <http://www.apache.org/>.
- *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
-
 package org.apache.commons.collections;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * Unit Tests for <code>MultiHashMap</code>.
+ * 
+ * @version $Revision$ $Date$
  *
+ * @author Unknown
  */
-public class TestMultiHashMap extends TestMap
-{
-    public TestMultiHashMap(String testName)
-    {
+public class TestMultiHashMap extends AbstractTestMap {
+
+    public TestMultiHashMap(String testName) {
         super(testName);
     }
 
-    public static Test suite()
-    {
+    public static Test suite() {
         return new TestSuite(TestMultiHashMap.class);
     }
 
-    public static void main(String args[])
-    {
-        String[] testCaseName = { TestMultiHashMap.class.getName() };
+    public static void main(String args[]) {
+        String[] testCaseName = { TestMultiHashMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // MutltiHashMap was introduced in Collections 2.x
-    public int getCompatibilityVersion() {
-        return 2;
+    public String getCompatibilityVersion() {
+        return "2";
     }
 
     public Map makeEmptyMap() {
@@ -102,52 +61,46 @@ public class TestMultiHashMap extends TestMap
     //----------------------------
     //          Tests
     //----------------------------
-    public void testPutNGet()
-    {
+    public void testPutNGet() {
         MultiHashMap map = new MultiHashMap();
-        loadMap( map );
-        checkMap( map );
-        
-        assertTrue( map.get(new Integer(99)) == null );
-        
+        loadMap(map);
+        checkMap(map);
+
+        assertTrue(map.get(new Integer(99)) == null);
+
         map.clear();
-        assertTrue( map.size() == 0 );
+        assertTrue(map.size() == 0);
     }
-    
-    public void testContainsValue()
-    {
+
+    public void testContainsValue() {
         MultiHashMap map = new MultiHashMap();
-        loadMap( map );
-        
-        assertTrue( map.containsValue( "uno" ) );
-        assertTrue( map.containsValue( "quatro" ) );
-        assertTrue( map.containsValue( "two" ) );
-        
-        assertTrue( ! map.containsValue( "uggaBugga" ) );
-        
+        loadMap(map);
+
+        assertTrue(map.containsValue("uno"));
+        assertTrue(map.containsValue("quatro"));
+        assertTrue(map.containsValue("two"));
+
+        assertTrue(!map.containsValue("uggaBugga"));
+
         map.clear();
     }
     
-    public void testValues()
-    {
+    public void testValues() {
         MultiHashMap map = new MultiHashMap();
-        loadMap( map );
-        
+        loadMap(map);
+
         Collection vals = map.values();
-        assertTrue( vals.size() == getFullSize() );
-        
+        assertTrue(vals.size() == getFullSize());
+
         map.clear();
     }
 
-    
-    static private class MapPair
-    {
-        MapPair( int key, String val )
-        {
-            mKey = new Integer( key );
+    static private class MapPair {
+        MapPair(int key, String val) {
+            mKey = new Integer(key);
             mValue = val;
         }
-        
+
         Integer mKey = null;
         String mValue = null;
     }
@@ -161,68 +114,66 @@ public class TestMultiHashMap extends TestMap
         {new MapPair(4,"four"), new MapPair(4,"quatro")}
     };
     
-    private void loadMap( MultiHashMap map )
-    {
+    private void loadMap(MultiHashMap map) {
         // Set up so that we load the keys "randomly"
         // (i.e. we don't want to load int row-order, so that all like keys
         // load together. We want to mix it up...)
-        
+
         int numRows = sMapPairs.length;
         int maxCols = 0;
-        for( int ii=0; ii < sMapPairs.length; ii++ ){
-            if ( sMapPairs[ii].length > maxCols )
+        for (int ii = 0; ii < sMapPairs.length; ii++) {
+            if (sMapPairs[ii].length > maxCols) {
                 maxCols = sMapPairs[ii].length;
+            }
         }
-        for( int ii=0; ii < maxCols; ii++ ){
-            for( int jj=0; jj < numRows; jj++ ){
-                if ( ii < sMapPairs[jj].length ) {
-                    map.put( sMapPairs[jj][ii].mKey, sMapPairs[jj][ii].mValue);
+        for (int ii = 0; ii < maxCols; ii++) {
+            for (int jj = 0; jj < numRows; jj++) {
+                if (ii < sMapPairs[jj].length) {
+                    map.put(sMapPairs[jj][ii].mKey, sMapPairs[jj][ii].mValue);
                     //---------------------------------------------------------
                 }
             }
         }
-        assertTrue( map.size() == sMapPairs.length );
+        assertTrue(map.size() == sMapPairs.length);
     }
     
-    private void checkMap( MultiHashMap map )
-    {
-        for( int ii=0; ii < sMapPairs.length; ii++ ){
-            checkKeyList( map, ii );
+    private void checkMap(MultiHashMap map) {
+        for (int ii = 0; ii < sMapPairs.length; ii++) {
+            checkKeyList(map, ii);
         }
     }
-    
-    private void checkKeyList( MultiHashMap map, int index )
-    {
-        assertTrue( index < sMapPairs.length );
-        Integer key = sMapPairs[index][0].mKey ;
-        
-        Object obj = map.get( key );
+
+    private void checkKeyList(MultiHashMap map, int index) {
+        assertTrue(index < sMapPairs.length);
+        Integer key = sMapPairs[index][0].mKey;
+
+        Object obj = map.get(key);
         //--------------------------
-        
-        assertTrue( obj != null );
-        assertTrue( obj instanceof Collection );
-        Collection keyList = (Collection)obj;
-        
-        assertTrue( keyList.size()  == sMapPairs[index].length );
+
+        assertTrue(obj != null);
+        assertTrue(obj instanceof Collection);
+        Collection keyList = (Collection) obj;
+
+        assertTrue(keyList.size() == sMapPairs[index].length);
         Iterator iter = keyList.iterator();
-        while ( iter.hasNext() ) {
+        while (iter.hasNext()) {
             Object oval = iter.next();
-            assertTrue( oval != null );
-            assertTrue( oval instanceof String );
-            String val = (String)oval;
+            assertTrue(oval != null);
+            assertTrue(oval instanceof String);
+            String val = (String) oval;
             boolean foundIt = false;
-            for( int ii=0; ii < sMapPairs[index].length; ii++ ){
-                if( val.equals( sMapPairs[index][ii].mValue ) )
+            for (int ii = 0; ii < sMapPairs[index].length; ii++) {
+                if (val.equals(sMapPairs[index][ii].mValue)) {
                     foundIt = true;
+                }
             }
-            assertTrue( foundIt );
+            assertTrue(foundIt);
         }
     }
     
-    public int getFullSize()
-    {
+    public int getFullSize() {
         int len = 0;
-        for( int ii=0; ii < sMapPairs.length; ii++ ){
+        for (int ii = 0; ii < sMapPairs.length; ii++) {
             len += sMapPairs[ii].length;
         }
         return len;
@@ -262,6 +213,13 @@ public class TestMultiHashMap extends TestMap
     }
 
     public void testMapEquals() {
+        MultiHashMap one = new MultiHashMap();
+        Integer value = new Integer(1);
+        one.put("One", value);
+        one.remove("One", value);
+        
+        MultiHashMap two = new MultiHashMap();
+        assertEquals(two, one);
     }
 
     public void testMapHashCode() {
@@ -289,4 +247,228 @@ public class TestMultiHashMap extends TestMap
         values = map.values();
         super.verifyValues();
     }
+    
+    //-----------------------------------------------------------------------
+    public void testGetCollection() {
+        MultiHashMap map = new MultiHashMap();
+        map.put("A", "AA");
+        assertSame(map.get("A"), map.getCollection("A"));
+    }
+    
+    public void testTotalSize() {
+        MultiHashMap map = new MultiHashMap();
+        assertEquals(0, map.totalSize());
+        map.put("A", "AA");
+        assertEquals(1, map.totalSize());
+        map.put("B", "BA");
+        assertEquals(2, map.totalSize());
+        map.put("B", "BB");
+        assertEquals(3, map.totalSize());
+        map.put("B", "BC");
+        assertEquals(4, map.totalSize());
+        map.remove("A");
+        assertEquals(3, map.totalSize());
+        map.remove("B", "BC");
+        assertEquals(2, map.totalSize());
+    }
+    
+    public void testSize_Key() {
+        MultiHashMap map = new MultiHashMap();
+        assertEquals(0, map.size("A"));
+        assertEquals(0, map.size("B"));
+        map.put("A", "AA");
+        assertEquals(1, map.size("A"));
+        assertEquals(0, map.size("B"));
+        map.put("B", "BA");
+        assertEquals(1, map.size("A"));
+        assertEquals(1, map.size("B"));
+        map.put("B", "BB");
+        assertEquals(1, map.size("A"));
+        assertEquals(2, map.size("B"));
+        map.put("B", "BC");
+        assertEquals(1, map.size("A"));
+        assertEquals(3, map.size("B"));
+        map.remove("A");
+        assertEquals(0, map.size("A"));
+        assertEquals(3, map.size("B"));
+        map.remove("B", "BC");
+        assertEquals(0, map.size("A"));
+        assertEquals(2, map.size("B"));
+    }
+    
+    public void testIterator_Key() {
+        MultiHashMap map = new MultiHashMap();
+        assertEquals(false, map.iterator("A").hasNext());
+        map.put("A", "AA");
+        Iterator it = map.iterator("A");
+        assertEquals(true, it.hasNext());
+        it.next();
+        assertEquals(false, it.hasNext());
+    }
+    
+    public void testContainsValue_Key() {
+        MultiHashMap map = new MultiHashMap();
+        assertEquals(false, map.containsValue("A", "AA"));
+        assertEquals(false, map.containsValue("B", "BB"));
+        map.put("A", "AA");
+        assertEquals(true, map.containsValue("A", "AA"));
+        assertEquals(false, map.containsValue("A", "AB"));
+    }
+
+    public void testPutAll_Map1() {
+        MultiMap original = new MultiHashMap();
+        original.put("key", "object1");
+        original.put("key", "object2");
+
+        MultiHashMap test = new MultiHashMap();
+        test.put("keyA", "objectA");
+        test.put("key", "object0");
+        test.putAll(original);
+
+        assertEquals(2, test.size());
+        assertEquals(4, test.totalSize());
+        assertEquals(1, test.getCollection("keyA").size());
+        assertEquals(3, test.getCollection("key").size());
+        assertEquals(true, test.containsValue("objectA"));
+        assertEquals(true, test.containsValue("object0"));
+        assertEquals(true, test.containsValue("object1"));
+        assertEquals(true, test.containsValue("object2"));
+    }
+
+    public void testPutAll_Map2() {
+        Map original = new HashMap();
+        original.put("keyX", "object1");
+        original.put("keyY", "object2");
+
+        MultiHashMap test = new MultiHashMap();
+        test.put("keyA", "objectA");
+        test.put("keyX", "object0");
+        test.putAll(original);
+
+        assertEquals(3, test.size());
+        assertEquals(4, test.totalSize());
+        assertEquals(1, test.getCollection("keyA").size());
+        assertEquals(2, test.getCollection("keyX").size());
+        assertEquals(1, test.getCollection("keyY").size());
+        assertEquals(true, test.containsValue("objectA"));
+        assertEquals(true, test.containsValue("object0"));
+        assertEquals(true, test.containsValue("object1"));
+        assertEquals(true, test.containsValue("object2"));
+    }
+
+    public void testPutAll_KeyCollection() {
+        MultiHashMap map = new MultiHashMap();
+        Collection coll = Arrays.asList(new Object[] {"X", "Y", "Z"});
+        
+        assertEquals(true, map.putAll("A", coll));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        assertEquals(false, map.putAll("A", null));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        assertEquals(false, map.putAll("A", new ArrayList()));
+        assertEquals(3, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        
+        coll = Arrays.asList(new Object[] {"M"});
+        assertEquals(true, map.putAll("A", coll));
+        assertEquals(4, map.size("A"));
+        assertEquals(true, map.containsValue("A", "X"));
+        assertEquals(true, map.containsValue("A", "Y"));
+        assertEquals(true, map.containsValue("A", "Z"));
+        assertEquals(true, map.containsValue("A", "M"));
+    }
+
+    public void testClone() {
+        MultiHashMap map = new MultiHashMap();
+        map.put("A", "1");
+        map.put("A", "2");
+        Collection coll = (Collection) map.get("A");
+        assertEquals(1, map.size());
+        assertEquals(2, coll.size());
+        
+        MultiHashMap cloned = (MultiHashMap) map.clone();
+        Collection clonedColl = (Collection) cloned.get("A");
+        assertNotSame(map, cloned);
+        assertNotSame(coll, clonedColl);
+        assertEquals(1, map.size());
+        assertEquals(2, coll.size());
+        assertEquals(1, cloned.size());
+        assertEquals(2, clonedColl.size());
+        map.put("A", "3");
+        assertEquals(1, map.size());
+        assertEquals(3, coll.size());
+        assertEquals(1, cloned.size());
+        assertEquals(2, clonedColl.size());
+    }
+
+    public void testConstructorCopy1() {
+        MultiHashMap map = new MultiHashMap();
+        map.put("A", "1");
+        map.put("A", "2");
+        Collection coll = (Collection) map.get("A");
+        assertEquals(1, map.size());
+        assertEquals(2, coll.size());
+        
+        MultiHashMap newMap = new MultiHashMap(map);
+        Collection newColl = (Collection) newMap.get("A");
+        assertNotSame(map, newMap);
+        assertNotSame(coll, newColl);
+        assertEquals(1, map.size());
+        assertEquals(2, coll.size());
+        assertEquals(1, newMap.size());
+        assertEquals(2, newColl.size());
+        
+        map.put("A", "3");
+        assertEquals(1, map.size());
+        assertEquals(3, coll.size());
+        assertEquals(1, newMap.size());
+        assertEquals(2, newColl.size());
+    }
+
+    public void testConstructorCopy2() {
+        Map map = new HashMap();
+        map.put("A", "1");
+        map.put("B", "2");
+        assertEquals(2, map.size());
+        
+        MultiHashMap newMap = new MultiHashMap(map);
+        Collection newColl = (Collection) newMap.get("A");
+        assertNotSame(map, newMap);
+        assertEquals(2, map.size());
+        assertEquals(2, newMap.size());
+        assertEquals(1, newColl.size());
+        
+        map.put("A", "3");
+        assertEquals(2, map.size());
+        assertEquals(2, newMap.size());
+        assertEquals(1, newColl.size());
+        
+        map.put("C", "4");
+        assertEquals(3, map.size());
+        assertEquals(2, newMap.size());
+        assertEquals(1, newColl.size());
+    }
+
+    public void testRemove_KeyItem() {
+        MultiHashMap map = new MultiHashMap();
+        map.put("A", "AA");
+        map.put("A", "AB");
+        map.put("A", "AC");
+        assertEquals(null, map.remove("C", "CA"));
+        assertEquals(null, map.remove("A", "AD"));
+        assertEquals("AC", map.remove("A", "AC"));
+        assertEquals("AB", map.remove("A", "AB"));
+        assertEquals("AA", map.remove("A", "AA"));
+        assertEquals(new MultiHashMap(), map);
+    }
+
 }

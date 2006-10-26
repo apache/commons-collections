@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+ <!--
+   Copyright 2003-2005 The Apache Software Foundation
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+
+<document>
+
+ <properties>
+  <title>User guide</title>
+  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
+ </properties>
+
+ <body>
+
+<section name="User guide">
+
+<p>
+Commons-Collections provides a large number of classes to aid day to day programming.
+This document highlights some key features to get you started.
+</p>
+  <ul>
+    <li><a href='#Utilities'>Utilities</a> for the standard collections.</li>
+    <li><a href='#Maps'>Maps</a>
+      <ul>
+         <li><a href='#Map%20Iteration'>Map Iteration</a></li>
+         <li><a href='#Ordered%20Maps'>Ordered Maps</a></li>
+         <li><a href='#Bidirectional%20Maps'>Bidirectional Maps</a></li>
+      </ul>
+    </li>
+    <li><a href='#Queues%20and%20Buffers'>Queues and Buffers</a></li>
+    <li><a href='#Bags'>Bags</a></li>
+  </ul>
+<subsection name='Note On Synchronization'>
+  <p>
+Commons-collections uses a design approach to synchronization similar 
+to the standard Java collections. The majority of the various implementations 
+of collections, maps and bags are not thread safe without additional 
+synchronization. The appropriate <code>synchronizeXXX</code> method on <code>Collections</code> is one way that these implementations can be synchronized for use in a 
+multithreaded application. 
+  </p>
+  <p>
+The class level javadocs should indicate whether a particular 
+implementation is safe for multithreaded access without additional
+synchronization. Where there is no expicit indication that the implementation
+is thread safe then it should be assumed that synchronization is required. 
+Please report the missing documentation to the commons development team.  
+</p>
+</subsection>
+
+</section>
+
+<section name="Utilities">
+
+<p>
+A Utility class is provided for each major collection interface.
+Thus, the <code>Set</code> and <code>SortedSet</code> interfaces are provided for by <code>SetUtils.</code>
+These classes provide useful methods for working with that collection type.
+</p>
+<p>
+The most methods are found on the two 'root' collection utility classes - 
+<code>CollectionUtils</code> and <code>MapUtils.</code>
+As all other collection interfaces extend <code>Collection</code> or <code>Map</code> these utilities can be used widely.
+They include intersection, counting, iteration, functor and typecasting operations amongst others.
+The utility classes also provide access to collection decorator classes in a way similar to the JDK <code>Collections</code> class.
+</p>
+
+</section>
+
+<section name='Maps'>
+<subsection name="Map Iteration">
+
+<p>
+The JDK <code>Map</code> interface always suffered from being difficult to iterate over.
+API users are forced to either iterate over an EntrySet or over the KeySet.
+Commons-Collections now provides a new interface - <code>MapIterator</code> that allows simple iteration over maps.
+</p>
+<source>
+IterableMap map = new HashedMap();
+MapIterator it = map.mapIterator();
+while (it.hasNext()) {
+  Object key = it.next();
+  Object value = it.getValue();
+  
+  it.setValue(newValue);
+}
+</source>
+
+</subsection>
+
+<subsection name="Ordered Maps">
+
+<p>
+A new interface is provided for maps that have an order but are not sorted - <code>OrderedMap.</code>
+Two implementations are provided - <code>LinkedMap</code> and <code>ListOrderedMap</code> (a decorator).
+This interface supports the map iterator, and also allows iteration both forwards and backwards through the map.
+</p>
+<source>
+OrderedMap map = new LinkedMap();
+map.put("FIVE", "5");
+map.put("SIX", "6");
+map.put("SEVEN", "7");
+map.firstKey();  // returns "FIVE"
+map.nextKey("FIVE");  // returns "SIX"
+map.nextKey("SIX");  // returns "SEVEN"
+</source>
+
+</subsection>
+
+<subsection name="Bidirectional Maps">
+
+<p>
+A new interface hierarchy has been added to support bidirectional maps - <code>BidiMap.</code>
+These represent maps where the key can lookup the value and the value can lookup the key with equal ease.
+</p>
+<source>
+BidiMap bidi = new TreeBidiMap();
+bidi.put("SIX", "6");
+bidi.get("SIX");  // returns "6"
+bidi.getKey("6");  // returns "SIX"
+bidi.removeValue("6");  // removes the mapping
+BidiMap inverse = bidi.inverseBidiMap();  // returns a map with keys and values swapped
+</source>
+<p>
+Additional interfaces are provided for ordered and sorted bidirectional maps.
+Implementations are provided for each bidirectional map type.
+</p>
+
+</subsection>
+</section>
+
+<section name="Queues and Buffers">
+
+<p>
+A new interface hierarchy has been added to support queues and buffers - <code>Buffer.</code>
+These represent collections that have a well defined removal order.
+</p>
+<source>
+Buffer buffer = new UnboundedFifoBuffer();
+buffer.add("ONE");
+buffer.add("TWO");
+buffer.add("THREE");
+buffer.remove();  // removes and returns the next in order, "ONE" as this is a FIFO
+buffer.remove();  // removes and returns the next in order, "TWO" as this is a FIFO
+</source>
+<p>
+Implementations are provided for FIFO (queue), LIFO (stack) and Priority (removal in comparator order).
+</p>
+
+</section>
+
+<section name="Bags">
+
+<p>
+A new interface hierarchy has been added to support bags - <code>Bag.</code>
+These represent collections where a certain number of copies of each element is held.
+</p>
+<source>
+Bag bag = new HashBag();
+bag.add("ONE", 6);  // add 6 copies of "ONE"
+bag.remove("ONE", 2);  // removes 2 copies of "ONE"
+bag.getCount("ONE");  // returns 4, the number of copies in the bag (6 - 2)
+</source>
+<p>
+Implementations are provided for both unsorted and sorted Bags.
+</p>
+
+</section>
+
+</body>
+</document>

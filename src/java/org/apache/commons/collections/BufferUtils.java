@@ -1,400 +1,200 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/BufferUtils.java,v 1.3 2002/07/03 02:16:48 mas Exp $
- * $Revision: 1.3 $
- * $Date: 2002/07/03 02:16:48 $
+ *  Copyright 2002-2005 The Apache Software Foundation
  *
- * ====================================================================
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * The Apache Software License, Version 1.1
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
- * reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
- *       "This product includes software developed by the
- *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
- *
- * 4. The names "The Jakarta Project", "Commons", and "Apache Software
- *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written
- *    permission, please contact apache@apache.org.
- *
- * 5. Products derived from this software may not be called "Apache"
- *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- * ====================================================================
- *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * <http://www.apache.org/>.
- *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package org.apache.commons.collections;
 
-
-import java.util.Collection;
-import java.util.Iterator;
-
+import org.apache.commons.collections.buffer.BlockingBuffer;
+import org.apache.commons.collections.buffer.PredicatedBuffer;
+import org.apache.commons.collections.buffer.SynchronizedBuffer;
+import org.apache.commons.collections.buffer.TransformedBuffer;
+import org.apache.commons.collections.buffer.TypedBuffer;
+import org.apache.commons.collections.buffer.UnmodifiableBuffer;
+import org.apache.commons.collections.buffer.BoundedBuffer;
 
 /**
- *  Contains static utility methods for operating on {@link Buffer} objects.
+ * Provides utility methods and decorators for {@link Buffer} instances.
  *
- *  @author Paul Jack
- *  @version $Id: BufferUtils.java,v 1.3 2002/07/03 02:16:48 mas Exp $
+ * @since Commons Collections 2.1
+ * @version $Revision$ $Date$
+ *
+ * @author Paul Jack
+ * @author Stephen Colebourne
  */
 public class BufferUtils {
 
+    /**
+     * An empty unmodifiable buffer.
+     */
+    public static final Buffer EMPTY_BUFFER = UnmodifiableBuffer.decorate(new ArrayStack(1));
 
     /**
-     *  Returns a synchronized buffer backed by the given buffer.
-     *  Much like the synchronized collections returned by 
-     *  {@link java.util.Collections}, you must manually synchronize on 
-     *  the returned buffer's iterator to avoid non-deterministic behavior:
-     *  
-     *  <Pre>
-     *  Buffer b = BufferUtils.synchronizedBuffer(myBuffer);
-     *  synchronized (b) {
-     *      Iterator i = b.iterator();
-     *      while (i.hasNext()) {
-     *          process (i.next());
-     *      }
-     *  }
-     *  </Pre>
-     *
-     *  @param b  the buffer to synchronize
-     *  @return  a synchronized buffer backed by that buffer
+     * <code>BufferUtils</code> should not normally be instantiated.
      */
-    public static Buffer synchronizedBuffer(final Buffer b) {
-        return new SynchronizedBuffer(b);
+    public BufferUtils() {
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Returns a synchronized buffer backed by the given buffer.
+     * Much like the synchronized collections returned by
+     * {@link java.util.Collections}, you must manually synchronize on
+     * the returned buffer's iterator to avoid non-deterministic behavior:
+     *
+     * <pre>
+     * Buffer b = BufferUtils.synchronizedBuffer(myBuffer);
+     * synchronized (b) {
+     *     Iterator i = b.iterator();
+     *     while (i.hasNext()) {
+     *         process (i.next());
+     *     }
+     * }
+     * </pre>
+     *
+     * @param buffer  the buffer to synchronize, must not be null
+     * @return a synchronized buffer backed by that buffer
+     * @throws IllegalArgumentException  if the Buffer is null
+     */
+    public static Buffer synchronizedBuffer(Buffer buffer) {
+        return SynchronizedBuffer.decorate(buffer);
+    }
 
     /**
-     *  Returns a synchronized buffer backed by the given buffer that will
-     *  block on {@link Buffer#get()} and {@link Buffer#remove()} operations.
-     *  If the buffer is empty, then the {@link Buffer#get()} and 
-     *  {@link Buffer#remove()} operations will block until new elements
-     *  are added to the buffer, rather than immediately throwing a 
-     *  <Code>BufferUnderflowException</Code>.
+     * Returns a synchronized buffer backed by the given buffer that will
+     * block on {@link Buffer#get()} and {@link Buffer#remove()} operations.
+     * If the buffer is empty, then the {@link Buffer#get()} and
+     * {@link Buffer#remove()} operations will block until new elements
+     * are added to the buffer, rather than immediately throwing a
+     * <code>BufferUnderflowException</code>.
      *
-     *  @param buf  the buffer to synchronize
-     *  @return  a blocking buffer backed by that buffer
+     * @param buffer  the buffer to synchronize, must not be null
+     * @return a blocking buffer backed by that buffer
+     * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static Buffer blockingBuffer(Buffer buf) {
-        return new SynchronizedBuffer(buf) {
-
-            public synchronized boolean add(Object o) {
-                boolean r = b.add(o);
-                notify();
-                return r;
-            }
-
-            public synchronized boolean addAll(Collection c) {
-                boolean r = b.addAll(c);
-                notifyAll();
-                return r;
-            }
-
-            public synchronized Object get() {
-                while (b.isEmpty()) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        throw new BufferUnderflowException();
-                    }
-                }
-                return b.get();
-            }
-
-            public synchronized Object remove() {
-                while (b.isEmpty()) {
-                    try {
-                        wait();
-                    } catch (InterruptedException e) {
-                        throw new BufferUnderflowException();
-                    }
-                }
-                return b.remove();
-            }
-        };
+    public static Buffer blockingBuffer(Buffer buffer) {
+        return BlockingBuffer.decorate(buffer);
     }
-
-
-    private static class SynchronizedBuffer implements Buffer {
-
-            Buffer b;
-
-
-            public SynchronizedBuffer(Buffer b) {
-                 this.b = b;
-            }
-
-            public synchronized int size() {
-                return b.size();
-            }
-
-            public synchronized boolean isEmpty() {
-                return b.isEmpty();
-            }
-
-            public synchronized boolean contains(Object o) {
-                return b.contains(o);
-            }
-
-            public Iterator iterator() {
-                return b.iterator();
-            }
-
-            public synchronized Object[] toArray() {
-                return b.toArray();
-            }
-
-            public synchronized Object[] toArray(Object[] o) {
-                return b.toArray(o);
-            }
-
-            public synchronized boolean add(Object o) {
-                return b.add(o);
-            }
-
-            public synchronized boolean remove(Object o) {
-                return b.remove(o);
-            }
-
-            public synchronized boolean containsAll(Collection c) {
-                return b.containsAll(c);
-            }
-
-            public synchronized boolean addAll(Collection c) {
-                return b.addAll(c);
-            }
-
-            public synchronized boolean removeAll(Collection c) {
-                return b.removeAll(c);
-            }
-
-            public synchronized boolean retainAll(Collection c) {
-                return b.retainAll(c);
-            }
-
-            public synchronized void clear() {
-                b.clear();
-            }
-
-            public synchronized boolean equals(Object o) {
-                return b.equals(o);
-            }
-
-            public synchronized int hashCode() {
-                return b.hashCode();
-            }
-
-            public synchronized String toString() {
-                return b.toString();
-            }
-
-            public synchronized Object get() {
-                return b.get();
-            }
-
-            public synchronized Object remove() {
-                return b.remove();
-            }          
-
-        
-    }
-
 
     /**
-     *  Returns an unmodifiable buffer backed by the given buffer.
+     * Returns a synchronized buffer backed by the given buffer that will
+     * block on {@link Buffer#get()} and {@link Buffer#remove()} operations
+     * until <code>timeout</code> expires.  If the buffer is empty, then the
+     * {@link Buffer#get()} and {@link Buffer#remove()} operations will block
+     * until new elements are added to the buffer, rather than immediately
+     * throwing a <code>BufferUnderflowException</code>.
      *
-     *  @param b  the buffer to make unmodifiable
-     *  @return  an unmodifiable buffer backed by that buffer
+     * @param buffer  the buffer to synchronize, must not be null
+     * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
+     * @return a blocking buffer backed by that buffer
+     * @throws IllegalArgumentException  if the Buffer is null
+     * @since Commons Collections 3.2
      */
-    public static Buffer unmodifiableBuffer(Buffer b) {
-        return new BufferDecorator(b) {
-            public boolean addAll(Collection c) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public boolean removeAll(Collection c) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public boolean retainAll(Collection c) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public boolean add(Object o) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public boolean remove(Object o) {
-                throw new UnsupportedOperationException();
-            } 
-
-            public void clear() {
-                throw new UnsupportedOperationException();
-            }
-
-            public Object remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+    public static Buffer blockingBuffer(Buffer buffer, long timeoutMillis) {
+        return BlockingBuffer.decorate(buffer, timeoutMillis);
     }
-
 
     /**
-     *  Returns a predicated buffer backed by the given buffer.  Elements are
-     *  evaluated with the given predicate before being added to the buffer.
-     *  If the predicate evaluation returns false, then an 
-     *  IllegalArgumentException is raised and the element is not added to
-     *  the buffer.
+     * Returns a synchronized buffer backed by the given buffer that will
+     * block on {@link Buffer#add(Object)} and
+     * {@link Buffer#addAll(java.util.Collection)} until enough object(s) are
+     * removed from the buffer to allow the object(s) to be added and still
+     * maintain the maximum size.
      *
-     *  @param buf  the buffer to predicate
-     *  @param p  the predicate used to evaluate new elements
-     *  @return  a predicated buffer
+     * @param buffer  the buffer to make bounded,  must not be null
+     * @param maximumSize  the maximum size
+     * @return a bounded buffer backed by the given buffer
+     * @throws IllegalArgumentException if the given buffer is null
+     * @since Commons Collections 3.2
      */
-    public static Buffer predicatedBuffer(Buffer buf, final Predicate p) {
-        if (buf == null) {
-            throw new IllegalArgumentException("Buffer must not be null.");
-        }
-        if (p == null) {
-            throw new IllegalArgumentException("Predicate must not be null.");
-        }
-        return new BufferDecorator(buf) {
-
-            public boolean add(Object o) {
-                test(o);
-                return b.add(o);
-            }
-
-            public boolean addAll(Collection c) {
-                Iterator iterator = c.iterator();
-                while (iterator.hasNext()) {
-                    test(iterator.next());
-                }
-                return b.addAll(c);
-            }
-
-            private void test(Object o) {
-                if (!p.evaluate(o)) {
-                    throw new IllegalArgumentException("Invalid: " + o);
-                }
-            }
-        };
+    public static Buffer boundedBuffer(Buffer buffer, int maximumSize) {
+        return BoundedBuffer.decorate(buffer, maximumSize);
     }
 
-
-    private static class BufferDecorator implements Buffer {
-
-        Buffer b;
-
-        BufferDecorator(Buffer b) {
-            this.b = b;
-        }
-
-        public int size() {
-            return b.size();
-        }
-
-        public boolean isEmpty() {
-            return b.isEmpty();
-        }
-
-        public boolean contains(Object o) {
-            return b.contains(o);
-        }
-
-        public Iterator iterator() {
-            return b.iterator();
-        }
-
-        public Object[] toArray() {
-            return b.toArray();
-        }
-
-        public Object[] toArray(Object[] o) {
-            return b.toArray(o);
-        }
-
-        public boolean add(Object o) {
-            return b.add(o);
-        }
-
-        public boolean remove(Object o) {
-            return b.remove(o);
-        }
-
-        public boolean containsAll(Collection c) {
-            return b.containsAll(c);
-        }
-
-        public boolean addAll(Collection c) {
-            return b.addAll(c);
-        }
-
-        public boolean removeAll(Collection c) {
-            return b.removeAll(c);
-        }
-
-        public boolean retainAll(Collection c) {
-            return b.retainAll(c);
-        }
-
-        public void clear() {
-            b.clear();
-        }
-
-        public boolean equals(Object o) {
-            return b.equals(o);
-        }
-
-        public int hashCode() {
-            return b.hashCode();
-        }
-
-        public String toString() {
-            return b.toString();
-        }
-
-        public Object get() {
-            return b.get();
-        }
-
-        public Object remove() {
-            return b.remove();
-        }
+    /**
+     * Returns a synchronized buffer backed by the given buffer that will
+     * block on {@link Buffer#add(Object)} and
+     * {@link Buffer#addAll(java.util.Collection)} until enough object(s) are
+     * removed from the buffer to allow the object(s) to be added and still
+     * maintain the maximum size or the timeout expires.
+     *
+     * @param buffer the buffer to make bounded, must not be null
+     * @param maximumSize the maximum size
+     * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
+     * @return a bounded buffer backed by the given buffer
+     * @throws IllegalArgumentException if the given buffer is null
+     * @since Commons Collections 3.2
+     */
+    public static Buffer boundedBuffer(Buffer buffer, int maximumSize, long timeoutMillis) {
+        return BoundedBuffer.decorate(buffer, maximumSize, timeoutMillis);
     }
 
+    /**
+     * Returns an unmodifiable buffer backed by the given buffer.
+     *
+     * @param buffer  the buffer to make unmodifiable, must not be null
+     * @return an unmodifiable buffer backed by that buffer
+     * @throws IllegalArgumentException  if the Buffer is null
+     */
+    public static Buffer unmodifiableBuffer(Buffer buffer) {
+        return UnmodifiableBuffer.decorate(buffer);
+    }
+
+    /**
+     * Returns a predicated (validating) buffer backed by the given buffer.
+     * <p>
+     * Only objects that pass the test in the given predicate can be added to the buffer.
+     * Trying to add an invalid object results in an IllegalArgumentException.
+     * It is important not to use the original buffer after invoking this method,
+     * as it is a backdoor for adding invalid objects.
+     *
+     * @param buffer  the buffer to predicate, must not be null
+     * @param predicate  the predicate used to evaluate new elements, must not be null
+     * @return a predicated buffer
+     * @throws IllegalArgumentException  if the Buffer or Predicate is null
+     */
+    public static Buffer predicatedBuffer(Buffer buffer, Predicate predicate) {
+        return PredicatedBuffer.decorate(buffer, predicate);
+    }
+
+    /**
+     * Returns a typed buffer backed by the given buffer.
+     * <p>
+     * Only elements of the specified type can be added to the buffer.
+     *
+     * @param buffer  the buffer to predicate, must not be null
+     * @param type  the type to allow into the buffer, must not be null
+     * @return a typed buffer
+     * @throws IllegalArgumentException  if the buffer or type is null
+     */
+    public static Buffer typedBuffer(Buffer buffer, Class type) {
+        return TypedBuffer.decorate(buffer, type);
+    }
+
+    /**
+     * Returns a transformed buffer backed by the given buffer.
+     * <p>
+     * Each object is passed through the transformer as it is added to the
+     * Buffer. It is important not to use the original buffer after invoking this 
+     * method, as it is a backdoor for adding untransformed objects.
+     *
+     * @param buffer  the buffer to predicate, must not be null
+     * @param transformer  the transformer for the buffer, must not be null
+     * @return a transformed buffer backed by the given buffer
+     * @throws IllegalArgumentException  if the Buffer or Transformer is null
+     */
+    public static Buffer transformedBuffer(Buffer buffer, Transformer transformer) {
+        return TransformedBuffer.decorate(buffer, transformer);
+    }
 
 }

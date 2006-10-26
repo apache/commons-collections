@@ -1,74 +1,39 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/test/org/apache/commons/collections/TestCursorableLinkedList.java,v 1.6 2002/06/21 03:32:06 mas Exp $
- * $Revision: 1.6 $
- * $Date: 2002/06/21 03:32:06 $
+ *  Copyright 2001-2004 The Apache Software Foundation
  *
- * ====================================================================
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * The Apache Software License, Version 1.1
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Copyright (c) 1999-2001 The Apache Software Foundation.  All rights
- * reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
- *       "This product includes software developed by the
- *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
- *
- * 4. The names "The Jakarta Project", "Commons", and "Apache Software
- *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written
- *    permission, please contact apache@apache.org.
- *
- * 5. Products derived from this software may not be called "Apache"
- *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- * ====================================================================
- *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * <http://www.apache.org/>.
- *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
-
 package org.apache.commons.collections;
 
-import junit.framework.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
+import junit.framework.Test;
+
+import org.apache.commons.collections.list.AbstractTestList;
 
 /**
+ * Test class.
+ * 
+ * @version $Revision$ $Date$
+ * 
  * @author Rodney Waldhoff
- * @version $Id: TestCursorableLinkedList.java,v 1.6 2002/06/21 03:32:06 mas Exp $
+ * @author Simon Kitching
  */
-public class TestCursorableLinkedList extends TestList {
+public class TestCursorableLinkedList extends AbstractTestList {
     public TestCursorableLinkedList(String testName) {
         super(testName);
     }
@@ -329,6 +294,79 @@ public class TestCursorableLinkedList extends TestList {
         it.close();
     }
 
+    public void testCursorConcurrentModification() {
+        // this test verifies that cursors remain valid when the list
+        // is modified via other means.
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        list.add("5");
+        list.add("7");
+        list.add("9");
+
+        CursorableLinkedList.Cursor c1 = list.cursor();
+        CursorableLinkedList.Cursor c2 = list.cursor();
+        ListIterator li = list.listIterator();
+        
+        // test cursors remain valid when list modified by std ListIterator
+        // test cursors skip elements removed via ListIterator
+        assertEquals("1",li.next());
+        assertEquals("2",li.next());
+        li.remove();
+        assertEquals("3",li.next());
+        assertEquals("1",c1.next());
+        assertEquals("3",c1.next());
+        assertEquals("1",c2.next());
+        
+        // test cursor c1 can remove elements from previously modified list
+        // test cursor c2 skips elements removed via different cursor
+        c1.remove();
+        assertEquals("5",c2.next());
+        c2.add("6");
+        assertEquals("5",c1.next());
+        assertEquals("6",c1.next());
+        assertEquals("7",c1.next());
+        
+        // test cursors remain valid when list mod via CursorableLinkedList
+        // test cursor remains valid when elements inserted into list before
+        // the current position of the cursor.
+        list.add(0, "0");
+
+        // test cursor remains valid when element inserted immediately after
+        // current element of a cursor, and the element is seen on the
+        // next call to the next method of that cursor.
+        list.add(5, "8");
+
+        assertEquals("8",c1.next());
+        assertEquals("9",c1.next());
+        c1.add("10");
+        assertEquals("7",c2.next());
+        assertEquals("8",c2.next());
+        assertEquals("9",c2.next());
+        assertEquals("10",c2.next());
+        
+        boolean nosuch = false;
+        try {
+            c2.next();
+        }
+        catch (java.util.NoSuchElementException nse) {
+           nosuch = true; // expected
+        }
+        assertTrue(nosuch);
+        
+        boolean listIteratorInvalid = false;
+        try {
+            li.next();
+        }
+        catch(java.util.ConcurrentModificationException cme) {
+            listIteratorInvalid = true; // expected
+        }
+        assertTrue(listIteratorInvalid);
+        
+        c1.close();  // not necessary
+        c2.close();  // not necessary
+    }
+    
     public void testEqualsAndHashCode() {
         assertTrue(list.equals(list));
         assertEquals(list.hashCode(),list.hashCode());
@@ -927,6 +965,29 @@ public class TestCursorableLinkedList extends TestList {
         assertTrue(list.equals(list2));
     }
 
+    public void testSerializationWithOpenCursor() throws Exception {
+        list.add("A");
+        list.add("B");
+        list.add("C");
+        list.add("D");
+        list.add("E");
+        CursorableLinkedList.Cursor cursor = list.cursor();
+
+        java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();
+        java.io.ObjectOutputStream out = new java.io.ObjectOutputStream(buf);
+        out.writeObject(list);
+        out.flush();
+        out.close();
+
+        java.io.ByteArrayInputStream bufin = new java.io.ByteArrayInputStream(buf.toByteArray());
+        java.io.ObjectInputStream in = new java.io.ObjectInputStream(bufin);
+        Object list2 = in.readObject();
+
+        assertTrue(list != list2);
+        assertTrue(list2.equals(list));
+        assertTrue(list.equals(list2));
+    }
+
     public void testLongSerialization() throws Exception {
         // recursive serialization will cause a stack
         // overflow exception with long lists
@@ -955,7 +1016,7 @@ public class TestCursorableLinkedList extends TestList {
      *
      *  @return an array of sublist serialization test names 
      */
-    public String[] ignoredSimpleTests() {
+    public String[] ignoredTests() {
         ArrayList list = new ArrayList();
         String prefix = "TestCursorableLinkedList";
         String bulk = ".bulkTestSubList";
@@ -966,7 +1027,8 @@ public class TestCursorableLinkedList extends TestList {
           ".testFullListCompatibility", 
           ".testSimpleSerialization",
           ".testCanonicalEmptyCollectionExists",
-          ".testCanonicalFullCollectionExists"
+          ".testCanonicalFullCollectionExists",
+          ".testSerializeDeserializeThenCompare"
         };
         for (int i = 0; i < ignored.length; i++) {
             list.add(prefix + bulk + ignored[i]);

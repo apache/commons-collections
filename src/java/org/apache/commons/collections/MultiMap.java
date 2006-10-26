@@ -1,81 +1,159 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//collections/src/java/org/apache/commons/collections/MultiMap.java,v 1.4 2002/06/12 03:59:15 mas Exp $
- * $Revision: 1.4 $
- * $Date: 2002/06/12 03:59:15 $
+ *  Copyright 2001-2004 The Apache Software Foundation
  *
- * ====================================================================
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- * The Apache Software License, Version 1.1
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Copyright (c) 1999-2002 The Apache Software Foundation.  All rights
- * reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in
- *    the documentation and/or other materials provided with the
- *    distribution.
- *
- * 3. The end-user documentation included with the redistribution, if
- *    any, must include the following acknowlegement:
- *       "This product includes software developed by the
- *        Apache Software Foundation (http://www.apache.org/)."
- *    Alternately, this acknowlegement may appear in the software itself,
- *    if and wherever such third-party acknowlegements normally appear.
- *
- * 4. The names "The Jakarta Project", "Commons", and "Apache Software
- *    Foundation" must not be used to endorse or promote products derived
- *    from this software without prior written permission. For written
- *    permission, please contact apache@apache.org.
- *
- * 5. Products derived from this software may not be called "Apache"
- *    nor may "Apache" appear in their names without prior written
- *    permission of the Apache Group.
- *
- * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
- * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
- * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
- * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
- * SUCH DAMAGE.
- * ====================================================================
- *
- * This software consists of voluntary contributions made by many
- * individuals on behalf of the Apache Software Foundation.  For more
- * information on the Apache Software Foundation, please see
- * <http://www.apache.org/>.
- *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
  */
 package org.apache.commons.collections;
 
+import java.util.Collection;
 import java.util.Map;
 
 /** 
- * This is simply a Map with slightly different semantics.
- * Instead of returning an Object, it returns a Collection.
- * So for example, you can put( key, new Integer(1) ); 
- * and then a Object get( key ); will return you a Collection 
- * instead of an Integer.
- * Thus, this is simply a tag interface.
+ * Defines a map that holds a collection of values against each key.
+ * <p>
+ * A <code>MultiMap</code> is a Map with slightly different semantics.
+ * Putting a value into the map will add the value to a Collection at that key.
+ * Getting a value will return a Collection, holding all the values put to that key.
+ * <p>
+ * For example:
+ * <pre>
+ * MultiMap mhm = new MultiHashMap();
+ * mhm.put(key, "A");
+ * mhm.put(key, "B");
+ * mhm.put(key, "C");
+ * Collection coll = (Collection) mhm.get(key);</pre>
+ * <p>
+ * <code>coll</code> will be a collection containing "A", "B", "C".
+ * <p>
+ * NOTE: Additional methods were added to this interface in Commons Collections 3.1.
+ * These were added solely for documentation purposes and do not change the interface
+ * as they were defined in the superinterface <code>Map</code> anyway.
  *
- * @since 2.0
+ * @since Commons Collections 2.0
+ * @version $Revision$ $Date$
+ * 
  * @author Christopher Berry
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
+ * @author James Strachan
+ * @author Stephen Colebourne
  */
 public interface MultiMap extends Map {
-    
-    public Object remove( Object key, Object item );
-   
+
+    /**
+     * Removes a specific value from map.
+     * <p>
+     * The item is removed from the collection mapped to the specified key.
+     * Other values attached to that key are unaffected.
+     * <p>
+     * If the last value for a key is removed, implementations typically
+     * return <code>null</code> from a subsequant <code>get(Object)</code>, however
+     * they may choose to return an empty collection.
+     * 
+     * @param key  the key to remove from
+     * @param item  the item to remove
+     * @return the value removed (which was passed in), null if nothing removed
+     * @throws UnsupportedOperationException if the map is unmodifiable
+     * @throws ClassCastException if the key or value is of an invalid type
+     * @throws NullPointerException if the key or value is null and null is invalid
+     */
+    public Object remove(Object key, Object item);
+
+    //-----------------------------------------------------------------------
+    /**
+     * Gets the number of keys in this map.
+     * <p>
+     * Implementations typically return only the count of keys in the map
+     * This cannot be mandated due to backwards compatability of this interface.
+     *
+     * @return the number of key-collection mappings in this map
+     */
+    int size();
+
+    /**
+     * Gets the collection of values associated with the specified key.
+     * <p>
+     * The returned value will implement <code>Collection</code>. Implementations
+     * are free to declare that they return <code>Collection</code> subclasses
+     * such as <code>List</code> or <code>Set</code>.
+     * <p>
+     * Implementations typically return <code>null</code> if no values have
+     * been mapped to the key, however the implementation may choose to
+     * return an empty collection.
+     * <p>
+     * Implementations may choose to return a clone of the internal collection.
+     *
+     * @param key  the key to retrieve
+     * @return the <code>Collection</code> of values, implementations should
+     *  return <code>null</code> for no mapping, but may return an empty collection
+     * @throws ClassCastException if the key is of an invalid type
+     * @throws NullPointerException if the key is null and null keys are invalid
+     */
+    Object get(Object key);
+
+    /**
+     * Checks whether the map contains the value specified.
+     * <p>
+     * Implementations typically check all collections against all keys for the value.
+     * This cannot be mandated due to backwards compatability of this interface.
+     *
+     * @param value  the value to search for
+     * @return true if the map contains the value
+     * @throws ClassCastException if the value is of an invalid type
+     * @throws NullPointerException if the value is null and null value are invalid
+     */
+    boolean containsValue(Object value);
+
+    /**
+     * Adds the value to the collection associated with the specified key.
+     * <p>
+     * Unlike a normal <code>Map</code> the previous value is not replaced.
+     * Instead the new value is added to the collection stored against the key.
+     * The collection may be a <code>List</code>, <code>Set</code> or other
+     * collection dependent on implementation.
+     *
+     * @param key  the key to store against
+     * @param value  the value to add to the collection at the key
+     * @return typically the value added if the map changed and null if the map did not change
+     * @throws UnsupportedOperationException if the map is unmodifiable
+     * @throws ClassCastException if the key or value is of an invalid type
+     * @throws NullPointerException if the key or value is null and null is invalid
+     * @throws IllegalArgumentException if the key or value is invalid
+     */
+    Object put(Object key, Object value);
+
+    /**
+     * Removes all values associated with the specified key.
+     * <p>
+     * Implementations typically return <code>null</code> from a subsequant
+     * <code>get(Object)</code>, however they may choose to return an empty collection.
+     *
+     * @param key  the key to remove values from
+     * @return the <code>Collection</code> of values removed, implementations should
+     *  return <code>null</code> for no mapping found, but may return an empty collection
+     * @throws UnsupportedOperationException if the map is unmodifiable
+     * @throws ClassCastException if the key is of an invalid type
+     * @throws NullPointerException if the key is null and null keys are invalid
+     */
+    Object remove(Object key);
+
+    /**
+     * Gets a collection containing all the values in the map.
+     * <p>
+     * Inplementations typically return a collection containing the combination
+     * of values from all keys.
+     * This cannot be mandated due to backwards compatability of this interface.
+     *
+     * @return a collection view of the values contained in this map
+     */
+    Collection values();
+
 }
