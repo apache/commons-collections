@@ -1,0 +1,43 @@
+
+        Commons Collections Generics Package
+                Version X.X
+               Release Notes
+
+
+INTRODUCTION:
+
+Commons collections is a project to develop and maintain collection classes
+based on and inspired by the JDK collection framework.
+This version uses the generics features of JDK1.5 and is not compatible with
+earlier JDK versions.
+
+The process of generifying an API is complex.
+For commons-collections, we have chosen to break the API in various ways.
+The aim behind this is to provide an API design that better suits generics.
+We have also removed all deprecated classes and fixed oddities in the previous
+API that we couldn't fix due to backwards compatability restrictions.
+
+As such, this release should not be considered to be a simple, drop-in, replacement
+for commons-collections. You will probably receive compile errors, and you will
+certainly have generification warnings to solve. These release notes will try
+to guide you in the process of upgrading, however you should remember that this
+is a new API based on the original, so some concepts have changed.
+
+
+Changes from commons-collections
+--------------------------------
+- Removed all deprecated classes and methods
+
+
+Feedback
+--------
+Open source works best when you give feedback:
+http://jakarta.apache.org/commons/collections/
+
+Please direct all bug reports to JIRA
+http://issues.apache.org/jira/browse/COLLECTIONS
+
+Or subscribe to the commons-user mailing list (prefix emails by [collections])
+http://jakarta.apache.org/site/mail.html
+
+The Commons-Collections-Generics Team

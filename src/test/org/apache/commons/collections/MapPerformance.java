@@ -54,7 +54,6 @@ public class MapPerformance {
         Map unmodHashMap = Collections.unmodifiableMap(new HashMap(hashMap));
         Map fastHashMap = new FastHashMap(hashMap);
         Map treeMap = new TreeMap(hashMap);
-        Map seqMap = new SequencedHashMap(hashMap);
 //        Map linkedMap = new LinkedHashMap(hashMap);
 //        Map syncMap = Collections.unmodifiableMap(new HashMap(hashMap));
 //        Map bucketMap = new StaticBucketMap();

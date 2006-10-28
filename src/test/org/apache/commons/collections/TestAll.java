@@ -41,6 +41,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestBufferUtils.suite());
         suite.addTest(TestEnumerationUtils.suite());
         suite.addTest(TestFactoryUtils.suite());
+        suite.addTest(TestIteratorUtils.suite());
         suite.addTest(TestListUtils.suite());
         suite.addTest(TestMapUtils.suite());
         suite.addTest(TestPredicateUtils.suite());
@@ -48,12 +49,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestTransformerUtils.suite());
         
         suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestBeanMap.suite());
-        suite.addTest(TestBinaryHeap.suite());
-        suite.addTest(TestBoundedFifoBuffer.suite());
-        suite.addTest(TestBoundedFifoBuffer2.suite());
-        suite.addTest(TestCursorableLinkedList.suite());
-        suite.addTest(TestDoubleOrderedMap.suite());
         suite.addTest(TestExtendedProperties.suite());
         suite.addTest(TestFastArrayList.suite());
         suite.addTest(TestFastArrayList1.suite());
@@ -61,15 +56,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestFastHashMap1.suite());
         suite.addTest(TestFastTreeMap.suite());
         suite.addTest(TestFastTreeMap1.suite());
-        suite.addTest(TestHashBag.suite());
-        suite.addTest(TestIteratorUtils.suite());
-        suite.addTest(TestLRUMap.suite());
-        suite.addTest(TestMultiHashMap.suite());
-        suite.addTest(TestReferenceMap.suite());
-        suite.addTest(TestSequencedHashMap.suite());
-        suite.addTest(TestStaticBucketMap.suite());
-        suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestUnboundedFifoBuffer.suite());
         return suite;
     }
         

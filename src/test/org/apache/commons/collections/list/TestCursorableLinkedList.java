@@ -1473,4 +1473,15 @@ public class TestCursorableLinkedList extends TestAbstractLinkedList {
         return (String[])list.toArray(new String[0]);
     }
 
+    public String getCompatibilityVersion() {
+        return "4.0";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "C:/commons/collections/data/test/CursorableLinkedList.emptyCollection.version4.0.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "C:/commons/collections/data/test/CursorableLinkedList.fullCollection.version4.0.obj");
+//    }
+
 }
