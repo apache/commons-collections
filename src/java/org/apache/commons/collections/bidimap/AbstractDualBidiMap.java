@@ -75,8 +75,6 @@ public abstract class AbstractDualBidiMap implements BidiMap {
      */
     protected AbstractDualBidiMap() {
         super();
-        maps[0] = createMap();
-        maps[1] = createMap();
     }
 
     /**
@@ -112,20 +110,6 @@ public abstract class AbstractDualBidiMap implements BidiMap {
         maps[0] = normalMap;
         maps[1] = reverseMap;
         this.inverseBidiMap = inverseBidiMap;
-    }
-
-    /**
-     * Creates a new instance of the map used by the subclass to store data.
-     * <p>
-     * This design is deeply flawed and has been deprecated.
-     * It relied on subclass data being used during a superclass constructor.
-     * 
-     * @return the map to be used for internal storage
-     * @deprecated For constructors, use the new two map constructor.
-     * For deserialization, populate the maps array directly in readObject.
-     */
-    protected Map createMap() {
-        return null;
     }
 
     /**
