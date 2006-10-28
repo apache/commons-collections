@@ -31,7 +31,6 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.MultiMap;
-import org.apache.commons.collections.TestMultiHashMap;
 
 /**
  * TestMultiValueMap.
@@ -47,11 +46,11 @@ public class TestMultiValueMap extends TestCase {
     }
 
     public static Test suite() {
-        return new TestSuite(TestMultiHashMap.class);
+        return new TestSuite(TestMultiValueMap.class);
     }
 
     public static void main(String args[]) {
-        String[] testCaseName = { TestMultiHashMap.class.getName()};
+        String[] testCaseName = { TestMultiValueMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
@@ -202,9 +201,9 @@ public class TestMultiValueMap extends TestCase {
         map.put("B", "BC");
         assertEquals(2, map.size());
         map.remove("A");
-        assertEquals(2, map.size());
+        assertEquals(1, map.size());
         map.remove("B", "BC");
-        assertEquals(2, map.size());
+        assertEquals(1, map.size());
     }
     
     public void testSize_Key() {
@@ -248,6 +247,25 @@ public class TestMultiValueMap extends TestCase {
         map.put("A", "AA");
         assertEquals(true, map.containsValue("A", "AA"));
         assertEquals(false, map.containsValue("A", "AB"));
+    }
+
+    public void testPutWithList() {
+        MultiValueMap test = MultiValueMap.decorate(new HashMap(), ArrayList.class);
+        assertEquals("a", test.put("A", "a"));
+        assertEquals("b", test.put("A", "b"));
+        assertEquals(1, test.size());
+        assertEquals(2, test.size("A"));
+        assertEquals(2, test.totalSize());
+    }
+
+    public void testPutWithSet() {
+        MultiValueMap test = MultiValueMap.decorate(new HashMap(), HashSet.class);
+        assertEquals("a", test.put("A", "a"));
+        assertEquals("b", test.put("A", "b"));
+        assertEquals(null, test.put("A", "a"));
+        assertEquals(1, test.size());
+        assertEquals(2, test.size("A"));
+        assertEquals(2, test.totalSize());
     }
 
     public void testPutAll_Map1() {

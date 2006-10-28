@@ -206,12 +206,12 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
         boolean result = false;
         Collection coll = getCollection(key);
         if (coll == null) {
-            coll = createCollection(1);
-            result = coll.add(value);
+            coll = createCollection(1);  // might produce a non-empty collection
+            coll.add(value);
             if (coll.size() > 0) {
                 // only add if non-zero size to maintain class state
                 getMap().put(key, coll);
-                result = false;
+                result = true;  // map definitely changed
             }
         } else {
             result = coll.add(value);
@@ -308,19 +308,20 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
         if (values == null || values.size() == 0) {
             return false;
         }
+        boolean result = false;
         Collection coll = getCollection(key);
         if (coll == null) {
-            coll = createCollection(values.size());
-            boolean result = coll.addAll(values);
+            coll = createCollection(values.size());  // might produce a non-empty collection
+            coll.addAll(values);
             if (coll.size() > 0) {
                 // only add if non-zero size to maintain class state
                 getMap().put(key, coll);
-                result = false;
+                result = true;  // map definitely changed
             }
-            return result;
         } else {
-            return coll.addAll(values);
+            result = coll.addAll(values);
         }
+        return result;
     }
 
     /**
