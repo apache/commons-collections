@@ -45,8 +45,8 @@ import java.util.Iterator;
  *
  * @author Stephen Colebourne
  */
-public interface MapIterator extends Iterator {
-    
+public interface MapIterator<K, V> extends Iterator<K> {
+
     /**
      * Checks to see if there are more entries still to be iterated.
      *
@@ -60,7 +60,7 @@ public interface MapIterator extends Iterator {
      * @return the next key in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
      */
-    Object next();
+    K next();
 
     //-----------------------------------------------------------------------
     /**
@@ -70,7 +70,7 @@ public interface MapIterator extends Iterator {
      * @return the current key
      * @throws IllegalStateException if <code>next()</code> has not yet been called
      */
-    Object getKey();
+    K getKey();
 
     /**
      * Gets the current value, which is the value associated with the last key
@@ -79,7 +79,7 @@ public interface MapIterator extends Iterator {
      * @return the current value
      * @throws IllegalStateException if <code>next()</code> has not yet been called
      */
-    Object getValue();
+    V getValue();
 
     //-----------------------------------------------------------------------
     /**
@@ -93,7 +93,7 @@ public interface MapIterator extends Iterator {
      *  since the last call to <code>next()</code>
      */
     void remove();
-    
+
     /**
      * Sets the value associated with the current key (optional operation).
      *
@@ -104,6 +104,6 @@ public interface MapIterator extends Iterator {
      * @throws IllegalStateException if <code>remove()</code> has been called since the
      *  last call to <code>next()</code>
      */
-    Object setValue(Object value);
+    V setValue(V value);
 
 }
