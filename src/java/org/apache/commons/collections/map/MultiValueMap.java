@@ -137,7 +137,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
 //            Collection coll = (Collection) keyValuePair.getValue();
 //            coll.clear();
 //        }
-        getMap().clear();
+        decorated().clear();
     }
 
     /**
@@ -177,7 +177,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
      * @return true if the map contains the value
      */
     public boolean containsValue(Object value) {
-        Set pairs = getMap().entrySet();
+        Set pairs = decorated().entrySet();
         if (pairs == null) {
             return false;
         }
@@ -210,7 +210,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
             coll.add(value);
             if (coll.size() > 0) {
                 // only add if non-zero size to maintain class state
-                getMap().put(key, coll);
+                decorated().put(key, coll);
                 result = true;  // map definitely changed
             }
         } else {
@@ -279,7 +279,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
      * @return the collection mapped to the key, null if no mapping
      */
     public Collection getCollection(Object key) {
-        return (Collection) getMap().get(key);
+        return (Collection) decorated().get(key);
     }
 
     /**
@@ -315,7 +315,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
             coll.addAll(values);
             if (coll.size() > 0) {
                 // only add if non-zero size to maintain class state
-                getMap().put(key, coll);
+                decorated().put(key, coll);
                 result = true;  // map definitely changed
             }
         } else {
@@ -345,7 +345,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
      */
     public int totalSize() {
         int total = 0;
-        Collection values = getMap().values();
+        Collection values = decorated().values();
         for (Iterator it = values.iterator(); it.hasNext();) {
             Collection coll = (Collection) it.next();
             total += coll.size();

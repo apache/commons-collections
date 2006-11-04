@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.map;
 
-import java.util.Map;
-
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
@@ -59,16 +57,6 @@ public abstract class AbstractOrderedMapDecorator
      */
     public AbstractOrderedMapDecorator(OrderedMap map) {
         super(map);
-    }
-
-    /**
-     * Gets the map being decorated.
-     * 
-     * @return the decorated map
-     * @deprecated use decorated()
-     */
-    protected OrderedMap getOrderedMap() {
-        return decorated();
     }
 
     /**

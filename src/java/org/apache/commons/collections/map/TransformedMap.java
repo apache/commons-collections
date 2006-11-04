@@ -93,7 +93,7 @@ public class TransformedMap
         if (map.size() > 0) {
             Map transformed = decorated.transformMap(map);
             decorated.clear();
-            decorated.getMap().putAll(transformed);  // avoids double transformation
+            decorated.decorated().putAll(transformed);  // avoids double transformation
         }
         return decorated;
     }
@@ -218,12 +218,12 @@ public class TransformedMap
     public Object put(Object key, Object value) {
         key = transformKey(key);
         value = transformValue(value);
-        return getMap().put(key, value);
+        return decorated().put(key, value);
     }
 
     public void putAll(Map mapToCopy) {
         mapToCopy = transformMap(mapToCopy);
-        getMap().putAll(mapToCopy);
+        decorated().putAll(mapToCopy);
     }
 
 }

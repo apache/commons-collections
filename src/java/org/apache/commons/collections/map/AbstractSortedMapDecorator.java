@@ -64,16 +64,6 @@ public abstract class AbstractSortedMapDecorator<K, V>
      * Gets the map being decorated.
      * 
      * @return the decorated map
-     * @deprecated use decorated()
-     */
-    protected SortedMap<K, V> getSortedMap() {
-        return decorated();
-    }
-
-    /**
-     * Gets the map being decorated.
-     * 
-     * @return the decorated map
      */
     protected SortedMap<K, V> decorated() {
         return (SortedMap<K, V>) super.decorated();

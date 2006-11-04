@@ -71,16 +71,6 @@ public abstract class AbstractMapDecorator<K, V> implements Map<K, V> {
      * Gets the map being decorated.
      * 
      * @return the decorated map
-     * @deprecated use decorated()
-     */
-    protected Map<K, V> getMap() {
-        return decorated();
-    }
-
-    /**
-     * Gets the map being decorated.
-     * 
-     * @return the decorated map
      */
     protected Map<K, V> decorated() {
         return map;

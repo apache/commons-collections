@@ -109,7 +109,7 @@ public class ListOrderedMap
      */
     protected ListOrderedMap(Map map) {
         super(map);
-        insertOrder.addAll(getMap().keySet());
+        insertOrder.addAll(decorated().keySet());
     }
 
     //-----------------------------------------------------------------------
@@ -206,12 +206,12 @@ public class ListOrderedMap
 
     //-----------------------------------------------------------------------
     public Object put(Object key, Object value) {
-        if (getMap().containsKey(key)) {
+        if (decorated().containsKey(key)) {
             // re-adding doesn't change order
-            return getMap().put(key, value);
+            return decorated().put(key, value);
         } else {
             // first add, so add to both map and list
-            Object result = getMap().put(key, value);
+            Object result = decorated().put(key, value);
             insertOrder.add(key);
             return result;
         }
@@ -225,13 +225,13 @@ public class ListOrderedMap
     }
 
     public Object remove(Object key) {
-        Object result = getMap().remove(key);
+        Object result = decorated().remove(key);
         insertOrder.remove(key);
         return result;
     }
 
     public void clear() {
-        getMap().clear();
+        decorated().clear();
         insertOrder.clear();
     }
 
@@ -399,7 +399,7 @@ public class ListOrderedMap
      * @since Commons Collections 3.2
      */
     public Object put(int index, Object key, Object value) {
-        Map m = getMap();
+        Map m = decorated();
         if (m.containsKey(key)) {
             Object result = m.remove(key);
             int pos = insertOrder.indexOf(key);
@@ -535,7 +535,7 @@ public class ListOrderedMap
 
         private Set getEntrySet() {
             if (entrySet == null) {
-                entrySet = parent.getMap().entrySet();
+                entrySet = parent.decorated().entrySet();
             }
             return entrySet;
         }
@@ -608,7 +608,7 @@ public class ListOrderedMap
 
         public void remove() {
             super.remove();
-            parent.getMap().remove(last);
+            parent.decorated().remove(last);
         }
     }
     
@@ -626,7 +626,7 @@ public class ListOrderedMap
         }
 
         public Object setValue(Object value) {
-            return parent.getMap().put(key, value);
+            return parent.decorated().put(key, value);
         }
     }
 

@@ -102,12 +102,12 @@ public final class UnmodifiableOrderedMap
 
     //-----------------------------------------------------------------------
     public MapIterator mapIterator() {
-        MapIterator it = getOrderedMap().mapIterator();
+        MapIterator it = decorated().mapIterator();
         return UnmodifiableMapIterator.decorate(it);
     }
 
     public OrderedMapIterator orderedMapIterator() {
-        OrderedMapIterator it = getOrderedMap().orderedMapIterator();
+        OrderedMapIterator it = decorated().orderedMapIterator();
         return UnmodifiableOrderedMapIterator.decorate(it);
     }
 

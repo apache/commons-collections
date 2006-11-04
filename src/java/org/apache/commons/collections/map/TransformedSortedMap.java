@@ -85,7 +85,7 @@ public class TransformedSortedMap
         if (map.size() > 0) {
             Map transformed = decorated.transformMap(map);
             decorated.clear();
-            decorated.getMap().putAll(transformed);  // avoids double transformation
+            decorated.decorated().putAll(transformed);  // avoids double transformation
         }
         return decorated;
     }

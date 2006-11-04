@@ -131,29 +131,29 @@ public final class UnmodifiableSortedMap
 
     //-----------------------------------------------------------------------
     public Object firstKey() {
-        return getSortedMap().firstKey();
+        return decorated().firstKey();
     }
 
     public Object lastKey() {
-        return getSortedMap().lastKey();
+        return decorated().lastKey();
     }
 
     public Comparator comparator() {
-        return getSortedMap().comparator();
+        return decorated().comparator();
     }
 
     public SortedMap subMap(Object fromKey, Object toKey) {
-        SortedMap map = getSortedMap().subMap(fromKey, toKey);
+        SortedMap map = decorated().subMap(fromKey, toKey);
         return new UnmodifiableSortedMap(map);
     }
 
     public SortedMap headMap(Object toKey) {
-        SortedMap map = getSortedMap().headMap(toKey);
+        SortedMap map = decorated().headMap(toKey);
         return new UnmodifiableSortedMap(map);
     }
 
     public SortedMap tailMap(Object fromKey) {
-        SortedMap map = getSortedMap().tailMap(fromKey);
+        SortedMap map = decorated().tailMap(fromKey);
         return new UnmodifiableSortedMap(map);
     }
 
