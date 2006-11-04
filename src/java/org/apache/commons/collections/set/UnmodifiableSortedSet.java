@@ -123,17 +123,17 @@ public final class UnmodifiableSortedSet
 
     //-----------------------------------------------------------------------
     public SortedSet subSet(Object fromElement, Object toElement) {
-        SortedSet sub = getSortedSet().subSet(fromElement, toElement);
+        SortedSet sub = decorated().subSet(fromElement, toElement);
         return new UnmodifiableSortedSet(sub);
     }
 
     public SortedSet headSet(Object toElement) {
-        SortedSet sub = getSortedSet().headSet(toElement);
+        SortedSet sub = decorated().headSet(toElement);
         return new UnmodifiableSortedSet(sub);
     }
 
     public SortedSet tailSet(Object fromElement) {
-        SortedSet sub = getSortedSet().tailSet(fromElement);
+        SortedSet sub = decorated().tailSet(fromElement);
         return new UnmodifiableSortedSet(sub);
     }
 

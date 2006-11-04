@@ -174,7 +174,7 @@ public class TestListOrderedSet extends AbstractTestSet {
         assertEquals(1, set.size());
         set.add(b);  // will match but not replace A as equal
         assertEquals(1, set.size());
-        assertSame(a, set.getSet().iterator().next());
+        assertSame(a, set.decorated().iterator().next());
         assertSame(a, set.iterator().next());
         assertSame(a, set.get(0));
         assertSame(a, set.asList().get(0));

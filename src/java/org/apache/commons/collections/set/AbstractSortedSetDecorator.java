@@ -54,16 +54,6 @@ public abstract class AbstractSortedSetDecorator<E>
     }
 
     /**
-     * Gets the sorted set being decorated.
-     * 
-     * @return the decorated set
-     * @deprecated use decorated()
-     */
-    protected SortedSet<E> getSortedSet() {
-        return decorated();
-    }
-
-    /**
      * Gets the set being decorated.
      * 
      * @return the decorated set

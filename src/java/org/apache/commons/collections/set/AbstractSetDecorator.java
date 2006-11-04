@@ -57,16 +57,6 @@ public abstract class AbstractSetDecorator<E>
      * Gets the set being decorated.
      * 
      * @return the decorated set
-     * @deprecated use decorated()
-     */
-    protected Set<E> getSet() {
-        return decorated();
-    }
-
-    /**
-     * Gets the set being decorated.
-     * 
-     * @return the decorated set
      */
     protected Set<E> decorated() {
         return (Set<E>) super.decorated();
