@@ -68,7 +68,7 @@ public final class UnmodifiableCollection
 
     //-----------------------------------------------------------------------
     public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
+        return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
     public boolean add(Object object) {

@@ -69,16 +69,6 @@ public abstract class AbstractCollectionDecorator<E> implements Collection<E> {
 
     /**
      * Gets the collection being decorated.
-     * 
-     * @return the decorated collection
-     * @deprecated use decorated()
-     */
-    protected Collection<E> getCollection() {
-        return decorated();
-    }
-
-    /**
-     * Gets the collection being decorated.
      * All access to the decorated collection goes via this method.
      * 
      * @return the decorated collection

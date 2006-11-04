@@ -94,7 +94,7 @@ public final class UnmodifiableSortedSet
 
     //-----------------------------------------------------------------------
     public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
+        return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
     public boolean add(Object object) {

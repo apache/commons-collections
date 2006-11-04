@@ -81,36 +81,36 @@ public class PredicatedSortedSet extends PredicatedSet implements SortedSet {
      * 
      * @return the decorated sorted set
      */
-    private SortedSet getSortedSet() {
-        return (SortedSet) getCollection();
+    protected SortedSet decorated() {
+        return (SortedSet) super.decorated();
     }
 
     //-----------------------------------------------------------------------
+    public Comparator comparator() {
+        return decorated().comparator();
+    }
+
+    public Object first() {
+        return decorated().first();
+    }
+
+    public Object last() {
+        return decorated().last();
+    }
+
     public SortedSet subSet(Object fromElement, Object toElement) {
-        SortedSet sub = getSortedSet().subSet(fromElement, toElement);
+        SortedSet sub = decorated().subSet(fromElement, toElement);
         return new PredicatedSortedSet(sub, predicate);
     }
 
     public SortedSet headSet(Object toElement) {
-        SortedSet sub = getSortedSet().headSet(toElement);
+        SortedSet sub = decorated().headSet(toElement);
         return new PredicatedSortedSet(sub, predicate);
     }
 
     public SortedSet tailSet(Object fromElement) {
-        SortedSet sub = getSortedSet().tailSet(fromElement);
+        SortedSet sub = decorated().tailSet(fromElement);
         return new PredicatedSortedSet(sub, predicate);
-    }
-
-    public Object first() {
-        return getSortedSet().first();
-    }
-
-    public Object last() {
-        return getSortedSet().last();
-    }
-
-    public Comparator comparator() {
-        return getSortedSet().comparator();
     }
 
 }

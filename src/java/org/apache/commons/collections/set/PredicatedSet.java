@@ -81,8 +81,8 @@ public class PredicatedSet extends PredicatedCollection implements Set {
      * 
      * @return the decorated set
      */
-    protected Set getSet() {
-        return (Set) getCollection();
+    protected Set decorated() {
+        return (Set) super.decorated();
     }
 
 }

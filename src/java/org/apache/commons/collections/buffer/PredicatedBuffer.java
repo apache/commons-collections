@@ -81,17 +81,17 @@ public class PredicatedBuffer extends PredicatedCollection implements Buffer {
      * 
      * @return the decorated buffer
      */
-    protected Buffer getBuffer() {
-        return (Buffer) getCollection();
+    protected Buffer decorated() {
+        return (Buffer) super.decorated();
     }
 
     //-----------------------------------------------------------------------
     public Object get() {
-        return getBuffer().get();
+        return decorated().get();
     }
 
     public Object remove() {
-        return getBuffer().remove();
+        return decorated().remove();
     }
 
 }

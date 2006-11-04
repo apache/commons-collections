@@ -111,12 +111,12 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
     //-----------------------------------------------------------------------
     public boolean add(Object object) {
         object = transform(object);
-        return getCollection().add(object);
+        return decorated().add(object);
     }
 
     public boolean addAll(Collection coll) {
         coll = transform(coll);
-        return getCollection().addAll(coll);
+        return decorated().addAll(coll);
     }
 
 }

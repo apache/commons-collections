@@ -85,38 +85,38 @@ public class PredicatedList extends PredicatedCollection implements List {
      * 
      * @return the decorated list
      */
-    protected List getList() {
-        return (List) getCollection();
+    protected List decorated() {
+        return (List) super.decorated();
     }
 
     //-----------------------------------------------------------------------
     public Object get(int index) {
-        return getList().get(index);
+        return decorated().get(index);
     }
 
     public int indexOf(Object object) {
-        return getList().indexOf(object);
+        return decorated().indexOf(object);
     }
 
     public int lastIndexOf(Object object) {
-        return getList().lastIndexOf(object);
+        return decorated().lastIndexOf(object);
     }
 
     public Object remove(int index) {
-        return getList().remove(index);
+        return decorated().remove(index);
     }
 
     //-----------------------------------------------------------------------
     public void add(int index, Object object) {
         validate(object);
-        getList().add(index, object);
+        decorated().add(index, object);
     }
 
     public boolean addAll(int index, Collection coll) {
         for (Iterator it = coll.iterator(); it.hasNext(); ) {
             validate(it.next());
         }
-        return getList().addAll(index, coll);
+        return decorated().addAll(index, coll);
     }
 
     public ListIterator listIterator() {
@@ -124,16 +124,16 @@ public class PredicatedList extends PredicatedCollection implements List {
     }
 
     public ListIterator listIterator(int i) {
-        return new PredicatedListIterator(getList().listIterator(i));
+        return new PredicatedListIterator(decorated().listIterator(i));
     }
 
     public Object set(int index, Object object) {
         validate(object);
-        return getList().set(index, object);
+        return decorated().set(index, object);
     }
 
     public List subList(int fromIndex, int toIndex) {
-        List sub = getList().subList(fromIndex, toIndex);
+        List sub = decorated().subList(fromIndex, toIndex);
         return new PredicatedList(sub, predicate);
     }
 

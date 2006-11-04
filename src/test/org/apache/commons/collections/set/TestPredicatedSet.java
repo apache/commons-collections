@@ -81,7 +81,7 @@ public class TestPredicatedSet extends AbstractTestSet{
     public void testGetSet() {
          Set set = makeTestSet();
         assertTrue("returned set should not be null",
-            ((PredicatedSet) set).getSet() != null);
+            ((PredicatedSet) set).decorated() != null);
     }
     
     public void testIllegalAdd() {

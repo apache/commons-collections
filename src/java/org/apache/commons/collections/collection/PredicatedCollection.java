@@ -63,7 +63,7 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
     public static Collection decorate(Collection coll, Predicate predicate) {
         return new PredicatedCollection(coll, predicate);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
@@ -113,7 +113,7 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
      */
     public boolean add(Object object) {
         validate(object);
-        return getCollection().add(object);
+        return decorated().add(object);
     }
 
     /**
@@ -129,7 +129,7 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
         for (Iterator it = coll.iterator(); it.hasNext(); ) {
             validate(it.next());
         }
-        return getCollection().addAll(coll);
+        return decorated().addAll(coll);
     }
 
 }

@@ -84,7 +84,7 @@ public class TestPredicatedSortedSet extends AbstractTestSortedSet{
     public void testGetSet() {
         SortedSet set = makeTestSet();
         assertTrue("returned set should not be null",
-            ((PredicatedSortedSet) set).getSet() != null);
+            ((PredicatedSortedSet) set).decorated() != null);
     }
     
     public void testIllegalAdd() {
