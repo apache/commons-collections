@@ -31,13 +31,16 @@ import java.util.SortedMap;
  * it would provide a loophole around the validation.
  * But, you might want that loophole, so this class is kept simple.
  *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractSortedMapDecorator
-        extends AbstractMapDecorator implements SortedMap {
+public abstract class AbstractSortedMapDecorator<K, V>
+        extends AbstractMapDecorator<K, V>
+        implements SortedMap<K, V> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -53,7 +56,7 @@ public abstract class AbstractSortedMapDecorator
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractSortedMapDecorator(SortedMap map) {
+    public AbstractSortedMapDecorator(SortedMap<K, V> map) {
         super(map);
     }
 
@@ -61,34 +64,44 @@ public abstract class AbstractSortedMapDecorator
      * Gets the map being decorated.
      * 
      * @return the decorated map
+     * @deprecated use decorated()
      */
-    protected SortedMap getSortedMap() {
-        return (SortedMap) map;
+    protected SortedMap<K, V> getSortedMap() {
+        return decorated();
+    }
+
+    /**
+     * Gets the map being decorated.
+     * 
+     * @return the decorated map
+     */
+    protected SortedMap<K, V> decorated() {
+        return (SortedMap<K, V>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public Comparator comparator() {
-        return getSortedMap().comparator();
+    public Comparator<? super K> comparator() {
+        return decorated().comparator();
     }
 
-    public Object firstKey() {
-        return getSortedMap().firstKey();
+    public K firstKey() {
+        return decorated().firstKey();
     }
 
-    public SortedMap headMap(Object toKey) {
-        return getSortedMap().headMap(toKey);
+    public K lastKey() {
+        return decorated().lastKey();
     }
 
-    public Object lastKey() {
-        return getSortedMap().lastKey();
+    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+        return decorated().subMap(fromKey, toKey);
     }
 
-    public SortedMap subMap(Object fromKey, Object toKey) {
-        return getSortedMap().subMap(fromKey, toKey);
+    public SortedMap<K, V> headMap(K toKey) {
+        return decorated().headMap(toKey);
     }
 
-    public SortedMap tailMap(Object fromKey) {
-        return getSortedMap().tailMap(fromKey);
+    public SortedMap<K, V> tailMap(K fromKey) {
+        return decorated().tailMap(fromKey);
     }
 
 }

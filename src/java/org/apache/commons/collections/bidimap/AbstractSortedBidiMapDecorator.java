@@ -39,8 +39,9 @@ import org.apache.commons.collections.SortedBidiMap;
  * @author Stephen Colebourne
  */
 public abstract class AbstractSortedBidiMapDecorator
-        extends AbstractOrderedBidiMapDecorator implements SortedBidiMap {
-    
+        extends AbstractOrderedBidiMapDecorator
+        implements SortedBidiMap {
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -55,9 +56,19 @@ public abstract class AbstractSortedBidiMapDecorator
      * Gets the map being decorated.
      * 
      * @return the decorated map
+     * @deprecated use decorated()
      */
     protected SortedBidiMap getSortedBidiMap() {
-        return (SortedBidiMap) map;
+        return decorated();
+    }
+
+    /**
+     * Gets the map being decorated.
+     * 
+     * @return the decorated map
+     */
+    protected SortedBidiMap decorated() {
+        return (SortedBidiMap) super.decorated();
     }
 
     //-----------------------------------------------------------------------
@@ -66,19 +77,19 @@ public abstract class AbstractSortedBidiMapDecorator
     }
 
     public Comparator comparator() {
-        return getSortedBidiMap().comparator();
+        return decorated().comparator();
     }
 
     public SortedMap subMap(Object fromKey, Object toKey) {
-        return getSortedBidiMap().subMap(fromKey, toKey);
+        return decorated().subMap(fromKey, toKey);
     }
 
     public SortedMap headMap(Object toKey) {
-        return getSortedBidiMap().headMap(toKey);
+        return decorated().headMap(toKey);
     }
 
     public SortedMap tailMap(Object fromKey) {
-        return getSortedBidiMap().tailMap(fromKey);
+        return decorated().tailMap(fromKey);
     }
 
 }

@@ -38,8 +38,9 @@ import org.apache.commons.collections.map.AbstractMapDecorator;
  * @author Stephen Colebourne
  */
 public abstract class AbstractBidiMapDecorator
-        extends AbstractMapDecorator implements BidiMap {
-    
+        extends AbstractMapDecorator
+        implements BidiMap {
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -54,26 +55,36 @@ public abstract class AbstractBidiMapDecorator
      * Gets the map being decorated.
      * 
      * @return the decorated map
+     * @deprecated use decorated()
      */
     protected BidiMap getBidiMap() {
-        return (BidiMap) map;
+        return decorated();
+    }
+
+    /**
+     * Gets the map being decorated.
+     * 
+     * @return the decorated map
+     */
+    protected BidiMap decorated() {
+        return (BidiMap) super.decorated();
     }
 
     //-----------------------------------------------------------------------
     public MapIterator mapIterator() {
-        return getBidiMap().mapIterator();
+        return decorated().mapIterator();
     }
 
     public Object getKey(Object value) {
-        return getBidiMap().getKey(value);
+        return decorated().getKey(value);
     }
 
     public Object removeValue(Object value) {
-        return getBidiMap().removeValue(value);
+        return decorated().removeValue(value);
     }
 
     public BidiMap inverseBidiMap() {
-        return getBidiMap().inverseBidiMap();
+        return decorated().inverseBidiMap();
     }
 
 }

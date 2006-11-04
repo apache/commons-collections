@@ -37,8 +37,9 @@ import org.apache.commons.collections.OrderedMapIterator;
  * @author Stephen Colebourne
  */
 public abstract class AbstractOrderedBidiMapDecorator
-        extends AbstractBidiMapDecorator implements OrderedBidiMap {
-    
+        extends AbstractBidiMapDecorator
+        implements OrderedBidiMap {
+
     /**
      * Constructor that wraps (not copies).
      *
@@ -53,34 +54,44 @@ public abstract class AbstractOrderedBidiMapDecorator
      * Gets the map being decorated.
      * 
      * @return the decorated map
+     * @deprecated use decorated()
      */
     protected OrderedBidiMap getOrderedBidiMap() {
-        return (OrderedBidiMap) map;
+        return decorated();
+    }
+
+    /**
+     * Gets the map being decorated.
+     * 
+     * @return the decorated map
+     */
+    protected OrderedBidiMap decorated() {
+        return (OrderedBidiMap) super.decorated();
     }
 
     //-----------------------------------------------------------------------
     public OrderedMapIterator orderedMapIterator() {
-        return getOrderedBidiMap().orderedMapIterator();
+        return decorated().orderedMapIterator();
     }
 
     public Object firstKey() {
-        return getOrderedBidiMap().firstKey();
+        return decorated().firstKey();
     }
 
     public Object lastKey() {
-        return getOrderedBidiMap().lastKey();
+        return decorated().lastKey();
     }
 
     public Object nextKey(Object key) {
-        return getOrderedBidiMap().nextKey(key);
+        return decorated().nextKey(key);
     }
 
     public Object previousKey(Object key) {
-        return getOrderedBidiMap().previousKey(key);
+        return decorated().previousKey(key);
     }
 
     public OrderedBidiMap inverseOrderedBidiMap() {
-        return getOrderedBidiMap().inverseOrderedBidiMap();
+        return decorated().inverseOrderedBidiMap();
     }
 
 }

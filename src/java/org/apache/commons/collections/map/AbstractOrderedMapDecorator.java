@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.map;
 
+import java.util.Map;
+
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
@@ -38,7 +40,8 @@ import org.apache.commons.collections.OrderedMapIterator;
  * @author Stephen Colebourne
  */
 public abstract class AbstractOrderedMapDecorator
-        extends AbstractMapDecorator implements OrderedMap {
+        extends AbstractMapDecorator
+        implements OrderedMap {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -62,34 +65,44 @@ public abstract class AbstractOrderedMapDecorator
      * Gets the map being decorated.
      * 
      * @return the decorated map
+     * @deprecated use decorated()
      */
     protected OrderedMap getOrderedMap() {
-        return (OrderedMap) map;
+        return decorated();
+    }
+
+    /**
+     * Gets the map being decorated.
+     * 
+     * @return the decorated map
+     */
+    protected OrderedMap decorated() {
+        return (OrderedMap) super.decorated();
     }
 
     //-----------------------------------------------------------------------
     public Object firstKey() {
-        return getOrderedMap().firstKey();
+        return decorated().firstKey();
     }
 
     public Object lastKey() {
-        return getOrderedMap().lastKey();
+        return decorated().lastKey();
     }
 
     public Object nextKey(Object key) {
-        return getOrderedMap().nextKey(key);
+        return decorated().nextKey(key);
     }
 
     public Object previousKey(Object key) {
-        return getOrderedMap().previousKey(key);
+        return decorated().previousKey(key);
     }
 
     public MapIterator mapIterator() {
-        return getOrderedMap().mapIterator();
+        return decorated().mapIterator();
     }
 
     public OrderedMapIterator orderedMapIterator() {
-        return getOrderedMap().orderedMapIterator();
+        return decorated().orderedMapIterator();
     }
 
 }

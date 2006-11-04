@@ -33,16 +33,18 @@ import java.util.Set;
  * implementation it would provide a loophole around the validation.
  * But, you might want that loophole, so this class is kept simple.
  *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  * 
  * @author Daniel Rall
  * @author Stephen Colebourne
  */
-public abstract class AbstractMapDecorator implements Map {
+public abstract class AbstractMapDecorator<K, V> implements Map<K, V> {
 
     /** The map to decorate */
-    protected transient Map map;
+    protected transient Map<K, V> map;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -58,7 +60,7 @@ public abstract class AbstractMapDecorator implements Map {
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractMapDecorator(Map map) {
+    protected AbstractMapDecorator(Map<K, V> map) {
         if (map == null) {
             throw new IllegalArgumentException("Map must not be null");
         }
@@ -69,73 +71,83 @@ public abstract class AbstractMapDecorator implements Map {
      * Gets the map being decorated.
      * 
      * @return the decorated map
+     * @deprecated use decorated()
      */
-    protected Map getMap() {
+    protected Map<K, V> getMap() {
+        return decorated();
+    }
+
+    /**
+     * Gets the map being decorated.
+     * 
+     * @return the decorated map
+     */
+    protected Map<K, V> decorated() {
         return map;
     }
 
     //-----------------------------------------------------------------------
     public void clear() {
-        map.clear();
+        decorated().clear();
     }
 
     public boolean containsKey(Object key) {
-        return map.containsKey(key);
+        return decorated().containsKey(key);
     }
 
     public boolean containsValue(Object value) {
-        return map.containsValue(value);
+        return decorated().containsValue(value);
     }
 
-    public Set entrySet() {
-        return map.entrySet();
+    public Set<Map.Entry<K, V>> entrySet() {
+        return decorated().entrySet();
     }
 
-    public Object get(Object key) {
-        return map.get(key);
+    public V get(Object key) {
+        return decorated().get(key);
     }
 
     public boolean isEmpty() {
-        return map.isEmpty();
+        return decorated().isEmpty();
     }
 
-    public Set keySet() {
-        return map.keySet();
+    public Set<K> keySet() {
+        return decorated().keySet();
     }
 
-    public Object put(Object key, Object value) {
-        return map.put(key, value);
+    public V put(K key, V value) {
+        return decorated().put(key, value);
     }
 
-    public void putAll(Map mapToCopy) {
-        map.putAll(mapToCopy);
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
+        decorated().putAll(mapToCopy);
     }
 
-    public Object remove(Object key) {
-        return map.remove(key);
+    public V remove(Object key) {
+        return decorated().remove(key);
     }
 
     public int size() {
-        return map.size();
+        return decorated().size();
     }
 
-    public Collection values() {
-        return map.values();
+    public Collection<V> values() {
+        return decorated().values();
     }
    
     public boolean equals(Object object) {
         if (object == this) {
             return true;
         }
-        return map.equals(object);
+        return decorated().equals(object);
     }
 
     public int hashCode() {
-        return map.hashCode();
+        return decorated().hashCode();
     }
 
     public String toString() {
-        return map.toString();
+        return decorated().toString();
     }
 
 }
