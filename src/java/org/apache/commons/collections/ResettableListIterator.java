@@ -23,17 +23,12 @@ import java.util.ListIterator;
  * <p>
  * This interface allows an iterator to be repeatedly reused.
  *
+ * @param <E> the type to iterate over
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */
-public interface ResettableListIterator extends ListIterator, ResettableIterator {
-
-    /**
-     * Resets the iterator back to the position at which the iterator
-     * was created.
-     */
-    public void reset();
+public interface ResettableListIterator<E> extends ListIterator<E>, ResettableIterator<E> {
 
 }

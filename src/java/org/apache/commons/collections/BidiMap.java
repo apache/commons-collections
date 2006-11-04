@@ -33,33 +33,15 @@ package org.apache.commons.collections;
  * This is required so that "inverting" the map results in a map without 
  * duplicate keys. See the {@link #put} method description for more information.
  * 
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public interface BidiMap extends IterableMap {
+public interface BidiMap<K, V> extends IterableMap<K, V> {
 
-    /**
-     * Obtains a <code>MapIterator</code> over the map.
-     * <p>
-     * A map iterator is an efficient way of iterating over maps.
-     * It does not require that the map is stored using Map Entry objects
-     * which can increase performance.
-     * <pre>
-     * BidiMap map = new DualHashBidiMap();
-     * MapIterator it = map.mapIterator();
-     * while (it.hasNext()) {
-     *   Object key = it.next();
-     *   Object value = it.getValue();
-     *   it.setValue("newValue");
-     * }
-     * </pre>
-     * 
-     * @return a map iterator
-     */
-    MapIterator mapIterator();
-    
     /**
      * Puts the key-value pair into the map, replacing any previous pair.
      * <p>
@@ -88,8 +70,8 @@ public interface BidiMap extends IterableMap {
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
      */
-    Object put(Object key, Object value);
-    
+    V put(K key, V value);
+
     /**
      * Gets the key that is currently mapped to the specified value.
      * <p>
@@ -106,8 +88,8 @@ public interface BidiMap extends IterableMap {
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
      */
-    Object getKey(Object value);
-    
+    K getKey(V value);
+
     /**
      * Removes the key-value pair that is currently mapped to the specified
      * value (optional operation).
@@ -127,8 +109,8 @@ public interface BidiMap extends IterableMap {
      * @throws UnsupportedOperationException if this method is not supported
      *  by the implementation
      */
-    Object removeValue(Object value);
-    
+    K removeValue(V value);
+
     /**
      * Gets a view of this map where the keys and values are reversed.
      * <p>
@@ -141,6 +123,6 @@ public interface BidiMap extends IterableMap {
      *
      * @return an inverted bidirectional map
      */
-    BidiMap inverseBidiMap();
-    
+    BidiMap<V, K> inverseBidiMap();
+
 }

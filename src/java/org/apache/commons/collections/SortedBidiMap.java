@@ -25,12 +25,14 @@ import java.util.SortedMap;
  * Implementations should allow a value to be looked up from a key and
  * a key to be looked up from a value with equal performance.
  *  
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public interface SortedBidiMap extends OrderedBidiMap, SortedMap {
+public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, V> {
 
     /**
      * Gets a view of this map where the keys and values are reversed.
@@ -47,8 +49,8 @@ public interface SortedBidiMap extends OrderedBidiMap, SortedMap {
      *
      * @return an inverted bidirectional map
      */
-    public BidiMap inverseBidiMap();
-    
+    public BidiMap<V, K> inverseBidiMap();
+
     /**
      * Gets a view of this map where the keys and values are reversed.
      * <p>
@@ -64,6 +66,6 @@ public interface SortedBidiMap extends OrderedBidiMap, SortedMap {
      *
      * @return an inverted bidirectional map
      */
-    public SortedBidiMap inverseSortedBidiMap();
-    
+    public SortedBidiMap<V, K> inverseSortedBidiMap();
+
 }

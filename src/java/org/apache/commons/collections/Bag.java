@@ -38,13 +38,14 @@ import java.util.Set;
  * In an ideal world, the interface would be changed to fix the problems, however
  * it has been decided to maintain backwards compatibility instead.
  *
+ * @param <E> the type held in the bag
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */
-public interface Bag extends Collection {
+public interface Bag<E> extends Collection<E> {
 
     /**
      * Returns the number of occurrences (cardinality) of the given
@@ -54,7 +55,7 @@ public interface Bag extends Collection {
      * @param object  the object to search for
      * @return the number of occurrences of the object, zero if not found
      */
-    int getCount(Object object);
+    int getCount(E object);
 
     /**
      * <i>(Violation)</i>
@@ -72,7 +73,7 @@ public interface Bag extends Collection {
      * @param object  the object to add
      * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
      */
-    boolean add(Object object);
+    boolean add(E object);
 
     /**
      * Adds <code>nCopies</code> copies of the specified object to the Bag.
@@ -85,7 +86,7 @@ public interface Bag extends Collection {
      * @param nCopies  the number of copies to add
      * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
      */
-    boolean add(Object object, int nCopies);
+    boolean add(E object, int nCopies);
 
     /**
      * <i>(Violation)</i>
@@ -111,7 +112,7 @@ public interface Bag extends Collection {
      * @param nCopies  the number of copies to remove
      * @return <code>true</code> if this call changed the collection
      */
-    boolean remove(Object object, int nCopies);
+    boolean remove(E object, int nCopies);
 
     /**
      * Returns a {@link Set} of unique elements in the Bag.
@@ -120,7 +121,7 @@ public interface Bag extends Collection {
      * 
      * @return the Set of unique Bag elements
      */
-    Set uniqueSet();
+    Set<E> uniqueSet();
 
     /**
      * Returns the total number of items in the bag across all types.
@@ -145,7 +146,7 @@ public interface Bag extends Collection {
      * @param coll  the collection to check against
      * @return <code>true</code> if the Bag contains all the collection
      */
-    boolean containsAll(Collection coll);
+    boolean containsAll(Collection<?> coll);
 
     /**
      * <i>(Violation)</i>
@@ -163,7 +164,7 @@ public interface Bag extends Collection {
      * @param coll  the collection to remove
      * @return <code>true</code> if this call changed the collection
      */
-    boolean removeAll(Collection coll);
+    boolean removeAll(Collection<?> coll);
 
     /**
      * <i>(Violation)</i>
@@ -184,7 +185,7 @@ public interface Bag extends Collection {
      * @param coll  the collection to retain
      * @return <code>true</code> if this call changed the collection
      */
-    boolean retainAll(Collection coll);
+    boolean retainAll(Collection<?> coll);
 
     /**
      * Returns an {@link Iterator} over the entire set of members,
@@ -193,7 +194,7 @@ public interface Bag extends Collection {
      * 
      * @return iterator over all elements in the Bag
      */
-    Iterator iterator();
+    Iterator<E> iterator();
 
     // The following is not part of the formal Bag interface, however where possible
     // Bag implementations should follow these comments.
@@ -218,5 +219,5 @@ public interface Bag extends Collection {
 //     * @return the hash code of the Bag
 //     */
 //    int hashCode();
-    
+
 }

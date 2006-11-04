@@ -17,6 +17,7 @@
 package org.apache.commons.collections;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Defines an iterator that operates over a <code>Map</code>.
@@ -32,14 +33,16 @@ import java.util.Iterator;
  * to <code>next()</code>, the <code>getValue()</code> method provides direct
  * access to the value. The value can also be set using <code>setValue()</code>.
  * <pre>
- * MapIterator it = map.mapIterator();
+ * MapIterator<String,Integer> it = map.mapIterator();
  * while (it.hasNext()) {
- *   Object key = it.next();
- *   Object value = it.getValue();
- *   it.setValue(newValue);
+ *   String key = it.next();
+ *   Integer value = it.getValue();
+ *   it.setValue(value + 1);
  * }
  * </pre>
- *  
+ *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
@@ -58,7 +61,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * Gets the next <em>key</em> from the <code>Map</code>.
      *
      * @return the next key in the iteration
-     * @throws java.util.NoSuchElementException if the iteration is finished
+     * @throws NoSuchElementException if the iteration is finished
      */
     K next();
 

@@ -22,12 +22,13 @@ import java.util.Comparator;
  * Defines a type of <code>Bag</code> that maintains a sorted order among
  * its unique representative members.
  *
+ * @param <E> the type to iterate over
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
  * 
  * @author Chuck Burdick
  */
-public interface SortedBag extends Bag {
+public interface SortedBag<E> extends Bag<E> {
 
     /**
      * Returns the comparator associated with this sorted set, or null
@@ -35,20 +36,20 @@ public interface SortedBag extends Bag {
      * 
      * @return the comparator in use, or null if natural ordering
      */
-    public Comparator comparator();
+    public Comparator<? super E> comparator();
 
     /**
      * Returns the first (lowest) member.
      * 
      * @return the first element in the sorted bag
      */
-    public Object first();
+    public E first();
 
     /**
      * Returns the last (highest) member.
      * 
      * @return the last element in the sorted bag
      */
-    public Object last();
-    
+    public E last();
+
 }
