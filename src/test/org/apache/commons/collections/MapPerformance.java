@@ -52,7 +52,7 @@ public class MapPerformance {
         Map flatMap = new Flat3Map(hashMap);
         System.out.println(flatMap);
         Map unmodHashMap = Collections.unmodifiableMap(new HashMap(hashMap));
-        Map fastHashMap = new FastHashMap(hashMap);
+//        Map fastHashMap = new FastHashMap(hashMap);
         Map treeMap = new TreeMap(hashMap);
 //        Map linkedMap = new LinkedHashMap(hashMap);
 //        Map syncMap = Collections.unmodifiableMap(new HashMap(hashMap));

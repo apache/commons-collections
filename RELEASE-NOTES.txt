@@ -28,6 +28,13 @@ Changes from commons-collections
 --------------------------------
 - Removed all deprecated classes and methods
 
+- Removed FastArrayList
+  - use CopyOnWriteList
+- Removed FastHashMap
+  - use ConcurrentHashMap, but beware null keys and values
+- Removed FastTreeSet
+  - no direct replacement - use ConcurrentHashMap or synchronized TreeMap
+
 
 Feedback
 --------

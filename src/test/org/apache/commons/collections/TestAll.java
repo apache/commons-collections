@@ -50,15 +50,9 @@ public class TestAll extends TestCase {
         
         suite.addTest(TestArrayStack.suite());
         suite.addTest(TestExtendedProperties.suite());
-        suite.addTest(TestFastArrayList.suite());
-        suite.addTest(TestFastArrayList1.suite());
-        suite.addTest(TestFastHashMap.suite());
-        suite.addTest(TestFastHashMap1.suite());
-        suite.addTest(TestFastTreeMap.suite());
-        suite.addTest(TestFastTreeMap1.suite());
         return suite;
     }
-        
+
     public static void main(String args[]) {
         String[] testCaseName = { TestAll.class.getName() };
         junit.textui.TestRunner.main(testCaseName);
