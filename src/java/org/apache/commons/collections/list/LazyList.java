@@ -108,14 +108,14 @@ public class LazyList extends AbstractSerializableListDecorator {
      * @param index  the index to retrieve
      */
     public Object get(int index) {
-        int size = getList().size();
+        int size = decorated().size();
         if (index < size) {
             // within bounds, get the object
-            Object object = getList().get(index);
+            Object object = decorated().get(index);
             if (object == null) {
                 // item is a place holder, create new one, set and return
                 object = factory.create();
-                getList().set(index, object);
+                decorated().set(index, object);
                 return object;
             } else {
                 // good and ready to go
@@ -124,18 +124,18 @@ public class LazyList extends AbstractSerializableListDecorator {
         } else {
             // we have to grow the list
             for (int i = size; i < index; i++) {
-                getList().add(null);
+                decorated().add(null);
             }
             // create our last object, set and return
             Object object = factory.create();
-            getList().add(object);
+            decorated().add(object);
             return object;
         }
     }
 
 
     public List subList(int fromIndex, int toIndex) {
-        List sub = getList().subList(fromIndex, toIndex);
+        List sub = decorated().subList(fromIndex, toIndex);
         return new LazyList(sub, factory);
     }
 

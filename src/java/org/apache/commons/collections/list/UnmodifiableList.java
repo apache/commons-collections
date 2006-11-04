@@ -97,11 +97,11 @@ public final class UnmodifiableList
 
     //-----------------------------------------------------------------------
     public ListIterator listIterator() {
-        return UnmodifiableListIterator.decorate(getList().listIterator());
+        return UnmodifiableListIterator.decorate(decorated().listIterator());
     }
 
     public ListIterator listIterator(int index) {
-        return UnmodifiableListIterator.decorate(getList().listIterator(index));
+        return UnmodifiableListIterator.decorate(decorated().listIterator(index));
     }
 
     public void add(int index, Object object) {
@@ -121,7 +121,7 @@ public final class UnmodifiableList
     }
 
     public List subList(int fromIndex, int toIndex) {
-        List sub = getList().subList(fromIndex, toIndex);
+        List sub = decorated().subList(fromIndex, toIndex);
         return new UnmodifiableList(sub);
     }
 

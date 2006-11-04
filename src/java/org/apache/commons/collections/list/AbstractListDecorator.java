@@ -59,16 +59,6 @@ public abstract class AbstractListDecorator<E>
      * Gets the list being decorated.
      * 
      * @return the decorated list
-     * @deprecated use decorated()
-     */
-    protected List<E> getList() {
-        return decorated();
-    }
-
-    /**
-     * Gets the list being decorated.
-     * 
-     * @return the decorated list
      */
     protected List<E> decorated() {
         return (List<E>) super.decorated();

@@ -89,27 +89,27 @@ public class FixedSizeList
     }
 
     public Object get(int index) {
-        return getList().get(index);
+        return decorated().get(index);
     }
 
     public int indexOf(Object object) {
-        return getList().indexOf(object);
+        return decorated().indexOf(object);
     }
 
     public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
+        return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
     public int lastIndexOf(Object object) {
-        return getList().lastIndexOf(object);
+        return decorated().lastIndexOf(object);
     }
 
     public ListIterator listIterator() {
-        return new FixedSizeListIterator(getList().listIterator(0));
+        return new FixedSizeListIterator(decorated().listIterator(0));
     }
 
     public ListIterator listIterator(int index) {
-        return new FixedSizeListIterator(getList().listIterator(index));
+        return new FixedSizeListIterator(decorated().listIterator(index));
     }
 
     public Object remove(int index) {
@@ -129,11 +129,11 @@ public class FixedSizeList
     }
 
     public Object set(int index, Object object) {
-        return getList().set(index, object);
+        return decorated().set(index, object);
     }
 
     public List subList(int fromIndex, int toIndex) {
-        List sub = getList().subList(fromIndex, toIndex);
+        List sub = decorated().subList(fromIndex, toIndex);
         return new FixedSizeList(sub);
     }
 
