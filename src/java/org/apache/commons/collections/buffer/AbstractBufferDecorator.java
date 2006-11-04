@@ -53,18 +53,28 @@ public abstract class AbstractBufferDecorator extends AbstractCollectionDecorato
      * Gets the buffer being decorated.
      * 
      * @return the decorated buffer
+     * @deprecated use decorated()
      */
     protected Buffer getBuffer() {
-        return (Buffer) getCollection();
+        return decorated();
+    }
+
+    /**
+     * Gets the buffer being decorated.
+     * 
+     * @return the decorated buffer
+     */
+    protected Buffer decorated() {
+        return (Buffer) super.decorated();
     }
 
     //-----------------------------------------------------------------------
     public Object get() {
-        return getBuffer().get();
+        return decorated().get();
     }
 
     public Object remove() {
-        return getBuffer().remove();
+        return decorated().remove();
     }
 
 }

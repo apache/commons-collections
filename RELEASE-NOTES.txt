@@ -38,6 +38,10 @@ Changes from commons-collections
 - Removed Typed* containers such as TypedList and TypedMap
   - use generics for type safety, or Collections.checked*()
 
+- Switch Abstract*Decorator classes to expose decorated() protected method
+  instead of the decorated collection directly. Each class overrides decorated()
+  to add its type covariantly, thus getList()/getSet() etc. methods are removed
+
 
 Feedback
 --------

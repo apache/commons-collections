@@ -27,12 +27,15 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * <p>
  * Methods are forwarded directly to the decorated list.
  *
+ * @param <E> the type of the elements in the list
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractListDecorator extends AbstractCollectionDecorator implements List {
+public abstract class AbstractListDecorator<E>
+        extends AbstractCollectionDecorator<E>
+        implements List<E> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -48,7 +51,7 @@ public abstract class AbstractListDecorator extends AbstractCollectionDecorator 
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractListDecorator(List list) {
+    protected AbstractListDecorator(List<E> list) {
         super(list);
     }
 
@@ -56,50 +59,60 @@ public abstract class AbstractListDecorator extends AbstractCollectionDecorator 
      * Gets the list being decorated.
      * 
      * @return the decorated list
+     * @deprecated use decorated()
      */
-    protected List getList() {
-        return (List) getCollection();
+    protected List<E> getList() {
+        return decorated();
+    }
+
+    /**
+     * Gets the list being decorated.
+     * 
+     * @return the decorated list
+     */
+    protected List<E> decorated() {
+        return (List<E>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public void add(int index, Object object) {
-        getList().add(index, object);
+    public void add(int index, E object) {
+        decorated().add(index, object);
     }
 
-    public boolean addAll(int index, Collection coll) {
-        return getList().addAll(index, coll);
+    public boolean addAll(int index, Collection<? extends E> coll) {
+        return decorated().addAll(index, coll);
     }
 
-    public Object get(int index) {
-        return getList().get(index);
+    public E get(int index) {
+        return decorated().get(index);
     }
 
     public int indexOf(Object object) {
-        return getList().indexOf(object);
+        return decorated().indexOf(object);
     }
 
     public int lastIndexOf(Object object) {
-        return getList().lastIndexOf(object);
+        return decorated().lastIndexOf(object);
     }
 
-    public ListIterator listIterator() {
-        return getList().listIterator();
+    public ListIterator<E> listIterator() {
+        return decorated().listIterator();
     }
 
-    public ListIterator listIterator(int index) {
-        return getList().listIterator(index);
+    public ListIterator<E> listIterator(int index) {
+        return decorated().listIterator(index);
     }
 
-    public Object remove(int index) {
-        return getList().remove(index);
+    public E remove(int index) {
+        return decorated().remove(index);
     }
 
-    public Object set(int index, Object object) {
-        return getList().set(index, object);
+    public E set(int index, E object) {
+        return decorated().set(index, object);
     }
 
-    public List subList(int fromIndex, int toIndex) {
-        return getList().subList(fromIndex, toIndex);
+    public List<E> subList(int fromIndex, int toIndex) {
+        return decorated().subList(fromIndex, toIndex);
     }
 
 }
