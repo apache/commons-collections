@@ -41,13 +41,12 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * @author Phil Steitz
  */
 public class CompositeCollection implements Collection {
-    
+
     /** CollectionMutator to handle changes to the collection */
     protected CollectionMutator mutator;
-    
     /** Collections in the composite */
     protected Collection[] all;
-    
+
     /**
      * Create an empty CompositeCollection.
      */
@@ -55,7 +54,7 @@ public class CompositeCollection implements Collection {
         super();
         this.all = new Collection[0];
     }
-    
+
     /**
      * Create a Composite Collection with only coll composited.
      * 
@@ -65,7 +64,7 @@ public class CompositeCollection implements Collection {
         this();
         this.addComposited(coll);
     }
-    
+
     /**
      * Create a CompositeCollection with colls as the initial list of
      * composited collections.
@@ -76,7 +75,7 @@ public class CompositeCollection implements Collection {
         this();
         this.addComposited(colls);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Gets the size of this composite collection.
@@ -92,7 +91,7 @@ public class CompositeCollection implements Collection {
         }
         return size;
     }
-    
+
     /**
      * Checks whether this composite collection is empty.
      * <p>
@@ -108,7 +107,7 @@ public class CompositeCollection implements Collection {
         }
         return true;
     }
-    
+
     /**
      * Checks whether this composite collection contains the object.
      * <p>
@@ -125,7 +124,7 @@ public class CompositeCollection implements Collection {
         }
         return false;
     }
-    
+
     /**
      * Gets an iterator over all the collections in this composite.
      * <p>
@@ -146,7 +145,7 @@ public class CompositeCollection implements Collection {
         }
         return chain;
     }
-    
+
     /**
      * Returns an array containing all of the elements in this composite.
      *
@@ -160,7 +159,7 @@ public class CompositeCollection implements Collection {
         }
         return result;
     }
-    
+
     /**
      * Returns an object array, populating the supplied array if possible.
      * See <code>Collection</code> interface for full details.
@@ -173,8 +172,7 @@ public class CompositeCollection implements Collection {
         Object[] result = null;
         if (array.length >= size) {
             result = array;
-        }
-        else {
+        } else {
             result = (Object[]) Array.newInstance(array.getClass().getComponentType(), size);
         }
         
@@ -189,7 +187,7 @@ public class CompositeCollection implements Collection {
         }
         return result;
     }
-    
+
     /**
      * Adds an object to the collection, throwing UnsupportedOperationException
      * unless a CollectionMutator strategy is specified.
@@ -209,7 +207,7 @@ public class CompositeCollection implements Collection {
         }
         return this.mutator.add(this, this.all, obj);
     }
-    
+
     /**
      * Removes an object from the collection, throwing UnsupportedOperationException
      * unless a CollectionMutator strategy is specified.
@@ -228,7 +226,7 @@ public class CompositeCollection implements Collection {
         }
         return this.mutator.remove(this, this.all, obj);
     }
-    
+
     /**
      * Checks whether this composite contains all the elements in the specified collection.
      * <p>
@@ -246,7 +244,7 @@ public class CompositeCollection implements Collection {
         }
         return true;
     }
-    
+
     /**
      * Adds a collection of elements to this collection, throwing
      * UnsupportedOperationException unless a CollectionMutator strategy is specified.
@@ -266,7 +264,7 @@ public class CompositeCollection implements Collection {
         }
         return this.mutator.addAll(this, this.all, coll);
     }
-    
+
     /**
      * Removes the elements in the specified collection from this composite collection.
      * <p>
@@ -286,7 +284,7 @@ public class CompositeCollection implements Collection {
         }
         return changed;
     }
-    
+
     /**
      * Retains all the elements in the specified collection in this composite collection,
      * removing all others.
@@ -304,7 +302,7 @@ public class CompositeCollection implements Collection {
         }
         return changed;
     }
-    
+
     /**
      * Removes all of the elements from this collection .
      * <p>
@@ -317,7 +315,7 @@ public class CompositeCollection implements Collection {
             this.all[i].clear();
         }
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Specify a CollectionMutator strategy instance to handle changes.
@@ -327,7 +325,7 @@ public class CompositeCollection implements Collection {
     public void setMutator(CollectionMutator mutator) {
         this.mutator = mutator;
     }
-    
+
     /**
      * Add these Collections to the list of collections in this composite
      *
@@ -338,7 +336,7 @@ public class CompositeCollection implements Collection {
         list.addAll(Arrays.asList(comps));
         all = (Collection[]) list.toArray(new Collection[list.size()]);
     }
-    
+
     /**
      * Add an additional collection to this composite.
      * 
@@ -347,7 +345,7 @@ public class CompositeCollection implements Collection {
     public void addComposited(Collection c) {
         this.addComposited(new Collection[]{c});
     }
-    
+
     /**
      * Add two additional collections to this composite.
      * 
@@ -357,7 +355,7 @@ public class CompositeCollection implements Collection {
     public void addComposited(Collection c, Collection d) {
         this.addComposited(new Collection[]{c, d});
     }
-    
+
     /**
      * Removes a collection from the those being decorated in this composite.
      *
@@ -369,7 +367,7 @@ public class CompositeCollection implements Collection {
         list.remove(coll);
         this.all = (Collection[]) list.toArray(new Collection[list.size()]);
     }
-    
+
     /**
      * Returns a new collection containing all of the elements
      *
@@ -379,7 +377,7 @@ public class CompositeCollection implements Collection {
     public Collection toCollection() {
         return new ArrayList(this);
     }
-    
+
     /**
      * Gets the collections being decorated.
      *
@@ -388,7 +386,7 @@ public class CompositeCollection implements Collection {
     public Collection getCollections() {
         return UnmodifiableList.decorate(Arrays.asList(this.all));
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Pluggable strategy to handle changes to the composite.
@@ -438,6 +436,6 @@ public class CompositeCollection implements Collection {
         public boolean remove(CompositeCollection composite, Collection[] collections, Object obj);
         
     }
-    
+
 }
 
