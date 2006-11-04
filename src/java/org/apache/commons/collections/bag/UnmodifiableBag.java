@@ -98,7 +98,7 @@ public final class UnmodifiableBag
 
     //-----------------------------------------------------------------------
     public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
+        return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
     public boolean add(Object object) {
@@ -135,7 +135,7 @@ public final class UnmodifiableBag
     }
 
     public Set uniqueSet() {
-        Set set = getBag().uniqueSet();
+        Set set = decorated().uniqueSet();
         return UnmodifiableSet.decorate(set);
     }
 

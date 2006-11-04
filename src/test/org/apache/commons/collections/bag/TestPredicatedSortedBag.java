@@ -80,7 +80,7 @@ public class TestPredicatedSortedBag extends AbstractTestSortedBag {
     
     public void testDecorate() {
         SortedBag bag = decorateBag(new TreeBag(), stringPredicate());
-        SortedBag bag2 = ((PredicatedSortedBag) bag).getSortedBag();
+        SortedBag bag2 = ((PredicatedSortedBag) bag).decorated();
         try {
             SortedBag bag3 = decorateBag(new TreeBag(), null);
             fail("Expecting IllegalArgumentException for null predicate");

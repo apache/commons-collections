@@ -83,21 +83,21 @@ public class PredicatedSortedBag
      * 
      * @return the decorated bag
      */
-    protected SortedBag getSortedBag() {
-        return (SortedBag) getCollection();
+    protected SortedBag decorated() {
+        return (SortedBag) super.decorated();
     }
     
     //-----------------------------------------------------------------------
     public Object first() {
-        return getSortedBag().first();
+        return decorated().first();
     }
 
     public Object last() {
-        return getSortedBag().last();
+        return decorated().last();
     }
 
     public Comparator comparator() {
-        return getSortedBag().comparator();
+        return decorated().comparator();
     }
 
 }

@@ -84,26 +84,26 @@ public class PredicatedBag
      * 
      * @return the decorated bag
      */
-    protected Bag getBag() {
-        return (Bag) getCollection();
+    protected Bag decorated() {
+        return (Bag) super.decorated();
     }
     
     //-----------------------------------------------------------------------
     public boolean add(Object object, int count) {
         validate(object);
-        return getBag().add(object, count);
+        return decorated().add(object, count);
     }
 
     public boolean remove(Object object, int count) {
-        return getBag().remove(object, count);
+        return decorated().remove(object, count);
     }
 
     public Set uniqueSet() {
-        return getBag().uniqueSet();
+        return decorated().uniqueSet();
     }
 
     public int getCount(Object object) {
-        return getBag().getCount(object);
+        return decorated().getCount(object);
     }
 
 }
