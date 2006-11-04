@@ -33,7 +33,6 @@ import org.apache.commons.collections.keyvalue.DefaultKeyValue;
 import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.collections.map.PredicatedMap;
-import org.apache.commons.collections.map.TestPredicatedMap;
 
 /**
  * Tests for MapUtils.
@@ -76,68 +75,6 @@ public class TestMapUtils extends BulkTest {
         } catch (IllegalArgumentException e) {
             // expected
         }
-    }
-
-    // Since a typed map is a predicated map, I copied the tests for predicated map
-    public void testTypedMapIllegalPut() {
-        final Map map = MapUtils.typedMap(new HashMap(), String.class, String.class);
-
-        try {
-            map.put("Hi", new Integer(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
-
-        try {
-            map.put(new Integer(3), "Hi");
-            fail("Illegal key should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
-
-        assertTrue(!map.containsKey(new Integer(3)));
-        assertTrue(!map.containsValue(new Integer(3)));
-
-        Map map2 = new HashMap();
-        map2.put("A", "a");
-        map2.put("B", "b");
-        map2.put("C", "c");
-        map2.put("c", new Integer(3));
-
-        try {
-            map.putAll(map2);
-            fail("Illegal value should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
-
-        map.put("E", "e");
-        Iterator iterator = map.entrySet().iterator();
-        try {
-            Map.Entry entry = (Map.Entry)iterator.next();
-            entry.setValue(new Integer(3));
-            fail("Illegal value should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
-
-    }
-
-    public BulkTest bulkTestTypedMap() {
-        return new TestPredicatedMap("") {
-            public boolean isAllowNullKey() {
-                return false;
-            }
-
-            public boolean isAllowNullValue() {
-                return false;
-            }
-
-            public Map makeEmptyMap() {
-                return MapUtils.typedMap(new HashMap(), String.class, String.class);
-            }
-        };
     }
 
     public void testLazyMapFactory() {

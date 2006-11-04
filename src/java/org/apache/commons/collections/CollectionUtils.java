@@ -31,7 +31,6 @@ import java.util.Set;
 import org.apache.commons.collections.collection.PredicatedCollection;
 import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.collection.TransformedCollection;
-import org.apache.commons.collections.collection.TypedCollection;
 import org.apache.commons.collections.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 
@@ -1072,19 +1071,6 @@ public class CollectionUtils {
         return PredicatedCollection.decorate(collection, predicate);
     }
 
-    /**
-     * Returns a typed collection backed by the given collection.
-     * <p>
-     * Only objects of the specified type can be added to the collection.
-     * 
-     * @param collection  the collection to limit to a specific type, must not be null
-     * @param type  the type of objects which may be added to the collection
-     * @return a typed collection backed by the specified collection
-     */
-    public static Collection typedCollection(Collection collection, Class type) {
-        return TypedCollection.decorate(collection, type);
-    }
-    
     /**
      * Returns a transformed bag backed by the given collection.
      * <p>

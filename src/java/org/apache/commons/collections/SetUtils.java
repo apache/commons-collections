@@ -30,8 +30,6 @@ import org.apache.commons.collections.set.SynchronizedSet;
 import org.apache.commons.collections.set.SynchronizedSortedSet;
 import org.apache.commons.collections.set.TransformedSet;
 import org.apache.commons.collections.set.TransformedSortedSet;
-import org.apache.commons.collections.set.TypedSet;
-import org.apache.commons.collections.set.TypedSortedSet;
 import org.apache.commons.collections.set.UnmodifiableSet;
 import org.apache.commons.collections.set.UnmodifiableSortedSet;
 
@@ -194,19 +192,6 @@ public class SetUtils {
     }
 
     /**
-     * Returns a typed set backed by the given set.
-     * <p>
-     * Only objects of the specified type can be added to the set.
-     * 
-     * @param set  the set to limit to a specific type, must not be null
-     * @param type  the type of objects which may be added to the set
-     * @return a typed set backed by the specified set
-     */
-    public static Set typedSet(Set set, Class type) {
-        return TypedSet.decorate(set, type);
-    }
-    
-    /**
      * Returns a transformed set backed by the given set.
      * <p>
      * Each object is passed through the transformer as it is added to the
@@ -294,19 +279,6 @@ public class SetUtils {
         return PredicatedSortedSet.decorate(set, predicate);
     }
 
-    /**
-     * Returns a typed sorted set backed by the given set.
-     * <p>
-     * Only objects of the specified type can be added to the set.
-     * 
-     * @param set  the set to limit to a specific type, must not be null
-     * @param type  the type of objects which may be added to the set
-     * @return a typed set backed by the specified set
-     */
-    public static SortedSet typedSortedSet(SortedSet set, Class type) {
-        return TypedSortedSet.decorate(set, type);
-    }
-    
     /**
      * Returns a transformed sorted set backed by the given set.
      * <p>

@@ -39,8 +39,6 @@ import org.apache.commons.collections.map.PredicatedMap;
 import org.apache.commons.collections.map.PredicatedSortedMap;
 import org.apache.commons.collections.map.TransformedMap;
 import org.apache.commons.collections.map.TransformedSortedMap;
-import org.apache.commons.collections.map.TypedMap;
-import org.apache.commons.collections.map.TypedSortedMap;
 import org.apache.commons.collections.map.UnmodifiableMap;
 import org.apache.commons.collections.map.UnmodifiableSortedMap;
 
@@ -1274,21 +1272,6 @@ public class MapUtils {
     }
 
     /**
-     * Returns a typed map backed by the given map.
-     * <p>
-     * Only keys and values of the specified types can be added to the map.
-     * 
-     * @param map  the map to limit to a specific type, must not be null
-     * @param keyType  the type of keys which may be added to the map, must not be null
-     * @param valueType  the type of values which may be added to the map, must not be null
-     * @return a typed map backed by the specified map
-     * @throws IllegalArgumentException  if the Map or Class is null
-     */
-    public static Map typedMap(Map map, Class keyType, Class valueType) {
-        return TypedMap.decorate(map, keyType, valueType);
-    }
-    
-    /**
      * Returns a transformed map backed by the given map.
      * <p>
      * This method returns a new map (decorating the specified map) that
@@ -1517,20 +1500,6 @@ public class MapUtils {
         return PredicatedSortedMap.decorate(map, keyPred, valuePred);
     }
 
-    /**
-     * Returns a typed sorted map backed by the given map.
-     * <p>
-     * Only keys and values of the specified types can be added to the map.
-     * 
-     * @param map  the map to limit to a specific type, must not be null
-     * @param keyType  the type of keys which may be added to the map, must not be null
-     * @param valueType  the type of values which may be added to the map, must not be null
-     * @return a typed map backed by the specified map
-     */
-    public static SortedMap typedSortedMap(SortedMap map, Class keyType, Class valueType) {
-        return TypedSortedMap.decorate(map, keyType, valueType);
-    }
-    
     /**
      * Returns a transformed sorted map backed by the given map.
      * <p>

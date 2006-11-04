@@ -36,7 +36,6 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.bag.HashBag;
 import org.apache.commons.collections.buffer.BoundedFifoBuffer;
-import org.apache.commons.collections.collection.AbstractTestCollection;
 import org.apache.commons.collections.collection.PredicatedCollection;
 import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.collection.TransformedCollection;
@@ -998,43 +997,6 @@ public class TestCollectionUtils extends TestCase {
         
    
 
-    public BulkTest bulkTestTypedCollection() {
-        return new TestTypedCollection("") {
-            public Collection typedCollection() {
-                return CollectionUtils.typedCollection(
-                    new ArrayList(),
-                    super.getType());
-            }
- 
-            public BulkTest bulkTestAll() {
-                return new AbstractTestCollection("") {
-                    public Collection makeCollection() {
-                        return typedCollection();
-                    }
- 
-                    public Collection makeConfirmedCollection() {
-                        return new ArrayList();
-                    }
- 
-                    public Collection makeConfirmedFullCollection() {
-                        ArrayList list = new ArrayList();
-                        list.addAll(java.util.Arrays.asList(getFullElements()));
-                        return list;
-                    }
- 
-                    public Object[] getFullElements() {
-                        return getFullNonNullStringElements();
-                    }
- 
-                    public Object[] getOtherElements() {
-                        return getOtherNonNullStringElements();
-                    }
- 
-                };
-            }
-        };
-    }
-    
     public void testIsFull() {
         Set set = new HashSet();
         set.add("1");

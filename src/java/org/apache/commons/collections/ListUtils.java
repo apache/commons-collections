@@ -27,7 +27,6 @@ import org.apache.commons.collections.list.LazyList;
 import org.apache.commons.collections.list.PredicatedList;
 import org.apache.commons.collections.list.SynchronizedList;
 import org.apache.commons.collections.list.TransformedList;
-import org.apache.commons.collections.list.TypedList;
 import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
@@ -331,19 +330,6 @@ public class ListUtils {
         return PredicatedList.decorate(list, predicate);
     }
 
-    /**
-     * Returns a typed list backed by the given list.
-     * <p>
-     * Only objects of the specified type can be added to the list.
-     * 
-     * @param list  the list to limit to a specific type, must not be null
-     * @param type  the type of objects which may be added to the list
-     * @return a typed list backed by the specified list
-     */
-    public static List typedList(List list, Class type) {
-        return TypedList.decorate(list, type);
-    }
-    
     /**
      * Returns a transformed list backed by the given list.
      * <p>

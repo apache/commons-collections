@@ -17,12 +17,11 @@
 package org.apache.commons.collections;
 
 import org.apache.commons.collections.buffer.BlockingBuffer;
+import org.apache.commons.collections.buffer.BoundedBuffer;
 import org.apache.commons.collections.buffer.PredicatedBuffer;
 import org.apache.commons.collections.buffer.SynchronizedBuffer;
 import org.apache.commons.collections.buffer.TransformedBuffer;
-import org.apache.commons.collections.buffer.TypedBuffer;
 import org.apache.commons.collections.buffer.UnmodifiableBuffer;
-import org.apache.commons.collections.buffer.BoundedBuffer;
 
 /**
  * Provides utility methods and decorators for {@link Buffer} instances.
@@ -166,20 +165,6 @@ public class BufferUtils {
      */
     public static Buffer predicatedBuffer(Buffer buffer, Predicate predicate) {
         return PredicatedBuffer.decorate(buffer, predicate);
-    }
-
-    /**
-     * Returns a typed buffer backed by the given buffer.
-     * <p>
-     * Only elements of the specified type can be added to the buffer.
-     *
-     * @param buffer  the buffer to predicate, must not be null
-     * @param type  the type to allow into the buffer, must not be null
-     * @return a typed buffer
-     * @throws IllegalArgumentException  if the buffer or type is null
-     */
-    public static Buffer typedBuffer(Buffer buffer, Class type) {
-        return TypedBuffer.decorate(buffer, type);
     }
 
     /**

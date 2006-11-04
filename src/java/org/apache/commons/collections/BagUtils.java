@@ -24,8 +24,6 @@ import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import org.apache.commons.collections.bag.TransformedBag;
 import org.apache.commons.collections.bag.TransformedSortedBag;
 import org.apache.commons.collections.bag.TreeBag;
-import org.apache.commons.collections.bag.TypedBag;
-import org.apache.commons.collections.bag.TypedSortedBag;
 import org.apache.commons.collections.bag.UnmodifiableBag;
 import org.apache.commons.collections.bag.UnmodifiableSortedBag;
 
@@ -122,19 +120,6 @@ public class BagUtils {
     }
     
     /**
-     * Returns a typed bag backed by the given bag.
-     * <p>
-     * Only objects of the specified type can be added to the bag.
-     * 
-     * @param bag  the bag to limit to a specific type, must not be null
-     * @param type  the type of objects which may be added to the bag
-     * @return a typed bag backed by the specified bag
-     */
-    public static Bag typedBag(Bag bag, Class type) {
-        return TypedBag.decorate(bag, type);
-    }
-    
-    /**
      * Returns a transformed bag backed by the given bag.
      * <p>
      * Each object is passed through the transformer as it is added to the
@@ -210,19 +195,6 @@ public class BagUtils {
      */
     public static SortedBag predicatedSortedBag(SortedBag bag, Predicate predicate) {
         return PredicatedSortedBag.decorate(bag, predicate);
-    }
-    
-    /**
-     * Returns a typed sorted bag backed by the given bag.
-     * <p>
-     * Only objects of the specified type can be added to the bag.
-     * 
-     * @param bag  the bag to limit to a specific type, must not be null
-     * @param type  the type of objects which may be added to the bag
-     * @return a typed bag backed by the specified bag
-     */
-    public static SortedBag typedSortedBag(SortedBag bag, Class type) {
-        return TypedSortedBag.decorate(bag, type);
     }
     
     /**

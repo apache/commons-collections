@@ -53,8 +53,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestSynchronizedSortedSet.suite());
         suite.addTest(TestTransformedSet.suite());
         suite.addTest(TestTransformedSortedSet.suite());
-        suite.addTest(TestTypedSet.suite());
-        suite.addTest(TestTypedSortedSet.suite());
         suite.addTest(TestUnmodifiableSet.suite());
         suite.addTest(TestUnmodifiableSortedSet.suite());
         

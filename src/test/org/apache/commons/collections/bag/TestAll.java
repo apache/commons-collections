@@ -48,8 +48,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestTransformedBag.suite());
         suite.addTest(TestTransformedSortedBag.suite());
         suite.addTest(TestTreeBag.suite());
-        suite.addTest(TestTypedBag.suite());
-        suite.addTest(TestTypedSortedBag.suite());
         
         return suite;
     }

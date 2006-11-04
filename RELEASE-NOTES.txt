@@ -35,6 +35,9 @@ Changes from commons-collections
 - Removed FastTreeSet
   - no direct replacement - use ConcurrentHashMap or synchronized TreeMap
 
+- Removed Typed* containers such as TypedList and TypedMap
+  - use generics for type safety, or Collections.checked*()
+
 
 Feedback
 --------
