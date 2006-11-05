@@ -18,7 +18,6 @@ package org.apache.commons.collections.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.Transformer;
@@ -33,18 +32,19 @@ import org.apache.commons.collections.Transformer;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */
-public class TransformedCollection extends AbstractSerializableCollectionDecorator {
+public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 8692300188161871514L;
 
     /** The transformer to use */
-    protected final Transformer transformer;
+    protected final Transformer<E, E> transformer;
 
     /**
      * Factory method to create a transforming collection.
@@ -52,15 +52,16 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
      * 
+     * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed collection
      * @throws IllegalArgumentException if collection or transformer is null
      */
-    public static Collection decorate(Collection coll, Transformer transformer) {
-        return new TransformedCollection(coll, transformer);
+    public static <T> Collection<T> decorate(Collection<T> coll, Transformer<T, T> transformer) {
+        return new TransformedCollection<T>(coll, transformer);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
@@ -72,7 +73,7 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if collection or transformer is null
      */
-    protected TransformedCollection(Collection coll, Transformer transformer) {
+    protected TransformedCollection(Collection<E> coll, Transformer<E, E> transformer) {
         super(coll);
         if (transformer == null) {
             throw new IllegalArgumentException("Transformer must not be null");
@@ -88,7 +89,7 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * @param object  the object to transform
      * @return a transformed object
      */
-    protected Object transform(Object object) {
+    protected E transform(E object) {
         return transformer.transform(object);
     }
 
@@ -100,21 +101,21 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * @param coll  the collection to transform
      * @return a transformed object
      */
-    protected Collection transform(Collection coll) {
-        List list = new ArrayList(coll.size());
-        for (Iterator it = coll.iterator(); it.hasNext(); ) {
-            list.add(transform(it.next()));
+    protected Collection<E> transform(Collection<? extends E> coll) {
+        List<E> list = new ArrayList<E>(coll.size());
+        for (E item : coll) {
+            list.add(transform(item));
         }
         return list;
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object object) {
+    public boolean add(E object) {
         object = transform(object);
         return decorated().add(object);
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         coll = transform(coll);
         return decorated().addAll(coll);
     }

@@ -40,7 +40,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * @author Stephen Colebourne
  */
 public final class UnmodifiableBoundedCollection
-        extends AbstractSerializableCollectionDecorator
+        extends AbstractCollectionDecorator
         implements BoundedCollection {
 
     /** Serialization version */

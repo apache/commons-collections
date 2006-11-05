@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections.collection;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -41,7 +42,11 @@ import java.util.Iterator;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public abstract class AbstractCollectionDecorator<E> implements Collection<E> {
+public abstract class AbstractCollectionDecorator<E>
+        implements Collection<E>, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 6249888059822088500L;
 
     /** The collection being decorated */
     protected Collection<E> collection;
