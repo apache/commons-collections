@@ -109,7 +109,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
     //-----------------------------------------------------------------------
     public Object remove() {
         synchronized (lock) {
-            Object returnValue = getBuffer().remove();
+            Object returnValue = decorated().remove();
             lock.notifyAll();
             return returnValue;
         }
@@ -118,14 +118,14 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
     public boolean add(Object o) {
         synchronized (lock) {
             timeoutWait(1);
-            return getBuffer().add(o);
+            return decorated().add(o);
         }
     }
 
     public boolean addAll(final Collection c) {
         synchronized (lock) {
             timeoutWait(c.size());
-            return getBuffer().addAll(c);
+            return decorated().addAll(c);
         }
     }
 
@@ -141,7 +141,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
         }
         if (timeout <= 0) {
             // no wait period (immediate timeout)
-            if (getBuffer().size() + nAdditions > maximumSize) {
+            if (decorated().size() + nAdditions > maximumSize) {
                 throw new BufferOverflowException(
                         "Buffer size cannot exceed " + maximumSize);
             }
@@ -149,7 +149,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
         }
         final long expiration = System.currentTimeMillis() + timeout;
         long timeLeft = expiration - System.currentTimeMillis();
-        while (timeLeft > 0 && getBuffer().size() + nAdditions > maximumSize) {
+        while (timeLeft > 0 && decorated().size() + nAdditions > maximumSize) {
             try {
                 lock.wait(timeLeft);
                 timeLeft = expiration - System.currentTimeMillis();
@@ -160,7 +160,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
                     "Caused by InterruptedException: " + out.toString());
             }
         }
-        if (getBuffer().size() + nAdditions > maximumSize) {
+        if (decorated().size() + nAdditions > maximumSize) {
             throw new BufferOverflowException("Timeout expired");
         }
     }

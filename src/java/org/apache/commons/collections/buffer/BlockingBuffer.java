@@ -45,10 +45,11 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Janek Bogucki
  * @author Phil Steitz
  * @author James Carman
+ * @param <E> the type of the elements in the buffer
  * @version $Revision$ $Date$
  * @since Commons Collections 3.0
  */
-public class BlockingBuffer extends SynchronizedBuffer {
+public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
 
     /** Serialization version. */
     private static final long serialVersionUID = 1719328905017860541L;
@@ -58,25 +59,27 @@ public class BlockingBuffer extends SynchronizedBuffer {
     /**
      * Factory method to create a blocking buffer.
      *
+     * @param <t> the type of the elements in the buffer
      * @param buffer the buffer to decorate, must not be null
      * @return a new blocking Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static Buffer decorate(Buffer buffer) {
-        return new BlockingBuffer(buffer);
+    public static <T> Buffer<T> decorate(Buffer<T> buffer) {
+        return new BlockingBuffer<T>(buffer);
     }
 
     /**
      * Factory method to create a blocking buffer with a timeout value.
      *
+     * @param <t> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a new blocking buffer
      * @throws IllegalArgumentException if the buffer is null
      * @since Commons Collections 3.2
      */
-    public static Buffer decorate(Buffer buffer, long timeoutMillis) {
-        return new BlockingBuffer(buffer, timeoutMillis);
+    public static <T> Buffer<T> decorate(Buffer<T> buffer, long timeoutMillis) {
+        return new BlockingBuffer<T>(buffer, timeoutMillis);
     }
 
     //-----------------------------------------------------------------------    
@@ -86,7 +89,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
      * @param buffer the buffer to decorate, must not be null
      * @throws IllegalArgumentException if the buffer is null
      */
-    protected BlockingBuffer(Buffer buffer) {
+    protected BlockingBuffer(Buffer<E> buffer) {
         super(buffer);
         this.timeout = 0;
     }
@@ -99,13 +102,13 @@ public class BlockingBuffer extends SynchronizedBuffer {
      * @throws IllegalArgumentException if the buffer is null
      * @since Commons Collections 3.2
      */
-    protected BlockingBuffer(Buffer buffer, long timeoutMillis) {
+    protected BlockingBuffer(Buffer<E> buffer, long timeoutMillis) {
         super(buffer);
         this.timeout = (timeoutMillis < 0 ? 0 : timeoutMillis);
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object o) {
+    public boolean add(E o) {
         synchronized (lock) {
             boolean result = collection.add(o);
             lock.notifyAll();
@@ -113,7 +116,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
         }
     }
 
-    public boolean addAll(Collection c) {
+    public boolean addAll(Collection<? extends E> c) {
         synchronized (lock) {
             boolean result = collection.addAll(c);
             lock.notifyAll();
@@ -128,7 +131,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
      *
      * @throws BufferUnderflowException if an interrupt is received
      */
-    public Object get() {
+    public E get() {
         synchronized (lock) {
             while (collection.isEmpty()) {
                 try {
@@ -143,7 +146,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
             }
-            return getBuffer().get();
+            return decorated().get();
         }
     }
 
@@ -156,7 +159,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
      * @throws BufferUnderflowException if the timeout expires
      * @since Commons Collections 3.2
      */
-    public Object get(final long timeout) {
+    public E get(final long timeout) {
         synchronized (lock) {
             final long expiration = System.currentTimeMillis() + timeout;
             long timeLeft = expiration - System.currentTimeMillis();
@@ -173,7 +176,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
             if (collection.isEmpty()) {
                 throw new BufferUnderflowException("Timeout expired");
             }
-            return getBuffer().get();
+            return decorated().get();
         }
     }
 
@@ -184,7 +187,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
      *
      * @throws BufferUnderflowException if an interrupt is received
      */
-    public Object remove() {
+    public E remove() {
         synchronized (lock) {
             while (collection.isEmpty()) {
                 try {
@@ -199,7 +202,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
             }
-            return getBuffer().remove();
+            return decorated().remove();
         }
     }
 
@@ -212,7 +215,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
      * @throws BufferUnderflowException if the timeout expires
      * @since Commons Collections 3.2
      */
-    public Object remove(final long timeout) {
+    public E remove(final long timeout) {
         synchronized (lock) {
             final long expiration = System.currentTimeMillis() + timeout;
             long timeLeft = expiration - System.currentTimeMillis();
@@ -229,7 +232,7 @@ public class BlockingBuffer extends SynchronizedBuffer {
             if (collection.isEmpty()) {
                 throw new BufferUnderflowException("Timeout expired");
             }
-            return getBuffer().remove();
+            return decorated().remove();
         }
     }
 

@@ -24,12 +24,15 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * <p>
  * Methods are forwarded directly to the decorated buffer.
  *
+ * @param <E> the type of the elements in the buffer
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractBufferDecorator extends AbstractCollectionDecorator implements Buffer {
+public abstract class AbstractBufferDecorator<E>
+        extends AbstractCollectionDecorator<E>
+        implements Buffer<E> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -45,7 +48,7 @@ public abstract class AbstractBufferDecorator extends AbstractCollectionDecorato
      * @param buffer  the buffer to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractBufferDecorator(Buffer buffer) {
+    protected AbstractBufferDecorator(Buffer<E> buffer) {
         super(buffer);
     }
 
@@ -53,27 +56,17 @@ public abstract class AbstractBufferDecorator extends AbstractCollectionDecorato
      * Gets the buffer being decorated.
      * 
      * @return the decorated buffer
-     * @deprecated use decorated()
      */
-    protected Buffer getBuffer() {
-        return decorated();
-    }
-
-    /**
-     * Gets the buffer being decorated.
-     * 
-     * @return the decorated buffer
-     */
-    protected Buffer decorated() {
-        return (Buffer) super.decorated();
+    protected Buffer<E> decorated() {
+        return (Buffer<E>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public Object get() {
+    public E get() {
         return decorated().get();
     }
 
-    public Object remove() {
+    public E remove() {
         return decorated().remove();
     }
 
