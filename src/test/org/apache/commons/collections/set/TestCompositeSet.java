@@ -16,14 +16,15 @@
  */
 package org.apache.commons.collections.set;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.collection.CompositeCollection;
-
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Collection;
 
 /**
  * Extension of {@link AbstractTestSet} for exercising the 
@@ -55,17 +56,17 @@ public class TestCompositeSet extends AbstractTestSet {
             }
             
             public boolean add(CompositeCollection composite, 
-                Collection[] collections, Object obj) {
+                    List collections, Object obj) {
                 return contained.add(obj);
             }
             
             public boolean addAll(CompositeCollection composite, 
-                Collection[] collections, Collection coll) {
+                    List collections, Collection coll) {
                 return contained.addAll(coll);
             }
             
             public boolean remove(CompositeCollection composite, 
-                Collection[] collections, Object obj) {
+                    List collections, Object obj) {
                 return contained.remove(obj);
             }
         });
@@ -123,17 +124,17 @@ public class TestCompositeSet extends AbstractTestSet {
             }
             
             public boolean add(CompositeCollection composite, 
-                Collection[] collections, Object obj) {
+                    List collections, Object obj) {
                 throw new UnsupportedOperationException();
             }
             
             public boolean addAll(CompositeCollection composite, 
-                Collection[] collections, Collection coll) {
+                    List collections, Collection coll) {
                 throw new UnsupportedOperationException();
             }
             
             public boolean remove(CompositeCollection composite, 
-                Collection[] collections, Object obj) {
+                    List collections, Object obj) {
                 throw new UnsupportedOperationException();
             }
         });
