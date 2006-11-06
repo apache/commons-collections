@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableCollection extends AbstractTestCollection {
+public class TestUnmodifiableCollection extends AbstractTestCollection<Object> {
     
     public TestUnmodifiableCollection(String testName) {
         super(testName);
@@ -50,23 +50,23 @@ public class TestUnmodifiableCollection extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------    
-    public Collection makeCollection() {
-        return UnmodifiableCollection.decorate(new ArrayList());
+    public Collection<Object> makeCollection() {
+        return UnmodifiableCollection.decorate(new ArrayList<Object>());
     }
     
-    public Collection makeFullCollection() {
-        List list = new ArrayList();
+    public Collection<Object> makeFullCollection() {
+        List<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableCollection.decorate(list);
     }
     
-    public Collection makeConfirmedCollection() {
-        ArrayList list = new ArrayList();
+    public Collection<Object> makeConfirmedCollection() {
+        ArrayList<Object> list = new ArrayList<Object>();
         return list;
     }
 
-    public Collection makeConfirmedFullCollection() {
-        ArrayList list = new ArrayList();
+    public Collection<Object> makeConfirmedFullCollection() {
+        ArrayList<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

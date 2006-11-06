@@ -33,7 +33,7 @@ import junit.framework.TestSuite;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestSynchronizedCollection extends AbstractTestCollection {
+public class TestSynchronizedCollection extends AbstractTestCollection<Object> {
     
     public TestSynchronizedCollection(String testName) {
         super(testName);
@@ -49,17 +49,17 @@ public class TestSynchronizedCollection extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------    
-    public Collection makeCollection() {
-        return SynchronizedCollection.decorate(new ArrayList());
+    public Collection<Object> makeCollection() {
+        return SynchronizedCollection.decorate(new ArrayList<Object>());
     }
     
-    public Collection makeConfirmedCollection() {
-        ArrayList list = new ArrayList();
+    public Collection<Object> makeConfirmedCollection() {
+        ArrayList<Object> list = new ArrayList<Object>();
         return list;
     }
 
-    public Collection makeConfirmedFullCollection() {
-        ArrayList list = new ArrayList();
+    public Collection<Object> makeConfirmedFullCollection() {
+        ArrayList<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

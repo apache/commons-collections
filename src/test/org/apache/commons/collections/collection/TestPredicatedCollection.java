@@ -36,7 +36,7 @@ import org.apache.commons.collections.PredicateUtils;
  * 
  * @author Phil Steitz
  */
-public class TestPredicatedCollection extends AbstractTestCollection {
+public class TestPredicatedCollection extends AbstractTestCollection<Object> {
 
     public TestPredicatedCollection(String name) {
         super(name);
@@ -50,54 +50,53 @@ public class TestPredicatedCollection extends AbstractTestCollection {
         String[] testCaseName = { TestPredicatedCollection.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
- 
+
    //------------------------------------------------------------------------
-        
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    
-    protected Collection decorateCollection(Collection collection, 
-        Predicate predicate) {
+    protected Predicate<Object> truePredicate = PredicateUtils.truePredicate();
+
+    protected Collection<Object> decorateCollection(
+                Collection<Object> collection, Predicate<Object> predicate) {
         return PredicatedCollection.decorate(collection, predicate);
     }
-    
-    public Collection makeCollection() {
-        return decorateCollection(new ArrayList(), truePredicate);
+
+    public Collection<Object> makeCollection() {
+        return decorateCollection(new ArrayList<Object>(), truePredicate);
     }
-    
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+
+    public Collection<Object> makeConfirmedCollection() {
+        return new ArrayList<Object>();
     }
-    
+
     public Object[] getFullElements() {
         return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
-    
-    public Collection makeFullCollection() {
-        List list = new ArrayList();
+
+    public Collection<Object> makeFullCollection() {
+        List<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
         return decorateCollection(list, truePredicate);
     }
-    
-    public Collection makeConfirmedFullCollection() {
-        List list = new ArrayList();
+
+    public Collection<Object> makeConfirmedFullCollection() {
+        List<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
 
- //-----------------------------------------------------------------
-    protected Predicate testPredicate =  
-        new Predicate() {
+    //-----------------------------------------------------------------------
+    protected Predicate<Object> testPredicate =  
+        new Predicate<Object>() {
             public boolean evaluate(Object o) {
                 return o instanceof String;
             }
         };
-    
-    public Collection makeTestCollection() {
-        return decorateCollection(new ArrayList(), testPredicate);
+
+    public Collection<Object> makeTestCollection() {
+        return decorateCollection(new ArrayList<Object>(), testPredicate);
     }
-     
+
     public void testIllegalAdd() {
-        Collection c = makeTestCollection();
+        Collection<Object> c = makeTestCollection();
         Integer i = new Integer(3);
         try {
             c.add(i);
@@ -110,8 +109,8 @@ public class TestPredicatedCollection extends AbstractTestCollection {
     }
 
     public void testIllegalAddAll() {
-        Collection c = makeTestCollection();
-        List elements = new ArrayList();
+        Collection<Object> c = makeTestCollection();
+        List<Object> elements = new ArrayList<Object>();
         elements.add("one");
         elements.add("two");
         elements.add(new Integer(3));
