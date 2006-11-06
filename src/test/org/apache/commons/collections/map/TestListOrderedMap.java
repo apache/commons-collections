@@ -33,7 +33,6 @@ import org.apache.commons.collections.list.AbstractTestList;
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  * 
- * @author Henri Yandell
  * @author Stephen Colebourne
  * @author Matt Benson
  */

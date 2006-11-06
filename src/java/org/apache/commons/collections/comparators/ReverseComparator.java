@@ -25,7 +25,6 @@ import java.util.Comparator;
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
  *
- * @author Henri Yandell
  * @author Michael A. Smith
  * 
  * @see java.util.Collections#reverseOrder()
