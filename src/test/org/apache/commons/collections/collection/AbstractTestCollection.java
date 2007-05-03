@@ -1103,7 +1103,7 @@ public abstract class AbstractTestCollection extends AbstractTestObject {
         Object[] a = new Object[] { new Object(), null, null };
         Object[] array = collection.toArray(a);
         assertEquals("Given array shouldn't shrink", array, a);
-        assertEquals("Last element should be set to null", a[0], null);
+        assertNull("Last element should be set to null", a[0]);
         verify();
 
         resetFull();

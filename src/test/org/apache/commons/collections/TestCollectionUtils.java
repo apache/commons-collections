@@ -438,8 +438,8 @@ public class TestCollectionUtils extends TestCase {
         testPredicate = PredicateUtils.equalPredicate("de");
         test = CollectionUtils.find(collectionA, testPredicate);
         assertTrue(test == null);
-        assertEquals(CollectionUtils.find(null,testPredicate), null);
-        assertEquals(CollectionUtils.find(collectionA, null), null);
+        assertNull(CollectionUtils.find(null,testPredicate));
+        assertNull(CollectionUtils.find(collectionA, null));
     }
     
     public void testForAllDo() {

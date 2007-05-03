@@ -104,14 +104,14 @@ public class TestLazySortedMap extends AbstractTestSortedMap {
         map.put("A",  "a");
         map.get("B"); // Entry with value "One" created
         map.put("C", "c");
-        assertEquals("First key should be A", map.firstKey(), "A");
-        assertEquals("Last key should be C", map.lastKey(), "C");
+        assertEquals("First key should be A", "A", map.firstKey());
+        assertEquals("Last key should be C", "C", map.lastKey());
         assertEquals("First key in tail map should be B", 
-            map.tailMap("B").firstKey(), "B");
+            "B", map.tailMap("B").firstKey());
         assertEquals("Last key in head map should be B", 
-            map.headMap("C").lastKey(), "B");
+            "B", map.headMap("C").lastKey());
         assertEquals("Last key in submap should be B",
-           map.subMap("A","C").lastKey(), "B");
+            "B", map.subMap("A","C").lastKey());
         
         Comparator c = map.comparator();
         assertTrue("natural order, so comparator should be null", 

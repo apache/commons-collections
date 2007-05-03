@@ -353,6 +353,6 @@ public class TestCompositeCollection extends AbstractTestCollection {
         c.addComposited(one, two);    
         c.removeComposited(one);
         assertTrue(c.contains("1"));
-        assertEquals(c.size(), 2);
+        assertEquals(2, c.size());
     }
 }

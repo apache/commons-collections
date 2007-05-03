@@ -88,13 +88,13 @@ public class TestPredicatedBuffer extends TestPredicatedCollection {
         buffer.add("one");
         buffer.add("two");
         buffer.add("three");
-        assertEquals("Buffer get", buffer.get(), "three");
+        assertEquals("Buffer get", "three", buffer.get());
     }
     
     public void testRemove() {
         Buffer buffer = makeTestBuffer();
         buffer.add("one");
-        assertEquals("Buffer get", buffer.remove(), "one");
+        assertEquals("Buffer get", "one", buffer.remove());
         try {
             buffer.remove();
             fail("Expecting BufferUnderflowException");

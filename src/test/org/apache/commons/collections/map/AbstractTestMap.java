@@ -993,8 +993,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
         int size = map.size();
         for (int i = 0; i < other.length; i++) {
             Object o = map.remove(other[i]);
-            assertEquals("map.remove for nonexistent key should return null",
-                         o, null);
+            assertNull("map.remove for nonexistent key should return null", o);
             assertEquals("map.remove for nonexistent key should not " +
                          "shrink map", size, map.size());
         }

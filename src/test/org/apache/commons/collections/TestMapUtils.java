@@ -159,7 +159,7 @@ public class TestMapUtils extends BulkTest {
         Transformer transformer = TransformerUtils.asTransformer(factory);
         map = MapUtils.lazyMap(new HashMap(), transformer);
         assertTrue(map instanceof LazyMap);
-         try {
+        try {
             map = MapUtils.lazyMap(new HashMap(), (Transformer) null);
             fail("Expecting IllegalArgumentException for null transformer");
         } catch (IllegalArgumentException e) {
@@ -212,11 +212,11 @@ public class TestMapUtils extends BulkTest {
         assertTrue( inKeySet.equals( outValSet ));
         assertTrue( inValSet.equals( outKeySet ));
 
-        assertEquals( out.get("A"), "1" );
-        assertEquals( out.get("B"), "2" );
-        assertEquals( out.get("C"), "3" );
-        assertEquals( out.get("D"), "4" );
-        assertEquals( out.get("E"), "5" );
+        assertEquals( "1", out.get("A"));
+        assertEquals( "2", out.get("B"));
+        assertEquals( "3", out.get("C"));
+        assertEquals( "4", out.get("D"));
+        assertEquals( "5", out.get("E"));
     }
 
     public void testPutAll_Map_array() {

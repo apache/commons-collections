@@ -78,7 +78,7 @@ public class TestCaseInsensitiveMap extends AbstractTestIterableMap {
         assertTrue(keys.contains("one"));
         assertTrue(keys.contains("two"));
         assertTrue(keys.contains(null));
-        assertTrue(keys.size() == 3);
+        assertEquals(3, keys.size());
     }
         
     public void testPutAll() {
@@ -89,16 +89,16 @@ public class TestCaseInsensitiveMap extends AbstractTestIterableMap {
         map.put(null, "Four");
         map.put(new Integer(20), "Five");
         Map caseInsensitiveMap = new CaseInsensitiveMap(map);
-        assertTrue(caseInsensitiveMap.size() == 4); // ones collapsed
+        assertEquals(4, caseInsensitiveMap.size()); // ones collapsed
         Set keys = caseInsensitiveMap.keySet();
         assertTrue(keys.contains("one"));
         assertTrue(keys.contains("two"));
         assertTrue(keys.contains(null));
         assertTrue(keys.contains(Integer.toString(20)));
-        assertTrue(keys.size() == 4);
+        assertEquals(4, keys.size());
         assertTrue(!caseInsensitiveMap.containsValue("One") 
             || !caseInsensitiveMap.containsValue("Three")); // ones collaped
-        assertEquals(caseInsensitiveMap.get(null), "Four");
+        assertEquals("Four", caseInsensitiveMap.get(null));
     } 
 
     public void testClone() {

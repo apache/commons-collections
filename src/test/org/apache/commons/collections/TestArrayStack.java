@@ -58,7 +58,7 @@ public class TestArrayStack extends TestArrayList {
     public void testNewStack() {
 
         assertTrue("New stack is empty", stack.empty());
-        assertEquals("New stack has size zero", stack.size(), 0);
+        assertEquals("New stack has size zero", 0, stack.size());
 
         try {
             stack.peek();
@@ -80,26 +80,26 @@ public class TestArrayStack extends TestArrayList {
 
         stack.push("First Item");
         assertTrue("Stack is not empty", !stack.empty());
-        assertEquals("Stack size is one", stack.size(), 1);
+        assertEquals("Stack size is one", 1, stack.size());
         assertEquals("Top item is 'First Item'",
-                     (String) stack.peek(), "First Item");
-        assertEquals("Stack size is one", stack.size(), 1);
+                     "First Item", (String) stack.peek());
+        assertEquals("Stack size is one", 1, stack.size());
 
         stack.push("Second Item");
-        assertEquals("Stack size is two", stack.size(), 2);
+        assertEquals("Stack size is two", 2, stack.size());
         assertEquals("Top item is 'Second Item'",
-                     (String) stack.peek(), "Second Item");
-        assertEquals("Stack size is two", stack.size(), 2);
+                     "Second Item", (String) stack.peek());
+        assertEquals("Stack size is two", 2, stack.size());
 
         assertEquals("Popped item is 'Second Item'",
-                     (String) stack.pop(), "Second Item");
+                     "Second Item", (String) stack.pop());
         assertEquals("Top item is 'First Item'",
-                     (String) stack.peek(), "First Item");
-        assertEquals("Stack size is one", stack.size(), 1);
+                     "First Item", (String) stack.peek());
+        assertEquals("Stack size is one", 1, stack.size());
 
         assertEquals("Popped item is 'First Item'",
-                     (String) stack.pop(), "First Item");
-        assertEquals("Stack size is zero", stack.size(), 0);
+                     "First Item", (String) stack.pop());
+        assertEquals("Stack size is zero", 0, stack.size());
 
     }
 
@@ -108,11 +108,11 @@ public class TestArrayStack extends TestArrayList {
         stack.push("First Item");
         stack.push("Second Item");
         assertEquals("Top item is 'Second Item'",
-                     stack.search("Second Item"), 1);
+                     1, stack.search("Second Item"));
         assertEquals("Next Item is 'First Item'",
-                     stack.search("First Item"), 2);
+                     2, stack.search("First Item"));
         assertEquals("Cannot find 'Missing Item'",
-                     stack.search("Missing Item"), -1);
+                     -1, stack.search("Missing Item"));
 
     }
 

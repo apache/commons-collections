@@ -50,13 +50,15 @@ public abstract class TestTreeMap extends AbstractTestMap {
 
     public void testNewMap() {
         assertTrue("New map is empty", map.isEmpty());
-        assertEquals("New map has size zero", map.size(), 0);
+        assertEquals("New map has size zero", 0, map.size());
     }
 
     public void testSearch() {
         map.put("first", "First Item");
         map.put("second", "Second Item");
-        assertEquals("Top item is 'Second Item'", map.get("first"), "First Item");
-        assertEquals("Next Item is 'First Item'", map.get("second"), "Second Item");
+        assertEquals("Top item is 'Second Item'",
+            "First Item", map.get("first"));
+        assertEquals("Next Item is 'First Item'",
+            "Second Item", map.get("second"));
     }
 }

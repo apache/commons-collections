@@ -498,7 +498,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         Object[] other = getOtherElements();
         for (int i = 0; i < other.length; i++) {
             assertEquals("indexOf should return -1 for nonexistent element",
-                list1.indexOf(other[i]), -1);
+                -1, list1.indexOf(other[i]));
             verify();
         }
     }
@@ -522,7 +522,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         Object[] other = getOtherElements();
         for (int i = 0; i < other.length; i++) {
             assertEquals("lastIndexOf should return -1 for nonexistent " +
-              "element", list1.lastIndexOf(other[i]), -1);
+                "element", -1, list1.lastIndexOf(other[i]));
             verify();
         }
     }
@@ -917,18 +917,18 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         while (i < max) {
             assertTrue("Iterator should have next", iter.hasNext());
             assertEquals("Iterator.nextIndex should work", 
-              iter.nextIndex(), i);
+                i, iter.nextIndex());
             assertEquals("Iterator.previousIndex should work",
-              iter.previousIndex(), i - 1);
+                i - 1, iter.previousIndex());
             Object o = iter.next();
             assertEquals("Iterator returned correct element", list.get(i), o);
             i++;
         }
 
         assertTrue("Iterator shouldn't have next", !iter.hasNext());
-        assertEquals("nextIndex should be size", iter.nextIndex(), max);
+        assertEquals("nextIndex should be size", max, iter.nextIndex());
         assertEquals("previousIndex should be size - 1", 
-          iter.previousIndex(), max - 1);
+            max - 1, iter.previousIndex());
 
         try {
             iter.next();
@@ -949,19 +949,23 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         List list = getList();
 
         while (i > 0) {
-            assertTrue("Iterator should have previous, i:" + i, iter.hasPrevious());
-            assertEquals("Iterator.nextIndex should work, i:" + i, iter.nextIndex(), i);
-            assertEquals("Iterator.previousIndex should work, i:" + i, iter.previousIndex(), i - 1);
+            assertTrue("Iterator should have previous, i:" + i,
+                iter.hasPrevious());
+            assertEquals("Iterator.nextIndex should work, i:" + i,
+                i, iter.nextIndex());
+            assertEquals("Iterator.previousIndex should work, i:" + i,
+                i - 1, iter.previousIndex());
             Object o = iter.previous();
-            assertEquals("Iterator returned correct element", list.get(i - 1), o);
+            assertEquals("Iterator returned correct element",
+                list.get(i - 1), o);
             i--;
         }
 
         assertTrue("Iterator shouldn't have previous", !iter.hasPrevious());
         int nextIndex = iter.nextIndex();
-        assertEquals("nextIndex should be 0, actual value: " + nextIndex, nextIndex, 0);
+        assertEquals("nextIndex should be 0", 0, nextIndex);
         int prevIndex = iter.previousIndex();
-        assertEquals("previousIndex should be -1, actual value: " + prevIndex, prevIndex, -1);
+        assertEquals("previousIndex should be -1", -1, prevIndex);
 
         try {
             iter.previous();
@@ -1037,8 +1041,8 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         byte[] objekt = writeExternalFormToBytes((Serializable) list);
         List list2 = (List) readExternalFormFromBytes(objekt);
 
-        assertTrue("Both lists are empty",list.size()  == 0);
-        assertTrue("Both lists are empty",list2.size() == 0);
+        assertEquals("Both lists are empty", 0, list.size());
+        assertEquals("Both lists are empty", 0, list2.size());
     }
 
     public void testFullListSerialization() 
@@ -1050,8 +1054,8 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         byte[] objekt = writeExternalFormToBytes((Serializable) list);
         List list2 = (List) readExternalFormFromBytes(objekt);
 
-        assertEquals("Both lists are same size",list.size(), size);
-        assertEquals("Both lists are same size",list2.size(), size);
+        assertEquals("Both lists are same size", size, list.size());
+        assertEquals("Both lists are same size", size, list2.size());
     }
 
     /**
@@ -1071,7 +1075,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
         List list = makeEmptyList();
         if(list instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             List list2 = (List) readExternalFormFromDisk(getCanonicalEmptyCollectionName(list));
-            assertTrue("List is empty",list2.size()  == 0);
+            assertEquals("List is empty", 0, list2.size());
             assertEquals(list, list2);
         }
     }

@@ -54,7 +54,7 @@ public abstract class TestArrayList extends AbstractTestList {
     //-----------------------------------------------------------------------
     public void testNewArrayList() {
         assertTrue("New list is empty", list.isEmpty());
-        assertEquals("New list has size zero", list.size(), 0);
+        assertEquals("New list has size zero", 0, list.size());
 
         try {
             list.get(1);
@@ -67,8 +67,8 @@ public abstract class TestArrayList extends AbstractTestList {
     public void testSearch() {
         list.add("First Item");
         list.add("Last Item");
-        assertEquals("First item is 'First Item'", list.get(0), "First Item");
-        assertEquals("Last Item is 'Last Item'", list.get(1), "Last Item");
+        assertEquals("First item is 'First Item'", "First Item", list.get(0));
+        assertEquals("Last Item is 'Last Item'", "Last Item", list.get(1));
     }
 
 }

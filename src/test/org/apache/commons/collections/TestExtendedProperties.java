@@ -57,14 +57,14 @@ public class TestExtendedProperties extends TestCase {
         /*
          * should be empty and return null
          */
-        assertEquals("This returns null", eprop.getProperty("foo"), null);
+        assertNull("This returns null", eprop.getProperty("foo"));
 
         /*
          *  add a real value, and get it two different ways
          */
         eprop.setProperty("number", "1");
-        assertEquals("This returns '1'", eprop.getProperty("number"), "1");
-        assertEquals("This returns '1'", eprop.getString("number"), "1");
+        assertEquals("This returns '1'", "1", eprop.getProperty("number"));
+        assertEquals("This returns '1'", "1", eprop.getString("number"));
 
         /*
          * now add another and get a Vector/list
