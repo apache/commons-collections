@@ -34,7 +34,7 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
  * 
  * @author Stephen Colebourne
  */
-public class SynchronizedSortedSet extends SynchronizedCollection implements SortedSet {
+public class SynchronizedSortedSet<E> extends SynchronizedCollection<E> implements SortedSet<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 2775582861954500111L;
@@ -45,8 +45,8 @@ public class SynchronizedSortedSet extends SynchronizedCollection implements Sor
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static SortedSet decorate(SortedSet set) {
-        return new SynchronizedSortedSet(set);
+    public static <T> SortedSet<T> decorate(SortedSet<T> set) {
+        return new SynchronizedSortedSet<T>(set);
     }
     
     //-----------------------------------------------------------------------
@@ -56,7 +56,7 @@ public class SynchronizedSortedSet extends SynchronizedCollection implements Sor
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SynchronizedSortedSet(SortedSet set) {
+    protected SynchronizedSortedSet(SortedSet<E> set) {
         super(set);
     }
 
@@ -67,7 +67,7 @@ public class SynchronizedSortedSet extends SynchronizedCollection implements Sor
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SynchronizedSortedSet(SortedSet set, Object lock) {
+    protected SynchronizedSortedSet(SortedSet<E> set, Object lock) {
         super(set, lock);
     }
 
@@ -76,12 +76,12 @@ public class SynchronizedSortedSet extends SynchronizedCollection implements Sor
      * 
      * @return the decorated set
      */
-    protected SortedSet getSortedSet() {
-        return (SortedSet) collection;
+    protected SortedSet<E> getSortedSet() {
+        return (SortedSet<E>) collection;
     }
 
     //-----------------------------------------------------------------------
-    public SortedSet subSet(Object fromElement, Object toElement) {
+    public SortedSet<E> subSet(E fromElement, E toElement) {
         synchronized (lock) {
             SortedSet set = getSortedSet().subSet(fromElement, toElement);
             // the lock is passed into the constructor here to ensure that the
@@ -90,7 +90,7 @@ public class SynchronizedSortedSet extends SynchronizedCollection implements Sor
         }
     }
 
-    public SortedSet headSet(Object toElement) {
+    public SortedSet<E> headSet(E toElement) {
         synchronized (lock) {
             SortedSet set = getSortedSet().headSet(toElement);
             // the lock is passed into the constructor here to ensure that the
@@ -99,7 +99,7 @@ public class SynchronizedSortedSet extends SynchronizedCollection implements Sor
         }
     }
 
-    public SortedSet tailSet(Object fromElement) {
+    public SortedSet<E> tailSet(E fromElement) {
         synchronized (lock) {
             SortedSet set = getSortedSet().tailSet(fromElement);
             // the lock is passed into the constructor here to ensure that the
@@ -108,13 +108,13 @@ public class SynchronizedSortedSet extends SynchronizedCollection implements Sor
         }
     }
 
-    public Object first() {
+    public E first() {
         synchronized (lock) {
             return getSortedSet().first();
         }
     }
 
-    public Object last() {
+    public E last() {
         synchronized (lock) {
             return getSortedSet().last();
         }

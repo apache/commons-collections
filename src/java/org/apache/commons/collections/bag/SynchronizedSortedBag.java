@@ -35,8 +35,8 @@ import org.apache.commons.collections.SortedBag;
  * 
  * @author Stephen Colebourne
  */
-public class SynchronizedSortedBag
-        extends SynchronizedBag implements SortedBag {
+public class SynchronizedSortedBag<E>
+        extends SynchronizedBag<E> implements SortedBag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 722374056718497858L;
@@ -48,8 +48,8 @@ public class SynchronizedSortedBag
      * @return a new synchronized SortedBag
      * @throws IllegalArgumentException if bag is null
      */
-    public static SortedBag decorate(SortedBag bag) {
-        return new SynchronizedSortedBag(bag);
+    public static <T> SortedBag<T> decorate(SortedBag<T> bag) {
+        return new SynchronizedSortedBag<T>(bag);
     }
     
     //-----------------------------------------------------------------------
@@ -59,7 +59,7 @@ public class SynchronizedSortedBag
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    protected SynchronizedSortedBag(SortedBag bag) {
+    protected SynchronizedSortedBag(SortedBag<E> bag) {
         super(bag);
     }
 
@@ -70,7 +70,7 @@ public class SynchronizedSortedBag
      * @param lock  the lock to use, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    protected SynchronizedSortedBag(Bag bag, Object lock) {
+    protected SynchronizedSortedBag(Bag<E> bag, Object lock) {
         super(bag, lock);
     }
 
@@ -79,24 +79,24 @@ public class SynchronizedSortedBag
      * 
      * @return the decorated bag
      */
-    protected SortedBag getSortedBag() {
-        return (SortedBag) collection;
+    protected SortedBag<E> getSortedBag() {
+        return (SortedBag<E>) collection;
     }
     
     //-----------------------------------------------------------------------
-    public synchronized Object first() {
+    public synchronized E first() {
         synchronized (lock) {
             return getSortedBag().first();
         }
     }
 
-    public synchronized Object last() {
+    public synchronized E last() {
         synchronized (lock) {
             return getSortedBag().last();
         }
     }
 
-    public synchronized Comparator comparator() {
+    public synchronized Comparator<? super E> comparator() {
         synchronized (lock) {
             return getSortedBag().comparator();
         }

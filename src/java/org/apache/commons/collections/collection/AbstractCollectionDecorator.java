@@ -136,10 +136,7 @@ public abstract class AbstractCollectionDecorator<E>
     }
 
     public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        return decorated().equals(object);
+        return object == this || decorated().equals(object);
     }
 
     public int hashCode() {

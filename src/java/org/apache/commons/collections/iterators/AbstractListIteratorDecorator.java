@@ -29,10 +29,10 @@ import java.util.ListIterator;
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
  */
-public class AbstractListIteratorDecorator implements ListIterator {
+public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
 
     /** The iterator being decorated */
-    protected final ListIterator iterator;
+    protected final ListIterator<E> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -41,7 +41,7 @@ public class AbstractListIteratorDecorator implements ListIterator {
      * @param iterator  the iterator to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractListIteratorDecorator(ListIterator iterator) {
+    public AbstractListIteratorDecorator(ListIterator<E> iterator) {
         super();
         if (iterator == null) {
             throw new IllegalArgumentException("ListIterator must not be null");
@@ -54,7 +54,7 @@ public class AbstractListIteratorDecorator implements ListIterator {
      * 
      * @return the decorated iterator
      */
-    protected ListIterator getListIterator() {
+    protected ListIterator<E> getListIterator() {
         return iterator;
     }
 
@@ -63,7 +63,7 @@ public class AbstractListIteratorDecorator implements ListIterator {
         return iterator.hasNext();
     }
 
-    public Object next() {
+    public E next() {
         return iterator.next();
     }
 
@@ -75,7 +75,7 @@ public class AbstractListIteratorDecorator implements ListIterator {
         return iterator.hasPrevious();
     }
 
-    public Object previous() {
+    public E previous() {
         return iterator.previous();
     }
 
@@ -87,11 +87,11 @@ public class AbstractListIteratorDecorator implements ListIterator {
         iterator.remove();
     }
 
-    public void set(Object obj) {
+    public void set(E obj) {
         iterator.set(obj);
     }
 
-    public void add(Object obj) {
+    public void add(E obj) {
         iterator.add(obj);
     }
     

@@ -36,8 +36,8 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * 
  * @author Stephen Colebourne
  */
-public class SynchronizedBag
-        extends SynchronizedCollection implements Bag {
+public class SynchronizedBag<E>
+        extends SynchronizedCollection<E> implements Bag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 8084674570753837109L;
@@ -49,8 +49,8 @@ public class SynchronizedBag
      * @return a new synchronized Bag
      * @throws IllegalArgumentException if bag is null
      */
-    public static Bag decorate(Bag bag) {
-        return new SynchronizedBag(bag);
+    public static <T> Bag<T> decorate(Bag<T> bag) {
+        return new SynchronizedBag<T>(bag);
     }
     
     //-----------------------------------------------------------------------
@@ -60,7 +60,7 @@ public class SynchronizedBag
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    protected SynchronizedBag(Bag bag) {
+    protected SynchronizedBag(Bag<E> bag) {
         super(bag);
     }
 
@@ -71,7 +71,7 @@ public class SynchronizedBag
      * @param lock  the lock to use, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    protected SynchronizedBag(Bag bag, Object lock) {
+    protected SynchronizedBag(Bag<E> bag, Object lock) {
         super(bag, lock);
     }
 
@@ -80,12 +80,12 @@ public class SynchronizedBag
      * 
      * @return the decorated bag
      */
-    protected Bag getBag() {
-        return (Bag) collection;
+    protected Bag<E> getBag() {
+        return (Bag<E>) collection;
     }
     
     //-----------------------------------------------------------------------
-    public boolean add(Object object, int count) {
+    public boolean add(E object, int count) {
         synchronized (lock) {
             return getBag().add(object, count);
         }
@@ -97,9 +97,9 @@ public class SynchronizedBag
         }
     }
 
-    public Set uniqueSet() {
+    public Set<E> uniqueSet() {
         synchronized (lock) {
-            Set set = getBag().uniqueSet();
+            Set<E> set = getBag().uniqueSet();
             return new SynchronizedBagSet(set, lock);
         }
     }
@@ -114,13 +114,13 @@ public class SynchronizedBag
     /**
      * Synchronized Set for the Bag class.
      */
-    class SynchronizedBagSet extends SynchronizedSet {
+    class SynchronizedBagSet extends SynchronizedSet<E> {
         /**
          * Constructor.
          * @param set  the set to decorate
          * @param lock  the lock to use, shared with the bag
          */
-        SynchronizedBagSet(Set set, Object lock) {
+        SynchronizedBagSet(Set<E> set, Object lock) {
             super(set, lock);
         }
     }

@@ -85,7 +85,7 @@ public class BagUtils {
      * @return a synchronized bag backed by that bag
      * @throws IllegalArgumentException  if the Bag is null
      */
-    public static Bag synchronizedBag(Bag bag) {
+    public static <E> Bag<E> synchronizedBag(Bag<E> bag) {
         return SynchronizedBag.decorate(bag);
     }
 
@@ -98,7 +98,7 @@ public class BagUtils {
      * @return an unmodifiable view of that bag
      * @throws IllegalArgumentException  if the Bag is null
      */
-    public static Bag unmodifiableBag(Bag bag) {
+    public static <E> Bag<E> unmodifiableBag(Bag<E> bag) {
         return UnmodifiableBag.decorate(bag);
     }
     
@@ -115,7 +115,7 @@ public class BagUtils {
      * @return a predicated bag backed by the given bag
      * @throws IllegalArgumentException  if the Bag or Predicate is null
      */
-    public static Bag predicatedBag(Bag bag, Predicate predicate) {
+    public static <E> Bag<E> predicatedBag(Bag<E> bag, Predicate<? super E> predicate) {
         return PredicatedBag.decorate(bag, predicate);
     }
     
@@ -163,7 +163,7 @@ public class BagUtils {
      * @return a synchronized bag backed by that bag
      * @throws IllegalArgumentException  if the SortedBag is null
      */
-    public static SortedBag synchronizedSortedBag(SortedBag bag) {
+    public static <E> SortedBag<E> synchronizedSortedBag(SortedBag<E> bag) {
         return SynchronizedSortedBag.decorate(bag);
     }
     
@@ -176,7 +176,7 @@ public class BagUtils {
      * @return an unmodifiable view of that bag
      * @throws IllegalArgumentException  if the SortedBag is null
      */
-    public static SortedBag unmodifiableSortedBag(SortedBag bag) {
+    public static <E> SortedBag<E> unmodifiableSortedBag(SortedBag<E> bag) {
         return UnmodifiableSortedBag.decorate(bag);
     }
     
@@ -193,7 +193,7 @@ public class BagUtils {
      * @return a predicated bag backed by the given bag
      * @throws IllegalArgumentException  if the SortedBag or Predicate is null
      */
-    public static SortedBag predicatedSortedBag(SortedBag bag, Predicate predicate) {
+    public static <E> SortedBag<E> predicatedSortedBag(SortedBag<E> bag, Predicate<? super E> predicate) {
         return PredicatedSortedBag.decorate(bag, predicate);
     }
     

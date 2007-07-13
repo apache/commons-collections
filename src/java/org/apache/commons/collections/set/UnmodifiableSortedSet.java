@@ -37,8 +37,8 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableSortedSet
-        extends AbstractSortedSetDecorator
+public final class UnmodifiableSortedSet<E>
+        extends AbstractSortedSetDecorator<E>
         implements Unmodifiable, Serializable {
 
     /** Serialization version */
@@ -50,7 +50,7 @@ public final class UnmodifiableSortedSet
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static SortedSet decorate(SortedSet set) {
+    public static <T> SortedSet<T> decorate(SortedSet<T> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
@@ -88,7 +88,7 @@ public final class UnmodifiableSortedSet
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableSortedSet(SortedSet set) {
+    private UnmodifiableSortedSet(SortedSet<E> set) {
         super(set);
     }
 
@@ -97,11 +97,11 @@ public final class UnmodifiableSortedSet
         return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
-    public boolean add(Object object) {
+    public boolean add(E object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -113,27 +113,27 @@ public final class UnmodifiableSortedSet
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
-    public SortedSet subSet(Object fromElement, Object toElement) {
-        SortedSet sub = decorated().subSet(fromElement, toElement);
+    public SortedSet<E> subSet(E fromElement, E toElement) {
+        SortedSet<E> sub = decorated().subSet(fromElement, toElement);
         return new UnmodifiableSortedSet(sub);
     }
 
-    public SortedSet headSet(Object toElement) {
-        SortedSet sub = decorated().headSet(toElement);
+    public SortedSet<E> headSet(E toElement) {
+        SortedSet<E> sub = decorated().headSet(toElement);
         return new UnmodifiableSortedSet(sub);
     }
 
-    public SortedSet tailSet(Object fromElement) {
-        SortedSet sub = decorated().tailSet(fromElement);
+    public SortedSet<E> tailSet(E fromElement) {
+        SortedSet<E> sub = decorated().tailSet(fromElement);
         return new UnmodifiableSortedSet(sub);
     }
 

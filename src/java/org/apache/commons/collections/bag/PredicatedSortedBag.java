@@ -40,8 +40,8 @@ import org.apache.commons.collections.SortedBag;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedSortedBag
-        extends PredicatedBag implements SortedBag {
+public class PredicatedSortedBag<E>
+        extends PredicatedBag<E> implements SortedBag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 3448581314086406616L;
@@ -58,8 +58,8 @@ public class PredicatedSortedBag
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    public static SortedBag decorate(SortedBag bag, Predicate predicate) {
-        return new PredicatedSortedBag(bag, predicate);
+    public static <T> SortedBag<T> decorate(SortedBag<T> bag, Predicate<? super T> predicate) {
+        return new PredicatedSortedBag<T>(bag, predicate);
     }
 
     //-----------------------------------------------------------------------
@@ -74,7 +74,7 @@ public class PredicatedSortedBag
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    protected PredicatedSortedBag(SortedBag bag, Predicate predicate) {
+    protected PredicatedSortedBag(SortedBag<E> bag, Predicate<? super E> predicate) {
         super(bag, predicate);
     }
 
@@ -83,20 +83,20 @@ public class PredicatedSortedBag
      * 
      * @return the decorated bag
      */
-    protected SortedBag decorated() {
-        return (SortedBag) super.decorated();
+    protected SortedBag<E> decorated() {
+        return (SortedBag<E>) super.decorated();
     }
     
     //-----------------------------------------------------------------------
-    public Object first() {
+    public E first() {
         return decorated().first();
     }
 
-    public Object last() {
+    public E last() {
         return decorated().last();
     }
 
-    public Comparator comparator() {
+    public Comparator<? super E> comparator() {
         return decorated().comparator();
     }
 

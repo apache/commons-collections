@@ -40,7 +40,7 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedSet extends PredicatedCollection implements Set {
+public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -684521469108685117L;
@@ -53,11 +53,12 @@ public class PredicatedSet extends PredicatedCollection implements Set {
      * 
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
+     * @return a decorated set
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    public static Set decorate(Set set, Predicate predicate) {
-        return new PredicatedSet(set, predicate);
+    public static <T> Set<T> decorate(Set<T> set, Predicate<? super T> predicate) {
+        return new PredicatedSet<T>(set, predicate);
     }
 
     //-----------------------------------------------------------------------
@@ -72,7 +73,7 @@ public class PredicatedSet extends PredicatedCollection implements Set {
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    protected PredicatedSet(Set set, Predicate predicate) {
+    protected PredicatedSet(Set<E> set, Predicate<? super E> predicate) {
         super(set, predicate);
     }
 
@@ -81,8 +82,8 @@ public class PredicatedSet extends PredicatedCollection implements Set {
      * 
      * @return the decorated set
      */
-    protected Set decorated() {
-        return (Set) super.decorated();
+    protected Set<E> decorated() {
+        return (Set<E>) super.decorated();
     }
 
 }

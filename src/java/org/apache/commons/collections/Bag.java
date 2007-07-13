@@ -55,7 +55,7 @@ public interface Bag<E> extends Collection<E> {
      * @param object  the object to search for
      * @return the number of occurrences of the object, zero if not found
      */
-    int getCount(E object);
+    int getCount(Object object);
 
     /**
      * <i>(Violation)</i>
@@ -112,7 +112,7 @@ public interface Bag<E> extends Collection<E> {
      * @param nCopies  the number of copies to remove
      * @return <code>true</code> if this call changed the collection
      */
-    boolean remove(E object, int nCopies);
+    boolean remove(Object object, int nCopies);
 
     /**
      * Returns a {@link Set} of unique elements in the Bag.

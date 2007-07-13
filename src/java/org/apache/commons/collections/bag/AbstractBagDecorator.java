@@ -31,8 +31,8 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractBagDecorator
-        extends AbstractCollectionDecorator implements Bag {
+public abstract class AbstractBagDecorator<E>
+        extends AbstractCollectionDecorator<E> implements Bag<E> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -48,7 +48,7 @@ public abstract class AbstractBagDecorator
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractBagDecorator(Bag bag) {
+    protected AbstractBagDecorator(Bag<E> bag) {
         super(bag);
     }
 
@@ -57,8 +57,8 @@ public abstract class AbstractBagDecorator
      * 
      * @return the decorated bag
      */
-    protected Bag decorated() {
-        return (Bag) super.decorated();
+    protected Bag<E> decorated() {
+        return (Bag<E>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
@@ -66,7 +66,7 @@ public abstract class AbstractBagDecorator
         return decorated().getCount(object);
     }
 
-    public boolean add(Object object, int count) {
+    public boolean add(E object, int count) {
         return decorated().add(object, count);
     }
 
@@ -74,7 +74,7 @@ public abstract class AbstractBagDecorator
         return decorated().remove(object, count);
     }
 
-    public Set uniqueSet() {
+    public Set<E> uniqueSet() {
         return decorated().uniqueSet();
     }
 

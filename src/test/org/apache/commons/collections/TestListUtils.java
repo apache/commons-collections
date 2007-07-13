@@ -19,6 +19,7 @@ package org.apache.commons.collections;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import junit.framework.Test;
@@ -44,7 +45,7 @@ public class TestListUtils extends BulkTest {
     private static final String x = "x";
 
     private String[] fullArray;
-    private List fullList;
+    private List<String> fullList;
     
     public TestListUtils(String name) {
         super(name);
@@ -62,8 +63,54 @@ public class TestListUtils extends BulkTest {
     
     public void testNothing() {
     }
-    
-    public void testpredicatedList() {
+
+    /**
+     * Tests intersecting a non-empty list with an empty list.
+     */
+    public void testIntersectNonEmptyWithEmptyList() {
+        final List<?> empty = Collections.EMPTY_LIST;
+        assertTrue("result not empty", ListUtils.intersection(empty, fullList).isEmpty());
+    }
+
+    /**
+     * Tests intersecting a non-empty list with an empty list.
+     */
+    public void testIntersectEmptyWithEmptyList() {
+        final List<?> empty = Collections.EMPTY_LIST;
+        assertTrue("result not empty", ListUtils.intersection(empty, empty).isEmpty());
+    }
+
+    /**
+     * Tests intersecting a non-empty list with an subset of iteself.
+     */
+    public void testIntersectNonEmptySubset() {
+        // create a copy
+        final List<String> other = new ArrayList(fullList);
+
+        // remove a few items
+        assertNotNull(other.remove(0));
+        assertNotNull(other.remove(1));
+
+        // make sure the intersection is equal to the copy
+        assertEquals(other, ListUtils.intersection(fullList, other));
+    }
+
+    /**
+     * Tests intersecting a non-empty list with an subset of iteself.
+     */
+    public void testIntersectListWithNoOverlapAndDifferentTypes() {
+        final List<Integer> other = Arrays.asList(1, 23);
+        assertTrue(ListUtils.intersection(fullList, other).isEmpty());
+    }
+
+    /**
+     * Tests intersecting a non-empty list with iteself.
+     */
+    public void testIntersectListWithSelf() {
+        assertEquals(fullList, ListUtils.intersection(fullList, fullList));
+    }
+
+    public void testPredicatedList() {
         Predicate predicate = new Predicate() {
             public boolean evaluate(Object o) {
                 return o instanceof String;

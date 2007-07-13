@@ -40,7 +40,7 @@ import org.apache.commons.collections.Predicate;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedSortedSet extends PredicatedSet implements SortedSet {
+public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSet<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -9110948148132275052L;
@@ -53,11 +53,12 @@ public class PredicatedSortedSet extends PredicatedSet implements SortedSet {
      * 
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
+     * @return a new predicated sorted set.
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    public static SortedSet decorate(SortedSet set, Predicate predicate) {
-        return new PredicatedSortedSet(set, predicate);
+    public static <T> SortedSet<T> decorate(SortedSet<T> set, Predicate<? super T> predicate) {
+        return new PredicatedSortedSet<T>(set, predicate);
     }
 
     //-----------------------------------------------------------------------
@@ -72,7 +73,7 @@ public class PredicatedSortedSet extends PredicatedSet implements SortedSet {
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    protected PredicatedSortedSet(SortedSet set, Predicate predicate) {
+    protected PredicatedSortedSet(SortedSet<E> set, Predicate<? super E> predicate) {
         super(set, predicate);
     }
 
@@ -81,36 +82,36 @@ public class PredicatedSortedSet extends PredicatedSet implements SortedSet {
      * 
      * @return the decorated sorted set
      */
-    protected SortedSet decorated() {
-        return (SortedSet) super.decorated();
+    protected SortedSet<E> decorated() {
+        return (SortedSet<E>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public Comparator comparator() {
+    public Comparator<? super E> comparator() {
         return decorated().comparator();
     }
 
-    public Object first() {
+    public E first() {
         return decorated().first();
     }
 
-    public Object last() {
+    public E last() {
         return decorated().last();
     }
 
-    public SortedSet subSet(Object fromElement, Object toElement) {
-        SortedSet sub = decorated().subSet(fromElement, toElement);
-        return new PredicatedSortedSet(sub, predicate);
+    public SortedSet<E> subSet(E fromElement, E toElement) {
+        SortedSet<E> sub = decorated().subSet(fromElement, toElement);
+        return new PredicatedSortedSet<E>(sub, predicate);
     }
 
-    public SortedSet headSet(Object toElement) {
-        SortedSet sub = decorated().headSet(toElement);
-        return new PredicatedSortedSet(sub, predicate);
+    public SortedSet<E> headSet(E toElement) {
+        SortedSet<E> sub = decorated().headSet(toElement);
+        return new PredicatedSortedSet<E>(sub, predicate);
     }
 
-    public SortedSet tailSet(Object fromElement) {
-        SortedSet sub = decorated().tailSet(fromElement);
-        return new PredicatedSortedSet(sub, predicate);
+    public SortedSet<E> tailSet(E fromElement) {
+        SortedSet<E> sub = decorated().tailSet(fromElement);
+        return new PredicatedSortedSet<E>(sub, predicate);
     }
 
 }

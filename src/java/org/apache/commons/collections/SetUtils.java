@@ -117,16 +117,13 @@ public class SetUtils {
      * @param set  the set to calculate the hash code for, may be null
      * @return the hash code
      */
-    public static int hashCodeForSet(final Collection set) {
+    public static <T> int hashCodeForSet(final Collection<T> set) {
         if (set == null) {
             return 0;
         }
-        int hashCode = 0;
-        Iterator it = set.iterator();
-        Object obj = null;
 
-        while (it.hasNext()) {
-            obj = it.next();
+        int hashCode = 0;
+        for (T obj : set) {
             if (obj != null) {
                 hashCode += obj.hashCode();
             }
@@ -157,7 +154,7 @@ public class SetUtils {
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static Set synchronizedSet(Set set) {
+    public static <T> Set<T> synchronizedSet(Set<T> set) {
         return SynchronizedSet.decorate(set);
     }
 
@@ -187,7 +184,7 @@ public class SetUtils {
      * @return a predicated set backed by the given set
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static Set predicatedSet(Set set, Predicate predicate) {
+    public static <T> Set<T> predicatedSet(Set<T> set, Predicate<? super T> predicate) {
         return PredicatedSet.decorate(set, predicate);
     }
 
@@ -245,7 +242,7 @@ public class SetUtils {
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static SortedSet synchronizedSortedSet(SortedSet set) {
+    public static <T> SortedSet<T> synchronizedSortedSet(SortedSet<T> set) {
         return SynchronizedSortedSet.decorate(set);
     }
 
@@ -258,7 +255,7 @@ public class SetUtils {
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static SortedSet unmodifiableSortedSet(SortedSet set) {
+    public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<T> set) {
         return UnmodifiableSortedSet.decorate(set);
     }
 
@@ -275,7 +272,7 @@ public class SetUtils {
      * @return a predicated sorted set backed by the given sorted set
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static SortedSet predicatedSortedSet(SortedSet set, Predicate predicate) {
+    public static <T> SortedSet<T> predicatedSortedSet(SortedSet<T> set, Predicate<? super T> predicate) {
         return PredicatedSortedSet.decorate(set, predicate);
     }
 

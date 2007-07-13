@@ -30,8 +30,8 @@ import org.apache.commons.collections.SortedBag;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractSortedBagDecorator
-        extends AbstractBagDecorator implements SortedBag {
+public abstract class AbstractSortedBagDecorator<E>
+        extends AbstractBagDecorator<E> implements SortedBag<E> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -47,7 +47,7 @@ public abstract class AbstractSortedBagDecorator
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractSortedBagDecorator(SortedBag bag) {
+    protected AbstractSortedBagDecorator(SortedBag<E> bag) {
         super(bag);
     }
 
@@ -56,20 +56,20 @@ public abstract class AbstractSortedBagDecorator
      * 
      * @return the decorated bag
      */
-    protected SortedBag decorated() {
-        return (SortedBag) super.decorated();
+    protected SortedBag<E> decorated() {
+        return (SortedBag<E>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public Object first() {
+    public E first() {
         return decorated().first();
     }
 
-    public Object last() {
+    public E last() {
         return decorated().last();
     }
 
-    public Comparator comparator() {
+    public Comparator<? super E> comparator() {
         return decorated().comparator();
     }
 

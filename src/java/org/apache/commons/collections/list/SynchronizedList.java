@@ -35,7 +35,7 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
  * 
  * @author Stephen Colebourne
  */
-public class SynchronizedList extends SynchronizedCollection implements List {
+public class SynchronizedList<E> extends SynchronizedCollection<E> implements List<E> {
 
     /** Serialization version */
      private static final long serialVersionUID = -1403835447328619437L;
@@ -46,8 +46,8 @@ public class SynchronizedList extends SynchronizedCollection implements List {
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static List decorate(List list) {
-        return new SynchronizedList(list);
+    public static <T> List<T> decorate(List<T> list) {
+        return new SynchronizedList<T>(list);
     }
     
     //-----------------------------------------------------------------------
@@ -57,7 +57,7 @@ public class SynchronizedList extends SynchronizedCollection implements List {
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected SynchronizedList(List list) {
+    protected SynchronizedList(List<E> list) {
         super(list);
     }
 
@@ -68,7 +68,7 @@ public class SynchronizedList extends SynchronizedCollection implements List {
      * @param lock  the lock to use, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected SynchronizedList(List list, Object lock) {
+    protected SynchronizedList(List<E> list, Object lock) {
         super(list, lock);
     }
 
@@ -77,24 +77,24 @@ public class SynchronizedList extends SynchronizedCollection implements List {
      * 
      * @return the decorated list
      */
-    protected List getList() {
-        return (List) collection;
+    protected List<E> getList() {
+        return (List<E>) collection;
     }
 
     //-----------------------------------------------------------------------
-    public void add(int index, Object object) {
+    public void add(int index, E object) {
         synchronized (lock) {
             getList().add(index, object);
         }
     }
 
-    public boolean addAll(int index, Collection coll) {
+    public boolean addAll(int index, Collection<? extends E> coll) {
         synchronized (lock) {
             return getList().addAll(index, coll);
         }
     }
 
-    public Object get(int index) {
+    public E get(int index) {
         synchronized (lock) {
             return getList().get(index);
         }
@@ -140,24 +140,24 @@ public class SynchronizedList extends SynchronizedCollection implements List {
         return getList().listIterator(index);
     }
 
-    public Object remove(int index) {
+    public E remove(int index) {
         synchronized (lock) {
             return getList().remove(index);
         }
     }
 
-    public Object set(int index, Object object) {
+    public E set(int index, E object) {
         synchronized (lock) {
             return getList().set(index, object);
         }
     }
 
-    public List subList(int fromIndex, int toIndex) {
+    public List<E> subList(int fromIndex, int toIndex) {
         synchronized (lock) {
-            List list = getList().subList(fromIndex, toIndex);
+            List<E> list = getList().subList(fromIndex, toIndex);
             // the lock is passed into the constructor here to ensure that the sublist is
             // synchronized on the same lock as the parent list
-            return new SynchronizedList(list, lock);
+            return new SynchronizedList<E>(list, lock);
         }
     }
 

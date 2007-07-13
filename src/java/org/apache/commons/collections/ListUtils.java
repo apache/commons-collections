@@ -68,7 +68,7 @@ public class ListUtils {
      * @throws NullPointerException if either list is null
      */
     public static List intersection(final List list1, final List list2) {
-        final ArrayList result = new ArrayList();
+        final List result = new ArrayList();
         final Iterator iterator = list2.iterator();
 
         while (iterator.hasNext()) {
@@ -203,16 +203,15 @@ public class ListUtils {
      * @param list  the list to generate the hashCode for, may be null
      * @return the hash code
      */
-    public static int hashCodeForList(final Collection list) {
+    public static <E> int hashCodeForList(final Collection<E> list) {
         if (list == null) {
             return 0;
         }
         int hashCode = 1;
-        Iterator it = list.iterator();
-        Object obj = null;
+        Iterator<E> it = list.iterator();
         
         while (it.hasNext()) {
-            obj = it.next();
+            E obj = it.next();
             hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
         }
         return hashCode;
@@ -234,11 +233,10 @@ public class ListUtils {
      * @throws NullPointerException if either parameter is null
      * @since Commons Collections 3.2
      */
-    public static List retainAll(Collection collection, Collection retain) {
-        List list = new ArrayList(Math.min(collection.size(), retain.size()));
+    public static <E> List<E> retainAll(Collection<E> collection, Collection<?> retain) {
+        List<E> list = new ArrayList<E>(Math.min(collection.size(), retain.size()));
 
-        for (Iterator iter = collection.iterator(); iter.hasNext();) {
-            Object obj = iter.next();
+        for (E obj : collection) {
             if (retain.contains(obj)) {
                 list.add(obj);
             }
@@ -262,11 +260,10 @@ public class ListUtils {
      * @throws NullPointerException if either parameter is null
      * @since Commons Collections 3.2
      */
-    public static List removeAll(Collection collection, Collection remove) {
-        List list = new ArrayList();
-        for (Iterator iter = collection.iterator(); iter.hasNext();) {
-            Object obj = iter.next();
-            if (remove.contains(obj) == false) {
+    public static <E> List<E> removeAll(Collection<E> collection, Collection<?> remove) {
+        List<E> list = new ArrayList<E>();
+        for (E obj : collection) {
+            if (!remove.contains(obj)) {
                 list.add(obj);
             }
         }
@@ -296,7 +293,7 @@ public class ListUtils {
      * @return a synchronized list backed by the given list
      * @throws IllegalArgumentException  if the list is null
      */
-    public static List synchronizedList(List list) {
+    public static <E> List<E> synchronizedList(List<E> list) {
         return SynchronizedList.decorate(list);
     }
 
@@ -309,7 +306,7 @@ public class ListUtils {
      * @return an unmodifiable list backed by the given list
      * @throws IllegalArgumentException  if the list is null
      */
-    public static List unmodifiableList(List list) {
+    public static <E> List unmodifiableList(List<E> list) {
         return UnmodifiableList.decorate(list);
     }
 
@@ -326,7 +323,7 @@ public class ListUtils {
      * @return a predicated list backed by the given list
      * @throws IllegalArgumentException  if the List or Predicate is null
      */
-    public static List predicatedList(List list, Predicate predicate) {
+    public static <E> List<E> predicatedList(List<E> list, Predicate<E> predicate) {
         return PredicatedList.decorate(list, predicate);
     }
 
