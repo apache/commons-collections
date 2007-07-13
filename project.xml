@@ -433,7 +433,18 @@ limitations under the License.
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.3.1</version>
+      <properties>
+       <scope>test</scope>
+       <comment>
+        Required only for testing.
+       </comment>
+      </properties>
+    </dependency>
+    <dependency>
+      <groupId>easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>2.0</version>
       <properties>
        <scope>test</scope>
        <comment>
