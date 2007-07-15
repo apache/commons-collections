@@ -435,6 +435,7 @@ public class FastHashMap extends HashMap {
     /**
      * Return a collection view of the mappings contained in this map.  Each
      * element in the returned collection is a <code>Map.Entry</code>.
+     * @return the set of map Map entries
      */
     public Set entrySet() {
         return new EntrySet();
@@ -442,6 +443,7 @@ public class FastHashMap extends HashMap {
 
     /**
      * Return a set view of the keys contained in this map.
+     * @return the set of the Map's keys
      */
     public Set keySet() {
         return new KeySet();
@@ -449,6 +451,7 @@ public class FastHashMap extends HashMap {
 
     /**
      * Return a collection view of the values contained in this map.
+     * @return the set of the Map's values
      */
     public Collection values() {
         return new Values();
@@ -589,7 +592,9 @@ public class FastHashMap extends HashMap {
 
 
         public boolean equals(Object o) {
-            if (o == this) return true;
+            if (o == this) {
+                return true;
+            }
             if (fast) {
                 return get(map).equals(o);
             } else {
