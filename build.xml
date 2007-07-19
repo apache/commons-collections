@@ -330,7 +330,7 @@ limitations under the License.
   <target name="testjar"  depends="compile.tests,jar"
           description="Run all unit test cases">
     <echo message="Running collections tests against built jar ..."/>
-    <junit printsummary="yes" haltonfailure="yes">
+    <junit printsummary="yes" haltonfailure="yes" dir="${basedir}">
       <classpath>
         <pathelement location="${build.jar.name}"/>
         <pathelement location="${build.tests}"/>
