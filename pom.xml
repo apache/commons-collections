@@ -33,7 +33,7 @@
   <inceptionYear>2001</inceptionYear>
   <description>Types that extend and augment the Java Collections Framework.</description>
 
-  <url>http://jakarta.apache.org/commons/collections/</url>
+  <url>http://commons.apache.org/collections/</url>
 
   <issueManagement>
     <system>jira</system>
@@ -41,9 +41,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:https://svn.apache.org/repos/asf/jakarta/commons/proper/collections/trunk</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/jakarta/commons/proper/collections/trunk</developerConnection>
-    <url>http://svn.apache.org/viewvc/jakarta/commons/proper/collections/trunk</url>
+    <connection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/collections/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/collections/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/commons/proper/collections/trunk</url>
   </scm>
 
   <developers>
