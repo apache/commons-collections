@@ -200,7 +200,7 @@ public class LRUMap
             header.before = entry;
         } else if (entry == header) {
             throw new IllegalStateException("Can't move header to MRU" +
-                " (please report this to commons-dev@jakarta.apache.org)");
+                " (please report this to dev@commons.apache.org)");
         }
     }
     
@@ -250,7 +250,7 @@ public class LRUMap
                         "Entry.after=null, header.after" + header.after + " header.before" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
                         " Please check that your keys are immutable, and that you have used synchronization properly." +
-                        " If so, then please report this to commons-dev@jakarta.apache.org as a bug.");
+                        " If so, then please report this to dev@commons.apache.org as a bug.");
                 }
             } else {
                 removeLRUEntry = removeLRU(reuse);
@@ -262,7 +262,7 @@ public class LRUMap
                         "reuse=null, header.after=" + header.after + " header.before" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
                         " Please check that your keys are immutable, and that you have used synchronization properly." +
-                        " If so, then please report this to commons-dev@jakarta.apache.org as a bug.");
+                        " If so, then please report this to dev@commons.apache.org as a bug.");
                 }
                 reuseMapping(reuse, hashIndex, hashCode, key, value);
             } else {
@@ -302,7 +302,7 @@ public class LRUMap
                     "Entry.next=null, data[removeIndex]=" + data[removeIndex] + " previous=" + previous +
                     " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
                     " Please check that your keys are immutable, and that you have used synchronization properly." +
-                    " If so, then please report this to commons-dev@jakarta.apache.org as a bug.");
+                    " If so, then please report this to dev@commons.apache.org as a bug.");
             }
             
             // reuse the entry
@@ -315,7 +315,7 @@ public class LRUMap
                     "NPE, entry=" + entry + " entryIsHeader=" + (entry==header) +
                     " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
                     " Please check that your keys are immutable, and that you have used synchronization properly." +
-                    " If so, then please report this to commons-dev@jakarta.apache.org as a bug.");
+                    " If so, then please report this to dev@commons.apache.org as a bug.");
         }
     }
     
