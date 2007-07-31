@@ -15,14 +15,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
   -->
-<!DOCTYPE org.apache.commons.menus SYSTEM 'http://jakarta.apache.org/commons/build/maven-build.dtd'>
+<!DOCTYPE org.apache.commons.menus SYSTEM 'http://commons.apache.org/build/maven-build.dtd'>
 <project name="Commons Collections">
 
   <title>Commons Collections</title>
 
   <body>
     <links>
-      <item name="Jakarta Commons" href="http://jakarta.apache.org/commons/"/>
+      <item name="Apache Commons" href="http://commons.apache.org/"/>
     </links>
 
     <menu name="Commons Collections">
@@ -39,7 +39,7 @@
       <item name="Team" href="/team-list.html"/>
       <item name="Tasks" href="/tasks.html"/>
       <item name="Proposal" href="/proposal.html"/>
-      <item name="SVN repository" href="http://svn.apache.org/viewcvs.cgi/jakarta/commons/proper/collections/trunk/"/>
+      <item name="SVN repository" href="http://svn.apache.org/viewvc/commons/proper/collections/trunk/"/>
       <item name="Javadoc (SVN latest)" href="apidocs/index.html"/>
     </menu>
 

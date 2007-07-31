@@ -33,7 +33,7 @@
   <property name="component.title"         value="Commons Collections"/>
 
   <!-- The full title of this component -->
-  <property name="component.title.full"    value="Apache Jakarta Commons Collections"/>
+  <property name="component.title.full"    value="Apache Apache Commons Collections"/>
 
   <!-- The current version number of this component -->
   <property name="component.version"       value="3.3-SNAPSHOT"/>
@@ -374,7 +374,7 @@
   <property name="tf.name"                 value="commons-collections-testframework"/>
   <property name="tf.package"              value="org.apache.commons.collections"/>
   <property name="tf.title"                value="Commons Collections Test Framework"/>
-  <property name="tf.title.full"           value="Apache Jakarta Commons Collections Test Framework"/>
+  <property name="tf.title.full"           value="Apache Apache Commons Collections Test Framework"/>
   <property name="tf.version"              value="${component.version}"/>
 
   <property name="tf.build.conf"           value="${build.home}/tfconf"/>
