@@ -13,8 +13,8 @@
     <description xml:lang="en">Types that extend and augment the Java Collections Framework.</description>
     <repository>
       <SVNRepository>
-        <browse rdf:resource="http://svn.apache.org/repos/asf/jakarta/commons/proper/collections/trunk"/>
-        <location rdf:resource="http://svn.apache.org/repos/asf/jakarta/commons/proper/collections"/>
+        <browse rdf:resource="http://svn.apache.org/repos/asf/commons/proper/collections/trunk"/>
+        <location rdf:resource="http://svn.apache.org/repos/asf/commons/proper/collections"/>
       </SVNRepository>
     </repository>
     <release>
