@@ -27,7 +27,7 @@
 
     <menu name="Commons Collections">
       <item name="Overview" href="/index.html"/>
-      <item name="Download" href="http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi"/>
+      <item name="Download" href="http://commons.apache.org/downloads/download_collections.cgi"/>
       <item name="User guide" href="/userguide.html"/>
       <item name="History" href="/history.html"/>
       <item name="Javadoc (3.2 release)" href="api-release/index.html"/>
