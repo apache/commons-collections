@@ -53,8 +53,70 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Jon Schewe
  * @author Neil O'Toole
  * @author Stephen Smith
+ * @author Stephen Kestle
  */
 public class CollectionUtils {
+
+    private static class CardinalityHelper {
+        final Map<?, Integer> cardinalityA, cardinalityB;
+        
+        public CardinalityHelper(Collection a, Collection b) {
+            cardinalityA = getCardinalityMap(a);
+            cardinalityB = getCardinalityMap(b);
+        }
+        
+        public final int max(Object obj) {
+            return Math.max(freqA(obj), freqB(obj));
+        }
+        
+        public final int min(Object obj) {
+            return Math.min(freqA(obj), freqB(obj));
+        }
+
+        public int freqA(Object obj) {
+            return getFreq(obj, cardinalityA);
+        }
+        
+        public int freqB(Object obj) {
+            return getFreq(obj, cardinalityB);
+        }
+        
+        private final int getFreq(final Object obj, final Map<?, Integer> freqMap) {
+            Integer count = freqMap.get(obj);
+            if (count != null) {
+                return count;
+            }
+            return 0;
+        }
+    }
+    
+    private static class SetOperationCardinalityHelper extends CardinalityHelper implements Iterable {
+        private final Set elements;
+        private final List newList;
+
+        public SetOperationCardinalityHelper(Collection a, Collection b) {
+            super(a, b);
+            elements = new HashSet(a);
+            elements.addAll(b);
+            newList = new ArrayList();
+        }
+
+        public Iterator iterator() {
+            return elements.iterator();
+        }
+
+        public void setCardinality(Object obj, int count) {
+            for (int i = 0; i < count; i++) {
+                newList.add(obj);
+            }
+        }
+
+        public Collection list() {
+            return newList;
+        }
+
+
+    }
 
     /** Constant to avoid repeated object creation */
     private static Integer INTEGER_ONE = new Integer(1);
@@ -87,19 +149,11 @@ public class CollectionUtils {
      * @see Collection#addAll
      */
     public static Collection union(final Collection a, final Collection b) {
-        ArrayList list = new ArrayList();
-        Map mapa = getCardinalityMap(a);
-        Map mapb = getCardinalityMap(b);
-        Set elts = new HashSet(a);
-        elts.addAll(b);
-        Iterator it = elts.iterator();
-        while(it.hasNext()) {
-            Object obj = it.next();
-            for(int i=0,m=Math.max(getFreq(obj,mapa),getFreq(obj,mapb));i<m;i++) {
-                list.add(obj);
-            }
+        SetOperationCardinalityHelper helper = new SetOperationCardinalityHelper(a, b);
+        for (Object obj : helper) {
+            helper.setCardinality(obj, helper.max(obj));
         }
-        return list;
+        return helper.list();
     }
 
     /**
@@ -117,19 +171,11 @@ public class CollectionUtils {
      * @see #containsAny
      */
     public static Collection intersection(final Collection a, final Collection b) {
-        ArrayList list = new ArrayList();
-        Map mapa = getCardinalityMap(a);
-        Map mapb = getCardinalityMap(b);
-        Set elts = new HashSet(a);
-        elts.addAll(b);
-        Iterator it = elts.iterator();
-        while(it.hasNext()) {
-            Object obj = it.next();
-            for(int i=0,m=Math.min(getFreq(obj,mapa),getFreq(obj,mapb));i<m;i++) {
-                list.add(obj);
-            }
+        SetOperationCardinalityHelper helper = new SetOperationCardinalityHelper(a, b);
+        for (Object obj : helper) {
+            helper.setCardinality(obj, helper.min(obj));
         }
-        return list;
+        return helper.list();
     }
 
     /**
@@ -150,19 +196,11 @@ public class CollectionUtils {
      * @return the symmetric difference of the two collections
      */
     public static Collection disjunction(final Collection a, final Collection b) {
-        ArrayList list = new ArrayList();
-        Map mapa = getCardinalityMap(a);
-        Map mapb = getCardinalityMap(b);
-        Set elts = new HashSet(a);
-        elts.addAll(b);
-        Iterator it = elts.iterator();
-        while(it.hasNext()) {
-            Object obj = it.next();
-            for(int i=0,m=((Math.max(getFreq(obj,mapa),getFreq(obj,mapb)))-(Math.min(getFreq(obj,mapa),getFreq(obj,mapb))));i<m;i++) {
-                list.add(obj);
-            }
+        SetOperationCardinalityHelper helper = new SetOperationCardinalityHelper(a, b);
+        for (Object obj : helper) {
+            helper.setCardinality(obj, helper.max(obj) - helper.min(obj));
         }
-        return list;
+        return helper.list();
     }
 
     /**
@@ -251,12 +289,9 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isSubCollection(final Collection a, final Collection b) {
-        Map mapa = getCardinalityMap(a);
-        Map mapb = getCardinalityMap(b);
-        Iterator it = a.iterator();
-        while (it.hasNext()) {
-            Object obj = it.next();
-            if (getFreq(obj, mapa) > getFreq(obj, mapb)) {
+        CardinalityHelper helper = new CardinalityHelper(a, b);
+        for (Object obj : a) {
+            if (helper.freqA(obj) > helper.freqB(obj)) {
                 return false;
             }
         }
@@ -303,22 +338,17 @@ public class CollectionUtils {
     public static boolean isEqualCollection(final Collection a, final Collection b) {
         if(a.size() != b.size()) {
             return false;
-        } else {
-            Map mapa = getCardinalityMap(a);
-            Map mapb = getCardinalityMap(b);
-            if(mapa.size() != mapb.size()) {
+        }
+        final CardinalityHelper helper = new CardinalityHelper(a, b);
+        if(helper.cardinalityA.size() != helper.cardinalityB.size()) {
+            return false;
+        }
+        for( Object obj : helper.cardinalityA.keySet()) {
+            if(helper.freqA(obj) != helper.freqB(obj)) {
                 return false;
-            } else {
-                Iterator it = mapa.keySet().iterator();
-                while(it.hasNext()) {
-                    Object obj = it.next();
-                    if(getFreq(obj,mapa) != getFreq(obj,mapb)) {
-                        return false;
-                    }
-                }
-                return true;
             }
         }
+        return true;
     }
 
     /**
@@ -902,14 +932,6 @@ public class CollectionUtils {
             j--;
             i++;
         }
-    }
-
-    private static final int getFreq(final Object obj, final Map freqMap) {
-        Integer count = (Integer) freqMap.get(obj);
-        if (count != null) {
-            return count.intValue();
-        }
-        return 0;
     }
 
     /**
