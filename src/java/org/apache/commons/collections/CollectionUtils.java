@@ -892,6 +892,9 @@ public class CollectionUtils {
      * @since Commons Collections 3.1
      */
     public static int size(Object object) {
+        if (object == null) {
+            return 0;
+        }
         int total = 0;
         if (object instanceof Map) {
             total = ((Map) object).size();

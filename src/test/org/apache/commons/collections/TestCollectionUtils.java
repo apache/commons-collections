@@ -739,7 +739,9 @@ public class TestCollectionUtils extends TestCase {
 
     //-----------------------------------------------------------------------
     public void testSize_List() {
-        List list = new ArrayList();
+        List list = null;
+        assertEquals(0, CollectionUtils.size(list));
+        list = new ArrayList();
         assertEquals(0, CollectionUtils.size(list));
         list.add("a");
         assertEquals(1, CollectionUtils.size(list));
@@ -793,10 +795,6 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(2, CollectionUtils.size(list.iterator()));
     }
     public void testSize_Other() {
-        try {
-            CollectionUtils.size(null);
-            fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException e) {}
         try {
             CollectionUtils.size("not a list");
             fail("Expecting IllegalArgumentException");
