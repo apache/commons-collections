@@ -28,7 +28,7 @@
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
   <version>3.3-SNAPSHOT</version>
-  <name>Collections</name>
+  <name>Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
   <description>Types that extend and augment the Java Collections Framework.</description>
