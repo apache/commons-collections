@@ -16,9 +16,11 @@
  */
 package org.apache.commons.collections;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * Entry point for all Collections package tests.
@@ -28,33 +30,20 @@ import junit.framework.TestSuite;
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
  */
+@RunWith(Suite.class)
+@SuiteClasses({TestBagUtils.class,
+        TestClosureUtils.class,
+        TestCollectionUtils.class,
+        TestBufferUtils.class,
+        TestEnumerationUtils.class,
+        TestFactoryUtils.class,
+        TestIteratorUtils.class,
+        TestListUtils.class,
+        TestMapUtils.class,
+        TestPredicateUtils.class,
+        TestSetUtils.class,
+        TestTransformerUtils.class,
+        TestArrayStack.class,
+        TestExtendedProperties.class})
 public class TestAll extends TestCase {
-    public TestAll(String testName) {
-        super(testName);
-    }
-
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestBagUtils.suite());
-        suite.addTest(TestClosureUtils.suite());
-        suite.addTest(TestCollectionUtils.suite());
-        suite.addTest(TestBufferUtils.suite());
-        suite.addTest(TestEnumerationUtils.suite());
-        suite.addTest(TestFactoryUtils.suite());
-        suite.addTest(TestIteratorUtils.suite());
-        suite.addTest(TestListUtils.suite());
-        suite.addTest(TestMapUtils.suite());
-        suite.addTest(TestPredicateUtils.suite());
-        suite.addTest(TestSetUtils.suite());
-        suite.addTest(TestTransformerUtils.suite());
-        
-        suite.addTest(TestArrayStack.suite());
-        suite.addTest(TestExtendedProperties.suite());
-        return suite;
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
 }
