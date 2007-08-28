@@ -19,8 +19,15 @@ limitations under the License.
 
 <!-- ========== Properties ================================================ -->
 
-  <!-- This can be used to define 'junit.jar' property if necessary -->
+  <!-- This can be used to define 'junit.jar' and 'emma.lib.dir' properties if necessary -->
   <property file="build.properties"/>
+  
+	<!-- Import EMMA coverage tool -->
+	<path id="emma.lib">
+		<pathelement location="${emma.lib.dir}/emma.jar" />
+		<pathelement location="${emma.lib.dir}/emma_ant.jar" />
+	</path>
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
 
 <!-- ========== Component Declarations ==================================== -->
 
@@ -55,6 +62,12 @@ limitations under the License.
   <property name="build.tests"             value="${build.home}/tests"/>
   <property name="build.docs"              value="${build.home}/docs/apidocs"/>
   <property name="build.src"               value="${build.home}/src-ide" />
+  
+  <!-- The directories for tests/instrumentation -->
+  <property name="build.instrumented"           value="${build.home}/instrumented" />
+  <property name="build.reports"           value="${build.home}/reports" />
+  <property name="build.reports.test"      value="${build.reports}/test" />
+  <property name="build.reports.coverage"  value="${build.reports}/coverage" />
   
   <!-- The name/location of the jar file to build -->
   <property name="final.name"           value="${component.name}-${component.version}"/>
@@ -283,17 +296,39 @@ limitations under the License.
   <target name="test" depends="-test-all,-test-single"
           description="Run unit tests" />
 
+  <path id="build.path">
+  			<pathelement location="${build.classes}" />
+  		</path>
+	<target name="instrument"
+	        depends="compile.tests"
+	        description="Instruments the compiled classes and moves them to the instrumentation directory">
+		<emma>
+			<instr instrpathref="build.path"
+			       destdir="${build.instrumented}"
+			       metadatafile="${build.reports.coverage}/coverage.emma"
+			       merge="true">
+			</instr>
+		</emma>
+	</target>
+
   <!-- Runs all tests -->
-  <target name="-test-all" depends="compile.tests" unless="testcase">
+  <target name="-test-all" depends="instrument" unless="testcase">
+	<mkdir dir="${build.reports.test}" />
+
     <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
-      <formatter type="brief" />
       <classpath>
+        <pathelement location="${build.instrumented}"/>
         <pathelement location="${build.classes}"/>
         <pathelement location="${build.tests}"/>
         <pathelement location="${junit.jar}"/>
+        <path refid="emma.lib"/>
       </classpath>
+      <jvmarg value="-Demma.coverage.out.file=${build.reports.coverage}/coverage.ec" />
+      <jvmarg value="-Demma.coverage.out.merge=true" />
+      <jvmarg value="-Demma.verbosity.level=quiet" />
 
-      <batchtest fork="yes">
+      <formatter type="plain" />
+      <batchtest fork="yes" todir="${build.reports.test}">
         <fileset dir="${source.test}">
           <include name="**/Test*.java"/>
           <exclude name="**/TestAll*.java"/>
@@ -304,9 +339,14 @@ limitations under the License.
           <exclude name="**/TestTreeMap.java"/>
           <exclude name="**/TestTypedCollection.java"/>
         </fileset>
-        <formatter type="brief" usefile="false" />
       </batchtest>
     </junit>
+	<junitreport todir="${build.reports.test}">
+		<fileset dir="${build.reports.test}">
+			<include name="TEST-*.xml" />
+		</fileset>
+		<report format="frames" todir="${build.reports.test}/html" />
+	</junitreport>
   </target>
 
   <!-- Runs a single test -->
@@ -324,6 +364,20 @@ limitations under the License.
       </test>
     </junit>
   </target>
+  
+	<target name="coverage.report"
+	        depends="test"
+	        description="Generates the coverage report for the code that has been run">
+		<emma>
+			<report sourcepath="${source.java}">
+				<fileset dir="${build.reports.coverage}">
+					<include name="*" />
+				</fileset>
+				<html outfile="${build.reports.coverage}/coverage.html" />
+			</report>
+		</emma>
+	</target>
+
 
 <!-- ====================================================================== -->
 
