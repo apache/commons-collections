@@ -117,7 +117,7 @@ public class FactoryUtils {
      * @return the <code>reflection</code> factory
      * @throws IllegalArgumentException if the classToInstantiate is null
      */
-    public static Factory instantiateFactory(Class classToInstantiate) {
+    public static <T> Factory<T> instantiateFactory(Class<T> classToInstantiate) {
         return InstantiateFactory.getInstance(classToInstantiate, null, null);
     }
 
@@ -135,7 +135,7 @@ public class FactoryUtils {
      * @throws IllegalArgumentException if the paramTypes and args don't match
      * @throws IllegalArgumentException if the constructor doesn't exist
      */
-    public static Factory instantiateFactory(Class classToInstantiate, Class[] paramTypes, Object[] args) {
+    public static <T> Factory<T> instantiateFactory(Class<T> classToInstantiate, Class[] paramTypes, Object[] args) {
         return InstantiateFactory.getInstance(classToInstantiate, paramTypes, args);
     }
 

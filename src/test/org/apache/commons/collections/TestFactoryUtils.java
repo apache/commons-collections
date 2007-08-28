@@ -26,11 +26,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.functors.ConstantFactory;
+import org.junit.Test;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
@@ -47,21 +44,6 @@ public class TestFactoryUtils extends junit.framework.TestCase {
      */
     public TestFactoryUtils(String name) {
         super(name);
-    }
-
-    /**
-     * Main.
-     * @param args
-     */    
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
-
-    /**
-     * Return class as a test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TestFactoryUtils.class);
     }
 
     /**
@@ -263,54 +245,40 @@ public class TestFactoryUtils extends junit.framework.TestCase {
     // instantiateFactory
     //------------------------------------------------------------------
     
-    public void testInstantiateFactoryNull() {
-        try {
-            Factory factory = FactoryUtils.instantiateFactory(null);
-            
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+    @Test(expected=IllegalArgumentException.class)
+    public void instantiateFactoryNull() {
+        FactoryUtils.instantiateFactory(null);
     }
 
-    public void testInstantiateFactorySimple() {
-        Factory factory = FactoryUtils.instantiateFactory(Mock3.class);
+    @Test
+    public void instantiateFactorySimple() {
+        Factory<Mock3> factory = FactoryUtils.instantiateFactory(Mock3.class);
         assertNotNull(factory);
-        Object created = factory.create();
-        assertEquals(0, ((Mock3) created).getValue());
+        Mock3 created = factory.create();
+        assertEquals(0, created.getValue());
         created = factory.create();
-        assertEquals(1, ((Mock3) created).getValue());
+        assertEquals(1, created.getValue());
     }
 
-    public void testInstantiateFactoryMismatch() {
-        try {
-            Factory factory = FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null});
-            
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+    @Test(expected=IllegalArgumentException.class)
+    public void instantiateFactoryMismatch() {
+        FactoryUtils.instantiateFactory(Date.class, null, new Object[] {null});
     }
 
-    public void testInstantiateFactoryNoConstructor() {
-        try {
-            Factory factory = FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null});
-            
-        } catch (IllegalArgumentException ex) {
-            return;
-        }
-        fail();
+    @Test(expected=IllegalArgumentException.class)
+    public void instantiateFactoryNoConstructor() {
+        FactoryUtils.instantiateFactory(Date.class, new Class[] {Long.class}, new Object[] {null});
     }
 
-    public void testInstantiateFactoryComplex() {
+    @Test
+    public void instantiateFactoryComplex() {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         // 2nd Jan 1970
-        Factory factory = FactoryUtils.instantiateFactory(Date.class,
+        Factory<Date> factory = FactoryUtils.instantiateFactory(Date.class,
             new Class[] {Integer.TYPE, Integer.TYPE, Integer.TYPE},
             new Object[] {new Integer(70), new Integer(0), new Integer(2)});
         assertNotNull(factory);
-        Object created = factory.create();
-        assertTrue(created instanceof Date);
+        Date created = factory.create();
         // long time of 1 day (== 2nd Jan 1970)
         assertEquals(new Date(1000 * 60 * 60 * 24), created);
     }

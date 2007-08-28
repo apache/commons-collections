@@ -31,19 +31,19 @@ import org.apache.commons.collections.FunctorException;
  *
  * @author Stephen Colebourne
  */
-public class InstantiateFactory implements Factory, Serializable {
+public class InstantiateFactory<T> implements Factory<T>, Serializable {
 
     /** The serial version */
     private static final long serialVersionUID = -7732226881069447957L;
 
     /** The class to create */
-    private final Class iClassToInstantiate;
+    private final Class<T> iClassToInstantiate;
     /** The constructor parameter types */
     private final Class[] iParamTypes;
     /** The constructor arguments */
     private final Object[] iArgs;
     /** The constructor */
-    private transient Constructor iConstructor = null;
+    private transient Constructor<T> iConstructor = null;
 
     /**
      * Factory method that performs validation.
@@ -53,7 +53,7 @@ public class InstantiateFactory implements Factory, Serializable {
      * @param args  the constructor arguments
      * @return a new instantiate factory
      */
-    public static Factory getInstance(Class classToInstantiate, Class[] paramTypes, Object[] args) {
+    public static <T> Factory<T> getInstance(Class<T> classToInstantiate, Class[] paramTypes, Object[] args) {
         if (classToInstantiate == null) {
             throw new IllegalArgumentException("Class to instantiate must not be null");
         }
@@ -64,12 +64,11 @@ public class InstantiateFactory implements Factory, Serializable {
         }
 
         if (paramTypes == null || paramTypes.length == 0) {
-            return new InstantiateFactory(classToInstantiate);
-        } else {
-            paramTypes = (Class[]) paramTypes.clone();
-            args = (Object[]) args.clone();
-            return new InstantiateFactory(classToInstantiate, paramTypes, args);
+            return new InstantiateFactory<T>(classToInstantiate);
         }
+        paramTypes = paramTypes.clone();
+        args = args.clone();
+        return new InstantiateFactory<T>(classToInstantiate, paramTypes, args);
     }
 
     /**
@@ -78,7 +77,7 @@ public class InstantiateFactory implements Factory, Serializable {
      * 
      * @param classToInstantiate  the class to instantiate
      */
-    public InstantiateFactory(Class classToInstantiate) {
+    public InstantiateFactory(Class<T> classToInstantiate) {
         super();
         iClassToInstantiate = classToInstantiate;
         iParamTypes = null;
@@ -94,7 +93,7 @@ public class InstantiateFactory implements Factory, Serializable {
      * @param paramTypes  the constructor parameter types, not cloned
      * @param args  the constructor arguments, not cloned
      */
-    public InstantiateFactory(Class classToInstantiate, Class[] paramTypes, Object[] args) {
+    public InstantiateFactory(Class<T> classToInstantiate, Class[] paramTypes, Object[] args) {
         super();
         iClassToInstantiate = classToInstantiate;
         iParamTypes = paramTypes;
@@ -119,7 +118,7 @@ public class InstantiateFactory implements Factory, Serializable {
      * 
      * @return the new object
      */
-    public Object create() {
+    public T create() {
         // needed for post-serialization
         if (iConstructor == null) {
             findConstructor();
