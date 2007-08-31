@@ -62,15 +62,15 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class LazyMap
-        extends AbstractMapDecorator
-        implements Map, Serializable {
+public class LazyMap<K,V>
+        extends AbstractMapDecorator<K,V>
+        implements Map<K,V>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 7990956402564206740L;
 
     /** The factory to use to construct elements */
-    protected final Transformer factory;
+    protected final Transformer<? super K, ? extends V> factory;
 
     /**
      * Factory method to create a lazily instantiated map.
@@ -78,9 +78,11 @@ public class LazyMap
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
+     * @deprecated use {@link #getLazyMap(Map, Factory)} instead.
      */
-    public static Map decorate(Map map, Factory factory) {
-        return new LazyMap(map, factory);
+    @Deprecated
+    public static <K,V> Map<K,V> decorate(Map<K,V> map, Factory<? extends V> factory) {
+        return getLazyMap(map, factory);
     }
 
     /**
@@ -90,9 +92,33 @@ public class LazyMap
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static Map decorate(Map map, Transformer factory) {
-        return new LazyMap(map, factory);
+    public static <K, V> LazyMap<K, V> getLazyMap(Map<K, V> map, Factory< ? extends V> factory) {
+		return new LazyMap<K,V>(map, factory);
+	}
+
+    /**
+     * Factory method to create a lazily instantiated map.
+     * 
+     * @param map  the map to decorate, must not be null
+     * @param factory  the factory to use, must not be null
+     * @throws IllegalArgumentException if map or factory is null
+     * @deprecated use {@link #getLazyMap(Map, Transformer)} instead.
+     */
+	@Deprecated
+    public static <K,V> Map<K,V> decorate(Map<K,V> map, Transformer<? super K, ? extends V> factory) {
+        return getLazyMap(map, factory);
     }
+
+	/**
+     * Factory method to create a lazily instantiated map.
+     * 
+     * @param map  the map to decorate, must not be null
+     * @param factory  the factory to use, must not be null
+     * @throws IllegalArgumentException if map or factory is null
+     */
+	public static <V, K> LazyMap<K, V> getLazyMap(Map<K, V> map, Transformer<? super K, ? extends V> factory) {
+		return new LazyMap<K,V>(map, factory);
+	}
 
     //-----------------------------------------------------------------------
     /**
@@ -102,7 +128,7 @@ public class LazyMap
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    protected LazyMap(Map map, Factory factory) {
+    protected LazyMap(Map<K,V> map, Factory<? extends V> factory) {
         super(map);
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
@@ -117,7 +143,7 @@ public class LazyMap
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    protected LazyMap(Map map, Transformer factory) {
+    protected LazyMap(Map<K,V> map, Transformer<? super K, ? extends V> factory) {
         super(map);
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
@@ -146,21 +172,35 @@ public class LazyMap
      * @throws ClassNotFoundException
      * @since Commons Collections 3.1
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    @SuppressWarnings("unchecked")
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
-    public Object get(Object key) {
+    @Override
+	public V get(Object key) {
         // create value for key if key is not currently in the map
         if (map.containsKey(key) == false) {
-            Object value = factory.transform(key);
-            map.put(key, value);
+        	K castKey = cast(key);
+            V value = factory.transform(castKey);
+            map.put(castKey, value);
             return value;
         }
         return map.get(key);
     }
+
+    /**
+     * Method just to cast {@link Object}s to K where necessary.  This is done to ensure that the SuppressWarnings does not 
+     * cover other stuff that it shouldn't
+     * @param key .
+     * @return the cast key.
+     */
+	@SuppressWarnings("unchecked")
+	private K cast(Object key) {
+		return (K) key;
+	}
 
     // no need to wrap keySet, entrySet or values as they are views of
     // existing map entries - you can't do a map-style get on them.

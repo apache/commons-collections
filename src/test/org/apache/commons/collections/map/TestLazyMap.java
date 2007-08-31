@@ -16,14 +16,15 @@
  */
 package org.apache.commons.collections.map;
 
+import static org.apache.commons.collections.map.LazyMap.getLazyMap;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.Transformer;
+import org.junit.Test;
 
 /**
  * Extension of {@link TestMap} for exercising the 
@@ -36,15 +37,11 @@ import org.apache.commons.collections.FactoryUtils;
  */
 public class TestLazyMap extends AbstractTestMap {
     
-    protected static final Factory oneFactory = FactoryUtils.constantFactory("One");
-    protected static final Factory nullFactory = FactoryUtils.nullFactory();
+	private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
+    private static final Factory<Object> nullFactory = FactoryUtils.nullFactory();
     
     public TestLazyMap(String testName) {
         super(testName);
-    }
-    
-    public static Test suite() {
-        return new TestSuite(TestLazyMap.class);
     }
     
     public static void main(String args[]) {
@@ -52,39 +49,52 @@ public class TestLazyMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    //-----------------------------------------------------------------------    
-    protected Map decorateMap(Map map, Factory factory) {
-        return LazyMap.decorate(map, factory);
+    @Override
+	public <K,V> Map<K,V> makeEmptyMap() {
+        return getLazyMap(new HashMap<K,V>(), FactoryUtils.<V>nullFactory());
     }
     
-    public Map makeEmptyMap() {
-        return decorateMap(new HashMap(), nullFactory);
-    }
-    
-    protected Map makeTestMap(Factory factory) {
-        return decorateMap(new HashMap(), factory);
-    }
-
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
+    @Override
     public void testMapGet() {
-        Map map = makeTestMap(oneFactory);
+    	//TODO eliminate need for this via superclass - see svn history.
+    }
+    
+    @Test
+    public void mapGetWithFactory() {
+        Map<Integer, Number> map = getLazyMap(new HashMap<Integer,Number>(), oneFactory);
         assertEquals(0, map.size());
-        String s1 = (String) map.get("Five");
-        assertEquals("One", s1);
+        Number i1 = map.get("Five");
+        assertEquals(1, i1);
         assertEquals(1, map.size());
-        String s2 = (String) map.get(new String(new char[] {'F','i','v','e'}));
-        assertEquals("One", s2);
+        Number i2 = map.get(new String(new char[] {'F','i','v','e'}));
+        assertEquals(1, i2);
         assertEquals(1, map.size());
-        assertSame(s1, s2);
+        assertSame(i1, i2);
         
-        map = makeTestMap(nullFactory);
+        map = getLazyMap(new HashMap<Integer,Number>(), FactoryUtils.<Long>nullFactory());
         Object o = map.get("Five");
         assertEquals(null,o);
         assertEquals(1, map.size());
-        
     }
     
-    public String getCompatibilityVersion() {
+    @Test
+    public void mapGetWithTransformer() {
+    	Transformer<Number, Integer> intConverter = new Transformer<Number, Integer>(){
+			public Integer transform(Number input) {
+				return input.intValue();
+			}
+    	};
+		Map<Long, Number> map = getLazyMap(new HashMap<Long,Number>(), intConverter );
+    	assertEquals(0, map.size());
+    	Number i1 = map.get(123L);
+    	assertEquals(123, i1);
+    	assertEquals(1, map.size());
+    }
+    
+    
+    @Override
+	public String getCompatibilityVersion() {
         return "3.1";
     }
 

@@ -64,10 +64,10 @@ public class FactoryUtils {
      * This could be useful during testing as a placeholder.
      *
      * @see org.apache.commons.collections.functors.ConstantFactory
-     * 
+     * @param <T> the "type" of null object the factory should return.
      * @return the factory
      */
-    public static Factory nullFactory() {
+    public static <T> Factory<T> nullFactory() {
         return ConstantFactory.NULL_INSTANCE;
     }
 

@@ -397,7 +397,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
      * 
      * @return the map to be tested
      */
-    public abstract Map makeEmptyMap();
+    public abstract <K,V> Map<K,V> makeEmptyMap();
 
     /**
      * Return a new, populated map.  The mappings in the map should match the
