@@ -357,7 +357,7 @@ public class FastTreeMap extends TreeMap {
     public void clear() {
         if (fast) {
             synchronized (this) {
-                map = new TreeMap();
+                map = new TreeMap(map.comparator());
             }
         } else {
             synchronized (map) {
@@ -580,7 +580,7 @@ public class FastTreeMap extends TreeMap {
         public void clear() {
             if (fast) {
                 synchronized (FastTreeMap.this) {
-                    map = new TreeMap();
+                    map = new TreeMap(map.comparator());
                 }
             } else {
                 synchronized (map) {
