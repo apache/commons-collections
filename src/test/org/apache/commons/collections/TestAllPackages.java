@@ -20,28 +20,27 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 /**
  * Entry point for all Collections project tests.
  * 
  * @version $Revision$ $Date$
  * 
  * @author Stephen Colebourne
+ * @author Stephen Kestle
  */
 @RunWith(Suite.class)
-@SuiteClasses({org.apache.commons.collections.TestAll.class,
-        org.apache.commons.collections.bag.TestAll.class,
-        org.apache.commons.collections.bidimap.TestAll.class,
-        org.apache.commons.collections.buffer.TestAll.class,
-        org.apache.commons.collections.collection.TestAll.class,
-        org.apache.commons.collections.comparators.TestAll.class,
-        org.apache.commons.collections.iterators.TestAll.class,
-        org.apache.commons.collections.keyvalue.TestAll.class,
-        org.apache.commons.collections.list.TestAll.class,
-        org.apache.commons.collections.map.TestAll.class,
-        org.apache.commons.collections.set.TestAll.class})
+@SuiteClasses({
+	org.apache.commons.collections.TestAll.class,
+    org.apache.commons.collections.bag.TestAll.class,
+    org.apache.commons.collections.bidimap.TestAll.class,
+    org.apache.commons.collections.buffer.TestAll.class,
+    org.apache.commons.collections.collection.TestAll.class,
+    org.apache.commons.collections.comparators.TestAll.class,
+    org.apache.commons.collections.iterators.TestAll.class,
+    org.apache.commons.collections.keyvalue.TestAll.class,
+    org.apache.commons.collections.list.TestAll.class,
+    org.apache.commons.collections.map.TestAll.class,
+    org.apache.commons.collections.set.TestAll.class
+})
 public class TestAllPackages {
 }
