@@ -38,7 +38,6 @@ import org.junit.Test;
 public class TestLazyMap extends AbstractTestMap {
     
 	private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
-    private static final Factory<Object> nullFactory = FactoryUtils.nullFactory();
     
     public TestLazyMap(String testName) {
         super(testName);
