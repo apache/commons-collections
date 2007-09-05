@@ -63,4 +63,25 @@ public class TestTransformedBuffer extends TestCase {
         assertEquals(true, buffer.remove(new Integer((String) els[0])));
         
     }
+
+    public void testTransformedBuffer_decorateTransform() {
+        Buffer originalBuffer = new ArrayStack();
+        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (int i = 0; i < els.length; i++) {
+            originalBuffer.add(els[i]);
+        }
+        Buffer buffer = TransformedBuffer.decorateTransform(originalBuffer, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(els.length, buffer.size());
+        for (int i = 0; i < els.length; i++) {
+            assertEquals(true, buffer.contains(new Integer((String) els[i])));
+            assertEquals(false, buffer.contains(els[i]));
+        }
+        
+        assertEquals(false, buffer.remove(els[0]));
+        assertEquals(true, buffer.remove(new Integer((String) els[0])));
+    }
+
+    public String getCompatibilityVersion() {
+        return "3.1";
+    }
 }

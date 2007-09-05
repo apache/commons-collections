@@ -51,6 +51,7 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
+     * Constrast this with {@link #decorateTransform}.
      * 
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -61,6 +62,32 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
         return new TransformedCollection(coll, transformer);
     }
     
+    /**
+     * Factory method to create a transforming collection that will transform
+     * existing contents of the specified collection.
+     * <p>
+     * If there are any elements already in the collection being decorated, they
+     * will be transformed by this method.
+     * Constrast this with {@link #decorate}.
+     * 
+     * @param collection  the collection to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed Collection
+     * @throws IllegalArgumentException if collection or transformer is null
+     * @since Commons Collections 3.3
+     */
+    public static Collection decorateTransform(Collection collection, Transformer transformer) {
+        TransformedCollection decorated = new TransformedCollection(collection, transformer);
+        if (transformer != null && collection != null && collection.size() > 0) {
+            Object[] values = collection.toArray();
+            collection.clear();
+            for(int i=0; i<values.length; i++) {
+                decorated.getCollection().add(transformer.transform(values[i]));
+            }
+        }
+        return decorated;
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).

@@ -63,7 +63,23 @@ public class TestTransformedBag extends AbstractTestBag {
         
         assertEquals(false, bag.remove(els[0]));
         assertEquals(true, bag.remove(new Integer((String) els[0])));
+    }
+
+    public void testTransformedBag_decorateTransform() {
+        Bag originalBag = new HashBag();
+        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (int i = 0; i < els.length; i++) {
+            originalBag.add(els[i]);
+        }
+        Bag bag = TransformedBag.decorateTransform(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(els.length, bag.size());
+        for (int i = 0; i < els.length; i++) {
+            assertEquals(true, bag.contains(new Integer((String) els[i])));
+            assertEquals(false, bag.contains(els[i]));
+        }
         
+        assertEquals(false, bag.remove(els[0]));
+        assertEquals(true, bag.remove(new Integer((String) els[0])));
     }
 
     public String getCompatibilityVersion() {

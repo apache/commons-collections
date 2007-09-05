@@ -1201,6 +1201,9 @@ public class CollectionUtils {
      * Each object is passed through the transformer as it is added to the
      * Collection. It is important not to use the original collection after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
+     * <p>
+     * Existing entries in the specified collection will not be transformed.
+     * If you want that behaviour, see {@link TransformedCollection#decorateTransform}.
      *
      * @param collection  the collection to predicate, must not be null
      * @param transformer  the transformer for the collection, must not be null

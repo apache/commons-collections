@@ -46,6 +46,7 @@ public class TransformedSortedSet extends TransformedSet implements SortedSet {
      * <p>
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
+     * Constrast this with {@link #decorateTransform}.
      * 
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -55,6 +56,32 @@ public class TransformedSortedSet extends TransformedSet implements SortedSet {
         return new TransformedSortedSet(set, transformer);
     }
     
+    /**
+     * Factory method to create a transforming sorted set that will transform
+     * existing contents of the specified sorted set.
+     * <p>
+     * If there are any elements already in the set being decorated, they
+     * will be transformed by this method.
+     * Constrast this with {@link #decorate}.
+     * 
+     * @param set  the set to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed SortedSet
+     * @throws IllegalArgumentException if set or transformer is null
+     * @since Commons Collections 3.3
+     */
+    public static SortedSet decorateTransform(SortedSet set, Transformer transformer) {
+        TransformedSortedSet decorated = new TransformedSortedSet(set, transformer);
+        if (transformer != null && set != null && set.size() > 0) {
+            Object[] values = set.toArray();
+            set.clear();
+            for(int i=0; i<values.length; i++) {
+                decorated.getCollection().add(transformer.transform(values[i]));
+            }
+        }
+        return decorated;
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).

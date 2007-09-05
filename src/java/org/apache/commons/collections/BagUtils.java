@@ -140,6 +140,9 @@ public class BagUtils {
      * Each object is passed through the transformer as it is added to the
      * Bag. It is important not to use the original bag after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
+     * <p>
+     * Existing entries in the specified bag will not be transformed.
+     * If you want that behaviour, see {@link TransformedBag#decorateTransform}.
      *
      * @param bag  the bag to predicate, must not be null
      * @param transformer  the transformer for the bag, must not be null
@@ -231,6 +234,9 @@ public class BagUtils {
      * Each object is passed through the transformer as it is added to the
      * Bag. It is important not to use the original bag after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
+     * <p>
+     * Existing entries in the specified bag will not be transformed.
+     * If you want that behaviour, see {@link TransformedSortedBag#decorateTransform}.
      *
      * @param bag  the bag to predicate, must not be null
      * @param transformer  the transformer for the bag, must not be null

@@ -118,6 +118,23 @@ public class TestTransformedList extends AbstractTestList {
         assertEquals(new Integer(2), list.get(2));
     }
 
+    public void testTransformedList_decorateTransform() {
+        List originalList = new ArrayList();
+        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (int i = 0; i < els.length; i++) {
+            originalList.add(els[i]);
+        }
+        List list = TransformedList.decorateTransform(originalList, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(els.length, list.size());
+        for (int i = 0; i < els.length; i++) {
+            assertEquals(true, list.contains(new Integer((String) els[i])));
+            assertEquals(false, list.contains(els[i]));
+        }
+        
+        assertEquals(false, list.remove(els[0]));
+        assertEquals(true, list.remove(new Integer((String) els[0])));
+    }
+
     public String getCompatibilityVersion() {
         return "3.1";
     }

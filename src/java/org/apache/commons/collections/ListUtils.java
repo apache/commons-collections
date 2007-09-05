@@ -350,6 +350,9 @@ public class ListUtils {
      * Each object is passed through the transformer as it is added to the
      * List. It is important not to use the original list after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
+     * <p>
+     * Existing entries in the specified list will not be transformed.
+     * If you want that behaviour, see {@link TransformedList#decorateTransform}.
      *
      * @param list  the list to predicate, must not be null
      * @param transformer  the transformer for the list, must not be null

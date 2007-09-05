@@ -212,6 +212,9 @@ public class SetUtils {
      * Each object is passed through the transformer as it is added to the
      * Set. It is important not to use the original set after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
+     * <p>
+     * Existing entries in the specified set will not be transformed.
+     * If you want that behaviour, see {@link TransformedSet#decorateTransform}.
      *
      * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
@@ -313,6 +316,9 @@ public class SetUtils {
      * Each object is passed through the transformer as it is added to the
      * Set. It is important not to use the original set after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
+     * <p>
+     * Existing entries in the specified set will not be transformed.
+     * If you want that behaviour, see {@link TransformedSortedSet#decorateTransform}.
      *
      * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null

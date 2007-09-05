@@ -105,6 +105,23 @@ public class TestTransformedCollection extends AbstractTestCollection {
         assertEquals(true, coll.remove(new Integer((String) els[0])));
     }
 
+    public void testTransformedCollection_decorateTransform() {
+        Collection originalCollection = new ArrayList();
+        Object[] els = getFullElements();
+        for (int i = 0; i < els.length; i++) {
+            originalCollection.add(els[i]);
+        }
+        Collection collection = TransformedCollection.decorateTransform(originalCollection, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(els.length, collection.size());
+        for (int i = 0; i < els.length; i++) {
+            assertEquals(true, collection.contains(new Integer((String) els[i])));
+            assertEquals(false, collection.contains(els[i]));
+        }
+        
+        assertEquals(false, collection.remove(els[0]));
+        assertEquals(true, collection.remove(new Integer((String) els[0])));
+    }
+
     public String getCompatibilityVersion() {
         return "3.1";
     }

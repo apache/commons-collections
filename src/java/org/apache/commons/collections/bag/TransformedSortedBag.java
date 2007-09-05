@@ -47,6 +47,7 @@ public class TransformedSortedBag
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed.
+     * Constrast this with {@link #decorateTransform}.
      * 
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -57,6 +58,32 @@ public class TransformedSortedBag
         return new TransformedSortedBag(bag, transformer);
     }
     
+    /**
+     * Factory method to create a transforming sorted bag that will transform
+     * existing contents of the specified sorted bag.
+     * <p>
+     * If there are any elements already in the bag being decorated, they
+     * will be transformed by this method.
+     * Constrast this with {@link #decorate}.
+     * 
+     * @param bag  the bag to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed SortedBag
+     * @throws IllegalArgumentException if bag or transformer is null
+     * @since Commons Collections 3.3
+     */
+    public static SortedBag decorateTransform(SortedBag bag, Transformer transformer) {
+        TransformedSortedBag decorated = new TransformedSortedBag(bag, transformer);
+        if (transformer != null && bag != null && bag.size() > 0) {
+            Object[] values = bag.toArray();
+            bag.clear();
+            for(int i=0; i<values.length; i++) {
+                decorated.getCollection().add(transformer.transform(values[i]));
+            }
+        }
+        return decorated;
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).

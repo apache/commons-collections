@@ -49,6 +49,7 @@ public class TransformedList extends TransformedCollection implements List {
      * <p>
      * If there are any elements already in the list being decorated, they
      * are NOT transformed.
+     * Constrast this with {@link #decorateTransform}.
      * 
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -58,6 +59,32 @@ public class TransformedList extends TransformedCollection implements List {
         return new TransformedList(list, transformer);
     }
     
+    /**
+     * Factory method to create a transforming list that will transform
+     * existing contents of the specified list.
+     * <p>
+     * If there are any elements already in the list being decorated, they
+     * will be transformed by this method.
+     * Constrast this with {@link #decorate}.
+     * 
+     * @param list  the list to decorate, must not be null
+     * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed List
+     * @throws IllegalArgumentException if list or transformer is null
+     * @since Commons Collections 3.3
+     */
+    public static List decorateTransform(List list, Transformer transformer) {
+        TransformedList decorated = new TransformedList(list, transformer);
+        if (transformer != null && list != null && list.size() > 0) {
+            Object[] values = list.toArray();
+            list.clear();
+            for(int i=0; i<values.length; i++) {
+                decorated.getCollection().add(transformer.transform(values[i]));
+            }
+        }
+        return decorated;
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).

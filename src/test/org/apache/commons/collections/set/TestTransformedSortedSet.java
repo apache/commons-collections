@@ -17,10 +17,9 @@
 package org.apache.commons.collections.set;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeSet;
 
 import junit.framework.Test;
 
@@ -64,20 +63,33 @@ public class TestTransformedSortedSet extends AbstractTestSortedSet {
     
     //-----------------------------------------------------------------------   
     public void testTransformedSet() {
-        Set set = TransformedSortedSet.decorate(new HashSet(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Set set = TransformedSortedSet.decorate(new TreeSet(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             set.add(els[i]);
             assertEquals(i + 1, set.size());
             assertEquals(true, set.contains(new Integer((String) els[i])));
-            assertEquals(false, set.contains(els[i]));
         }
         
-        assertEquals(false, set.remove(els[0]));
         assertEquals(true, set.remove(new Integer((String) els[0])));
         
     } 
+
+    public void testTransformedSet_decorateTransform() {
+        Set originalSet = new TreeSet();
+        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (int i = 0; i < els.length; i++) {
+            originalSet.add(els[i]);
+        }
+        Set set = TransformedSortedSet.decorateTransform(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(els.length, set.size());
+        for (int i = 0; i < els.length; i++) {
+            assertEquals(true, set.contains(new Integer((String) els[i])));
+        }
+        
+        assertEquals(true, set.remove(new Integer((String) els[0])));
+    }
 
     public String getCompatibilityVersion() {
         return "3.1";
