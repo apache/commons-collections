@@ -44,6 +44,7 @@ import org.junit.runners.Suite.SuiteClasses;
         TestSetUtils.class,
         TestTransformerUtils.class,
         TestArrayStack.class,
-        TestExtendedProperties.class})
+        TestExtendedProperties.class,
+        TestIndexedCollection.class})
 public class TestAll extends TestCase {
 }
