@@ -86,10 +86,17 @@ limitations under the License.
   <property name="build.src.tar.name"   value="${build.dist}/${component.name}-${component.version}-src.tar"/>
   <property name="build.src.gz.name"    value="${build.dist}/${component.name}-${component.version}-src.tar.gz"/>
   <property name="build.src.zip.name"   value="${build.dist}/${component.name}-${component.version}-src.zip"/>
-  <property name="dist.home"            value="dist"/> <!-- for nightly builds -->
+  <property name="dist.home"            value="dist"/>
+  <!-- for nightly builds -->
 
+  <!-- Path variables -->
+  <path id="test.support.path">
+    <!--Combines all jar references needed for running and compiling tests-->
+    <pathelement location="${junit.jar}" />
+    <pathelement location="${easymock.jar}" />
+  </path>
 
-<!-- ========== Settings ================================================== -->
+  <!-- ========== Settings ================================================== -->
 
   <!-- Javac -->
   <property name="compile.debug"           value="true"/>
@@ -107,30 +114,30 @@ limitations under the License.
   <property name="maven.repo"  value="${user.home}/.maven/repository" />
 
 
-<!-- ====================================================================== -->
-<!-- ========== Executable Targets ======================================== -->
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
+  <!-- ========== Executable Targets ======================================== -->
+  <!-- ====================================================================== -->
 
   <target name="clean"
           description="Clean build and distribution directories">
     <delete dir="${build.home}"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="init"
           description="Initialize and evaluate conditionals">
     <echo message="-------- ${component.name} ${component.version} --------"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="prepare" depends="init"
           description="Prepare build directory">
     <mkdir dir="${build.home}"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="compile" depends="prepare"
           description="Compile main code">
@@ -143,7 +150,7 @@ limitations under the License.
     </javac>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="jar" depends="compile"
           description="Create jar">
@@ -152,7 +159,7 @@ limitations under the License.
              tofile="${build.classes}/META-INF/LICENSE.txt"/>
     <copy      file="NOTICE.txt"
              tofile="${build.classes}/META-INF/NOTICE.txt"/>
-             
+
     <tstamp/>
     <mkdir      dir="${build.conf}"/>
     <copy     todir="${build.conf}" filtering="on">
@@ -164,14 +171,14 @@ limitations under the License.
       </filterset>
       <fileset dir="${source.conf}" includes="*.MF"/>
     </copy>
-             
+
     <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
     <jar    jarfile="${build.jar.name}"
             basedir="${build.classes}"
            manifest="${build.conf}/MANIFEST.MF"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
   <!-- Targets you might use to get smaller jar files - not recommended -->
 
   <target name="splitjar" depends="jar"
@@ -273,7 +280,7 @@ limitations under the License.
 
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="compile.tests" depends="compile"
           description="Compile unit test cases">
@@ -285,12 +292,12 @@ limitations under the License.
           optimize="false">
       <classpath>
         <pathelement location="${build.classes}"/>
-        <pathelement location="${junit.jar}"/>
+        <path refid="test.support.path"/>
       </classpath>
     </javac>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <!-- Tests collections, either running all or one test -->
   <target name="test" depends="-test-all,-test-single"
@@ -320,8 +327,8 @@ limitations under the License.
         <pathelement location="${build.instrumented}"/>
         <pathelement location="${build.classes}"/>
         <pathelement location="${build.tests}"/>
-        <pathelement location="${junit.jar}"/>
-        <path refid="emma.lib"/>
+        <path refid="test.support.path"/>
+      	<path refid="emma.lib"/>
       </classpath>
       <jvmarg value="-Demma.coverage.out.file=${build.reports.coverage}/coverage.ec" />
       <jvmarg value="-Demma.coverage.out.merge=true" />
@@ -379,7 +386,7 @@ limitations under the License.
 	</target>
 
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="testjar"  depends="compile.tests,jar"
           description="Run all unit test cases">
@@ -400,11 +407,13 @@ limitations under the License.
     </junit>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="javadoc" depends="prepare"
           description="Create component Javadoc documentation">
-    <tstamp><format property="year" pattern="yyyy"/></tstamp>
+    <tstamp>
+      <format property="year" pattern="yyyy"/>
+    </tstamp>
     <delete     dir="${build.docs}"/>
     <mkdir      dir="${build.docs}"/>
     <javadoc sourcepath="${source.java}"
@@ -422,10 +431,10 @@ limitations under the License.
     </javadoc>
   </target>
 
-<!-- ====================================================================== -->
-<!-- ========== Test framework ============================================ -->
-<!-- ====================================================================== -->
-   
+  <!-- ====================================================================== -->
+  <!-- ========== Test framework ============================================ -->
+  <!-- ====================================================================== -->
+
   <property name="tf.name"                 value="commons-collections-testframework"/>
   <property name="tf.package"              value="org.apache.commons.collections"/>
   <property name="tf.title"                value="Commons Collections Test Framework"/>
@@ -435,12 +444,12 @@ limitations under the License.
   <property name="tf.build.conf"           value="${build.home}/tfconf"/>
   <property name="tf.build.tf"             value="${build.home}/testframework"/>
   <property name="tf.build.docs"           value="${build.home}/docs/testframework"/>
-  
+
   <property name="tf.jar.name" value="${tf.name}-${tf.version}.jar"/>
   <property name="tf.build.jar.name" value="${build.home}/${tf.jar.name}"/>
 
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <!-- patternset describing test framework source not dependent on collections jar -->
   <patternset id="tf.patternset.validate">
@@ -457,7 +466,7 @@ limitations under the License.
     <include name="**/AbstractTestMapEntry.java"/>
     <include name="**/BulkTest.java"/>
   </patternset>
-  
+
   <target name="tf.validate" depends="prepare"
           description="Testframework - Validate testframework independence">
     <delete    dir="${tf.build.tf}"/>
@@ -475,7 +484,7 @@ limitations under the License.
     <delete dir="${tf.build.tf}"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="tf.jar" depends="compile.tests"
           description="Testframework - Create jar">
@@ -486,13 +495,13 @@ limitations under the License.
         <include name="**/BulkTest*.class"/>
       </fileset>
     </copy>
-    
+
     <mkdir      dir="${tf.build.tf}/META-INF"/>
     <copy      file="LICENSE.txt"
              tofile="${tf.build.tf}/META-INF/LICENSE.txt"/>
     <copy      file="NOTICE.txt"
              tofile="${tf.build.tf}/META-INF/NOTICE.txt"/>
-             
+
     <tstamp/>
     <mkdir      dir="${tf.build.conf}"/>
     <copy     todir="${tf.build.conf}" filtering="on">
@@ -504,18 +513,20 @@ limitations under the License.
       </filterset>
       <fileset dir="${source.conf}" includes="*.MF"/>
     </copy>
-             
+
     <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
     <jar    jarfile="${tf.build.jar.name}"
             basedir="${tf.build.tf}"
            manifest="${tf.build.conf}/MANIFEST.MF"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="tf.javadoc" depends="prepare"
           description="Testframework - Create Javadoc documentation">
-    <tstamp><format property="year" pattern="yyyy"/></tstamp>
+    <tstamp>
+      <format property="year" pattern="yyyy"/>
+    </tstamp>
     <delete     dir="${tf.build.docs}"/>
     <mkdir      dir="${tf.build.docs}"/>
     <javadoc    destdir="${tf.build.docs}"
@@ -535,11 +546,11 @@ limitations under the License.
   </target>
 
 
-<!-- ====================================================================== -->
-<!-- ========== Distributions ============================================= -->
-<!-- ====================================================================== -->
-   
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
+  <!-- ========== Distributions ============================================= -->
+  <!-- ====================================================================== -->
+
+  <!-- ====================================================================== -->
 
   <!-- Target needed for nightly builds -->
   <target name="dist" depends="javadoc,dist.create"
@@ -548,7 +559,7 @@ limitations under the License.
     <mkdir dir="${dist.home}" />
     <copy todir="${dist.home}">
       <fileset dir="${build.dist.bin}" />
-	</copy>
+    </copy>
   </target>
 
   <target name="dist.create" depends="jar,testjar,tf.validate,tf.jar,dist.bin,dist.src">
@@ -565,7 +576,7 @@ limitations under the License.
     <antcall target="internal-md5">
       <param name="path" value="${build.home}/${final.name}.jar"/>
     </antcall>
-  	
+
     <mkdir      dir="${build.dist.bin.work}"/>
     <copy     todir="${build.dist.bin.work}">
       <fileset dir=".">
@@ -582,7 +593,7 @@ limitations under the License.
       </fileset>
     </copy>
   </target>
-  
+
   <target name="dist.src">
     <mkdir      dir="${build.dist.src.work}"/>
     <copy     todir="${build.dist.src.work}">
@@ -614,12 +625,12 @@ limitations under the License.
     </copy>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="release" depends="dist.create,zip"
           description="Create release">
-  	<!-- POM -->
-  	<copy file="project.xml" tofile="${build.home}/${final.name}.pom" />
+    <!-- POM -->
+    <copy file="project.xml" tofile="${build.home}/${final.name}.pom" />
     <antcall target="internal-md5">
       <param name="path" value="${build.home}/${final.name}.pom"/>
     </antcall>
@@ -627,10 +638,10 @@ limitations under the License.
 
   <target name="zip" depends="zip.bin,zip.src">
   </target>
-  
+
   <target name="zip.bin">
     <mkdir dir="${build.dist}"/>
-  	<fixcrlf srcdir="${build.dist.bin.work}" eol="lf" includes="*.txt" />
+    <fixcrlf srcdir="${build.dist.bin.work}" eol="lf" includes="*.txt" />
     <tar longfile="gnu" tarfile="${build.bin.tar.name}">
       <tarfileset dir="${build.dist.bin}"/>
     </tar>
@@ -639,8 +650,8 @@ limitations under the License.
     <antcall target="internal-md5">
       <param name="path" value="${build.bin.gz.name}"/>
     </antcall>
-    
-  	<fixcrlf srcdir="${build.dist.bin.work}" eol="crlf" includes="*.txt" />
+
+    <fixcrlf srcdir="${build.dist.bin.work}" eol="crlf" includes="*.txt" />
     <zip zipfile="${build.bin.zip.name}" >
       <zipfileset dir="${build.dist.bin}"/>
     </zip>
@@ -651,7 +662,7 @@ limitations under the License.
 
   <target name="zip.src">
     <mkdir dir="${build.dist}"/>
-  	<fixcrlf srcdir="${build.dist.src.work}" eol="lf" includes="*.txt,*.properties" />
+    <fixcrlf srcdir="${build.dist.src.work}" eol="lf" includes="*.txt,*.properties" />
     <tar longfile="gnu" tarfile="${build.src.tar.name}">
       <tarfileset dir="${build.dist.src}"/>
     </tar>
@@ -660,8 +671,8 @@ limitations under the License.
     <antcall target="internal-md5">
       <param name="path" value="${build.src.gz.name}"/>
     </antcall>
-    
-  	<fixcrlf srcdir="${build.dist.src.work}" eol="crlf" includes="*.txt,*.properties" />
+
+    <fixcrlf srcdir="${build.dist.src.work}" eol="crlf" includes="*.txt,*.properties" />
     <zip zipfile="${build.src.zip.name}" >
       <zipfileset dir="${build.dist.src}"/>
     </zip>
@@ -673,10 +684,10 @@ limitations under the License.
   <target name="internal-md5">
     <basename property="_base" file="${path}"/>
     <checksum file="${path}" property="md5"/>
-   	<echo message="${md5} *${_base}" file="${path}.md5"/>
+    <echo message="${md5} *${_base}" file="${path}.md5"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
   <target name="clirr">
     <taskdef resource="clirrtask.properties">
       <classpath path="${maven.repo}/clirr/jars/clirr-core-0.6-uber.jar;" />

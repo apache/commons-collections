@@ -172,6 +172,10 @@ limitations under the License.
       <name>Robert Burrell Donkin</name>
       <id>rdonkin</id>
     </developer>
+    <developer>
+       <name>Stephen Kestle</name>
+       <id>skestle</id>
+    </developer>
   </developers>
   
   <contributors>
