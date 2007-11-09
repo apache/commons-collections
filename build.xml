@@ -363,7 +363,7 @@ limitations under the License.
       <classpath>
         <pathelement location="${build.classes}"/>
         <pathelement location="${build.tests}"/>
-        <pathelement location="${junit.jar}"/>
+      	<path refid="test.support.path"/>
       </classpath>
 
       <test name="${testcase}" fork="yes">
@@ -395,7 +395,7 @@ limitations under the License.
       <classpath>
         <pathelement location="${build.jar.name}"/>
         <pathelement location="${build.tests}"/>
-        <pathelement location="${junit.jar}"/>
+      	<path refid="test.support.path"/>
       </classpath>
 
       <batchtest fork="yes">
@@ -478,7 +478,7 @@ limitations under the License.
           optimize="false">
       <patternset refid="tf.patternset.validate" />
       <classpath>
-        <pathelement location="${junit.jar}"/>
+        <path refid="test.support.path"/>
       </classpath>
     </javac>
     <delete dir="${tf.build.tf}"/>
