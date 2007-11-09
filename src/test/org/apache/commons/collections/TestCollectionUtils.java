@@ -151,18 +151,18 @@ public class TestCollectionUtils extends MockTestCase {
     @Test
     public void getCardinalityMap() {
         Map<Number, Integer> freqA = CollectionUtils.<Number, Integer>getCardinalityMap(iterableA);
-        assertEquals(1, freqA.get(1));
-        assertEquals(2, freqA.get(2));
-        assertEquals(3, freqA.get(3));
-        assertEquals(4, freqA.get(4));
+        assertEquals(1, (int) freqA.get(1));
+        assertEquals(2, (int) freqA.get(2));
+        assertEquals(3, (int) freqA.get(3));
+        assertEquals(4, (int) freqA.get(4));
         assertNull(freqA.get(5));
 
         Map<Long, Integer> freqB = CollectionUtils.getCardinalityMap(iterableB);
         assertNull(freqB.get(1L));
-        assertEquals(4, freqB.get(2L));
-        assertEquals(3, freqB.get(3L));
-        assertEquals(2, freqB.get(4L));
-        assertEquals(1, freqB.get(5L));
+        assertEquals(4, (int) freqB.get(2L));
+        assertEquals(3, (int) freqB.get(3L));
+        assertEquals(2, (int) freqB.get(4L));
+        assertEquals(1, (int) freqB.get(5L));
     }
 
     @Test
@@ -585,9 +585,9 @@ public class TestCollectionUtils extends MockTestCase {
     public void getFromIterator() throws Exception {
         // Iterator, entry exists
         Iterator<Integer> iterator = iterableA.iterator();
-        assertEquals(1, CollectionUtils.get(iterator, 0));
+        assertEquals(1, (int) CollectionUtils.get(iterator, 0));
         iterator = iterableA.iterator();
-        assertEquals(2, CollectionUtils.get(iterator, 1));
+        assertEquals(2, (int) CollectionUtils.get(iterator, 1));
 
         // Iterator, non-existent entry
         try {
@@ -873,7 +873,8 @@ public class TestCollectionUtils extends MockTestCase {
     };
 
 //Up to here
-    @Test
+    @SuppressWarnings("cast")
+	@Test
     public void filter() {
         List<Integer> ints = new ArrayList<Integer>();
         ints.add(1);
@@ -882,8 +883,8 @@ public class TestCollectionUtils extends MockTestCase {
         ints.add(3);
         Iterable<Integer> iterable = ints;
         CollectionUtils.filter(iterable, EQUALS_TWO);
-        assertEquals(1, ints.size());
-        assertEquals(2, ints.get(0));
+        assertEquals(1, (int) ints.size());
+        assertEquals(2, (int) ints.get(0));
     }
     
     @Test
