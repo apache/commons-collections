@@ -934,7 +934,7 @@ public class CollectionUtils {
         } else if (object instanceof Enumeration) {
             Enumeration it = (Enumeration) object;
             while (it.hasMoreElements()) {
-                index--;
+                i--;
                 if (i == -1) {
                     return it.nextElement();
                 } else {
