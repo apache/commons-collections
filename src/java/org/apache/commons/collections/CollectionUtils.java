@@ -122,16 +122,14 @@ public class CollectionUtils {
 
     }
 
-    /** Constant to avoid repeated object creation */
-    private static Integer INTEGER_ONE = new Integer(1);
-
     /**
      * An empty unmodifiable collection.
      * The JDK provides empty Set and List implementations which could be used for
      * this purpose. However they could be cast to Set or List which might be
      * undesirable. This implementation only implements Collection.
      */
-    public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.decorate(new ArrayList<Object>());
+    @SuppressWarnings("unchecked")
+	public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.decorate(new ArrayList<Object>());
 
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.
@@ -144,6 +142,7 @@ public class CollectionUtils {
      * 
      * @see #EMPTY_COLLECTION
      * @since 4.0
+     * @return immutable empty collection
      */
     @SuppressWarnings("unchecked")
     public static <T> Collection<T> emptyCollection() {
@@ -162,8 +161,6 @@ public class CollectionUtils {
      * @param b the second collection, must not be null
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
-     * @param <I1> the generic type of the first input {@link Iterable}.
-     * @param <I2> the generic type of the second input {@link Iterable}.
      * @return the union of the two collections
      * @see Collection#addAll
      */
@@ -187,8 +184,6 @@ public class CollectionUtils {
      * @param b the second collection, must not be null
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
-     * @param <I1> the generic type of the first input {@link Iterable}.
-     * @param <I2> the generic type of the second input {@link Iterable}.
      * @return the intersection of the two collections
      * @see Collection#retainAll
      * @see #containsAny
@@ -218,8 +213,6 @@ public class CollectionUtils {
      * @param b the second collection, must not be null
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
-     * @param <I1> the generic type of the first input {@link Iterable}.
-     * @param <I2> the generic type of the second input {@link Iterable}.
      * @return the symmetric difference of the two collections
      */
     public static <O> Collection<O> disjunction(final Iterable<? extends O> a, final Iterable<? extends O> b) {
@@ -240,8 +233,6 @@ public class CollectionUtils {
      * @param b  the collection to subtract, must not be null
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
-     * @param <I1> the generic type of the first input {@link Iterable}.
-     * @param <I2> the generic type of the second input {@link Iterable}.
      * @return a new collection with the results
      * @see Collection#removeAll
      */
@@ -266,16 +257,16 @@ public class CollectionUtils {
      * @since 2.1
      * @see #intersection
      */
-    public static boolean containsAny(final Collection coll1, final Collection coll2) {
+    public static boolean containsAny(final Collection<?> coll1, final Collection<?> coll2) {
         if (coll1.size() < coll2.size()) {
-            for (Iterator it = coll1.iterator(); it.hasNext();) {
-                if (coll2.contains(it.next())) {
+            for (Object aColl1 : coll1) {
+                if (coll2.contains(aColl1)) {
                     return true;
                 }
             }
         } else {
-            for (Iterator it = coll2.iterator(); it.hasNext();) {
-                if (coll1.contains(it.next())) {
+            for (Object aColl2 : coll2) {
+                if (coll1.contains(aColl2)) {
                     return true;
                 }
             }
@@ -306,7 +297,7 @@ public class CollectionUtils {
         for (I obj : coll) {
             Integer c = count.get(obj);
             if (c == null) {
-                count.put(obj, INTEGER_ONE);
+                count.put(obj, 1);
             } else {
                 count.put(obj, c + 1);
             }
@@ -474,7 +465,7 @@ public class CollectionUtils {
     public static <T> void filter(Iterable<T> collection, Predicate<? super T> predicate) {
         if (collection != null && predicate != null) {
             for (Iterator<T> it = collection.iterator(); it.hasNext();) {
-                if (predicate.evaluate(it.next()) == false) {
+                if (!predicate.evaluate(it.next())) {
                     it.remove();
                 }
             }
@@ -593,6 +584,7 @@ public class CollectionUtils {
      *            the predicate to use, may be null
      * @param outputCollection
      *            the collection to output into, may not be null
+     * @return outputCollection
      */
     public static <O, I extends O> Collection<O> select(Collection<I> inputCollection, Predicate<? super I> predicate, Collection<O> outputCollection) {
         if (inputCollection != null && predicate != null) {
@@ -637,11 +629,12 @@ public class CollectionUtils {
      *            the predicate to use, may be null
      * @param outputCollection
      *            the collection to output into, may not be null
+     * @return outputCollection
      */
     public static <O, I extends O> Collection<O> selectRejected(Collection<I> inputCollection, Predicate<? super I> predicate, Collection<O> outputCollection) {
         if (inputCollection != null && predicate != null) {
             for (I item : inputCollection) {
-                if (predicate.evaluate(item) == false) {
+                if (!predicate.evaluate(item)) {
                     outputCollection.add(item);
                 }
             }
@@ -661,7 +654,6 @@ public class CollectionUtils {
      *            the transformer to use, may be null
      * @param <I> the type of object in the input collection
      * @param <O> the type of object in the output collection
-     * @param <T> the output type of the transformer - this extends O.
      * @return the transformed result (new list)
      * @throws NullPointerException
      *             if the input collection is null
@@ -685,7 +677,6 @@ public class CollectionUtils {
      *            the transformer to use, may be null
      * @param <I> the type of object in the input collection
      * @param <O> the type of object in the output collection
-     * @param <T> the output type of the transformer - this extends O.
      * @return the transformed result (new list)
      */
     public static <I,O> Collection<O> collect(Iterator<I> inputIterator, Transformer<? super I, ? extends O> transformer) {
@@ -772,9 +763,9 @@ public class CollectionUtils {
      * @throws NullPointerException
      *             if the collection or iterator is null
      */
-    public static <T> boolean addAll(Collection<? super T> collection, Iterable<T> iterable) {
+    public static <C> boolean addAll(Collection<C> collection, Iterable<? extends C> iterable) {
         if (iterable instanceof Collection) {
-            return collection.addAll((Collection<T>) iterable);
+            return collection.addAll((Collection<? extends C>) iterable);
         }
         return addAll(collection, iterable.iterator());
     }
@@ -843,15 +834,16 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if the object type is invalid
      */
     public static <T> T get(Iterator<T> iterator, int index) {
-        checkIndexBounds(index);
+        int i = index;
+		checkIndexBounds(i);
             while (iterator.hasNext()) {
-                index--;
-                if (index == -1) {
+                i--;
+                if (i == -1) {
                     return iterator.next();
                 }
                 iterator.next();
             }
-            throw new IndexOutOfBoundsException("Entry does not exist: " + index);
+            throw new IndexOutOfBoundsException("Entry does not exist: " + i);
     }
 
     /**
@@ -916,45 +908,45 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if the object type is invalid
      */
     public static Object get(Object object, int index) {
-        if (index < 0) {
-            throw new IndexOutOfBoundsException("Index cannot be negative: " + index);
+        int i = index;
+		if (i < 0) {
+            throw new IndexOutOfBoundsException("Index cannot be negative: " + i);
         }
         if (object instanceof Map) {
             Map map = (Map) object;
             Iterator iterator = map.entrySet().iterator();
-            return get(iterator, index);
+            return get(iterator, i);
         } else if (object instanceof Object[]) {
-            return ((Object[]) object)[index];
+            return ((Object[]) object)[i];
         } else if (object instanceof Iterator) {
             Iterator it = (Iterator) object;
             while (it.hasNext()) {
-                index--;
-                if (index == -1) {
+                i--;
+                if (i == -1) {
                     return it.next();
-                } else {
-                    it.next();
                 }
+				it.next();
             }
-            throw new IndexOutOfBoundsException("Entry does not exist: " + index);
+            throw new IndexOutOfBoundsException("Entry does not exist: " + i);
         } else if (object instanceof Collection) {
             Iterator iterator = ((Collection) object).iterator();
-            return get(iterator, index);
+            return get(iterator, i);
         } else if (object instanceof Enumeration) {
             Enumeration it = (Enumeration) object;
             while (it.hasMoreElements()) {
                 index--;
-                if (index == -1) {
+                if (i == -1) {
                     return it.nextElement();
                 } else {
                     it.nextElement();
                 }
             }
-            throw new IndexOutOfBoundsException("Entry does not exist: " + index);
+            throw new IndexOutOfBoundsException("Entry does not exist: " + i);
         } else if (object == null) {
             throw new IllegalArgumentException("Unsupported object type: null");
         } else {
             try {
-                return Array.get(object, index);
+                return Array.get(object, i);
             } catch (IllegalArgumentException ex) {
                 throw new IllegalArgumentException("Unsupported object type: " + object.getClass().getName());
             }
@@ -1113,14 +1105,6 @@ public class CollectionUtils {
         }
     }
 
-    private static final <T> int getFreq(final T obj, final Map<T, Integer> freqMap) {
-        Integer count = freqMap.get(obj);
-        if (count != null) {
-            return count.intValue();
-        }
-        return 0;
-    }
-
     /**
      * Returns true if no more elements can be added to the Collection.
      * <p>
@@ -1246,7 +1230,7 @@ public class CollectionUtils {
      * @return a synchronized collection backed by the given collection
      * @throws IllegalArgumentException  if the collection is null
      */
-    public static Collection synchronizedCollection(Collection collection) {
+    public static <C> Collection<C> synchronizedCollection(Collection<C> collection) {
         return SynchronizedCollection.decorate(collection);
     }
 
@@ -1259,7 +1243,7 @@ public class CollectionUtils {
      * @return an unmodifiable collection backed by the given collection
      * @throws IllegalArgumentException  if the collection is null
      */
-    public static Collection unmodifiableCollection(Collection collection) {
+    public static <C> Collection<C> unmodifiableCollection(Collection<C> collection) {
         return UnmodifiableCollection.decorate(collection);
     }
 

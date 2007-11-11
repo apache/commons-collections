@@ -22,20 +22,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.Vector;
+import java.util.*;
 
 import org.apache.commons.collections.bag.HashBag;
 import org.apache.commons.collections.buffer.BoundedFifoBuffer;
@@ -77,7 +64,7 @@ public class TestCollectionUtils extends MockTestCase {
     private List<Long> collectionB = null;
 
     /**
-     * Collection of {@link Integers}s that are equivalent to the Longs in
+     * Collection of {@link Integer}s that are equivalent to the Longs in
      * collectionB.
      */
     private Collection<Integer> collectionC = null;
@@ -93,7 +80,7 @@ public class TestCollectionUtils extends MockTestCase {
     private Collection<Number> collectionB2 = null;
 
     /**
-     * Collection of {@link Integers}s (cast as {@link Number}s) that are
+     * Collection of {@link Integer}s (cast as {@link Number}s) that are
      * equivalent to the Longs in collectionB.
      */
     private Collection<Number> collectionC2 = null;
@@ -437,6 +424,16 @@ public class TestCollectionUtils extends MockTestCase {
     public void testIsEqualCollection() {
         assertTrue(!CollectionUtils.isEqualCollection(collectionA, collectionC));
         assertTrue(!CollectionUtils.isEqualCollection(collectionC, collectionA));
+    }
+
+    @Test
+    public void testIsEqualCollectionReturnsFalse() {
+        List<Integer> b = new ArrayList<Integer>(collectionA);
+        // remove an extra '2', and add a 5.  This will increase the size of the cardinality
+        b.remove(1);
+        b.add(5);
+        assertFalse(CollectionUtils.isEqualCollection(collectionA, b));
+        assertFalse(CollectionUtils.isEqualCollection(b, collectionA));
     }
 
     @Test
@@ -1073,7 +1070,7 @@ public class TestCollectionUtils extends MockTestCase {
             // expected
         }
         try {
-            collection = CollectionUtils.predicatedCollection(null, predicate);
+            CollectionUtils.predicatedCollection(null, predicate);
             fail("Expecting IllegalArgumentException for null collection.");
         } catch (IllegalArgumentException ex) {
             // expected
@@ -1106,6 +1103,12 @@ public class TestCollectionUtils extends MockTestCase {
         assertFalse(CollectionUtils.isFull(buf2));
         buf2.add("2");
         assertEquals(true, CollectionUtils.isFull(buf2));
+    }
+
+    @Test
+    public void isEmpty() {
+        assertFalse(CollectionUtils.isNotEmpty(null));
+        assertTrue(CollectionUtils.isNotEmpty(collectionA));
     }
 
     @Test
@@ -1346,6 +1349,68 @@ public class TestCollectionUtils extends MockTestCase {
         assertFalse(CollectionUtils.addAll(c, inputIterable));
         verify();
     }
+
+    @Test
+    public void addAllForEnumeration() {
+        Hashtable<Integer, Integer> h = new Hashtable();
+        h.put(5, 5);
+        Enumeration<? extends Integer> enumeration = h.keys();
+        CollectionUtils.addAll(collectionA, enumeration);
+        assertTrue(collectionA.contains(5));
+    }
+
+    @Test
+    public void addAllForElements() {
+        CollectionUtils.addAll(collectionA, new Integer[]{5});
+        assertTrue(collectionA.contains(5));
+    }
+
+    @Test
+    public void get() {
+        try {
+            CollectionUtils.get((Object)collectionA, -3);
+            fail();
+        } catch(IndexOutOfBoundsException e) {
+            ;
+        }
+        try {
+            CollectionUtils.get((Object)collectionA.iterator(), 30);
+            fail();
+        } catch(IndexOutOfBoundsException e) {
+            ;
+        }
+        try {
+            CollectionUtils.get((Object)null, 0);
+            fail();
+        } catch(IllegalArgumentException e) {
+            ;
+        }
+        assertEquals(2, CollectionUtils.get((Object)collectionA, 2));
+        assertEquals(2, CollectionUtils.get((Object)collectionA.iterator(), 2));
+        Map<Integer, Integer> map = CollectionUtils.getCardinalityMap(collectionA);
+        assertEquals(map.entrySet().iterator().next(), CollectionUtils.get(
+                (Object)map, 0));
+    }
+
+    /**
+	 * TODO: Should {@link CollectionUtils} be able to be extended? If it is extended, subclasses must 'override' the static methods with
+	 * call-throughs anyhow, otherwise java compiler warnings will result
+	 */
+	@Test
+    public void ensureCollectionUtilsCanBeExtended() {
+        new CollectionUtils() {};
+    }
+
+    @Test
+    public void reverse() {
+        CollectionUtils.reverseArray(new Object[] {});
+        Integer[] a = collectionA.toArray(new Integer[collectionA.size()]);
+        CollectionUtils.reverseArray(a);
+        // assume our implementation is correct if it returns the same order as the Java function
+        Collections.reverse(collectionA);
+        assertEquals(collectionA, Arrays.asList(a));
+    }
+
 
     /**
      * Records the next object returned for a mock iterator
