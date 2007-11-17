@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
  <!--
-   Copyright 2002-2006 The Apache Software Foundation
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+   Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -17,7 +18,7 @@
 <document>
  <properties>
   <title>Home</title>
-  <author email="commons-dev@jakarta.apache.org">Commons Documentation Team</author>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
  </properties>
 <body>
 <!-- ================================================== -->
@@ -65,18 +66,18 @@ The JavaDoc API documents are available online:
 </ul>
 <p>
 The <a href="cvs-usage.html">subversion repository</a> can be
-<a href="http://svn.apache.org/viewcvs.cgi/jakarta/commons/proper/collections/trunk/">browsed</a>.
+<a href="http://svn.apache.org/viewvc/commons/proper/collections/trunk/">browsed</a>.
 </p>
 </section>
 <!-- ================================================== -->
 <section name="Releases">
 <p>
 The latest version is v3.2. - 
-<a href="http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi">Download now!</a><br />
+<a href="http://commons.apache.org/downloads/download_collections.cgi">Download now!</a><br />
 The <a href="release_3_2.html">release notes</a> are also available.
 </p>
 <p>
-For previous releases, see the <a href="http://archive.apache.org/dist/jakarta/commons/collections/">Apache Archive</a>
+For previous releases, see the <a href="http://archive.apache.org/dist/commons/collections/">Apache Archive</a>
 </p>
 </section>
 <!-- ================================================== -->

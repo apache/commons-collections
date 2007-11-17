@@ -26,13 +26,13 @@ limitations under the License.
   <description>Types that extend and augment the Java Collections Framework.</description>
   <logo>/images/logo.png</logo>
    
-  <url>http://jakarta.apache.org/commons/collections/</url>
+  <url>http://commons.apache.org/collections/</url>
   <package>org.apache.commons.collections</package>
 
   <organization>
     <name>The Apache Software Foundation</name>
-    <url>http://jakarta.apache.org</url>
-    <logo>http://jakarta.apache.org/images/original-jakarta-logo.gif</logo>
+    <url>http://commons.apache.org/</url>
+    <logo>http://commons.apache.org/images/logo.png</logo>
   </organization>
 
   <licenses>
@@ -43,29 +43,29 @@ limitations under the License.
 	</license>
   </licenses>
   
-  <gumpRepositoryId>jakarta</gumpRepositoryId>
+  <gumpRepositoryId>commons</gumpRepositoryId>
   <issueTrackingUrl>http://issues.apache.org/jira/</issueTrackingUrl>
   <siteAddress>people.apache.org</siteAddress>
-  <siteDirectory>/www/jakarta.apache.org/commons/collections/</siteDirectory>
-  <distributionDirectory>/www/jakarta.apache.org/builds/jakarta-commons/collections/</distributionDirectory>
+  <siteDirectory>/www/commons.apache.org/collections/</siteDirectory>
+  <distributionDirectory>/www/people.apache.org/builds/commons/collections/</distributionDirectory>
   
   <repository>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/jakarta/commons/proper/collections/trunk</connection>
-    <url>http://svn.apache.org/repos/asf/jakarta/commons/proper/collections/trunk</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/collections/trunk</connection>
+    <url>http://svn.apache.org/repos/asf/commons/proper/collections/trunk</url>
   </repository>
   
   <mailingLists>
     <mailingList>
       <name>Commons Dev List</name>
-      <subscribe>commons-dev-subscribe@jakarta.apache.org</subscribe>
-      <unsubscribe>commons-dev-unsubscribe@jakarta.apache.org</unsubscribe>
-      <archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-dev@jakarta.apache.org</archive>
+      <subscribe>dev-subscribe@commons.apache.org</subscribe>
+      <unsubscribe>dev-unsubscribe@commons.apache.org</unsubscribe>
+      <archive>http://mail-archives.apache.org/mod_mbox/commons-dev/</archive>
     </mailingList>
     <mailingList>
       <name>Commons User List</name>
-      <subscribe>commons-user-subscribe@jakarta.apache.org</subscribe>
-      <unsubscribe>commons-user-unsubscribe@jakarta.apache.org</unsubscribe>
-      <archive>http://mail-archives.apache.org/eyebrowse/SummarizeList?listName=commons-user@jakarta.apache.org</archive>
+      <subscribe>user-subscribe@commons.apache.org</subscribe>
+      <unsubscribe>user-unsubscribe@commons.apache.org</unsubscribe>
+      <archive>http://mail-archives.apache.org/mod_mbox/commons-user/</archive>
     </mailingList>
   </mailingLists>
 
@@ -472,7 +472,7 @@ limitations under the License.
   </dependencies>
 
   <build>
-    <nagEmailAddress>commons-dev@jakarta.apache.org</nagEmailAddress>
+    <nagEmailAddress>dev@commons.apache.org</nagEmailAddress>
     <sourceDirectory>src/java</sourceDirectory>
     <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
     <integrationUnitTestSourceDirectory/>
