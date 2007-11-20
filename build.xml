@@ -89,6 +89,9 @@ limitations under the License.
   <property name="dist.home"            value="dist"/>
   <!-- for nightly builds -->
 
+  <!-- Used for generating a support jar for open source packages that require deprecated classes -->
+  <property name="collections-3.jar" value="commons-collections-3.2.jar"/>
+  
   <!-- Path variables -->
   <path id="test.support.path">
     <!--Combines all jar references needed for running and compiling tests-->
@@ -699,4 +702,15 @@ limitations under the License.
     </clirr>
   </target>
 
+  <!-- ====================================================================== -->
+  <target name="deprecated.jar" description="Compiles a jar of deprecated classes that existed in 3.* releases, and are necessary for other dependencies">
+    <jar jarfile="commons-collections-deprecated.jar">
+    	<zipfileset src="${collections-3.jar}">
+  			<!-- used by Hibernate -->
+    		<include name="**/SequencedHashMap*"/>
+    		<include name="**/LRUMap*"/>
+    		<include name="**/ReferenceMap*"/>
+    	</zipfileset>
+   	</jar>
+  </target>
 </project>
