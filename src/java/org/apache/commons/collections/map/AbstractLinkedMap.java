@@ -168,9 +168,9 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
 
     //-----------------------------------------------------------------------
     /**
-     * Gets the first key in the map, which is the most recently inserted.
+     * Gets the first key in the map, which is the first inserted.
      * 
-     * @return the most recently inserted key
+     * @return the eldest key
      */
     public Object firstKey() {
         if (size == 0) {
@@ -180,9 +180,9 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     }
 
     /**
-     * Gets the last key in the map, which is the first inserted.
+     * Gets the last key in the map, which is the most recently inserted.
      * 
-     * @return the eldest key
+     * @return the most recently inserted key
      */
     public Object lastKey() {
         if (size == 0) {
