@@ -22,9 +22,10 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>7</version>
+    <version>8</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
+  <packaging>bundle</packaging>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
   <version>3.3-SNAPSHOT</version>
@@ -390,6 +391,11 @@
   <properties>
       <maven.compile.source>1.5</maven.compile.source>
       <maven.compile.target>1.5</maven.compile.target>
+      <commons.componentid>collections</commons.componentid>
+      <commons.release.version>3.2</commons.release.version>
+      <commons.binary.suffix></commons.binary.suffix>
+      <commons.jira.id>COLLECTIONS</commons.jira.id>
+      <commons.jira.pid>12310465</commons.jira.pid>
   </properties> 
 
   <build>
