@@ -708,6 +708,7 @@ limitations under the License.
     	<zipfileset src="${collections-3.jar}">
   			<!-- used by Hibernate -->
     		<include name="**/SequencedHashMap*"/>
+  			<include name="**/KeyValue*"/> <!-- used by SequencedHashMap --> 
     		<include name="**/LRUMap*"/>
     		<include name="**/ReferenceMap*"/>
     	</zipfileset>
