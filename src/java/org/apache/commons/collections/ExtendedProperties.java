@@ -31,6 +31,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.StringTokenizer;
@@ -639,7 +640,7 @@ public class ExtendedProperties extends Hashtable {
      */
     public Object getProperty(String key) {
         // first, try to get from the 'user value' store
-        Object obj = this.get(key);
+        Object obj = super.get(key);
 
         if (obj == null) {
             // if there isn't a value there, get it from the
@@ -705,7 +706,7 @@ public class ExtendedProperties extends Hashtable {
         if (!containsKey(key)) {
             keysAsListed.add(key);
         }
-        put(key, value);
+        super.put(key, value);
     }
 
     /**
@@ -727,7 +728,7 @@ public class ExtendedProperties extends Hashtable {
             List values = new Vector(2);
             values.add(current);
             values.add(value);
-            put(key, values);
+            super.put(key, values);
             
         } else if (current instanceof List) {
             // already a list - just add the new token
@@ -738,7 +739,7 @@ public class ExtendedProperties extends Hashtable {
             if (!containsKey(key)) {
                 keysAsListed.add(key);
             }
-            put(key, value);
+            super.put(key, value);
         }
     }
 
@@ -831,7 +832,7 @@ public class ExtendedProperties extends Hashtable {
                     break;
                 }
             }
-            remove(key);
+            super.remove(key);
         }
     }
 
@@ -1090,7 +1091,7 @@ public class ExtendedProperties extends Hashtable {
         } else if (value instanceof String) {
             Vector values = new Vector(1);
             values.add(value);
-            put(key, values);
+            super.put(key, values);
             return values;
             
         } else if (value == null) {
@@ -1142,7 +1143,7 @@ public class ExtendedProperties extends Hashtable {
         } else if (value instanceof String) {
             List values = new ArrayList(1);
             values.add(value);
-            put(key, values);
+            super.put(key, values);
             return values;
             
         } else if (value == null) {
@@ -1208,7 +1209,7 @@ public class ExtendedProperties extends Hashtable {
         } else if (value instanceof String) {
             String s = testBoolean((String) value);
             Boolean b = new Boolean(s);
-            put(key, b);
+            super.put(key, b);
             return b;
             
         } else if (value == null) {
@@ -1302,7 +1303,7 @@ public class ExtendedProperties extends Hashtable {
             
         } else if (value instanceof String) {
             Byte b = new Byte((String) value);
-            put(key, b);
+            super.put(key, b);
             return b;
             
         } else if (value == null) {
@@ -1372,7 +1373,7 @@ public class ExtendedProperties extends Hashtable {
             
         } else if (value instanceof String) {
             Short s = new Short((String) value);
-            put(key, s);
+            super.put(key, s);
             return s;
             
         } else if (value == null) {
@@ -1470,7 +1471,7 @@ public class ExtendedProperties extends Hashtable {
             
         } else if (value instanceof String) {
             Integer i = new Integer((String) value);
-            put(key, i);
+            super.put(key, i);
             return i;
             
         } else if (value == null) {
@@ -1540,7 +1541,7 @@ public class ExtendedProperties extends Hashtable {
             
         } else if (value instanceof String) {
             Long l = new Long((String) value);
-            put(key, l);
+            super.put(key, l);
             return l;
             
         } else if (value == null) {
@@ -1610,7 +1611,7 @@ public class ExtendedProperties extends Hashtable {
             
         } else if (value instanceof String) {
             Float f = new Float((String) value);
-            put(key, f);
+            super.put(key, f);
             return f;
             
         } else if (value == null) {
@@ -1680,7 +1681,7 @@ public class ExtendedProperties extends Hashtable {
             
         } else if (value instanceof String) {
             Double d = new Double((String) value);
-            put(key, d);
+            super.put(key, d);
             return d;
             
         } else if (value == null) {
@@ -1712,6 +1713,57 @@ public class ExtendedProperties extends Hashtable {
         }
 
         return c;
+    }
+
+    /**
+     * Add a new property specified by the key to the 
+     * ExtendedProperties.
+     *
+     * @param key specifying the property
+     * @param value for the property
+     * @return old value of the property
+     */
+    public Object put(Object key, Object value) {
+        String strKey = String.valueOf(key);
+        Object ret = getProperty(strKey);
+        addProperty(strKey, value);
+        return ret;
+    }
+
+    /**
+     * Add a map full of key/value pairs to the ExtendedProperties. 
+     * If the added map is an ExtendedProperties class, then the 
+     * order of the added properties is maintained. 
+     *
+     * @param map full of key/value pair data
+     */
+    public void putAll(Map map) {
+        if (map instanceof ExtendedProperties) {
+            for (Iterator it = ((ExtendedProperties) map).getKeys(); it.hasNext(); ) {
+                Object key = it.next();
+                put(key, map.get(key));
+            }
+        } else {
+            for (Iterator it = map.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry entry = (Map.Entry) it.next();
+                put(entry.getKey(), entry.getValue());
+            }
+        }
+    }
+
+
+    /**
+     * Remove the property specified by the key from the 
+     * ExtendedProperties.
+     *
+     * @param key specifying the property
+     * @return old value of the property
+     */
+    public Object remove(Object key) {
+        String strKey = String.valueOf(key);
+        Object ret = getProperty(strKey);
+        clearProperty(strKey);
+        return ret;
     }
 
 }

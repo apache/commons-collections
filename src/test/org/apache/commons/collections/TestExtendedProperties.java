@@ -19,6 +19,7 @@ package org.apache.commons.collections;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Properties;
 
 import junit.framework.Test;
@@ -336,6 +337,63 @@ public class TestExtendedProperties extends TestCase {
         a.setInclude(null);
         assertEquals(null, a.getInclude());
         assertEquals("include", b.getInclude());
+    }
+
+    public void testKeySet1() {
+            ExtendedProperties p = new ExtendedProperties();
+            p.addProperty("a", "foo");
+            p.addProperty("b", "bar");
+            p.addProperty("c", "bar");
+
+            Iterator it = p.getKeys();
+            assertEquals("a", (String) it.next());
+            assertEquals("b", (String) it.next());
+            assertEquals("c", (String) it.next());
+            assertFalse(it.hasNext());
+    }
+
+    public void testKeySet2() {
+        ExtendedProperties p = new ExtendedProperties();
+        p.put("a", "foo");
+        p.put("b", "bar");
+        p.put("c", "bar");
+
+        Iterator it = p.getKeys();
+        assertEquals("a", (String) it.next());
+        assertEquals("b", (String) it.next());
+        assertEquals("c", (String) it.next());
+        assertFalse(it.hasNext());
+    }
+
+
+    public void testKeySet3() {
+        ExtendedProperties q = new ExtendedProperties();
+        q.addProperty("a", "foo");
+        q.addProperty("b", "bar");
+        q.addProperty("c", "bar");
+
+        ExtendedProperties p = new ExtendedProperties();
+        p.putAll(q);
+
+        Iterator it = p.getKeys();
+        assertEquals("a", (String) it.next());
+        assertEquals("b", (String) it.next());
+        assertEquals("c", (String) it.next());
+        assertFalse(it.hasNext());
+    }
+
+    public void testKeySet4() {
+        ExtendedProperties q = new ExtendedProperties();
+        q.addProperty("a", "foo");
+        q.addProperty("b", "bar");
+        q.addProperty("c", "bar");
+
+        q.remove("b");
+
+        Iterator it = q.getKeys();
+        assertEquals("a", (String) it.next());
+        assertEquals("c", (String) it.next());
+        assertFalse(it.hasNext());
     }
 
 }
