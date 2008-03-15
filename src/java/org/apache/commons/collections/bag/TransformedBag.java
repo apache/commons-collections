@@ -17,7 +17,6 @@
 package org.apache.commons.collections.bag;
 
 import java.util.Set;
-import java.util.Collection;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Transformer;
