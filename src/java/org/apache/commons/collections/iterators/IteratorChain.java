@@ -50,7 +50,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  */
 public class IteratorChain implements Iterator {
 
-	/** The chain of iterators */
+    /** The chain of iterators */
     protected final List iteratorChain = new ArrayList();
     /** The index of the current iterator */
     protected int currentIteratorIndex = 0;

@@ -78,11 +78,11 @@ public class CursorableLinkedList implements List, Serializable {
      * @param element element to be inserted.
      *
      * @throws ClassCastException if the class of the specified element
-     * 		  prevents it from being added to this list.
+     *           prevents it from being added to this list.
      * @throws IllegalArgumentException if some aspect of the specified
-     *		     element prevents it from being added to this list.
+     *             element prevents it from being added to this list.
      * @throws IndexOutOfBoundsException if the index is out of range
-     *		     (index &lt; 0 || index &gt; size()).
+     *             (index &lt; 0 || index &gt; size()).
      */
     public void add(int index, Object element) {
         if(index == _size) {
@@ -109,7 +109,7 @@ public class CursorableLinkedList implements List, Serializable {
      * @return <tt>true</tt> if this list changed as a result of the call.
      *
      * @throws ClassCastException if the class of an element in the specified
-     * 	     collection prevents it from being added to this list.
+     *          collection prevents it from being added to this list.
      * @throws IllegalArgumentException if some aspect of an element in the
      *         specified collection prevents it from being added to this
      *         list.
@@ -137,18 +137,18 @@ public class CursorableLinkedList implements List, Serializable {
      * collection is this list, and it's nonempty.)
      *
      * @param index index at which to insert first element from the specified
-     *	            collection.
+     *                collection.
      * @param c elements to be inserted into this list.
      * @return <tt>true</tt> if this list changed as a result of the call.
      *
      * @throws ClassCastException if the class of one of elements of the
-     * 		   specified collection prevents it from being added to this
-     * 		   list.
+     *            specified collection prevents it from being added to this
+     *            list.
      * @throws IllegalArgumentException if some aspect of one of elements of
      *         the specified collection prevents it from being added to
      *         this list.
      * @throws IndexOutOfBoundsException if the index is out of range (index
-     *	      &lt; 0 || index &gt; size()).
+     *          &lt; 0 || index &gt; size()).
      */
     public boolean addAll(int index, Collection c) {
         if(c.isEmpty()) {
@@ -291,7 +291,7 @@ public class CursorableLinkedList implements List, Serializable {
      * @see #listIterator(int)
      * @see CursorableLinkedList.Cursor
      * @throws IndexOutOfBoundsException if the index is out of range (index
-     *	        &lt; 0 || index &gt; size()).
+     *            &lt; 0 || index &gt; size()).
      */
     public CursorableLinkedList.Cursor cursor(int i) {
         return new Cursor(i);
@@ -333,7 +333,7 @@ public class CursorableLinkedList implements List, Serializable {
      * @return the element at the specified position in this list.
      *
      * @throws IndexOutOfBoundsException if the index is out of range (index
-     * 		  &lt; 0 || index &gt;= size()).
+     *           &lt; 0 || index &gt;= size()).
      */
     public Object get(int index) {
         return getListableAt(index).value();
@@ -450,7 +450,7 @@ public class CursorableLinkedList implements List, Serializable {
      *
      * @param o element to search for.
      * @return the index in this list of the last occurrence of the specified
-     * 	       element, or -1 if this list does not contain this element.
+     *            element, or -1 if this list does not contain this element.
      */
     public int lastIndexOf(Object o) {
         int ndx = _size-1;
@@ -617,11 +617,11 @@ public class CursorableLinkedList implements List, Serializable {
      * @return the element previously at the specified position.
      *
      * @throws ClassCastException if the class of the specified element
-     * 		  prevents it from being added to this list.
+     *           prevents it from being added to this list.
      * @throws IllegalArgumentException if some aspect of the specified
-     *	        element prevents it from being added to this list.
+     *            element prevents it from being added to this list.
      * @throws IndexOutOfBoundsException if the index is out of range
-     *		     (index &lt; 0 || index &gt;= size()).
+     *             (index &lt; 0 || index &gt;= size()).
      */
     public Object set(int index, Object element) {
         Listable elt = getListableAt(index);

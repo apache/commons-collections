@@ -185,7 +185,7 @@ public class CompositeMap implements Map {
      *         key.
      *
      * @throws ClassCastException if the key is of an inappropriate type for
-     * 		  this map (optional).
+     *           this map (optional).
      * @throws NullPointerException if the key is <tt>null</tt> and this map
      *            does not not permit <tt>null</tt> keys (optional).
      */
@@ -210,7 +210,7 @@ public class CompositeMap implements Map {
      * @return <tt>true</tt> if this map maps one or more keys to the
      *         specified value.
      * @throws ClassCastException if the value is of an inappropriate type for
-     * 		  this map (optional).
+     *           this map (optional).
      * @throws NullPointerException if the value is <tt>null</tt> and this map
      *            does not not permit <tt>null</tt> values (optional).
      */
@@ -263,12 +263,12 @@ public class CompositeMap implements Map {
      *
      * @param key key whose associated value is to be returned.
      * @return the value to which this map maps the specified key, or
-     *	       <tt>null</tt> if the map contains no mapping for this key.
+     *           <tt>null</tt> if the map contains no mapping for this key.
      *
      * @throws ClassCastException if the key is of an inappropriate type for
-     * 		  this map (optional).
+     *           this map (optional).
      * @throws NullPointerException key is <tt>null</tt> and this map does not
-     *		  not permit <tt>null</tt> keys (optional).
+     *          not permit <tt>null</tt> keys (optional).
      *
      * @see #containsKey(Object)
      */
@@ -329,16 +329,16 @@ public class CompositeMap implements Map {
      * @param key key with which the specified value is to be associated.
      * @param value value to be associated with the specified key.
      * @return previous value associated with specified key, or <tt>null</tt>
-     *	       if there was no mapping for key.  A <tt>null</tt> return can
-     *	       also indicate that the map previously associated <tt>null</tt>
-     *	       with the specified key, if the implementation supports
-     *	       <tt>null</tt> values.
+     *           if there was no mapping for key.  A <tt>null</tt> return can
+     *           also indicate that the map previously associated <tt>null</tt>
+     *           with the specified key, if the implementation supports
+     *           <tt>null</tt> values.
      *
      * @throws UnsupportedOperationException if no MapMutator has been specified
      * @throws ClassCastException if the class of the specified key or value
-     * 	          prevents it from being stored in this map.
+     *               prevents it from being stored in this map.
      * @throws IllegalArgumentException if some aspect of this key or value
-     *	          prevents it from being stored in this map.
+     *              prevents it from being stored in this map.
      * @throws NullPointerException this map does not permit <tt>null</tt>
      *            keys or values, and the specified key or value is
      *            <tt>null</tt>.
@@ -361,13 +361,13 @@ public class CompositeMap implements Map {
      * @param map Mappings to be stored in this map.
      *
      * @throws UnsupportedOperationException if the <tt>putAll</tt> method is
-     * 		  not supported by this map.
+     *           not supported by this map.
      *
      * @throws ClassCastException if the class of a key or value in the
-     * 	          specified map prevents it from being stored in this map.
+     *               specified map prevents it from being stored in this map.
      *
      * @throws IllegalArgumentException some aspect of a key or value in the
-     *	          specified map prevents it from being stored in this map.
+     *              specified map prevents it from being stored in this map.
      * @throws NullPointerException the specified map is <tt>null</tt>, or if
      *         this map does not permit <tt>null</tt> keys or values, and the
      *         specified map contains <tt>null</tt> keys or values.
@@ -395,10 +395,10 @@ public class CompositeMap implements Map {
      *
      * @param key key whose mapping is to be removed from the map.
      * @return previous value associated with specified key, or <tt>null</tt>
-     *	       if there was no mapping for key.
+     *           if there was no mapping for key.
      *
      * @throws ClassCastException if the key is of an inappropriate type for
-     * 		  the composited map (optional).
+     *           the composited map (optional).
      * @throws NullPointerException if the key is <tt>null</tt> and the composited map
      *            does not not permit <tt>null</tt> keys (optional).
      * @throws UnsupportedOperationException if the <tt>remove</tt> method is
@@ -501,16 +501,16 @@ public class CompositeMap implements Map {
          * @param key  key with which the specified value is to be associated.
          * @param value  value to be associated with the specified key.
          * @return previous value associated with specified key, or <tt>null</tt>
-         *	       if there was no mapping for key.  A <tt>null</tt> return can
-         *	       also indicate that the map previously associated <tt>null</tt>
-         *	       with the specified key, if the implementation supports
-         *	       <tt>null</tt> values.
+         *           if there was no mapping for key.  A <tt>null</tt> return can
+         *           also indicate that the map previously associated <tt>null</tt>
+         *           with the specified key, if the implementation supports
+         *           <tt>null</tt> values.
          *
          * @throws UnsupportedOperationException if not defined
          * @throws ClassCastException if the class of the specified key or value
-         * 	          prevents it from being stored in this map.
+         *               prevents it from being stored in this map.
          * @throws IllegalArgumentException if some aspect of this key or value
-         *	          prevents it from being stored in this map.
+         *              prevents it from being stored in this map.
          * @throws NullPointerException this map does not permit <tt>null</tt>
          *            keys or values, and the specified key or value is
          *            <tt>null</tt>.
@@ -526,9 +526,9 @@ public class CompositeMap implements Map {
          *
          * @throws UnsupportedOperationException if not defined
          * @throws ClassCastException if the class of the specified key or value
-         * 	          prevents it from being stored in this map.
+         *               prevents it from being stored in this map.
          * @throws IllegalArgumentException if some aspect of this key or value
-         *	          prevents it from being stored in this map.
+         *              prevents it from being stored in this map.
          * @throws NullPointerException this map does not permit <tt>null</tt>
          *            keys or values, and the specified key or value is
          *            <tt>null</tt>.

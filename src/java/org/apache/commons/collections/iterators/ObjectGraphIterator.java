@@ -79,7 +79,7 @@ public class ObjectGraphIterator implements Iterator {
 
     /** The stack of iterators */
     protected final ArrayStack stack = new ArrayStack(8);
-	/** The root object in the tree */
+    /** The root object in the tree */
     protected Object root;
     /** The transformer to use */
     protected Transformer transformer;
