@@ -138,17 +138,23 @@ public abstract class AbstractTestObject extends BulkTest {
         }
     }
 
+    protected Object serializeDeserialize(Object obj) throws Exception {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(buffer);
+        out.writeObject(obj);
+        out.close();
+
+        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        Object dest = in.readObject();
+        in.close();
+
+        return dest;
+    }
+
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(buffer);
-            out.writeObject(obj);
-            out.close();
-
-            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            Object dest = in.readObject();
-            in.close();
+            Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
                 assertEquals("obj != deserialize(serialize(obj))", obj, dest);
             }

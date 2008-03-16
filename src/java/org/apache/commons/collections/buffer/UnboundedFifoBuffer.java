@@ -115,6 +115,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeInt(size());
+        out.writeInt(buffer.length);
         for (Iterator it = iterator(); it.hasNext();) {
             out.writeObject(it.next());
         }
@@ -130,7 +131,8 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         int size = in.readInt();
-        buffer = new Object[size + 1];
+        int length = in.readInt();
+        buffer = new Object[length];
         for (int i = 0; i < size; i++) {
             buffer[i] = in.readObject();
         }

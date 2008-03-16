@@ -413,6 +413,17 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------
+    public void testCollections220() throws Exception {
+         UnboundedFifoBuffer buffer = new UnboundedFifoBuffer();
+         
+         buffer = (UnboundedFifoBuffer) serializeDeserialize(buffer);
+
+         // test size() gets incremented
+         buffer.add("Foo");
+         assertEquals(1, buffer.size());
+    }
+
+    //-----------------------------------------------------------------------
     public String getCompatibilityVersion() {
         return "3.1";
     }
