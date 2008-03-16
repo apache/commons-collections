@@ -42,6 +42,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * @author Stephen Colebourne
  * @author Neil O'Toole
  * @author Matthew Hawthorne
+ * @author Dave Meikle
  */
 public class ListUtils {
 
@@ -410,4 +411,26 @@ public class ListUtils {
         return FixedSizeList.decorate(list);
     }
 
+    /**
+     * Finds the first index in the given List which matches the given predicate.
+     * <p>
+     * If the input List or predicate is null, or no element of the List
+     * matches the predicate, -1 is returned.
+     *
+     * @param list the List to search, may be null
+     * @param predicate  the predicate to use, may be null
+     * @return the first index of an Object in the List which matches the predicate or -1 if none could be found
+     */
+    public static int indexOf(List list, Predicate predicate) {
+        if (list != null && predicate != null) {
+            for (int i = 0; i < list.size(); i++) {
+                Object item = list.get(i);
+                if (predicate.evaluate(item)) {
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
+    
 }

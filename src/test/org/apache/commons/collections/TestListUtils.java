@@ -33,6 +33,7 @@ import org.apache.commons.collections.list.PredicatedList;
  * @author Stephen Colebourne
  * @author Neil O'Toole
  * @author Matthew Hawthorne
+ * @author Dave Meikle
  */
 public class TestListUtils extends BulkTest {
 
@@ -171,6 +172,22 @@ public class TestListUtils extends BulkTest {
             ListUtils.removeAll(null, null);
             fail("expecting NullPointerException");
         } catch(NullPointerException npe) {} // this is what we want
+    }
+
+    /**
+     * Tests the <code>indexOf</code> method in <code>ListUtils</code> class..
+     */
+    public void testIndexOf() {
+        Predicate testPredicate = PredicateUtils.equalPredicate("d");
+        int index = ListUtils.indexOf(fullList, testPredicate);
+        assertEquals(d, fullList.get(index));
+
+        testPredicate = PredicateUtils.equalPredicate("de");
+        index = ListUtils.indexOf(fullList, testPredicate);
+        assertTrue(index == -1);
+        
+        assertEquals(ListUtils.indexOf(null,testPredicate), -1);
+        assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
     
 }
