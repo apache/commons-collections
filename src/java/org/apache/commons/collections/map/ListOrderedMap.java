@@ -66,6 +66,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * 
  * @author Stephen Colebourne
  * @author Matt Benson
+ * @author Dave Meikle
  */
 public class ListOrderedMap
         extends AbstractMapDecorator
@@ -220,6 +221,21 @@ public class ListOrderedMap
         for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
             put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    /**
+     * Puts the values contained in a supplied Map into the Map starting at
+     * the specified index.
+     *
+     * @param index the index in the Map to start at.
+     * @param map the Map containing the values to be added.
+     */
+    public void putAll(int index, Map map) {
+        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            put(index, entry.getKey(), entry.getValue());
+            index++;
         }
     }
 

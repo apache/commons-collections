@@ -299,6 +299,32 @@ public class TestListOrderedMap extends AbstractTestOrderedMap {
         assertEquals("One", lom.getValue(2));
     }
 
+    public void testPutAllWithIndex() {
+        resetEmpty();
+        ListOrderedMap lom = (ListOrderedMap) map;
+
+        // Create Initial Data
+        lom.put("testInsert0", "testInsert0v");
+        lom.put("testInsert1", "testInsert1v");
+        lom.put("testInsert2", "testInsert2v");
+        assertEquals("testInsert0v", lom.getValue(0));
+        assertEquals("testInsert1v", lom.getValue(1));
+        assertEquals("testInsert2v", lom.getValue(2));
+
+        // Create New Test Map and Add using putAll(int, Object, Object)
+        Map values = new HashMap();
+        values.put("NewInsert0", "NewInsert0v");
+        values.put("NewInsert1", "NewInsert1v");
+        lom.putAll(1, values);
+
+        // Perform Asserts
+        assertEquals("testInsert0v", lom.getValue(0));
+        assertEquals("NewInsert0v", lom.getValue(1));
+        assertEquals("NewInsert1v", lom.getValue(2));
+        assertEquals("testInsert1v", lom.getValue(3));
+        assertEquals("testInsert2v", lom.getValue(4));
+    }
+
     //-----------------------------------------------------------------------
     public void testValueList_getByIndex() {
         resetFull();
