@@ -813,7 +813,7 @@ public class ExtendedProperties extends Hashtable {
     public void combine(ExtendedProperties props) {
         for (Iterator it = props.getKeys(); it.hasNext();) {
             String key = (String) it.next();
-            setProperty(key, props.get(key));
+            super.put(key, props.get(key));
         }
     }
     
