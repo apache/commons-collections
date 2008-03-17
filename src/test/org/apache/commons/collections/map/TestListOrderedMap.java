@@ -312,7 +312,7 @@ public class TestListOrderedMap extends AbstractTestOrderedMap {
         assertEquals("testInsert2v", lom.getValue(2));
 
         // Create New Test Map and Add using putAll(int, Object, Object)
-        Map values = new HashMap();
+        Map values = new ListOrderedMap();
         values.put("NewInsert0", "NewInsert0v");
         values.put("NewInsert1", "NewInsert1v");
         lom.putAll(1, values);
