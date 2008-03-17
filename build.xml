@@ -432,28 +432,15 @@
       </fileset>
     </copy>
     
-    <mkdir      dir="${tf.build.tf}/META-INF"/>
-    <copy      file="LICENSE.txt"
-             tofile="${tf.build.tf}/META-INF/LICENSE.txt"/>
-    <copy      file="NOTICE.txt"
-             tofile="${tf.build.tf}/META-INF/NOTICE.txt"/>
-             
-    <tstamp/>
-    <mkdir      dir="${tf.build.conf}"/>
-    <copy     todir="${tf.build.conf}" filtering="on">
-      <filterset>
-        <filter token="name"     value="${tf.name}"/>
-        <filter token="title"    value="${tf.title}"/>
-        <filter token="package"  value="${tf.package}"/>
-        <filter token="version"  value="${tf.version}"/>
-      </filterset>
-      <fileset dir="${source.conf}" includes="*.MF"/>
-    </copy>
-             
     <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
-    <jar    jarfile="${tf.build.jar.name}"
-            basedir="${tf.build.tf}"
-           manifest="${tf.build.conf}/MANIFEST.MF"/>
+    <ant antfile="build-testframework.xml" target="jar">
+      <property name="test.classes"         value="${tf.build.tf}"/>
+      <property name="dist.home"            value="${tf.build.tf}"/>
+      <property name="component.version"    value="${tf.version}"/>
+      <property name="maven.compile.source" value="1.2"/>
+      <property name="maven.compile.target" value="1.2"/>
+    </ant>
+
   </target>
 
 <!-- ====================================================================== -->
