@@ -348,6 +348,10 @@ public class ListUtils {
     /**
      * Returns a transformed list backed by the given list.
      * <p>
+     * This method returns a new list (decorating the specified list) that
+     * will transform any new entries added to it.
+     * Existing entries in the specified list will not be transformed.
+     * <p>
      * Each object is passed through the transformer as it is added to the
      * List. It is important not to use the original list after invoking this 
      * method, as it is a backdoor for adding untransformed objects.
