@@ -435,7 +435,7 @@
     <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
     <ant antfile="build-testframework.xml" target="jar">
       <property name="test.classes"         value="${tf.build.tf}"/>
-      <property name="dist.home"            value="${tf.build.tf}"/>
+      <property name="dist.home"            value="${build.home}"/>
       <property name="component.version"    value="${tf.version}"/>
       <property name="maven.compile.source" value="1.2"/>
       <property name="maven.compile.target" value="1.2"/>
@@ -511,11 +511,6 @@
       <fileset dir="${build.home}">
         <include name="*.jar"/>
         <include name="docs/**"/>
-      </fileset>
-    </copy>
-    <copy     todir="${build.dist.bin.work}">
-      <fileset dir="${tf.build.tf}">
-        <include name="*.jar"/>
       </fileset>
     </copy>
   </target>
