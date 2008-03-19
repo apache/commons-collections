@@ -25,8 +25,9 @@
         <fileSet>
             <includes>
                 <include>build.xml</include>
+                <include>build-testframework.xml</include>
+                <include>checkstyle.xml</include>
                 <include>DEVELOPERS-GUIDE.html</include>
-                <include>default.properties</include>
                 <include>LICENSE.txt</include>
                 <include>maven.xml</include>
                 <include>NOTICE.txt</include>
@@ -36,7 +37,6 @@
                 <include>PROPOSAL.html</include>
                 <include>README.txt</include>
                 <include>RELEASE-NOTES.html</include>
-
             </includes>
         </fileSet>
         <fileSet>
