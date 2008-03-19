@@ -253,6 +253,20 @@ public class CollatingIterator implements Iterator {
         it.remove();
     }
 
+    /**
+     * Returns the index of the iterator that returned the last element.
+     * 
+     * @return the index of the iterator that returned the last element
+     * @throws IllegalStateException if there is no last returned element
+     */
+    public int getIteratorIndex() {
+        if (lastReturned == -1) {
+            throw new IllegalStateException("No value has been returned yet");
+        }
+        
+        return lastReturned;
+    }
+    
     // Private Methods
     // -------------------------------------------------------------------
     /** 
