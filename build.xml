@@ -513,6 +513,11 @@
         <include name="docs/**"/>
       </fileset>
     </copy>
+    <copy     todir="${build.dist.bin.work}">
+      <fileset dir="${tf.build.tf}">
+        <include name="*.jar"/>
+      </fileset>
+    </copy>
   </target>
   
   <target name="dist.src">
@@ -527,9 +532,12 @@
         <include name="PROPOSAL.html"/>
         <include name="STATUS.html"/>
         <include name="build.xml"/>
+        <include name="build-testframework.xml"/>
+        <include name="checkstyle.xml"/>
         <include name="maven.xml"/>
         <include name="project.xml"/>
         <include name="project.properties"/>
+        <include name="pom.xml"/>
       </fileset>
     </copy>
     <copy     todir="${build.dist.src.work}">

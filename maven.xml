@@ -98,6 +98,10 @@
     <!-- Copy Files -->
     <ant:copy todir="${maven.dist.src.assembly.dir}">
       <ant:fileset dir=".">
+        <ant:include name="build-testframework.xml"/>
+        <ant:include name="checkstyle.xml"/>
+        <ant:include name="pom.xml"/>
+        <ant:include name="NOTICE.txt"/>
         <ant:include name="RELEASE-NOTES.html"/>
         <ant:include name="DEVELOPERS-GUIDE.html"/>
         <ant:include name="PROPOSAL.html"/>
