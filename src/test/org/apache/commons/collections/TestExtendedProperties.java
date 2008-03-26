@@ -407,4 +407,16 @@ public class TestExtendedProperties extends TestCase {
         assertEquals( "\\\\192.168.1.91\\test", props2.getProperty("test") );
     }
 
+    public void testCollections238() throws IOException {
+        ExtendedProperties props = new ExtendedProperties();
+        String txt = "x=1\ny=\nz=3";
+        byte[] bytes = txt.getBytes();
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        props.load(in);
+        assertEquals("1", props.getProperty("x"));
+        assertEquals("3", props.getProperty("z"));
+        assertEquals("", props.getProperty("y"));
+        assertEquals(3, props.size());
+    }
+
 }

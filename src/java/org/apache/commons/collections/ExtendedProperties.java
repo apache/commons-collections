@@ -593,10 +593,12 @@ public class ExtendedProperties extends Hashtable {
                     String key = line.substring(0, equalSign).trim();
                     String value = line.substring(equalSign + 1).trim();
 
+                    /* COLLECTIONS-238 allows empty properties to exist by commenting this out
                     // Configure produces lines like this ... just ignore them
                     if ("".equals(value)) {
                         continue;
                     }
+                    */
 
                     if (includeProperty != null && key.equalsIgnoreCase(includeProperty)) {
                         // Recursively load properties files.
