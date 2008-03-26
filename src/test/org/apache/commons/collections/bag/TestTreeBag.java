@@ -71,6 +71,16 @@ public class TestTreeBag extends AbstractTestBag {
       assertEquals("Should get last key",
                    "D", ((SortedBag)bag).last());
    }
+
+   public void testCollections265() {
+       Bag bag = new TreeBag();
+       try {
+           bag.add(new Object());
+           fail("IllegalArgumentException expected");
+       } catch(IllegalArgumentException iae) {
+           // expected;
+       }
+   }
    
    public String getCompatibilityVersion() {
        return "3";

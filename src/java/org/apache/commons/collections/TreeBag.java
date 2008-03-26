@@ -62,6 +62,14 @@ public class TreeBag extends DefaultMapBag implements SortedBag {
         addAll(coll);
     }
 
+    public boolean add(Object o) {
+        if(comparator() == null && !(o instanceof Comparable)) {
+            throw new IllegalArgumentException("Objects of type " + o.getClass() + " cannot be added to " + 
+                                               "a naturally ordered TreeBag as it does not implement Comparable");
+        }
+        return super.add(o);
+    }
+
     public Object first() {
         return ((SortedMap) getMap()).firstKey();
     }
