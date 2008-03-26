@@ -98,7 +98,7 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
      */
     protected void validate(Object object) {
         if (predicate.evaluate(object) == false) {
-            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate rejected it");
+            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" + predicate + "' rejected it");
         }
     }
 
