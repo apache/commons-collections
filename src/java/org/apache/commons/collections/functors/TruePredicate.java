@@ -27,14 +27,27 @@ import org.apache.commons.collections.Predicate;
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
+ * @author Stephen Kestle
  */
-public final class TruePredicate implements Predicate, Serializable {
+public final class TruePredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3374767158756189740L;
     
     /** Singleton predicate instance */
-    public static final Predicate INSTANCE = new TruePredicate();
+    public static final Predicate<?> INSTANCE = new TruePredicate<Object>();
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     * @since Commons Collections 3.1
+     * @deprecated
+     */
+    @Deprecated 
+    public static <T> Predicate<T> getInstance() {
+        return truePredicate();
+    }
 
     /**
      * Factory returning the singleton instance.
@@ -42,8 +55,9 @@ public final class TruePredicate implements Predicate, Serializable {
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Predicate getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> truePredicate() {
+        return (Predicate<T>) INSTANCE;
     }
 
     /**
@@ -59,8 +73,7 @@ public final class TruePredicate implements Predicate, Serializable {
      * @param object  the input object
      * @return true always
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         return true;
     }
-
 }

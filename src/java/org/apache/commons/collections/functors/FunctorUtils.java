@@ -17,7 +17,6 @@
 package org.apache.commons.collections.functors;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.apache.commons.collections.Closure;
 import org.apache.commons.collections.Predicate;
@@ -43,15 +42,35 @@ class FunctorUtils {
     
     /**
      * Clone the predicates to ensure that the internal reference can't be messed with.
+     * Due to the {@link Predicate#evaluate(T)} method, Predicate<? super T> is
+     * able to be coerced to Predicate<T> without casting issues. 
      * 
      * @param predicates  the predicates to copy
      * @return the cloned predicates
      */
-    static Predicate[] copy(Predicate[] predicates) {
+    @SuppressWarnings("unchecked")
+    static <T> Predicate<? super T>[] copy(Predicate<? super T>[] predicates) {
         if (predicates == null) {
             return null;
         }
-        return (Predicate[]) predicates.clone();
+        return predicates.clone();
+    }
+    
+    /**
+     * A very simple method that coerces Predicate<? super T> to Predicate<T>.
+     * Due to the {@link Predicate#evaluate(T)} method, Predicate<? super T> is
+     * able to be coerced to Predicate<T> without casting issues. 
+     * <p>This method exists
+     * simply as centralised documentation and atomic unchecked warning
+     * suppression.
+     * 
+     * @param <T> the type of object the returned predicate should "accept"
+     * @param predicate the predicate to coerce.
+     * @return the coerced predicate.
+     */
+    @SuppressWarnings("unchecked")
+    static <T> Predicate<T> coerce(Predicate<? super T> predicate){
+        return (Predicate<T>) predicate;
     }
     
     /**
@@ -59,7 +78,7 @@ class FunctorUtils {
      * 
      * @param predicates  the predicates to validate
      */
-    static void validate(Predicate[] predicates) {
+    static void validate(Predicate<?>[] predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate array must not be null");
         }
@@ -76,15 +95,16 @@ class FunctorUtils {
      * @param predicates  the predicates to validate
      * @return predicate array
      */
-    static Predicate[] validate(Collection predicates) {
+    @SuppressWarnings("unchecked")
+    static <T> Predicate<? super T>[] validate(Collection<Predicate<? super T>> predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate collection must not be null");
         }
         // convert to array like this to guarantee iterator() ordering
-        Predicate[] preds = new Predicate[predicates.size()];
+        Predicate<? super T>[] preds = new Predicate[predicates.size()];
         int i = 0;
-        for (Iterator it = predicates.iterator(); it.hasNext();) {
-            preds[i] = (Predicate) it.next();
+        for (Predicate<? super T> predicate : predicates) {
+            preds[i] = predicate;
             if (preds[i] == null) {
                 throw new IllegalArgumentException("The predicate collection must not contain a null predicate, index " + i + " was null");
             }

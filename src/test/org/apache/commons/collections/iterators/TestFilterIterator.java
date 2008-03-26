@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.iterators;
 
+import static org.apache.commons.collections.functors.TruePredicate.truePredicate;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -125,7 +127,7 @@ public class TestFilterIterator extends AbstractTestIterator {
         Iterator iter2 = Collections.EMPTY_LIST.iterator();
         
         FilterIterator filterIterator = new FilterIterator(iter1);
-        filterIterator.setPredicate(TruePredicate.getInstance());
+        filterIterator.setPredicate(truePredicate());
         // this iterator has elements
         assertEquals(true, filterIterator.hasNext());
         
@@ -142,7 +144,7 @@ public class TestFilterIterator extends AbstractTestIterator {
         Iterator iter = Collections.singleton(null).iterator();
 
         FilterIterator filterIterator = new FilterIterator(iter);
-        filterIterator.setPredicate(TruePredicate.getInstance());
+        filterIterator.setPredicate(truePredicate());
         // this predicate matches
         assertEquals(true, filterIterator.hasNext());
         

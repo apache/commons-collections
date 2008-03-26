@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections;
 
+import static org.apache.commons.collections.functors.AllPredicate.allPredicate;
+import static org.apache.commons.collections.functors.TruePredicate.truePredicate;
+
 import java.util.Collection;
 
 import org.apache.commons.collections.functors.AllPredicate;
@@ -103,8 +106,8 @@ public class PredicateUtils {
      * 
      * @return the predicate
      */
-    public static Predicate truePredicate() {
-        return TruePredicate.INSTANCE;
+    public static <T> Predicate<T> truePredicate() {
+        return truePredicate();
     }
 
     /**
@@ -274,8 +277,8 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate allPredicate(Predicate[] predicates) {
-        return AllPredicate.getInstance(predicates);
+    public static <T> Predicate<T> allPredicate(Predicate<? super T>[] predicates) {
+        return allPredicate(predicates);
     }
 
     /**
@@ -290,8 +293,8 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static Predicate allPredicate(Collection predicates) {
-        return AllPredicate.getInstance(predicates);
+    public static <T> Predicate<T> allPredicate(Collection<Predicate<? super T>> predicates) {
+        return allPredicate(predicates);
     }
 
     /**
