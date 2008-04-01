@@ -107,7 +107,7 @@ public class PredicateUtils {
      * @return the predicate
      */
     public static <T> Predicate<T> truePredicate() {
-        return truePredicate();
+        return TruePredicate.truePredicate();
     }
 
     /**
