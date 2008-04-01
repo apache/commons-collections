@@ -105,7 +105,9 @@ public class PredicateUtils {
      * @see org.apache.commons.collections.functors.TruePredicate
      * 
      * @return the predicate
+     * @deprecated use {@link TruePredicate#truePredicate()} instead.
      */
+    @Deprecated
     public static <T> Predicate<T> truePredicate() {
         return TruePredicate.truePredicate();
     }
@@ -276,9 +278,11 @@ public class PredicateUtils {
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
+     * @deprecated use {@link AllPredicate#allPredicate(Predicate...)))} instead.
      */
+    @Deprecated
     public static <T> Predicate<T> allPredicate(Predicate<? super T>[] predicates) {
-        return allPredicate(predicates);
+        return AllPredicate.allPredicate(predicates);
     }
 
     /**
@@ -292,9 +296,11 @@ public class PredicateUtils {
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
+     * @deprecated use {@link AllPredicate#allPredicate(Collection))} instead.
      */
+    @Deprecated
     public static <T> Predicate<T> allPredicate(Collection<Predicate<? super T>> predicates) {
-        return allPredicate(predicates);
+        return AllPredicate.allPredicate(predicates);
     }
 
     /**
