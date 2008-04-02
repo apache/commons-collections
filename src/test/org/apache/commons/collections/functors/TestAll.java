@@ -14,6 +14,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Edwin Tellman
  */
 @RunWith(Suite.class)
-@SuiteClasses({TestAllPredicate.class})
+@SuiteClasses({TestAllPredicate.class, 
+    TestNullPredicate.class})
 public class TestAll extends TestCase {
 }

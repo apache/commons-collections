@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author Edwin Tellman
  */
-public abstract class PredicateTestBase<T> {
+public abstract class MockPredicateTestBase<T> {
     /**
      * Mock predicates created by a single test case which need to be verified after the test completes.
      */
@@ -35,7 +35,7 @@ public abstract class PredicateTestBase<T> {
      *
      * @param testValue the value to pass to mock predicates.
      */
-    protected PredicateTestBase(final T testValue) {
+    protected MockPredicateTestBase(final T testValue) {
         this.testValue = testValue;
     }
 

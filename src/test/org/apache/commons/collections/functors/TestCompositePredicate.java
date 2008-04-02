@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author Edwin Tellman
  */
-public abstract class TestCompositePredicate<T> extends PredicateTestBase<T> {
+public abstract class TestCompositePredicate<T> extends MockPredicateTestBase<T> {
 
     /**
      * Creates a new <code>TestCompositePredicate</code>.

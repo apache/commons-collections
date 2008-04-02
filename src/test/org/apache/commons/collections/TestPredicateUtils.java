@@ -16,6 +16,14 @@
  */
 package org.apache.commons.collections;
 
+import static org.apache.commons.collections.functors.NullPredicate.nullPredicate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -23,10 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import org.apache.commons.collections.functors.BasicPredicateTestBase;
+import org.apache.commons.collections.functors.NullPredicate;
+import org.junit.Test;
 
 /**
  * Tests the org.apache.commons.collections.PredicateUtils class.
@@ -37,34 +44,7 @@ import junit.textui.TestRunner;
  * @author Stephen Colebourne
  * @author Matt Benson
  */
-public class TestPredicateUtils extends junit.framework.TestCase {
-
-    private static final Object cObject = new Object();
-    private static final Object cString = "Hello";
-    private static final Object cInteger = new Integer(6);
-
-    /**
-     * Construct
-     */
-    public TestPredicateUtils(String name) {
-        super(name);
-    }
-
-    /**
-     * Main.
-     * @param args
-     */    
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
-
-    /**
-     * Return class as a test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TestPredicateUtils.class);
-    }
-
+public class TestPredicateUtils extends BasicPredicateTestBase {
     /**
      * Set up instance variables required by this test case.
      */
@@ -80,7 +60,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // exceptionPredicate
     //------------------------------------------------------------------
 
-    public void testExceptionPredicate() {
+    @Test public void testExceptionPredicate() {
         assertNotNull(PredicateUtils.exceptionPredicate());
         assertSame(PredicateUtils.exceptionPredicate(), PredicateUtils.exceptionPredicate());
         try {
@@ -95,22 +75,10 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    // nullPredicate
-    //------------------------------------------------------------------
-
-    public void testNullPredicate() {
-        assertNotNull(PredicateUtils.nullPredicate());
-        assertSame(PredicateUtils.nullPredicate(), PredicateUtils.nullPredicate());
-        assertEquals(true, PredicateUtils.nullPredicate().evaluate(null));
-        assertEquals(false, PredicateUtils.nullPredicate().evaluate(cObject));
-        assertEquals(false, PredicateUtils.nullPredicate().evaluate(cString));
-        assertEquals(false, PredicateUtils.nullPredicate().evaluate(cInteger));
-    }
-
     // notNullPredicate
     //------------------------------------------------------------------
 
-    public void testIsNotNullPredicate() {
+    @Test public void testIsNotNullPredicate() {
         assertNotNull(PredicateUtils.notNullPredicate());
         assertSame(PredicateUtils.notNullPredicate(), PredicateUtils.notNullPredicate());
         assertEquals(false, PredicateUtils.notNullPredicate().evaluate(null));
@@ -122,8 +90,8 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // equalPredicate
     //------------------------------------------------------------------
 
-    public void testEqualPredicate() {
-        assertSame(PredicateUtils.nullPredicate(), PredicateUtils.equalPredicate(null));
+    @Test public void testEqualPredicate() {
+        assertSame(nullPredicate(), PredicateUtils.equalPredicate(null));
         assertNotNull(PredicateUtils.equalPredicate(new Integer(6)));
         assertEquals(false, PredicateUtils.equalPredicate(new Integer(6)).evaluate(null));
         assertEquals(false, PredicateUtils.equalPredicate(new Integer(6)).evaluate(cObject));
@@ -134,8 +102,8 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // identityPredicate
     //------------------------------------------------------------------
 
-    public void testIdentityPredicate() {
-        assertSame(PredicateUtils.nullPredicate(), PredicateUtils.identityPredicate(null));
+    @Test public void testIdentityPredicate() {
+        assertSame(nullPredicate(), PredicateUtils.identityPredicate(null));
         assertNotNull(PredicateUtils.identityPredicate(new Integer(6)));
         assertEquals(false, PredicateUtils.identityPredicate(new Integer(6)).evaluate(null));
         assertEquals(false, PredicateUtils.identityPredicate(new Integer(6)).evaluate(cObject));
@@ -147,7 +115,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // truePredicate
     //------------------------------------------------------------------
 
-    public void testTruePredicate() {
+    @Test public void testTruePredicate() {
         assertNotNull(PredicateUtils.truePredicate());
         assertSame(PredicateUtils.truePredicate(), PredicateUtils.truePredicate());
         assertEquals(true, PredicateUtils.truePredicate().evaluate(null));
@@ -159,7 +127,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // falsePredicate
     //------------------------------------------------------------------
 
-    public void testFalsePredicate() {
+    @Test public void testFalsePredicate() {
         assertNotNull(PredicateUtils.falsePredicate());
         assertSame(PredicateUtils.falsePredicate(), PredicateUtils.falsePredicate());
         assertEquals(false, PredicateUtils.falsePredicate().evaluate(null));
@@ -171,7 +139,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // notPredicate
     //------------------------------------------------------------------
 
-    public void testNotPredicate() {
+    @Test public void testNotPredicate() {
         assertNotNull(PredicateUtils.notPredicate(PredicateUtils.truePredicate()));
         assertEquals(false, PredicateUtils.notPredicate(PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(false, PredicateUtils.notPredicate(PredicateUtils.truePredicate()).evaluate(cObject));
@@ -179,7 +147,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         assertEquals(false, PredicateUtils.notPredicate(PredicateUtils.truePredicate()).evaluate(cInteger));
     }
     
-    public void testNotPredicateEx() {
+    @Test public void testNotPredicateEx() {
         try {
             PredicateUtils.notPredicate(null);
         } catch (IllegalArgumentException ex) {
@@ -191,14 +159,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // andPredicate
     //------------------------------------------------------------------
 
-    public void testAndPredicate() {
+    @Test public void testAndPredicate() {
         assertEquals(true, PredicateUtils.andPredicate(PredicateUtils.truePredicate(), PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(false, PredicateUtils.andPredicate(PredicateUtils.truePredicate(), PredicateUtils.falsePredicate()).evaluate(null));
         assertEquals(false, PredicateUtils.andPredicate(PredicateUtils.falsePredicate(), PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(false, PredicateUtils.andPredicate(PredicateUtils.falsePredicate(), PredicateUtils.falsePredicate()).evaluate(null));
     }
 
-    public void testAndPredicateEx() {
+    @Test public void testAndPredicateEx() {
         try {
             PredicateUtils.andPredicate(null, null);
         } catch (IllegalArgumentException ex) {
@@ -210,7 +178,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // allPredicate
     //------------------------------------------------------------------
 
-    public void testAllPredicate() {
+    @Test public void testAllPredicate() {
         assertTrue(PredicateUtils.allPredicate(
             new Predicate[] {}).evaluate(null));
         assertEquals(true, PredicateUtils.allPredicate(new Predicate[] {
@@ -251,7 +219,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         assertTrue(PredicateUtils.allPredicate(coll).evaluate(null));
     }
 
-    public void testAllPredicateEx1() {
+    @Test public void testAllPredicateEx1() {
         try {
             PredicateUtils.allPredicate((Predicate[]) null);
         } catch (IllegalArgumentException ex) {
@@ -260,7 +228,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAllPredicateEx2() {
+    @Test public void testAllPredicateEx2() {
         try {
             PredicateUtils.allPredicate(new Predicate[] {null});
         } catch (IllegalArgumentException ex) {
@@ -269,7 +237,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAllPredicateEx3() {
+    @Test public void testAllPredicateEx3() {
         try {
             PredicateUtils.allPredicate(new Predicate[] {null, null});
         } catch (IllegalArgumentException ex) {
@@ -278,7 +246,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAllPredicateEx4() {
+    @Test public void testAllPredicateEx4() {
         try {
             PredicateUtils.allPredicate((Collection) null);
         } catch (IllegalArgumentException ex) {
@@ -287,11 +255,11 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAllPredicateEx5() {
+    @Test public void testAllPredicateEx5() {
         PredicateUtils.allPredicate(Collections.EMPTY_LIST);
     }
     
-    public void testAllPredicateEx6() {
+    @Test public void testAllPredicateEx6() {
         try {
             Collection coll = new ArrayList();
             coll.add(null);
@@ -306,14 +274,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // orPredicate
     //------------------------------------------------------------------
 
-    public void testOrPredicate() {
+    @Test public void testOrPredicate() {
         assertEquals(true, PredicateUtils.orPredicate(PredicateUtils.truePredicate(), PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(true, PredicateUtils.orPredicate(PredicateUtils.truePredicate(), PredicateUtils.falsePredicate()).evaluate(null));
         assertEquals(true, PredicateUtils.orPredicate(PredicateUtils.falsePredicate(), PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(false, PredicateUtils.orPredicate(PredicateUtils.falsePredicate(), PredicateUtils.falsePredicate()).evaluate(null));
     }
     
-    public void testOrPredicateEx() {
+    @Test public void testOrPredicateEx() {
         try {
             PredicateUtils.orPredicate(null, null);
         } catch (IllegalArgumentException ex) {
@@ -325,7 +293,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // anyPredicate
     //------------------------------------------------------------------
 
-    public void testAnyPredicate() {
+    @Test public void testAnyPredicate() {
         assertFalse(PredicateUtils.anyPredicate(
             new Predicate[] {}).evaluate(null));
         assertEquals(true, PredicateUtils.anyPredicate(new Predicate[] {
@@ -366,7 +334,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         assertFalse(PredicateUtils.anyPredicate(coll).evaluate(null));
     }
 
-    public void testAnyPredicateEx1() {
+    @Test public void testAnyPredicateEx1() {
         try {
             PredicateUtils.anyPredicate((Predicate[]) null);
         } catch (IllegalArgumentException ex) {
@@ -375,7 +343,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAnyPredicateEx2() {
+    @Test public void testAnyPredicateEx2() {
         try {
             PredicateUtils.anyPredicate(new Predicate[] {null});
         } catch (IllegalArgumentException ex) {
@@ -384,7 +352,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAnyPredicateEx3() {
+    @Test public void testAnyPredicateEx3() {
         try {
             PredicateUtils.anyPredicate(new Predicate[] {null, null});
         } catch (IllegalArgumentException ex) {
@@ -393,7 +361,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAnyPredicateEx4() {
+    @Test public void testAnyPredicateEx4() {
         try {
             PredicateUtils.anyPredicate((Collection) null);
         } catch (IllegalArgumentException ex) {
@@ -402,11 +370,11 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAnyPredicateEx5() {
+    @Test public void testAnyPredicateEx5() {
         PredicateUtils.anyPredicate(Collections.EMPTY_LIST);
     }
     
-    public void testAnyPredicateEx6() {
+    @Test public void testAnyPredicateEx6() {
         try {
             Collection coll = new ArrayList();
             coll.add(null);
@@ -421,14 +389,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // eitherPredicate
     //------------------------------------------------------------------
 
-    public void testEitherPredicate() {
+    @Test public void testEitherPredicate() {
         assertEquals(false, PredicateUtils.eitherPredicate(PredicateUtils.truePredicate(), PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(true, PredicateUtils.eitherPredicate(PredicateUtils.truePredicate(), PredicateUtils.falsePredicate()).evaluate(null));
         assertEquals(true, PredicateUtils.eitherPredicate(PredicateUtils.falsePredicate(), PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(false, PredicateUtils.eitherPredicate(PredicateUtils.falsePredicate(), PredicateUtils.falsePredicate()).evaluate(null));
     }
 
-    public void testEitherPredicateEx() {
+    @Test public void testEitherPredicateEx() {
         try {
             PredicateUtils.eitherPredicate(null, null);
         } catch (IllegalArgumentException ex) {
@@ -440,7 +408,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // onePredicate
     //------------------------------------------------------------------
 
-    public void testOnePredicate() {
+    @Test public void testOnePredicate() {
         assertFalse(PredicateUtils.onePredicate(
             new Predicate[] {}).evaluate(null));
         assertEquals(false, PredicateUtils.onePredicate(new Predicate[] {
@@ -485,7 +453,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         assertFalse(PredicateUtils.onePredicate(coll).evaluate(null));
     }
 
-    public void testOnePredicateEx1() {
+    @Test public void testOnePredicateEx1() {
         try {
             PredicateUtils.onePredicate((Predicate[]) null);
         } catch (IllegalArgumentException ex) {
@@ -494,7 +462,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testOnePredicateEx2() {
+    @Test public void testOnePredicateEx2() {
         try {
             PredicateUtils.onePredicate(new Predicate[] {null});
         } catch (IllegalArgumentException ex) {
@@ -503,7 +471,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testOnePredicateEx3() {
+    @Test public void testOnePredicateEx3() {
         try {
             PredicateUtils.onePredicate(new Predicate[] {null, null});
         } catch (IllegalArgumentException ex) {
@@ -512,7 +480,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testOnePredicateEx4() {
+    @Test public void testOnePredicateEx4() {
         try {
             PredicateUtils.onePredicate((Collection) null);
         } catch (IllegalArgumentException ex) {
@@ -521,11 +489,11 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testOnePredicateEx5() {
+    @Test public void testOnePredicateEx5() {
         PredicateUtils.onePredicate(Collections.EMPTY_LIST);
     }
     
-    public void testOnePredicateEx6() {
+    @Test public void testOnePredicateEx6() {
         try {
             Collection coll = new ArrayList();
             coll.add(null);
@@ -540,14 +508,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // neitherPredicate
     //------------------------------------------------------------------
 
-    public void testNeitherPredicate() {
+    @Test public void testNeitherPredicate() {
         assertEquals(false, PredicateUtils.neitherPredicate(PredicateUtils.truePredicate(), PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(false, PredicateUtils.neitherPredicate(PredicateUtils.truePredicate(), PredicateUtils.falsePredicate()).evaluate(null));
         assertEquals(false, PredicateUtils.neitherPredicate(PredicateUtils.falsePredicate(), PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(true, PredicateUtils.neitherPredicate(PredicateUtils.falsePredicate(), PredicateUtils.falsePredicate()).evaluate(null));
     }
 
-    public void testNeitherPredicateEx() {
+    @Test public void testNeitherPredicateEx() {
         try {
             PredicateUtils.neitherPredicate(null, null);
         } catch (IllegalArgumentException ex) {
@@ -559,7 +527,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // nonePredicate
     //------------------------------------------------------------------
 
-    public void testNonePredicate() {
+    @Test public void testNonePredicate() {
         assertTrue(PredicateUtils.nonePredicate(
             new Predicate[] {}).evaluate(null));
         assertEquals(false, PredicateUtils.nonePredicate(new Predicate[] {
@@ -600,7 +568,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         assertTrue(PredicateUtils.nonePredicate(coll).evaluate(null));
     }
 
-    public void testNonePredicateEx1() {
+    @Test public void testNonePredicateEx1() {
         try {
             PredicateUtils.nonePredicate((Predicate[]) null);
         } catch (IllegalArgumentException ex) {
@@ -609,7 +577,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testNonePredicateEx2() {
+    @Test public void testNonePredicateEx2() {
         try {
             PredicateUtils.nonePredicate(new Predicate[] {null});
         } catch (IllegalArgumentException ex) {
@@ -618,7 +586,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testNonePredicateEx3() {
+    @Test public void testNonePredicateEx3() {
         try {
             PredicateUtils.nonePredicate(new Predicate[] {null, null});
         } catch (IllegalArgumentException ex) {
@@ -627,7 +595,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testNonePredicateEx4() {
+    @Test public void testNonePredicateEx4() {
         try {
             PredicateUtils.nonePredicate((Collection) null);
         } catch (IllegalArgumentException ex) {
@@ -636,11 +604,11 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testNonePredicateEx5() {
+    @Test public void testNonePredicateEx5() {
         PredicateUtils.nonePredicate(Collections.EMPTY_LIST);
     }
     
-    public void testNonePredicateEx6() {
+    @Test public void testNonePredicateEx6() {
         try {
             Collection coll = new ArrayList();
             coll.add(null);
@@ -655,7 +623,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // instanceofPredicate
     //------------------------------------------------------------------
 
-    public void testInstanceOfPredicate() {
+    @Test public void testInstanceOfPredicate() {
         assertNotNull(PredicateUtils.instanceofPredicate(String.class));
         assertEquals(false, PredicateUtils.instanceofPredicate(String.class).evaluate(null));
         assertEquals(false, PredicateUtils.instanceofPredicate(String.class).evaluate(cObject));
@@ -666,7 +634,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // uniquePredicate
     //------------------------------------------------------------------
 
-    public void testUniquePredicate() {
+    @Test public void testUniquePredicate() {
         Predicate p = PredicateUtils.uniquePredicate();
         assertEquals(true, p.evaluate(new Object()));
         assertEquals(true, p.evaluate(new Object()));
@@ -679,12 +647,12 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // asPredicate(Transformer)
     //------------------------------------------------------------------
 
-    public void testAsPredicateTransformer() {
+    @Test public void testAsPredicateTransformer() {
         assertEquals(false, PredicateUtils.asPredicate(TransformerUtils.nopTransformer()).evaluate(Boolean.FALSE));
         assertEquals(true, PredicateUtils.asPredicate(TransformerUtils.nopTransformer()).evaluate(Boolean.TRUE));
     }
 
-    public void testAsPredicateTransformerEx1() {
+    @Test public void testAsPredicateTransformerEx1() {
         try {
             PredicateUtils.asPredicate(null);
         } catch (IllegalArgumentException ex) {
@@ -693,7 +661,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testAsPredicateTransformerEx2() {
+    @Test public void testAsPredicateTransformerEx2() {
         try {
             PredicateUtils.asPredicate(TransformerUtils.nopTransformer()).evaluate(null);
         } catch (FunctorException ex) {
@@ -705,14 +673,14 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // invokerPredicate
     //------------------------------------------------------------------
 
-    public void testInvokerPredicate() {
+    @Test public void testInvokerPredicate() {
         List list = new ArrayList();
         assertEquals(true, PredicateUtils.invokerPredicate("isEmpty").evaluate(list));
         list.add(new Object());
         assertEquals(false, PredicateUtils.invokerPredicate("isEmpty").evaluate(list));
     }
 
-    public void testInvokerPredicateEx1() {
+    @Test public void testInvokerPredicateEx1() {
         try {
             PredicateUtils.invokerPredicate(null);
         } catch (IllegalArgumentException ex) {
@@ -721,7 +689,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testInvokerPredicateEx2() {
+    @Test public void testInvokerPredicateEx2() {
         try {
             PredicateUtils.invokerPredicate("isEmpty").evaluate(null);
         } catch (FunctorException ex) {
@@ -730,7 +698,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testInvokerPredicateEx3() {
+    @Test public void testInvokerPredicateEx3() {
         try {
             PredicateUtils.invokerPredicate("noSuchMethod").evaluate(new Object());
         } catch (FunctorException ex) {
@@ -742,7 +710,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // invokerPredicate2
     //------------------------------------------------------------------
 
-    public void testInvokerPredicate2() {
+    @Test public void testInvokerPredicate2() {
         List list = new ArrayList();
         assertEquals(false, PredicateUtils.invokerPredicate(
             "contains", new Class[] {Object.class}, new Object[] {cString}).evaluate(list));
@@ -751,7 +719,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
             "contains", new Class[] {Object.class}, new Object[] {cString}).evaluate(list));
     }
 
-    public void testInvokerPredicate2Ex1() {
+    @Test public void testInvokerPredicate2Ex1() {
         try {
             PredicateUtils.invokerPredicate(null, null, null);
         } catch (IllegalArgumentException ex) {
@@ -760,7 +728,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testInvokerPredicate2Ex2() {
+    @Test public void testInvokerPredicate2Ex2() {
         try {
             PredicateUtils.invokerPredicate("contains", new Class[] {Object.class}, new Object[] {cString}).evaluate(null);
         } catch (FunctorException ex) {
@@ -769,7 +737,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
     
-    public void testInvokerPredicate2Ex3() {
+    @Test public void testInvokerPredicate2Ex3() {
         try {
             PredicateUtils.invokerPredicate(
                 "noSuchMethod", new Class[] {Object.class}, new Object[] {cString}).evaluate(new Object());
@@ -782,7 +750,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // nullIsException
     //------------------------------------------------------------------
 
-    public void testNullIsExceptionPredicate() {
+    @Test public void testNullIsExceptionPredicate() {
         assertEquals(true, PredicateUtils.nullIsExceptionPredicate(PredicateUtils.truePredicate()).evaluate(new Object()));
         try {
             PredicateUtils.nullIsExceptionPredicate(PredicateUtils.truePredicate()).evaluate(null);
@@ -792,7 +760,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
         fail();
     }
 
-    public void testNullIsExceptionPredicateEx1() {
+    @Test public void testNullIsExceptionPredicateEx1() {
         try {
             PredicateUtils.nullIsExceptionPredicate(null);
         } catch (IllegalArgumentException ex) {
@@ -804,13 +772,13 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // nullIsTrue
     //------------------------------------------------------------------
 
-    public void testNullIsTruePredicate() {
+    @Test public void testNullIsTruePredicate() {
         assertEquals(true, PredicateUtils.nullIsTruePredicate(PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(true, PredicateUtils.nullIsTruePredicate(PredicateUtils.truePredicate()).evaluate(new Object()));
         assertEquals(false, PredicateUtils.nullIsTruePredicate(PredicateUtils.falsePredicate()).evaluate(new Object()));
     }
 
-    public void testNullIsTruePredicateEx1() {
+    @Test public void testNullIsTruePredicateEx1() {
         try {
             PredicateUtils.nullIsTruePredicate(null);
         } catch (IllegalArgumentException ex) {
@@ -822,13 +790,13 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // nullIsFalse
     //------------------------------------------------------------------
 
-    public void testNullIsFalsePredicate() {
+    @Test public void testNullIsFalsePredicate() {
         assertEquals(false, PredicateUtils.nullIsFalsePredicate(PredicateUtils.truePredicate()).evaluate(null));
         assertEquals(true, PredicateUtils.nullIsFalsePredicate(PredicateUtils.truePredicate()).evaluate(new Object()));
         assertEquals(false, PredicateUtils.nullIsFalsePredicate(PredicateUtils.falsePredicate()).evaluate(new Object()));
     }
 
-    public void testNullIsFalsePredicateEx1() {
+    @Test public void testNullIsFalsePredicateEx1() {
         try {
             PredicateUtils.nullIsFalsePredicate(null);
         } catch (IllegalArgumentException ex) {
@@ -840,7 +808,7 @@ public class TestPredicateUtils extends junit.framework.TestCase {
     // transformed
     //------------------------------------------------------------------
 
-    public void testTransformedPredicate() {
+    @Test public void testTransformedPredicate() {
         assertEquals(true, PredicateUtils.transformedPredicate(
                 TransformerUtils.nopTransformer(),
                 PredicateUtils.truePredicate()).evaluate(new Object()));

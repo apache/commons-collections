@@ -129,9 +129,11 @@ public class PredicateUtils {
      * @see org.apache.commons.collections.functors.NullPredicate
      * 
      * @return the predicate
+     * @deprecated use {@link NullPredicate#nullPredicate()} instead
      */
-    public static Predicate nullPredicate() {
-        return NullPredicate.INSTANCE;
+    @Deprecated
+    public static <T> Predicate<T> nullPredicate() {
+        return NullPredicate.nullPredicate();
     }
 
     /**
