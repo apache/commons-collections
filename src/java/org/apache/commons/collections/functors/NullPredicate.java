@@ -41,6 +41,18 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
      * 
      * @return the singleton instance
      * @since Commons Collections 3.1
+     * @deprecated use {@link #nullPredicate()} instead.
+     */
+    @Deprecated
+    public static <T> Predicate<T> getInstance() {
+        return nullPredicate();
+    }
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> nullPredicate() {

@@ -155,9 +155,11 @@ public class PredicateUtils {
      * 
      * @param value  the value to compare against
      * @return the predicate
+     * @deprecated use {@link EqualPredicate#equalPredicate(Object)} instead.
      */
-    public static Predicate equalPredicate(Object value) {
-        return EqualPredicate.getInstance(value);
+    @Deprecated
+    public static <T> Predicate<T> equalPredicate(T value) {
+        return EqualPredicate.equalPredicate(value);
     }
 
     /**

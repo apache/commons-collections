@@ -26,6 +26,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
+import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.NOPClosure;
 
 /**
@@ -276,7 +277,7 @@ public class TestClosureUtils extends junit.framework.TestCase {
         MockClosure a = new MockClosure();
         MockClosure b = new MockClosure();
         ClosureUtils.switchClosure(
-            new Predicate[] {PredicateUtils.equalPredicate("HELLO"), PredicateUtils.equalPredicate("THERE")}, 
+            new Predicate[] {EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE")}, 
             new Closure[] {a, b}).execute("WELL");
         assertEquals(0, a.count);
         assertEquals(0, b.count);
@@ -284,7 +285,7 @@ public class TestClosureUtils extends junit.framework.TestCase {
         a = new MockClosure();
         b = new MockClosure();
         ClosureUtils.switchClosure(
-            new Predicate[] {PredicateUtils.equalPredicate("HELLO"), PredicateUtils.equalPredicate("THERE")}, 
+            new Predicate[] {EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE")}, 
             new Closure[] {a, b}).execute("HELLO");
         assertEquals(1, a.count);
         assertEquals(0, b.count);
@@ -293,7 +294,7 @@ public class TestClosureUtils extends junit.framework.TestCase {
         b = new MockClosure();
         MockClosure c = new MockClosure();
         ClosureUtils.switchClosure(
-            new Predicate[] {PredicateUtils.equalPredicate("HELLO"), PredicateUtils.equalPredicate("THERE")}, 
+            new Predicate[] {EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE")}, 
             new Closure[] {a, b}, c).execute("WELL");
         assertEquals(0, a.count);
         assertEquals(0, b.count);
@@ -302,8 +303,8 @@ public class TestClosureUtils extends junit.framework.TestCase {
         a = new MockClosure();
         b = new MockClosure();
         Map map = new HashMap();
-        map.put(PredicateUtils.equalPredicate("HELLO"), a);
-        map.put(PredicateUtils.equalPredicate("THERE"), b);
+        map.put(EqualPredicate.equalPredicate("HELLO"), a);
+        map.put(EqualPredicate.equalPredicate("THERE"), b);
         ClosureUtils.switchClosure(map).execute(null);
         assertEquals(0, a.count);
         assertEquals(0, b.count);
@@ -311,8 +312,8 @@ public class TestClosureUtils extends junit.framework.TestCase {
         a = new MockClosure();
         b = new MockClosure();
         map = new HashMap();
-        map.put(PredicateUtils.equalPredicate("HELLO"), a);
-        map.put(PredicateUtils.equalPredicate("THERE"), b);
+        map.put(EqualPredicate.equalPredicate("HELLO"), a);
+        map.put(EqualPredicate.equalPredicate("THERE"), b);
         ClosureUtils.switchClosure(map).execute("THERE");
         assertEquals(0, a.count);
         assertEquals(1, b.count);
@@ -321,8 +322,8 @@ public class TestClosureUtils extends junit.framework.TestCase {
         b = new MockClosure();
         c = new MockClosure();
         map = new HashMap();
-        map.put(PredicateUtils.equalPredicate("HELLO"), a);
-        map.put(PredicateUtils.equalPredicate("THERE"), b);
+        map.put(EqualPredicate.equalPredicate("HELLO"), a);
+        map.put(EqualPredicate.equalPredicate("THERE"), b);
         map.put(null, c);
         ClosureUtils.switchClosure(map).execute("WELL");
         assertEquals(0, a.count);

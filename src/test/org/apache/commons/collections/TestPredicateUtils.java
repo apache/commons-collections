@@ -17,11 +17,10 @@
 package org.apache.commons.collections;
 
 import static org.apache.commons.collections.functors.NullPredicate.nullPredicate;
+import static org.apache.commons.collections.functors.TruePredicate.truePredicate;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
@@ -32,7 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.functors.BasicPredicateTestBase;
-import org.apache.commons.collections.functors.NullPredicate;
+import org.apache.commons.collections.functors.EqualPredicate;
+import org.apache.commons.collections.functors.TruePredicate;
 import org.junit.Test;
 
 /**
@@ -85,18 +85,6 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertEquals(true, PredicateUtils.notNullPredicate().evaluate(cObject));
         assertEquals(true, PredicateUtils.notNullPredicate().evaluate(cString));
         assertEquals(true, PredicateUtils.notNullPredicate().evaluate(cInteger));
-    }
-
-    // equalPredicate
-    //------------------------------------------------------------------
-
-    @Test public void testEqualPredicate() {
-        assertSame(nullPredicate(), PredicateUtils.equalPredicate(null));
-        assertNotNull(PredicateUtils.equalPredicate(new Integer(6)));
-        assertEquals(false, PredicateUtils.equalPredicate(new Integer(6)).evaluate(null));
-        assertEquals(false, PredicateUtils.equalPredicate(new Integer(6)).evaluate(cObject));
-        assertEquals(false, PredicateUtils.equalPredicate(new Integer(6)).evaluate(cString));
-        assertEquals(true, PredicateUtils.equalPredicate(new Integer(6)).evaluate(cInteger));
     }
 
     // identityPredicate
@@ -180,7 +168,7 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
 
     @Test public void testAllPredicate() {
         assertTrue(PredicateUtils.allPredicate(
-            new Predicate[] {}).evaluate(null));
+            new Predicate[] {}), null);
         assertEquals(true, PredicateUtils.allPredicate(new Predicate[] {
             PredicateUtils.truePredicate(), PredicateUtils.truePredicate(), PredicateUtils.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.allPredicate(new Predicate[] {
@@ -211,12 +199,12 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertEquals(false, PredicateUtils.allPredicate(coll).evaluate(null));
         coll.clear();
         coll.add(PredicateUtils.falsePredicate());
-        assertFalse(PredicateUtils.allPredicate(coll).evaluate(null));
+        assertFalse(PredicateUtils.allPredicate(coll), null);
         coll.clear();
         coll.add(PredicateUtils.truePredicate());
-        assertTrue(PredicateUtils.allPredicate(coll).evaluate(null));
+        assertTrue(PredicateUtils.allPredicate(coll), null);
         coll.clear();
-        assertTrue(PredicateUtils.allPredicate(coll).evaluate(null));
+        assertTrue(PredicateUtils.allPredicate(coll), null);
     }
 
     @Test public void testAllPredicateEx1() {
@@ -295,7 +283,7 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
 
     @Test public void testAnyPredicate() {
         assertFalse(PredicateUtils.anyPredicate(
-            new Predicate[] {}).evaluate(null));
+            new Predicate[] {}), null);
         assertEquals(true, PredicateUtils.anyPredicate(new Predicate[] {
             PredicateUtils.truePredicate(), PredicateUtils.truePredicate(), PredicateUtils.truePredicate()}).evaluate(null));
         assertEquals(true, PredicateUtils.anyPredicate(new Predicate[] {
@@ -326,12 +314,12 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertEquals(false, PredicateUtils.anyPredicate(coll).evaluate(null));
         coll.clear();
         coll.add(PredicateUtils.falsePredicate());
-        assertFalse(PredicateUtils.anyPredicate(coll).evaluate(null));
+        assertFalse(PredicateUtils.anyPredicate(coll), null);
         coll.clear();
         coll.add(PredicateUtils.truePredicate());
-        assertTrue(PredicateUtils.anyPredicate(coll).evaluate(null));
+        assertTrue(PredicateUtils.anyPredicate(coll), null);
         coll.clear();
-        assertFalse(PredicateUtils.anyPredicate(coll).evaluate(null));
+        assertFalse(PredicateUtils.anyPredicate(coll), null);
     }
 
     @Test public void testAnyPredicateEx1() {
@@ -409,8 +397,7 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
     //------------------------------------------------------------------
 
     @Test public void testOnePredicate() {
-        assertFalse(PredicateUtils.onePredicate(
-            new Predicate[] {}).evaluate(null));
+        assertFalse(PredicateUtils.onePredicate(new Predicate[] {}), null);
         assertEquals(false, PredicateUtils.onePredicate(new Predicate[] {
             PredicateUtils.truePredicate(), PredicateUtils.truePredicate(), PredicateUtils.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.onePredicate(new Predicate[] {
@@ -445,12 +432,12 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertEquals(false, PredicateUtils.onePredicate(coll).evaluate(null));
         coll.clear();
         coll.add(PredicateUtils.falsePredicate());
-        assertFalse(PredicateUtils.onePredicate(coll).evaluate(null));
+        assertFalse(PredicateUtils.onePredicate(coll), null);
         coll.clear();
         coll.add(PredicateUtils.truePredicate());
-        assertTrue(PredicateUtils.onePredicate(coll).evaluate(null));
+        assertTrue(PredicateUtils.onePredicate(coll), null);
         coll.clear();
-        assertFalse(PredicateUtils.onePredicate(coll).evaluate(null));
+        assertFalse(PredicateUtils.onePredicate(coll), null);
     }
 
     @Test public void testOnePredicateEx1() {
@@ -528,8 +515,7 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
     //------------------------------------------------------------------
 
     @Test public void testNonePredicate() {
-        assertTrue(PredicateUtils.nonePredicate(
-            new Predicate[] {}).evaluate(null));
+        assertTrue(PredicateUtils.nonePredicate(new Predicate[] {}), null);
         assertEquals(false, PredicateUtils.nonePredicate(new Predicate[] {
             PredicateUtils.truePredicate(), PredicateUtils.truePredicate(), PredicateUtils.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.nonePredicate(new Predicate[] {
@@ -560,12 +546,12 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertEquals(true, PredicateUtils.nonePredicate(coll).evaluate(null));
         coll.clear();
         coll.add(PredicateUtils.falsePredicate());
-        assertTrue(PredicateUtils.nonePredicate(coll).evaluate(null));
+        assertTrue(PredicateUtils.nonePredicate(coll), null);
         coll.clear();
         coll.add(PredicateUtils.truePredicate());
-        assertFalse(PredicateUtils.nonePredicate(coll).evaluate(null));
+        assertFalse(PredicateUtils.nonePredicate(coll), null);
         coll.clear();
-        assertTrue(PredicateUtils.nonePredicate(coll).evaluate(null));
+        assertTrue(PredicateUtils.nonePredicate(coll), null);
     }
 
     @Test public void testNonePredicateEx1() {
@@ -816,13 +802,18 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         Map map = new HashMap();
         map.put(Boolean.TRUE, "Hello");
         Transformer t = TransformerUtils.mapTransformer(map);
-        Predicate p = PredicateUtils.equalPredicate("Hello");
+        Predicate p = EqualPredicate.equalPredicate("Hello");
         assertEquals(false, PredicateUtils.transformedPredicate(t, p).evaluate(null));
         assertEquals(true, PredicateUtils.transformedPredicate(t, p).evaluate(Boolean.TRUE));
         try {
             PredicateUtils.transformedPredicate(null, null);
             fail();
         } catch (IllegalArgumentException ex) {}
+    }
+
+    @Override
+    protected Predicate<?> generatePredicate() {
+        return truePredicate();  //Just return something to satisfy super class.
     }
 
 }

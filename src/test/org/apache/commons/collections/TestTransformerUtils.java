@@ -29,6 +29,7 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.commons.collections.functors.ConstantTransformer;
+import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.NOPTransformer;
 
 /**
@@ -266,22 +267,22 @@ public class TestTransformerUtils extends junit.framework.TestCase {
         assertEquals("B", TransformerUtils.switchTransformer(PredicateUtils.falsePredicate(), a, b).transform(null));
         
         assertEquals(null, TransformerUtils.switchTransformer(
-            new Predicate[] {PredicateUtils.equalPredicate("HELLO"), PredicateUtils.equalPredicate("THERE")}, 
+            new Predicate[] {EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE")}, 
             new Transformer[] {a, b}).transform("WELL"));
         assertEquals("A", TransformerUtils.switchTransformer(
-            new Predicate[] {PredicateUtils.equalPredicate("HELLO"), PredicateUtils.equalPredicate("THERE")}, 
+            new Predicate[] {EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE")}, 
             new Transformer[] {a, b}).transform("HELLO"));
         assertEquals("B", TransformerUtils.switchTransformer(
-            new Predicate[] {PredicateUtils.equalPredicate("HELLO"), PredicateUtils.equalPredicate("THERE")}, 
+            new Predicate[] {EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE")}, 
             new Transformer[] {a, b}).transform("THERE"));
             
         assertEquals("C", TransformerUtils.switchTransformer(
-            new Predicate[] {PredicateUtils.equalPredicate("HELLO"), PredicateUtils.equalPredicate("THERE")}, 
+            new Predicate[] {EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE")}, 
             new Transformer[] {a, b}, c).transform("WELL"));
             
         Map map = new HashMap();
-        map.put(PredicateUtils.equalPredicate("HELLO"), a);
-        map.put(PredicateUtils.equalPredicate("THERE"), b);
+        map.put(EqualPredicate.equalPredicate("HELLO"), a);
+        map.put(EqualPredicate.equalPredicate("THERE"), b);
         assertEquals(null, TransformerUtils.switchTransformer(map).transform("WELL"));
         assertEquals("A", TransformerUtils.switchTransformer(map).transform("HELLO"));
         assertEquals("B", TransformerUtils.switchTransformer(map).transform("THERE"));

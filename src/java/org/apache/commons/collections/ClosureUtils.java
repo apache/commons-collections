@@ -360,7 +360,7 @@ public class ClosureUtils {
         int i = 0;
         for (Iterator it = objectsAndClosures.entrySet().iterator(); it.hasNext();) {
             Map.Entry entry = (Map.Entry) it.next();
-            preds[i] = EqualPredicate.getInstance(entry.getKey());
+            preds[i] = EqualPredicate.equalPredicate(entry.getKey());
             trs[i] = (Closure) entry.getValue();
             i++;
         }

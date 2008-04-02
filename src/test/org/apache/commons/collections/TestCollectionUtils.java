@@ -17,6 +17,7 @@
 package org.apache.commons.collections;
 
 import static junit.framework.Assert.assertFalse;
+import static org.apache.commons.collections.functors.EqualPredicate.equalPredicate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -30,6 +31,7 @@ import org.apache.commons.collections.collection.PredicatedCollection;
 import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.collection.TransformedCollection;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.functors.EqualPredicate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -486,10 +488,10 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void find() {
-        Predicate<Number> testPredicate = PredicateUtils.equalPredicate(4);
+        Predicate<Number> testPredicate = equalPredicate(4);
         Integer test = CollectionUtils.find(collectionA, testPredicate);
         assertTrue(test.equals(4));
-        testPredicate = PredicateUtils.equalPredicate(45);
+        testPredicate = equalPredicate(45);
         test = CollectionUtils.find(collectionA, testPredicate);
         assertTrue(test == null);
         assertEquals(CollectionUtils.find(null, testPredicate), null);

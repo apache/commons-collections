@@ -36,6 +36,7 @@ import org.junit.runners.Suite.SuiteClasses;
     org.apache.commons.collections.buffer.TestAll.class,
     org.apache.commons.collections.collection.TestAll.class,
     org.apache.commons.collections.comparators.TestAll.class,
+    org.apache.commons.collections.functors.TestAll.class,
     org.apache.commons.collections.iterators.TestAll.class,
     org.apache.commons.collections.keyvalue.TestAll.class,
     org.apache.commons.collections.list.TestAll.class,
