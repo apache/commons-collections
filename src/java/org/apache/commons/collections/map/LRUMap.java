@@ -191,6 +191,11 @@ public class LRUMap
         if (entry.after != header) {
             modCount++;
             // remove
+            if(entry.before == null) {
+                throw new IllegalStateException("Entry.before is null." + 
+                    " Please check that your keys are immutable, and that you have used synchronization properly." +
+                    " If so, then please report this to dev@commons.apache.org as a bug.");
+            }
             entry.before.after = entry.after;
             entry.after.before = entry.before;
             // add first
