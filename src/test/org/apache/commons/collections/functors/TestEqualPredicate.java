@@ -31,7 +31,7 @@ public class TestEqualPredicate extends BasicPredicateTestBase {
     
     @Test
     public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
-        Predicate<Number> predicate = equalPredicate(4);
+        Predicate<Number> predicate = EqualPredicate.<Number>equalPredicate(4);
         assertTrue(predicate, 4);
     }
 

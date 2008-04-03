@@ -488,10 +488,10 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void find() {
-        Predicate<Number> testPredicate = equalPredicate(4);
+        Predicate<Number> testPredicate = EqualPredicate.<Number>equalPredicate(4);
         Integer test = CollectionUtils.find(collectionA, testPredicate);
         assertTrue(test.equals(4));
-        testPredicate = equalPredicate(45);
+        testPredicate = EqualPredicate.<Number>equalPredicate(45);
         test = CollectionUtils.find(collectionA, testPredicate);
         assertTrue(test == null);
         assertEquals(CollectionUtils.find(null, testPredicate), null);
