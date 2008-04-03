@@ -13,7 +13,7 @@ public class TestEqualPredicate extends BasicPredicateTestBase {
     private static final EqualsTestObject TRUE_OBJECT = new EqualsTestObject(true);
 
     @Override
-    protected Predicate<?> generatePredicate() {
+    protected Predicate<Object> generatePredicate() {
        return equalPredicate(null);
     }
     
@@ -31,7 +31,7 @@ public class TestEqualPredicate extends BasicPredicateTestBase {
     
     @Test
     public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
-        Predicate<Number> predicate = EqualPredicate.<Number>equalPredicate(4);
+        Predicate<Number> predicate = equalPredicate((Number) 4);
         assertTrue(predicate, 4);
     }
 
