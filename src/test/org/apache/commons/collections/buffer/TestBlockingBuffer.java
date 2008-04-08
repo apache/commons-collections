@@ -549,7 +549,7 @@ public class TestBlockingBuffer extends AbstractTestObject {
 
     private void delay() {
         try {
-            Thread.sleep( 100 );
+            Thread.sleep( 200 );
         }
         catch( InterruptedException e ) {
         }
