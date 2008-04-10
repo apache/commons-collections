@@ -1,9 +1,10 @@
  <!--
-   Copyright 2003-2005 The Apache Software Foundation
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+   Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -15,10 +16,10 @@
   -->
 <html>
 <head>
-<title>RELEASE NOTES: COLLECTIONS 3.2</title>
+<title>RELEASE NOTES: COLLECTIONS 3.2.1</title>
 </head>
 <body>
-<center><h2>RELEASE NOTES: COLLECTIONS 3.2</h2></center>
+<center><h2>RELEASE NOTES: COLLECTIONS 3.2.1</h2></center>
 
 <p>
 Commons collections is a project to develop and maintain collection classes
@@ -26,104 +27,14 @@ based on and inspired by the JDK collection framework.
 This project is JDK1.2 compatible, and does not use JDK1.5 generics.
 </p>
 <p>
-This release adds various new classes and fixes a number of bugs.
-All feedback should be directed to commons-user at jakarta.apache.org.
+This v3.2.1 release is simply a re-packaging of the v3.2 release, with appropriate
+OSGi meta data added to the jar's manifest file.
 </p>
 <hr />
 
 <center><h3>COMPATIBILITY</h3></center>
 <p>
-This release is fully source and binary compatible with v3.1.
-(Checks performed using JDiff and Clirr, thanks).
-Please check the bug fixes to ensure you weren't relying on the behaviour of a bug.
+This release is fully source and binary compatible with v3.2.
 </p>
-<p>
-There are two new <i>deprecations</i>:<br />
-BeanMap is now deprecated and will be removed in v4.0.
-The class is now available in commons-beanutils (full jar version).
-This change was made to ensure that all bean related collections were in one place (ie. beanutils).
-If this causes major headaches to anyone please contact commons-dev at jakarta.apache.org.
-</p>
-<p>
-MultiHashMap is now deprecated and will be removed in v4.0.
-The class is now available as MultiValueMap in the map subpackage.
-This new version of the class is a decorator and can wrap maps other than HashMap
-making it much more flexible.
-If this causes major headaches to anyone please contact commons-dev at jakarta.apache.org.
-</p>
-
-<center><h3>NEW CLASSES</h3></center>
-<ul>
-<li>MultiValueMap - Decorator implementation of MultiMap providing control over the map and collection implementations, updated MapUtils to match [29440]</li>
-<li>DefaultedMap - Returns a default value when the key is not found, without adding the default value to the map itself [30911]</li>
-<li>GrowthList - Decorator that causes set and indexed add to expand the list rather than throw IndexOutOfBoundsException [34171]</li>
-<li>LoopingListIterator - When the end of the list is reached the iteration continues from the start, updated IteratorUtils to match [30166]</li>
-<li>ReverseListIterator - A list iterator that returns the elements from the list in reverse order [39224]</li>
-<li>BoundedBuffer - A new wrapper class which can make any buffer bounded, updated BufferUtils to match [37473]</li>
-</ul>
-
-<center><h3>ENHANCEMENTS</h3></center>
-<ul>
-<li>CollectionUtils.addIgnoreNull - Adds to the collection if the value being added is not null [30020]</li>
-<li>MapUtils.putAll - Puts an array of key/value pairs into a map [30882]</li>
-<li>CollectionUtils/MapUtils.isEmpty/isNotEmpty - Null-safe checks of collection emptyness [35890]</li>
-<li>CollectionUtils.sizeIsEmpty - Checks if a collection, array, map, iterator or enumeration is empty</li>
-<li>CollectionUtils/ListUtils - retainAll/removeAll that don't change original colllection</li>
-<li>ExtendedProperties - Accepts List elements (does not enforce Vector) as values [36812]</li>
-<li>ExtendedProperties - new Methods getList(String key) and getList(String key, List defaults) [36812]</li>
-<li>ExtendedProperties - No longer uses an exception in normal processing [30497]</li>
-<li>BlockingBuffer - now includes stack trace if InterupttedException occurs [33700]</li>
-<li>BlockingBuffer - new methods that allow get and remove with a timeout, updated BufferUtils to match [27691]</li>
-<li>BlockingBuffer - now allows you to specify a default timeout value for get/remove operations [37607]</li>
-<li>TransformedMap/TransformedSortedMap - new factory decorateTransform() that transforms any existing entries in the map [30959]</li>
-<li>ListOrderedMap - values can now be accessed as a List using valueList() [37015]</li>
-<li>ListOrderedMap - additional list-like method, setValue(int,Object)</li>
-<li>ListOrderedMap - additional method, put(int,Object,Object)</li>
-<li>PriorityBuffer - now Serializable [36163]</li>
-<li>ListIteratorWrapper - now implements ResettableListIterator [39449]</li>
-<li>IfClosure - add single argument constructor, updated CllosureUtils to match [38495]</li>
-<li>All/Any/One/None Predicate - allow construction with zero or one predicates [37979]</li>
-</ul>
-
-<center><h3>BUG FIXES</h3></center>
-<ul>
-<li>FastArrayList - Fix iterators and views to work better in multithreaded environments</li>
-<li>FastArrayList - Fix iterator remove where ConcurrentModificationException not as expected [34690]</li>
-<li>CursorableLinkedList (list subpackage) - Fix iterator remove/set not throwing IllegalStateException after next-previous-removeByIndex [35766]</li>
-<li>TreeList/CursorableLinkedList/NodeCachingLinkedList/AbstractLinkedList - Fix iterator remove not working properly when called after previous [35258]</li>
-<li>TreeList - remove(int) could break class invariants, breaking iterator previous [35258]</li>
-<li>SetUniqueList.set(int,Object) - Destroyed set status in certain circumstances [33294]</li>
-<li>AbstractLinkedMap.init() - Now calls createEntry() to create the map entry object [33706]</li>
-<li>AbstractHashedMap deserialization - Fix to prevent doubling of internal data array [34265]</li>
-<li>AbstractHashedMap initialization - Fix to setup threshold correctly, improving performance [35012]</li>
-<li>BeanMap.initialize() - Internal variable now correctly initialised with only write methods that actually exist [15895]</li>
-<li>MultiHashMap.remove(key, item) - Was returning the item even when nothing was removed [32366]</li>
-<li>MultiHashMap.putAll(multimap) - Was adding the collection as a single item rather than individually [35631]</li>
-<li>MultiHashMap - Enable compilation using J#</li>
-<li>Flat3Map.equals() - Fix to make flat mode comparison actually work [34917]</li>
-<li>TransformedMap.putAll - Now allows putAll of an empty map [34686]</li>
-<li>StaticBucketMap.containsKey - Fix incorrect null checking [37567]</li>
-<li>AbstractMapBag.BagIterator.remove - Removing the last entry used to break the class invariants [35747]</li>
-<li>BoundedFifoBuffer/CircularFifoBuffer - Fix serialization to work in case where buffer serialized when full [31433]</li>
-<li>BoundedFifoBuffer - Fix iterator remove bug causing ArrayIndexOutOfBounds error [33071]</li>
-<li>UnboundedFifoBuffer - Fix iterator remove bug causing ArrayIndexOutOfBounds error [35733]</li>
-<li>UnboundedFifoBuffer - Fix deserialization to work with subsequant object manipulation [35763]</li>
-<li>BlockingBuffer - Fix internal locking code (internal fix, no effect on users of BlockingBuffer) [37028]</li>
-<li>IteratorChain.remove() - Fix to avoid IllegalStateException when one of the underlying iterators is a FilterIterator [34267]</li>
-<li>FilterIterator - Correctly handle setting of iterator and predicate after object creation [38074]</li>
-<li>ExtendedProperties.convertProperties() - Fix to handle default properties maps correctly [32204]</li>
-<li>Add casts to avoid some JDK1.5 compilation warnings [35474]</li>
-<li>Make serialization version ids private [37106]</li>
-</ul>
-
-<center><h3>JAVADOC</h3></center>
-<ul>
-<li>MapUtils.safeAddToMap - Better comment</li>
-<li>MapUtils.transformed*Map - Better comment</li>
-<li>ListOrderedSet.decorate(List) - Better comment [32073]</li>
-<li>BlockingBuffer - Add comments</li>
-<li>Maps - synchronization comments [32573]</li>
-<li>SwitchTransformer - defaultTransformer comment fix [39207]</li>
-</ul>
 </body>
 </html>

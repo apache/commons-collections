@@ -1,106 +1,50 @@
-<?xml version="1.0" encoding="UTF-8"?>
- <!--
+<?xml version="1.0"?>
+<!--
    Licensed to the Apache Software Foundation (ASF) under one or more
-  contributor license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
    Unless required by applicable law or agreed to in writing, software
    distributed under the License is distributed on an "AS IS" BASIS,
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
+   See the License for the specific collectionsuage governing permissions and
    limitations under the License.
-  -->
-<project>
-  <pomVersion>3</pomVersion>
+-->
+<project
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-parent</artifactId>
+    <version>9</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <currentVersion>3.2.1</currentVersion>
+  <version>3.2.1</version>
+  <name>Commons Collections</name>
+
   <inceptionYear>2001</inceptionYear>
-  <name>Collections</name>
-  <shortDescription>Commons Collections</shortDescription>
   <description>Types that extend and augment the Java Collections Framework.</description>
-  <logo>/images/logo.png</logo>
-   
+
   <url>http://commons.apache.org/collections/</url>
-  <package>org.apache.commons.collections</package>
 
-  <organization>
-    <name>The Apache Software Foundation</name>
-    <url>http://commons.apache.org/</url>
-    <logo>http://commons.apache.org/images/logo.png</logo>
-  </organization>
+  <issueManagement>
+    <system>jira</system>
+    <url>http://issues.apache.org/jira/browse/COLLECTIONS</url>
+  </issueManagement>
 
-  <licenses>
-	<license>
-    	<name>The Apache Software License, Version 2.0</name>
-    	<url>/LICENSE.txt</url>
-    	<distribution>repo</distribution>
-	</license>
-  </licenses>
-  
-  <gumpRepositoryId>commons</gumpRepositoryId>
-  <issueTrackingUrl>http://issues.apache.org/jira/</issueTrackingUrl>
-  <siteAddress>people.apache.org</siteAddress>
-  <siteDirectory>/www/commons.apache.org/collections/</siteDirectory>
-  <distributionDirectory>/www/people.apache.org/builds/commons/collections/</distributionDirectory>
-  
-  <repository>
+  <scm>
     <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/collections/trunk</connection>
-    <url>http://svn.apache.org/repos/asf/commons/proper/collections/trunk</url>
-  </repository>
-  
-  <mailingLists>
-    <mailingList>
-      <name>Commons Dev List</name>
-      <subscribe>dev-subscribe@commons.apache.org</subscribe>
-      <unsubscribe>dev-unsubscribe@commons.apache.org</unsubscribe>
-      <archive>http://mail-archives.apache.org/mod_mbox/commons-dev/</archive>
-    </mailingList>
-    <mailingList>
-      <name>Commons User List</name>
-      <subscribe>user-subscribe@commons.apache.org</subscribe>
-      <unsubscribe>user-unsubscribe@commons.apache.org</unsubscribe>
-      <archive>http://mail-archives.apache.org/mod_mbox/commons-user/</archive>
-    </mailingList>
-  </mailingLists>
-
-  <versions>
-    <version>
-      <id>1.0</id>
-      <name>1.0</name>
-      <tag>COLLECTIONS_1_0</tag>
-    </version>
-    <version>
-      <id>2.0</id>
-      <name>2.0</name>
-      <tag>COLLECTIONS_2_0</tag>
-    </version>
-    <version>
-      <id>2.1</id>
-      <name>2.1</name>
-      <tag>COLLECTIONS_2_1</tag>
-    </version>
-    <version>
-      <id>2.1.1</id>
-      <name>2.1.1</name>
-      <tag>COLLECTIONS_2_1_1</tag>
-    </version>
-    <version>
-      <id>3.0</id>
-      <name>3.0</name>
-      <tag>COLLECTIONS_3_0</tag>
-    </version>
-    <version>
-      <id>3.1</id>
-      <name>3.1</name>
-      <tag>COLLECTIONS_3_1</tag>
-    </version>
-  </versions>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/collections/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/commons/proper/collections/trunk</url>
+  </scm>
 
   <developers>
     <developer>
@@ -429,61 +373,66 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
-      <properties>
-       <scope>test</scope>
-       <comment>
-        Required only for testing.
-       </comment>
-      </properties>
-    </dependency>
-    <dependency>
-      <groupId>maven-plugins</groupId>
-      <artifactId>maven-cobertura-plugin</artifactId>
-      <version>1.1.1</version>
-      <url>http://maven-plugins.sourceforge.net/maven-cobertura-plugin/</url>
-      <type>plugin</type>
-      <properties>
-       <scope>test</scope>
-       <comment>
-        Required only for generating test coverage reports.
-       </comment>
-      </properties>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 
-  <build>
-    <nagEmailAddress>dev@commons.apache.org</nagEmailAddress>
-    <sourceDirectory>src/java</sourceDirectory>
-    <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
-    <integrationUnitTestSourceDirectory/>
-    <aspectSourceDirectory/>
-    <unitTest>
-      <includes>
-        <include>org/apache/commons/collections/TestAllPackages.java</include>
-      </includes>
-   	</unitTest>
-    <resources>
-      <resource>
-        <directory>.</directory>
-        <targetPath>META-INF</targetPath>
-        <includes>
-          <include>NOTICE.txt</include>
-        </includes>
-      </resource>
-    </resources>
-  </build>
+  <properties>
+    <maven.compile.source>1.2</maven.compile.source>
+    <maven.compile.target>1.2</maven.compile.target>
+    <commons.componentid>collections</commons.componentid>
+    <commons.release.version>3.2.1</commons.release.version>
+    <commons.binary.suffix>-bin</commons.binary.suffix>
+    <commons.jira.id>COLLECTIONS</commons.jira.id>
+    <commons.jira.pid>12310465</commons.jira.pid>
+  </properties> 
 
-  <reports>
-    <!--report>maven-changes-plugin</report-->   <!-- commented out until changes.xml exists -->
-    <report>maven-checkstyle-plugin</report>
-    <report>maven-pmd-plugin</report>
-    <!--report>maven-findbugs-plugin</report-->  <!-- commented out due to license -->
-    <report>maven-javadoc-plugin</report>
-    <report>maven-jdepend-plugin</report>
-    <report>maven-junit-report-plugin</report>
-    <report>maven-jxr-plugin</report>
-    <report>maven-license-plugin</report>
-    <!--report>maven-cobertura-plugin</report--> <!-- commented out due to license -->
-  </reports>
+  <build>
+    <sourceDirectory>src/java</sourceDirectory>
+    <testSourceDirectory>src/test</testSourceDirectory>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <includes>
+                <include>org/apache/commons/collections/TestAllPackages.java</include>
+              </includes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-antrun-plugin</artifactId>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <configuration>
+                <tasks>
+                  <ant antfile="build-testframework.xml" target="jar">
+                    <property name="component.version"    value="${project.version}"/>
+                    <property name="test.classes"         value="${project.build.directory}/test-classes"/>
+                    <property name="dist.home"            value="${project.build.directory}"/>
+                    <property name="maven.compile.source" value="${maven.compile.source}"/>
+                    <property name="maven.compile.target" value="${maven.compile.target}"/>
+                  </ant>
+                </tasks>
+              </configuration>
+              <goals>
+                <goal>run</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <descriptors>
+              <descriptor>src/assembly/bin.xml</descriptor>
+              <descriptor>src/assembly/src.xml</descriptor>
+            </descriptors>
+            <tarLongFileMode>gnu</tarLongFileMode>
+          </configuration>
+        </plugin>
+      </plugins>
+    </build>
 
 </project>

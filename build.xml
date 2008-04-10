@@ -1,9 +1,10 @@
  <!--
-   Copyright 2001-2006 The Apache Software Foundation
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+   Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -32,10 +33,10 @@
   <property name="component.title"         value="Commons Collections"/>
 
   <!-- The full title of this component -->
-  <property name="component.title.full"    value="Apache Jakarta Commons Collections"/>
+  <property name="component.title.full"    value="Apache Commons Collections"/>
 
   <!-- The current version number of this component -->
-  <property name="component.version"       value="3.2"/>
+  <property name="component.version"       value="3.2.1"/>
 
   <!-- The base directory for component configuration files -->
   <property name="source.conf"               value="src/conf"/>
@@ -373,7 +374,7 @@
   <property name="tf.name"                 value="commons-collections-testframework"/>
   <property name="tf.package"              value="org.apache.commons.collections"/>
   <property name="tf.title"                value="Commons Collections Test Framework"/>
-  <property name="tf.title.full"           value="Apache Jakarta Commons Collections Test Framework"/>
+  <property name="tf.title.full"           value="Apache Commons Collections Test Framework"/>
   <property name="tf.version"              value="${component.version}"/>
 
   <property name="tf.build.conf"           value="${build.home}/tfconf"/>
@@ -431,28 +432,15 @@
       </fileset>
     </copy>
     
-    <mkdir      dir="${tf.build.tf}/META-INF"/>
-    <copy      file="LICENSE.txt"
-             tofile="${tf.build.tf}/META-INF/LICENSE.txt"/>
-    <copy      file="NOTICE.txt"
-             tofile="${tf.build.tf}/META-INF/NOTICE.txt"/>
-             
-    <tstamp/>
-    <mkdir      dir="${tf.build.conf}"/>
-    <copy     todir="${tf.build.conf}" filtering="on">
-      <filterset>
-        <filter token="name"     value="${tf.name}"/>
-        <filter token="title"    value="${tf.title}"/>
-        <filter token="package"  value="${tf.package}"/>
-        <filter token="version"  value="${tf.version}"/>
-      </filterset>
-      <fileset dir="${source.conf}" includes="*.MF"/>
-    </copy>
-             
     <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
-    <jar    jarfile="${tf.build.jar.name}"
-            basedir="${tf.build.tf}"
-           manifest="${tf.build.conf}/MANIFEST.MF"/>
+    <ant antfile="build-testframework.xml" target="jar">
+      <property name="test.classes"         value="${tf.build.tf}"/>
+      <property name="dist.home"            value="${build.home}"/>
+      <property name="component.version"    value="${tf.version}"/>
+      <property name="maven.compile.source" value="1.2"/>
+      <property name="maven.compile.target" value="1.2"/>
+    </ant>
+
   </target>
 
 <!-- ====================================================================== -->
@@ -539,9 +527,12 @@
         <include name="PROPOSAL.html"/>
         <include name="STATUS.html"/>
         <include name="build.xml"/>
+        <include name="build-testframework.xml"/>
+        <include name="checkstyle.xml"/>
         <include name="maven.xml"/>
         <include name="project.xml"/>
         <include name="project.properties"/>
+        <include name="pom.xml"/>
       </fileset>
     </copy>
     <copy     todir="${build.dist.src.work}">

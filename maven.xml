@@ -1,9 +1,10 @@
  <!--
-   Copyright 2002-2004 The Apache Software Foundation
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+   Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
 
        http://www.apache.org/licenses/LICENSE-2.0
 
@@ -28,37 +29,11 @@
 
   <!-- ============== JAR ================== -->
   <postGoal name="jar:jar">
-    <j:set var="finalName" value="${pom.getPluginContext('maven-jar-plugin').getVariable('maven.final.name')}"/>
-    <j:set var="finalVersion" value="${finalName.substring(20)}" />
-    <j:set var="testfwkBase" value="${pom.artifactId}-testframework" />
-    <j:set var="testfwkName" value="${testfwkBase}-${finalVersion}" />
-    
-    <ant:jar 
-        jarfile="${maven.build.dir}/${testfwkName}.jar">
-      <j:set var="licenseFileName"><license:fileName/></j:set>
-      <util:file name="${licenseFileName}" var="licenseFile"/>
-      <ant:metainf dir="${licenseFile.canonicalFile.parent}">
-        <ant:include name="${licenseFile.canonicalFile.name}"/>
-      </ant:metainf>
-      <ant:manifest>
-        <ant:attribute name="Built-By" value="${user.name}"/>
-        <ant:attribute name="Created-By" value="Apache Jakarta Maven"/>
-        <ant:attribute name="Package" value="${pom.package}"/>
-        <ant:attribute name="Build-Jdk" value="${java.version}"/>
-        <!-- added supplementary entries -->
-        <ant:attribute name="Extension-Name" value="Commons Collections Test Framework"/>
-        <ant:attribute name="Specification-Version" value="${pom.specificationVersion}"/>
-        <ant:attribute name="Specification-Vendor" value="${pom.organization.name}"/>
-        <ant:attribute name="Specification-Title" value="Commons Collections Test Framework"/>
-        <ant:attribute name="Implementation-Version" value="${pom.currentVersion}"/>
-        <ant:attribute name="Implementation-Vendor" value="${pom.organization.name}"/>
-        <ant:attribute name="Implementation-Vendor-Id" value="${pom.organization.identifier}"/>
-      </ant:manifest>
-      <ant:fileset dir="${maven.build.dir}/test-classes">
-        <ant:include name="**/AbstractTest*.class"/>
-        <ant:include name="**/BulkTest*.class"/>
-      </ant:fileset>
-    </ant:jar>
+    <ant:ant antfile="build-testframework.xml" target="jar">
+      <property name="component.version" value="${pom.currentVersion}"/>
+      <property name="test.classes"      value="${maven.build.dir}/test-classes"/>
+      <property name="dist.home"         value="${maven.build.dir}"/>
+    </ant:ant>
   </postGoal>
   
   <postGoal name="jar:install">
@@ -123,6 +98,10 @@
     <!-- Copy Files -->
     <ant:copy todir="${maven.dist.src.assembly.dir}">
       <ant:fileset dir=".">
+        <ant:include name="build-testframework.xml"/>
+        <ant:include name="checkstyle.xml"/>
+        <ant:include name="pom.xml"/>
+        <ant:include name="NOTICE.txt"/>
         <ant:include name="RELEASE-NOTES.html"/>
         <ant:include name="DEVELOPERS-GUIDE.html"/>
         <ant:include name="PROPOSAL.html"/>
