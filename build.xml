@@ -52,6 +52,7 @@
   <property name="build.conf"              value="${build.home}/conf"/>
   <property name="build.classes"           value="${build.home}/classes"/>
   <property name="build.tests"             value="${build.home}/tests"/>
+  <property name="build.test.reports"      value="${build.home}/test-reports"/>
   <property name="build.docs"              value="${build.home}/docs/apidocs"/>
   <property name="build.src"               value="${build.home}/src-ide" />
   
@@ -284,6 +285,7 @@
 
   <!-- Runs all tests -->
   <target name="-test-all" depends="compile.tests" unless="testcase">
+    <mkdir dir="${build.test.reports}"/>
     <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
       <formatter type="brief" />
       <classpath>
@@ -292,7 +294,7 @@
         <pathelement location="${junit.jar}"/>
       </classpath>
 
-      <batchtest fork="yes">
+      <batchtest fork="yes" todir="${build.test.reports}">
         <fileset dir="${source.test}">
           <include name="**/Test*.java"/>
           <exclude name="**/TestAll*.java"/>
@@ -318,7 +320,7 @@
         <pathelement location="${junit.jar}"/>
       </classpath>
 
-      <test name="${testcase}" fork="yes">
+      <test name="${testcase}" fork="yes" todir="${build.test.reports}">
         <formatter type="brief" usefile="false" />
       </test>
     </junit>
