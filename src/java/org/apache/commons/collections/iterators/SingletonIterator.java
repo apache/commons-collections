@@ -33,7 +33,7 @@ import org.apache.commons.collections.ResettableIterator;
  * @author Rodney Waldhoff
  */
 public class SingletonIterator
-		implements Iterator, ResettableIterator {
+        implements Iterator, ResettableIterator {
 
     /** Whether remove is allowed */
     private final boolean removeAllowed;

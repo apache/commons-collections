@@ -45,7 +45,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * @author Phil Steitz
  */
 public class ArrayListIterator extends ArrayIterator
-		implements ListIterator, ResettableListIterator {
+        implements ListIterator, ResettableListIterator {
 
     /**
      * Holds the index of the last item returned by a call to <code>next()</code>

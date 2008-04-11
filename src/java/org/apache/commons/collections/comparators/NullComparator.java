@@ -168,7 +168,7 @@ public class NullComparator implements Comparator, Serializable {
         if(!obj.getClass().equals(this.getClass())) { return false; }
 
         NullComparator other = (NullComparator)obj;
-	
+    
         return ((this.nullsAreHigh == other.nullsAreHigh) &&
                 (this.nonNullComparator.equals(other.nonNullComparator)));
     }

@@ -48,9 +48,9 @@ public class ArrayIterator implements ResettableIterator {
     /** The start index to loop from */
     protected int startIndex = 0;
     /** The end index to loop to */
-	protected int endIndex = 0;
+    protected int endIndex = 0;
     /** The current iterator index */
-	protected int index = 0;
+    protected int index = 0;
     
     // Constructors
     // ----------------------------------------------------------------------
