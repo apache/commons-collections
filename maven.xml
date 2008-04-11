@@ -75,6 +75,7 @@
     <ant:copy todir="${maven.dist.bin.assembly.dir}">
       <ant:fileset dir=".">
         <ant:include name="RELEASE-NOTES.html"/>
+        <ant:include name="NOTICE.txt"/>
       </ant:fileset>
     </ant:copy>
 
@@ -110,13 +111,6 @@
       </ant:fileset>
     </ant:copy>
 
-    <!-- Copy Jars -->
-    <ant:copy todir="${maven.dist.src.assembly.dir}">
-      <ant:fileset dir="${maven.build.dir}">
-        <ant:include name="*.jar"/>
-      </ant:fileset>
-    </ant:copy>
-    
     <!-- Copy XDocs -->
     <ant:copy todir="${maven.dist.src.assembly.dir}/xdocs">
       <ant:fileset dir="xdocs" />
