@@ -24,28 +24,13 @@ limitations under the License.
 <!-- ================================================== -->
 <section name="Building Commons Collections">
 <p>
-  Commons Collections uses <a href="http://ant.apache.org">Ant</a> as its
-  primary build system, however <a href="http://maven.apache.org">Maven</a>
-  is used for site generation.
+  Commons Collections uses <a href="http://maven.apache.org">Maven 2</a> as its
+  primary build system, however an <a href="http://ant.apache.org">Ant</a>
+  build is also available.
 </p>
 <p>
   You may also be interested in the <a href="release_3_2_1.html">v3.2.1 release notes</a>.
 </p>
-</section>
-<!-- ================================================== -->
-<section name="Ant Goals">
-  <p>
-    To build a jar file, change into Collection's root directory and run "ant jar".
-    The result will be in the "build" subdirectory.
-  </p>
-  <p>
-    All tests can be run with "ant test".
-    A single test can be run with "ant -Dtestcase=org.apache.commons.collections.TestXxx test".
-  </p>
-  <p>
-    To build the Javadocs, run "ant javadoc".
-    The result will be in "build/docs/apidocs".
-  </p>
 </section>
 <!-- ================================================== -->
 <section name="Maven 2 Goals">
