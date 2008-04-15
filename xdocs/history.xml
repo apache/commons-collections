@@ -100,6 +100,10 @@ Other changes included more classes implementing Serializable and a ReferenceIde
 Notably MultiValueMap is a new more flexible implementation of MultiHashMap.
 </p>
 
+<p>
+<b>Collections 3.2.1</b> Re-packaged v3.2 release which is OSGi enabled.
+</p>
+
 </section>
 
 </body>

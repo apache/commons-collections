@@ -379,7 +379,7 @@
 
   <properties>
     <commons.componentid>collections</commons.componentid>
-    <commons.release.version>3.2</commons.release.version>
+    <commons.release.version>3.2.1</commons.release.version>
     <commons.binary.suffix></commons.binary.suffix>
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
