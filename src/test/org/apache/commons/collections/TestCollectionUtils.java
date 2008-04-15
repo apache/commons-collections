@@ -931,7 +931,7 @@ public class TestCollectionUtils extends MockTestCase {
         // Ensure that the collection is the input type or a super type
         Collection<Integer> output1 = CollectionUtils.select(list, EQUALS_TWO);
         Collection<Number> output2 = CollectionUtils.<Number, Integer>select(list, EQUALS_TWO);
-        Collection<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
+        HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
         assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         assertEquals(4, list.size());
         assertEquals(1, output1.size());
@@ -947,7 +947,7 @@ public class TestCollectionUtils extends MockTestCase {
         list.add(4L);
         Collection<Long> output1 = CollectionUtils.selectRejected(list, EQUALS_TWO);
         Collection<Number> output2 = CollectionUtils.<Number, Long>selectRejected(list, EQUALS_TWO);
-        Collection<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
+        HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
         assertTrue(CollectionUtils.isEqualCollection(output1, output2));
         assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         assertEquals(4, list.size());
@@ -964,17 +964,16 @@ public class TestCollectionUtils extends MockTestCase {
         assertTrue(collection.size() == collectionA.size());
         assertCollectResult(collection);
         
-        collection = new ArrayList<Number>();
-        CollectionUtils.collect(collectionA, transformer, collection);
-        assertTrue(collection.size() == collectionA.size());
-        assertCollectResult(collection);
+        ArrayList<Number> list;
+        list = CollectionUtils.collect(collectionA, transformer, new ArrayList<Number>());
+        assertTrue(list.size() == collectionA.size());
+        assertCollectResult(list);
 
         Iterator<Integer> iterator = null;
-        collection = new ArrayList<Number>();
-        CollectionUtils.collect(iterator, transformer, collection);
+        list = CollectionUtils.collect(iterator, transformer, new ArrayList<Number>());
 
         iterator = iterableA.iterator();
-        CollectionUtils.collect(iterator, transformer, collection);
+        list = CollectionUtils.collect(iterator, transformer, list);
         assertTrue(collection.size() == collectionA.size());
         assertCollectResult(collection);
 
@@ -986,7 +985,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertTrue(collection.size() == 0);
 
         int size = collectionA.size();
-        CollectionUtils.collect((Collection<Integer>) null, transformer, collectionB);
+        collectionB = CollectionUtils.collect((Collection<Integer>) null, transformer, collectionB);
         assertTrue(collectionA.size() == size && collectionA.contains(1));
         CollectionUtils.collect(collectionB, null, collectionA);
         assertTrue(collectionA.size() == size && collectionA.contains(1));

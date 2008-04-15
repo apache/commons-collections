@@ -586,7 +586,7 @@ public class CollectionUtils {
      *            the collection to output into, may not be null
      * @return outputCollection
      */
-    public static <O, I extends O> Collection<O> select(Collection<I> inputCollection, Predicate<? super I> predicate, Collection<O> outputCollection) {
+    public static <O, I extends O, R extends Collection<O>> R select(Collection<I> inputCollection, Predicate<? super I> predicate, R outputCollection) {
         if (inputCollection != null && predicate != null) {
             for (I item : inputCollection) {
                 if (predicate.evaluate(item)) {
@@ -631,7 +631,7 @@ public class CollectionUtils {
      *            the collection to output into, may not be null
      * @return outputCollection
      */
-    public static <O, I extends O> Collection<O> selectRejected(Collection<I> inputCollection, Predicate<? super I> predicate, Collection<O> outputCollection) {
+    public static <O, I extends O, R extends Collection<O>> R selectRejected(Collection<I> inputCollection, Predicate<? super I> predicate, R outputCollection) {
         if (inputCollection != null && predicate != null) {
             for (I item : inputCollection) {
                 if (!predicate.evaluate(item)) {
@@ -701,7 +701,7 @@ public class CollectionUtils {
      * @return the outputCollection with the transformed input added
      * @throws NullPointerException if the output collection is null
      */
-    public static <I,O,T extends O> Collection<O> collect(Iterable<I> inputCollection, final Transformer<? super I,T> transformer, final Collection<O> outputCollection) {
+    public static <I,O,T extends O, R extends Collection<O>> R collect(Iterable<I> inputCollection, final Transformer<? super I,T> transformer, final R outputCollection) {
         if (inputCollection != null) {
             return collect(inputCollection.iterator(), transformer, outputCollection);
         }
@@ -725,7 +725,7 @@ public class CollectionUtils {
      * @throws NullPointerException if the output collection is null
      */
     //TODO - deprecate and replace with IteratorIterable
-    public static <I,O,T extends O> Collection<O> collect(Iterator<I> inputIterator, final Transformer<? super I,T> transformer, final Collection<O> outputCollection) {
+    public static <I,O,T extends O, R extends Collection<O>> R collect(Iterator<I> inputIterator, final Transformer<? super I,T> transformer, final R outputCollection) {
         if (inputIterator != null && transformer != null) {
             while (inputIterator.hasNext()) {
                 I item = inputIterator.next();
