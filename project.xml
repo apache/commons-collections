@@ -19,7 +19,7 @@
   <pomVersion>3</pomVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <currentVersion>3.2.1</currentVersion>
+  <currentVersion>3.2.2-SNAPSHOT</currentVersion>
   <inceptionYear>2001</inceptionYear>
   <name>Collections</name>
   <shortDescription>Commons Collections</shortDescription>
