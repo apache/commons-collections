@@ -31,6 +31,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Properties;
@@ -1238,7 +1239,7 @@ public class ExtendedProperties extends Hashtable {
      * text maps to a boolean value, or <code>null</code> otherwise.
      */
     public String testBoolean(String value) {
-        String s = value.toLowerCase();
+        String s = value.toLowerCase(Locale.ENGLISH);
 
         if (s.equals("true") || s.equals("on") || s.equals("yes")) {
             return "true";
