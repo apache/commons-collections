@@ -726,7 +726,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
     /**
      * Compare the current serialized form of the Map
-     * against the canonical version in CVS.
+     * against the canonical version in SVN.
      */
     public void testEmptyMapCompatibility() throws Exception {
         /**
@@ -747,7 +747,7 @@ public abstract class AbstractTestMap extends AbstractTestObject {
 
     /**
      * Compare the current serialized form of the Map
-     * against the canonical version in CVS.
+     * against the canonical version in SVN.
      */
     public void testFullMapCompatibility() throws Exception {
         /**

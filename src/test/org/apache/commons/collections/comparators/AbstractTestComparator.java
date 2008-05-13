@@ -193,7 +193,7 @@ public abstract class AbstractTestComparator extends AbstractTestObject {
 
     /**
      * Compare the current serialized form of the Comparator
-     * against the canonical version in CVS.
+     * against the canonical version in SVN.
      */
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if(!skipSerializedCanonicalTests()) {
@@ -211,7 +211,7 @@ public abstract class AbstractTestComparator extends AbstractTestObject {
             		String fileName = getCanonicalComparatorName(comparator);
             		writeExternalFormToDisk((Serializable) comparator, fileName);
             		fail("Serialized form could not be found.  A serialized version " +
-            		     "has now been written (and should be added to CVS): " + fileName);
+            		     "has now been written (and should be added to SVN): " + fileName);
                 } else {
                     fail("The Serialized form could be located to test serialization " +
                         "compatibility: " + exception.getMessage());

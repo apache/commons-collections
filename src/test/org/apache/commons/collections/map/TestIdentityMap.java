@@ -115,7 +115,7 @@ public class TestIdentityMap extends AbstractTestObject {
     
     /**
      * Compare the current serialized form of the Map
-     * against the canonical version in CVS.
+     * against the canonical version in SVN.
      */
     public void testEmptyMapCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved

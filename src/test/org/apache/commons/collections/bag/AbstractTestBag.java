@@ -475,7 +475,7 @@ public abstract class AbstractTestBag extends AbstractTestObject {
 
     /**
      * Compare the current serialized form of the Bag
-     * against the canonical version in CVS.
+     * against the canonical version in SVN.
      */
     public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
@@ -489,7 +489,7 @@ public abstract class AbstractTestBag extends AbstractTestObject {
 
     /**
      * Compare the current serialized form of the Bag
-     * against the canonical version in CVS.
+     * against the canonical version in SVN.
      */
     public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved

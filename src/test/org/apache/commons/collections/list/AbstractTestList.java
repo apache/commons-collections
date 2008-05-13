@@ -1060,7 +1060,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
 
     /**
      * Compare the current serialized form of the List
-     * against the canonical version in CVS.
+     * against the canonical version in SVN.
      */
     public void testEmptyListCompatibility() throws IOException, ClassNotFoundException {
         /**
@@ -1082,7 +1082,7 @@ public abstract class AbstractTestList extends AbstractTestCollection {
 
     /**
      * Compare the current serialized form of the List
-     * against the canonical version in CVS.
+     * against the canonical version in SVN.
      */
     public void testFullListCompatibility() throws IOException, ClassNotFoundException {
         /**

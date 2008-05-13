@@ -51,7 +51,7 @@ public class TestReverseComparator extends AbstractTestComparator {
      * Comparator.  The resulting comparator should
      * sort according to natural Order.  (Note: we wrap
      * a Comparator taken from the JDK so that we can
-     * save a "canonical" form in CVS.
+     * save a "canonical" form in SVN.
      * 
      * @return Comparator that returns "natural" order
      */
