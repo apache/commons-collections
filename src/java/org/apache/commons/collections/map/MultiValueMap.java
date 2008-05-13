@@ -66,7 +66,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
     /** The factory for creating value collections. */
     private final Factory collectionFactory;
     /** The cached values. */
-    private transient Collection values;
+    private transient Collection valuesView;
 
     /**
      * Creates a map which wraps the given map and
@@ -253,8 +253,10 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
      * @return a collection view of the values contained in this map
      */
     public Collection values() {
-        Collection vs = values;
-        return (vs != null ? vs : (values = new Values()));
+        if (valuesView == null) {
+            valuesView = new Values();
+        }
+        return valuesView;
     }
 
     /**
