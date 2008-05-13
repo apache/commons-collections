@@ -58,23 +58,7 @@ public class TestCompositeMap extends AbstractTestMap {
     public Map makeEmptyMap() {
         CompositeMap map = new CompositeMap();
         map.addComposited(new HashMap());
-        map.setMutator(new CompositeMap.MapMutator() {
-            public void resolveCollision(CompositeMap composite,
-            Map existing,
-            Map added,
-            Collection intersect) {
-                // Do nothing
-            }
-            
-            public Object put(CompositeMap map, Map[] composited, Object key, Object value) {
-                return composited[0].put(key, value);
-            }
-            
-            public void putAll(CompositeMap map, Map[] composited, Map t) {
-                composited[0].putAll(t);
-            }
-            
-        });
+        map.setMutator( new EmptyMapMutator() );
         return map;
     }
     
@@ -223,5 +207,16 @@ public class TestCompositeMap extends AbstractTestMap {
         map.putAll(null);
         assertTrue(pass);
     }
-}
 
+    public String getCompatibilityVersion() {
+        return "3.3";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) map, "/tmp/CompositeMap.emptyCollection.version3.3.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) map, "/tmp/CompositeMap.fullCollection.version3.3.obj");
+//    }
+
+}

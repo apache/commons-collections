@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.Serializable;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,7 +45,7 @@ import org.apache.commons.collections.set.CompositeSet;
  *
  * @author Brian McCallister
  */
-public class CompositeMap implements Map {
+public class CompositeMap implements Map, Serializable {
 
     /** Array of all maps in the composite */
     private Map[] composite;
@@ -479,7 +481,7 @@ public class CompositeMap implements Map {
      * mutators in a CompositeMap, as well as providing a hook for
      * callbacks on key collisions.
      */
-    public static interface MapMutator {
+    public static interface MapMutator extends Serializable {
         /**
          * Called when adding a new Composited Map results in a
          * key collision.

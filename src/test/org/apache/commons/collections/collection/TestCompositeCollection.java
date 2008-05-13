@@ -355,4 +355,16 @@ public class TestCompositeCollection extends AbstractTestCollection {
         assertTrue(c.contains("1"));
         assertEquals(2, c.size());
     }
+
+    public String getCompatibilityVersion() {
+        return "3.3";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "/tmp/CompositeCollection.emptyCollection.version3.3.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "/tmp/CompositeCollection.fullCollection.version3.3.obj");
+//    }
+
 }

@@ -48,27 +48,7 @@ public class TestCompositeSet extends AbstractTestSet {
     public Set makeEmptySet() {
         final HashSet contained = new HashSet();
         CompositeSet set = new CompositeSet(contained);
-        set.setMutator(new CompositeSet.SetMutator() {
-            public void resolveCollision(CompositeSet comp, Set existing, 
-                Set added, Collection intersects) {
-                throw new IllegalArgumentException();
-            }
-            
-            public boolean add(CompositeCollection composite, 
-                Collection[] collections, Object obj) {
-                return contained.add(obj);
-            }
-            
-            public boolean addAll(CompositeCollection composite, 
-                Collection[] collections, Collection coll) {
-                return contained.addAll(coll);
-            }
-            
-            public boolean remove(CompositeCollection composite, 
-                Collection[] collections, Object obj) {
-                return contained.remove(obj);
-            }
-        });
+        set.setMutator( new EmptySetMutator(contained) );
         return set;
     }
     
@@ -173,4 +153,16 @@ public class TestCompositeSet extends AbstractTestSet {
             // expected
         }
     }
+
+    public String getCompatibilityVersion() {
+        return "3.3";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "/tmp/CompositeSet.emptyCollection.version3.3.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) collection, "/tmp/CompositeSet.fullCollection.version3.3.obj");
+//    }
+
 }

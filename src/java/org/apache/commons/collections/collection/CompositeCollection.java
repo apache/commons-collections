@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections.collection;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,7 +41,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * @author Stephen Colebourne
  * @author Phil Steitz
  */
-public class CompositeCollection implements Collection {
+public class CompositeCollection implements Collection, Serializable {
     
     /** CollectionMutator to handle changes to the collection */
     protected CollectionMutator mutator;
@@ -393,7 +394,7 @@ public class CompositeCollection implements Collection {
     /**
      * Pluggable strategy to handle changes to the composite.
      */
-    public interface CollectionMutator {
+    public interface CollectionMutator extends Serializable {
         
         /**
          * Called when an object is to be added to the composite.
