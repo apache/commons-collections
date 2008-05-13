@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.bidimap;
 
+import java.io.Serializable;
+
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
@@ -73,7 +75,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  * @author Marc Johnson
  * @author Stephen Colebourne
  */
-public class TreeBidiMap implements OrderedBidiMap {
+public class TreeBidiMap implements OrderedBidiMap, Serializable {
 
     private static final int KEY = 0;
     private static final int VALUE = 1;
@@ -87,10 +89,11 @@ public class TreeBidiMap implements OrderedBidiMap {
     private Node[] rootNode = new Node[2];
     private int nodeCount = 0;
     private int modifications = 0;
-    private Set keySet;
-    private Set valuesSet;
-    private Set entrySet;
-    private TreeBidiMap.Inverse inverse = null;
+
+    private transient Set keySet;
+    private transient Set valuesSet;
+    private transient Set entrySet;
+    private transient TreeBidiMap.Inverse inverse = null;
 
     //-----------------------------------------------------------------------
     /**
@@ -148,7 +151,7 @@ public class TreeBidiMap implements OrderedBidiMap {
     }
 
     /**
-     * Checks whether this map contains the a mapping for the specified value.
+     * Checks whether this map contains a mapping for the specified value.
      * <p>
      * The value must implement <code>Comparable</code>.
      *
@@ -1707,7 +1710,7 @@ public class TreeBidiMap implements OrderedBidiMap {
     /**
      * A node used to store the data.
      */
-    static class Node implements Map.Entry, KeyValue {
+    static class Node implements Map.Entry, KeyValue, Serializable {
 
         private Comparable[] data;
         private Node[] leftNode;

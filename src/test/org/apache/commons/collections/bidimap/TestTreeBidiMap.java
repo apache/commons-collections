@@ -73,4 +73,15 @@ public class TestTreeBidiMap extends AbstractTestOrderedBidiMap {
         return false;
     }
     
+    public String getCompatibilityVersion() {
+        return "3.3";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) map, "/tmp/TreeBidiMap.emptyCollection.version3.3.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) map, "/tmp/TreeBidiMap.fullCollection.version3.3.obj");
+//    }
+
 }
