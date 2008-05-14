@@ -442,6 +442,7 @@
           <linksource>true</linksource>
           <links>
             <link>http://java.sun.com/javase/6/docs/api</link>
+            <link>http://commons.apache.org/configuration/apidocs/</link>
           </links>
         </configuration>
       </plugin>

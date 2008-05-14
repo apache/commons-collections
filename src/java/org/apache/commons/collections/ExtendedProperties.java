@@ -43,8 +43,12 @@ import java.util.Vector;
  * to use the same key many times concatenating the value strings
  * instead of overwriting them.
  * <p>
- * <b>Please consider using the <code>PropertiesConfiguration</code> class in
- * Commons-Configuration as soon as it is released.</b>
+ * <b>Please consider using the
+ * {@link org.apache.commons.configuration.PropertiesConfiguration} class in
+ * <a href="http://commons.apache.org/configuration">Commons Configuration</a>.
+ * It's an evolution of <code>ExtendedProperties</code> supporting more
+ * features like automatic reloading, advanced interpolation, more type
+ * conversions, changes notifications and file layout preservation.</b>
  * <p>
  * The Extended Properties syntax is explained here:
  *
