@@ -32,6 +32,8 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.MultiMap;
 
+import org.apache.commons.collections.AbstractTestObject;
+
 /**
  * TestMultiValueMap.
  *
@@ -39,7 +41,7 @@ import org.apache.commons.collections.MultiMap;
  * @author Stephen Colebourne
  * @since Commons Collections 3.2
  */
-public class TestMultiValueMap extends TestCase {
+public class TestMultiValueMap extends AbstractTestObject {
 
     public TestMultiValueMap(String testName) {
         super(testName);
@@ -351,6 +353,57 @@ public class TestMultiValueMap extends TestCase {
         assertEquals("AB", map.remove("A", "AB"));
         assertEquals("AA", map.remove("A", "AA"));
         assertEquals(new MultiValueMap(), map);
+    }
+
+    //-----------------------------------------------------------------------
+    // Manual serialization testing as this class cannot easily 
+    // extend the AbstractTestMap
+    //-----------------------------------------------------------------------
+
+    public String getCompatibilityVersion() {
+        return "3.3";
+    }
+
+    public Object makeObject() {
+        Map m = makeEmptyMap();
+        m.put("a", "1");
+        m.put("a", "1b");
+        m.put("b", "2");
+        m.put("c", "3");
+        m.put("c", "3b");
+        m.put("d", "4");
+        return m;
+    }
+
+    private Map makeEmptyMap() {
+        return new MultiValueMap();
+    }
+
+//    public void testCreate() throws Exception {
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) makeEmptyMap(),
+//            "/tmp/MultiValueMap.emptyCollection.version3.3.obj");
+//
+//        writeExternalFormToDisk(
+//            (java.io.Serializable) makeObject(),
+//            "/tmp/MultiValueMap.fullCollection.version3.3.obj");
+//    }
+
+    public void testEmptyMapCompatibility() throws Exception {
+        Map map = makeEmptyMap();
+        Map map2 = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
+        assertEquals("Map is empty", 0, map2.size());
+    }
+    public void testFullMapCompatibility() throws Exception {
+        Map map = (Map) makeObject();
+        Map map2 = (Map) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
+        assertEquals("Map is the right size", map.size(), map2.size());
+        for (Iterator it = map.keySet().iterator(); it.hasNext();) {
+            Object key = it.next();
+            assertEquals( "Map had inequal elements", map.get(key), map2.get(key) );
+            map2.remove(key);
+        }
+        assertEquals("Map had extra values", 0, map2.size());
     }
 
 }

@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,7 +66,10 @@ import org.apache.commons.collections.iterators.IteratorChain;
  * @version $Revision$ $Date$
  * @since Commons Collections 3.2
  */
-public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
+public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -2214159910087182007L;
 
     /** The factory for creating value collections. */
     private final Factory collectionFactory;
@@ -122,6 +130,32 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
             throw new IllegalArgumentException("The factory must not be null");
         }
         this.collectionFactory = collectionFactory;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     * @since Commons Collections 3.3
+     */
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     * @since Commons Collections 3.3
+     */
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
@@ -424,7 +458,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap {
     /**
      * Inner class that provides a simple reflection factory.
      */
-    private static class ReflectionFactory implements Factory {
+    private static class ReflectionFactory implements Factory, Serializable {
         private final Class clazz;
 
         public ReflectionFactory(Class clazz) {
