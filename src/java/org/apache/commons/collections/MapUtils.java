@@ -28,6 +28,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.Collection;
 
 import org.apache.commons.collections.map.FixedSizeMap;
 import org.apache.commons.collections.map.FixedSizeSortedMap;
@@ -1642,4 +1643,36 @@ public class MapUtils {
         return LazySortedMap.decorate(map, transformerFactory);
     }
 
+    /**
+     * <p>
+     * Populates a Map using the supplied <code>Transformer</code> to transform the collection
+     * values into keys, using the unaltered collection value as the value in the <code>Map</code>.
+     * </p>
+     * @param map the <code>Map</code> to populate.
+     * @param collection the <code>Collection</code> to use as input values for the map.
+     * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
+     * @throws NullPointerException if the map, collection or transformer are null
+     */
+    public static void populateMap(Map map, Collection collection, Transformer keyTransformer) {
+        populateMap(map, collection, keyTransformer, TransformerUtils.nopTransformer());
+    }
+
+    /**
+     * <p>
+     * Populates a Map using the supplied <code>Transformer</code>s to transform the collection
+     * values into keys and values.
+     * </p>
+     * @param map the <code>Map</code> to populate.
+     * @param collection the <code>Collection</code> to use as input values for the map.
+     * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
+     * @param valueTransformer the <code>Transformer</code> used to transform the collection value into a value
+     * @throws NullPointerException if the map, collection or transformers are null
+     */
+    public static void populateMap(Map map, Collection collection, Transformer keyTransformer, Transformer valueTransformer) {
+        Iterator iter = collection.iterator();
+        while (iter.hasNext()) {
+            Object temp = iter.next();
+            map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
+        }
+    }
 }

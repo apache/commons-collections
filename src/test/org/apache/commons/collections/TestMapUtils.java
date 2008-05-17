@@ -26,6 +26,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.List;
+import java.util.ArrayList;
 
 import junit.framework.Test;
 
@@ -34,6 +36,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.collections.map.PredicatedMap;
 import org.apache.commons.collections.map.TestPredicatedMap;
+import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
  * Tests for MapUtils.
@@ -805,4 +808,39 @@ public class TestMapUtils extends BulkTest {
         assertEquals(false, MapUtils.isNotEmpty(map));
     }
 
+    public void testPopulateMap() {
+        // Setup Test Data
+        List list = new ArrayList();
+        list.add("1");
+        list.add("3");
+        list.add("5");
+        list.add("7");
+        list.add("2");
+        list.add("4");
+        list.add("6");
+
+        // Now test key transform population
+        Map map = new HashMap();
+        MapUtils.populateMap(map, list, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(list.size(), map.size());
+
+        for (int i = 0; i < list.size(); i++) {
+            assertEquals(true, map.containsKey(new Integer((String) list.get(i))));
+            assertEquals(false, map.containsKey(list.get(i)));
+            assertEquals(true, map.containsValue(list.get(i)));
+            assertEquals(list.get(i), map.get(new Integer((String) list.get(i))));
+        }
+
+        // Now test both Key-Value transform population
+        map = new HashMap();
+        MapUtils.populateMap(map, list, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+
+        assertEquals(list.size(), map.size());
+        for (int i = 0; i < list.size(); i++) {
+            assertEquals(true, map.containsKey(new Integer((String) list.get(i))));
+            assertEquals(false, map.containsKey(list.get(i)));
+            assertEquals(true, map.containsValue(new Integer((String) list.get(i))));
+            assertEquals(new Integer((String) list.get(i)), map.get(new Integer((String) list.get(i))));
+        }
+    }
 }
