@@ -941,13 +941,15 @@ public class CollectionUtils {
      * Note: This method is named to avoid clashing with
      * {@link #isEmpty(Collection)}.
      * 
-     * @param object  the object to get the size of, not null
-     * @return true if empty
-     * @throws IllegalArgumentException thrown if object is not recognised or null
+     * @param object  the object to get the size of, may be null
+     * @return true if empty or null
+     * @throws IllegalArgumentException thrown if object is not recognised
      * @since Commons Collections 3.2
      */
     public static boolean sizeIsEmpty(Object object) {
-        if (object instanceof Collection) {
+        if (object == null) {
+            return true;
+        } else if (object instanceof Collection) {
             return ((Collection) object).isEmpty();
         } else if (object instanceof Map) {
             return ((Map) object).isEmpty();
@@ -957,8 +959,6 @@ public class CollectionUtils {
             return ((Iterator) object).hasNext() == false;
         } else if (object instanceof Enumeration) {
             return ((Enumeration) object).hasMoreElements() == false;
-        } else if (object == null) {
-            throw new IllegalArgumentException("Unsupported object type: null");
         } else {
             try {
                 return Array.getLength(object) == 0;
