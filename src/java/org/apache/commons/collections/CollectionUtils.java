@@ -886,9 +886,9 @@ public class CollectionUtils {
      * <li>Enumeration - the number of elements remaining in the enumeration
      * </ul>
      * 
-     * @param object  the object to get the size of
-     * @return the size of the specified collection
-     * @throws IllegalArgumentException thrown if object is not recognised or null
+     * @param object  the object to get the size of, may be null
+     * @return the size of the specified collection or 0 if the object was null
+     * @throws IllegalArgumentException thrown if object is not recognised
      * @since Commons Collections 3.1
      */
     public static int size(Object object) {
