@@ -391,8 +391,7 @@
       <maven.compile.source>1.5</maven.compile.source>
       <maven.compile.target>1.5</maven.compile.target>
       <commons.componentid>collections</commons.componentid>
-      <commons.release.version>3.2</commons.release.version>
-      <commons.binary.suffix></commons.binary.suffix>
+      <commons.release.version>3.2.1</commons.release.version>
       <commons.jira.id>COLLECTIONS</commons.jira.id>
       <commons.jira.pid>12310465</commons.jira.pid>
   </properties> 
