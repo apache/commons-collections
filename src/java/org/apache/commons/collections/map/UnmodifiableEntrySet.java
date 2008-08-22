@@ -29,6 +29,8 @@ import org.apache.commons.collections.set.AbstractSetDecorator;
 
 /**
  * Decorates a map entry <code>Set</code> to ensure it can't be altered.
+ * <p>
+ * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$

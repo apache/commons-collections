@@ -30,6 +30,8 @@ import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>BidiMap</code> to ensure it can't be altered.
+ * <p>
+ * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$

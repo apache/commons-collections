@@ -34,6 +34,8 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Decorates another <code>SortedMap</code> to ensure it can't be altered.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * <p>
+ * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$

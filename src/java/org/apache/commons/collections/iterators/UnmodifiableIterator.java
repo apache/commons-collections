@@ -22,6 +22,8 @@ import org.apache.commons.collections.Unmodifiable;
 
 /** 
  * Decorates an iterator such that it cannot be modified.
+ * <p>
+ * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
