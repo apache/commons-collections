@@ -405,6 +405,15 @@ public class TestExtendedProperties extends TestCase {
         ExtendedProperties props2 = new ExtendedProperties();
         props2.combine(props);
         assertEquals( "\\\\192.168.1.91\\test", props2.getProperty("test") );
+
+        ExtendedProperties props3 = new ExtendedProperties();
+        props3.setProperty("sub.test", "foo");
+        props2.combine(props3);
+        assertEquals("foo", props2.getProperty("sub.test"));
+
+        ExtendedProperties subs = props2.subset("sub");
+        assertNotNull(subs);
+        assertEquals("foo", subs.getProperty("test"));
     }
 
     public void testCollections238() throws IOException {
