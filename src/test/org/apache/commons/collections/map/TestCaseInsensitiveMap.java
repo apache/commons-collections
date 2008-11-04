@@ -17,6 +17,7 @@
 package org.apache.commons.collections.map;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -117,4 +118,33 @@ public class TestCaseInsensitiveMap extends AbstractTestIterableMap {
         writeExternalFormToDisk((java.io.Serializable) map, "/home/phil/jakarta-commons/collections/data/test/CaseInsensitiveMap.fullCollection.version3.obj");
     }
      */
+
+    // COLLECTIONS-294
+    public void testLocaleIndependence() {
+        Locale orig = Locale.getDefault();
+
+        Locale[] locales = { Locale.ENGLISH, new Locale("tr"), Locale.getDefault() };
+
+        String[][] data = { 
+            { "i", "I" },
+            { "\u03C2", "\u03C3" },
+            { "\u03A3", "\u03C2" },
+            { "\u03A3", "\u03C3" },
+        };
+
+        try {
+            for (int i = 0; i < locales.length; i++) {
+                Locale.setDefault(locales[i]);
+                for (int j = 0; j < data.length; j++) {
+                    assertTrue("Test data corrupt: " + j, data[j][0].equalsIgnoreCase(data[j][1]));
+                    CaseInsensitiveMap map = new CaseInsensitiveMap();
+                    map.put(data[j][0], "value");
+                    assertEquals(Locale.getDefault() + ": " + j, "value", map.get(data[j][1]));
+                }
+            }
+        } finally {
+            Locale.setDefault(orig);
+        }
+    }
+
 }

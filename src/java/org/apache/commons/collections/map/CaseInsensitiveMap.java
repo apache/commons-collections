@@ -25,9 +25,9 @@ import java.util.Map;
 /**
  * A case-insensitive <code>Map</code>.
  * <p>
- * As entries are added to the map, keys are converted to all lowercase. A new 
- * key is compared to existing keys by comparing <code>newKey.toString().toLower()</code>
- * to the lowercase values in the current <code>KeySet.</code>
+ * Before keys are added to the map or compared to other existing keys, they are converted
+ * to all lowercase in a locale-independent fashion by using information from the Unicode
+ * data file.
  * <p>
  * Null keys are supported.  
  * <p>
@@ -111,14 +111,18 @@ public class CaseInsensitiveMap extends AbstractHashedMap implements Serializabl
      * Overrides convertKey() from {@link AbstractHashedMap} to convert keys to 
      * lower case.
      * <p>
-     * Returns null if key is null.
+     * Returns {@link AbstractHashedMap#NULL} if key is null.
      * 
      * @param key  the key convert
      * @return the converted key
      */
     protected Object convertKey(Object key) {
         if (key != null) {
-            return key.toString().toLowerCase();
+            char[] chars = key.toString().toCharArray();
+            for (int i = chars.length - 1; i >= 0; i--) {
+                chars[i] = Character.toLowerCase(Character.toUpperCase(chars[i]));
+            }
+            return new String(chars);
         } else {
             return AbstractHashedMap.NULL;
         }
