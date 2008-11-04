@@ -428,4 +428,20 @@ public class TestExtendedProperties extends TestCase {
         assertEquals(3, props.size());
     }
 
+    public void testCollections299() {
+        Properties defaults = new Properties();
+        defaults.put("objectTrue", Boolean.TRUE);
+
+        Properties properties = new Properties(defaults);
+        properties.put("objectFalse", Boolean.FALSE);
+
+        ExtendedProperties extended = ExtendedProperties.convertProperties(properties);
+
+        assertNull(extended.getString("objectTrue"));
+        assertNull(extended.getString("objectFalse"));
+
+        assertNull(extended.get("objectTrue"));
+        assertNull(extended.get("objectFalse"));
+    }
+
 }

@@ -1708,6 +1708,10 @@ public class ExtendedProperties extends Hashtable {
      * <p>
      * NOTE: From Commons Collections 3.2 this method will pick up
      * any default parent Properties of the specified input object.
+     * <p>
+     * As with java.util.Properties(Properties), any non-String 
+     * values will not be passed on in the new ExtendedProperties 
+     * object.
      *
      * @param props  the properties object to convert
      * @return new ExtendedProperties created from props
@@ -1717,7 +1721,10 @@ public class ExtendedProperties extends Hashtable {
 
         for (Enumeration e = props.propertyNames(); e.hasMoreElements();) {
             String s = (String) e.nextElement();
-            c.setProperty(s, props.getProperty(s));
+            String value = props.getProperty(s);
+            if(value != null) {
+                c.setProperty(s, value);
+            }
         }
 
         return c;
