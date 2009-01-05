@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -468,6 +469,52 @@ public class TestSetUniqueList extends AbstractTestList {
         decoratedList.add(1, s2);
 
         assertEquals(4, decoratedList.size());
+    }
+
+    public void testCollections307() {
+        List list = new ArrayList();
+        List uniqueList = SetUniqueList.decorate(list);
+
+        String hello = "Hello";
+        String world = "World";
+        uniqueList.add(hello);
+        uniqueList.add(world);
+
+        List subList = list.subList(0, 0);
+        List subUniqueList = uniqueList.subList(0, 0);
+
+        assertFalse(subList.contains(world)); // passes
+        assertFalse(subUniqueList.contains(world)); // fails
+
+        List worldList = new ArrayList();
+        worldList.add(world);
+        assertFalse(subList.contains("World")); // passes
+        assertFalse(subUniqueList.contains("World")); // fails
+
+        // repeat the test with a different class than HashSet; 
+        // which means subclassing SetUniqueList below
+        list = new ArrayList();
+        uniqueList = new SetUniqueList307(list, new java.util.TreeSet());
+
+        uniqueList.add(hello);
+        uniqueList.add(world);
+
+        subList = list.subList(0, 0);
+        subUniqueList = uniqueList.subList(0, 0);
+
+        assertFalse(subList.contains(world)); // passes
+        assertFalse(subUniqueList.contains(world)); // fails
+
+        worldList = new ArrayList();
+        worldList.add(world);
+        assertFalse(subList.contains("World")); // passes
+        assertFalse(subUniqueList.contains("World")); // fails
+    }
+
+    class SetUniqueList307 extends SetUniqueList {
+        public SetUniqueList307(List list, Set set) {
+            super(list, set);
+        }
     }
 
 }
