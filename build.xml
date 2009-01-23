@@ -89,6 +89,7 @@
 
   <!-- JUnit -->
   <property name="test.failonerror"        value="true"/>
+  <property name="test.fork"               value="true"/>
 
   <!-- Maven -->
   <property name="maven.repo"  value="${user.home}/.maven/repository" />
@@ -294,7 +295,7 @@
         <pathelement location="${junit.jar}"/>
       </classpath>
 
-      <batchtest fork="yes" todir="${build.test.reports}">
+      <batchtest fork="${test.fork}" todir="${build.test.reports}">
         <fileset dir="${source.test}">
           <include name="**/Test*.java"/>
           <exclude name="**/TestAll*.java"/>
@@ -320,7 +321,7 @@
         <pathelement location="${junit.jar}"/>
       </classpath>
 
-      <test name="${testcase}" fork="yes" todir="${build.test.reports}">
+      <test name="${testcase}" fork="${test.fork}" todir="${build.test.reports}">
         <formatter type="brief" usefile="false" />
       </test>
     </junit>
@@ -338,7 +339,7 @@
         <pathelement location="${junit.jar}"/>
       </classpath>
 
-      <batchtest fork="yes">
+      <batchtest fork="${test.fork}">
         <fileset dir="${source.test}">
           <include name="**/TestAllPackages.java"/>
         </fileset>
