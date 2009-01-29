@@ -112,6 +112,7 @@ limitations under the License.
 
   <!-- JUnit -->
   <property name="test.failonerror"        value="true"/>
+  <property name="test.fork"               value="true"/>
 
   <!-- Maven -->
   <property name="maven.repo"  value="${user.home}/.maven/repository" />
@@ -307,19 +308,20 @@ limitations under the License.
           description="Run unit tests" />
 
   <path id="build.path">
-  			<pathelement location="${build.classes}" />
-  		</path>
-	<target name="instrument"
-	        depends="compile.tests"
-	        description="Instruments the compiled classes and moves them to the instrumentation directory">
-		<emma>
-			<instr instrpathref="build.path"
-			       destdir="${build.instrumented}"
-			       metadatafile="${build.reports.coverage}/coverage.emma"
-			       merge="true">
-			</instr>
-		</emma>
-	</target>
+    <pathelement location="${build.classes}" />
+  </path>
+
+  <target name="instrument"
+          depends="compile.tests"
+          description="Instruments the compiled classes and moves them to the instrumentation directory">
+    <emma>
+      <instr instrpathref="build.path"
+             destdir="${build.instrumented}"
+             metadatafile="${build.reports.coverage}/coverage.emma"
+             merge="true">
+      </instr>
+    </emma>
+  </target>
 
   <!-- Runs all tests -->
   <target name="-test-all" depends="instrument" unless="testcase">
@@ -337,8 +339,9 @@ limitations under the License.
       <jvmarg value="-Demma.coverage.out.merge=true" />
       <jvmarg value="-Demma.verbosity.level=quiet" />
 
+      <formatter type="xml" />
       <formatter type="plain" />
-      <batchtest fork="yes" todir="${build.reports.test}">
+      <batchtest fork="${test.fork}" todir="${build.reports.test}">
         <fileset dir="${source.test}">
           <include name="**/Test*.java"/>
           <exclude name="**/TestAll*.java"/>
@@ -348,15 +351,17 @@ limitations under the License.
           <exclude name="**/TestHashMap.java"/>
           <exclude name="**/TestTreeMap.java"/>
           <exclude name="**/TestTypedCollection.java"/>
+          <exclude name="**/TestAnyAllOnePredicate.java"/>
+          <exclude name="**/TestCompositePredicate.java"/>
         </fileset>
       </batchtest>
     </junit>
-	<junitreport todir="${build.reports.test}">
-		<fileset dir="${build.reports.test}">
-			<include name="TEST-*.xml" />
-		</fileset>
-		<report format="frames" todir="${build.reports.test}/html" />
-	</junitreport>
+    <junitreport todir="${build.reports.test}">
+      <fileset dir="${build.reports.test}">
+        <include name="TEST-*.xml" />
+      </fileset>
+      <report format="frames" todir="${build.reports.test}/html" />
+    </junitreport>
   </target>
 
   <!-- Runs a single test -->
@@ -369,25 +374,24 @@ limitations under the License.
       	<path refid="test.support.path"/>
       </classpath>
 
-      <test name="${testcase}" fork="yes">
+      <test name="${testcase}" fork="${test.fork}">
         <formatter type="brief" usefile="false" />
       </test>
     </junit>
   </target>
   
-	<target name="coverage.report"
-	        depends="test"
-	        description="Generates the coverage report for the code that has been run">
-		<emma>
-			<report sourcepath="${source.java}">
-				<fileset dir="${build.reports.coverage}">
-					<include name="*" />
-				</fileset>
-				<html outfile="${build.reports.coverage}/coverage.html" />
-			</report>
-		</emma>
-	</target>
-
+  <target name="coverage.report"
+          depends="test"
+          description="Generates the coverage report for the code that has been run">
+    <emma>
+      <report sourcepath="${source.java}">
+        <fileset dir="${build.reports.coverage}">
+          <include name="*" />
+        </fileset>
+        <html outfile="${build.reports.coverage}/coverage.html" />
+      </report>
+    </emma>
+  </target>
 
   <!-- ====================================================================== -->
 
@@ -401,7 +405,7 @@ limitations under the License.
       	<path refid="test.support.path"/>
       </classpath>
 
-      <batchtest fork="yes">
+      <batchtest fork="${test.fork}">
         <fileset dir="${source.test}">
           <include name="**/TestAllPackages.java"/>
         </fileset>
@@ -420,17 +424,17 @@ limitations under the License.
     <delete     dir="${build.docs}"/>
     <mkdir      dir="${build.docs}"/>
     <javadoc sourcepath="${source.java}"
-                destdir="${build.docs}"
-           packagenames="${component.package}.*"
-                 access="${javadoc.access}"
-                 author="true"
-                version="true"
-                    use="true"
-                   link="${javadoc.links}"
-               overview="${source.java}/org/apache/commons/collections/overview.html"
-               doctitle="${component.title} ${component.version} API;"
-            windowtitle="${component.title} ${component.version} API"
-                 bottom="Copyright &amp;copy; 2001-${year} Apache Software Foundation. All Rights Reserved.">
+             destdir="${build.docs}"
+             packagenames="${component.package}.*"
+             access="${javadoc.access}"
+             author="true"
+             version="true"
+             use="true"
+             link="${javadoc.links}"
+             overview="${source.java}/org/apache/commons/collections/overview.html"
+             doctitle="${component.title} ${component.version} API;"
+             windowtitle="${component.title} ${component.version} API"
+             bottom="Copyright &amp;copy; 2001-${year} Apache Software Foundation. All Rights Reserved.">
     </javadoc>
   </target>
 
@@ -475,10 +479,10 @@ limitations under the License.
     <delete    dir="${tf.build.tf}"/>
     <mkdir     dir="${tf.build.tf}"/>
     <javac  srcdir="${source.test}"
-           destdir="${tf.build.tf}"
-             debug="true"
-       deprecation="false"
-          optimize="false">
+            destdir="${tf.build.tf}"
+            debug="true"
+            deprecation="false"
+            optimize="false">
       <patternset refid="tf.patternset.validate" />
       <classpath>
         <path refid="test.support.path"/>
@@ -565,8 +569,7 @@ limitations under the License.
     </copy>
   </target>
 
-  <target name="dist.create" depends="jar,testjar,tf.validate,tf.jar,dist.bin,dist.src">
-  </target>
+  <target name="dist.create" depends="jar,testjar,tf.validate,tf.jar,dist.bin,dist.src" />
 
   <target name="dist.bin">
     <copy todir="${build.src}">
