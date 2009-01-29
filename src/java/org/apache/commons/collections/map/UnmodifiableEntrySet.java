@@ -35,8 +35,11 @@ import org.apache.commons.collections.set.AbstractSetDecorator;
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableEntrySet
-        extends AbstractSetDecorator implements Unmodifiable {
+public final class UnmodifiableEntrySet<K, V>
+        extends AbstractSetDecorator<Map.Entry<K, V>> implements Unmodifiable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 1678353579659253473L;
 
     /**
      * Factory method to create an unmodifiable set of Map Entry objects.
@@ -44,11 +47,11 @@ public final class UnmodifiableEntrySet
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static Set decorate(Set set) {
+    public static <K, V> Set<Map.Entry<K, V>> decorate(Set<Map.Entry<K, V>> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableEntrySet(set);
+        return new UnmodifiableEntrySet<K, V>(set);
     }
 
     //-----------------------------------------------------------------------
@@ -58,16 +61,16 @@ public final class UnmodifiableEntrySet
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableEntrySet(Set set) {
+    private UnmodifiableEntrySet(Set<Map.Entry<K, V>> set) {
         super(set);
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object object) {
+    public boolean add(Map.Entry<K, V> object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends Map.Entry<K, V>> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -79,28 +82,30 @@ public final class UnmodifiableEntrySet
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
+    public Iterator<Map.Entry<K, V>> iterator() {
         return new UnmodifiableEntrySetIterator(collection.iterator());
     }
     
+    @SuppressWarnings("unchecked")
     public Object[] toArray() {
         Object[] array = collection.toArray();
         for (int i = 0; i < array.length; i++) {
-            array[i] = new UnmodifiableEntry((Map.Entry) array[i]);
+            array[i] = new UnmodifiableEntry((Map.Entry<K, V>) array[i]);
         }
         return array;
     }
     
-    public Object[] toArray(Object array[]) {
+    @SuppressWarnings("unchecked")
+    public <T> T[] toArray(T[] array) {
         Object[] result = array;
         if (array.length > 0) {
             // we must create a new array to handle multi-threaded situations
@@ -109,15 +114,15 @@ public final class UnmodifiableEntrySet
         }
         result = collection.toArray(result);
         for (int i = 0; i < result.length; i++) {
-            result[i] = new UnmodifiableEntry((Map.Entry) result[i]);
+            result[i] = new UnmodifiableEntry((Map.Entry<K, V>) result[i]);
         }
 
         // check to see if result should be returned straight
         if (result.length > array.length) {
-            return result;
+            return (T[]) result;
         }
 
-        // copy back into input array to fulfil the method contract
+        // copy back into input array to fulfill the method contract
         System.arraycopy(result, 0, array, 0, result.length);
         if (array.length > result.length) {
             array[result.length] = null;
@@ -129,17 +134,16 @@ public final class UnmodifiableEntrySet
     /**
      * Implementation of an entry set iterator.
      */
-    final static class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator {
-        
-        protected UnmodifiableEntrySetIterator(Iterator iterator) {
+    private class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, V>> {
+
+        protected UnmodifiableEntrySetIterator(Iterator<Map.Entry<K, V>> iterator) {
             super(iterator);
         }
-        
-        public Object next() {
-            Map.Entry entry = (Map.Entry) iterator.next();
-            return new UnmodifiableEntry(entry);
+
+        public Map.Entry<K, V> next() {
+            return new UnmodifiableEntry(iterator.next());
         }
-        
+
         public void remove() {
             throw new UnsupportedOperationException();
         }
@@ -149,13 +153,13 @@ public final class UnmodifiableEntrySet
     /**
      * Implementation of a map entry that is unmodifiable.
      */
-    final static class UnmodifiableEntry extends AbstractMapEntryDecorator {
+    private class UnmodifiableEntry extends AbstractMapEntryDecorator<K, V> {
 
-        protected UnmodifiableEntry(Map.Entry entry) {
+        protected UnmodifiableEntry(Map.Entry<K, V> entry) {
             super(entry);
         }
 
-        public Object setValue(Object obj) {
+        public V setValue(V obj) {
             throw new UnsupportedOperationException();
         }
     }

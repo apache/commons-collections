@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -20,107 +20,111 @@ import java.util.Arrays;
 
 /**
  * Test case for {@link AbstractLinkedList}.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rich Dougherty
  * @author David Hay
  * @author Phil Steitz
  */
-public abstract class TestAbstractLinkedList extends AbstractTestList {
-    
+public abstract class TestAbstractLinkedList<E> extends AbstractTestList<E> {
+
     public TestAbstractLinkedList(String testName) {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testRemoveFirst() {
         resetEmpty();
-        AbstractLinkedList list = (AbstractLinkedList) collection;
+        AbstractLinkedList<E> list = getCollection();
         if (isRemoveSupported() == false) {
             try {
                 list.removeFirst();
             } catch (UnsupportedOperationException ex) {}
-        } 
-        
-        list.addAll( Arrays.asList( new String[]{"value1", "value2"}));
-        assertEquals( "value1", list.removeFirst() );
+        }
+
+        list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
+        assertEquals("value1", list.removeFirst());
         checkNodes();
-        list.addLast( "value3");
+        list.addLast((E) "value3");
         checkNodes();
-        assertEquals( "value2", list.removeFirst() );
-        assertEquals( "value3", list.removeFirst() );
+        assertEquals("value2", list.removeFirst());
+        assertEquals("value3", list.removeFirst());
         checkNodes();
-        list.addLast( "value4" );
+        list.addLast((E) "value4");
         checkNodes();
-        assertEquals( "value4", list.removeFirst() );
+        assertEquals("value4", list.removeFirst());
         checkNodes();
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testRemoveLast() {
         resetEmpty();
-        AbstractLinkedList list = (AbstractLinkedList) collection;
+        AbstractLinkedList<E> list = getCollection();
         if (isRemoveSupported() == false) {
             try {
                 list.removeLast();
             } catch (UnsupportedOperationException ex) {}
-        } 
-        
-        list.addAll( Arrays.asList( new String[]{"value1", "value2"}));
-        assertEquals( "value2", list.removeLast() );
-        list.addFirst( "value3");
+        }
+
+        list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
+        assertEquals("value2", list.removeLast());
+        list.addFirst((E) "value3");
         checkNodes();
-        assertEquals( "value1", list.removeLast() );
-        assertEquals( "value3", list.removeLast() );
-        list.addFirst( "value4" );
+        assertEquals("value1", list.removeLast());
+        assertEquals("value3", list.removeLast());
+        list.addFirst((E) "value4");
         checkNodes();
-        assertEquals( "value4", list.removeFirst() );
+        assertEquals("value4", list.removeFirst());
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testAddNodeAfter() {
         resetEmpty();
-        AbstractLinkedList list = (AbstractLinkedList) collection;
+        AbstractLinkedList<E> list = getCollection();
         if (isAddSupported() == false) {
             try {
                 list.addFirst(null);
             } catch (UnsupportedOperationException ex) {}
-        } 
-        
-        list.addFirst("value1");
-        list.addNodeAfter(list.getNode(0,false),"value2");
+        }
+
+        list.addFirst((E) "value1");
+        list.addNodeAfter(list.getNode(0, false), (E) "value2");
         assertEquals("value1", list.getFirst());
         assertEquals("value2", list.getLast());
         list.removeFirst();
         checkNodes();
-        list.addNodeAfter(list.getNode(0,false),"value3");
+        list.addNodeAfter(list.getNode(0, false), (E) "value3");
         checkNodes();
         assertEquals("value2", list.getFirst());
         assertEquals("value3", list.getLast());
-        list.addNodeAfter(list.getNode(0, false),"value4");
+        list.addNodeAfter(list.getNode(0, false), (E) "value4");
         checkNodes();
         assertEquals("value2", list.getFirst());
         assertEquals("value3", list.getLast());
         assertEquals("value4", list.get(1));
-        list.addNodeAfter(list.getNode(2, false), "value5");
+        list.addNodeAfter(list.getNode(2, false), (E) "value5");
         checkNodes();
         assertEquals("value2", list.getFirst());
         assertEquals("value4", list.get(1));
         assertEquals("value3", list.get(2));
         assertEquals("value5", list.getLast());
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testRemoveNode() {
         resetEmpty();
         if (isAddSupported() == false || isRemoveSupported() == false) return;
-        AbstractLinkedList list = (AbstractLinkedList) collection;
-        
-        list.addAll( Arrays.asList( new String[]{"value1", "value2"}));
+        AbstractLinkedList<E> list = getCollection();
+
+        list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
         list.removeNode(list.getNode(0, false));
         checkNodes();
         assertEquals("value2", list.getFirst());
         assertEquals("value2", list.getLast());
-        list.addFirst("value1");
-        list.addFirst("value0");
+        list.addFirst((E) "value1");
+        list.addFirst((E) "value0");
         checkNodes();
         list.removeNode(list.getNode(1, false));
         assertEquals("value0", list.getFirst());
@@ -131,53 +135,61 @@ public abstract class TestAbstractLinkedList extends AbstractTestList {
         assertEquals("value0", list.getLast());
         checkNodes();
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testGetNode() {
         resetEmpty();
-        AbstractLinkedList list = (AbstractLinkedList) collection;
+        AbstractLinkedList<E> list = getCollection();
         // get marker
         assertEquals(list.getNode(0, true).previous, list.getNode(0, true).next);
         try {
-            Object obj = list.getNode(0, false);
+            list.getNode(0, false);
             fail("Expecting IndexOutOfBoundsException.");
         } catch (IndexOutOfBoundsException ex) {
             // expected
         }
-        list.addAll( Arrays.asList( new String[]{"value1", "value2"}));
+        list.addAll( Arrays.asList((E[]) new String[]{"value1", "value2"}));
         checkNodes();
-        list.addFirst("value0");
+        list.addFirst((E) "value0");
         checkNodes();
         list.removeNode(list.getNode(1, false));
         checkNodes();
         try {
-            Object obj = list.getNode(2, false);
+            list.getNode(2, false);
             fail("Expecting IndexOutOfBoundsException.");
         } catch (IndexOutOfBoundsException ex) {
             // expected
         }
         try {
-            Object obj = list.getNode(-1, false);
+            list.getNode(-1, false);
             fail("Expecting IndexOutOfBoundsException.");
         } catch (IndexOutOfBoundsException ex) {
             // expected
         }
          try {
-            Object obj = list.getNode(3, true);
+            list.getNode(3, true);
             fail("Expecting IndexOutOfBoundsException.");
         } catch (IndexOutOfBoundsException ex) {
             // expected
-        }       
+        }
     }
-    
+
     protected void checkNodes() {
-        AbstractLinkedList list = (AbstractLinkedList) collection;
+        AbstractLinkedList<E> list = getCollection();
         for (int i = 0; i < list.size; i++) {
             assertEquals(list.getNode(i, false).next, list.getNode(i + 1, true));
             if (i < list.size - 1) {
-                assertEquals(list.getNode(i + 1, false).previous, 
-                    list.getNode(i, false));  
+                assertEquals(list.getNode(i + 1, false).previous,
+                    list.getNode(i, false));
             }
         }
     }
-        
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public AbstractLinkedList<E> getCollection() {
+        return (AbstractLinkedList<E>) super.getCollection();
+    }
 }

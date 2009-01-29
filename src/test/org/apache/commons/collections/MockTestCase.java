@@ -17,7 +17,6 @@
 package org.apache.commons.collections;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -50,13 +49,13 @@ public abstract class MockTestCase {
 	}
 
 	protected final void replay() {
-		for (Iterator i = mockObjects.iterator(); i.hasNext();) {
-			EasyMock.replay(i.next());
+		for (Object o : mockObjects) {
+			EasyMock.replay(o);
 		}
 	}
 
 	protected final void verify() {
-		for (ListIterator i = mockObjects.listIterator(); i.hasNext();) {
+		for (ListIterator<Object> i = mockObjects.listIterator(); i.hasNext();) {
 			try {
 				EasyMock.verify(i.next());
 			} catch (AssertionError e) {

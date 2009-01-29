@@ -38,12 +38,12 @@ import org.apache.commons.collections.ResettableIterator;
  * @author <a href="mailto:joncrlsn@users.sf.net">Jonathan Carlson</a>
  * @author Stephen Colebourne
  */
-public class LoopingIterator implements ResettableIterator {
+public class LoopingIterator<E> implements ResettableIterator<E> {
     
     /** The collection to base the iterator on */
-    private Collection collection;
+    private Collection<? extends E> collection;
     /** The current iterator */
-    private Iterator iterator;
+    private Iterator<? extends E> iterator;
 
     /**
      * Constructor that wraps a collection.
@@ -54,7 +54,7 @@ public class LoopingIterator implements ResettableIterator {
      * @param coll  the collection to wrap
      * @throws NullPointerException if the collection is null
      */
-    public LoopingIterator(Collection coll) {
+    public LoopingIterator(Collection<? extends E> coll) {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }
@@ -82,7 +82,7 @@ public class LoopingIterator implements ResettableIterator {
      * @throws NoSuchElementException if there are no elements
      *         at all.  Use {@link #hasNext} to avoid this error.
      */
-    public Object next() {
+    public E next() {
         if (collection.size() == 0) {
             throw new NoSuchElementException("There are no elements for this iterator to loop on");
         }

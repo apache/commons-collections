@@ -29,13 +29,13 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public final class StringValueTransformer implements Transformer, Serializable {
+public final class StringValueTransformer<T> implements Transformer<T, String>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7511110693171758606L;
 
     /** Singleton predicate instance */
-    public static final Transformer INSTANCE = new StringValueTransformer();
+    public static final Transformer<Object, String> INSTANCE = new StringValueTransformer<Object>();
 
     /**
      * Factory returning the singleton instance.
@@ -43,8 +43,9 @@ public final class StringValueTransformer implements Transformer, Serializable {
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Transformer getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <T> Transformer<T, String> getInstance() {
+        return (Transformer<T, String>) INSTANCE;
     }
 
     /**
@@ -60,7 +61,7 @@ public final class StringValueTransformer implements Transformer, Serializable {
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public Object transform(Object input) {
+    public String transform(T input) {
         return String.valueOf(input);
     }
 

@@ -30,13 +30,13 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class CloneTransformer implements Transformer, Serializable {
+public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -8188742709499652567L;
 
     /** Singleton predicate instance */
-    public static final Transformer INSTANCE = new CloneTransformer();
+    public static final Transformer<Object, Object> INSTANCE = new CloneTransformer<Object>();
 
     /**
      * Factory returning the singleton instance.
@@ -44,8 +44,9 @@ public class CloneTransformer implements Transformer, Serializable {
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Transformer getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <T> Transformer<T, T> getInstance() {
+        return (Transformer<T, T>) INSTANCE;
     }
 
     /**
@@ -61,7 +62,7 @@ public class CloneTransformer implements Transformer, Serializable {
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public Object transform(Object input) {
+    public T transform(T input) {
         if (input == null) {
             return null;
         }

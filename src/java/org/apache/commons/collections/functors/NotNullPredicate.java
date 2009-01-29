@@ -28,13 +28,13 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class NotNullPredicate implements Predicate, Serializable {
+public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7533784454832764388L;
     
     /** Singleton predicate instance */
-    public static final Predicate INSTANCE = new NotNullPredicate();
+    public static final Predicate<Object> INSTANCE = new NotNullPredicate<Object>();
 
     /**
      * Factory returning the singleton instance.
@@ -42,8 +42,9 @@ public final class NotNullPredicate implements Predicate, Serializable {
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Predicate getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> getInstance() {
+        return (Predicate<T>) INSTANCE;
     }
 
     /**
@@ -59,7 +60,7 @@ public final class NotNullPredicate implements Predicate, Serializable {
      * @param object  the object to evaluate
      * @return true if not null
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         return (object != null);
     }
 

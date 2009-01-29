@@ -32,7 +32,7 @@ import org.apache.commons.collections.ResettableIterator;
  * 
  * @author James Strachan
  */
-public class TestSingletonIterator2 extends AbstractTestIterator {
+public class TestSingletonIterator2<E> extends AbstractTestIterator<E> {
 
     private static final Object testValue = "foo";
 
@@ -45,16 +45,18 @@ public class TestSingletonIterator2 extends AbstractTestIterator {
     }
 
     //-----------------------------------------------------------------------
-    public Iterator makeEmptyIterator() {
-        SingletonIterator iter = new SingletonIterator(testValue);
+    @SuppressWarnings("unchecked")
+    public SingletonIterator<E> makeEmptyIterator() {
+        SingletonIterator<E> iter = new SingletonIterator<E>((E) testValue);
         iter.next();
         iter.remove();
         iter.reset();
         return iter;
     }
 
-    public Iterator makeFullIterator() {
-        return new SingletonIterator(testValue, false);
+    @SuppressWarnings("unchecked")
+    public SingletonIterator<E> makeObject() {
+        return new SingletonIterator<E>((E) testValue, false);
     }
 
     public boolean supportsRemove() {
@@ -67,10 +69,10 @@ public class TestSingletonIterator2 extends AbstractTestIterator {
 
     //-----------------------------------------------------------------------
     public void testIterator() {
-        Iterator iter = (Iterator) makeObject();
+        Iterator<E> iter = makeObject();
         assertTrue("Iterator has a first item", iter.hasNext());
 
-        Object iterValue = iter.next();
+        E iterValue = iter.next();
         assertEquals("Iteration value is correct", testValue, iterValue);
 
         assertTrue("Iterator should now be empty", !iter.hasNext());
@@ -85,7 +87,7 @@ public class TestSingletonIterator2 extends AbstractTestIterator {
     }
 
     public void testReset() {
-        ResettableIterator it = (ResettableIterator) makeObject();
+        ResettableIterator<E> it = makeObject();
 
         assertEquals(true, it.hasNext());
         assertEquals(testValue, it.next());

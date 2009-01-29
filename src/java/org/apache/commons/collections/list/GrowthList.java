@@ -55,7 +55,7 @@ import java.util.List;
  * @author Stephen Colebourne
  * @author Paul Legato
  */
-public class GrowthList extends AbstractSerializableListDecorator {
+public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -3620001881672L;
@@ -66,8 +66,8 @@ public class GrowthList extends AbstractSerializableListDecorator {
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static List decorate(List list) {
-        return new GrowthList(list);
+    public static <E> List<E> decorate(List<E> list) {
+        return new GrowthList<E>(list);
     }
 
     //-----------------------------------------------------------------------
@@ -75,7 +75,7 @@ public class GrowthList extends AbstractSerializableListDecorator {
      * Constructor that uses an ArrayList internally.
      */
     public GrowthList() {
-        super(new ArrayList());
+        super(new ArrayList<E>());
     }
 
     /**
@@ -85,7 +85,7 @@ public class GrowthList extends AbstractSerializableListDecorator {
      * @throws IllegalArgumentException if initial size is invalid
      */
     public GrowthList(int initialSize) {
-        super(new ArrayList(initialSize));
+        super(new ArrayList<E>(initialSize));
     }
 
     /**
@@ -94,7 +94,7 @@ public class GrowthList extends AbstractSerializableListDecorator {
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected GrowthList(List list) {
+    protected GrowthList(List<E> list) {
         super(list);
     }
 
@@ -117,10 +117,10 @@ public class GrowthList extends AbstractSerializableListDecorator {
      * @throws ClassCastException if the underlying list rejects the element
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
-    public void add(int index, Object element) {
+    public void add(int index, E element) {
         int size = decorated().size();
         if (index > size) {
-            decorated().addAll(Collections.nCopies(index - size, null));
+            decorated().addAll(Collections.<E>nCopies(index - size, null));
         }
         decorated().add(index, element);
     }
@@ -145,11 +145,11 @@ public class GrowthList extends AbstractSerializableListDecorator {
      * @throws ClassCastException if the underlying list rejects the element
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
-    public boolean addAll(int index, Collection coll) {
+    public boolean addAll(int index, Collection<? extends E> coll) {
         int size = decorated().size();
         boolean result = false;
         if (index > size) {
-            decorated().addAll(Collections.nCopies(index - size, null));
+            decorated().addAll(Collections.<E>nCopies(index - size, null));
             result = true;
         }
         return (decorated().addAll(index, coll) | result);
@@ -175,10 +175,10 @@ public class GrowthList extends AbstractSerializableListDecorator {
      * @throws ClassCastException if the underlying list rejects the element
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
-    public Object set(int index, Object element) {
+    public E set(int index, E element) {
         int size = decorated().size();
         if (index >= size) {
-            decorated().addAll(Collections.nCopies((index - size) + 1, null));
+            decorated().addAll(Collections.<E>nCopies((index - size) + 1, null));
         }
         return decorated().set(index, element);
     }

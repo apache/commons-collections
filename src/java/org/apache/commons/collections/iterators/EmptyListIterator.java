@@ -20,30 +20,53 @@ import java.util.ListIterator;
 
 import org.apache.commons.collections.ResettableListIterator;
 
-/** 
+/**
  * Provides an implementation of an empty list iterator.
  * <p>
- * This class provides an implementation of an empty list iterator.
- * This class provides for binary compatability between Commons Collections
- * 2.1.1 and 3.1 due to issues with <code>IteratorUtils</code>.
- *
+ * This class provides an implementation of an empty list iterator. This class
+ * provides for binary compatability between Commons Collections 2.1.1 and 3.1
+ * due to issues with <code>IteratorUtils</code>.
+ * 
  * @since Commons Collections 2.1.1 and 3.1
- * @version $Revision$ $Date$
+ * @version $Revision$ $Date: 2006-10-27 19:52:37 -0500 (Fri, 27 Oct
+ * 2006) $
  * 
  * @author Stephen Colebourne
  */
-public class EmptyListIterator extends AbstractEmptyIterator implements ResettableListIterator {
+public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
+        ResettableListIterator<E> {
 
     /**
      * Singleton instance of the iterator.
      * @since Commons Collections 3.1
      */
-    public static final ResettableListIterator RESETTABLE_INSTANCE = new EmptyListIterator();
+    public static final ResettableListIterator<Object> RESETTABLE_INSTANCE = new EmptyListIterator<Object>();
+
     /**
      * Singleton instance of the iterator.
      * @since Commons Collections 2.1.1 and 3.1
      */
-    public static final ListIterator INSTANCE = RESETTABLE_INSTANCE;
+    public static final ListIterator<Object> INSTANCE = RESETTABLE_INSTANCE;
+
+    /**
+     * Get a typed instance of the iterator.
+     * @param <E>
+     * @return {@link ResettableListIterator}<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> ResettableListIterator<E> getResettableInstance() {
+        return (ResettableListIterator<E>) RESETTABLE_INSTANCE;
+    }
+
+    /**
+     * Get a typed instance of the iterator.
+     * @param <E>
+     * @return {@link ListIterator}<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> ListIterator<E> getInstance() {
+        return (ListIterator<E>) INSTANCE;
+    }
 
     /**
      * Constructor.

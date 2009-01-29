@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,14 +35,14 @@ import org.apache.commons.collections.Predicate;
  * @author Stephen Colebourne
  * @author Matt Benson
  */
-public final class AnyPredicate implements Predicate, PredicateDecorator, Serializable {
+public final class AnyPredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7429999530934647542L;
-    
+
     /** The array of predicates to call */
-    private final Predicate[] iPredicates;
-    
+    private final Predicate<? super T>[] iPredicates;
+
     /**
      * Factory to create the predicate.
      * <p>
@@ -54,15 +54,16 @@ public final class AnyPredicate implements Predicate, PredicateDecorator, Serial
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate getInstance(Predicate[] predicates) {
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> getInstance(Predicate<? super T>[] predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
-            return FalsePredicate.INSTANCE;
+            return FalsePredicate.<T>falsePredicate();
         }
         if (predicates.length == 1) {
-            return predicates[0];
+            return (Predicate<T>) predicates[0];
         }
-        return new AnyPredicate(FunctorUtils.copy(predicates));
+        return new AnyPredicate<T>(FunctorUtils.copy(predicates));
     }
 
     /**
@@ -76,35 +77,36 @@ public final class AnyPredicate implements Predicate, PredicateDecorator, Serial
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate getInstance(Collection predicates) {
-        Predicate[] preds = FunctorUtils.validate(predicates);
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> getInstance(Collection<? extends Predicate<T>> predicates) {
+        Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         if (preds.length == 0) {
-            return FalsePredicate.INSTANCE;
+            return FalsePredicate.<T>falsePredicate();
         }
         if (preds.length == 1) {
-            return preds[0];
+            return (Predicate<T>) preds[0];
         }
-        return new AnyPredicate(preds);
+        return new AnyPredicate<T>(preds);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public AnyPredicate(Predicate[] predicates) {
+    public AnyPredicate(Predicate<? super T>[] predicates) {
         super();
         iPredicates = predicates;
     }
 
     /**
      * Evaluates the predicate returning true if any predicate returns true.
-     * 
+     *
      * @param object  the input object
      * @return true if any decorated predicate return true
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         for (int i = 0; i < iPredicates.length; i++) {
             if (iPredicates[i].evaluate(object)) {
                 return true;
@@ -115,11 +117,11 @@ public final class AnyPredicate implements Predicate, PredicateDecorator, Serial
 
     /**
      * Gets the predicates, do not modify the array.
-     * 
+     *
      * @return the predicates
      * @since Commons Collections 3.1
      */
-    public Predicate[] getPredicates() {
+    public Predicate<? super T>[] getPredicates() {
         return iPredicates;
     }
 

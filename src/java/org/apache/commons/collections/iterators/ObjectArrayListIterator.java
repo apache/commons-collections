@@ -41,8 +41,8 @@ import org.apache.commons.collections.ResettableListIterator;
  * @author Stephen Colebourne
  * @author Phil Steitz
  */
-public class ObjectArrayListIterator extends ObjectArrayIterator
-		implements ListIterator, ResettableListIterator {
+public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
+		implements ListIterator<E>, ResettableListIterator<E> {
 
     /**
      * Holds the index of the last item returned by a call to <code>next()</code> 
@@ -69,7 +69,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator
      * @param array the array to iterate over
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayListIterator(Object[] array) {
+    public ObjectArrayListIterator(E[] array) {
         super(array);
     }
 
@@ -82,7 +82,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
-    public ObjectArrayListIterator(Object[] array, int start) {
+    public ObjectArrayListIterator(E[] array, int start) {
         super(array, start);
     }
     
@@ -97,7 +97,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator
      * @throws IllegalArgumentException if end index is before the start
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayListIterator(Object[] array, int start, int end) {
+    public ObjectArrayListIterator(E[] array, int start, int end) {
         super(array, start, end);
     }
 
@@ -119,7 +119,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator
      * @return the previous element
      * @throws NoSuchElementException if there is no previous element
      */
-    public Object previous() {
+    public E previous() {
         if (hasPrevious() == false) {
             throw new NoSuchElementException();
         }
@@ -133,7 +133,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator
      * @return the next element
      * @throws NoSuchElementException if there is no next element
      */
-    public Object next() {
+    public E next() {
         if (hasNext() == false) {
             throw new NoSuchElementException();
         }
@@ -166,7 +166,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator
      * @param obj  the object to add
      * @throws UnsupportedOperationException always thrown.
      */
-    public void add(Object obj) {
+    public void add(E obj) {
         throw new UnsupportedOperationException("add() method is not supported");
     }
 
@@ -187,7 +187,7 @@ public class ObjectArrayListIterator extends ObjectArrayIterator
      * @throws IllegalStateException if next() has not yet been called.
      * @throws ClassCastException if the object type is unsuitable for the array
      */
-    public void set(Object obj) {
+    public void set(E obj) {
         if (this.lastItemIndex == -1) {
             throw new IllegalStateException("must call next() or previous() before a call to set()");
         }

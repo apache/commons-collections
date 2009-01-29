@@ -19,6 +19,8 @@ package org.apache.commons.collections.comparators;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import org.apache.commons.collections.ComparatorUtils;
+
 /**
  * A Comparator that will compare nulls to be either lower or higher than
  * other objects.
@@ -28,7 +30,7 @@ import java.util.Comparator;
  *
  * @author Michael A. Smith
  */
-public class NullComparator implements Comparator, Serializable {
+public class NullComparator<E> implements Comparator<E>, Serializable {
 
     /** Serialization version. */
     private static final long serialVersionUID = -5820772575483504339L;
@@ -36,7 +38,7 @@ public class NullComparator implements Comparator, Serializable {
     /**
      *  The comparator to use when comparing two non-<code>null</code> objects.
      **/
-    private Comparator nonNullComparator;
+    private Comparator<E> nonNullComparator;
 
     /**
      *  Specifies whether a <code>null</code> are compared as higher than
@@ -51,8 +53,9 @@ public class NullComparator implements Comparator, Serializable {
      *  non-<code>null</code> objects, the {@link ComparableComparator} is
      *  used.
      **/
+    @SuppressWarnings("unchecked")
     public NullComparator() {
-        this(ComparableComparator.getInstance(), true);
+        this(ComparatorUtils.NATURAL_COMPARATOR, true);
     }
 
     /**
@@ -68,7 +71,7 @@ public class NullComparator implements Comparator, Serializable {
      *  @exception NullPointerException if <code>nonNullComparator</code> is
      *  <code>null</code>
      **/
-    public NullComparator(Comparator nonNullComparator) {
+    public NullComparator(Comparator<E> nonNullComparator) {
         this(nonNullComparator, true);
     }
 
@@ -84,8 +87,9 @@ public class NullComparator implements Comparator, Serializable {
      *  that <code>null</code> should be compared as lower than a
      *  non-<code>null</code> object.
      **/
+    @SuppressWarnings("unchecked")
     public NullComparator(boolean nullsAreHigh) {
-        this(ComparableComparator.getInstance(), nullsAreHigh);
+        this(ComparatorUtils.NATURAL_COMPARATOR, nullsAreHigh);
     }
     
     /**
@@ -107,11 +111,11 @@ public class NullComparator implements Comparator, Serializable {
      *  @exception NullPointerException if <code>nonNullComparator</code> is
      *  <code>null</code>
      **/
-    public NullComparator(Comparator nonNullComparator, boolean nullsAreHigh) {
+    public NullComparator(Comparator<E> nonNullComparator, boolean nullsAreHigh) {
         this.nonNullComparator = nonNullComparator;
         this.nullsAreHigh = nullsAreHigh;
         
-        if(nonNullComparator == null) {
+        if (nonNullComparator == null) {
             throw new NullPointerException("null nonNullComparator");
         }
     }
@@ -133,7 +137,7 @@ public class NullComparator implements Comparator, Serializable {
      *  "higher" than (greater than, after, etc.) <code>o2</code>; or
      *  <code>0</code> if <code>o1</code> and <code>o2</code> are equal.
      **/
-    public int compare(Object o1, Object o2) {
+    public int compare(E o1, E o2) {
         if(o1 == o2) { return 0; }
         if(o1 == null) { return (this.nullsAreHigh ? 1 : -1); }
         if(o2 == null) { return (this.nullsAreHigh ? -1 : 1); }
@@ -167,7 +171,7 @@ public class NullComparator implements Comparator, Serializable {
         if(obj == this) { return true; }
         if(!obj.getClass().equals(this.getClass())) { return false; }
 
-        NullComparator other = (NullComparator)obj;
+        NullComparator<?> other = (NullComparator<?>) obj;
 	
         return ((this.nullsAreHigh == other.nullsAreHigh) &&
                 (this.nonNullComparator.equals(other.nonNullComparator)));

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,6 @@
 package org.apache.commons.collections.list;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import junit.framework.Test;
@@ -29,11 +28,11 @@ import junit.framework.TestSuite;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestSynchronizedList extends AbstractTestList {
-    
+public class TestSynchronizedList<E> extends AbstractTestList<E> {
+
     public TestSynchronizedList(String testName) {
         super(testName);
     }
@@ -47,12 +46,12 @@ public class TestSynchronizedList extends AbstractTestList {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+    public List<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
 
-    public List makeEmptyList() {
-        return SynchronizedList.decorate(new ArrayList());
+    public List<E> makeObject() {
+        return SynchronizedList.decorate(new ArrayList<E>());
     }
 
     public String getCompatibilityVersion() {

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,18 +19,19 @@ package org.apache.commons.collections.iterators;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.Unmodifiable;
 
-/** 
+/**
  * Decorates an ordered map iterator such that it cannot be modified.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableOrderedMapIterator implements OrderedMapIterator, Unmodifiable {
+public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>,
+        Unmodifiable {
 
     /** The iterator being decorated */
-    private OrderedMapIterator iterator;
+    private OrderedMapIterator<K, V> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -39,23 +40,23 @@ public final class UnmodifiableOrderedMapIterator implements OrderedMapIterator,
      * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static OrderedMapIterator decorate(OrderedMapIterator iterator) {
+    public static <K, V> OrderedMapIterator<K, V> decorate(OrderedMapIterator<K, V> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("OrderedMapIterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
             return iterator;
         }
-        return new UnmodifiableOrderedMapIterator(iterator);
+        return new UnmodifiableOrderedMapIterator<K, V>(iterator);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor.
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableOrderedMapIterator(OrderedMapIterator iterator) {
+    private UnmodifiableOrderedMapIterator(OrderedMapIterator<K, V> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -65,7 +66,7 @@ public final class UnmodifiableOrderedMapIterator implements OrderedMapIterator,
         return iterator.hasNext();
     }
 
-    public Object next() {
+    public K next() {
         return iterator.next();
     }
 
@@ -73,19 +74,19 @@ public final class UnmodifiableOrderedMapIterator implements OrderedMapIterator,
         return iterator.hasPrevious();
     }
 
-    public Object previous() {
+    public K previous() {
         return iterator.previous();
     }
 
-    public Object getKey() {
+    public K getKey() {
         return iterator.getKey();
     }
 
-    public Object getValue() {
+    public V getValue() {
         return iterator.getValue();
     }
 
-    public Object setValue(Object value) {
+    public V setValue(V value) {
         throw new UnsupportedOperationException("setValue() is not supported");
     }
 

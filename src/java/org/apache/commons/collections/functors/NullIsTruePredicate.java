@@ -28,13 +28,13 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class NullIsTruePredicate implements Predicate, PredicateDecorator, Serializable {
+public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -7625133768987126273L;
     
     /** The predicate to decorate */
-    private final Predicate iPredicate;
+    private final Predicate<? super T> iPredicate;
     
     /**
      * Factory to create the null true predicate.
@@ -43,11 +43,11 @@ public final class NullIsTruePredicate implements Predicate, PredicateDecorator,
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static Predicate getInstance(Predicate predicate) {
+    public static <T> Predicate<T> getInstance(Predicate<? super T> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
-        return new NullIsTruePredicate(predicate);
+        return new NullIsTruePredicate<T>(predicate);
     }
 
     /**
@@ -56,7 +56,7 @@ public final class NullIsTruePredicate implements Predicate, PredicateDecorator,
      * 
      * @param predicate  the predicate to call after the null check
      */
-    public NullIsTruePredicate(Predicate predicate) {
+    public NullIsTruePredicate(Predicate<? super T> predicate) {
         super();
         iPredicate = predicate;
     }
@@ -68,7 +68,7 @@ public final class NullIsTruePredicate implements Predicate, PredicateDecorator,
      * @param object  the input object
      * @return true if decorated predicate returns true or input is null
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         if (object == null) {
             return true;
         }
@@ -81,8 +81,9 @@ public final class NullIsTruePredicate implements Predicate, PredicateDecorator,
      * @return the predicate as the only element in an array
      * @since Commons Collections 3.1
      */
-    public Predicate[] getPredicates() {
-        return new Predicate[] {iPredicate};
+    @SuppressWarnings("unchecked")
+    public Predicate<? super T>[] getPredicates() {
+        return new Predicate[] { iPredicate };
     }
 
 }

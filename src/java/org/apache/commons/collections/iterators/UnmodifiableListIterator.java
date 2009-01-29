@@ -28,10 +28,10 @@ import org.apache.commons.collections.Unmodifiable;
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableListIterator implements ListIterator, Unmodifiable {
+public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmodifiable {
 
     /** The iterator being decorated */
-    private ListIterator iterator;
+    private ListIterator<E> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -40,14 +40,14 @@ public final class UnmodifiableListIterator implements ListIterator, Unmodifiabl
      * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static ListIterator decorate(ListIterator iterator) {
+    public static <E> ListIterator<E> decorate(ListIterator<E> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("ListIterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
             return iterator;
         }
-        return new UnmodifiableListIterator(iterator);
+        return new UnmodifiableListIterator<E>(iterator);
     }
     
     //-----------------------------------------------------------------------
@@ -56,7 +56,7 @@ public final class UnmodifiableListIterator implements ListIterator, Unmodifiabl
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableListIterator(ListIterator iterator) {
+    private UnmodifiableListIterator(ListIterator<E> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -66,7 +66,7 @@ public final class UnmodifiableListIterator implements ListIterator, Unmodifiabl
         return iterator.hasNext();
     }
 
-    public Object next() {
+    public E next() {
         return iterator.next();
     }
 
@@ -78,7 +78,7 @@ public final class UnmodifiableListIterator implements ListIterator, Unmodifiabl
         return iterator.hasPrevious();
     }
 
-    public Object previous() {
+    public E previous() {
         return iterator.previous();
     }
 
@@ -90,11 +90,11 @@ public final class UnmodifiableListIterator implements ListIterator, Unmodifiabl
         throw new UnsupportedOperationException("remove() is not supported");
     }
 
-    public void set(Object obj) {
+    public void set(E obj) {
         throw new UnsupportedOperationException("set() is not supported");
     }
 
-    public void add(Object obj) {
+    public void add(E obj) {
         throw new UnsupportedOperationException("add() is not supported");
     }
 

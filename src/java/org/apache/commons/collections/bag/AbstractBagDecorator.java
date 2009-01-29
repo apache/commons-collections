@@ -34,6 +34,9 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
 public abstract class AbstractBagDecorator<E>
         extends AbstractCollectionDecorator<E> implements Bag<E> {
 
+    /** Serialization version */
+    private static final long serialVersionUID = -3768146017343785417L;
+
     /**
      * Constructor only used in deserialization, do not use otherwise.
      * @since Commons Collections 3.1

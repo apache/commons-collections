@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,13 +18,13 @@ package org.apache.commons.collections.list;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
@@ -33,11 +33,11 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestTransformedList extends AbstractTestList {
-    
+public class TestTransformedList<E> extends AbstractTestList<E> {
+
     public TestTransformedList(String testName) {
         super(testName);
     }
@@ -51,67 +51,70 @@ public class TestTransformedList extends AbstractTestList {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+    public List<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
 
-    public Collection makeConfirmedFullCollection() {
-        List list = new ArrayList();
+    public List<E> makeConfirmedFullCollection() {
+        List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
-    
-    public List makeEmptyList() {
-        return TransformedList.decorate(new ArrayList(), TestTransformedCollection.NOOP_TRANSFORMER);
+
+    @SuppressWarnings("unchecked")
+    public List<E> makeObject() {
+        return TransformedList.decorate(new ArrayList<E>(), (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
-    public List makeFullList() {
-        List list = new ArrayList();
+    @SuppressWarnings("unchecked")
+    public List<E> makeFullCollection() {
+        List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
-        return TransformedList.decorate(list, TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedList.decorate(list, (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testTransformedList() {
-        List list = TransformedList.decorate(new ArrayList(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        List<E> list = TransformedList.decorate(new ArrayList<E>(), (Transformer<E, E>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, list.size());
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        E[] els = (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             list.add(els[i]);
             assertEquals(i + 1, list.size());
             assertEquals(true, list.contains(new Integer((String) els[i])));
             assertEquals(false, list.contains(els[i]));
         }
-        
+
         assertEquals(false, list.remove(els[0]));
         assertEquals(true, list.remove(new Integer((String) els[0])));
-        
+
         list.clear();
         for (int i = 0; i < els.length; i++) {
             list.add(0, els[i]);
             assertEquals(i + 1, list.size());
             assertEquals(new Integer((String) els[i]), list.get(0));
         }
-        
-        list.set(0, "22");
+
+        list.set(0, (E) "22");
         assertEquals(new Integer(22), list.get(0));
-        
-        ListIterator it = list.listIterator();
+
+        ListIterator<E> it = list.listIterator();
         it.next();
-        it.set("33");
+        it.set((E) "33");
         assertEquals(new Integer(33), list.get(0));
-        it.add("44");
+        it.add((E) "44");
         assertEquals(new Integer(44), list.get(1));
-        
-        List adds = new ArrayList();
-        adds.add("1");
-        adds.add("2");
+
+        List<E> adds = new ArrayList<E>();
+        adds.add((E) "1");
+        adds.add((E) "2");
         list.clear();
         list.addAll(adds);
         assertEquals(new Integer(1), list.get(0));
         assertEquals(new Integer(2), list.get(1));
-        
+
         adds.clear();
-        adds.add("3");
+        adds.add((E) "3");
         list.addAll(1, adds);
         assertEquals(new Integer(1), list.get(0));
         assertEquals(new Integer(3), list.get(1));

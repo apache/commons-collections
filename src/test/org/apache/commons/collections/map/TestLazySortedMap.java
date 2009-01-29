@@ -38,7 +38,7 @@ import org.junit.Test;
  * 
  * @author Phil Steitz
  */
-public class TestLazySortedMap extends AbstractTestSortedMap {
+public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     
 	private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
    
@@ -52,12 +52,8 @@ public class TestLazySortedMap extends AbstractTestSortedMap {
     }
 
     @Override
-	public <K,V> Map<K,V> makeEmptyMap() {
+	public SortedMap<K,V> makeObject() {
         return getLazySortedMap(new TreeMap<K,V>(), FactoryUtils.<V>nullFactory());
-    }
-    
-    private <K,V> SortedMap<K,V> makeTestSortedMap(Factory<V> factory) {
-        return getLazySortedMap(new TreeMap<K,V>(), factory);
     }
     
     @Override

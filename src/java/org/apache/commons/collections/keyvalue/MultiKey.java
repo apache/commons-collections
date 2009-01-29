@@ -45,17 +45,17 @@ import java.util.Arrays;
  * @author Howard Lewis Ship
  * @author Stephen Colebourne
  */
-public class MultiKey implements Serializable {
+public class MultiKey<K> implements Serializable {
     // This class could implement List, but that would confuse it's purpose
 
     /** Serialisation version */
     private static final long serialVersionUID = 4465448607415788805L;
 
     /** The individual keys */
-    private final Object[] keys;
+    private final K[] keys;
     /** The cached hashCode */
     private final int hashCode;
-    
+
     /**
      * Constructor taking two keys.
      * <p>
@@ -65,10 +65,11 @@ public class MultiKey implements Serializable {
      * @param key1  the first key
      * @param key2  the second key
      */
-    public MultiKey(Object key1, Object key2) {
-        this(new Object[] {key1, key2}, false);
+    @SuppressWarnings("unchecked")
+    public MultiKey(K key1, K key2) {
+        this((K[]) new Object[] { key1, key2 }, false);
     }
-    
+
     /**
      * Constructor taking three keys.
      * <p>
@@ -79,10 +80,11 @@ public class MultiKey implements Serializable {
      * @param key2  the second key
      * @param key3  the third key
      */
-    public MultiKey(Object key1, Object key2, Object key3) {
-        this(new Object[] {key1, key2, key3}, false);
+    @SuppressWarnings("unchecked")
+    public MultiKey(K key1, K key2, K key3) {
+        this((K[]) new Object[] {key1, key2, key3}, false);
     }
-    
+
     /**
      * Constructor taking four keys.
      * <p>
@@ -94,10 +96,11 @@ public class MultiKey implements Serializable {
      * @param key3  the third key
      * @param key4  the fourth key
      */
-    public MultiKey(Object key1, Object key2, Object key3, Object key4) {
-        this(new Object[] {key1, key2, key3, key4}, false);
+    @SuppressWarnings("unchecked")
+    public MultiKey(K key1, K key2, K key3, K key4) {
+        this((K[]) new Object[] {key1, key2, key3, key4}, false);
     }
-    
+
     /**
      * Constructor taking five keys.
      * <p>
@@ -110,10 +113,11 @@ public class MultiKey implements Serializable {
      * @param key4  the fourth key
      * @param key5  the fifth key
      */
-    public MultiKey(Object key1, Object key2, Object key3, Object key4, Object key5) {
-        this(new Object[] {key1, key2, key3, key4, key5}, false);
+    @SuppressWarnings("unchecked")
+    public MultiKey(K key1, K key2, K key3, K key4, K key5) {
+        this((K[]) new Object[] {key1, key2, key3, key4, key5}, false);
     }
-    
+
     /**
      * Constructor taking an array of keys which is cloned.
      * <p>
@@ -125,10 +129,10 @@ public class MultiKey implements Serializable {
      * @param keys  the array of keys, not null
      * @throws IllegalArgumentException if the key array is null
      */
-    public MultiKey(Object[] keys) {
+    public MultiKey(K[] keys) {
         this(keys, true);
     }
-    
+
     /**
      * Constructor taking an array of keys, optionally choosing whether to clone.
      * <p>
@@ -153,17 +157,17 @@ public class MultiKey implements Serializable {
      * @throws IllegalArgumentException if the key array is null
      * @since Commons Collections 3.1
      */
-    public MultiKey(Object[] keys, boolean makeClone) {
+    public MultiKey(K[] keys, boolean makeClone) {
         super();
         if (keys == null) {
             throw new IllegalArgumentException("The array of keys must not be null");
         }
         if (makeClone) {
-            this.keys = (Object[]) keys.clone();
+            this.keys = keys.clone();
         } else {
             this.keys = keys;
         }
-        
+
         int total = 0;
         for (int i = 0; i < keys.length; i++) {
             if (keys[i] != null) {
@@ -172,7 +176,7 @@ public class MultiKey implements Serializable {
         }
         hashCode = total;
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Gets a clone of the array of keys.
@@ -182,10 +186,10 @@ public class MultiKey implements Serializable {
      * 
      * @return the individual keys
      */
-    public Object[] getKeys() {
-        return (Object[]) keys.clone();
+    public K[] getKeys() {
+        return keys.clone();
     }
-    
+
     /**
      * Gets the key at the specified index.
      * <p>
@@ -197,10 +201,10 @@ public class MultiKey implements Serializable {
      * @throws IndexOutOfBoundsException if the index is invalid
      * @since Commons Collections 3.1
      */
-    public Object getKey(int index) {
+    public K getKey(int index) {
         return keys[index];
     }
-    
+
     /**
      * Gets the size of the list of keys.
      * 
@@ -210,7 +214,7 @@ public class MultiKey implements Serializable {
     public int size() {
         return keys.length;
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Compares this object to another.
@@ -226,7 +230,7 @@ public class MultiKey implements Serializable {
             return true;
         }
         if (other instanceof MultiKey) {
-            MultiKey otherMulti = (MultiKey) other;
+            MultiKey<?> otherMulti = (MultiKey<?>) other;
             return Arrays.equals(keys, otherMulti.keys);
         }
         return false;

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * Internal utilities for functors.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
@@ -32,38 +32,38 @@ import org.apache.commons.collections.Transformer;
  * @author Matt Benson
  */
 class FunctorUtils {
-    
+
     /**
      * Restricted constructor.
      */
     private FunctorUtils() {
         super();
     }
-    
+
     /**
      * Clone the predicates to ensure that the internal reference can't be messed with.
      * Due to the {@link Predicate#evaluate(T)} method, Predicate<? super T> is
-     * able to be coerced to Predicate<T> without casting issues. 
-     * 
+     * able to be coerced to Predicate<T> without casting issues.
+     *
      * @param predicates  the predicates to copy
      * @return the cloned predicates
      */
     @SuppressWarnings("unchecked")
-    static <T> Predicate<? super T>[] copy(Predicate<? super T>[] predicates) {
+    static <T> Predicate<T>[] copy(Predicate<? super T>[] predicates) {
         if (predicates == null) {
             return null;
         }
-        return predicates.clone();
+        return (Predicate<T>[]) predicates.clone();
     }
-    
+
     /**
      * A very simple method that coerces Predicate<? super T> to Predicate<T>.
      * Due to the {@link Predicate#evaluate(T)} method, Predicate<? super T> is
-     * able to be coerced to Predicate<T> without casting issues. 
+     * able to be coerced to Predicate<T> without casting issues.
      * <p>This method exists
      * simply as centralised documentation and atomic unchecked warning
      * suppression.
-     * 
+     *
      * @param <T> the type of object the returned predicate should "accept"
      * @param predicate the predicate to coerce.
      * @return the coerced predicate.
@@ -72,10 +72,10 @@ class FunctorUtils {
     static <T> Predicate<T> coerce(Predicate<? super T> predicate){
         return (Predicate<T>) predicate;
     }
-    
+
     /**
      * Validate the predicates to ensure that all is well.
-     * 
+     *
      * @param predicates  the predicates to validate
      */
     static void validate(Predicate<?>[] predicates) {
@@ -88,22 +88,22 @@ class FunctorUtils {
             }
         }
     }
-    
+
     /**
      * Validate the predicates to ensure that all is well.
-     * 
+     *
      * @param predicates  the predicates to validate
      * @return predicate array
      */
     @SuppressWarnings("unchecked")
-    static <T> Predicate<? super T>[] validate(Collection<Predicate<? super T>> predicates) {
+    static <T> Predicate<T>[] validate(Collection<? extends Predicate<T>> predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate collection must not be null");
         }
         // convert to array like this to guarantee iterator() ordering
-        Predicate<? super T>[] preds = new Predicate[predicates.size()];
+        Predicate<T>[] preds = new Predicate[predicates.size()];
         int i = 0;
-        for (Predicate<? super T> predicate : predicates) {
+        for (Predicate<T> predicate : predicates) {
             preds[i] = predicate;
             if (preds[i] == null) {
                 throw new IllegalArgumentException("The predicate collection must not contain a null predicate, index " + i + " was null");
@@ -112,26 +112,27 @@ class FunctorUtils {
         }
         return preds;
     }
-    
+
     /**
      * Clone the closures to ensure that the internal reference can't be messed with.
-     * 
+     *
      * @param closures  the closures to copy
      * @return the cloned closures
      */
-    static Closure[] copy(Closure[] closures) {
+    @SuppressWarnings("unchecked")
+    static <E> Closure<E>[] copy(Closure<? super E>[] closures) {
         if (closures == null) {
             return null;
         }
-        return (Closure[]) closures.clone();
+        return (Closure<E>[]) closures.clone();
     }
-    
+
     /**
      * Validate the closures to ensure that all is well.
-     * 
+     *
      * @param closures  the closures to validate
      */
-    static void validate(Closure[] closures) {
+    static void validate(Closure<?>[] closures) {
         if (closures == null) {
             throw new IllegalArgumentException("The closure array must not be null");
         }
@@ -143,24 +144,40 @@ class FunctorUtils {
     }
 
     /**
+     * A very simple method that coerces Closure<? super T> to Closure<T>.
+     * <p>This method exists
+     * simply as centralised documentation and atomic unchecked warning
+     * suppression.
+     *
+     * @param <T> the type of object the returned closure should "accept"
+     * @param closure the closure to coerce.
+     * @return the coerced closure.
+     */
+    @SuppressWarnings("unchecked")
+    static <T> Closure<T> coerce(Closure<? super T> closure){
+        return (Closure<T>) closure;
+    }
+
+    /**
      * Copy method
-     * 
+     *
      * @param transformers  the transformers to copy
      * @return a clone of the transformers
      */
-    static Transformer[] copy(Transformer[] transformers) {
+    @SuppressWarnings("unchecked")
+    static <I, O> Transformer<I, O>[] copy(Transformer<? super I, ? extends O>[] transformers) {
         if (transformers == null) {
             return null;
         }
-        return (Transformer[]) transformers.clone();
+        return (Transformer<I, O>[]) transformers.clone();
     }
-    
+
     /**
      * Validate method
-     * 
+     *
      * @param transformers  the transformers to validate
      */
-    static void validate(Transformer[] transformers) {
+    static void validate(Transformer<?, ?>[] transformers) {
         if (transformers == null) {
             throw new IllegalArgumentException("The transformer array must not be null");
         }
@@ -170,6 +187,21 @@ class FunctorUtils {
                     "The transformer array must not contain a null transformer, index " + i + " was null");
             }
         }
+    }
+
+    /**
+     * A very simple method that coerces Transformer<? super I, ? extends O> to Transformer<I, O>.
+     * <p>This method exists
+     * simply as centralised documentation and atomic unchecked warning
+     * suppression.
+     *
+     * @param <T> the type of object the returned transformer should "accept"
+     * @param transformer the transformer to coerce.
+     * @return the coerced transformer.
+     */
+    @SuppressWarnings("unchecked")
+    static <I, O> Transformer<I, O> coerce(Transformer<? super I, ? extends O> transformer) {
+        return (Transformer<I, O>) transformer;
     }
 
 }

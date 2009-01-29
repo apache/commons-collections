@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,8 +17,8 @@
 package org.apache.commons.collections.buffer;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.Test;
 
@@ -28,12 +28,12 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 
 /**
  * Test cases for BoundedFifoBuffer.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Paul Jack
  */
-public class TestBoundedFifoBuffer extends AbstractTestCollection {
+public class TestBoundedFifoBuffer<E> extends AbstractTestCollection<E> {
 
     public TestBoundedFifoBuffer(String n) {
         super(n);
@@ -45,18 +45,18 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
 
     //-----------------------------------------------------------------------
     /**
-     *  Runs through the regular verifications, but also verifies that 
+     *  Runs through the regular verifications, but also verifies that
      *  the buffer contains the same elements in the same sequence as the
      *  list.
      */
     public void verify() {
         super.verify();
-        Iterator iterator1 = collection.iterator();
-        Iterator iterator2 = confirmed.iterator();
+        Iterator<E> iterator1 = getCollection().iterator();
+        Iterator<E> iterator2 = getConfirmed().iterator();
         while (iterator2.hasNext()) {
             assertTrue(iterator1.hasNext());
-            Object o1 = iterator1.next();
-            Object o2 = iterator2.next();
+            E o1 = iterator1.next();
+            E o2 = iterator2.next();
             assertEquals(o1, o2);
         }
     }
@@ -78,14 +78,14 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
         return false;
     }
 
-    //-----------------------------------------------------------------------  
+    //-----------------------------------------------------------------------
     /**
      *  Returns an empty ArrayList.
      *
      *  @return an empty ArrayList
      */
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+    public List<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
 
     /**
@@ -93,37 +93,37 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      *
      *  @return a full ArrayList
      */
-    public Collection makeConfirmedFullCollection() {
-        Collection c = makeConfirmedCollection();
+    public List<E> makeConfirmedFullCollection() {
+        List<E> c = makeConfirmedCollection();
         c.addAll(java.util.Arrays.asList(getFullElements()));
         return c;
     }
 
     /**
-     *  Returns an empty BoundedFifoBuffer that won't overflow.  
-     *  
+     *  Returns an empty BoundedFifoBuffer that won't overflow.
+     *
      *  @return an empty BoundedFifoBuffer
      */
-    public Collection makeCollection() {
-        return new BoundedFifoBuffer(100);
+    public BoundedFifoBuffer<E> makeObject() {
+        return new BoundedFifoBuffer<E>(100);
     }
 
-    //-----------------------------------------------------------------------  
+    //-----------------------------------------------------------------------
     /**
      * Tests that the removal operation actually removes the first element.
      */
     public void testBoundedFifoBufferRemove() {
         resetFull();
-        int size = confirmed.size();
+        int size = getConfirmed().size();
         for (int i = 0; i < size; i++) {
-            Object o1 = ((BoundedFifoBuffer)collection).remove();
-            Object o2 = ((ArrayList)confirmed).remove(0);
+            E o1 = getCollection().remove();
+            E o2 = getConfirmed().remove(0);
             assertEquals("Removed objects should be equal", o1, o2);
             verify();
         }
 
         try {
-            ((BoundedFifoBuffer)collection).remove();
+            getCollection().remove();
             fail("Empty buffer should raise Underflow.");
         } catch (BufferUnderflowException e) {
             // expected
@@ -135,19 +135,19 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      */
     public void testConstructorException1() {
         try {
-            new BoundedFifoBuffer(0);
+            new BoundedFifoBuffer<E>(0);
         } catch (IllegalArgumentException ex) {
             return;
         }
         fail();
     }
-    
+
     /**
      * Tests that the constructor correctly throws an exception.
      */
     public void testConstructorException2() {
         try {
-            new BoundedFifoBuffer(-20);
+            new BoundedFifoBuffer<E>(-20);
         } catch (IllegalArgumentException ex) {
             return;
         }
@@ -159,7 +159,7 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
      */
     public void testConstructorException3() {
         try {
-            new BoundedFifoBuffer(null);
+            new BoundedFifoBuffer<E>(null);
         } catch (NullPointerException ex) {
             return;
         }
@@ -169,15 +169,16 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
     public String getCompatibilityVersion() {
         return "3.1";
     }
-    
+
     // BZ 33071 -- gets start=end=1 before removal of interior element
+    @SuppressWarnings("unchecked")
     public void testShift() {
-        BoundedFifoBuffer fifo = new BoundedFifoBuffer(3);
-        fifo.add("a");
-        fifo.add("b");
-        fifo.add("c");
+        BoundedFifoBuffer<E> fifo = new BoundedFifoBuffer<E>(3);
+        fifo.add((E) "a");
+        fifo.add((E) "b");
+        fifo.add((E) "c");
         fifo.remove();
-        fifo.add("e");
+        fifo.add((E) "e");
         fifo.remove("c");
     }
 
@@ -188,4 +189,19 @@ public class TestBoundedFifoBuffer extends AbstractTestCollection {
 //        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/BoundedFifoBuffer.fullCollection.version3.1.obj");
 //    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public BoundedFifoBuffer<E> getCollection() {
+        return (BoundedFifoBuffer<E>) super.getCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<E> getConfirmed() {
+        return (List<E>) super.getConfirmed();
+    }
 }

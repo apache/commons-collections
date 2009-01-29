@@ -29,8 +29,8 @@ import java.util.Set;
  * @author Stephen Colebourne
  * @since Commons Collections 3.1
  */
-public abstract class AbstractSerializableSetDecorator
-        extends AbstractSetDecorator
+public abstract class AbstractSerializableSetDecorator<E>
+        extends AbstractSetDecorator<E>
         implements Serializable {
 
     /** Serialization version */
@@ -39,7 +39,7 @@ public abstract class AbstractSerializableSetDecorator
     /**
      * Constructor.
      */
-    protected AbstractSerializableSetDecorator(Set set) {
+    protected AbstractSerializableSetDecorator(Set<E> set) {
         super(set);
     }
 
@@ -62,9 +62,10 @@ public abstract class AbstractSerializableSetDecorator
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        collection = (Collection) in.readObject();
+        collection = (Collection<E>) in.readObject();
     }
 
 }

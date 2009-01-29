@@ -31,7 +31,7 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class InvokerTransformer implements Transformer, Serializable {
+public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable {
 
     /** The serial version */
     private static final long serialVersionUID = -8653385846894047688L;
@@ -39,7 +39,7 @@ public class InvokerTransformer implements Transformer, Serializable {
     /** The method name to call */
     private final String iMethodName;
     /** The array of reflection parameter types */
-    private final Class[] iParamTypes;
+    private final Class<?>[] iParamTypes;
     /** The array of reflection arguments */
     private final Object[] iArgs;
 
@@ -50,11 +50,11 @@ public class InvokerTransformer implements Transformer, Serializable {
      * @return an invoker transformer
      * @since Commons Collections 3.1
      */
-    public static Transformer getInstance(String methodName) {
+    public static <I, O> Transformer<I, O> getInstance(String methodName) {
         if (methodName == null) {
             throw new IllegalArgumentException("The method to invoke must not be null");
         }
-        return new InvokerTransformer(methodName);
+        return new InvokerTransformer<I, O>(methodName);
     }
 
     /**
@@ -65,7 +65,7 @@ public class InvokerTransformer implements Transformer, Serializable {
      * @param args  the arguments to pass to the method
      * @return an invoker transformer
      */
-    public static Transformer getInstance(String methodName, Class[] paramTypes, Object[] args) {
+    public static <I, O> Transformer<I, O> getInstance(String methodName, Class<?>[] paramTypes, Object[] args) {
         if (methodName == null) {
             throw new IllegalArgumentException("The method to invoke must not be null");
         }
@@ -75,11 +75,11 @@ public class InvokerTransformer implements Transformer, Serializable {
             throw new IllegalArgumentException("The parameter types must match the arguments");
         }
         if (paramTypes == null || paramTypes.length == 0) {
-            return new InvokerTransformer(methodName);
+            return new InvokerTransformer<I, O>(methodName);
         } else {
             paramTypes = (Class[]) paramTypes.clone();
             args = (Object[]) args.clone();
-            return new InvokerTransformer(methodName, paramTypes, args);
+            return new InvokerTransformer<I, O>(methodName, paramTypes, args);
         }
     }
 
@@ -103,7 +103,7 @@ public class InvokerTransformer implements Transformer, Serializable {
      * @param paramTypes  the constructor parameter types, not cloned
      * @param args  the constructor arguments, not cloned
      */
-    public InvokerTransformer(String methodName, Class[] paramTypes, Object[] args) {
+    public InvokerTransformer(String methodName, Class<?>[] paramTypes, Object[] args) {
         super();
         iMethodName = methodName;
         iParamTypes = paramTypes;
@@ -116,15 +116,15 @@ public class InvokerTransformer implements Transformer, Serializable {
      * @param input  the input object to transform
      * @return the transformed result, null if null input
      */
-    public Object transform(Object input) {
+    @SuppressWarnings("unchecked")
+    public O transform(Object input) {
         if (input == null) {
             return null;
         }
         try {
-            Class cls = input.getClass();
+            Class<?> cls = input.getClass();
             Method method = cls.getMethod(iMethodName, iParamTypes);
-            return method.invoke(input, iArgs);
-                
+            return (O) method.invoke(input, iArgs);
         } catch (NoSuchMethodException ex) {
             throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" + input.getClass() + "' does not exist");
         } catch (IllegalAccessException ex) {

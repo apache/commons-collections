@@ -36,8 +36,8 @@ import org.apache.commons.collections.Transformer;
  * 
  * @author Stephen Colebourne
  */
-public class TransformedSortedBag
-        extends TransformedBag implements SortedBag {
+public class TransformedSortedBag<E>
+        extends TransformedBag<E> implements SortedBag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -251737742649401930L;
@@ -53,8 +53,8 @@ public class TransformedSortedBag
      * @return a new transformed SortedBag
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    public static SortedBag decorate(SortedBag bag, Transformer transformer) {
-        return new TransformedSortedBag(bag, transformer);
+    public static <E> SortedBag<E> decorate(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
+        return new TransformedSortedBag<E>(bag, transformer);
     }
     
     //-----------------------------------------------------------------------
@@ -68,7 +68,7 @@ public class TransformedSortedBag
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    protected TransformedSortedBag(SortedBag bag, Transformer transformer) {
+    protected TransformedSortedBag(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
         super(bag, transformer);
     }
 
@@ -77,20 +77,20 @@ public class TransformedSortedBag
      * 
      * @return the decorated bag
      */
-    protected SortedBag getSortedBag() {
-        return (SortedBag) collection;
+    protected SortedBag<E> getSortedBag() {
+        return (SortedBag<E>) collection;
     }
 
     //-----------------------------------------------------------------------
-    public Object first() {
+    public E first() {
         return getSortedBag().first();
     }
 
-    public Object last() {
+    public E last() {
         return getSortedBag().last();
     }
 
-    public Comparator comparator() {
+    public Comparator<? super E> comparator() {
         return getSortedBag().comparator();
     }
 

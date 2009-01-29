@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  * 
  * @author Neil O'Toole
  */
-public class TestDefaultKeyValue extends TestCase {
+public class TestDefaultKeyValue<K, V> extends TestCase {
     
     private final String key = "name";
     private final String value = "duke";
@@ -60,8 +60,8 @@ public class TestDefaultKeyValue extends TestCase {
      * Subclasses should override this method to return a DefaultKeyValue
      * of the type being tested.
      */
-    protected DefaultKeyValue makeDefaultKeyValue() {
-        return new DefaultKeyValue(null, null);
+    protected DefaultKeyValue<K, V> makeDefaultKeyValue() {
+        return new DefaultKeyValue<K, V>(null, null);
     }
 
     /**
@@ -69,18 +69,19 @@ public class TestDefaultKeyValue extends TestCase {
      * Subclasses should override this method to return a DefaultKeyValue
      * of the type being tested.
      */
-    protected DefaultKeyValue makeDefaultKeyValue(Object key, Object value) {
-        return new DefaultKeyValue(key, value);
+    protected DefaultKeyValue<K, V> makeDefaultKeyValue(K key, V value) {
+        return new DefaultKeyValue<K, V>(key, value);
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testAccessorsAndMutators() {
-        DefaultKeyValue kv = makeDefaultKeyValue();
+        DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
-        kv.setKey(key);
+        kv.setKey((K) key);
         assertTrue(kv.getKey() == key);
 
-        kv.setValue(value);
+        kv.setValue((V) value);
         assertTrue(kv.getValue() == value);
 
         // check that null doesn't do anything funny
@@ -92,15 +93,16 @@ public class TestDefaultKeyValue extends TestCase {
 
     }
 
+    @SuppressWarnings("unchecked")
     public void testSelfReferenceHandling() {
         // test that #setKey and #setValue do not permit
         //  the KVP to contain itself (and thus cause infinite recursion
         //  in #hashCode and #toString)
 
-        DefaultKeyValue kv = makeDefaultKeyValue();
+        DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
         try {
-            kv.setKey(kv);
+            kv.setKey((K) kv);
             fail("Should throw an IllegalArgumentException");
         } catch (IllegalArgumentException iae) {
             // expected to happen...
@@ -110,7 +112,7 @@ public class TestDefaultKeyValue extends TestCase {
         }
 
         try {
-            kv.setValue(kv);
+            kv.setValue((V) kv);
             fail("Should throw an IllegalArgumentException");
         } catch (IllegalArgumentException iae) {
             // expected to happen...
@@ -123,17 +125,18 @@ public class TestDefaultKeyValue extends TestCase {
     /**
      * Subclasses should override this method to test their own constructors.
      */
+    @SuppressWarnings("unchecked")
     public void testConstructors() {
         // 1. test default constructor
-        DefaultKeyValue kv = new DefaultKeyValue();
+        DefaultKeyValue<K, V> kv = new DefaultKeyValue<K, V>();
         assertTrue(kv.getKey() == null && kv.getValue() == null);
 
         // 2. test key-value constructor
-        kv = new DefaultKeyValue(key, value);
+        kv = new DefaultKeyValue<K, V>((K) key, (V) value);
         assertTrue(kv.getKey() == key && kv.getValue() == value);
 
         // 3. test copy constructor
-        DefaultKeyValue kv2 = new DefaultKeyValue(kv);
+        DefaultKeyValue<K, V> kv2 = new DefaultKeyValue<K, V>(kv);
         assertTrue(kv2.getKey() == key && kv2.getValue() == value);
 
         // test that the KVPs are independent
@@ -143,11 +146,11 @@ public class TestDefaultKeyValue extends TestCase {
         assertTrue(kv2.getKey() == key && kv2.getValue() == value);
 
         // 4. test Map.Entry constructor
-        Map map = new HashMap();
-        map.put(key, value);
-        Map.Entry entry = (Map.Entry) map.entrySet().iterator().next();
+        Map<K, V> map = new HashMap<K, V>();
+        map.put((K) key, (V) value);
+        Map.Entry<K, V> entry = map.entrySet().iterator().next();
 
-        kv = new DefaultKeyValue(entry);
+        kv = new DefaultKeyValue<K, V>(entry);
         assertTrue(kv.getKey() == key && kv.getValue() == value);
 
         // test that the KVP is independent of the Map.Entry
@@ -156,10 +159,11 @@ public class TestDefaultKeyValue extends TestCase {
 
     }
 
+    @SuppressWarnings("unchecked")
     public void testEqualsAndHashCode() {
         // 1. test with object data
-        DefaultKeyValue kv = makeDefaultKeyValue(key, value);
-        DefaultKeyValue kv2 = makeDefaultKeyValue(key, value);
+        DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
+        DefaultKeyValue<K, V> kv2 = makeDefaultKeyValue((K) key, (V) value);
 
         assertTrue(kv.equals(kv));
         assertTrue(kv.equals(kv2));
@@ -174,8 +178,9 @@ public class TestDefaultKeyValue extends TestCase {
         assertTrue(kv.hashCode() == kv2.hashCode());
     }
 
+    @SuppressWarnings("unchecked")
     public void testToString() {
-        DefaultKeyValue kv = makeDefaultKeyValue(key, value);
+        DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
         assertTrue(kv.toString().equals(kv.getKey() + "=" + kv.getValue()));
 
         // test with nulls
@@ -183,12 +188,13 @@ public class TestDefaultKeyValue extends TestCase {
         assertTrue(kv.toString().equals(kv.getKey() + "=" + kv.getValue()));
     }
 
+    @SuppressWarnings("unchecked")
     public void testToMapEntry() {
-        DefaultKeyValue kv = makeDefaultKeyValue(key, value);
+        DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
 
-        Map map = new HashMap();
+        Map<K, V> map = new HashMap<K, V>();
         map.put(kv.getKey(), kv.getValue());
-        Map.Entry entry = (Map.Entry) map.entrySet().iterator().next();
+        Map.Entry<K, V> entry = map.entrySet().iterator().next();
 
         assertTrue(entry.equals(kv.toMapEntry()));
         assertTrue(entry.hashCode() == kv.hashCode());

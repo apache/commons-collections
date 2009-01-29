@@ -37,15 +37,16 @@ import java.util.Set;
  * 
  * @author Stephen Colebourne
  */
-public final class MapBackedSet implements Set, Serializable {
+public final class MapBackedSet<E, V> implements Set<E>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 6723912213766056587L;
 
     /** The map being used as the backing store */
-    protected final Map map;
+    protected final Map<E, ? super V> map;
+
     /** The dummyValue to use */
-    protected final Object dummyValue;
+    protected final V dummyValue;
 
     /**
      * Factory method to create a set from a map.
@@ -53,7 +54,7 @@ public final class MapBackedSet implements Set, Serializable {
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static Set decorate(Map map) {
+    public static <E, V> Set<E> decorate(Map<E, ? super V> map) {
         return decorate(map, null);
     }
 
@@ -64,11 +65,11 @@ public final class MapBackedSet implements Set, Serializable {
      * @param dummyValue  the dummy value to use
      * @throws IllegalArgumentException if map is null
      */
-    public static Set decorate(Map map, Object dummyValue) {
+    public static <E, V> Set<E> decorate(Map<E, ? super V> map, V dummyValue) {
         if (map == null) {
             throw new IllegalArgumentException("The map must not be null");
         }
-        return new MapBackedSet(map, dummyValue);
+        return new MapBackedSet<E, V>(map, dummyValue);
     }
 
     //-----------------------------------------------------------------------
@@ -79,7 +80,7 @@ public final class MapBackedSet implements Set, Serializable {
      * @param dummyValue  the dummy value to use
      * @throws IllegalArgumentException if map is null
      */
-    private MapBackedSet(Map map, Object dummyValue) {
+    private MapBackedSet(Map<E, ? super V> map, V dummyValue) {
         super();
         this.map = map;
         this.dummyValue = dummyValue;
@@ -94,7 +95,7 @@ public final class MapBackedSet implements Set, Serializable {
         return map.isEmpty();
     }
 
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return map.keySet().iterator();
     }
 
@@ -102,21 +103,20 @@ public final class MapBackedSet implements Set, Serializable {
         return map.containsKey(obj);
     }
 
-    public boolean containsAll(Collection coll) {
+    public boolean containsAll(Collection<?> coll) {
         return map.keySet().containsAll(coll);
     }
 
-    public boolean add(Object obj) {
+    public boolean add(E obj) {
         int size = map.size();
         map.put(obj, dummyValue);
         return (map.size() != size);
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         int size = map.size();
-        for (Iterator it = coll.iterator(); it.hasNext();) {
-            Object obj = it.next();
-            map.put(obj, dummyValue);
+        for (E e : coll) {
+            map.put(e, dummyValue);
         }
         return (map.size() != size);
     }
@@ -127,11 +127,11 @@ public final class MapBackedSet implements Set, Serializable {
         return (map.size() != size);
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         return map.keySet().removeAll(coll);
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         return map.keySet().retainAll(coll);
     }
 
@@ -143,7 +143,7 @@ public final class MapBackedSet implements Set, Serializable {
         return map.keySet().toArray();
     }
 
-    public Object[] toArray(Object[] array) {
+    public <T> T[] toArray(T[] array) {
         return map.keySet().toArray(array);
     }
 

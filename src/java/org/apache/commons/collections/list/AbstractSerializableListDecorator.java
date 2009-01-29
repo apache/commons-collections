@@ -29,8 +29,8 @@ import java.util.List;
  * @author Stephen Colebourne
  * @since Commons Collections 3.1
  */
-public abstract class AbstractSerializableListDecorator
-        extends AbstractListDecorator
+public abstract class AbstractSerializableListDecorator<E>
+        extends AbstractListDecorator<E>
         implements Serializable {
 
     /** Serialization version */
@@ -39,7 +39,7 @@ public abstract class AbstractSerializableListDecorator
     /**
      * Constructor.
      */
-    protected AbstractSerializableListDecorator(List list) {
+    protected AbstractSerializableListDecorator(List<E> list) {
         super(list);
     }
 
@@ -62,9 +62,10 @@ public abstract class AbstractSerializableListDecorator
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        collection = (Collection) in.readObject();
+        collection = (Collection<E>) in.readObject();
     }
 
 }

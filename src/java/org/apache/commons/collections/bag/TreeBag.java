@@ -34,63 +34,72 @@ import org.apache.commons.collections.SortedBag;
  * Order will be maintained among the bag members and can be viewed through the
  * iterator.
  * <p>
- * A <code>Bag</code> stores each object in the collection together with a
- * count of occurrences. Extra methods on the interface allow multiple copies
- * of an object to be added or removed at once. It is important to read the
- * interface javadoc carefully as several methods violate the
- * <code>Collection</code> interface specification.
- *
+ * A <code>Bag</code> stores each object in the collection together with a count
+ * of occurrences. Extra methods on the interface allow multiple copies of an
+ * object to be added or removed at once. It is important to read the interface
+ * javadoc carefully as several methods violate the <code>Collection</code>
+ * interface specification.
+ * 
  * @since Commons Collections 3.0 (previously in main package v2.0)
- * @version $Revision$ $Date$
+ * @version $Revision$ $Date: 2006-10-27 19:52:37 -0500 (Fri, 27 Oct
+ * 2006) $
  * 
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */
-public class TreeBag
-        extends AbstractMapBag implements SortedBag, Serializable {
+public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Serializable {
 
     /** Serial version lock */
     private static final long serialVersionUID = -7740146511091606676L;
-    
+
     /**
      * Constructs an empty <code>TreeBag</code>.
      */
     public TreeBag() {
-        super(new TreeMap());
+        super(new TreeMap<E, MutableInteger>());
     }
 
     /**
-     * Constructs an empty bag that maintains order on its unique
-     * representative members according to the given {@link Comparator}.
+     * Constructs an empty bag that maintains order on its unique representative
+     * members according to the given {@link Comparator}.
      * 
-     * @param comparator  the comparator to use
+     * @param comparator the comparator to use
      */
-    public TreeBag(Comparator comparator) {
-        super(new TreeMap(comparator));
+    public TreeBag(Comparator<? super E> comparator) {
+        super(new TreeMap<E, MutableInteger>(comparator));
     }
 
     /**
      * Constructs a <code>TreeBag</code> containing all the members of the
      * specified collection.
      * 
-     * @param coll  the collection to copy into the bag
+     * @param coll the collection to copy into the bag
      */
-    public TreeBag(Collection coll) {
+    public TreeBag(Collection<? extends E> coll) {
         this();
         addAll(coll);
     }
 
     //-----------------------------------------------------------------------
-    public Object first() {
-        return ((SortedMap) getMap()).firstKey();
+    public E first() {
+        return getMap().firstKey();
     }
 
-    public Object last() {
-        return ((SortedMap) getMap()).lastKey();
+    public E last() {
+        return getMap().lastKey();
     }
 
-    public Comparator comparator() {
-        return ((SortedMap) getMap()).comparator();
+    public Comparator<? super E> comparator() {
+        return getMap().comparator();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected SortedMap<E, org.apache.commons.collections.bag.AbstractMapBag.MutableInteger> getMap() {
+        return (SortedMap<E, org.apache.commons.collections.bag.AbstractMapBag.MutableInteger>) super
+                .getMap();
     }
 
     //-----------------------------------------------------------------------
@@ -106,10 +115,11 @@ public class TreeBag
     /**
      * Read the bag in using a custom routine.
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         Comparator comp = (Comparator) in.readObject();
         super.doReadObject(new TreeMap(comp), in);
     }
-    
+
 }

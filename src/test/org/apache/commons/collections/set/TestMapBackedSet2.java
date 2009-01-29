@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,10 +29,10 @@ import org.apache.commons.collections.map.LinkedMap;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestMapBackedSet2 extends AbstractTestSet {
+public class TestMapBackedSet2<E> extends AbstractTestSet<E> {
 
     public TestMapBackedSet2(String testName) {
         super(testName);
@@ -47,22 +47,24 @@ public class TestMapBackedSet2 extends AbstractTestSet {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Set makeEmptySet() {
-        return MapBackedSet.decorate(new LinkedMap());
+    public Set<E> makeObject() {
+        return MapBackedSet.decorate(new LinkedMap<E, Object>());
     }
 
-    protected Set setupSet() {
-        Set set = makeEmptySet();
+    @SuppressWarnings("unchecked")
+    protected Set<E> setupSet() {
+        Set<E> set = makeObject();
 
         for (int i = 0; i < 10; i++) {
-            set.add(Integer.toString(i));
+            set.add((E) Integer.toString(i));
         }
         return set;
     }
 
+    @SuppressWarnings("unchecked")
     public void testOrdering() {
-        Set set = setupSet();
-        Iterator it = set.iterator();
+        Set<E> set = setupSet();
+        Iterator<E> it = set.iterator();
 
         for (int i = 0; i < 10; i++) {
             assertEquals("Sequence is wrong", Integer.toString(i), it.next());
@@ -78,7 +80,7 @@ public class TestMapBackedSet2 extends AbstractTestSet {
         }
 
         for (int i = 0; i < 10; i++) {
-            set.add(Integer.toString(i));
+            set.add((E) Integer.toString(i));
         }
 
         assertEquals("Size of set is wrong!", 10, set.size());

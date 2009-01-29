@@ -71,7 +71,7 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
         return list;
     }
     
-    public Collection<Object> makeCollection() {
+    public Collection<Object> makeObject() {
         return TransformedCollection.decorate(new ArrayList<Object>(), NOOP_TRANSFORMER);
     }
 

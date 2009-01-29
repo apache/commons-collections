@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -64,7 +64,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * <strong>Note that Flat3Map is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since Commons Collections 3.0
@@ -72,7 +72,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  *
  * @author Stephen Colebourne
  */
-public class Flat3Map implements IterableMap, Serializable, Cloneable {
+public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneable {
 
     /** Serialization version */
     private static final long serialVersionUID = -6701087419741928296L;
@@ -86,19 +86,19 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     /** Hash, used while in flat mode */
     private transient int hash3;
     /** Key, used while in flat mode */
-    private transient Object key1;
+    private transient K key1;
     /** Key, used while in flat mode */
-    private transient Object key2;
+    private transient K key2;
     /** Key, used while in flat mode */
-    private transient Object key3;
+    private transient K key3;
     /** Value, used while in flat mode */
-    private transient Object value1;
+    private transient V value1;
     /** Value, used while in flat mode */
-    private transient Object value2;
+    private transient V value2;
     /** Value, used while in flat mode */
-    private transient Object value3;
+    private transient V value3;
     /** Map, used while in delegate mode */
-    private transient AbstractHashedMap delegateMap;
+    private transient AbstractHashedMap<K, V> delegateMap;
 
     /**
      * Constructor.
@@ -113,7 +113,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public Flat3Map(Map map) {
+    public Flat3Map(Map<? extends K, ? extends V> map) {
         super();
         putAll(map);
     }
@@ -121,11 +121,11 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the key specified.
-     * 
+     *
      * @param key  the key
      * @return the mapped value, null if no match
      */
-    public Object get(Object key) {
+    public V get(Object key) {
         if (delegateMap != null) {
             return delegateMap.get(key);
         }
@@ -158,7 +158,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
 
     /**
      * Gets the size of the map.
-     * 
+     *
      * @return the size
      */
     public int size() {
@@ -170,7 +170,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
 
     /**
      * Checks whether the map is currently empty.
-     * 
+     *
      * @return true if the map is currently size zero
      */
     public boolean isEmpty() {
@@ -180,7 +180,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     //-----------------------------------------------------------------------
     /**
      * Checks whether the map contains the specified key.
-     * 
+     *
      * @param key  the key to search for
      * @return true if the map contains the key
      */
@@ -215,7 +215,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
 
     /**
      * Checks whether the map contains the specified value.
-     * 
+     *
      * @param value  the value to search for
      * @return true if the map contains the key
      */
@@ -248,12 +248,12 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     //-----------------------------------------------------------------------
     /**
      * Puts a key-value mapping into this map.
-     * 
+     *
      * @param key  the key to add
      * @param value  the value to add
      * @return the value previously mapped to this key, null if none
      */
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         if (delegateMap != null) {
             return delegateMap.put(key, value);
         }
@@ -262,19 +262,19 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             switch (size) {  // drop through
                 case 3:
                     if (key3 == null) {
-                        Object old = value3;
+                        V old = value3;
                         value3 = value;
                         return old;
                     }
                 case 2:
                     if (key2 == null) {
-                        Object old = value2;
+                        V old = value2;
                         value2 = value;
                         return old;
                     }
                 case 1:
                     if (key1 == null) {
-                        Object old = value1;
+                        V old = value1;
                         value1 = value;
                         return old;
                     }
@@ -285,26 +285,26 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                 switch (size) {  // drop through
                     case 3:
                         if (hash3 == hashCode && key.equals(key3)) {
-                            Object old = value3;
+                            V old = value3;
                             value3 = value;
                             return old;
                         }
                     case 2:
                         if (hash2 == hashCode && key.equals(key2)) {
-                            Object old = value2;
+                            V old = value2;
                             value2 = value;
                             return old;
                         }
                     case 1:
                         if (hash1 == hashCode && key.equals(key1)) {
-                            Object old = value1;
+                            V old = value1;
                             value1 = value;
                             return old;
                         }
                 }
             }
         }
-        
+
         // add new mapping
         switch (size) {
             default:
@@ -333,11 +333,11 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
 
     /**
      * Puts all the values from the specified map into this map.
-     * 
+     *
      * @param map  the map to add
      * @throws NullPointerException if the map is null
      */
-    public void putAll(Map map) {
+    public void putAll(Map<? extends K, ? extends V> map) {
         int size = map.size();
         if (size == 0) {
             return;
@@ -347,8 +347,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             return;
         }
         if (size < 4) {
-            for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
-                Map.Entry entry = (Map.Entry) it.next();
+            for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
                 put(entry.getKey(), entry.getValue());
             }
         } else {
@@ -370,7 +369,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             case 1:
                 delegateMap.put(key1, value1);
         }
-        
+
         size = 0;
         hash1 = hash2 = hash3 = 0;
         key1 = key2 = key3 = null;
@@ -387,17 +386,17 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
      * @return a new AbstractHashedMap or subclass
      * @since Commons Collections 3.1
      */
-    protected AbstractHashedMap createDelegateMap() {
-        return new HashedMap();
+    protected AbstractHashedMap<K, V> createDelegateMap() {
+        return new HashedMap<K, V>();
     }
 
     /**
      * Removes the specified mapping from this map.
-     * 
+     *
      * @param key  the mapping to remove
      * @return the value mapped to the removed key, null if key not in map
      */
-    public Object remove(Object key) {
+    public V remove(Object key) {
         if (delegateMap != null) {
             return delegateMap.remove(key);
         }
@@ -408,7 +407,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             switch (size) {  // drop through
                 case 3:
                     if (key3 == null) {
-                        Object old = value3;
+                        V old = value3;
                         hash3 = 0;
                         key3 = null;
                         value3 = null;
@@ -416,7 +415,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                         return old;
                     }
                     if (key2 == null) {
-                        Object old = value3;
+                        V old = value3;
                         hash2 = hash3;
                         key2 = key3;
                         value2 = value3;
@@ -427,7 +426,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                         return old;
                     }
                     if (key1 == null) {
-                        Object old = value3;
+                        V old = value3;
                         hash1 = hash3;
                         key1 = key3;
                         value1 = value3;
@@ -440,7 +439,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                     return null;
                 case 2:
                     if (key2 == null) {
-                        Object old = value2;
+                        V old = value2;
                         hash2 = 0;
                         key2 = null;
                         value2 = null;
@@ -448,7 +447,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                         return old;
                     }
                     if (key1 == null) {
-                        Object old = value2;
+                        V old = value2;
                         hash1 = hash2;
                         key1 = key2;
                         value1 = value2;
@@ -461,7 +460,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                     return null;
                 case 1:
                     if (key1 == null) {
-                        Object old = value1;
+                        V old = value1;
                         hash1 = 0;
                         key1 = null;
                         value1 = null;
@@ -475,7 +474,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                 switch (size) {  // drop through
                     case 3:
                         if (hash3 == hashCode && key.equals(key3)) {
-                            Object old = value3;
+                            V old = value3;
                             hash3 = 0;
                             key3 = null;
                             value3 = null;
@@ -483,7 +482,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                             return old;
                         }
                         if (hash2 == hashCode && key.equals(key2)) {
-                            Object old = value3;
+                            V old = value3;
                             hash2 = hash3;
                             key2 = key3;
                             value2 = value3;
@@ -494,7 +493,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                             return old;
                         }
                         if (hash1 == hashCode && key.equals(key1)) {
-                            Object old = value3;
+                            V old = value3;
                             hash1 = hash3;
                             key1 = key3;
                             value1 = value3;
@@ -507,7 +506,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                         return null;
                     case 2:
                         if (hash2 == hashCode && key.equals(key2)) {
-                            Object old = value2;
+                            V old = value2;
                             hash2 = 0;
                             key2 = null;
                             value2 = null;
@@ -515,7 +514,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                             return old;
                         }
                         if (hash1 == hashCode && key.equals(key1)) {
-                            Object old = value2;
+                            V old = value2;
                             hash1 = hash2;
                             key1 = key2;
                             value1 = value2;
@@ -528,7 +527,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
                         return null;
                     case 1:
                         if (hash1 == hashCode && key.equals(key1)) {
-                            Object old = value1;
+                            V old = value1;
                             hash1 = 0;
                             key1 = null;
                             value1 = null;
@@ -566,28 +565,28 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
      * methods to get the key and value, and set the value.
      * It avoids the need to create an entrySet/keySet/values object.
      * It also avoids creating the Map Entry object.
-     * 
+     *
      * @return the map iterator
      */
-    public MapIterator mapIterator() {
+    public MapIterator<K, V> mapIterator() {
         if (delegateMap != null) {
             return delegateMap.mapIterator();
         }
         if (size == 0) {
-            return EmptyMapIterator.INSTANCE;
+            return EmptyMapIterator.<K, V>getInstance();
         }
-        return new FlatMapIterator(this);
+        return new FlatMapIterator<K, V>(this);
     }
 
     /**
      * FlatMapIterator
      */
-    static class FlatMapIterator implements MapIterator, ResettableIterator {
-        private final Flat3Map parent;
+    static class FlatMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
+        private final Flat3Map<K, V> parent;
         private int nextIndex = 0;
         private boolean canRemove = false;
-        
-        FlatMapIterator(Flat3Map parent) {
+
+        FlatMapIterator(Flat3Map<K, V> parent) {
             super();
             this.parent = parent;
         }
@@ -596,7 +595,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             return (nextIndex < parent.size);
         }
 
-        public Object next() {
+        public K next() {
             if (hasNext() == false) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
@@ -614,7 +613,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             canRemove = false;
         }
 
-        public Object getKey() {
+        public K getKey() {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
@@ -629,7 +628,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             throw new IllegalStateException("Invalid map index");
         }
 
-        public Object getValue() {
+        public V getValue() {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
@@ -644,13 +643,13 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             throw new IllegalStateException("Invalid map index");
         }
 
-        public Object setValue(Object value) {
+        public V setValue(V value) {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
-            Object old = getValue();
+            V old = getValue();
             switch (nextIndex) {
-                case 3: 
+                case 3:
                     parent.value3 = value;
                     break;
                 case 2:
@@ -662,44 +661,43 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             }
             return old;
         }
-        
+
         public void reset() {
             nextIndex = 0;
             canRemove = false;
         }
-        
+
         public String toString() {
             if (canRemove) {
                 return "Iterator[" + getKey() + "=" + getValue() + "]";
-            } else {
-                return "Iterator[]";
             }
+            return "Iterator[]";
         }
     }
-    
+
     /**
      * Gets the entrySet view of the map.
      * Changes made to the view affect this map.
-     * The Map Entry is not an independent object and changes as the 
+     * The Map Entry is not an independent object and changes as the
      * iterator progresses.
      * To simply iterate through the entries, use {@link #mapIterator()}.
-     * 
+     *
      * @return the entrySet view
      */
-    public Set entrySet() {
+    public Set<Map.Entry<K, V>> entrySet() {
         if (delegateMap != null) {
             return delegateMap.entrySet();
         }
-        return new EntrySet(this);
+        return new EntrySet<K, V>(this);
     }
-    
+
     /**
      * EntrySet
      */
-    static class EntrySet extends AbstractSet {
-        private final Flat3Map parent;
-        
-        EntrySet(Flat3Map parent) {
+    static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
+        private final Flat3Map<K, V> parent;
+
+        EntrySet(Flat3Map<K, V> parent) {
             super();
             this.parent = parent;
         }
@@ -707,43 +705,42 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
         public int size() {
             return parent.size();
         }
-        
+
         public void clear() {
             parent.clear();
         }
-        
+
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry entry = (Map.Entry) obj;
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             Object key = entry.getKey();
             boolean result = parent.containsKey(key);
             parent.remove(key);
             return result;
         }
 
-        public Iterator iterator() {
+        public Iterator<Map.Entry<K, V>> iterator() {
             if (parent.delegateMap != null) {
                 return parent.delegateMap.entrySet().iterator();
             }
             if (parent.size() == 0) {
-                return EmptyIterator.INSTANCE;
+                return EmptyIterator.<Map.Entry<K, V>>getInstance();
             }
-            return new EntrySetIterator(parent);
+            return new EntrySetIterator<K, V>(parent);
         }
     }
 
-    /**
-     * EntrySetIterator and MapEntry
-     */
-    static class EntrySetIterator implements Iterator, Map.Entry {
-        private final Flat3Map parent;
+    static abstract class EntryIterator<K, V> implements Map.Entry<K, V> {
+        private final Flat3Map<K, V> parent;
         private int nextIndex = 0;
-        private boolean canRemove = false;
-        
-        EntrySetIterator(Flat3Map parent) {
-            super();
+        protected boolean canRemove = false;
+
+        /**
+         * Create a new Flat3Map.EntryIterator.
+         */
+        public EntryIterator(Flat3Map<K, V> parent) {
             this.parent = parent;
         }
 
@@ -751,7 +748,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             return (nextIndex < parent.size);
         }
 
-        public Object next() {
+        public Map.Entry<K, V> nextEntry() {
             if (hasNext() == false) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
@@ -769,7 +766,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             canRemove = false;
         }
 
-        public Object getKey() {
+        public K getKey() {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
@@ -784,7 +781,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             throw new IllegalStateException("Invalid map index");
         }
 
-        public Object getValue() {
+        public V getValue() {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
@@ -799,13 +796,13 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             throw new IllegalStateException("Invalid map index");
         }
 
-        public Object setValue(Object value) {
+        public V setValue(V value) {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
-            Object old = getValue();
+            V old = getValue();
             switch (nextIndex) {
-                case 3: 
+                case 3:
                     parent.value3 = value;
                     break;
                 case 2:
@@ -817,7 +814,21 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             }
             return old;
         }
-        
+    }
+
+    /**
+     * EntrySetIterator and MapEntry
+     */
+    static class EntrySetIterator<K, V> extends EntryIterator<K, V> implements Iterator<Map.Entry<K, V>> {
+
+        EntrySetIterator(Flat3Map<K, V> parent) {
+            super(parent);
+        }
+
+        public Map.Entry<K, V> next() {
+            return nextEntry();
+        }
+
         public boolean equals(Object obj) {
             if (canRemove == false) {
                 return false;
@@ -825,13 +836,13 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry other = (Map.Entry) obj;
+            Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
             Object key = getKey();
             Object value = getValue();
             return (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
                    (value == null ? other.getValue() == null : value.equals(other.getValue()));
         }
-        
+
         public int hashCode() {
             if (canRemove == false) {
                 return 0;
@@ -841,37 +852,36 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             return (key == null ? 0 : key.hashCode()) ^
                    (value == null ? 0 : value.hashCode());
         }
-        
+
         public String toString() {
             if (canRemove) {
                 return getKey() + "=" + getValue();
-            } else {
-                return "";
             }
+            return "";
         }
     }
-    
+
     /**
      * Gets the keySet view of the map.
      * Changes made to the view affect this map.
      * To simply iterate through the keys, use {@link #mapIterator()}.
-     * 
+     *
      * @return the keySet view
      */
-    public Set keySet() {
+    public Set<K> keySet() {
         if (delegateMap != null) {
             return delegateMap.keySet();
         }
-        return new KeySet(this);
+        return new KeySet<K>(this);
     }
 
     /**
      * KeySet
      */
-    static class KeySet extends AbstractSet {
-        private final Flat3Map parent;
-        
-        KeySet(Flat3Map parent) {
+    static class KeySet<K> extends AbstractSet<K> {
+        private final Flat3Map<K, ?> parent;
+
+        KeySet(Flat3Map<K, ?> parent) {
             super();
             this.parent = parent;
         }
@@ -879,11 +889,11 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
         public int size() {
             return parent.size();
         }
-        
+
         public void clear() {
             parent.clear();
         }
-        
+
         public boolean contains(Object key) {
             return parent.containsKey(key);
         }
@@ -894,53 +904,54 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             return result;
         }
 
-        public Iterator iterator() {
+        public Iterator<K> iterator() {
             if (parent.delegateMap != null) {
                 return parent.delegateMap.keySet().iterator();
             }
             if (parent.size() == 0) {
-                return EmptyIterator.INSTANCE;
+                return EmptyIterator.<K>getInstance();
             }
-            return new KeySetIterator(parent);
+            return new KeySetIterator<K>(parent);
         }
     }
 
     /**
      * KeySetIterator
      */
-    static class KeySetIterator extends EntrySetIterator {
-        
-        KeySetIterator(Flat3Map parent) {
-            super(parent);
+    static class KeySetIterator<K> extends EntryIterator<K, Object> implements Iterator<K>{
+
+        @SuppressWarnings("unchecked")
+        KeySetIterator(Flat3Map<K, ?> parent) {
+            super((Flat3Map<K, Object>) parent);
         }
 
-        public Object next() {
-            super.next();
+        public K next() {
+            nextEntry();
             return getKey();
         }
     }
-    
+
     /**
      * Gets the values view of the map.
      * Changes made to the view affect this map.
      * To simply iterate through the values, use {@link #mapIterator()}.
-     * 
+     *
      * @return the values view
      */
-    public Collection values() {
+    public Collection<V> values() {
         if (delegateMap != null) {
             return delegateMap.values();
         }
-        return new Values(this);
+        return new Values<V>(this);
     }
 
     /**
      * Values
      */
-    static class Values extends AbstractCollection {
-        private final Flat3Map parent;
-        
-        Values(Flat3Map parent) {
+    static class Values<V> extends AbstractCollection<V> {
+        private final Flat3Map<?, V> parent;
+
+        Values(Flat3Map<?, V> parent) {
             super();
             this.parent = parent;
         }
@@ -948,37 +959,38 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
         public int size() {
             return parent.size();
         }
-        
+
         public void clear() {
             parent.clear();
         }
-        
+
         public boolean contains(Object value) {
             return parent.containsValue(value);
         }
 
-        public Iterator iterator() {
+        public Iterator<V> iterator() {
             if (parent.delegateMap != null) {
                 return parent.delegateMap.values().iterator();
             }
             if (parent.size() == 0) {
-                return EmptyIterator.INSTANCE;
+                return EmptyIterator.<V>getInstance();
             }
-            return new ValuesIterator(parent);
+            return new ValuesIterator<V>(parent);
         }
     }
 
     /**
      * ValuesIterator
      */
-    static class ValuesIterator extends EntrySetIterator {
-        
-        ValuesIterator(Flat3Map parent) {
-            super(parent);
+    static class ValuesIterator<V> extends EntryIterator<Object, V> implements Iterator<V> {
+
+        @SuppressWarnings("unchecked")
+        ValuesIterator(Flat3Map<?, V> parent) {
+            super((Flat3Map<Object, V>) parent);
         }
 
-        public Object next() {
-            super.next();
+        public V next() {
+            nextEntry();
             return getValue();
         }
     }
@@ -990,7 +1002,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeInt(size());
-        for (MapIterator it = mapIterator(); it.hasNext();) {
+        for (MapIterator<?, ?> it = mapIterator(); it.hasNext();) {
             out.writeObject(it.next());  // key
             out.writeObject(it.getValue());  // value
         }
@@ -999,6 +1011,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
     /**
      * Read the map in using a custom routine.
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         int count = in.readInt();
@@ -1006,7 +1019,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             delegateMap = createDelegateMap();
         }
         for (int i = count; i > 0; i--) {
-            put(in.readObject(), in.readObject());
+            put((K) in.readObject(), (V) in.readObject());
         }
     }
 
@@ -1017,11 +1030,12 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
      * @return a shallow clone
      * @since Commons Collections 3.1
      */
-    public Object clone() {
+    @SuppressWarnings("unchecked")
+    public Flat3Map<K, V> clone() {
         try {
-            Flat3Map cloned = (Flat3Map) super.clone();
+            Flat3Map<K, V> cloned = (Flat3Map<K, V>) super.clone();
             if (cloned.delegateMap != null) {
-                cloned.delegateMap = (HashedMap) cloned.delegateMap.clone();
+                cloned.delegateMap = (HashedMap<K, V>) cloned.delegateMap.clone();
             }
             return cloned;
         } catch (CloneNotSupportedException ex) {
@@ -1031,7 +1045,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
 
     /**
      * Compares this map with another.
-     * 
+     *
      * @param obj  the object to compare to
      * @return true if equal
      */
@@ -1045,7 +1059,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
         if (obj instanceof Map == false) {
             return false;
         }
-        Map other = (Map) obj;
+        Map<?, ?> other = (Map<?, ?>) obj;
         if (size != other.size()) {
             return false;
         }
@@ -1083,7 +1097,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
 
     /**
      * Gets the standard Map hashCode.
-     * 
+     *
      * @return the hash code defined in the Map interface
      */
     public int hashCode() {
@@ -1104,7 +1118,7 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
 
     /**
      * Gets the map as a String.
-     * 
+     *
      * @return a string version of the map
      */
     public String toString() {

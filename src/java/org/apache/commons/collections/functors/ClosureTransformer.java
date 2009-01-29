@@ -30,13 +30,13 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class ClosureTransformer implements Transformer, Serializable {
+public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 478466901448617286L;
 
     /** The closure to wrap */
-    private final Closure iClosure;
+    private final Closure<? super T> iClosure;
 
     /**
      * Factory method that performs validation.
@@ -45,11 +45,11 @@ public class ClosureTransformer implements Transformer, Serializable {
      * @return the <code>closure</code> transformer
      * @throws IllegalArgumentException if the closure is null
      */
-    public static Transformer getInstance(Closure closure) {
+    public static <T> Transformer<T, T> getInstance(Closure<? super T> closure) {
         if (closure == null) {
             throw new IllegalArgumentException("Closure must not be null");
         }
-        return new ClosureTransformer(closure);
+        return new ClosureTransformer<T>(closure);
     }
 
     /**
@@ -58,7 +58,7 @@ public class ClosureTransformer implements Transformer, Serializable {
      * 
      * @param closure  the closure to call, not null
      */
-    public ClosureTransformer(Closure closure) {
+    public ClosureTransformer(Closure<? super T> closure) {
         super();
         iClosure = closure;
     }
@@ -69,7 +69,7 @@ public class ClosureTransformer implements Transformer, Serializable {
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public Object transform(Object input) {
+    public T transform(T input) {
         iClosure.execute(input);
         return input;
     }
@@ -80,7 +80,7 @@ public class ClosureTransformer implements Transformer, Serializable {
      * @return the closure
      * @since Commons Collections 3.1
      */
-    public Closure getClosure() {
+    public Closure<? super T> getClosure() {
         return iClosure;
     }
 

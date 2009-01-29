@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,48 +25,47 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the 
+ * Extension of {@link AbstractTestCollection} for exercising the
  * {@link UnmodifiableCollection} implementation.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableCollection extends AbstractTestCollection<Object> {
-    
+public class TestUnmodifiableCollection<E> extends AbstractTestCollection<E> {
+
     public TestUnmodifiableCollection(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestUnmodifiableCollection.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestUnmodifiableCollection.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    //-----------------------------------------------------------------------    
-    public Collection<Object> makeCollection() {
-        return UnmodifiableCollection.decorate(new ArrayList<Object>());
+    //-----------------------------------------------------------------------
+    public Collection<E> makeObject() {
+        return UnmodifiableCollection.decorate(new ArrayList<E>());
     }
-    
-    public Collection<Object> makeFullCollection() {
-        List<Object> list = new ArrayList<Object>();
+
+    public Collection<E> makeFullCollection() {
+        List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableCollection.decorate(list);
     }
-    
-    public Collection<Object> makeConfirmedCollection() {
-        ArrayList<Object> list = new ArrayList<Object>();
-        return list;
+
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
 
-    public Collection<Object> makeConfirmedFullCollection() {
-        ArrayList<Object> list = new ArrayList<Object>();
+    public Collection<E> makeConfirmedFullCollection() {
+        ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -74,7 +73,7 @@ public class TestUnmodifiableCollection extends AbstractTestCollection<Object> {
     public boolean isAddSupported() {
         return false;
     }
-    
+
     public boolean isRemoveSupported() {
         return false;
     }

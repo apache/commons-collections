@@ -42,7 +42,7 @@ import org.apache.commons.collections.Bag;
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestBag extends AbstractTestObject {
+public abstract class AbstractTestBag<T> extends AbstractTestObject {
 //  TODO: this class should really extend from TestCollection, but the bag
 //  implementations currently do not conform to the Collection interface.  Once
 //  those are fixed or at least a strategy is made for resolving the issue, this
@@ -63,52 +63,46 @@ public abstract class AbstractTestBag extends AbstractTestObject {
      * 
      * @return the bag to be tested
      */
-    public abstract Bag makeBag();
-
-    /**
-     * Implements the superclass method to return the Bag.
-     * 
-     * @return the bag to be tested
-     */
-    public Object makeObject() {
-        return makeBag();
-    }
+    public abstract Bag<T> makeObject();
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testBagAdd() {
-        Bag bag = makeBag();
-        bag.add("A");
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
         assertTrue("Should contain 'A'", bag.contains("A"));
         assertEquals("Should have count of 1", 1, bag.getCount("A"));
-        bag.add("A");
+        bag.add((T) "A");
         assertTrue("Should contain 'A'", bag.contains("A"));
         assertEquals("Should have count of 2", 2, bag.getCount("A"));
-        bag.add("B");
+        bag.add((T) "B");
         assertTrue(bag.contains("A"));
         assertTrue(bag.contains("B"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testBagEqualsSelf() {
-        Bag bag = makeBag();
+        Bag<T> bag = makeObject();
         assertTrue(bag.equals(bag));
-        bag.add("elt");
+        bag.add((T) "elt");
         assertTrue(bag.equals(bag));
-        bag.add("elt"); // again
+        bag.add((T) "elt"); // again
         assertTrue(bag.equals(bag));
-        bag.add("elt2");
+        bag.add((T) "elt2");
         assertTrue(bag.equals(bag));
     }
 
+    @SuppressWarnings("unchecked")
     public void testRemove() {
-        Bag bag = makeBag();
-        bag.add("A");
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
         assertEquals("Should have count of 1", 1, bag.getCount("A"));
         bag.remove("A");
         assertEquals("Should have count of 0", 0, bag.getCount("A"));
-        bag.add("A");
-        bag.add("A");
-        bag.add("A");
-        bag.add("A");
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "A");
         assertEquals("Should have count of 4", 4, bag.getCount("A"));
         bag.remove("A", 0);
         assertEquals("Should have count of 4", 4, bag.getCount("A"));
@@ -118,14 +112,15 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals("Should have count of 0", 0, bag.getCount("A"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testRemoveAll() {
-        Bag bag = makeBag();
-        bag.add("A", 2);
+        Bag<T> bag = makeObject();
+        bag.add((T) "A", 2);
         assertEquals("Should have count of 2", 2, bag.getCount("A"));
-        bag.add("B");
-        bag.add("C");
+        bag.add((T) "B");
+        bag.add((T) "C");
         assertEquals("Should have count of 4", 4, bag.size());
-        List delete = new ArrayList();
+        List<String> delete = new ArrayList<String>();
         delete.add("A");
         delete.add("B");
         bag.removeAll(delete);
@@ -135,36 +130,38 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals("Should have count of 2", 2, bag.size());
     }
     
+    @SuppressWarnings("unchecked")
     public void testContains() {
-        Bag bag = makeBag();
+        Bag<T> bag = makeObject();
         
         assertEquals("Bag does not have at least 1 'A'", false, bag.contains("A"));
         assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
         
-        bag.add("A");  // bag 1A
+        bag.add((T) "A");  // bag 1A
         assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
         assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
         
-        bag.add("A");  // bag 2A
+        bag.add((T) "A");  // bag 2A
         assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
         assertEquals("Bag does not have at least 1 'B'", false, bag.contains("B"));
         
-        bag.add("B");  // bag 2A,1B
+        bag.add((T) "B");  // bag 2A,1B
         assertEquals("Bag has at least 1 'A'", true, bag.contains("A"));
         assertEquals("Bag has at least 1 'B'", true, bag.contains("B"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testContainsAll() {
-        Bag bag = makeBag();
-        List known = new ArrayList();
-        List known1A = new ArrayList();
+        Bag<T> bag = makeObject();
+        List<String> known = new ArrayList<String>();
+        List<String> known1A = new ArrayList<String>();
         known1A.add("A");
-        List known2A = new ArrayList();
+        List<String> known2A = new ArrayList<String>();
         known2A.add("A");
         known2A.add("A");
-        List known1B = new ArrayList();
+        List<String> known1B = new ArrayList<String>();
         known1B.add("B");
-        List known1A1B = new ArrayList();
+        List<String> known1A1B = new ArrayList<String>();
         known1A1B.add("A");
         known1A1B.add("B");
         
@@ -174,28 +171,28 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
         assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
         
-        bag.add("A");  // bag 1A
+        bag.add((T) "A");  // bag 1A
         assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
         assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
         assertEquals("Bag does not containsAll of 2 'A'", false, bag.containsAll(known2A));
         assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
         assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
         
-        bag.add("A");  // bag 2A
+        bag.add((T) "A");  // bag 2A
         assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
         assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
         assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
         assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
         assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
         
-        bag.add("A");  // bag 3A
+        bag.add((T) "A");  // bag 3A
         assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
         assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
         assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
         assertEquals("Bag does not containsAll of 1 'B'", false, bag.containsAll(known1B));
         assertEquals("Bag does not containsAll of 1 'A' 1 'B'", false, bag.containsAll(known1A1B));
         
-        bag.add("B");  // bag 3A1B
+        bag.add((T) "B");  // bag 3A1B
         assertEquals("Bag containsAll of empty", true, bag.containsAll(known));
         assertEquals("Bag containsAll of 1 'A'", true, bag.containsAll(known1A));
         assertEquals("Bag containsAll of 2 'A'", true, bag.containsAll(known2A));
@@ -203,18 +200,19 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals("Bag containsAll of 1 'A' 1 'B'", true, bag.containsAll(known1A1B));
     }
 
+    @SuppressWarnings("unchecked")
     public void testSize() {
-        Bag bag = makeBag();
+        Bag<T> bag = makeObject();
         assertEquals("Should have 0 total items", 0, bag.size());
-        bag.add("A");
+        bag.add((T) "A");
         assertEquals("Should have 1 total items", 1, bag.size());
-        bag.add("A");
+        bag.add((T) "A");
         assertEquals("Should have 2 total items", 2, bag.size());
-        bag.add("A");
+        bag.add((T) "A");
         assertEquals("Should have 3 total items", 3, bag.size());
-        bag.add("B");
+        bag.add((T) "B");
         assertEquals("Should have 4 total items", 4, bag.size());
-        bag.add("B");
+        bag.add((T) "B");
         assertEquals("Should have 5 total items", 5, bag.size());
         bag.remove("A", 2);
         assertEquals("Should have 1 'A'", 1, bag.getCount("A"));
@@ -223,28 +221,30 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals("Should have 1 total item", 1, bag.size());
     }
     
+    @SuppressWarnings("unchecked")
     public void testRetainAll() {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        bag.add("C");
-        List retains = new ArrayList();
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        bag.add((T) "B");
+        bag.add((T) "C");
+        List<String> retains = new ArrayList<String>();
         retains.add("B");
         retains.add("C");
         bag.retainAll(retains);
         assertEquals("Should have 2 total items", 2, bag.size());
     }
 
+    @SuppressWarnings("unchecked")
     public void testIterator() {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
         assertEquals("Bag should have 3 items", 3, bag.size());
-        Iterator i = bag.iterator();
+        Iterator<T> i = bag.iterator();
     
         boolean foundA = false;
         while (i.hasNext()) {
@@ -264,12 +264,13 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals("Bag should have 1 'A'", 1, bag.getCount("A"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testIteratorFail() {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        Iterator it = bag.iterator();
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        Iterator<T> it = bag.iterator();
         it.next();
         bag.remove("A");
         try {
@@ -280,12 +281,13 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         }
     }
     
+    @SuppressWarnings("unchecked")
     public void testIteratorFailNoMore() {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        Iterator it = bag.iterator();
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        Iterator<T> it = bag.iterator();
         it.next();
         it.next();
         it.next();
@@ -297,12 +299,13 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         }
     }
     
+    @SuppressWarnings("unchecked")
     public void testIteratorFailDoubleRemove() {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        Iterator it = bag.iterator();
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        Iterator<T> it = bag.iterator();
         it.next();
         it.next();
         assertEquals(3, bag.size());
@@ -320,12 +323,13 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals(1, bag.size());
     }
     
+    @SuppressWarnings("unchecked")
     public void testIteratorRemoveProtectsInvariants() {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
         assertEquals(2, bag.size());
-        Iterator it = bag.iterator();
+        Iterator<T> it = bag.iterator();
         assertEquals("A", it.next());
         assertEquals(true, it.hasNext());
         it.remove();
@@ -337,17 +341,18 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals(0, bag.size());
         assertEquals(false, it.hasNext());
         
-        Iterator it2 = bag.iterator();
+        Iterator<T> it2 = bag.iterator();
         assertEquals(false, it2.hasNext());
     }
     
+    @SuppressWarnings("unchecked")
     public void testToArray() {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        bag.add("C");
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        bag.add((T) "B");
+        bag.add((T) "C");
         Object[] array = bag.toArray();
         int a = 0, b = 0, c = 0;
         for (int i = 0; i < array.length; i++) {
@@ -360,13 +365,14 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals(1, c);
     }
 
+    @SuppressWarnings("unchecked")
     public void testToArrayPopulate() {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        bag.add("C");
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        bag.add((T) "B");
+        bag.add((T) "C");
         String[] array = (String[]) bag.toArray(new String[0]);
         int a = 0, b = 0, c = 0;
         for (int i = 0; i < array.length; i++) {
@@ -380,60 +386,63 @@ public abstract class AbstractTestBag extends AbstractTestObject {
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testEquals() {
-        Bag bag = makeBag();
-        Bag bag2 = makeBag();
+        Bag<T> bag = makeObject();
+        Bag<T> bag2 = makeObject();
         assertEquals(true, bag.equals(bag2));
-        bag.add("A");
+        bag.add((T) "A");
         assertEquals(false, bag.equals(bag2));
-        bag2.add("A");
+        bag2.add((T) "A");
         assertEquals(true, bag.equals(bag2));
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        bag.add("C");
-        bag2.add("A");
-        bag2.add("B");
-        bag2.add("B");
-        bag2.add("C");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        bag.add((T) "B");
+        bag.add((T) "C");
+        bag2.add((T) "A");
+        bag2.add((T) "B");
+        bag2.add((T) "B");
+        bag2.add((T) "C");
         assertEquals(true, bag.equals(bag2));
     }
 
+    @SuppressWarnings("unchecked")
     public void testEqualsHashBag() {
-        Bag bag = makeBag();
-        Bag bag2 = new HashBag();
+        Bag<T> bag = makeObject();
+        Bag<T> bag2 = new HashBag<T>();
         assertEquals(true, bag.equals(bag2));
-        bag.add("A");
+        bag.add((T) "A");
         assertEquals(false, bag.equals(bag2));
-        bag2.add("A");
+        bag2.add((T) "A");
         assertEquals(true, bag.equals(bag2));
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        bag.add("C");
-        bag2.add("A");
-        bag2.add("B");
-        bag2.add("B");
-        bag2.add("C");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        bag.add((T) "B");
+        bag.add((T) "C");
+        bag2.add((T) "A");
+        bag2.add((T) "B");
+        bag2.add((T) "B");
+        bag2.add((T) "C");
         assertEquals(true, bag.equals(bag2));
     }
 
+    @SuppressWarnings("unchecked")
     public void testHashCode() {
-        Bag bag = makeBag();
-        Bag bag2 = makeBag();
+        Bag<T> bag = makeObject();
+        Bag<T> bag2 = makeObject();
         assertEquals(0, bag.hashCode());
         assertEquals(0, bag2.hashCode());
         assertEquals(bag.hashCode(), bag2.hashCode());
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        bag.add("C");
-        bag2.add("A");
-        bag2.add("A");
-        bag2.add("B");
-        bag2.add("B");
-        bag2.add("C");
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        bag.add((T) "B");
+        bag.add((T) "C");
+        bag2.add((T) "A");
+        bag2.add((T) "A");
+        bag2.add((T) "B");
+        bag2.add((T) "B");
+        bag2.add((T) "C");
         assertEquals(bag.hashCode(), bag2.hashCode());
         
         int total = 0;
@@ -445,8 +454,9 @@ public abstract class AbstractTestBag extends AbstractTestObject {
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testEmptyBagSerialization() throws IOException, ClassNotFoundException {
-        Bag bag = makeBag();
+        Bag<T> bag = makeObject();
         if (!(bag instanceof Serializable && isTestSerialization())) return;
         
         byte[] objekt = writeExternalFormToBytes((Serializable) bag);
@@ -456,13 +466,14 @@ public abstract class AbstractTestBag extends AbstractTestObject {
         assertEquals("Bag should be empty",0, bag2.size());
     }
 
+    @SuppressWarnings("unchecked")
     public void testFullBagSerialization() throws IOException, ClassNotFoundException {
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        bag.add("C");
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        bag.add((T) "B");
+        bag.add((T) "C");
         int size = bag.size();
         if (!(bag instanceof Serializable && isTestSerialization())) return;
         
@@ -488,10 +499,11 @@ public abstract class AbstractTestBag extends AbstractTestObject {
      * Compare the current serialized form of the Bag
      * against the canonical version in CVS.
      */
+    @SuppressWarnings("unchecked")
     public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
-        Bag bag = makeBag();
-        if(bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
+        Bag<T> bag = makeObject();
+        if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             Bag bag2 = (Bag) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
             assertTrue("Bag is empty",bag2.size()  == 0);
             assertEquals(bag, bag2);
@@ -502,15 +514,16 @@ public abstract class AbstractTestBag extends AbstractTestObject {
      * Compare the current serialized form of the Bag
      * against the canonical version in CVS.
      */
+    @SuppressWarnings("unchecked")
     public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
-        Bag bag = makeBag();
-        bag.add("A");
-        bag.add("A");
-        bag.add("B");
-        bag.add("B");
-        bag.add("C");
-        if(bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
+        Bag<T> bag = makeObject();
+        bag.add((T) "A");
+        bag.add((T) "A");
+        bag.add((T) "B");
+        bag.add((T) "B");
+        bag.add((T) "C");
+        if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             Bag bag2 = (Bag) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
             assertEquals("Bag is the right size",bag.size(), bag2.size());
             assertEquals(bag, bag2);

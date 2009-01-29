@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,28 +25,28 @@ import org.apache.commons.collections.Predicate;
 /**
  * Predicate implementation that returns true the first time an object is
  * passed into the predicate.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public final class UniquePredicate implements Predicate, Serializable {
+public final class UniquePredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3319417438027438040L;
-    
+
     /** The set of previously seen objects */
-    private final Set iSet = new HashSet();
-    
+    private final Set<T> iSet = new HashSet<T>();
+
     /**
      * Factory to create the predicate.
-     * 
+     *
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static Predicate getInstance() {
-        return new UniquePredicate();
+    public static <E> Predicate<E> getInstance() {
+        return new UniquePredicate<E>();
     }
 
     /**
@@ -60,11 +60,11 @@ public final class UniquePredicate implements Predicate, Serializable {
     /**
      * Evaluates the predicate returning true if the input object hasn't been
      * received yet.
-     * 
+     *
      * @param object  the input object
      * @return true if this is the first time the object is seen
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         return iSet.add(object);
     }
 

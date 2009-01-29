@@ -38,9 +38,8 @@ import java.util.SortedMap;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractSortedMapDecorator<K, V>
-        extends AbstractMapDecorator<K, V>
-        implements SortedMap<K, V> {
+public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecorator<K, V> implements
+        SortedMap<K, V> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.

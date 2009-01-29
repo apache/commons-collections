@@ -28,11 +28,12 @@ import org.apache.commons.collections.bag.UnmodifiableBag;
 import org.apache.commons.collections.bag.UnmodifiableSortedBag;
 
 /**
- * Provides utility methods and decorators for
- * {@link Bag} and {@link SortedBag} instances.
- *
+ * Provides utility methods and decorators for {@link Bag} and {@link SortedBag}
+ * instances.
+ * 
  * @since Commons Collections 2.1
- * @version $Revision$ $Date$
+ * @version $Revision$ $Date: 2007-07-13 05:39:24 -0500 (Fri, 13 Jul
+ * 2007) $
  * 
  * @author Paul Jack
  * @author Stephen Colebourne
@@ -44,29 +45,29 @@ public class BagUtils {
     /**
      * An empty unmodifiable bag.
      */
-    public static final Bag EMPTY_BAG = UnmodifiableBag.decorate(new HashBag());
+    public static final Bag<Object> EMPTY_BAG = UnmodifiableBag.decorate(new HashBag<Object>());
 
     /**
      * An empty unmodifiable sorted bag.
      */
-    public static final Bag EMPTY_SORTED_BAG = UnmodifiableSortedBag.decorate(new TreeBag());
+    public static final Bag<Object> EMPTY_SORTED_BAG = UnmodifiableSortedBag.decorate(new TreeBag<Object>());
 
     /**
-     * Instantiation of BagUtils is not intended or required.
-     * However, some tools require an instance to operate.
+     * Instantiation of BagUtils is not intended or required. However, some
+     * tools require an instance to operate.
      */
     public BagUtils() {
     }
 
     //-----------------------------------------------------------------------
     /**
-     * Returns a synchronized (thread-safe) bag backed by the given bag.
-     * In order to guarantee serial access, it is critical that all 
-     * access to the backing bag is accomplished through the returned bag.
+     * Returns a synchronized (thread-safe) bag backed by the given bag. In
+     * order to guarantee serial access, it is critical that all access to the
+     * backing bag is accomplished through the returned bag.
      * <p>
-     * It is imperative that the user manually synchronize on the returned
-     * bag when iterating over it:
-     *
+     * It is imperative that the user manually synchronize on the returned bag
+     * when iterating over it:
+     * 
      * <pre>
      * Bag bag = BagUtils.synchronizedBag(new HashBag());
      * ...
@@ -77,74 +78,73 @@ public class BagUtils {
      *     }
      * }
      * </pre>
-     *
-     * Failure to follow this advice may result in non-deterministic 
-     * behavior.
-     *
-     * @param bag  the bag to synchronize, must not be null
+     * 
+     * Failure to follow this advice may result in non-deterministic behavior.
+     * 
+     * @param bag the bag to synchronize, must not be null
      * @return a synchronized bag backed by that bag
-     * @throws IllegalArgumentException  if the Bag is null
+     * @throws IllegalArgumentException if the Bag is null
      */
     public static <E> Bag<E> synchronizedBag(Bag<E> bag) {
         return SynchronizedBag.decorate(bag);
     }
 
     /**
-     * Returns an unmodifiable view of the given bag.  Any modification
-     * attempts to the returned bag will raise an 
-     * {@link UnsupportedOperationException}.
-     *
-     * @param bag  the bag whose unmodifiable view is to be returned, must not be null
+     * Returns an unmodifiable view of the given bag. Any modification attempts
+     * to the returned bag will raise an {@link UnsupportedOperationException}.
+     * 
+     * @param bag the bag whose unmodifiable view is to be returned, must not be
+     * null
      * @return an unmodifiable view of that bag
-     * @throws IllegalArgumentException  if the Bag is null
+     * @throws IllegalArgumentException if the Bag is null
      */
     public static <E> Bag<E> unmodifiableBag(Bag<E> bag) {
         return UnmodifiableBag.decorate(bag);
     }
-    
+
     /**
      * Returns a predicated (validating) bag backed by the given bag.
      * <p>
-     * Only objects that pass the test in the given predicate can be added to the bag.
-     * Trying to add an invalid object results in an IllegalArgumentException.
-     * It is important not to use the original bag after invoking this method,
-     * as it is a backdoor for adding invalid objects.
-     *
-     * @param bag  the bag to predicate, must not be null
-     * @param predicate  the predicate for the bag, must not be null
+     * Only objects that pass the test in the given predicate can be added to
+     * the bag. Trying to add an invalid object results in an
+     * IllegalArgumentException. It is important not to use the original bag
+     * after invoking this method, as it is a backdoor for adding invalid
+     * objects.
+     * 
+     * @param bag the bag to predicate, must not be null
+     * @param predicate the predicate for the bag, must not be null
      * @return a predicated bag backed by the given bag
-     * @throws IllegalArgumentException  if the Bag or Predicate is null
+     * @throws IllegalArgumentException if the Bag or Predicate is null
      */
     public static <E> Bag<E> predicatedBag(Bag<E> bag, Predicate<? super E> predicate) {
         return PredicatedBag.decorate(bag, predicate);
     }
-    
+
     /**
      * Returns a transformed bag backed by the given bag.
      * <p>
-     * Each object is passed through the transformer as it is added to the
-     * Bag. It is important not to use the original bag after invoking this 
-     * method, as it is a backdoor for adding untransformed objects.
-     *
-     * @param bag  the bag to predicate, must not be null
-     * @param transformer  the transformer for the bag, must not be null
+     * Each object is passed through the transformer as it is added to the Bag.
+     * It is important not to use the original bag after invoking this method,
+     * as it is a backdoor for adding untransformed objects.
+     * 
+     * @param bag the bag to predicate, must not be null
+     * @param transformer the transformer for the bag, must not be null
      * @return a transformed bag backed by the given bag
-     * @throws IllegalArgumentException  if the Bag or Transformer is null
+     * @throws IllegalArgumentException if the Bag or Transformer is null
      */
-    public static Bag transformedBag(Bag bag, Transformer transformer) {
+    public static <E> Bag<E> transformedBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
         return TransformedBag.decorate(bag, transformer);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
-     * Returns a synchronized (thread-safe) sorted bag backed by the given 
-     * sorted bag.
-     * In order to guarantee serial access, it is critical that all 
+     * Returns a synchronized (thread-safe) sorted bag backed by the given
+     * sorted bag. In order to guarantee serial access, it is critical that all
      * access to the backing bag is accomplished through the returned bag.
      * <p>
-     * It is imperative that the user manually synchronize on the returned
-     * bag when iterating over it:
-     *
+     * It is imperative that the user manually synchronize on the returned bag
+     * when iterating over it:
+     * 
      * <pre>
      * SortedBag bag = BagUtils.synchronizedSortedBag(new TreeBag());
      * ...
@@ -155,62 +155,84 @@ public class BagUtils {
      *     }
      * }
      * </pre>
-     *
-     * Failure to follow this advice may result in non-deterministic 
-     * behavior.
-     *
-     * @param bag  the bag to synchronize, must not be null
+     * 
+     * Failure to follow this advice may result in non-deterministic behavior.
+     * 
+     * @param bag the bag to synchronize, must not be null
      * @return a synchronized bag backed by that bag
-     * @throws IllegalArgumentException  if the SortedBag is null
+     * @throws IllegalArgumentException if the SortedBag is null
      */
     public static <E> SortedBag<E> synchronizedSortedBag(SortedBag<E> bag) {
         return SynchronizedSortedBag.decorate(bag);
     }
-    
+
     /**
-     * Returns an unmodifiable view of the given sorted bag.  Any modification
-     * attempts to the returned bag will raise an 
+     * Returns an unmodifiable view of the given sorted bag. Any modification
+     * attempts to the returned bag will raise an
      * {@link UnsupportedOperationException}.
-     *
-     * @param bag  the bag whose unmodifiable view is to be returned, must not be null
+     * 
+     * @param bag the bag whose unmodifiable view is to be returned, must not be
+     * null
      * @return an unmodifiable view of that bag
-     * @throws IllegalArgumentException  if the SortedBag is null
+     * @throws IllegalArgumentException if the SortedBag is null
      */
     public static <E> SortedBag<E> unmodifiableSortedBag(SortedBag<E> bag) {
         return UnmodifiableSortedBag.decorate(bag);
     }
-    
+
     /**
-     * Returns a predicated (validating) sorted bag backed by the given sorted bag.
+     * Returns a predicated (validating) sorted bag backed by the given sorted
+     * bag.
      * <p>
-     * Only objects that pass the test in the given predicate can be added to the bag.
-     * Trying to add an invalid object results in an IllegalArgumentException.
-     * It is important not to use the original bag after invoking this method,
-     * as it is a backdoor for adding invalid objects.
-     *
-     * @param bag  the sorted bag to predicate, must not be null
-     * @param predicate  the predicate for the bag, must not be null
+     * Only objects that pass the test in the given predicate can be added to
+     * the bag. Trying to add an invalid object results in an
+     * IllegalArgumentException. It is important not to use the original bag
+     * after invoking this method, as it is a backdoor for adding invalid
+     * objects.
+     * 
+     * @param bag the sorted bag to predicate, must not be null
+     * @param predicate the predicate for the bag, must not be null
      * @return a predicated bag backed by the given bag
-     * @throws IllegalArgumentException  if the SortedBag or Predicate is null
+     * @throws IllegalArgumentException if the SortedBag or Predicate is null
      */
-    public static <E> SortedBag<E> predicatedSortedBag(SortedBag<E> bag, Predicate<? super E> predicate) {
+    public static <E> SortedBag<E> predicatedSortedBag(SortedBag<E> bag,
+            Predicate<? super E> predicate) {
         return PredicatedSortedBag.decorate(bag, predicate);
     }
-    
+
     /**
      * Returns a transformed sorted bag backed by the given bag.
      * <p>
-     * Each object is passed through the transformer as it is added to the
-     * Bag. It is important not to use the original bag after invoking this 
-     * method, as it is a backdoor for adding untransformed objects.
-     *
-     * @param bag  the bag to predicate, must not be null
-     * @param transformer  the transformer for the bag, must not be null
+     * Each object is passed through the transformer as it is added to the Bag.
+     * It is important not to use the original bag after invoking this method,
+     * as it is a backdoor for adding untransformed objects.
+     * 
+     * @param bag the bag to predicate, must not be null
+     * @param transformer the transformer for the bag, must not be null
      * @return a transformed bag backed by the given bag
-     * @throws IllegalArgumentException  if the Bag or Transformer is null
+     * @throws IllegalArgumentException if the Bag or Transformer is null
      */
-    public static SortedBag transformedSortedBag(SortedBag bag, Transformer transformer) {
+    public static <E> SortedBag<E> transformedSortedBag(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
         return TransformedSortedBag.decorate(bag, transformer);
     }
-    
+
+    /**
+     * Get an empty <code>Bag</code>.
+     * @param <E>
+     * @return Bag<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> Bag<E> emptyBag() {
+        return (Bag<E>) EMPTY_BAG;        
+    }
+
+    /**
+     * Get an empty <code>SortedBag</code>.
+     * @param <E>
+     * @return SortedBag<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> SortedBag<E> emptySortedBag() {
+        return (SortedBag<E>) EMPTY_SORTED_BAG;        
+    }
 }

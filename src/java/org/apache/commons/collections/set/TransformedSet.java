@@ -36,7 +36,7 @@ import org.apache.commons.collections.collection.TransformedCollection;
  * 
  * @author Stephen Colebourne
  */
-public class TransformedSet extends TransformedCollection implements Set {
+public class TransformedSet<E> extends TransformedCollection<E> implements Set<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 306127383500410386L;
@@ -51,8 +51,8 @@ public class TransformedSet extends TransformedCollection implements Set {
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null
      */
-    public static Set decorate(Set set, Transformer transformer) {
-        return new TransformedSet(set, transformer);
+    public static <E> Set<E> decorate(Set<E> set, Transformer<? super E, ? extends E> transformer) {
+        return new TransformedSet<E>(set, transformer);
     }
     
     //-----------------------------------------------------------------------
@@ -66,7 +66,7 @@ public class TransformedSet extends TransformedCollection implements Set {
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null
      */
-    protected TransformedSet(Set set, Transformer transformer) {
+    protected TransformedSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
         super(set, transformer);
     }
 

@@ -29,14 +29,13 @@ import org.apache.commons.collections.FunctorException;
  *
  * @author Stephen Colebourne
  */
-public final class ExceptionFactory implements Factory, Serializable {
+public final class ExceptionFactory<T> implements Factory<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7179106032121985545L;
-    
 
     /** Singleton predicate instance */
-    public static final Factory INSTANCE = new ExceptionFactory();
+    public static final Factory<Object> INSTANCE = new ExceptionFactory<Object>();
 
     /**
      * Factory returning the singleton instance.
@@ -44,8 +43,9 @@ public final class ExceptionFactory implements Factory, Serializable {
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Factory getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <T> Factory<T> getInstance() {
+        return (Factory<T>) INSTANCE;
     }
 
     /**
@@ -61,7 +61,7 @@ public final class ExceptionFactory implements Factory, Serializable {
      * @return never
      * @throws FunctorException always
      */
-    public Object create() {
+    public T create() {
         throw new FunctorException("ExceptionFactory invoked");
     }
 

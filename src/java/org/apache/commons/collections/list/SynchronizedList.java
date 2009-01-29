@@ -122,7 +122,7 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
      * 
      * @return an iterator that must be manually synchronized on the collection
      */
-    public ListIterator listIterator() {
+    public ListIterator<E> listIterator() {
         return getList().listIterator();
     }
 
@@ -136,7 +136,7 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
      * 
      * @return an iterator that must be manually synchronized on the collection
      */
-    public ListIterator listIterator(int index) {
+    public ListIterator<E> listIterator(int index) {
         return getList().listIterator(index);
     }
 

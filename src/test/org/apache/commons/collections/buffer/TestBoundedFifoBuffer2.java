@@ -21,7 +21,6 @@ import java.util.Collection;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections.BoundedCollection;
 import org.apache.commons.collections.BufferOverflowException;
 import org.apache.commons.collections.BulkTest;
 
@@ -33,7 +32,7 @@ import org.apache.commons.collections.BulkTest;
  * 
  * @author Unknown
  */
-public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
+public class TestBoundedFifoBuffer2<E> extends TestBoundedFifoBuffer<E> {
 
     public TestBoundedFifoBuffer2(String n) {
         super(n);
@@ -50,10 +49,9 @@ public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
      *
      *  @return a full BoundedFifoBuffer
      */
-    public Collection makeFullCollection() {
-        return new BoundedFifoBuffer(Arrays.asList(getFullElements()));
+    public Collection<E> makeFullCollection() {
+        return new BoundedFifoBuffer<E>(Arrays.asList(getFullElements()));
     }
-
 
     /**
      *  Overridden to skip the add tests.  All of them would fail with a 
@@ -65,7 +63,6 @@ public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
         return false;
     }
 
-
     /**
      *  Overridden because the add operations raise BufferOverflowException
      *  instead of UnsupportedOperationException.
@@ -73,14 +70,13 @@ public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
     public void testUnsupportedAdd() {
     }
 
-
     /**
      *  Tests to make sure the add operations raise BufferOverflowException.
      */
     public void testBufferOverflow() {
         resetFull();
         try {
-            collection.add(getOtherElements()[0]);
+            getCollection().add(getOtherElements()[0]);
             fail("add should raise BufferOverflow.");
         } catch (BufferOverflowException e) {
             // expected
@@ -88,7 +84,7 @@ public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
         verify();
 
         try {
-            collection.addAll(Arrays.asList(getOtherElements()));
+            getCollection().addAll(Arrays.asList(getOtherElements()));
             fail("addAll should raise BufferOverflow.");
         } catch (BufferOverflowException e) {
             // expected
@@ -99,25 +95,27 @@ public class TestBoundedFifoBuffer2 extends TestBoundedFifoBuffer {
     /**
      * Tests is full
      */
+    @SuppressWarnings("unchecked")
     public void testIsFull() {
         resetFull();
-        assertEquals(true, ((BoundedCollection) collection).isFull());
-        ((BoundedFifoBuffer) collection).remove();
-        assertEquals(false, ((BoundedCollection) collection).isFull());
-        ((BoundedFifoBuffer) collection).add("jj");
-        assertEquals(true, ((BoundedCollection) collection).isFull());
+        assertEquals(true, getCollection().isFull());
+        getCollection().remove();
+        assertEquals(false, getCollection().isFull());
+        getCollection().add((E) "jj");
+        assertEquals(true, getCollection().isFull());
     }
 
     /**
      * Tests max size
      */
+    @SuppressWarnings("unchecked")
     public void testMaxSize() {
         resetFull();
-        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
-        ((BoundedFifoBuffer) collection).remove();
-        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
-        ((BoundedFifoBuffer) collection).add("jj");
-        assertEquals(getFullElements().length, ((BoundedCollection) collection).maxSize());
+        assertEquals(getFullElements().length, getCollection().maxSize());
+        getCollection().remove();
+        assertEquals(getFullElements().length, getCollection().maxSize());
+        getCollection().add((E) "jj");
+        assertEquals(getFullElements().length, getCollection().maxSize());
     }
 
 }

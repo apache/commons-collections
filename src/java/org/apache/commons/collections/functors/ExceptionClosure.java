@@ -29,14 +29,13 @@ import org.apache.commons.collections.FunctorException;
  *
  * @author Stephen Colebourne
  */
-public final class ExceptionClosure implements Closure, Serializable {
+public final class ExceptionClosure<E> implements Closure<E>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7179106032121985545L;
-    
 
     /** Singleton predicate instance */
-    public static final Closure INSTANCE = new ExceptionClosure();
+    public static final Closure<Object> INSTANCE = new ExceptionClosure<Object>();
 
     /**
      * Factory returning the singleton instance.
@@ -44,8 +43,9 @@ public final class ExceptionClosure implements Closure, Serializable {
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Closure getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <E> Closure<E> getInstance() {
+        return (Closure<E>) INSTANCE;
     }
 
     /**
@@ -61,7 +61,7 @@ public final class ExceptionClosure implements Closure, Serializable {
      * @param input  the input object
      * @throws FunctorException always
      */
-    public void execute(Object input) {
+    public void execute(E input) {
         throw new FunctorException("ExceptionClosure invoked");
     }
 

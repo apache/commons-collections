@@ -17,7 +17,6 @@
 package org.apache.commons.collections.iterators;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -31,16 +30,16 @@ import org.apache.commons.collections.ResettableListIterator;
  * a ListIterator correctly.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Morgan Delagrange
  */
-public class TestListIteratorWrapper extends AbstractTestIterator {
+public class TestListIteratorWrapper<E> extends AbstractTestIterator<E> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
-    protected List list1 = null;
+    protected List<E> list1 = null;
 
     public static Test suite() {
         return new TestSuite(TestListIteratorWrapper.class);
@@ -50,49 +49,48 @@ public class TestListIteratorWrapper extends AbstractTestIterator {
         super(testName);
     }
 
+    @SuppressWarnings("unchecked")
     public void setUp() {
-        list1 = new ArrayList();
-        list1.add("One");
-        list1.add("Two");
-        list1.add("Three");
-        list1.add("Four");
-        list1.add("Five");
-        list1.add("Six");
+        list1 = new ArrayList<E>();
+        list1.add((E) "One");
+        list1.add((E) "Two");
+        list1.add((E) "Three");
+        list1.add((E) "Four");
+        list1.add((E) "Five");
+        list1.add((E) "Six");
     }
 
-    public Iterator makeEmptyIterator() {
-        ArrayList list = new ArrayList();
-        return new ListIteratorWrapper(list.iterator());
+    public ResettableListIterator<E> makeEmptyIterator() {
+        ArrayList<E> list = new ArrayList<E>();
+        return new ListIteratorWrapper<E>(list.iterator());
     }
 
-    public Iterator makeFullIterator() {
-        Iterator i = list1.iterator();
-
-        return new ListIteratorWrapper(i);
+    public ResettableListIterator<E> makeObject() {
+        return new ListIteratorWrapper<E>(list1.iterator());
     }
 
     public void testIterator() {
-        ListIterator iter = (ListIterator) makeFullIterator();
-        for ( int i = 0; i < testArray.length; i++ ) {
-            Object testValue = testArray[i];            
+        ListIterator<E> iter = makeObject();
+        for (int i = 0; i < testArray.length; i++) {
+            Object testValue = testArray[i];
             Object iterValue = iter.next();
 
-            assertEquals( "Iteration value is correct", testValue, iterValue );
+            assertEquals("Iteration value is correct", testValue, iterValue);
         }
 
-        assertTrue("Iterator should now be empty", ! iter.hasNext() );
+        assertTrue("Iterator should now be empty", !iter.hasNext());
 
         try {
             iter.next();
         } catch (Exception e) {
-            assertTrue("NoSuchElementException must be thrown", 
+            assertTrue("NoSuchElementException must be thrown",
                        e.getClass().equals((new NoSuchElementException()).getClass()));
         }
 
         // now, read it backwards
         for (int i = testArray.length - 1; i > -1; --i) {
             Object testValue = testArray[i];
-            Object iterValue = iter.previous();
+            E iterValue = iter.previous();
 
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
@@ -100,22 +98,22 @@ public class TestListIteratorWrapper extends AbstractTestIterator {
         try {
             iter.previous();
         } catch (Exception e) {
-            assertTrue("NoSuchElementException must be thrown", 
+            assertTrue("NoSuchElementException must be thrown",
                        e.getClass().equals((new NoSuchElementException()).getClass()));
         }
 
         // now, read it forwards again
-        for ( int i = 0; i < testArray.length; i++ ) {
-            Object testValue = testArray[i];            
+        for (int i = 0; i < testArray.length; i++) {
+            Object testValue = testArray[i];
             Object iterValue = iter.next();
 
-            assertEquals( "Iteration value is correct", testValue, iterValue );
+            assertEquals("Iteration value is correct", testValue, iterValue);
         }
 
     }
 
     public void testRemove() {
-        Iterator iter = (Iterator) makeFullIterator();
+        ListIterator<E> iter = makeObject();
 
         try {
             iter.remove();
@@ -127,23 +125,23 @@ public class TestListIteratorWrapper extends AbstractTestIterator {
     }
 
     public void testReset() {
-        ResettableListIterator iter = (ResettableListIterator) makeFullIterator();
-        Object first = iter.next();
-        Object second = iter.next();
-        
+        ResettableListIterator<E> iter = makeObject();
+        E first = iter.next();
+        E second = iter.next();
+
         iter.reset();
-        
+
         // after reset, there shouldn't be any previous elements
         assertFalse("No previous elements after reset()", iter.hasPrevious());
 
         // after reset, the results should be the same as before
         assertEquals("First element should be the same", first, iter.next());
         assertEquals("Second elment should be the same", second, iter.next());
-        
+
         // after passing the point, where we resetted, continuation should work as expected
         for (int i = 2; i < testArray.length; i++) {
             Object testValue = testArray[i];
-            Object iterValue = iter.next();
+            E iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }

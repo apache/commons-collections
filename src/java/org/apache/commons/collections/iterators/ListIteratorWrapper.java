@@ -42,16 +42,16 @@ import org.apache.commons.collections.ResettableListIterator;
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public class ListIteratorWrapper implements ResettableListIterator {
+public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
 
     /** Message used when remove, set or add are called. */
     private static final String UNSUPPORTED_OPERATION_MESSAGE =
         "ListIteratorWrapper does not support optional operations of ListIterator.";
 
     /** The underlying iterator being decorated. */
-    private final Iterator iterator;
+    private final Iterator<? extends E> iterator;
     /** The list being used to cache the iterator. */
-    private final List list = new ArrayList();
+    private final List<E> list = new ArrayList<E>();
 
     /** The current index of this iterator. */
     private int currentIndex = 0;
@@ -67,7 +67,7 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @param iterator  the iterator to wrap
      * @throws NullPointerException if the iterator is null
      */
-    public ListIteratorWrapper(Iterator iterator) {
+    public ListIteratorWrapper(Iterator<? extends E> iterator) {
         super();
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
@@ -83,7 +83,7 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @param obj  the object to add, ignored
      * @throws UnsupportedOperationException always
      */
-    public void add(Object obj) throws UnsupportedOperationException {
+    public void add(E obj) throws UnsupportedOperationException {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }
 
@@ -117,13 +117,13 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @return the next element from the iterator
      * @throws NoSuchElementException if there are no more elements
      */
-    public Object next() throws NoSuchElementException {
+    public E next() throws NoSuchElementException {
         if (currentIndex < wrappedIteratorIndex) {
             ++currentIndex;
             return list.get(currentIndex - 1);
         }
 
-        Object retval = iterator.next();
+        E retval = iterator.next();
         list.add(retval);
         ++currentIndex;
         ++wrappedIteratorIndex;
@@ -145,7 +145,7 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @return the previous element
      * @throws NoSuchElementException  if there are no previous elements
      */
-    public Object previous() throws NoSuchElementException {
+    public E previous() throws NoSuchElementException {
         if (currentIndex == 0) {
             throw new NoSuchElementException();
         }
@@ -177,7 +177,7 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @param obj  the object to set, ignored
      * @throws UnsupportedOperationException always
      */
-    public void set(Object obj) throws UnsupportedOperationException {
+    public void set(E obj) throws UnsupportedOperationException {
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }
 

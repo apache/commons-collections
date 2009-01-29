@@ -17,14 +17,13 @@
 package org.apache.commons.collections.set;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
@@ -33,11 +32,11 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestTransformedSortedSet extends AbstractTestSortedSet {
-    
+public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
+
     public TestTransformedSortedSet(String testName) {
         super(testName);
     }
@@ -52,32 +51,35 @@ public class TestTransformedSortedSet extends AbstractTestSortedSet {
     }
 
     //-----------------------------------------------------------------------
-    public Set makeEmptySet() {
-        return TransformedSortedSet.decorate(new TreeSet(), TestTransformedCollection.NOOP_TRANSFORMER);
+    @SuppressWarnings("unchecked")
+    public SortedSet<E> makeObject() {
+        return TransformedSortedSet.decorate(new TreeSet<E>(), (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
-    public Set makeFullSet() {
-        SortedSet set = new TreeSet();
+    @SuppressWarnings("unchecked")
+    public SortedSet<E> makeFullCollection() {
+        SortedSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
-        return TransformedSortedSet.decorate(set, TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSortedSet.decorate(set, (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
-    
-    //-----------------------------------------------------------------------   
+
+    //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        Set set = TransformedSortedSet.decorate(new HashSet(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        SortedSet<E> set = TransformedSortedSet.decorate(new TreeSet<E>(),
+                (Transformer<E, E>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
             set.add(els[i]);
             assertEquals(i + 1, set.size());
             assertEquals(true, set.contains(new Integer((String) els[i])));
-            assertEquals(false, set.contains(els[i]));
+            assertNotCollectionContains(set, els[i]);
         }
-        
-        assertEquals(false, set.remove(els[0]));
+
+        assertNotRemoveFromCollection(set, els[0]);
         assertEquals(true, set.remove(new Integer((String) els[0])));
-        
-    } 
+    }
 
     public String getCompatibilityVersion() {
         return "3.1";

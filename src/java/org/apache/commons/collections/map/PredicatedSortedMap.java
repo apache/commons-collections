@@ -46,9 +46,7 @@ import org.apache.commons.collections.Predicate;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedSortedMap
-        extends PredicatedMap
-        implements SortedMap {
+public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements SortedMap<K, V> {
 
     /** Serialization version */
     private static final long serialVersionUID = 3359846175935304332L;
@@ -64,8 +62,9 @@ public class PredicatedSortedMap
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
-    public static SortedMap decorate(SortedMap map, Predicate keyPredicate, Predicate valuePredicate) {
-        return new PredicatedSortedMap(map, keyPredicate, valuePredicate);
+    public static <K, V> SortedMap<K, V> decorate(SortedMap<K, V> map,
+            Predicate<? super K> keyPredicate, Predicate<? super V> valuePredicate) {
+        return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
     //-----------------------------------------------------------------------
@@ -77,7 +76,8 @@ public class PredicatedSortedMap
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
-    protected PredicatedSortedMap(SortedMap map, Predicate keyPredicate, Predicate valuePredicate) {
+    protected PredicatedSortedMap(SortedMap<K, V> map, Predicate<? super K> keyPredicate,
+            Predicate<? super V> valuePredicate) {
         super(map, keyPredicate, valuePredicate);
     }
 
@@ -87,36 +87,36 @@ public class PredicatedSortedMap
      * 
      * @return the decorated map
      */
-    protected SortedMap getSortedMap() {
-        return (SortedMap) map;
+    protected SortedMap<K, V> getSortedMap() {
+        return (SortedMap<K, V>) map;
     }
 
     //-----------------------------------------------------------------------
-    public Object firstKey() {
+    public K firstKey() {
         return getSortedMap().firstKey();
     }
 
-    public Object lastKey() {
+    public K lastKey() {
         return getSortedMap().lastKey();
     }
 
-    public Comparator comparator() {
+    public Comparator<? super K> comparator() {
         return getSortedMap().comparator();
     }
 
-    public SortedMap subMap(Object fromKey, Object toKey) {
-        SortedMap map = getSortedMap().subMap(fromKey, toKey);
-        return new PredicatedSortedMap(map, keyPredicate, valuePredicate);
+    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+        SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
+        return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
-    public SortedMap headMap(Object toKey) {
-        SortedMap map = getSortedMap().headMap(toKey);
-        return new PredicatedSortedMap(map, keyPredicate, valuePredicate);
+    public SortedMap<K, V> headMap(K toKey) {
+        SortedMap<K, V> map = getSortedMap().headMap(toKey);
+        return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
-    public SortedMap tailMap(Object fromKey) {
-        SortedMap map = getSortedMap().tailMap(fromKey);
-        return new PredicatedSortedMap(map, keyPredicate, valuePredicate);
+    public SortedMap<K, V> tailMap(K fromKey) {
+        SortedMap<K, V> map = getSortedMap().tailMap(fromKey);
+        return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
 }

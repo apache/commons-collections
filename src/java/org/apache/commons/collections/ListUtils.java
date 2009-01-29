@@ -49,8 +49,8 @@ public class ListUtils {
      * This uses the {@link Collections Collections} implementation 
      * and is provided for completeness.
      */
-    public static final List EMPTY_LIST = Collections.EMPTY_LIST;
-    
+    public static final List<Object> EMPTY_LIST = Collections.<Object>emptyList();
+
     /**
      * <code>ListUtils</code> should not normally be instantiated.
      */
@@ -67,18 +67,14 @@ public class ListUtils {
      * @return  the intersection of those two lists
      * @throws NullPointerException if either list is null
      */
-    public static List intersection(final List list1, final List list2) {
-        final List result = new ArrayList();
-        final Iterator iterator = list2.iterator();
+    public static <E> List<E> intersection(final List<? extends E> list1, final List<? extends E> list2) {
+        final List<E> result = new ArrayList<E>();
 
-        while (iterator.hasNext()) {
-            final Object o = iterator.next();
-
-            if (list1.contains(o)) {
-                result.add(o);
+        for (E e : list2) {
+            if (list1.contains(e)) {
+                result.add(e);
             }
         }
-
         return result;
     }
 
@@ -97,14 +93,11 @@ public class ListUtils {
      * @return  a new list containing the results
      * @throws NullPointerException if either list is null
      */
-    public static List subtract(final List list1, final List list2) {
-        final ArrayList result = new ArrayList(list1);
-        final Iterator iterator = list2.iterator();
-
-        while (iterator.hasNext()) {
-            result.remove(iterator.next());
+    public static <E> List<E> subtract(final List<E> list1, final List<? extends E> list2) {
+        final ArrayList<E> result = new ArrayList<E>(list1);
+        for (E e : list2) {
+            result.remove(e);
         }
-
         return result;
     }
 
@@ -117,7 +110,7 @@ public class ListUtils {
      * @return  a new list containing the sum of those lists
      * @throws NullPointerException if either list is null
      */ 
-    public static List sum(final List list1, final List list2) {
+    public static <E> List<E> sum(final List<? extends E> list1, final List<? extends E> list2) {
         return subtract(union(list1, list2), intersection(list1, list2));
     }
 
@@ -131,8 +124,8 @@ public class ListUtils {
      * @return  a new list containing the union of those lists
      * @throws NullPointerException if either list is null
      */
-    public static List union(final List list1, final List list2) {
-        final ArrayList result = new ArrayList(list1);
+    public static <E> List<E> union(final List<? extends E> list1, final List<? extends E> list2) {
+        final ArrayList<E> result = new ArrayList<E>(list1);
         result.addAll(list2);
         return result;
     }
@@ -166,7 +159,7 @@ public class ListUtils {
      * @param list2  the second list, may be null
      * @return whether the lists are equal by value comparison
      */
-    public static boolean isEqualList(final Collection list1, final Collection list2) {
+    public static boolean isEqualList(final Collection<?> list1, final Collection<?> list2) {
         if (list1 == list2) {
             return true;
         }
@@ -174,8 +167,8 @@ public class ListUtils {
             return false;
         }
 
-        Iterator it1 = list1.iterator();
-        Iterator it2 = list2.iterator();
+        Iterator<?> it1 = list1.iterator();
+        Iterator<?> it2 = list2.iterator();
         Object obj1 = null;
         Object obj2 = null;
 
@@ -306,7 +299,7 @@ public class ListUtils {
      * @return an unmodifiable list backed by the given list
      * @throws IllegalArgumentException  if the list is null
      */
-    public static <E> List unmodifiableList(List<E> list) {
+    public static <E> List<E> unmodifiableList(List<E> list) {
         return UnmodifiableList.decorate(list);
     }
 
@@ -339,7 +332,7 @@ public class ListUtils {
      * @return a transformed list backed by the given list
      * @throws IllegalArgumentException  if the List or Transformer is null
      */
-    public static List transformedList(List list, Transformer transformer) {
+    public static <E> List<E> transformedList(List<E> list, Transformer<? super E, ? extends E> transformer) {
         return TransformedList.decorate(list, transformer);
     }
     
@@ -372,7 +365,7 @@ public class ListUtils {
      * @return a lazy list backed by the given list
      * @throws IllegalArgumentException  if the List or Factory is null
      */
-    public static List lazyList(List list, Factory factory) {
+    public static <E> List<E> lazyList(List<E> list, Factory<? extends E> factory) {
         return LazyList.decorate(list, factory);
     }
 
@@ -386,7 +379,7 @@ public class ListUtils {
      * @return a fixed-size list backed by that list
      * @throws IllegalArgumentException  if the List is null
      */
-    public static List fixedSizeList(List list) {
+    public static <E> List<E> fixedSizeList(List<E> list) {
         return FixedSizeList.decorate(list);
     }
 

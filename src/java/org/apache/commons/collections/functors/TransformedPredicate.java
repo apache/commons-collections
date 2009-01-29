@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,80 +24,82 @@ import org.apache.commons.collections.Transformer;
 /**
  * Predicate implementation that transforms the given object before invoking
  * another <code>Predicate</code>.
- * 
+ *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
  * @author Alban Peignier
  * @author Stephen Colebourne
  */
-public final class TransformedPredicate implements Predicate, PredicateDecorator, Serializable {
+public final class TransformedPredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -5596090919668315834L;
-    
+
     /** The transformer to call */
-    private final Transformer iTransformer;
+    private final Transformer<? super T, ? extends T> iTransformer;
+
     /** The predicate to call */
-    private final Predicate iPredicate;
+    private final Predicate<? super T> iPredicate;
 
     /**
      * Factory to create the predicate.
-     * 
+     *
      * @param transformer  the transformer to call
      * @param predicate  the predicate to call with the result of the transform
      * @return the predicate
      * @throws IllegalArgumentException if the transformer or the predicate is null
      */
-    public static Predicate getInstance(Transformer transformer, Predicate predicate) {
+    public static <T> Predicate<T> getInstance(Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {
         if (transformer == null) {
             throw new IllegalArgumentException("The transformer to call must not be null");
         }
         if (predicate == null) {
             throw new IllegalArgumentException("The predicate to call must not be null");
         }
-        return new TransformedPredicate(transformer, predicate);
+        return new TransformedPredicate<T>(transformer, predicate);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param transformer  the transformer to use
      * @param predicate  the predicate to decorate
      */
-    public TransformedPredicate(Transformer transformer, Predicate predicate) {
+    public TransformedPredicate(Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {
         iTransformer = transformer;
         iPredicate = predicate;
     }
-    
+
     /**
      * Evaluates the predicate returning the result of the decorated predicate
      * once the input has been transformed
-     * 
+     *
      * @param object  the input object which will be transformed
      * @return true if decorated predicate returns true
      */
-    public boolean evaluate(Object object) {
-        Object result = iTransformer.transform(object);
+    public boolean evaluate(T object) {
+        T result = iTransformer.transform(object);
         return iPredicate.evaluate(result);
     }
 
     /**
      * Gets the predicate being decorated.
-     * 
+     *
      * @return the predicate as the only element in an array
      * @since Commons Collections 3.1
      */
-    public Predicate[] getPredicates() {
+    @SuppressWarnings("unchecked")
+    public Predicate<? super T>[] getPredicates() {
         return new Predicate[] {iPredicate};
     }
 
     /**
      * Gets the transformer in use.
-     * 
+     *
      * @return the transformer
      */
-    public Transformer getTransformer() {
+    public Transformer<? super T, ? extends T> getTransformer() {
         return iTransformer;
     }
 

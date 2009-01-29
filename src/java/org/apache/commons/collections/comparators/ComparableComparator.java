@@ -42,13 +42,14 @@ import java.util.Comparator;
  *
  * @see java.util.Collections#reverseOrder()
  */
-public class ComparableComparator implements Comparator, Serializable {
+public class ComparableComparator<E extends Comparable<? super E>> implements Comparator<E>, Serializable {
 
     /** Serialization version. */
     private static final long serialVersionUID=-291439688585137865L;
 
     /** The singleton instance. */
-    private static final ComparableComparator instance = new ComparableComparator();
+    @SuppressWarnings("unchecked")
+    public static final ComparableComparator<?> INSTANCE = new ComparableComparator();
 
     //-----------------------------------------------------------------------
     /**
@@ -60,8 +61,9 @@ public class ComparableComparator implements Comparator, Serializable {
      * 
      * @return the singleton ComparableComparator
      */
-    public static ComparableComparator getInstance() {
-        return instance;
+    @SuppressWarnings("unchecked")
+    public static <E extends Comparable<? super E>> ComparableComparator<E> getInstance() {
+        return (ComparableComparator<E>) INSTANCE;
     }
 
     //-----------------------------------------------------------------------
@@ -88,8 +90,8 @@ public class ComparableComparator implements Comparator, Serializable {
      * @throws ClassCastException when <i>obj1</i> is not a <code>Comparable</code>,
      *         or when <code>((Comparable)obj1).compareTo(obj2)</code> does
      */
-    public int compare(Object obj1, Object obj2) {
-        return ((Comparable)obj1).compareTo(obj2);
+    public int compare(E obj1, E obj2) {
+        return obj1.compareTo(obj2);
     }
 
     //-----------------------------------------------------------------------

@@ -30,7 +30,7 @@ import java.util.Map;
  * 
  * @author Stephen Colebourne
  */
-public interface BoundedMap extends Map {
+public interface BoundedMap<K, V> extends Map<K, V> {
 
     /**
      * Returns true if this map is full and no new elements can be added.

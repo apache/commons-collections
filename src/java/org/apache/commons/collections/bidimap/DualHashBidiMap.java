@@ -42,8 +42,7 @@ import org.apache.commons.collections.BidiMap;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class DualHashBidiMap
-        extends AbstractDualBidiMap implements Serializable {
+public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements Serializable {
 
     /** Ensure serialization compatibility */
     private static final long serialVersionUID = 721969328361808L;
@@ -52,7 +51,7 @@ public class DualHashBidiMap
      * Creates an empty <code>HashBidiMap</code>.
      */
     public DualHashBidiMap() {
-        super(new HashMap(), new HashMap());
+        super(new HashMap<K, V>(), new HashMap<V, K>());
     }
 
     /** 
@@ -61,8 +60,8 @@ public class DualHashBidiMap
      *
      * @param map  the map whose mappings are to be placed in this map
      */
-    public DualHashBidiMap(Map map) {
-        super(new HashMap(), new HashMap());
+    public DualHashBidiMap(Map<K, V> map) {
+        super(new HashMap<K, V>(), new HashMap<V, K>());
         putAll(map);
     }
     
@@ -73,7 +72,7 @@ public class DualHashBidiMap
      * @param reverseMap  the reverse direction map
      * @param inverseBidiMap  the inverse BidiMap
      */
-    protected DualHashBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
+    protected DualHashBidiMap(Map<K, V> normalMap, Map<V, K> reverseMap, BidiMap<V, K> inverseBidiMap) {
         super(normalMap, reverseMap, inverseBidiMap);
     }
 
@@ -85,21 +84,22 @@ public class DualHashBidiMap
      * @param inverseBidiMap  the inverse BidiMap
      * @return new bidi map
      */
-    protected BidiMap createBidiMap(Map normalMap, Map reverseMap, BidiMap inverseBidiMap) {
-        return new DualHashBidiMap(normalMap, reverseMap, inverseBidiMap);
+    protected BidiMap<V, K> createBidiMap(Map<V, K> normalMap, Map<K, V> reverseMap, BidiMap<K, V> inverseBidiMap) {
+        return new DualHashBidiMap<V, K>(normalMap, reverseMap, inverseBidiMap);
     }
 
     // Serialization
     //-----------------------------------------------------------------------
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
-        out.writeObject(maps[0]);
+        out.writeObject(normalMap);
     }
 
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        maps[0] = new HashMap();
-        maps[1] = new HashMap();
+        normalMap = new HashMap();
+        reverseMap = new HashMap();
         Map map = (Map) in.readObject();
         putAll(map);
     }

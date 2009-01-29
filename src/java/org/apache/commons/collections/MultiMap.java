@@ -47,7 +47,7 @@ import java.util.Map;
  * @author James Strachan
  * @author Stephen Colebourne
  */
-public interface MultiMap extends Map {
+public interface MultiMap<K, V> extends Map<K, Object> {
 
     /**
      * Removes a specific value from map.
@@ -66,7 +66,7 @@ public interface MultiMap extends Map {
      * @throws ClassCastException if the key or value is of an invalid type
      * @throws NullPointerException if the key or value is null and null is invalid
      */
-    public Object remove(Object key, Object item);
+    public V remove(K key, V item);
 
     //-----------------------------------------------------------------------
     /**
@@ -98,7 +98,7 @@ public interface MultiMap extends Map {
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
-    Object get(Object key);
+    Object get(K key);
 
     /**
      * Checks whether the map contains the value specified.
@@ -129,7 +129,7 @@ public interface MultiMap extends Map {
      * @throws NullPointerException if the key or value is null and null is invalid
      * @throws IllegalArgumentException if the key or value is invalid
      */
-    Object put(Object key, Object value);
+    Object put(K key, Object value);
 
     /**
      * Removes all values associated with the specified key.
@@ -144,7 +144,7 @@ public interface MultiMap extends Map {
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
-    Object remove(Object key);
+    Object remove(K key);
 
     /**
      * Gets a collection containing all the values in the map.
@@ -155,6 +155,6 @@ public interface MultiMap extends Map {
      *
      * @return a collection view of the values contained in this map
      */
-    Collection values();
+    Collection<Object> values();
 
 }

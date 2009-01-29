@@ -32,7 +32,7 @@ import java.util.Comparator;
  * 
  * @author Rodney Waldhoff
  */
-public final class BooleanComparator implements Comparator, Serializable {
+public final class BooleanComparator implements Comparator<Boolean>, Serializable {
 
     /** Serialization version. */
     private static final long serialVersionUID = 1830042991606340609L;
@@ -126,22 +126,6 @@ public final class BooleanComparator implements Comparator, Serializable {
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Compares two arbitrary Objects.
-     * When both arguments are <code>Boolean</code>, this method is equivalent to 
-     * {@link #compare(Boolean,Boolean) compare((Boolean)<i>obj1</i>,(Boolean)<i>obj2</i>)}.
-     * When either argument is not a <code>Boolean</code>, this methods throws
-     * a {@link ClassCastException}.
-     * 
-     * @param obj1  the first object to compare
-     * @param obj2  the second object to compare
-     * @return negative if obj1 is less, positive if greater, zero if equal
-     * @throws ClassCastException when either argument is not <code>Boolean</code>
-     */
-    public int compare(Object obj1, Object obj2) {
-        return compare((Boolean)obj1, (Boolean)obj2);
-    }
-    
     /**
      * Compares two non-<code>null</code> <code>Boolean</code> objects
      * according to the value of {@link #sortsTrueFirst()}.

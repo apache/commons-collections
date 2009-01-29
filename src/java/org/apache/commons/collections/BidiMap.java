@@ -88,7 +88,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
      */
-    K getKey(V value);
+    K getKey(Object value);
 
     /**
      * Removes the key-value pair that is currently mapped to the specified
@@ -109,7 +109,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * @throws UnsupportedOperationException if this method is not supported
      *  by the implementation
      */
-    K removeValue(V value);
+    K removeValue(Object value);
 
     /**
      * Gets a view of this map where the keys and values are reversed.

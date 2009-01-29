@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,29 +16,28 @@
  */
 package org.apache.commons.collections.bidimap;
 
-import java.util.Map;
+import java.util.SortedMap;
 import java.util.TreeMap;
 
 import junit.framework.Test;
 import junit.textui.TestRunner;
 
-import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.SortedBidiMap;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableSortedBidiMap extends AbstractTestSortedBidiMap {
+public class TestUnmodifiableSortedBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestSortedBidiMap<K, V> {
 
     public static void main(String[] args) {
         TestRunner.run(suite());
     }
-    
+
     public static Test suite() {
         return BulkTest.makeSuite(TestUnmodifiableSortedBidiMap.class);
     }
@@ -48,30 +47,25 @@ public class TestUnmodifiableSortedBidiMap extends AbstractTestSortedBidiMap {
     }
 
     //-----------------------------------------------------------------------
-    public BidiMap makeEmptyBidiMap() {
-        return UnmodifiableSortedBidiMap.decorate(new DualTreeBidiMap());
+    public SortedBidiMap<K, V> makeObject() {
+        return UnmodifiableSortedBidiMap.decorate(new DualTreeBidiMap<K, V>());
     }
-    public BidiMap makeFullBidiMap() {
-        SortedBidiMap bidi = new DualTreeBidiMap();
-        for (int i = 0; i < entries.length; i++) {
-            bidi.put(entries[i][0], entries[i][1]);
-        }
-        return UnmodifiableSortedBidiMap.decorate(bidi);
-    }
-    public Map makeFullMap() {
-        SortedBidiMap bidi = new DualTreeBidiMap();
+
+    public SortedBidiMap<K, V> makeFullMap() {
+        SortedBidiMap<K, V> bidi = new DualTreeBidiMap<K, V>();
         addSampleMappings(bidi);
         return UnmodifiableSortedBidiMap.decorate(bidi);
     }
-    
-    public Map makeConfirmedMap() {
-        return new TreeMap();
+
+    public SortedMap<K, V> makeConfirmedMap() {
+        return new TreeMap<K, V>();
     }
 
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;
     }
+
     public String[] ignoredTests() {
         // Override to prevent infinite recursion of tests.
         return new String[] {"TestUnmodifiableSortedBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
@@ -81,17 +75,21 @@ public class TestUnmodifiableSortedBidiMap extends AbstractTestSortedBidiMap {
     public boolean isAllowNullKey() {
         return false;
     }
+
     public boolean isAllowNullValue() {
         return false;
     }
+
     public boolean isPutAddSupported() {
         return false;
     }
+
     public boolean isPutChangeSupported() {
         return false;
     }
+
     public boolean isRemoveSupported() {
         return false;
     }
-    
+
 }

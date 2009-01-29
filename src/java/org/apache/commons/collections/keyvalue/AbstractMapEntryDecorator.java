@@ -29,10 +29,10 @@ import org.apache.commons.collections.KeyValue;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractMapEntryDecorator implements Map.Entry, KeyValue {
+public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
     
     /** The <code>Map.Entry</code> to decorate */
-    protected final Map.Entry entry;
+    protected final Map.Entry<K, V> entry;
 
     /**
      * Constructor that wraps (not copies).
@@ -40,7 +40,7 @@ public abstract class AbstractMapEntryDecorator implements Map.Entry, KeyValue {
      * @param entry  the <code>Map.Entry</code> to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractMapEntryDecorator(Map.Entry entry) {
+    public AbstractMapEntryDecorator(Map.Entry<K, V> entry) {
         if (entry == null) {
             throw new IllegalArgumentException("Map Entry must not be null");
         }
@@ -52,20 +52,20 @@ public abstract class AbstractMapEntryDecorator implements Map.Entry, KeyValue {
      * 
      * @return the decorated map
      */
-    protected Map.Entry getMapEntry() {
+    protected Map.Entry<K, V> getMapEntry() {
         return entry;
     }
 
     //-----------------------------------------------------------------------
-    public Object getKey() {
+    public K getKey() {
         return entry.getKey();
     }
 
-    public Object getValue() {
+    public V getValue() {
         return entry.getValue();
     }
 
-    public Object setValue(Object object) {
+    public V setValue(V object) {
         return entry.setValue(object);
     }
    

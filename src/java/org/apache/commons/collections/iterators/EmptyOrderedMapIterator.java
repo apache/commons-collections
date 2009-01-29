@@ -27,13 +27,25 @@ import org.apache.commons.collections.ResettableIterator;
  * 
  * @author Stephen Colebourne
  */
-public class EmptyOrderedMapIterator extends AbstractEmptyIterator implements OrderedMapIterator, ResettableIterator {
+public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> implements
+        OrderedMapIterator<K, V>, ResettableIterator<K> {
 
     /**
      * Singleton instance of the iterator.
      * @since Commons Collections 3.1
      */
-    public static final OrderedMapIterator INSTANCE = new EmptyOrderedMapIterator();
+    public static final OrderedMapIterator<Object, Object> INSTANCE = new EmptyOrderedMapIterator<Object, Object>();
+
+    /**
+     * Get a typed instance of the iterator.
+     * @param <K>
+     * @param <V>
+     * @return {@link OrderedMapIterator}<K, V>
+     */
+    @SuppressWarnings("unchecked")
+    public static <K, V> OrderedMapIterator<K, V> getInstance() {
+        return (OrderedMapIterator<K, V>) INSTANCE;
+    }
 
     /**
      * Constructor.

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,6 @@ import java.util.TreeMap;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.Unmodifiable;
@@ -31,12 +30,12 @@ import org.apache.commons.collections.map.ListOrderedMap;
 
 /**
  * Tests the UnmodifiableOrderedMapIterator.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableOrderedMapIterator extends AbstractTestOrderedMapIterator {
+public class TestUnmodifiableOrderedMapIterator<K, V> extends AbstractTestOrderedMapIterator<K, V> {
 
     public static Test suite() {
         return new TestSuite(TestUnmodifiableOrderedMapIterator.class);
@@ -46,29 +45,30 @@ public class TestUnmodifiableOrderedMapIterator extends AbstractTestOrderedMapIt
         super(testName);
     }
 
-    public MapIterator makeEmptyMapIterator() {
+    public OrderedMapIterator<K, V> makeEmptyIterator() {
         return UnmodifiableOrderedMapIterator.decorate(
-            ListOrderedMap.decorate(new HashMap()).orderedMapIterator());
+                ListOrderedMap.decorate(new HashMap<K, V>()).mapIterator());
     }
 
-    public MapIterator makeFullMapIterator() {
-        return UnmodifiableOrderedMapIterator.decorate(
-            ((OrderedMap) getMap()).orderedMapIterator());
+    public OrderedMapIterator<K, V> makeObject() {
+        return UnmodifiableOrderedMapIterator.decorate(getMap().mapIterator());
     }
-    
-    public Map getMap() {
-        Map testMap = ListOrderedMap.decorate(new HashMap());
-        testMap.put("A", "a");
-        testMap.put("B", "b");
-        testMap.put("C", "c");
+
+    @SuppressWarnings("unchecked")
+    public OrderedMap<K, V> getMap() {
+        OrderedMap<K, V> testMap = ListOrderedMap.decorate(new HashMap<K, V>());
+        testMap.put((K) "A", (V) "a");
+        testMap.put((K) "B", (V) "b");
+        testMap.put((K) "C", (V) "c");
         return testMap;
     }
 
-    public Map getConfirmedMap() {
-        Map testMap = new TreeMap();
-        testMap.put("A", "a");
-        testMap.put("B", "b");
-        testMap.put("C", "c");
+    @SuppressWarnings("unchecked")
+    public Map<K, V> getConfirmedMap() {
+        Map<K, V> testMap = new TreeMap<K, V>();
+        testMap.put((K) "A", (V) "a");
+        testMap.put((K) "B", (V) "b");
+        testMap.put((K) "C", (V) "c");
         return testMap;
     }
 
@@ -79,19 +79,19 @@ public class TestUnmodifiableOrderedMapIterator extends AbstractTestOrderedMapIt
     public boolean supportsSetValue() {
         return false;
     }
-    
+
     //-----------------------------------------------------------------------
     public void testOrderedMapIterator() {
-        assertTrue(makeEmptyOrderedMapIterator() instanceof Unmodifiable);
+        assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
-    
+
     public void testDecorateFactory() {
-        OrderedMapIterator it = makeFullOrderedMapIterator();
+        OrderedMapIterator<K, V> it = makeObject();
         assertSame(it, UnmodifiableOrderedMapIterator.decorate(it));
-        
-        it = ((OrderedMap) getMap()).orderedMapIterator() ;
+
+        it = getMap().mapIterator() ;
         assertTrue(it != UnmodifiableOrderedMapIterator.decorate(it));
-        
+
         try {
             UnmodifiableOrderedMapIterator.decorate(null);
             fail();

@@ -115,6 +115,9 @@ public class SynchronizedBag<E>
      * Synchronized Set for the Bag class.
      */
     class SynchronizedBagSet extends SynchronizedSet<E> {
+        /** Serialization version */
+        private static final long serialVersionUID = 2990565892366827855L;
+
         /**
          * Constructor.
          * @param set  the set to decorate

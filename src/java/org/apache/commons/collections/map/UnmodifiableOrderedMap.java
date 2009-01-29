@@ -24,12 +24,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
-import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
 import org.apache.commons.collections.iterators.UnmodifiableOrderedMapIterator;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
@@ -43,9 +41,8 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableOrderedMap
-        extends AbstractOrderedMapDecorator
-        implements Unmodifiable, Serializable {
+public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecorator<K, V> implements
+        Unmodifiable, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 8136428161720526266L;
@@ -56,11 +53,11 @@ public final class UnmodifiableOrderedMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static OrderedMap decorate(OrderedMap map) {
+    public static <K, V> OrderedMap<K, V> decorate(OrderedMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
-        return new UnmodifiableOrderedMap(map);
+        return new UnmodifiableOrderedMap<K, V>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -70,7 +67,7 @@ public final class UnmodifiableOrderedMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableOrderedMap(OrderedMap map) {
+    private UnmodifiableOrderedMap(OrderedMap<K, V> map) {
         super(map);
     }
 
@@ -95,19 +92,15 @@ public final class UnmodifiableOrderedMap
      * @throws ClassNotFoundException
      * @since Commons Collections 3.1
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
-    public MapIterator mapIterator() {
-        MapIterator it = decorated().mapIterator();
-        return UnmodifiableMapIterator.decorate(it);
-    }
-
-    public OrderedMapIterator orderedMapIterator() {
-        OrderedMapIterator it = decorated().orderedMapIterator();
+    public OrderedMapIterator<K, V> mapIterator() {
+        OrderedMapIterator<K, V> it = decorated().mapIterator();
         return UnmodifiableOrderedMapIterator.decorate(it);
     }
 
@@ -115,30 +108,30 @@ public final class UnmodifiableOrderedMap
         throw new UnsupportedOperationException();
     }
 
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
-    public void putAll(Map mapToCopy) {
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
-    public Object remove(Object key) {
+    public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
-    public Set entrySet() {
-        Set set = super.entrySet();
+    public Set<Map.Entry<K, V>> entrySet() {
+        Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.decorate(set);
     }
 
-    public Set keySet() {
-        Set set = super.keySet();
+    public Set<K> keySet() {
+        Set<K> set = super.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
-    public Collection values() {
-        Collection coll = super.values();
+    public Collection<V> values() {
+        Collection<V> coll = super.values();
         return UnmodifiableCollection.decorate(coll);
     }
 

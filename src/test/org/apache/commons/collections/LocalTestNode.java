@@ -23,46 +23,50 @@ package org.apache.commons.collections;
  *
  * @author Marc Johnson (marcj at users dot sourceforge dot net)
  */
-class LocalTestNode implements Comparable {
+class LocalTestNode<K extends Comparable<K>, V extends Comparable<V>> implements Comparable<LocalTestNode<K, V>> {
 
-    private Comparable key;
-    private Comparable value;
+    private K key;
+    private V value;
+
+    static LocalTestNode<Integer, String> createLocalTestNode(final int key) {
+        return new LocalTestNode<Integer, String>(key, String.valueOf(key));
+    }
 
     /**
      * construct a LocalTestNode
      *
      * @param key value used to create the key and value
      */
-    LocalTestNode(final int key) {
-        this.key   = new Integer(key);
-        this.value = String.valueOf(key);
+    private LocalTestNode(K key, V value) {
+        this.key = key;
+        this.value = value;
     }
 
     /**
      * @param key the unique key associated with the current node.
      */
-    void setKey(Comparable key) {
+    void setKey(K key) {
         this.key = key;
     }
 
     /**
      * @return the unique key associated with the current node
      */
-    Comparable getKey() {
+    K getKey() {
         return key;
     }
 
     /**
      * @param value the unique value associated with the current node.
      */
-    void setValue(Comparable value) {
+    void setValue(V value) {
         this.value = value;
     }
 
     /**
      * @return the unique value associated with the current node
      */
-    Comparable getValue() {
+    V getValue() {
         return value;
     }
 
@@ -73,10 +77,9 @@ class LocalTestNode implements Comparable {
      *
      * @return
      */
-    public int compareTo(Object o) {
+    public int compareTo(LocalTestNode<K, V> other) {
 
-        LocalTestNode other = (LocalTestNode) o;
-        int           rval  = getKey().compareTo(other.getKey());
+        int rval = getKey().compareTo(other.getKey());
 
         if (rval == 0) {
             rval = getValue().compareTo(other.getValue());
@@ -92,6 +95,7 @@ class LocalTestNode implements Comparable {
      *
      * @return true if equal
      */
+    @SuppressWarnings("unchecked")
     public boolean equals(Object o) {
 
         if (o == null) {

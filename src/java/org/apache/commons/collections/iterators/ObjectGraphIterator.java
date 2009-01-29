@@ -75,23 +75,23 @@ import org.apache.commons.collections.Transformer;
  * 
  * @author Stephen Colebourne
  */
-public class ObjectGraphIterator implements Iterator {
+public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /** The stack of iterators */
-    protected final ArrayStack stack = new ArrayStack(8);
+    protected final ArrayStack<Iterator<? extends E>> stack = new ArrayStack<Iterator<? extends E>>(8);
 	/** The root object in the tree */
-    protected Object root;
+    protected E root;
     /** The transformer to use */
-    protected Transformer transformer;
+    protected Transformer<? super E, ? extends E> transformer;
 
     /** Whether there is another element in the iteration */
-    protected boolean hasNext = false;    
+    protected boolean hasNext = false;
     /** The current iterator */
-    protected Iterator currentIterator;
+    protected Iterator<? extends E> currentIterator;
     /** The current value */
-    protected Object currentValue;
+    protected E currentValue;
     /** The last used iterator, needed for remove() */
-    protected Iterator lastUsedIterator;
+    protected Iterator<? extends E> lastUsedIterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -103,10 +103,11 @@ public class ObjectGraphIterator implements Iterator {
      * @param root  the root object, null will result in an empty iterator
      * @param transformer  the transformer to use, null will use a no effect transformer
      */
-    public ObjectGraphIterator(Object root, Transformer transformer) {
+    @SuppressWarnings("unchecked")
+    public ObjectGraphIterator(E root, Transformer<? super E, ? extends E> transformer) {
         super();
         if (root instanceof Iterator) {
-            this.currentIterator = (Iterator) root;
+            this.currentIterator = (Iterator<? extends E>) root;
         } else {
             this.root = root;
         }
@@ -123,7 +124,7 @@ public class ObjectGraphIterator implements Iterator {
      * 
      * @param rootIterator  the root iterator, null will result in an empty iterator
      */
-    public ObjectGraphIterator(Iterator rootIterator) {
+    public ObjectGraphIterator(Iterator<? extends E> rootIterator) {
         super();
         this.currentIterator = rootIterator;
         this.transformer = null;
@@ -158,10 +159,11 @@ public class ObjectGraphIterator implements Iterator {
      * 
      * @param value  the value to start from
      */
-    protected void findNext(Object value) {
+    @SuppressWarnings("unchecked")
+    protected void findNext(E value) {
         if (value instanceof Iterator) {
             // need to examine this iterator
-            findNextByIterator((Iterator) value);
+            findNextByIterator((Iterator<? extends E>) value);
         } else {
             // next value found
             currentValue = value;
@@ -174,7 +176,7 @@ public class ObjectGraphIterator implements Iterator {
      * 
      * @param iterator  the iterator to start from
      */
-    protected void findNextByIterator(Iterator iterator) {
+    protected void findNextByIterator(Iterator<? extends E> iterator) {
         if (iterator != currentIterator) {
             // recurse a level
             if (currentIterator != null) {
@@ -184,7 +186,7 @@ public class ObjectGraphIterator implements Iterator {
         }
         
         while (currentIterator.hasNext() && hasNext == false) {
-            Object next = currentIterator.next();
+            E next = currentIterator.next();
             if (transformer != null) {
                 next = transformer.transform(next);
             }
@@ -196,7 +198,7 @@ public class ObjectGraphIterator implements Iterator {
             // all iterators exhausted
         } else {
             // current iterator exhausted, go up a level
-            currentIterator = (Iterator) stack.pop();
+            currentIterator = (Iterator<? extends E>) stack.pop();
             findNextByIterator(currentIterator);
         }
     }
@@ -218,13 +220,13 @@ public class ObjectGraphIterator implements Iterator {
      * @return the next element from the iteration
      * @throws NoSuchElementException if all the Iterators are exhausted
      */
-    public Object next() {
+    public E next() {
         updateCurrentIterator();
         if (hasNext == false) {
             throw new NoSuchElementException("No more elements in the iteration");
         }
         lastUsedIterator = currentIterator;
-        Object result = currentValue;
+        E result = currentValue;
         currentValue = null;
         hasNext = false;
         return result;

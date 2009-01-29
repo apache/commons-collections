@@ -38,9 +38,8 @@ import org.apache.commons.collections.SortedBidiMap;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractSortedBidiMapDecorator
-        extends AbstractOrderedBidiMapDecorator
-        implements SortedBidiMap {
+public abstract class AbstractSortedBidiMapDecorator<K, V> extends
+        AbstractOrderedBidiMapDecorator<K, V> implements SortedBidiMap<K, V> {
 
     /**
      * Constructor that wraps (not copies).
@@ -48,7 +47,7 @@ public abstract class AbstractSortedBidiMapDecorator
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractSortedBidiMapDecorator(SortedBidiMap map) {
+    public AbstractSortedBidiMapDecorator(SortedBidiMap<K, V> map) {
         super(map);
     }
 
@@ -56,39 +55,34 @@ public abstract class AbstractSortedBidiMapDecorator
      * Gets the map being decorated.
      * 
      * @return the decorated map
-     * @deprecated use decorated()
      */
-    protected SortedBidiMap getSortedBidiMap() {
-        return decorated();
-    }
-
-    /**
-     * Gets the map being decorated.
-     * 
-     * @return the decorated map
-     */
-    protected SortedBidiMap decorated() {
-        return (SortedBidiMap) super.decorated();
+    protected SortedBidiMap<K, V> decorated() {
+        return (SortedBidiMap<K, V>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public SortedBidiMap inverseSortedBidiMap() {
-        return getSortedBidiMap().inverseSortedBidiMap();
+    @Override
+    public SortedBidiMap<V, K> inverseBidiMap() {
+        return decorated().inverseBidiMap();
     }
 
-    public Comparator comparator() {
+    public Comparator<? super K> comparator() {
         return decorated().comparator();
     }
 
-    public SortedMap subMap(Object fromKey, Object toKey) {
+    public Comparator<? super V> valueComparator() {
+        return decorated().valueComparator();
+    }
+
+    public SortedMap<K, V> subMap(K fromKey, K toKey) {
         return decorated().subMap(fromKey, toKey);
     }
 
-    public SortedMap headMap(Object toKey) {
+    public SortedMap<K, V> headMap(K toKey) {
         return decorated().headMap(toKey);
     }
 
-    public SortedMap tailMap(Object fromKey) {
+    public SortedMap<K, V> tailMap(K fromKey) {
         return decorated().tailMap(fromKey);
     }
 

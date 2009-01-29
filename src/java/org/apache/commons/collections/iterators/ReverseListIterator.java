@@ -38,12 +38,12 @@ import org.apache.commons.collections.ResettableListIterator;
  * @since Commons Collections 3.2
  * @version $Revision: $ $Date$
  */
-public class ReverseListIterator implements ResettableListIterator {
+public class ReverseListIterator<E> implements ResettableListIterator<E> {
 
     /** The list being wrapped. */
-    private final List list;
+    private final List<E> list;
     /** The list iterator being wrapped. */
-    private ListIterator iterator;
+    private ListIterator<E> iterator;
     /** Flag to indicate if updating is possible at the moment. */
     private boolean validForUpdate = true;
 
@@ -53,7 +53,7 @@ public class ReverseListIterator implements ResettableListIterator {
      * @param list  the list to create a reversed iterator for
      * @throws NullPointerException if the list is null
      */
-    public ReverseListIterator(List list) {
+    public ReverseListIterator(List<E> list) {
         super();
         this.list = list;
         iterator = list.listIterator(list.size());
@@ -75,8 +75,8 @@ public class ReverseListIterator implements ResettableListIterator {
      *
      * @return the next element in the iterator
      */
-    public Object next() {
-        Object obj = iterator.previous();
+    public E next() {
+        E obj = iterator.previous();
         validForUpdate = true;
         return obj;
     }
@@ -105,8 +105,8 @@ public class ReverseListIterator implements ResettableListIterator {
      *
      * @return the previous element in the iterator
      */
-    public Object previous() {
-        Object obj = iterator.next();
+    public E previous() {
+        E obj = iterator.next();
         validForUpdate = true;
         return obj;
     }
@@ -140,7 +140,7 @@ public class ReverseListIterator implements ResettableListIterator {
      * @throws UnsupportedOperationException if the list is unmodifiable
      * @throws IllegalStateException if the iterator is not in a valid state for set
      */
-    public void set(Object obj) {
+    public void set(E obj) {
         if (validForUpdate == false) {
             throw new IllegalStateException("Cannot set to list until next() or previous() called");
         }
@@ -154,7 +154,7 @@ public class ReverseListIterator implements ResettableListIterator {
      * @throws UnsupportedOperationException if the list is unmodifiable
      * @throws IllegalStateException if the iterator is not in a valid state for set
      */
-    public void add(Object obj) {
+    public void add(E obj) {
         // the validForUpdate flag is needed as the necessary previous()
         // method call re-enables remove and add
         if (validForUpdate == false) {

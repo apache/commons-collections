@@ -30,13 +30,13 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class TransformerClosure implements Closure, Serializable {
+public class TransformerClosure<E> implements Closure<E>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -5194992589193388969L;
 
     /** The transformer to wrap */
-    private final Transformer iTransformer;
+    private final Transformer<? super E, ?> iTransformer;
 
     /**
      * Factory method that performs validation.
@@ -46,11 +46,11 @@ public class TransformerClosure implements Closure, Serializable {
      * @param transformer  the transformer to call, null means nop
      * @return the <code>transformer</code> closure
      */
-    public static Closure getInstance(Transformer transformer) {
+    public static <E> Closure<E> getInstance(Transformer<? super E, ?> transformer) {
         if (transformer == null) {
-            return NOPClosure.INSTANCE;
+            return NOPClosure.<E>getInstance();
         }
-        return new TransformerClosure(transformer);
+        return new TransformerClosure<E>(transformer);
     }
 
     /**
@@ -59,7 +59,7 @@ public class TransformerClosure implements Closure, Serializable {
      * 
      * @param transformer  the transformer to call, not null
      */
-    public TransformerClosure(Transformer transformer) {
+    public TransformerClosure(Transformer<? super E, ?> transformer) {
         super();
         iTransformer = transformer;
     }
@@ -69,7 +69,7 @@ public class TransformerClosure implements Closure, Serializable {
      * 
      * @param input  the input object
      */
-    public void execute(Object input) {
+    public void execute(E input) {
         iTransformer.transform(input);
     }
 
@@ -79,7 +79,7 @@ public class TransformerClosure implements Closure, Serializable {
      * @return the transformer
      * @since Commons Collections 3.1
      */
-    public Transformer getTransformer() {
+    public Transformer<? super E, ?> getTransformer() {
         return iTransformer;
     }
 

@@ -29,18 +29,18 @@ import org.apache.commons.collections.Transformer;
  * @author James Strachan
  * @author Stephen Colebourne
  */
-public class TransformIterator implements Iterator {
+public class TransformIterator<I, O> implements Iterator<O> {
 
     /** The iterator being used */
-    private Iterator iterator;
+    private Iterator<? extends I> iterator;
     /** The transformer being used */
-    private Transformer transformer;
+    private Transformer<? super I, ? extends O> transformer;
 
     //-----------------------------------------------------------------------
     /**
      * Constructs a new <code>TransformIterator</code> that will not function
-     * until the {@link #setIterator(Iterator) setIterator} method is 
-     * invoked.
+     * until the {@link #setIterator(Iterator) setIterator} and 
+     * {@link #setTransformer(Transformer)} methods are invoked.
      */
     public TransformIterator() {
         super();
@@ -52,7 +52,7 @@ public class TransformIterator implements Iterator {
      *
      * @param iterator  the iterator to use
      */
-    public TransformIterator(Iterator iterator) {
+    public TransformIterator(Iterator<? extends I> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -65,7 +65,7 @@ public class TransformIterator implements Iterator {
      * @param iterator  the iterator to use
      * @param transformer  the transformer to use
      */
-    public TransformIterator(Iterator iterator, Transformer transformer) {
+    public TransformIterator(Iterator<? extends I> iterator, Transformer<? super I, ? extends O> transformer) {
         super();
         this.iterator = iterator;
         this.transformer = transformer;
@@ -84,7 +84,7 @@ public class TransformIterator implements Iterator {
      * @return the next object
      * @throws java.util.NoSuchElementException if there are no more elements
      */
-    public Object next() {
+    public O next() {
         return transform(iterator.next());
     }
 
@@ -98,7 +98,7 @@ public class TransformIterator implements Iterator {
      * 
      * @return the iterator.
      */
-    public Iterator getIterator() {
+    public Iterator<? extends I> getIterator() {
         return iterator;
     }
 
@@ -108,7 +108,7 @@ public class TransformIterator implements Iterator {
      * 
      * @param iterator  the iterator to use
      */
-    public void setIterator(Iterator iterator) {
+    public void setIterator(Iterator<? extends I> iterator) {
         this.iterator = iterator;
     }
 
@@ -118,7 +118,7 @@ public class TransformIterator implements Iterator {
      * 
      * @return the transformer.
      */
-    public Transformer getTransformer() {
+    public Transformer<? super I, ? extends O> getTransformer() {
         return transformer;
     }
 
@@ -128,7 +128,7 @@ public class TransformIterator implements Iterator {
      * 
      * @param transformer  the transformer to use
      */
-    public void setTransformer(Transformer transformer) {
+    public void setTransformer(Transformer<? super I, ? extends O> transformer) {
         this.transformer = transformer;
     }
 
@@ -140,10 +140,7 @@ public class TransformIterator implements Iterator {
      * @param source  the object to transform
      * @return the transformed object
      */
-    protected Object transform(Object source) {
-        if (transformer != null) {
-            return transformer.transform(source);
-        }
-        return source;
+    protected O transform(I source) {
+        return transformer.transform(source);
     }
 }

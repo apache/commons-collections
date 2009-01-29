@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.iterators;
 
-import java.util.Iterator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -27,7 +25,7 @@ import junit.framework.TestSuite;
  * @version $Revision$ $Date$
  * @author Neil O'Toole
  */
-public class TestArrayListIterator2 extends TestArrayIterator2 {
+public class TestArrayListIterator2<E> extends TestArrayIterator2<E> {
 
     public TestArrayListIterator2(String testName) {
         super(testName);
@@ -37,28 +35,24 @@ public class TestArrayListIterator2 extends TestArrayIterator2 {
         return new TestSuite(TestArrayListIterator2.class);
     }
 
-    public Iterator makeEmptyIterator() {
-        return new ArrayListIterator(new int[0]);
+    public ArrayListIterator<E> makeEmptyIterator() {
+        return new ArrayListIterator<E>(new int[0]);
     }
 
-    public Iterator makeFullIterator() {
-        return new ArrayListIterator(testArray);
+    public ArrayListIterator<E> makeObject() {
+        return new ArrayListIterator<E>(testArray);
     }
 
-    public ArrayIterator makeArrayIterator() {
-        return (ArrayIterator) makeEmptyIterator();
+    public ArrayListIterator<E> makeArrayListIterator(Object array) {
+        return new ArrayListIterator<E>(array);
     }
 
-    public ArrayIterator makeArrayIterator(Object array) {
-        return new ArrayListIterator(array);
+    public ArrayListIterator<E> makeArrayListIterator(Object array, int index) {
+        return new ArrayListIterator<E>(array, index);
     }
 
-    public ArrayIterator makeArrayIterator(Object array, int index) {
-        return new ArrayListIterator(array, index);
-    }
-
-    public ArrayIterator makeArrayIterator(Object array, int start, int end) {
-        return new ArrayListIterator(array, start, end);
+    public ArrayListIterator<E> makeArrayListIterator(Object array, int start, int end) {
+        return new ArrayListIterator<E>(array, start, end);
     }
 
 }

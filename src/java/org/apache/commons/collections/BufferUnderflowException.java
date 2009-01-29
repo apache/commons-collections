@@ -34,6 +34,9 @@ import java.util.NoSuchElementException;
  */
 public class BufferUnderflowException extends NoSuchElementException {
     
+    /** Serialization version */
+    private static final long serialVersionUID = 4054570024234606028L;
+
     /** The root cause throwable */
     private final Throwable throwable;
 

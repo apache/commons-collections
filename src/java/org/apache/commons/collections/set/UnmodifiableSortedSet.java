@@ -54,7 +54,7 @@ public final class UnmodifiableSortedSet<E>
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableSortedSet(set);
+        return new UnmodifiableSortedSet<T>(set);
     }
 
     //-----------------------------------------------------------------------
@@ -76,6 +76,7 @@ public final class UnmodifiableSortedSet<E>
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection) in.readObject();
@@ -93,7 +94,7 @@ public final class UnmodifiableSortedSet<E>
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
@@ -124,17 +125,17 @@ public final class UnmodifiableSortedSet<E>
     //-----------------------------------------------------------------------
     public SortedSet<E> subSet(E fromElement, E toElement) {
         SortedSet<E> sub = decorated().subSet(fromElement, toElement);
-        return new UnmodifiableSortedSet(sub);
+        return new UnmodifiableSortedSet<E>(sub);
     }
 
     public SortedSet<E> headSet(E toElement) {
         SortedSet<E> sub = decorated().headSet(toElement);
-        return new UnmodifiableSortedSet(sub);
+        return new UnmodifiableSortedSet<E>(sub);
     }
 
     public SortedSet<E> tailSet(E fromElement) {
         SortedSet<E> sub = decorated().tailSet(fromElement);
-        return new UnmodifiableSortedSet(sub);
+        return new UnmodifiableSortedSet<E>(sub);
     }
 
 }

@@ -35,6 +35,9 @@ public abstract class AbstractSortedSetDecorator<E>
         extends AbstractSetDecorator<E>
         implements SortedSet<E> {
 
+    /** Serialization version */
+    private static final long serialVersionUID = -3462240946294214398L;
+
     /**
      * Constructor only used in deserialization, do not use otherwise.
      * @since Commons Collections 3.1

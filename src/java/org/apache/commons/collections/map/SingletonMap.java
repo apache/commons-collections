@@ -27,7 +27,6 @@ import java.util.Set;
 
 import org.apache.commons.collections.BoundedMap;
 import org.apache.commons.collections.KeyValue;
-import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.ResettableIterator;
@@ -59,16 +58,16 @@ import org.apache.commons.collections.keyvalue.TiedMapEntry;
  *
  * @author Stephen Colebourne
  */
-public class SingletonMap
-        implements OrderedMap, BoundedMap, KeyValue, Serializable, Cloneable {
+public class SingletonMap<K, V>
+        implements OrderedMap<K, V>, BoundedMap<K, V>, KeyValue<K, V>, Serializable, Cloneable {
 
     /** Serialization version */
     private static final long serialVersionUID = -8931271118676803261L;
 
     /** Singleton key */
-    private final Object key;
+    private final K key;
     /** Singleton value */
-    private Object value;
+    private V value;
 
     /**
      * Constructor that creates a map of <code>null</code> to <code>null</code>.
@@ -84,7 +83,7 @@ public class SingletonMap
      * @param key  the key to use
      * @param value  the value to use
      */
-    public SingletonMap(Object key, Object value) {
+    public SingletonMap(K key, V value) {
         super();
         this.key = key;
         this.value = value;
@@ -95,7 +94,7 @@ public class SingletonMap
      *
      * @param keyValue  the key value pair to use
      */
-    public SingletonMap(KeyValue keyValue) {
+    public SingletonMap(KeyValue<K, V> keyValue) {
         super();
         this.key = keyValue.getKey();
         this.value = keyValue.getValue();
@@ -106,7 +105,7 @@ public class SingletonMap
      *
      * @param mapEntry  the mapEntry to use
      */
-    public SingletonMap(Map.Entry mapEntry) {
+    public SingletonMap(Map.Entry<K, V> mapEntry) {
         super();
         this.key = mapEntry.getKey();
         this.value = mapEntry.getValue();
@@ -119,12 +118,12 @@ public class SingletonMap
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the size is not 1
      */
-    public SingletonMap(Map map) {
+    public SingletonMap(Map<K, V> map) {
         super();
         if (map.size() != 1) {
             throw new IllegalArgumentException("The map size must be 1");
         }
-        Map.Entry entry = (Map.Entry) map.entrySet().iterator().next();
+        Map.Entry<K, V> entry = map.entrySet().iterator().next();
         this.key = entry.getKey();
         this.value = entry.getValue();
     }
@@ -136,7 +135,7 @@ public class SingletonMap
      *
      * @return the key 
      */
-    public Object getKey() {
+    public K getKey() {
         return key;
     }
 
@@ -145,7 +144,7 @@ public class SingletonMap
      *
      * @return the value
      */
-    public Object getValue() {
+    public V getValue() {
         return value;
     }
 
@@ -155,8 +154,8 @@ public class SingletonMap
      * @param value  the new value to set
      * @return the old value
      */
-    public Object setValue(Object value) {
-        Object old = this.value;
+    public V setValue(V value) {
+        V old = this.value;
         this.value = value;
         return old;
     }
@@ -189,7 +188,7 @@ public class SingletonMap
      * @param key  the key
      * @return the mapped value, null if no match
      */
-    public Object get(Object key) {
+    public V get(Object key) {
         if (isEqualKey(key)) {
             return value;
         }
@@ -247,7 +246,7 @@ public class SingletonMap
      * @return the value previously mapped to this key, null if none
      * @throws IllegalArgumentException if the key does not match
      */
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         if (isEqualKey(key)) {
             return setValue(value);
         }
@@ -265,21 +264,21 @@ public class SingletonMap
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the key does not match
      */
-    public void putAll(Map map) {
+    public void putAll(Map<? extends K, ? extends V> map) {
         switch (map.size()) {
             case 0:
                 return;
-            
+
             case 1:
-                Map.Entry entry = (Map.Entry) map.entrySet().iterator().next();
+                Map.Entry<? extends K, ? extends V> entry = map.entrySet().iterator().next();
                 put(entry.getKey(), entry.getValue());
                 return;
-            
+
             default:
                 throw new IllegalArgumentException("The map size must be 0 or 1");
         }
     }
-
+    
     /**
      * Unsupported operation.
      * 
@@ -287,7 +286,7 @@ public class SingletonMap
      * @return the value mapped to the removed key, null if key not in map
      * @throws UnsupportedOperationException always
      */
-    public Object remove(Object key) {
+    public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
@@ -306,8 +305,8 @@ public class SingletonMap
      * 
      * @return the entrySet view
      */
-    public Set entrySet() {
-        Map.Entry entry = new TiedMapEntry(this, getKey());
+    public Set<Map.Entry<K, V>> entrySet() {
+        Map.Entry<K, V> entry = new TiedMapEntry<K, V>(this, getKey());
         return Collections.singleton(entry);
     }
     
@@ -318,7 +317,7 @@ public class SingletonMap
      * 
      * @return the keySet view
      */
-    public Set keySet() {
+    public Set<K> keySet() {
         return Collections.singleton(key);
     }
 
@@ -329,38 +328,15 @@ public class SingletonMap
      * 
      * @return the values view
      */
-    public Collection values() {
-        return new SingletonValues(this);
+    public Collection<V> values() {
+        return new SingletonValues<V>(this);
     }
 
     /**
-     * Gets an iterator over the map.
-     * Changes made to the iterator using <code>setValue</code> affect this map.
-     * The <code>remove</code> method is unsupported.
-     * <p>
-     * A MapIterator returns the keys in the map. It also provides convenient
-     * methods to get the key and value, and set the value.
-     * It avoids the need to create an entrySet/keySet/values object.
-     * It also avoids creating the Map Entry object.
-     * 
-     * @return the map iterator
+     * {@inheritDoc}
      */
-    public MapIterator mapIterator() {
-        return new SingletonMapIterator(this);
-    }
-
-    // OrderedMap
-    //-----------------------------------------------------------------------
-    /**
-     * Obtains an <code>OrderedMapIterator</code> over the map.
-     * <p>
-     * A ordered map iterator is an efficient way of iterating over maps
-     * in both directions.
-     * 
-     * @return an ordered map iterator
-     */
-    public OrderedMapIterator orderedMapIterator() {
-        return new SingletonMapIterator(this);
+    public OrderedMapIterator<K, V> mapIterator() {
+        return new SingletonMapIterator<K, V>(this);
     }
 
     /**
@@ -368,7 +344,7 @@ public class SingletonMap
      * 
      * @return the key
      */
-    public Object firstKey() {
+    public K firstKey() {
         return getKey();
     }
 
@@ -377,7 +353,7 @@ public class SingletonMap
      * 
      * @return the key
      */
-    public Object lastKey() {
+    public K lastKey() {
         return getKey();
     }
 
@@ -387,7 +363,7 @@ public class SingletonMap
      * @param key  the next key
      * @return null always
      */
-    public Object nextKey(Object key) {
+    public K nextKey(K key) {
         return null;
     }
 
@@ -397,7 +373,7 @@ public class SingletonMap
      * @param key  the next key
      * @return null always
      */
-    public Object previousKey(Object key) {
+    public K previousKey(K key) {
         return null;
     }
 
@@ -426,12 +402,12 @@ public class SingletonMap
     /**
      * SingletonMapIterator.
      */
-    static class SingletonMapIterator implements OrderedMapIterator, ResettableIterator {
-        private final SingletonMap parent;
+    static class SingletonMapIterator<K, V> implements OrderedMapIterator<K, V>, ResettableIterator<K> {
+        private final SingletonMap<K, V> parent;
         private boolean hasNext = true;
         private boolean canGetSet = false;
         
-        SingletonMapIterator(SingletonMap parent) {
+        SingletonMapIterator(SingletonMap<K, V> parent) {
             super();
             this.parent = parent;
         }
@@ -440,7 +416,7 @@ public class SingletonMap
             return hasNext;
         }
 
-        public Object next() {
+        public K next() {
             if (hasNext == false) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
             }
@@ -453,7 +429,7 @@ public class SingletonMap
             return (hasNext == false);
         }
 
-        public Object previous() {
+        public K previous() {
             if (hasNext == true) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_PREVIOUS_ENTRY);
             }
@@ -465,21 +441,21 @@ public class SingletonMap
             throw new UnsupportedOperationException();
         }
 
-        public Object getKey() {
+        public K getKey() {
             if (canGetSet == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             return parent.getKey();
         }
 
-        public Object getValue() {
+        public V getValue() {
             if (canGetSet == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             return parent.getValue();
         }
 
-        public Object setValue(Object value) {
+        public V setValue(V value) {
             if (canGetSet == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
@@ -493,9 +469,8 @@ public class SingletonMap
         public String toString() {
             if (hasNext) {
                 return "Iterator[]";
-            } else {
-                return "Iterator[" + getKey() + "=" + getValue() + "]";
             }
+            return "Iterator[" + getKey() + "=" + getValue() + "]";
         }
     }
     
@@ -503,11 +478,11 @@ public class SingletonMap
      * Values implementation for the SingletonMap.
      * This class is needed as values is a view that must update as the map updates.
      */
-    static class SingletonValues extends AbstractSet implements Serializable {
+    static class SingletonValues<V> extends AbstractSet<V> implements Serializable {
         private static final long serialVersionUID = -3689524741863047872L;
-        private final SingletonMap parent;
+        private final SingletonMap<?, V> parent;
 
-        SingletonValues(SingletonMap parent) {
+        SingletonValues(SingletonMap<?, V> parent) {
             super();
             this.parent = parent;
         }
@@ -524,8 +499,8 @@ public class SingletonMap
         public void clear() {
             throw new UnsupportedOperationException();
         }
-        public Iterator iterator() {
-            return new SingletonIterator(parent.getValue(), false);
+        public Iterator<V> iterator() {
+            return new SingletonIterator<V>(parent.getValue(), false);
         }
     }
     
@@ -535,10 +510,10 @@ public class SingletonMap
      *
      * @return a shallow clone
      */
-    public Object clone() {
+    @SuppressWarnings("unchecked")
+    public SingletonMap<K, V> clone() {
         try {
-            SingletonMap cloned = (SingletonMap) super.clone();
-            return cloned;
+            return (SingletonMap<K, V>) super.clone();
         } catch (CloneNotSupportedException ex) {
             throw new InternalError();
         }
@@ -550,6 +525,7 @@ public class SingletonMap
      * @param obj  the object to compare to
      * @return true if equal
      */
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

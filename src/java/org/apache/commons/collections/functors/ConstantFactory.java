@@ -32,16 +32,16 @@ import org.apache.commons.collections.Factory;
  *
  * @author Stephen Colebourne
  */
-public class ConstantFactory implements Factory, Serializable {
+public class ConstantFactory<T> implements Factory<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3520677225766901240L;
     
     /** Returns null each time */
-    public static final Factory NULL_INSTANCE = new ConstantFactory(null);
+    public static final Factory<Object> NULL_INSTANCE = new ConstantFactory<Object>(null);
 
     /** The closures to call in turn */
-    private final Object iConstant;
+    private final T iConstant;
 
     /**
      * Factory method that performs validation.
@@ -49,11 +49,12 @@ public class ConstantFactory implements Factory, Serializable {
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
-    public static Factory getInstance(Object constantToReturn) {
+    @SuppressWarnings("unchecked")
+    public static <T> Factory<T> getInstance(T constantToReturn) {
         if (constantToReturn == null) {
-            return NULL_INSTANCE;
+            return (Factory<T>) NULL_INSTANCE;
         }
-        return new ConstantFactory(constantToReturn);
+        return new ConstantFactory<T>(constantToReturn);
     }
     
     /**
@@ -62,7 +63,7 @@ public class ConstantFactory implements Factory, Serializable {
      * 
      * @param constantToReturn  the constant to return each time
      */
-    public ConstantFactory(Object constantToReturn) {
+    public ConstantFactory(T constantToReturn) {
         super();
         iConstant = constantToReturn;
     }
@@ -72,7 +73,7 @@ public class ConstantFactory implements Factory, Serializable {
      * 
      * @return the stored constant value
      */
-    public Object create() {
+    public T create() {
         return iConstant;
     }
 
@@ -82,7 +83,7 @@ public class ConstantFactory implements Factory, Serializable {
      * @return the constant
      * @since Commons Collections 3.1
      */
-    public Object getConstant() {
+    public T getConstant() {
         return iConstant;
     }
 

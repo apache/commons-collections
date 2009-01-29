@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,42 +24,41 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the 
+ * Extension of {@link AbstractTestCollection} for exercising the
  * {@link SynchronizedCollection} implementation.
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestSynchronizedCollection extends AbstractTestCollection<Object> {
-    
+public class TestSynchronizedCollection<E> extends AbstractTestCollection<E> {
+
     public TestSynchronizedCollection(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestSynchronizedCollection.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestSynchronizedCollection.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    //-----------------------------------------------------------------------    
-    public Collection<Object> makeCollection() {
-        return SynchronizedCollection.decorate(new ArrayList<Object>());
-    }
-    
-    public Collection<Object> makeConfirmedCollection() {
-        ArrayList<Object> list = new ArrayList<Object>();
-        return list;
+    //-----------------------------------------------------------------------
+    public Collection<E> makeObject() {
+        return SynchronizedCollection.decorate(new ArrayList<E>());
     }
 
-    public Collection<Object> makeConfirmedFullCollection() {
-        ArrayList<Object> list = new ArrayList<Object>();
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
+    }
+
+    public Collection<E> makeConfirmedFullCollection() {
+        ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

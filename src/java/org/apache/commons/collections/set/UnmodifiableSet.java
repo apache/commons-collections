@@ -33,8 +33,8 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableSet
-        extends AbstractSerializableSetDecorator
+public final class UnmodifiableSet<E>
+        extends AbstractSerializableSetDecorator<E>
         implements Unmodifiable {
 
     /** Serialization version */
@@ -46,11 +46,11 @@ public final class UnmodifiableSet
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static Set decorate(Set set) {
+    public static <E> Set<E> decorate(Set<E> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableSet(set);
+        return new UnmodifiableSet<E>(set);
     }
 
     //-----------------------------------------------------------------------
@@ -60,20 +60,20 @@ public final class UnmodifiableSet
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableSet(Set set) {
+    private UnmodifiableSet(Set<E> set) {
         super(set);
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
-        return UnmodifiableIterator.decorate(decorated().iterator());
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.<E>decorate(decorated().iterator());
     }
 
-    public boolean add(Object object) {
+    public boolean add(E object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -85,11 +85,11 @@ public final class UnmodifiableSet
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 

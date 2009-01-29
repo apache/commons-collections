@@ -75,8 +75,8 @@ public class SynchronizedSet<E> extends SynchronizedCollection<E> implements Set
      * 
      * @return the decorated set
      */
-    protected Set getSet() {
-        return (Set) collection;
+    protected Set<E> getSet() {
+        return (Set<E>) collection;
     }
 
 }

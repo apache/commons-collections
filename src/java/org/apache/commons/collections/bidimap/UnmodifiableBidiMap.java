@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,39 +33,39 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableBidiMap
-        extends AbstractBidiMapDecorator implements Unmodifiable {
-    
+public final class UnmodifiableBidiMap<K, V>
+        extends AbstractBidiMapDecorator<K, V> implements Unmodifiable {
+
     /** The inverse unmodifiable map */
-    private UnmodifiableBidiMap inverse;
+    private UnmodifiableBidiMap<V, K> inverse;
 
     /**
      * Factory method to create an unmodifiable map.
      * <p>
      * If the map passed in is already unmodifiable, it is returned.
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @return an unmodifiable BidiMap
      * @throws IllegalArgumentException if map is null
      */
-    public static BidiMap decorate(BidiMap map) {
+    public static <K, V> BidiMap<K, V> decorate(BidiMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
-        return new UnmodifiableBidiMap(map);
+        return new UnmodifiableBidiMap<K, V>(map);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableBidiMap(BidiMap map) {
+    private UnmodifiableBidiMap(BidiMap<K, V> map) {
         super(map);
     }
 
@@ -74,49 +74,49 @@ public final class UnmodifiableBidiMap
         throw new UnsupportedOperationException();
     }
 
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
-    public void putAll(Map mapToCopy) {
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
-    public Object remove(Object key) {
+    public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
-    public Set entrySet() {
-        Set set = super.entrySet();
+    public Set<Map.Entry<K, V>> entrySet() {
+        Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.decorate(set);
     }
 
-    public Set keySet() {
-        Set set = super.keySet();
+    public Set<K> keySet() {
+        Set<K> set = super.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
-    public Collection values() {
-        Collection coll = super.values();
+    public Collection<V> values() {
+        Collection<V> coll = super.values();
         return UnmodifiableCollection.decorate(coll);
     }
 
     //-----------------------------------------------------------------------
-    public Object removeValue(Object value) {
+    public K removeValue(Object value) {
         throw new UnsupportedOperationException();
     }
 
-    public MapIterator mapIterator() {
-        MapIterator it = getBidiMap().mapIterator();
+    public MapIterator<K, V> mapIterator() {
+        MapIterator<K, V> it = decorated().mapIterator();
         return UnmodifiableMapIterator.decorate(it);
     }
 
-    public BidiMap inverseBidiMap() {
+    public synchronized BidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {
-            inverse = new UnmodifiableBidiMap(getBidiMap().inverseBidiMap());
+            inverse = new UnmodifiableBidiMap<V, K>(decorated().inverseBidiMap());
             inverse.inverse = this;
         }
         return inverse;
     }
-    
+
 }

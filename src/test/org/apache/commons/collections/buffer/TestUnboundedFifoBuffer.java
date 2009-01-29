@@ -19,6 +19,7 @@ package org.apache.commons.collections.buffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import junit.framework.Test;
 
@@ -32,7 +33,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * 
  * @author Unknown
  */
-public class TestUnboundedFifoBuffer extends AbstractTestCollection {
+public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
 
     public TestUnboundedFifoBuffer(String n) {
         super(n);
@@ -49,8 +50,8 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
      */
     public void verify() {
         super.verify();
-        Iterator iterator1 = collection.iterator();
-        Iterator iterator2 = confirmed.iterator();
+        Iterator<E> iterator1 = getCollection().iterator();
+        Iterator<E> iterator2 = getConfirmed().iterator();
         while (iterator2.hasNext()) {
             assertTrue(iterator1.hasNext());
             Object o1 = iterator1.next();
@@ -82,8 +83,8 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
      *
      *  @return an empty ArrayList
      */
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
 
     /**
@@ -91,8 +92,8 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
      *
      *  @return a full ArrayList
      */
-    public Collection makeConfirmedFullCollection() {
-        Collection c = makeConfirmedCollection();
+    public Collection<E> makeConfirmedFullCollection() {
+        Collection<E> c = makeConfirmedCollection();
         c.addAll(java.util.Arrays.asList(getFullElements()));
         return c;
     }
@@ -102,8 +103,8 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
      *
      *  @return an empty UnboundedFifoBuffer
      */
-    public Collection makeCollection() {
-        return new UnboundedFifoBuffer(5);
+    public Collection<E> makeObject() {
+        return new UnboundedFifoBuffer<E>(5);
     }
 
     //-----------------------------------------------------------------------
@@ -112,10 +113,10 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
      */
     public void testUnboundedFifoBufferRemove() {
         resetFull();
-        int size = confirmed.size();
+        int size = getConfirmed().size();
         for (int i = 0; i < size; i++) {
-            Object o1 = ((UnboundedFifoBuffer)collection).remove();
-            Object o2 = ((ArrayList)confirmed).remove(0);
+            E o1 = getCollection().remove();
+            E o2 = getConfirmed().remove(0);
             assertEquals("Removed objects should be equal", o1, o2);
             verify();
         }
@@ -126,7 +127,7 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
      */
     public void testConstructorException1() {
         try {
-            new UnboundedFifoBuffer(0);
+            new UnboundedFifoBuffer<E>(0);
         } catch (IllegalArgumentException ex) {
             return;
         }
@@ -138,7 +139,7 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
      */
     public void testConstructorException2() {
         try {
-            new UnboundedFifoBuffer(-20);
+            new UnboundedFifoBuffer<E>(-20);
         } catch (IllegalArgumentException ex) {
             return;
         }
@@ -146,43 +147,45 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testInternalStateAdd() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(2);
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(2);
         assertEquals(3, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(0, test.tail);
-        test.add("A");
+        test.add((E) "A");
         assertEquals(3, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(1, test.tail);
-        test.add("B");
+        test.add((E) "B");
         assertEquals(3, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(2, test.tail);
-        test.add("C");  // forces buffer increase
+        test.add((E) "C");  // forces buffer increase
         assertEquals(5, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(3, test.tail);
-        test.add("D");
+        test.add((E) "D");
         assertEquals(5, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(4, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateAddWithWrap() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(3);
         assertEquals(4, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(0, test.tail);
-        test.add("A");
+        test.add((E) "A");
         assertEquals(4, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(1, test.tail);
-        test.add("B");
+        test.add((E) "B");
         assertEquals(4, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(2, test.tail);
-        test.add("C");
+        test.add((E) "C");
         assertEquals(4, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(3, test.tail);
@@ -194,21 +197,22 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(4, test.buffer.length);
         assertEquals(2, test.head);
         assertEquals(3, test.tail);
-        test.add("D");
+        test.add((E) "D");
         assertEquals(4, test.buffer.length);
         assertEquals(2, test.head);
         assertEquals(0, test.tail);
-        test.add("E");
+        test.add((E) "E");
         assertEquals(4, test.buffer.length);
         assertEquals(2, test.head);
         assertEquals(1, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateRemove1() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(4);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(4);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         assertEquals(5, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(3, test.tail);
@@ -218,17 +222,18 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(1, test.head);
         assertEquals(3, test.tail);
         
-        test.add("D");
+        test.add((E) "D");
         assertEquals(5, test.buffer.length);
         assertEquals(1, test.head);
         assertEquals(4, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateRemove2() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(4);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(4);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         assertEquals(5, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(3, test.tail);
@@ -238,41 +243,43 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(0, test.head);
         assertEquals(2, test.tail);
         
-        test.add("D");
+        test.add((E) "D");
         assertEquals(5, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(3, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateIteratorRemove1() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(4);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(4);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         assertEquals(5, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(3, test.tail);
         
-        Iterator it = test.iterator();
+        Iterator<E> it = test.iterator();
         it.next();
         it.remove();
         assertEquals(5, test.buffer.length);
         assertEquals(1, test.head);
         assertEquals(3, test.tail);
         
-        test.add("D");
+        test.add((E) "D");
         assertEquals(5, test.buffer.length);
         assertEquals(1, test.head);
         assertEquals(4, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateIteratorRemove2() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(4);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(4);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         
-        Iterator it = test.iterator();
+        Iterator<E> it = test.iterator();
         it.next();
         it.next();
         it.remove();
@@ -280,24 +287,25 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(0, test.head);
         assertEquals(2, test.tail);
         
-        test.add("D");
+        test.add((E) "D");
         assertEquals(5, test.buffer.length);
         assertEquals(0, test.head);
         assertEquals(3, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateIteratorRemoveWithTailAtEnd1() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(3);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         test.remove("A");
-        test.add("D");
+        test.add((E) "D");
         assertEquals(4, test.buffer.length);
         assertEquals(1, test.head);
         assertEquals(0, test.tail);
         
-        Iterator it = test.iterator();
+        Iterator<E> it = test.iterator();
         assertEquals("B", it.next());
         it.remove();
         assertEquals(4, test.buffer.length);
@@ -305,18 +313,19 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(0, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateIteratorRemoveWithTailAtEnd2() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(3);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         test.remove("A");
-        test.add("D");
+        test.add((E) "D");
         assertEquals(4, test.buffer.length);
         assertEquals(1, test.head);
         assertEquals(0, test.tail);
         
-        Iterator it = test.iterator();
+        Iterator<E> it = test.iterator();
         assertEquals("B", it.next());
         assertEquals("C", it.next());
         it.remove();
@@ -325,18 +334,19 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(3, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateIteratorRemoveWithTailAtEnd3() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(3);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         test.remove("A");
-        test.add("D");
+        test.add((E) "D");
         assertEquals(4, test.buffer.length);
         assertEquals(1, test.head);
         assertEquals(0, test.tail);
         
-        Iterator it = test.iterator();
+        Iterator<E> it = test.iterator();
         assertEquals("B", it.next());
         assertEquals("C", it.next());
         assertEquals("D", it.next());
@@ -346,20 +356,21 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(3, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateIteratorRemoveWithWrap1() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(3);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         test.remove("A");
         test.remove("B");
-        test.add("D");
-        test.add("E");
+        test.add((E) "D");
+        test.add((E) "E");
         assertEquals(4, test.buffer.length);
         assertEquals(2, test.head);
         assertEquals(1, test.tail);
         
-        Iterator it = test.iterator();
+        Iterator<E> it = test.iterator();
         assertEquals("C", it.next());
         it.remove();
         assertEquals(4, test.buffer.length);
@@ -367,20 +378,21 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(1, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateIteratorRemoveWithWrap2() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(3);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         test.remove("A");
         test.remove("B");
-        test.add("D");
-        test.add("E");
+        test.add((E) "D");
+        test.add((E) "E");
         assertEquals(4, test.buffer.length);
         assertEquals(2, test.head);
         assertEquals(1, test.tail);
         
-        Iterator it = test.iterator();
+        Iterator<E> it = test.iterator();
         assertEquals("C", it.next());
         assertEquals("D", it.next());
         it.remove();
@@ -389,20 +401,21 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
         assertEquals(0, test.tail);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalStateIteratorRemoveWithWrap3() {
-        UnboundedFifoBuffer test = new UnboundedFifoBuffer(3);
-        test.add("A");
-        test.add("B");
-        test.add("C");
+        UnboundedFifoBuffer<E> test = new UnboundedFifoBuffer<E>(3);
+        test.add((E) "A");
+        test.add((E) "B");
+        test.add((E) "C");
         test.remove("A");
         test.remove("B");
-        test.add("D");
-        test.add("E");
+        test.add((E) "D");
+        test.add((E) "E");
         assertEquals(4, test.buffer.length);
         assertEquals(2, test.head);
         assertEquals(1, test.tail);
         
-        Iterator it = test.iterator();
+        Iterator<E> it = test.iterator();
         assertEquals("C", it.next());
         assertEquals("D", it.next());
         assertEquals("E", it.next());
@@ -424,4 +437,19 @@ public class TestUnboundedFifoBuffer extends AbstractTestCollection {
 //        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnboundedFifoBuffer.fullCollection.version3.1.obj");
 //    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UnboundedFifoBuffer<E> getCollection() {
+        return (UnboundedFifoBuffer<E>) super.getCollection();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<E> getConfirmed() {
+        return (List<E>) super.getConfirmed();
+    }
 }

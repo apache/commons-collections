@@ -30,14 +30,14 @@ import java.util.Iterator;
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  */
-public class EnumerationIterator implements Iterator {
+public class EnumerationIterator<E> implements Iterator<E> {
     
     /** The collection to remove elements from */
-    private Collection collection;
+    private Collection<? super E> collection;
     /** The enumeration being converted */
-    private Enumeration enumeration;
+    private Enumeration<? extends E> enumeration;
     /** The last object retrieved */
-    private Object last;
+    private E last;
     
     // Constructors
     //-----------------------------------------------------------------------
@@ -55,7 +55,7 @@ public class EnumerationIterator implements Iterator {
      *
      * @param enumeration  the enumeration to use
      */
-    public EnumerationIterator(final Enumeration enumeration) {
+    public EnumerationIterator(final Enumeration<? extends E> enumeration) {
         this(enumeration, null);
     }
 
@@ -64,9 +64,9 @@ public class EnumerationIterator implements Iterator {
      * elements from the specified collection.
      *
      * @param enumeration  the enumeration to use
-     * @param collection  the collection to remove elements form
+     * @param collection  the collection to remove elements from
      */
-    public EnumerationIterator(final Enumeration enumeration, final Collection collection) {
+    public EnumerationIterator(final Enumeration<? extends E> enumeration, final Collection<? super E> collection) {
         super();
         this.enumeration = enumeration;
         this.collection = collection;
@@ -91,7 +91,7 @@ public class EnumerationIterator implements Iterator {
      * @return the next object from the enumeration
      * @throws NullPointerException if the enumeration is null
      */
-    public Object next() {
+    public E next() {
         last = enumeration.nextElement();
         return last;
     }
@@ -125,7 +125,7 @@ public class EnumerationIterator implements Iterator {
      *
      * @return the underlying enumeration
      */
-    public Enumeration getEnumeration() {
+    public Enumeration<? extends E> getEnumeration() {
         return enumeration;
     }
 
@@ -134,7 +134,7 @@ public class EnumerationIterator implements Iterator {
      *
      * @param enumeration  the new underlying enumeration
      */
-    public void setEnumeration(final Enumeration enumeration) {
+    public void setEnumeration(final Enumeration<? extends E> enumeration) {
         this.enumeration = enumeration;
     }
     

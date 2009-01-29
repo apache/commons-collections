@@ -39,8 +39,8 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableBag
-        extends AbstractBagDecorator implements Unmodifiable, Serializable {
+public final class UnmodifiableBag<E>
+        extends AbstractBagDecorator<E> implements Unmodifiable, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = -1873799975157099624L;
@@ -54,11 +54,11 @@ public final class UnmodifiableBag
      * @return an unmodifiable Bag
      * @throws IllegalArgumentException if bag is null
      */
-    public static Bag decorate(Bag bag) {
+    public static <E> Bag<E> decorate(Bag<E> bag) {
         if (bag instanceof Unmodifiable) {
             return bag;
         }
-        return new UnmodifiableBag(bag);
+        return new UnmodifiableBag<E>(bag);
     }
 
     //-----------------------------------------------------------------------
@@ -68,7 +68,7 @@ public final class UnmodifiableBag
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    private UnmodifiableBag(Bag bag) {
+    private UnmodifiableBag(Bag<E> bag) {
         super(bag);
     }
 
@@ -91,21 +91,22 @@ public final class UnmodifiableBag
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        collection = (Collection) in.readObject();
+        collection = (Collection<E>) in.readObject();
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
-        return UnmodifiableIterator.decorate(decorated().iterator());
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.<E>decorate(decorated().iterator());
     }
 
-    public boolean add(Object object) {
+    public boolean add(E object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -117,16 +118,16 @@ public final class UnmodifiableBag
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object object, int count) {
+    public boolean add(E object, int count) {
         throw new UnsupportedOperationException();
     }
 
@@ -134,9 +135,9 @@ public final class UnmodifiableBag
         throw new UnsupportedOperationException();
     }
 
-    public Set uniqueSet() {
-        Set set = decorated().uniqueSet();
-        return UnmodifiableSet.decorate(set);
+    public Set<E> uniqueSet() {
+        Set<E> set = decorated().uniqueSet();
+        return UnmodifiableSet.<E>decorate(set);
     }
 
 }

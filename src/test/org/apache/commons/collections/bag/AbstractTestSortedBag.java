@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.bag;
 
+import org.apache.commons.collections.SortedBag;
+
 /**
  * Abstract test class for
  * {@link org.apache.commons.collections.SortedBag SortedBag}
@@ -26,11 +28,17 @@ package org.apache.commons.collections.bag;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestSortedBag extends AbstractTestBag {
+public abstract class AbstractTestSortedBag<T> extends AbstractTestBag<T> {
 
     public AbstractTestSortedBag(String testName) {
         super(testName);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract SortedBag<T> makeObject();
+
     // TODO: Add the SortedBag tests!
 }

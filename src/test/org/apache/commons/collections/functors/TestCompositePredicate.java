@@ -45,7 +45,7 @@ public abstract class TestCompositePredicate<T> extends MockPredicateTestBase<T>
      *
      * @return a predicate to test.
      */
-    protected abstract Predicate<T> getPredicateInstance(final Collection<Predicate<? super T>> predicates);
+    protected abstract Predicate<T> getPredicateInstance(final Collection<Predicate<T>> predicates);
 
     /**
      * Creates an instance of the predicate to test.
@@ -55,20 +55,19 @@ public abstract class TestCompositePredicate<T> extends MockPredicateTestBase<T>
      *
      * @return a predicate to test.
      */
-    protected final Predicate<T> getPredicateInstance(final Boolean ... mockReturnValues)
-    {
-        final List<Predicate<? super T>> predicates = new ArrayList<Predicate<? super T>>();
+    protected final Predicate<T> getPredicateInstance(final Boolean... mockReturnValues) {
+        final List<Predicate<T>> predicates = new ArrayList<Predicate<T>>();
         for (Boolean returnValue : mockReturnValues) {
             predicates.add(createMockPredicate(returnValue));
-        }        
+        }
         return getPredicateInstance(predicates);
     }
 
     /**
      * Tests whether <code>getInstance</code> with a one element array returns the first element in the array.
      */
-    public void singleElementArrayToGetInstance()
-    {
+    @SuppressWarnings("unchecked")
+    public void singleElementArrayToGetInstance() {
         final Predicate<T> predicate = createMockPredicate(null);
         final Predicate<T> allPredicate = getPredicateInstance(predicate);
         Assert.assertSame("expected argument to be returned by getInstance()", predicate, allPredicate);
@@ -78,18 +77,16 @@ public abstract class TestCompositePredicate<T> extends MockPredicateTestBase<T>
      * Tests that passing a singleton collection to <code>getInstance</code> returns the single element in the
      * collection.
      */
-    public void singletonCollectionToGetInstance()
-    {
+    public void singletonCollectionToGetInstance() {
         final Predicate<T> predicate = createMockPredicate(null);
         final Predicate<T> allPredicate = getPredicateInstance(
-                Collections.<Predicate<? super T>>singleton(predicate));
+                Collections.<Predicate<T>>singleton(predicate));
         Assert.assertSame("expected argument to be returned by getInstance()", predicate, allPredicate);
     }
 
     /**
      * Tests <code>getInstance</code> with a null predicate array.
      */
-    @SuppressWarnings({"unchecked"})
     @Test(expected = IllegalArgumentException.class)
     public final void nullArrayToGetInstance() {
         getPredicateInstance((Predicate<T>[]) null);
@@ -119,7 +116,7 @@ public abstract class TestCompositePredicate<T> extends MockPredicateTestBase<T>
      */
     @Test(expected = IllegalArgumentException.class)
     public final void nullCollectionToGetInstance() {
-        getPredicateInstance((Collection<Predicate<? super T>>) null);
+        getPredicateInstance((Collection<Predicate<T>>) null);
     }
 
     /**
@@ -127,7 +124,7 @@ public abstract class TestCompositePredicate<T> extends MockPredicateTestBase<T>
      */
     @Test(expected = IllegalArgumentException.class)
     public final void nullElementsInCollectionToGetInstance() {
-        final Collection<Predicate<? super T>> coll = new ArrayList<Predicate<? super T>>();
+        final Collection<Predicate<T>> coll = new ArrayList<Predicate<T>>();
         coll.add(null);
         coll.add(null);
         getPredicateInstance(coll);

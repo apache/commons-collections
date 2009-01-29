@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,28 +22,40 @@ import org.apache.commons.collections.Predicate;
 
 /**
  * Predicate implementation that always returns false.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public final class FalsePredicate implements Predicate, Serializable {
+public final class FalsePredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7533784454832764388L;
-    
+
     /** Singleton predicate instance */
-    public static final Predicate INSTANCE = new FalsePredicate();
+    public static final Predicate<Object> INSTANCE = new FalsePredicate<Object>();
 
     /**
-     * Factory returning the singleton instance.
-     * 
+     * Get a typed instance.
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
+     * @deprecated use {@link #falsePredicate()} instead.
      */
-    public static Predicate getInstance() {
-        return INSTANCE;
+    public static <T> Predicate<T> getInstance() {
+        return FalsePredicate.<T>falsePredicate();
+    }
+
+    /**
+     * Get a typed instance.
+     *
+     * @return the singleton instance
+     * @since Commons Collections 5
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> falsePredicate() {
+        return (Predicate<T>) INSTANCE;
     }
 
     /**
@@ -55,11 +67,11 @@ public final class FalsePredicate implements Predicate, Serializable {
 
     /**
      * Evaluates the predicate returning false always.
-     * 
+     *
      * @param object  the input object
      * @return false always
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         return false;
     }
 

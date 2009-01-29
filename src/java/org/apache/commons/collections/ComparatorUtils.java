@@ -54,14 +54,16 @@ public class ComparatorUtils {
      *
      * @see ComparableComparator#getInstance
      */
-    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.getInstance();
+    @SuppressWarnings("unchecked")
+    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.<Comparable>getInstance();
 
     /**
      * Gets a comparator that uses the natural order of the objects.
      *
      * @return  a comparator which uses natural order
      */
-    public static Comparator naturalComparator() {
+    @SuppressWarnings("unchecked")
+    public static <E extends Comparable<? super E>> Comparator<E> naturalComparator() {
         return NATURAL_COMPARATOR;
     }
 
@@ -76,7 +78,8 @@ public class ComparatorUtils {
      * @throws NullPointerException if either comparator is null
      * @see ComparatorChain
      */
-    public static Comparator chainedComparator(Comparator comparator1, Comparator comparator2) {
+    @SuppressWarnings("unchecked")
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(Comparator<E> comparator1, Comparator<E> comparator2) {
         return chainedComparator(new Comparator[] {comparator1, comparator2});
     }
 
@@ -89,8 +92,8 @@ public class ComparatorUtils {
      * @throws NullPointerException if comparators array is null or contains a null
      * @see ComparatorChain
      */
-    public static Comparator chainedComparator(Comparator[] comparators) {
-        ComparatorChain chain = new ComparatorChain();
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(Comparator<E>[] comparators) {
+        ComparatorChain<E> chain = new ComparatorChain<E>();
         for (int i = 0; i < comparators.length; i++) {
             if (comparators[i] == null) {
                 throw new NullPointerException("Comparator cannot be null");
@@ -111,9 +114,10 @@ public class ComparatorUtils {
      * @throws ClassCastException if the comparators collection contains the wrong object type
      * @see ComparatorChain
      */
-    public static Comparator chainedComparator(Collection comparators) {
+    @SuppressWarnings("unchecked")
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(Collection<Comparator<E>> comparators) {
         return chainedComparator(
-            (Comparator[]) comparators.toArray(new Comparator[comparators.size()])
+            (Comparator<E>[]) comparators.toArray(new Comparator[comparators.size()])
         );
     }
 
@@ -124,11 +128,8 @@ public class ComparatorUtils {
      * @return  a comparator that reverses the order of the input comparator
      * @see ReverseComparator
      */
-    public static Comparator reversedComparator(Comparator comparator) {
-        if (comparator == null) {
-            comparator = NATURAL_COMPARATOR;
-        }
-        return new ReverseComparator(comparator);
+    public static <E> Comparator<E> reversedComparator(Comparator<E> comparator) {
+        return new ReverseComparator<E>(comparator);
     }
 
     /**
@@ -143,7 +144,7 @@ public class ComparatorUtils {
      *        <code>false</code> {@link Boolean}s.
      * @return  a comparator that sorts booleans
      */
-    public static Comparator booleanComparator(boolean trueFirst) {
+    public static Comparator<Boolean> booleanComparator(boolean trueFirst) {
         return BooleanComparator.getBooleanComparator(trueFirst);
     }
     
@@ -158,11 +159,12 @@ public class ComparatorUtils {
      * @return  a version of that comparator that allows nulls
      * @see NullComparator
      */
-    public static Comparator nullLowComparator(Comparator comparator) {
+    @SuppressWarnings("unchecked")
+    public static <E> Comparator<E> nullLowComparator(Comparator<E> comparator) {
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }
-        return new NullComparator(comparator, false);
+        return new NullComparator<E>(comparator, false);
     }
 
     /**
@@ -176,11 +178,12 @@ public class ComparatorUtils {
      * @return  a version of that comparator that allows nulls
      * @see NullComparator
      */
-    public static Comparator nullHighComparator(Comparator comparator) {
+    @SuppressWarnings("unchecked")
+    public static <E> Comparator<E> nullHighComparator(Comparator<E> comparator) {
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }
-        return new NullComparator(comparator, true);
+        return new NullComparator<E>(comparator, true);
     }
 
     /**
@@ -195,11 +198,12 @@ public class ComparatorUtils {
      * @return  a comparator that transforms its input objects before comparing them
      * @see  TransformingComparator
      */
-    public static Comparator transformedComparator(Comparator comparator, Transformer transformer) {
+    @SuppressWarnings("unchecked")
+    public static <E> Comparator<E> transformedComparator(Comparator<E> comparator, Transformer<? super E, ? extends E> transformer) {
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }
-        return new TransformingComparator(transformer, comparator);
+        return new TransformingComparator<E>(transformer, comparator);
     }
 
     /**
@@ -212,7 +216,8 @@ public class ComparatorUtils {
      *  @param comparator  the sort order to use
      *  @return  the smaller of the two objects
      */
-    public static Object min(Object o1, Object o2, Comparator comparator) {
+    @SuppressWarnings("unchecked")
+    public static <E> E min(E o1, E o2, Comparator<E> comparator) {
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }
@@ -230,7 +235,8 @@ public class ComparatorUtils {
      *  @param comparator  the sort order to use
      *  @return  the larger of the two objects
      */
-    public static Object max(Object o1, Object o2, Comparator comparator) {
+    @SuppressWarnings("unchecked")
+    public static <E> E max(E o1, E o2, Comparator<E> comparator) {
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }

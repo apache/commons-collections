@@ -60,13 +60,13 @@ import java.util.ListIterator;
  * @author Simon Kitching
  * @author Stephen Colebourne
  */
-public class CursorableLinkedList extends AbstractLinkedList implements Serializable {
+public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
 
     /** Ensure serialization compatibility */
     private static final long serialVersionUID = 8836393098519411393L;
 
     /** A list of the cursor currently open on this list */
-    protected transient List cursors = new ArrayList();
+    protected transient List<WeakReference<Cursor<E>>> cursors;
 
     //-----------------------------------------------------------------------
     /**
@@ -82,7 +82,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * 
      * @param coll  the collection to copy
      */
-    public CursorableLinkedList(Collection coll) {
+    public CursorableLinkedList(Collection<E> coll) {
         super(coll);
     }
 
@@ -92,7 +92,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      */
     protected void init() {
         super.init();
-        cursors = new ArrayList();
+        cursors = new ArrayList<WeakReference<Cursor<E>>>();
     }
 
     //-----------------------------------------------------------------------
@@ -105,7 +105,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * 
      * @return a new iterator that does <b>not</b> support concurrent modification
      */
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return super.listIterator(0);
     }
 
@@ -124,7 +124,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * 
      * @return a new cursor iterator
      */
-    public ListIterator listIterator() {
+    public ListIterator<E> listIterator() {
         return cursor(0);
     }
 
@@ -144,7 +144,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * @param fromIndex  the index to start from
      * @return a new cursor iterator
      */
-    public ListIterator listIterator(int fromIndex) {
+    public ListIterator<E> listIterator(int fromIndex) {
         return cursor(fromIndex);
     }
 
@@ -171,7 +171,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      *
      * @return a new cursor iterator
      */
-    public CursorableLinkedList.Cursor cursor() {
+    public CursorableLinkedList.Cursor<E> cursor() {
         return cursor(0);
     }
 
@@ -202,8 +202,8 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * @throws IndexOutOfBoundsException if the index is out of range
      *      (index &lt; 0 || index &gt; size()).
      */
-    public CursorableLinkedList.Cursor cursor(int fromIndex) {
-        Cursor cursor = new Cursor(this, fromIndex);
+    public CursorableLinkedList.Cursor<E> cursor(int fromIndex) {
+        Cursor<E> cursor = new Cursor<E>(this, fromIndex);
         registerCursor(cursor);
         return cursor;
     }
@@ -217,7 +217,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * @param node  node to update
      * @param value  new value of the node
      */
-    protected void updateNode(Node node, Object value) {
+    protected void updateNode(Node<E> node, E value) {
         super.updateNode(node, value);
         broadcastNodeChanged(node);
     }
@@ -229,7 +229,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * @param insertBeforeNode  node to insert before
      * @throws NullPointerException if either node is null
      */
-    protected void addNode(Node nodeToInsert, Node insertBeforeNode) {
+    protected void addNode(Node<E> nodeToInsert, Node<E> insertBeforeNode) {
         super.addNode(nodeToInsert, insertBeforeNode);
         broadcastNodeInserted(nodeToInsert);
     }
@@ -240,7 +240,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * @param node  the node to remove
      * @throws NullPointerException if <code>node</code> is null
      */
-    protected void removeNode(Node node) {
+    protected void removeNode(Node<E> node) {
         super.removeNode(node);
         broadcastNodeRemoved(node);
     }
@@ -251,7 +251,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
     protected void removeAllNodes() {
         if (size() > 0) {
             // superclass implementation would break all the iterators
-            Iterator it = iterator();
+            Iterator<E> it = iterator();
             while (it.hasNext()) {
                 it.next();
                 it.remove();
@@ -265,16 +265,16 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * 
      * @param cursor  the cursor to register
      */
-    protected void registerCursor(Cursor cursor) {
+    protected void registerCursor(Cursor<E> cursor) {
         // We take this opportunity to clean the cursors list
         // of WeakReference objects to garbage-collected cursors.
-        for (Iterator it = cursors.iterator(); it.hasNext();) {
-            WeakReference ref = (WeakReference) it.next();
+        for (Iterator<WeakReference<Cursor<E>>> it = cursors.iterator(); it.hasNext();) {
+            WeakReference<Cursor<E>> ref = it.next();
             if (ref.get() == null) {
                 it.remove();
             }
         }
-        cursors.add(new WeakReference(cursor));
+        cursors.add(new WeakReference<Cursor<E>>(cursor));
     }
 
     /**
@@ -282,16 +282,15 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * 
      * @param cursor  the cursor to deregister
      */
-    protected void unregisterCursor(Cursor cursor) {
-        for (Iterator it = cursors.iterator(); it.hasNext();) {
-            WeakReference ref = (WeakReference) it.next();
-            Cursor cur = (Cursor) ref.get();
+    protected void unregisterCursor(Cursor<E> cursor) {
+        for (Iterator<WeakReference<Cursor<E>>> it = cursors.iterator(); it.hasNext();) {
+            WeakReference<Cursor<E>> ref = it.next();
+            Cursor<E> cur = ref.get();
             if (cur == null) {
                 // some other unrelated cursor object has been 
                 // garbage-collected; let's take the opportunity to
                 // clean up the cursors list anyway..
                 it.remove();
-
             } else if (cur == cursor) {
                 ref.clear();
                 it.remove();
@@ -307,11 +306,11 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * 
      * @param node  the node that was changed
      */
-    protected void broadcastNodeChanged(Node node) {
-        Iterator it = cursors.iterator();
+    protected void broadcastNodeChanged(Node<E> node) {
+        Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
         while (it.hasNext()) {
-            WeakReference ref = (WeakReference) it.next();
-            Cursor cursor = (Cursor) ref.get();
+            WeakReference<Cursor<E>> ref = it.next();
+            Cursor<E> cursor = ref.get();
             if (cursor == null) {
                 it.remove(); // clean up list
             } else {
@@ -326,11 +325,11 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * 
      * @param node  the node that was changed
      */
-    protected void broadcastNodeRemoved(Node node) {
-        Iterator it = cursors.iterator();
+    protected void broadcastNodeRemoved(Node<E> node) {
+        Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
         while (it.hasNext()) {
-            WeakReference ref = (WeakReference) it.next();
-            Cursor cursor = (Cursor) ref.get();
+            WeakReference<Cursor<E>> ref = it.next();
+            Cursor<E> cursor = ref.get();
             if (cursor == null) {
                 it.remove(); // clean up list
             } else {
@@ -345,11 +344,11 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * 
      * @param node  the node that was changed
      */
-    protected void broadcastNodeInserted(Node node) {
-        Iterator it = cursors.iterator();
+    protected void broadcastNodeInserted(Node<E> node) {
+        Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
         while (it.hasNext()) {
-            WeakReference ref = (WeakReference) it.next();
-            Cursor cursor = (Cursor) ref.get();
+            WeakReference<Cursor<E>> ref = it.next();
+            Cursor<E> cursor = ref.get();
             if (cursor == null) {
                 it.remove(); // clean up list
             } else {
@@ -382,8 +381,8 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * @param subList  the sublist to get an iterator for
      * @param fromIndex  the index to start from, relative to the sublist
      */
-    protected ListIterator createSubListListIterator(LinkedSubList subList, int fromIndex) {
-        SubCursor cursor = new SubCursor(subList, fromIndex);
+    protected ListIterator<E> createSubListListIterator(LinkedSubList<E> subList, int fromIndex) {
+        SubCursor<E> cursor = new SubCursor<E>(subList, fromIndex);
         registerCursor(cursor);
         return cursor;
     }
@@ -393,7 +392,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      * An extended <code>ListIterator</code> that allows concurrent changes to
      * the underlying list.
      */
-    public static class Cursor extends AbstractLinkedList.LinkedListIterator {
+    public static class Cursor<E> extends AbstractLinkedList.LinkedListIterator<E> {
         /** Is the cursor valid (not closed) */
         boolean valid = true;
         /** Is the next index valid */
@@ -406,7 +405,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          * 
          * @param index  the index to start from
          */
-        protected Cursor(CursorableLinkedList parent, int index) {
+        protected Cursor(CursorableLinkedList<E> parent, int index) {
             super(parent, index);
             valid = true;
         }
@@ -443,7 +442,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          * 
          * @param obj  the object to add
          */
-        public void add(Object obj) {
+        public void add(E obj) {
             // overridden, as the nodeInserted() method updates the iterator state
             super.add(obj);
             // matches the (next.previous == node) clause in nodeInserted()
@@ -467,7 +466,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
                     nextIndex = parent.size();
                 } else {
                     int pos = 0;
-                    Node temp = parent.header.next;
+                    Node<E> temp = parent.header.next;
                     while (temp != next) {
                         pos++;
                         temp = temp.next;
@@ -484,7 +483,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          * 
          * @param node  the node that changed
          */
-        protected void nodeChanged(Node node) {
+        protected void nodeChanged(Node<E> node) {
             // do nothing
         }
 
@@ -493,7 +492,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          * 
          * @param node  the node that was removed
          */
-        protected void nodeRemoved(Node node) {
+        protected void nodeRemoved(Node<E> node) {
             if (node == next && node == current) {
                 // state where next() followed by previous()
                 next = node.next;
@@ -521,7 +520,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          * 
          * @param node  the node that was added
          */
-        protected void nodeInserted(Node node) {
+        protected void nodeInserted(Node<E> node) {
             if (node.previous == current) {
                 next = node;
             } else if (next.previous == node) {
@@ -550,7 +549,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
          */
         public void close() {
             if (valid) {
-                ((CursorableLinkedList) parent).unregisterCursor(this);
+                ((CursorableLinkedList<E>) parent).unregisterCursor(this);
                 valid = false;
             }
         }
@@ -562,18 +561,18 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
      *
      * @since Commons Collections 3.2
      */
-    protected static class SubCursor extends Cursor {
+    protected static class SubCursor<E> extends Cursor<E> {
 
         /** The parent list */
-        protected final LinkedSubList sub;
+        protected final LinkedSubList<E> sub;
 
         /**
          * Constructs a new cursor.
          * 
          * @param index  the index to start from
          */
-        protected SubCursor(LinkedSubList sub, int index) {
-            super((CursorableLinkedList) sub.parent, index + sub.offset);
+        protected SubCursor(LinkedSubList<E> sub, int index) {
+            super((CursorableLinkedList<E>) sub.parent, index + sub.offset);
             this.sub = sub;
         }
 
@@ -589,7 +588,7 @@ public class CursorableLinkedList extends AbstractLinkedList implements Serializ
             return (super.nextIndex() - sub.offset);
         }
 
-        public void add(Object obj) {
+        public void add(E obj) {
             super.add(obj);
             sub.expectedModCount = parent.modCount;
             sub.size++;

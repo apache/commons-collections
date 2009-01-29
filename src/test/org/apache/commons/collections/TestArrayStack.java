@@ -17,7 +17,6 @@
 package org.apache.commons.collections;
 
 import java.util.EmptyStackException;
-import java.util.List;
 
 import junit.framework.Test;
 
@@ -28,10 +27,8 @@ import junit.framework.Test;
  * 
  * @author Craig McClanahan
  */
-public class TestArrayStack extends TestArrayList {
+public class TestArrayStack<E> extends TestArrayList<E> {
     
-    protected ArrayStack stack = null;
-
     public TestArrayStack(String testName) {
         super(testName);
     }
@@ -45,18 +42,13 @@ public class TestArrayStack extends TestArrayList {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public List makeEmptyList() {
-        return new ArrayStack();
-    }
-
-    public void setUp() {
-        stack = (ArrayStack) makeEmptyList();
-        list = stack;
+    public ArrayStack<E> makeObject() {
+        return new ArrayStack<E>();
     }
 
     //-----------------------------------------------------------------------
     public void testNewStack() {
-
+        ArrayStack<E> stack = makeObject();
         assertTrue("New stack is empty", stack.empty());
         assertEquals("New stack has size zero", stack.size(), 0);
 
@@ -76,16 +68,18 @@ public class TestArrayStack extends TestArrayList {
 
     }
 
+    @SuppressWarnings("unchecked")
     public void testPushPeekPop() {
+        ArrayStack<E> stack = makeObject();
 
-        stack.push("First Item");
+        stack.push((E) "First Item");
         assertTrue("Stack is not empty", !stack.empty());
         assertEquals("Stack size is one", stack.size(), 1);
         assertEquals("Top item is 'First Item'",
                      (String) stack.peek(), "First Item");
         assertEquals("Stack size is one", stack.size(), 1);
 
-        stack.push("Second Item");
+        stack.push((E) "Second Item");
         assertEquals("Stack size is two", stack.size(), 2);
         assertEquals("Top item is 'Second Item'",
                      (String) stack.peek(), "Second Item");
@@ -103,10 +97,12 @@ public class TestArrayStack extends TestArrayList {
 
     }
 
+    @SuppressWarnings("unchecked")
     public void testSearch() {
+        ArrayStack<E> stack = makeObject();
 
-        stack.push("First Item");
-        stack.push("Second Item");
+        stack.push((E) "First Item");
+        stack.push((E) "Second Item");
         assertEquals("Top item is 'Second Item'",
                      stack.search("Second Item"), 1);
         assertEquals("Next Item is 'First Item'",

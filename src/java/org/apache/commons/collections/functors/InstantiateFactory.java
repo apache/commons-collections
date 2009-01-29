@@ -39,7 +39,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
     /** The class to create */
     private final Class<T> iClassToInstantiate;
     /** The constructor parameter types */
-    private final Class[] iParamTypes;
+    private final Class<?>[] iParamTypes;
     /** The constructor arguments */
     private final Object[] iArgs;
     /** The constructor */
@@ -53,7 +53,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * @param args  the constructor arguments
      * @return a new instantiate factory
      */
-    public static <T> Factory<T> getInstance(Class<T> classToInstantiate, Class[] paramTypes, Object[] args) {
+    public static <T> Factory<T> getInstance(Class<T> classToInstantiate, Class<?>[] paramTypes, Object[] args) {
         if (classToInstantiate == null) {
             throw new IllegalArgumentException("Class to instantiate must not be null");
         }
@@ -93,7 +93,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * @param paramTypes  the constructor parameter types, not cloned
      * @param args  the constructor arguments, not cloned
      */
-    public InstantiateFactory(Class<T> classToInstantiate, Class[] paramTypes, Object[] args) {
+    public InstantiateFactory(Class<T> classToInstantiate, Class<?>[] paramTypes, Object[] args) {
         super();
         iClassToInstantiate = classToInstantiate;
         iParamTypes = paramTypes;
@@ -126,7 +126,6 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
 
         try {
             return iConstructor.newInstance(iArgs);
-
         } catch (InstantiationException ex) {
             throw new FunctorException("InstantiateFactory: InstantiationException", ex);
         } catch (IllegalAccessException ex) {

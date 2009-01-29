@@ -35,7 +35,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestIterator extends AbstractTestObject {
+public abstract class AbstractTestIterator<E> extends AbstractTestObject {
 
     /**
      * JUnit constructor.
@@ -52,23 +52,14 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
      * 
      * @return an empty iterator
      */
-    public abstract Iterator makeEmptyIterator();
-
-    /**
-     * Implement this method to return an iterator over a collection with elements.
-     * 
-     * @return a full iterator
-     */
-    public abstract Iterator makeFullIterator();
+    public abstract Iterator<E> makeEmptyIterator();
 
     /**
      * Implements the abstract superclass method to return the full iterator.
      * 
      * @return a full iterator
      */
-    public Object makeObject() {
-        return makeFullIterator();
-    }
+    public abstract Iterator<E> makeObject();
 
     /**
      * Whether or not we are testing an iterator that can be empty.
@@ -116,7 +107,7 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
             return;
         }
 
-        Iterator it = makeEmptyIterator();
+        Iterator<E> it = makeEmptyIterator();
         
         // hasNext() should return false
         assertEquals("hasNext() should return false for empty iterators", false, it.hasNext());
@@ -140,7 +131,7 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
             return;
         }
 
-        Iterator it = makeFullIterator();
+        Iterator<E> it = makeObject();
 
         // hasNext() must be true (ensure makeFullIterator is correct!)
         assertEquals("hasNext() should return true for at least one element", true, it.hasNext());
@@ -172,7 +163,7 @@ public abstract class AbstractTestIterator extends AbstractTestObject {
      * Test remove behaviour.
      */
     public void testRemove() {
-        Iterator it = makeFullIterator();
+        Iterator<E> it = makeObject();
         
         if (supportsRemove() == false) {
             // check for UnsupportedOperationException if not supported

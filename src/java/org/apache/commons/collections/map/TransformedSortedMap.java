@@ -43,9 +43,9 @@ import org.apache.commons.collections.Transformer;
  * 
  * @author Stephen Colebourne
  */
-public class TransformedSortedMap
-        extends TransformedMap
-        implements SortedMap {
+public class TransformedSortedMap<K, V>
+        extends TransformedMap<K, V>
+        implements SortedMap<K, V> {
 
     /** Serialization version */
     private static final long serialVersionUID = -8751771676410385778L;
@@ -62,8 +62,10 @@ public class TransformedSortedMap
      * @param valueTransformer  the predicate to validate to values, null means no transformation
      * @throws IllegalArgumentException if the map is null
      */
-    public static SortedMap decorate(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
-        return new TransformedSortedMap(map, keyTransformer, valueTransformer);
+    public static <K, V> SortedMap<K, V> decorate(SortedMap<K, V> map,
+            Transformer<? super K, ? extends K> keyTransformer,
+            Transformer<? super V, ? extends V> valueTransformer) {
+        return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
     /**
@@ -80,10 +82,12 @@ public class TransformedSortedMap
      * @throws IllegalArgumentException if map is null
      * @since Commons Collections 3.2
      */
-    public static SortedMap decorateTransform(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
-        TransformedSortedMap decorated = new TransformedSortedMap(map, keyTransformer, valueTransformer);
+    public static <K, V> SortedMap<K, V> decorateTransform(SortedMap<K, V> map,
+            Transformer<? super K, ? extends K> keyTransformer,
+            Transformer<? super V, ? extends V> valueTransformer) {
+        TransformedSortedMap<K, V> decorated = new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
         if (map.size() > 0) {
-            Map transformed = decorated.transformMap(map);
+            Map<K, V> transformed = decorated.transformMap(map);
             decorated.clear();
             decorated.decorated().putAll(transformed);  // avoids double transformation
         }
@@ -102,7 +106,9 @@ public class TransformedSortedMap
      * @param valueTransformer  the predicate to validate to values, null means no transformation
      * @throws IllegalArgumentException if the map is null
      */
-    protected TransformedSortedMap(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
+    protected TransformedSortedMap(SortedMap<K, V> map,
+            Transformer<? super K, ? extends K> keyTransformer,
+            Transformer<? super V, ? extends V> valueTransformer) {
         super(map, keyTransformer, valueTransformer);
     }
 
@@ -112,36 +118,36 @@ public class TransformedSortedMap
      * 
      * @return the decorated map
      */
-    protected SortedMap getSortedMap() {
-        return (SortedMap) map;
+    protected SortedMap<K, V> getSortedMap() {
+        return (SortedMap<K, V>) map;
     }
 
     //-----------------------------------------------------------------------
-    public Object firstKey() {
+    public K firstKey() {
         return getSortedMap().firstKey();
     }
 
-    public Object lastKey() {
+    public K lastKey() {
         return getSortedMap().lastKey();
     }
 
-    public Comparator comparator() {
+    public Comparator<? super K> comparator() {
         return getSortedMap().comparator();
     }
 
-    public SortedMap subMap(Object fromKey, Object toKey) {
-        SortedMap map = getSortedMap().subMap(fromKey, toKey);
-        return new TransformedSortedMap(map, keyTransformer, valueTransformer);
+    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+        SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
+        return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
-    public SortedMap headMap(Object toKey) {
-        SortedMap map = getSortedMap().headMap(toKey);
-        return new TransformedSortedMap(map, keyTransformer, valueTransformer);
+    public SortedMap<K, V> headMap(K toKey) {
+        SortedMap<K, V> map = getSortedMap().headMap(toKey);
+        return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
-    public SortedMap tailMap(Object fromKey) {
-        SortedMap map = getSortedMap().tailMap(fromKey);
-        return new TransformedSortedMap(map, keyTransformer, valueTransformer);
+    public SortedMap<K, V> tailMap(K fromKey) {
+        SortedMap<K, V> map = getSortedMap().tailMap(fromKey);
+        return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
 }

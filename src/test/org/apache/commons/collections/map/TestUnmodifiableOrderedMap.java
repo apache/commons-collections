@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,6 @@
 package org.apache.commons.collections.map;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,63 +25,63 @@ import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.Unmodifiable;
 
 /**
- * Extension of {@link AbstractTestOrderedMap} for exercising the 
+ * Extension of {@link AbstractTestOrderedMap} for exercising the
  * {@link UnmodifiableOrderedMap} implementation.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableOrderedMap extends AbstractTestOrderedMap {
-    
+public class TestUnmodifiableOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
+
     public TestUnmodifiableOrderedMap(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestUnmodifiableOrderedMap.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestUnmodifiableOrderedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
+
     //-------------------------------------------------------------------
-    
-    public Map makeEmptyMap() {
-        return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap()));
+
+    public OrderedMap<K, V> makeObject() {
+        return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap<K, V>()));
     }
-    
+
     public boolean isPutChangeSupported() {
         return false;
     }
-    
+
     public boolean isPutAddSupported() {
         return false;
     }
-    
+
     public boolean isRemoveSupported() {
         return false;
     }
-    
-    public Map makeFullMap() {
-        OrderedMap m = ListOrderedMap.decorate(new HashMap());
+
+    public OrderedMap<K, V> makeFullMap() {
+        OrderedMap<K, V> m = ListOrderedMap.decorate(new HashMap<K, V>());
         addSampleMappings(m);
         return UnmodifiableOrderedMap.decorate(m);
     }
-    
+
     //-----------------------------------------------------------------------
     public void testUnmodifiable() {
-        assertTrue(makeEmptyMap() instanceof Unmodifiable);
+        assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
-    
+
     public void testDecorateFactory() {
-        Map map = makeFullMap();
-        assertSame(map, UnmodifiableOrderedMap.decorate((OrderedMap) map));
-        
+        OrderedMap<K, V> map = makeFullMap();
+        assertSame(map, UnmodifiableOrderedMap.decorate(map));
+
         try {
             UnmodifiableOrderedMap.decorate(null);
             fail();

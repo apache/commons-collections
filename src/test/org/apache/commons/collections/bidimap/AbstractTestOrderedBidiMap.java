@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,13 +30,13 @@ import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 
 /**
  * Abstract test class for {@link OrderedBidiMap} methods and contracts.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
+public abstract class AbstractTestOrderedBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
 
     public AbstractTestOrderedBidiMap(String testName) {
         super(testName);
@@ -49,39 +49,39 @@ public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
     //-----------------------------------------------------------------------
     public void testFirstKey() {
         resetEmpty();
-        OrderedBidiMap bidi = (OrderedBidiMap) map;
+        OrderedBidiMap<K, V> bidi = getMap();
         try {
             bidi.firstKey();
             fail();
         } catch (NoSuchElementException ex) {}
-        
+
         resetFull();
-        bidi = (OrderedBidiMap) map;
-        Object confirmedFirst = confirmed.keySet().iterator().next();
+        bidi = getMap();
+        K confirmedFirst = confirmed.keySet().iterator().next();
         assertEquals(confirmedFirst, bidi.firstKey());
     }
-    
+
     public void testLastKey() {
         resetEmpty();
-        OrderedBidiMap bidi = (OrderedBidiMap) map;
+        OrderedBidiMap<K, V> bidi = getMap();
         try {
             bidi.lastKey();
             fail();
         } catch (NoSuchElementException ex) {}
-        
+
         resetFull();
-        bidi = (OrderedBidiMap) map;
-        Object confirmedLast = null;
-        for (Iterator it = confirmed.keySet().iterator(); it.hasNext();) {
+        bidi = getMap();
+        K confirmedLast = null;
+        for (Iterator<K> it = confirmed.keySet().iterator(); it.hasNext();) {
             confirmedLast = it.next();
         }
         assertEquals(confirmedLast, bidi.lastKey());
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
     public void testNextKey() {
         resetEmpty();
-        OrderedBidiMap bidi = (OrderedBidiMap) map;
+        OrderedBidiMap<K, V> bidi = (OrderedBidiMap<K, V>) map;
         assertEquals(null, bidi.nextKey(getOtherKeys()[0]));
         if (isAllowNullKey() == false) {
             try {
@@ -90,18 +90,18 @@ public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
         } else {
             assertEquals(null, bidi.nextKey(null));
         }
-        
+
         resetFull();
-        bidi = (OrderedBidiMap) map;
-        Iterator it = confirmed.keySet().iterator();
-        Object confirmedLast = it.next();
+        bidi = (OrderedBidiMap<K, V>) map;
+        Iterator<K> it = confirmed.keySet().iterator();
+        K confirmedLast = it.next();
         while (it.hasNext()) {
-            Object confirmedObject = it.next();
+            K confirmedObject = it.next();
             assertEquals(confirmedObject, bidi.nextKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
         assertEquals(null, bidi.nextKey(confirmedLast));
-        
+
         if (isAllowNullKey() == false) {
             try {
                 bidi.nextKey(null);
@@ -111,10 +111,10 @@ public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
             assertEquals(null, bidi.nextKey(null));
         }
     }
-    
+
     public void testPreviousKey() {
         resetEmpty();
-        OrderedBidiMap bidi = (OrderedBidiMap) map;
+        OrderedBidiMap<K, V> bidi = getMap();
         assertEquals(null, bidi.previousKey(getOtherKeys()[0]));
         if (isAllowNullKey() == false) {
             try {
@@ -123,20 +123,20 @@ public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
         } else {
             assertEquals(null, bidi.previousKey(null));
         }
-        
+
         resetFull();
-        bidi = (OrderedBidiMap) map;
-        List list = new ArrayList(confirmed.keySet());
+        bidi = getMap();
+        List<K> list = new ArrayList<K>(confirmed.keySet());
         Collections.reverse(list);
-        Iterator it = list.iterator();
-        Object confirmedLast = it.next();
+        Iterator<K> it = list.iterator();
+        K confirmedLast = it.next();
         while (it.hasNext()) {
-            Object confirmedObject = it.next();
+            K confirmedObject = it.next();
             assertEquals(confirmedObject, bidi.previousKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
         assertEquals(null, bidi.previousKey(confirmedLast));
-        
+
         if (isAllowNullKey() == false) {
             try {
                 bidi.previousKey(null);
@@ -146,21 +146,29 @@ public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
             assertEquals(null, bidi.previousKey(null));
         }
     }
-    
+
     //-----------------------------------------------------------------------
     public BulkTest bulkTestOrderedMapIterator() {
         return new TestBidiOrderedMapIterator();
     }
-    
-    public class TestBidiOrderedMapIterator extends AbstractTestMapIterator {
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrderedBidiMap<K, V> getMap() {
+        return (OrderedBidiMap<K, V>) super.getMap();
+    }
+
+    public class TestBidiOrderedMapIterator extends AbstractTestMapIterator<K, V> {
         public TestBidiOrderedMapIterator() {
             super("TestBidiOrderedMapIterator");
         }
-        
-        public Object[] addSetValues() {
+
+        public V[] addSetValues() {
             return AbstractTestOrderedBidiMap.this.getNewSampleValues();
         }
-        
+
         public boolean supportsRemove() {
             return AbstractTestOrderedBidiMap.this.isRemoveSupported();
         }
@@ -169,30 +177,30 @@ public abstract class AbstractTestOrderedBidiMap extends AbstractTestBidiMap {
             return AbstractTestOrderedBidiMap.this.isSetValueSupported();
         }
 
-        public MapIterator makeEmptyMapIterator() {
+        public MapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
-            return ((OrderedBidiMap) AbstractTestOrderedBidiMap.this.map).orderedMapIterator();
+            return AbstractTestOrderedBidiMap.this.getMap().mapIterator();
         }
 
-        public MapIterator makeFullMapIterator() {
+        public MapIterator<K, V> makeObject() {
             resetFull();
-            return ((OrderedBidiMap) AbstractTestOrderedBidiMap.this.map).orderedMapIterator();
+            return AbstractTestOrderedBidiMap.this.getMap().mapIterator();
         }
-        
-        public Map getMap() {
+
+        public Map<K, V> getMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestOrderedBidiMap.this.map;
         }
-        
-        public Map getConfirmedMap() {
+
+        public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestOrderedBidiMap.this.confirmed;
         }
-        
+
         public void verify() {
             super.verify();
             AbstractTestOrderedBidiMap.this.verify();
         }
     }
-    
+
 }

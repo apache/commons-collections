@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections.map;
 
-import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
 
@@ -37,9 +36,8 @@ import org.apache.commons.collections.OrderedMapIterator;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractOrderedMapDecorator
-        extends AbstractMapDecorator
-        implements OrderedMap {
+public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecorator<K, V>
+        implements OrderedMap<K, V> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -55,7 +53,7 @@ public abstract class AbstractOrderedMapDecorator
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractOrderedMapDecorator(OrderedMap map) {
+    public AbstractOrderedMapDecorator(OrderedMap<K, V> map) {
         super(map);
     }
 
@@ -64,33 +62,29 @@ public abstract class AbstractOrderedMapDecorator
      * 
      * @return the decorated map
      */
-    protected OrderedMap decorated() {
-        return (OrderedMap) super.decorated();
+    protected OrderedMap<K, V> decorated() {
+        return (OrderedMap<K, V>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public Object firstKey() {
+    public K firstKey() {
         return decorated().firstKey();
     }
 
-    public Object lastKey() {
+    public K lastKey() {
         return decorated().lastKey();
     }
 
-    public Object nextKey(Object key) {
+    public K nextKey(K key) {
         return decorated().nextKey(key);
     }
 
-    public Object previousKey(Object key) {
+    public K previousKey(K key) {
         return decorated().previousKey(key);
     }
 
-    public MapIterator mapIterator() {
+    public OrderedMapIterator<K, V> mapIterator() {
         return decorated().mapIterator();
-    }
-
-    public OrderedMapIterator orderedMapIterator() {
-        return decorated().orderedMapIterator();
     }
 
 }

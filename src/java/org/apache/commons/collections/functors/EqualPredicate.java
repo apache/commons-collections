@@ -62,7 +62,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T, O extends T> Predicate<T> equalPredicate(O object) {
+    public static <T> Predicate<T> equalPredicate(T object) {
         if (object == null) {
             return nullPredicate();
         }

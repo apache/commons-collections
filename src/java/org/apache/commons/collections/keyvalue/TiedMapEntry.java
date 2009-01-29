@@ -32,15 +32,16 @@ import org.apache.commons.collections.KeyValue;
  * 
  * @author Stephen Colebourne
  */
-public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
+public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Serializable {
 
     /** Serialization version */    
     private static final long serialVersionUID = -8453869361373831205L;
 
     /** The map underlying the entry/iterator */    
-    private final Map map;
+    private final Map<K, V> map;
+
     /** The key */
-    private final Object key;
+    private final K key;
 
     /**
      * Constructs a new entry with the given Map and key.
@@ -48,7 +49,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
      * @param map  the map
      * @param key  the key
      */
-    public TiedMapEntry(Map map, Object key) {
+    public TiedMapEntry(Map<K, V> map, K key) {
         super();
         this.map = map;
         this.key = key;
@@ -61,7 +62,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
      * 
      * @return the key
      */
-    public Object getKey() {
+    public K getKey() {
         return key;
     }
 
@@ -70,7 +71,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
      * 
      * @return the value
      */
-    public Object getValue() {
+    public V getValue() {
         return map.get(key);
     }
 
@@ -81,7 +82,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
      * @return the old value
      * @throws IllegalArgumentException if the value is set to this map entry
      */
-    public Object setValue(Object value) {
+    public V setValue(V value) {
         if (value == this) {
             throw new IllegalArgumentException("Cannot set value to this map entry");
         }
@@ -96,6 +97,7 @@ public class TiedMapEntry implements Map.Entry, KeyValue, Serializable {
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

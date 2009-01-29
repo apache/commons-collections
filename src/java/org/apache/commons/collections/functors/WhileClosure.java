@@ -30,15 +30,15 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public class WhileClosure implements Closure, Serializable {
+public class WhileClosure<E> implements Closure<E>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3110538116913760108L;
 
     /** The test condition */
-    private final Predicate iPredicate;
+    private final Predicate<? super E> iPredicate;
     /** The closure to call */
-    private final Closure iClosure;
+    private final Closure<? super E> iClosure;
     /** The flag, true is a do loop, false is a while */
     private final boolean iDoLoop;
 
@@ -51,14 +51,14 @@ public class WhileClosure implements Closure, Serializable {
      * @return the <code>while</code> closure
      * @throws IllegalArgumentException if the predicate or closure is null
      */
-    public static Closure getInstance(Predicate predicate, Closure closure, boolean doLoop) {
+    public static <E> Closure<E> getInstance(Predicate<? super E> predicate, Closure<? super E> closure, boolean doLoop) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
         if (closure == null) {
             throw new IllegalArgumentException("Closure must not be null");
         }
-        return new WhileClosure(predicate, closure, doLoop);
+        return new WhileClosure<E>(predicate, closure, doLoop);
     }
 
     /**
@@ -69,7 +69,7 @@ public class WhileClosure implements Closure, Serializable {
      * @param closure  the closure the execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      */
-    public WhileClosure(Predicate predicate, Closure closure, boolean doLoop) {
+    public WhileClosure(Predicate<? super E> predicate, Closure<? super E> closure, boolean doLoop) {
         super();
         iPredicate = predicate;
         iClosure = closure;
@@ -81,7 +81,7 @@ public class WhileClosure implements Closure, Serializable {
      * 
      * @param input  the input object
      */
-    public void execute(Object input) {
+    public void execute(E input) {
         if (iDoLoop) {
             iClosure.execute(input);
         }
@@ -96,7 +96,7 @@ public class WhileClosure implements Closure, Serializable {
      * @return the predicate
      * @since Commons Collections 3.1
      */
-    public Predicate getPredicate() {
+    public Predicate<? super E> getPredicate() {
         return iPredicate;
     }
 
@@ -106,7 +106,7 @@ public class WhileClosure implements Closure, Serializable {
      * @return the closure
      * @since Commons Collections 3.1
      */
-    public Closure getClosure() {
+    public Closure<? super E> getClosure() {
         return iClosure;
     }
 

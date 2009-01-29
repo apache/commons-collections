@@ -62,8 +62,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  *
  * @author Stephen Colebourne
  */
-public class LinkedMap
-        extends AbstractLinkedMap implements Serializable, Cloneable {
+public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializable, Cloneable {
 
     /** Serialisation version */
     private static final long serialVersionUID = 9077234323521161066L;
@@ -104,7 +103,7 @@ public class LinkedMap
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public LinkedMap(Map map) {
+    public LinkedMap(Map<K, V> map) {
         super(map);
     }
 
@@ -114,8 +113,8 @@ public class LinkedMap
      *
      * @return a shallow clone
      */
-    public Object clone() {
-        return super.clone();
+    public LinkedMap<K, V> clone() {
+        return (LinkedMap<K, V>) super.clone();
     }
     
     /**
@@ -142,7 +141,7 @@ public class LinkedMap
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public Object get(int index) {
+    public K get(int index) {
         return getEntry(index).getKey();
     }
     
@@ -153,7 +152,7 @@ public class LinkedMap
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public Object getValue(int index) {
+    public V getValue(int index) {
         return getEntry(index).getValue();
     }
     
@@ -166,7 +165,7 @@ public class LinkedMap
     public int indexOf(Object key) {
         key = convertKey(key);
         int i = 0;
-        for (LinkEntry entry = header.after; entry != header; entry = entry.after, i++) {
+        for (LinkEntry<K, V> entry = header.after; entry != header; entry = entry.after, i++) {
             if (isEqualKey(key, entry.key)) {
                 return i;
             }
@@ -182,7 +181,7 @@ public class LinkedMap
      *  or <code>null</code> if none existed
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public Object remove(int index) {
+    public V remove(int index) {
         return remove(get(index));
     }
 
@@ -201,29 +200,29 @@ public class LinkedMap
      * @see #keySet()
      * @return The ordered list of keys.  
      */
-    public List asList() {
-        return new LinkedMapList(this);
+    public List<K> asList() {
+        return new LinkedMapList<K>(this);
     }
 
     /**
      * List view of map.
      */
-    static class LinkedMapList extends AbstractList {
-        
-        final LinkedMap parent;
-        
-        LinkedMapList(LinkedMap parent) {
+    static class LinkedMapList<K> extends AbstractList<K> {
+
+        final LinkedMap<K, ?> parent;
+
+        LinkedMapList(LinkedMap<K, ?> parent) {
             this.parent = parent;
         }
-        
+
         public int size() {
             return parent.size();
         }
-    
-        public Object get(int index) {
+
+        public K get(int index) {
             return parent.get(index);
         }
-        
+
         public boolean contains(Object obj) {
             return parent.containsKey(obj);
         }
@@ -231,58 +230,58 @@ public class LinkedMap
         public int indexOf(Object obj) {
             return parent.indexOf(obj);
         }
-        
+
         public int lastIndexOf(Object obj) {
             return parent.indexOf(obj);
         }
-        
-        public boolean containsAll(Collection coll) {
+
+        public boolean containsAll(Collection<?> coll) {
             return parent.keySet().containsAll(coll);
         }
-        
-        public Object remove(int index) {
+
+        public K remove(int index) {
             throw new UnsupportedOperationException();
         }
-        
+
         public boolean remove(Object obj) {
             throw new UnsupportedOperationException();
         }
-        
-        public boolean removeAll(Collection coll) {
+
+        public boolean removeAll(Collection<?> coll) {
             throw new UnsupportedOperationException();
         }
-        
-        public boolean retainAll(Collection coll) {
+
+        public boolean retainAll(Collection<?> coll) {
             throw new UnsupportedOperationException();
         }
-        
+
         public void clear() {
             throw new UnsupportedOperationException();
         }
-        
+
         public Object[] toArray() {
             return parent.keySet().toArray();
         }
 
-        public Object[] toArray(Object[] array) {
+        public <T> T[] toArray(T[] array) {
             return parent.keySet().toArray(array);
         }
-        
-        public Iterator iterator() {
+
+        public Iterator<K> iterator() {
             return UnmodifiableIterator.decorate(parent.keySet().iterator());
         }
-        
-        public ListIterator listIterator() {
+
+        public ListIterator<K> listIterator() {
             return UnmodifiableListIterator.decorate(super.listIterator());
         }
-        
-        public ListIterator listIterator(int fromIndex) {
+
+        public ListIterator<K> listIterator(int fromIndex) {
             return UnmodifiableListIterator.decorate(super.listIterator(fromIndex));
         }
-        
-        public List subList(int fromIndexInclusive, int toIndexExclusive) {
+
+        public List<K> subList(int fromIndexInclusive, int toIndexExclusive) {
             return UnmodifiableList.decorate(super.subList(fromIndexInclusive, toIndexExclusive));
         }
     }
-    
+
 }

@@ -19,6 +19,7 @@ package org.apache.commons.collections;
 import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -91,12 +92,14 @@ public class MapUtils {
      * An empty unmodifiable map.
      * This was not provided in JDK1.2.
      */
-    public static final Map EMPTY_MAP = UnmodifiableMap.decorate(new HashMap(1));
+    public static final Map<Object, Object> EMPTY_MAP = UnmodifiableMap.decorate(new HashMap<Object, Object>(1));
+
     /**
      * An empty unmodifiable sorted map.
      * This is not provided in the JDK.
      */
-    public static final SortedMap EMPTY_SORTED_MAP = UnmodifiableSortedMap.decorate(new TreeMap());
+    public static final SortedMap<Object, Object> EMPTY_SORTED_MAP = UnmodifiableSortedMap.decorate(new TreeMap<Object, Object>());
+
     /**
      * String used to indent the verbose and debug Map prints.
      */
@@ -107,7 +110,7 @@ public class MapUtils {
      */
     public MapUtils() {
     }    
-    
+
     // Type safe getters
     //-------------------------------------------------------------------------
     /**
@@ -117,7 +120,7 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map, <code>null</code> if null map input
      */
-    public static Object getObject(final Map map, final Object key) {
+    public static <K, V> V getObject(final Map<? super K, V> map, final K key) {
         if (map != null) {
             return map.get(key);
         }
@@ -133,7 +136,7 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a String, <code>null</code> if null map input
      */
-    public static String getString(final Map map, final Object key) {
+    public static <K> String getString(final Map<? super K, ?> map, final K key) {
         if (map != null) {
             Object answer = map.get(key);
             if (answer != null) {
@@ -157,17 +160,17 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Boolean, <code>null</code> if null map input
      */
-    public static Boolean getBoolean(final Map map, final Object key) {
+    public static <K> Boolean getBoolean(final Map<? super K, ?> map, final K key) {
         if (map != null) {
             Object answer = map.get(key);
             if (answer != null) {
                 if (answer instanceof Boolean) {
                     return (Boolean) answer;
-                    
-                } else if (answer instanceof String) {
+                }
+                if (answer instanceof String) {
                     return new Boolean((String) answer);
-                    
-                } else if (answer instanceof Number) {
+                }
+                if (answer instanceof Number) {
                     Number n = (Number) answer;
                     return (n.intValue() != 0) ? Boolean.TRUE : Boolean.FALSE;
                 }
@@ -189,18 +192,17 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Number, <code>null</code> if null map input
      */
-    public static Number getNumber(final Map map, final Object key) {
+    public static <K> Number getNumber(final Map<? super K, ?> map, final K key) {
         if (map != null) {
             Object answer = map.get(key);
             if (answer != null) {
                 if (answer instanceof Number) {
                     return (Number) answer;
-                    
-                } else if (answer instanceof String) {
+                }
+                if (answer instanceof String) {
                     try {
                         String text = (String) answer;
                         return NumberFormat.getInstance().parse(text);
-                        
                     } catch (ParseException e) {
                         logInfo(e);
                     }
@@ -219,11 +221,12 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Byte, <code>null</code> if null map input
      */
-    public static Byte getByte(final Map map, final Object key) {
+    public static <K> Byte getByte(final Map<? super K, ?> map, final K key) {
         Number answer = getNumber(map, key);
         if (answer == null) {
             return null;
-        } else if (answer instanceof Byte) {
+        }
+        if (answer instanceof Byte) {
             return (Byte) answer;
         }
         return new Byte(answer.byteValue());
@@ -238,11 +241,12 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Short, <code>null</code> if null map input
      */
-    public static Short getShort(final Map map, final Object key) {
+    public static <K> Short getShort(final Map<? super K, ?> map, final K key) {
         Number answer = getNumber(map, key);
         if (answer == null) {
             return null;
-        } else if (answer instanceof Short) {
+        }
+        if (answer instanceof Short) {
             return (Short) answer;
         }
         return new Short(answer.shortValue());
@@ -257,11 +261,12 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Integer, <code>null</code> if null map input
      */
-    public static Integer getInteger(final Map map, final Object key) {
+    public static <K> Integer getInteger(final Map<? super K, ?> map, final K key) {
         Number answer = getNumber(map, key);
         if (answer == null) {
             return null;
-        } else if (answer instanceof Integer) {
+        }
+        if (answer instanceof Integer) {
             return (Integer) answer;
         }
         return new Integer(answer.intValue());
@@ -276,11 +281,12 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Long, <code>null</code> if null map input
      */
-    public static Long getLong(final Map map, final Object key) {
+    public static <K> Long getLong(final Map<? super K, ?> map, final K key) {
         Number answer = getNumber(map, key);
         if (answer == null) {
             return null;
-        } else if (answer instanceof Long) {
+        }
+        if (answer instanceof Long) {
             return (Long) answer;
         }
         return new Long(answer.longValue());
@@ -295,11 +301,12 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Float, <code>null</code> if null map input
      */
-    public static Float getFloat(final Map map, final Object key) {
+    public static <K> Float getFloat(final Map<? super K, ?> map, final K key) {
         Number answer = getNumber(map, key);
         if (answer == null) {
             return null;
-        } else if (answer instanceof Float) {
+        }
+        if (answer instanceof Float) {
             return (Float) answer;
         }
         return new Float(answer.floatValue());
@@ -314,11 +321,12 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Double, <code>null</code> if null map input
      */
-    public static Double getDouble(final Map map, final Object key) {
+    public static <K> Double getDouble(final Map<? super K, ?> map, final K key) {
         Number answer = getNumber(map, key);
         if (answer == null) {
             return null;
-        } else if (answer instanceof Double) {
+        }
+        if (answer instanceof Double) {
             return (Double) answer;
         }
         return new Double(answer.doubleValue());
@@ -334,11 +342,11 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Map, <code>null</code> if null map input
      */
-    public static Map getMap(final Map map, final Object key) {
+    public static <K> Map<?, ?> getMap(final Map<? super K, ?> map, final K key) {
         if (map != null) {
             Object answer = map.get(key);
             if (answer != null && answer instanceof Map) {
-                return (Map) answer;
+                return (Map<?, ?>) answer;
             }
         }
         return null;
@@ -356,10 +364,10 @@ public class MapUtils {
      *  @return  the value in the map, or defaultValue if the original value
      *    is null or the map is null
      */
-    public static Object getObject( Map map, Object key, Object defaultValue ) {
-        if ( map != null ) {
-            Object answer = map.get( key );
-            if ( answer != null ) {
+    public static <K, V> V getObject(Map<K, V> map, K key, V defaultValue) {
+        if (map != null) {
+            V answer = map.get(key);
+            if (answer != null) {
                 return answer;
             }
         }
@@ -378,9 +386,9 @@ public class MapUtils {
      *    original value is null, the map is null or the string conversion
      *    fails
      */
-    public static String getString( Map map, Object key, String defaultValue ) {
-        String answer = getString( map, key );
-        if ( answer == null ) {
+    public static <K> String getString(Map<? super K, ?> map, K key, String defaultValue) {
+        String answer = getString(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -398,9 +406,9 @@ public class MapUtils {
      *    original value is null, the map is null or the boolean conversion
      *    fails
      */
-    public static Boolean getBoolean( Map map, Object key, Boolean defaultValue ) {
-        Boolean answer = getBoolean( map, key );
-        if ( answer == null ) {
+    public static <K> Boolean getBoolean(Map<? super K, ?> map, K key, Boolean defaultValue) {
+        Boolean answer = getBoolean(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -418,9 +426,9 @@ public class MapUtils {
      *    original value is null, the map is null or the number conversion
      *    fails
      */
-    public static Number getNumber( Map map, Object key, Number defaultValue ) {
-        Number answer = getNumber( map, key );
-        if ( answer == null ) {
+    public static <K> Number getNumber(Map<? super K, ?> map, K key, Number defaultValue) {
+        Number answer = getNumber(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -438,9 +446,9 @@ public class MapUtils {
      *    original value is null, the map is null or the number conversion
      *    fails
      */
-    public static Byte getByte( Map map, Object key, Byte defaultValue ) {
-        Byte answer = getByte( map, key );
-        if ( answer == null ) {
+    public static <K> Byte getByte(Map<? super K, ?> map, K key, Byte defaultValue) {
+        Byte answer = getByte(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -458,9 +466,9 @@ public class MapUtils {
      *    original value is null, the map is null or the number conversion
      *    fails
      */
-    public static Short getShort( Map map, Object key, Short defaultValue ) {
-        Short answer = getShort( map, key );
-        if ( answer == null ) {
+    public static <K> Short getShort(Map<? super K, ?> map, K key, Short defaultValue) {
+        Short answer = getShort(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -478,9 +486,9 @@ public class MapUtils {
      *    original value is null, the map is null or the number conversion
      *    fails
      */
-    public static Integer getInteger( Map map, Object key, Integer defaultValue ) {
-        Integer answer = getInteger( map, key );
-        if ( answer == null ) {
+    public static <K> Integer getInteger(Map<? super K, ?> map, K key, Integer defaultValue) {
+        Integer answer = getInteger(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -498,9 +506,9 @@ public class MapUtils {
      *    original value is null, the map is null or the number conversion
      *    fails
      */
-    public static Long getLong( Map map, Object key, Long defaultValue ) {
-        Long answer = getLong( map, key );
-        if ( answer == null ) {
+    public static <K> Long getLong(Map<? super K, ?> map, K key, Long defaultValue) {
+        Long answer = getLong(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -518,9 +526,9 @@ public class MapUtils {
      *    original value is null, the map is null or the number conversion
      *    fails
      */
-    public static Float getFloat( Map map, Object key, Float defaultValue ) {
-        Float answer = getFloat( map, key );
-        if ( answer == null ) {
+    public static <K> Float getFloat(Map<? super K, ?> map, K key, Float defaultValue) {
+        Float answer = getFloat(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -538,9 +546,9 @@ public class MapUtils {
      *    original value is null, the map is null or the number conversion
      *    fails
      */
-    public static Double getDouble( Map map, Object key, Double defaultValue ) {
-        Double answer = getDouble( map, key );
-        if ( answer == null ) {
+    public static <K> Double getDouble(Map<? super K, ?> map, K key, Double defaultValue) {
+        Double answer = getDouble(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
@@ -558,14 +566,13 @@ public class MapUtils {
      *    original value is null, the map is null or the map conversion
      *    fails
      */
-    public static Map getMap( Map map, Object key, Map defaultValue ) {
-        Map answer = getMap( map, key );
-        if ( answer == null ) {
+    public static <K> Map<?, ?> getMap(Map<? super K, ?> map, K key, Map<?, ?> defaultValue) {
+        Map<?, ?> answer = getMap(map, key);
+        if (answer == null) {
             answer = defaultValue;
         }
         return answer;
     }
-    
 
     // Type safe primitive getters
     //-------------------------------------------------------------------------
@@ -583,12 +590,8 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a Boolean, <code>false</code> if null map input
      */
-    public static boolean getBooleanValue(final Map map, final Object key) {
-        Boolean booleanObject = getBoolean(map, key);
-        if (booleanObject == null) {
-            return false;
-        }
-        return booleanObject.booleanValue();
+    public static <K> boolean getBooleanValue(final Map<? super K, ?> map, final K key) {
+        return Boolean.TRUE.equals(getBoolean(map, key));
     }
 
     /**
@@ -600,7 +603,7 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a byte, <code>0</code> if null map input
      */
-    public static byte getByteValue(final Map map, final Object key) {
+    public static <K> byte getByteValue(final Map<? super K, ?> map, final K key) {
         Byte byteObject = getByte(map, key);
         if (byteObject == null) {
             return 0;
@@ -617,7 +620,7 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a short, <code>0</code> if null map input
      */
-    public static short getShortValue(final Map map, final Object key) {
+    public static <K> short getShortValue(final Map<? super K, ?> map, final K key) {
         Short shortObject = getShort(map, key);
         if (shortObject == null) {
             return 0;
@@ -634,7 +637,7 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as an int, <code>0</code> if null map input
      */
-    public static int getIntValue(final Map map, final Object key) {
+    public static <K> int getIntValue(final Map<? super K, ?> map, final K key) {
         Integer integerObject = getInteger(map, key);
         if (integerObject == null) {
             return 0;
@@ -651,7 +654,7 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a long, <code>0L</code> if null map input
      */
-    public static long getLongValue(final Map map, final Object key) {
+    public static <K> long getLongValue(final Map<? super K, ?> map, final K key) {
         Long longObject = getLong(map, key);
         if (longObject == null) {
             return 0L;
@@ -668,7 +671,7 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a float, <code>0.0F</code> if null map input
      */
-    public static float getFloatValue(final Map map, final Object key) {
+    public static <K> float getFloatValue(final Map<? super K, ?> map, final K key) {
         Float floatObject = getFloat(map, key);
         if (floatObject == null) {
             return 0f;
@@ -685,7 +688,7 @@ public class MapUtils {
      * @param key  the key to look up
      * @return the value in the Map as a double, <code>0.0</code> if null map input
      */
-    public static double getDoubleValue(final Map map, final Object key) {
+    public static <K> double getDoubleValue(final Map<? super K, ?> map, final K key) {
         Double doubleObject = getDouble(map, key);
         if (doubleObject == null) {
             return 0d;
@@ -712,7 +715,7 @@ public class MapUtils {
      *     conversion fails
      * @return the value in the Map as a Boolean, <code>defaultValue</code> if null map input
      */
-    public static boolean getBooleanValue(final Map map, final Object key, boolean defaultValue) {
+    public static <K> boolean getBooleanValue(final Map<? super K, ?> map, final K key, boolean defaultValue) {
         Boolean booleanObject = getBoolean(map, key);
         if (booleanObject == null) {
             return defaultValue;
@@ -732,7 +735,7 @@ public class MapUtils {
      *     conversion fails
      * @return the value in the Map as a byte, <code>defaultValue</code> if null map input
      */
-    public static byte getByteValue(final Map map, final Object key, byte defaultValue) {
+    public static <K> byte getByteValue(final Map<? super K, ?> map, final K key, byte defaultValue) {
         Byte byteObject = getByte(map, key);
         if (byteObject == null) {
             return defaultValue;
@@ -752,7 +755,7 @@ public class MapUtils {
      *     conversion fails
      * @return the value in the Map as a short, <code>defaultValue</code> if null map input
      */
-    public static short getShortValue(final Map map, final Object key, short defaultValue) {
+    public static <K> short getShortValue(final Map<? super K, ?> map, final K key, short defaultValue) {
         Short shortObject = getShort(map, key);
         if (shortObject == null) {
             return defaultValue;
@@ -772,7 +775,7 @@ public class MapUtils {
      *     conversion fails
      * @return the value in the Map as an int, <code>defaultValue</code> if null map input
      */
-    public static int getIntValue(final Map map, final Object key, int defaultValue) {
+    public static <K> int getIntValue(final Map<? super K, ?> map, final K key, int defaultValue) {
         Integer integerObject = getInteger(map, key);
         if (integerObject == null) {
             return defaultValue;
@@ -792,7 +795,7 @@ public class MapUtils {
      *     conversion fails
      * @return the value in the Map as a long, <code>defaultValue</code> if null map input
      */
-    public static long getLongValue(final Map map, final Object key, long defaultValue) {
+    public static <K> long getLongValue(final Map<? super K, ?> map, final K key, long defaultValue) {
         Long longObject = getLong(map, key);
         if (longObject == null) {
             return defaultValue;
@@ -812,7 +815,7 @@ public class MapUtils {
      *     conversion fails
      * @return the value in the Map as a float, <code>defaultValue</code> if null map input
      */
-    public static float getFloatValue(final Map map, final Object key, float defaultValue) {
+    public static <K> float getFloatValue(final Map<? super K, ?> map, final K key, float defaultValue) {
         Float floatObject = getFloat(map, key);
         if (floatObject == null) {
             return defaultValue;
@@ -832,7 +835,7 @@ public class MapUtils {
      *     conversion fails
      * @return the value in the Map as a double, <code>defaultValue</code> if null map input
      */
-    public static double getDoubleValue(final Map map, final Object key, double defaultValue) {
+    public static <K> double getDoubleValue(final Map<? super K, ?> map, final K key, double defaultValue) {
         Double doubleObject = getDouble(map, key);
         if (doubleObject == null) {
             return defaultValue;
@@ -849,11 +852,11 @@ public class MapUtils {
      * @param map  the map to convert to a Properties object, may not be null
      * @return the properties object
      */
-    public static Properties toProperties(final Map map) {
+    public static <K, V> Properties toProperties(final Map<K, V> map) {
         Properties answer = new Properties();
         if (map != null) {
-            for (Iterator iter = map.entrySet().iterator(); iter.hasNext();) {
-                Map.Entry entry = (Map.Entry) iter.next();
+            for (Iterator<Map.Entry<K, V>> iter = map.entrySet().iterator(); iter.hasNext();) {
+                Map.Entry<?, ?> entry = iter.next();
                 Object key = entry.getKey();
                 Object value = entry.getValue();
                 answer.put(key, value);
@@ -869,16 +872,16 @@ public class MapUtils {
      * @return the hashmap containing the data
      * @throws NullPointerException if the bundle is null
      */
-    public static Map toMap(final ResourceBundle resourceBundle) {
-        Enumeration enumeration = resourceBundle.getKeys();
-        Map map = new HashMap();
+    public static Map<String, Object> toMap(final ResourceBundle resourceBundle) {
+        Enumeration<String> enumeration = resourceBundle.getKeys();
+        Map<String, Object> map = new HashMap<String, Object>();
 
         while (enumeration.hasMoreElements()) {
             String key = (String) enumeration.nextElement();
             Object value = resourceBundle.getObject(key);
             map.put(key, value);
         }
-        
+
         return map;
     }
  
@@ -905,9 +908,9 @@ public class MapUtils {
     public static void verbosePrint(
         final PrintStream out,
         final Object label,
-        final Map map) {
+        final Map<?, ?> map) {
 
-        verbosePrintInternal(out, label, map, new ArrayStack(), false);
+        verbosePrintInternal(out, label, map, new ArrayStack<Map<?, ?>>(), false);
     }
 
     /**
@@ -931,9 +934,9 @@ public class MapUtils {
     public static void debugPrint(
         final PrintStream out,
         final Object label,
-        final Map map) {
+        final Map<?, ?> map) {
 
-        verbosePrintInternal(out, label, map, new ArrayStack(), true);
+        verbosePrintInternal(out, label, map, new ArrayStack<Map<?, ?>>(), true);
     }
 
     // Implementation methods
@@ -975,8 +978,8 @@ public class MapUtils {
     private static void verbosePrintInternal(
         final PrintStream out,
         final Object label,
-        final Map map,
-        final ArrayStack lineage,
+        final Map<?, ?> map,
+        final ArrayStack<Map<?, ?>> lineage,
         final boolean debug) {
         
         printIndent(out, lineage.size());
@@ -999,15 +1002,14 @@ public class MapUtils {
 
         lineage.push(map);
 
-        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
             Object childKey = entry.getKey();
             Object childValue = entry.getValue();
             if (childValue instanceof Map && !lineage.contains(childValue)) {
                 verbosePrintInternal(
                     out,
                     (childKey == null ? "null" : childKey),
-                    (Map) childValue,
+                    (Map<?, ?>) childValue,
                     lineage,
                     debug);
             } else {
@@ -1026,7 +1028,7 @@ public class MapUtils {
                             + (lineage.size() - 1 - lineageIndex - 1)
                             + "] Map)");
                 }
-                
+
                 if (debug && childValue != null) {
                     out.print(' ');
                     out.println(childValue.getClass().getName());
@@ -1035,7 +1037,7 @@ public class MapUtils {
                 }
             }
         }
-        
+
         lineage.pop();
 
         printIndent(out, lineage.size());
@@ -1052,7 +1054,7 @@ public class MapUtils {
             out.print(INDENT_STRING);
         }
     }
-    
+
     // Misc
     //-----------------------------------------------------------------------
     /**
@@ -1068,15 +1070,15 @@ public class MapUtils {
      * @return a new HashMap containing the inverted data
      * @throws NullPointerException if the map is null
      */
-    public static Map invertMap(Map map) {
-        Map out = new HashMap(map.size());
-        for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry) it.next();
+    public static <K, V> Map<V, K> invertMap(Map<K, V> map) {
+        Map<V, K> out = new HashMap<V, K>(map.size());
+        for (Iterator<Map.Entry<K, V>> it = map.entrySet().iterator(); it.hasNext();) {
+            Map.Entry<K, V> entry = it.next();
             out.put(entry.getValue(), entry.getKey());
         }
         return out;
     }
-     
+
     //-----------------------------------------------------------------------
     /**
      * Protects against adding null values to a map.
@@ -1089,18 +1091,16 @@ public class MapUtils {
      * which should be held in the same way in the map.
      * <p>
      * Keys are not validated.
+     * Note that this method can be used to circumvent the map's
+     * value type at runtime.
      * 
      * @param map  the map to add to, may not be null
      * @param key  the key
      * @param value  the value, null converted to ""
      * @throws NullPointerException if the map is null
      */
-    public static void safeAddToMap(Map map, Object key, Object value) throws NullPointerException {
-        if (value == null) {
-            map.put(key, "");
-        } else {
-            map.put(key, value);
-        }
+    public static <K> void safeAddToMap(Map<? super K, Object> map, K key, Object value) throws NullPointerException {
+        map.put(key, value == null ? "" : value);
     }
 
     //-----------------------------------------------------------------------
@@ -1151,7 +1151,8 @@ public class MapUtils {
      * @throws ClassCastException if the array contents is mixed
      * @since Commons Collections 3.2
      */
-    public static Map putAll(Map map, Object[] array) {
+    @SuppressWarnings("unchecked")
+    public static <K, V> Map<K, V> putAll(Map<K, V> map, Object[] array) {
         map.size();  // force NPE
         if (array == null || array.length == 0) {
             return map;
@@ -1159,12 +1160,12 @@ public class MapUtils {
         Object obj = array[0];
         if (obj instanceof Map.Entry) {
             for (int i = 0; i < array.length; i++) {
-                Map.Entry entry = (Map.Entry) array[i];
+                Map.Entry<K, V> entry = (Map.Entry<K, V>) array[i];
                 map.put(entry.getKey(), entry.getValue());
             }
         } else if (obj instanceof KeyValue) {
             for (int i = 0; i < array.length; i++) {
-                KeyValue keyval = (KeyValue) array[i];
+                KeyValue<K, V> keyval = (KeyValue<K, V>) array[i];
                 map.put(keyval.getKey(), keyval.getValue());
             }
         } else if (obj instanceof Object[]) {
@@ -1173,11 +1174,11 @@ public class MapUtils {
                 if (sub == null || sub.length < 2) {
                     throw new IllegalArgumentException("Invalid array element: " + i);
                 }
-                map.put(sub[0], sub[1]);
+                map.put((K) sub[0], (V) sub[1]);
             }
         } else {
             for (int i = 0; i < array.length - 1;) {
-                map.put(array[i++], array[i++]);
+                map.put((K) array[i++], (V) array[i++]);
             }
         }
         return map;
@@ -1193,6 +1194,7 @@ public class MapUtils {
      * @return true if empty or null
      * @since Commons Collections 3.2
      */
+    @SuppressWarnings("unchecked")
     public static boolean isEmpty(Map map) {
         return (map == null || map.isEmpty());
     }
@@ -1206,6 +1208,7 @@ public class MapUtils {
      * @return true if non-null and non-empty
      * @since Commons Collections 3.2
      */
+    @SuppressWarnings("unchecked")
     public static boolean isNotEmpty(Map map) {
         return !MapUtils.isEmpty(map);
     }
@@ -1235,7 +1238,7 @@ public class MapUtils {
      * @return a synchronized map backed by the given map
      * @throws IllegalArgumentException  if the map is null
      */
-    public static Map synchronizedMap(Map map) {
+    public static <K, V> Map<K, V> synchronizedMap(Map<K, V> map) {
         return Collections.synchronizedMap(map);
     }
 
@@ -1248,7 +1251,7 @@ public class MapUtils {
      * @return an unmodifiable map backed by the given map
      * @throws IllegalArgumentException  if the map is null
      */
-    public static Map unmodifiableMap(Map map) {
+    public static <K, V> Map<K, V> unmodifiableMap(Map<K, V> map) {
         return UnmodifiableMap.decorate(map);
     }
 
@@ -1267,7 +1270,7 @@ public class MapUtils {
      * @return a predicated map backed by the given map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static Map predicatedMap(Map map, Predicate keyPred, Predicate valuePred) {
+    public static <K, V> Map<K, V> predicatedMap(Map<K, V> map, Predicate<? super K> keyPred, Predicate<? super V> valuePred) {
         return PredicatedMap.decorate(map, keyPred, valuePred);
     }
 
@@ -1292,7 +1295,9 @@ public class MapUtils {
      * @return a transformed map backed by the given map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static Map transformedMap(Map map, Transformer keyTransformer, Transformer valueTransformer) {
+    public static <K, V> Map<K, V> transformedMap(Map<K, V> map,
+            Transformer<? super K, ? extends K> keyTransformer,
+            Transformer<? super V, ? extends V> valueTransformer) {
         return TransformedMap.decorate(map, keyTransformer, valueTransformer);
     }
     
@@ -1306,7 +1311,7 @@ public class MapUtils {
      * @return a fixed-size map backed by that map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static Map fixedSizeMap(Map map) {
+    public static <K, V> Map<K, V> fixedSizeMap(Map<K, V> map) {
         return FixedSizeMap.decorate(map);
     }
 
@@ -1338,8 +1343,8 @@ public class MapUtils {
      * @return a lazy map backed by the given map
      * @throws IllegalArgumentException  if the Map or Factory is null
      */
-    public static Map lazyMap(Map map, Factory factory) {
-        return LazyMap.decorate(map, factory);
+    public static <K, V> Map<K, V> lazyMap(Map<K, V> map, Factory<? extends V> factory) {
+        return LazyMap.getLazyMap(map, factory);
     }
 
     /**
@@ -1377,8 +1382,8 @@ public class MapUtils {
      * @return a lazy map backed by the given map
      * @throws IllegalArgumentException  if the Map or Transformer is null
      */
-    public static Map lazyMap(Map map, Transformer transformerFactory) {
-        return LazyMap.decorate(map, transformerFactory);
+    public static <K, V> Map<K, V> lazyMap(Map<K, V> map, Transformer<? super K, ? extends V> transformerFactory) {
+        return LazyMap.getLazyMap(map, transformerFactory);
     }
 
     /**
@@ -1392,7 +1397,7 @@ public class MapUtils {
      * @return an ordered map backed by the given map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static Map orderedMap(Map map) {
+    public static <K, V> Map<K, V> orderedMap(Map<K, V> map) {
         return ListOrderedMap.decorate(map);
     }
 
@@ -1405,8 +1410,8 @@ public class MapUtils {
      * @see MultiValueMap
      * @since Commons Collections 3.2
      */
-    public static Map multiValueMap(Map map) {
-        return MultiValueMap.decorate(map);
+    public static <K, V> MultiValueMap<K, V> multiValueMap(Map<K, ? super Collection<V>> map) {
+        return MultiValueMap.<K, V>decorate(map);
     }
 
     /**
@@ -1420,7 +1425,7 @@ public class MapUtils {
      * @see MultiValueMap
      * @since Commons Collections 3.2
      */
-    public static Map multiValueMap(Map map, Class collectionClass) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, C> map, Class<C> collectionClass) {
         return MultiValueMap.decorate(map, collectionClass);
     }
 
@@ -1435,7 +1440,7 @@ public class MapUtils {
      * @see MultiValueMap
      * @since Commons Collections 3.2
      */
-    public static Map multiValueMap(Map map, Factory collectionFactory) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, C> map, Factory<C> collectionFactory) {
         return MultiValueMap.decorate(map, collectionFactory);
     }
 
@@ -1464,7 +1469,7 @@ public class MapUtils {
      * @return a synchronized map backed by the given map
      * @throws IllegalArgumentException  if the map is null
      */
-    public static Map synchronizedSortedMap(SortedMap map) {
+    public static <K, V> SortedMap<K, V> synchronizedSortedMap(SortedMap<K, V> map) {
         return Collections.synchronizedSortedMap(map);
     }
 
@@ -1477,7 +1482,7 @@ public class MapUtils {
      * @return an unmodifiable map backed by the given map
      * @throws IllegalArgumentException  if the map is null
      */
-    public static Map unmodifiableSortedMap(SortedMap map) {
+    public static <K, V> SortedMap<K, V> unmodifiableSortedMap(SortedMap<K, V> map) {
         return UnmodifiableSortedMap.decorate(map);
     }
 
@@ -1496,7 +1501,8 @@ public class MapUtils {
      * @return a predicated map backed by the given map
      * @throws IllegalArgumentException  if the SortedMap is null
      */
-    public static SortedMap predicatedSortedMap(SortedMap map, Predicate keyPred, Predicate valuePred) {
+    public static <K, V> SortedMap<K, V> predicatedSortedMap(SortedMap<K, V> map,
+            Predicate<? super K> keyPred, Predicate<? super V> valuePred) {
         return PredicatedSortedMap.decorate(map, keyPred, valuePred);
     }
 
@@ -1521,7 +1527,9 @@ public class MapUtils {
      * @return a transformed map backed by the given map
      * @throws IllegalArgumentException  if the SortedMap is null
      */
-    public static SortedMap transformedSortedMap(SortedMap map, Transformer keyTransformer, Transformer valueTransformer) {
+    public static <K, V> SortedMap<K, V> transformedSortedMap(SortedMap<K, V> map,
+            Transformer<? super K, ? extends K> keyTransformer,
+            Transformer<? super V, ? extends V> valueTransformer) {
         return TransformedSortedMap.decorate(map, keyTransformer, valueTransformer);
     }
     
@@ -1535,7 +1543,7 @@ public class MapUtils {
      * @return a fixed-size map backed by that map
      * @throws IllegalArgumentException  if the SortedMap is null
      */
-    public static SortedMap fixedSizeSortedMap(SortedMap map) {
+    public static <K, V> SortedMap<K, V> fixedSizeSortedMap(SortedMap<K, V> map) {
         return FixedSizeSortedMap.decorate(map);
     }
 
@@ -1568,8 +1576,9 @@ public class MapUtils {
      * @return a lazy map backed by the given map
      * @throws IllegalArgumentException  if the SortedMap or Factory is null
      */
-    public static SortedMap lazySortedMap(SortedMap map, Factory factory) {
-        return LazySortedMap.decorate(map, factory);
+    public static <K, V> SortedMap<K, V> lazySortedMap(SortedMap<K, V> map,
+            Factory<? extends V> factory) {
+        return LazySortedMap.getLazySortedMap(map, factory);
     }
     
     /**
@@ -1607,8 +1616,9 @@ public class MapUtils {
      * @return a lazy map backed by the given map
      * @throws IllegalArgumentException  if the Map or Transformer is null
      */
-    public static SortedMap lazySortedMap(SortedMap map, Transformer transformerFactory) {
-        return LazySortedMap.decorate(map, transformerFactory);
+    public static <K, V> SortedMap<K, V> lazySortedMap(SortedMap<K, V> map,
+            Transformer<? super K, ? extends V> transformerFactory) {
+        return LazySortedMap.getLazySortedMap(map, transformerFactory);
     }
 
 }

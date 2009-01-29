@@ -31,9 +31,11 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractSetDecorator<E>
-        extends AbstractCollectionDecorator<E>
-        implements Set<E> {
+public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorator<E> implements
+        Set<E> {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -4678668309576958546L;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.

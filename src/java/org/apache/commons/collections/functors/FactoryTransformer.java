@@ -29,13 +29,13 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class FactoryTransformer implements Transformer, Serializable {
+public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -6817674502475353160L;
 
     /** The factory to wrap */
-    private final Factory iFactory;
+    private final Factory<? extends O> iFactory;
 
     /**
      * Factory method that performs validation.
@@ -44,11 +44,11 @@ public class FactoryTransformer implements Transformer, Serializable {
      * @return the <code>factory</code> transformer
      * @throws IllegalArgumentException if the factory is null
      */
-    public static Transformer getInstance(Factory factory) {
+    public static <I, O> Transformer<I, O> getInstance(Factory<? extends O> factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }
-        return new FactoryTransformer(factory);
+        return new FactoryTransformer<I, O>(factory);
     }
 
     /**
@@ -57,7 +57,7 @@ public class FactoryTransformer implements Transformer, Serializable {
      * 
      * @param factory  the factory to call, not null
      */
-    public FactoryTransformer(Factory factory) {
+    public FactoryTransformer(Factory<? extends O> factory) {
         super();
         iFactory = factory;
     }
@@ -69,7 +69,7 @@ public class FactoryTransformer implements Transformer, Serializable {
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public Object transform(Object input) {
+    public O transform(I input) {
         return iFactory.create();
     }
 
@@ -79,7 +79,7 @@ public class FactoryTransformer implements Transformer, Serializable {
      * @return the factory
      * @since Commons Collections 3.1
      */
-    public Factory getFactory() {
+    public Factory<? extends O> getFactory() {
         return iFactory;
     }
 

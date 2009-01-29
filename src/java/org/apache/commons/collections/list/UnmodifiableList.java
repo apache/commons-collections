@@ -35,8 +35,8 @@ import org.apache.commons.collections.iterators.UnmodifiableListIterator;
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableList
-        extends AbstractSerializableListDecorator
+public final class UnmodifiableList<E>
+        extends AbstractSerializableListDecorator<E>
         implements Unmodifiable {
 
     /** Serialization version */
@@ -48,11 +48,11 @@ public final class UnmodifiableList
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static List decorate(List list) {
+    public static <E> List<E> decorate(List<E> list) {
         if (list instanceof Unmodifiable) {
             return list;
         }
-        return new UnmodifiableList(list);
+        return new UnmodifiableList<E>(list);
     }
 
     //-----------------------------------------------------------------------
@@ -61,13 +61,14 @@ public final class UnmodifiableList
      * 
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
+     * @since Commons Collection 5
      */
-    private UnmodifiableList(List list) {
+    public UnmodifiableList(List<E> list) {
         super(list);
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
@@ -75,7 +76,7 @@ public final class UnmodifiableList
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -87,42 +88,42 @@ public final class UnmodifiableList
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
-    public ListIterator listIterator() {
+    public ListIterator<E> listIterator() {
         return UnmodifiableListIterator.decorate(decorated().listIterator());
     }
 
-    public ListIterator listIterator(int index) {
+    public ListIterator<E> listIterator(int index) {
         return UnmodifiableListIterator.decorate(decorated().listIterator(index));
     }
 
-    public void add(int index, Object object) {
+    public void add(int index, E object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(int index, Collection coll) {
+    public boolean addAll(int index, Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public Object remove(int index) {
+    public E remove(int index) {
         throw new UnsupportedOperationException();
     }
 
-    public Object set(int index, Object object) {
+    public E set(int index, E object) {
         throw new UnsupportedOperationException();
     }
 
-    public List subList(int fromIndex, int toIndex) {
-        List sub = decorated().subList(fromIndex, toIndex);
-        return new UnmodifiableList(sub);
+    public List<E> subList(int fromIndex, int toIndex) {
+        List<E> sub = decorated().subList(fromIndex, toIndex);
+        return new UnmodifiableList<E>(sub);
     }
 
 }

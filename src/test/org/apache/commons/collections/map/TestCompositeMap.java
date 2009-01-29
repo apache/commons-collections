@@ -33,7 +33,7 @@ import java.util.Collection;
  *
  * @author Brian McCallister
  */
-public class TestCompositeMap extends AbstractTestMap {
+public class TestCompositeMap<K, V> extends AbstractTestMap<K, V> {
     /** used as a flag in MapMutator tests */
     private boolean pass = false;
     
@@ -55,22 +55,20 @@ public class TestCompositeMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
     
-    public Map makeEmptyMap() {
-        CompositeMap map = new CompositeMap();
-        map.addComposited(new HashMap());
-        map.setMutator(new CompositeMap.MapMutator() {
-            public void resolveCollision(CompositeMap composite,
-            Map existing,
-            Map added,
-            Collection intersect) {
+    public CompositeMap<K, V> makeObject() {
+        CompositeMap<K, V> map = new CompositeMap<K, V>();
+        map.addComposited(new HashMap<K, V>());
+        map.setMutator(new CompositeMap.MapMutator<K, V>() {
+            public void resolveCollision(CompositeMap<K, V> composite, Map<K, V> existing,
+                    Map<K, V> added, Collection<K> intersect) {
                 // Do nothing
             }
             
-            public Object put(CompositeMap map, Map[] composited, Object key, Object value) {
+            public V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, V value) {
                 return composited[0].put(key, value);
             }
             
-            public void putAll(CompositeMap map, Map[] composited, Map t) {
+            public void putAll(CompositeMap<K, V> map, Map<K, V>[] composited, Map<? extends K, ? extends V> t) {
                 composited[0].putAll(t);
             }
             
@@ -78,30 +76,33 @@ public class TestCompositeMap extends AbstractTestMap {
         return map;
     }
     
-    private Map buildOne() {
-        HashMap map = new HashMap();
-        map.put("1", "one");
-        map.put("2", "two");
+    @SuppressWarnings("unchecked")
+    private Map<K, V> buildOne() {
+        HashMap<K, V> map = new HashMap<K, V>();
+        map.put((K) "1", (V) "one");
+        map.put((K) "2", (V) "two");
         return map;
     }
     
-    public Map buildTwo() {
-        HashMap map = new HashMap();
-        map.put("3", "three");
-        map.put("4", "four");
+    @SuppressWarnings("unchecked")
+    public Map<K, V> buildTwo() {
+        HashMap<K, V> map = new HashMap<K, V>();
+        map.put((K) "3", (V) "three");
+        map.put((K) "4", (V) "four");
         return map;
     }
     
     public void testGet() {
-        CompositeMap map = new CompositeMap(buildOne(), buildTwo());
+        CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
         Assert.assertEquals("one", map.get("1"));
         Assert.assertEquals("four", map.get("4"));
     }
     
+    @SuppressWarnings("unchecked")
     public void testAddComposited() {
-        CompositeMap map = new CompositeMap(buildOne(), buildTwo());
-        HashMap three = new HashMap();
-        three.put("5", "five");
+        CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
+        HashMap<K, V> three = new HashMap<K, V>();
+        three.put((K) "5", (V) "five");
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
         try {
@@ -112,10 +113,11 @@ public class TestCompositeMap extends AbstractTestMap {
         }
     }
     
+    @SuppressWarnings("unchecked")
     public void testRemoveComposited() {
-        CompositeMap map = new CompositeMap(buildOne(), buildTwo());
-        HashMap three = new HashMap();
-        three.put("5", "five");
+        CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
+        HashMap<K, V> three = new HashMap<K, V>();
+        three.put((K) "5", (V) "five");
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
         
@@ -127,10 +129,11 @@ public class TestCompositeMap extends AbstractTestMap {
         
     }
     
+    @SuppressWarnings("unchecked")
     public void testRemoveFromUnderlying() {
-        CompositeMap map = new CompositeMap(buildOne(), buildTwo());
-        HashMap three = new HashMap();
-        three.put("5", "five");
+        CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
+        HashMap<K, V> three = new HashMap<K, V>();
+        three.put((K) "5", (V) "five");
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
         
@@ -139,10 +142,11 @@ public class TestCompositeMap extends AbstractTestMap {
         assertFalse(map.containsKey("5"));
     }
     
+    @SuppressWarnings("unchecked")
     public void testRemoveFromComposited() {
-        CompositeMap map = new CompositeMap(buildOne(), buildTwo());
-        HashMap three = new HashMap();
-        three.put("5", "five");
+        CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
+        HashMap<K, V> three = new HashMap<K, V>();
+        three.put((K) "5", (V) "five");
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
         
@@ -152,21 +156,21 @@ public class TestCompositeMap extends AbstractTestMap {
     }
     
     public void testResolveCollision() {
-        CompositeMap map = new CompositeMap(buildOne(), buildTwo(), 
-            new CompositeMap.MapMutator() {
-            public void resolveCollision(CompositeMap composite,
-            Map existing,
-            Map added,
-            Collection intersect) {
+        CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(), 
+            new CompositeMap.MapMutator<K, V>() {
+            public void resolveCollision(CompositeMap<K, V> composite,
+            Map<K, V> existing,
+            Map<K, V> added,
+            Collection<K> intersect) {
                 pass = true;
             }
             
-            public Object put(CompositeMap map, Map[] composited, Object key, 
-                Object value) {
+            public V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, 
+                V value) {
                 throw new UnsupportedOperationException();
             }
             
-            public void putAll(CompositeMap map, Map[] composited, Map t) {
+            public void putAll(CompositeMap<K, V> map, Map<K, V>[] composited, Map<? extends K, ? extends V> t) {
                 throw new UnsupportedOperationException();
             }
         });
@@ -175,47 +179,48 @@ public class TestCompositeMap extends AbstractTestMap {
         assertTrue(pass);
     }
     
+    @SuppressWarnings("unchecked")
     public void testPut() {
-        CompositeMap map = new CompositeMap(buildOne(), buildTwo(), 
-            new CompositeMap.MapMutator() {
-            public void resolveCollision(CompositeMap composite,
-            Map existing,
-            Map added,
-            Collection intersect) {
+        CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(), 
+            new CompositeMap.MapMutator<K, V>() {
+            public void resolveCollision(CompositeMap<K, V> composite,
+            Map<K, V> existing,
+            Map<K, V> added,
+            Collection<K> intersect) {
                 throw new UnsupportedOperationException();
             }
             
-            public Object put(CompositeMap map, Map[] composited, Object key, 
-                Object value) {
+            public V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, 
+                V value) {
                 pass = true;
-                return "foo";
+                return (V) "foo";
             }
             
-            public void putAll(CompositeMap map, Map[] composited, Map t) {
+            public void putAll(CompositeMap<K, V> map, Map<K, V>[] composited, Map<? extends K, ? extends V> t) {
                 throw new UnsupportedOperationException();
             }
         });
         
-        map.put("willy", "wonka");
+        map.put((K) "willy", (V) "wonka");
         assertTrue(pass);
     }
     
     public void testPutAll() {
-        CompositeMap map = new CompositeMap(buildOne(), buildTwo(), 
-            new CompositeMap.MapMutator() {
-            public void resolveCollision(CompositeMap composite,
-            Map existing,
-            Map added,
-            Collection intersect) {
+        CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(), 
+            new CompositeMap.MapMutator<K, V>() {
+            public void resolveCollision(CompositeMap<K, V> composite,
+            Map<K, V> existing,
+            Map<K, V> added,
+            Collection<K> intersect) {
                 throw new UnsupportedOperationException();
             }
             
-            public Object put(CompositeMap map, Map[] composited, Object key,
-                Object value) {
+            public V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, 
+                V value) {
                 throw new UnsupportedOperationException();
             }
             
-            public void putAll(CompositeMap map, Map[] composited, Map t) {
+            public void putAll(CompositeMap<K, V> map, Map<K, V>[] composited, Map<? extends K, ? extends V> t) {
                 pass = true;
             }
         });

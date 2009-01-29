@@ -30,9 +30,11 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * 
  * @author Stephen Colebourne
  */
-public abstract class AbstractBufferDecorator<E>
-        extends AbstractCollectionDecorator<E>
-        implements Buffer<E> {
+public abstract class AbstractBufferDecorator<E> extends AbstractCollectionDecorator<E> implements
+        Buffer<E> {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -2629815475789577029L;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.

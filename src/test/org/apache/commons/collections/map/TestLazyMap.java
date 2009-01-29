@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,38 +27,38 @@ import org.apache.commons.collections.Transformer;
 import org.junit.Test;
 
 /**
- * Extension of {@link TestMap} for exercising the 
+ * Extension of {@link TestMap} for exercising the
  * {@link LazyMap} implementation.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
-public class TestLazyMap extends AbstractTestMap {
-    
+public class TestLazyMap<K, V> extends AbstractTestMap<K, V> {
+
 	private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
-    
+
     public TestLazyMap(String testName) {
         super(testName);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestLazyMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override
-	public <K,V> Map<K,V> makeEmptyMap() {
+	public LazyMap<K,V> makeObject() {
         return getLazyMap(new HashMap<K,V>(), FactoryUtils.<V>nullFactory());
     }
-    
+
     //-----------------------------------------------------------------------
     @Override
     public void testMapGet() {
     	//TODO eliminate need for this via superclass - see svn history.
     }
-    
+
     @Test
     public void mapGetWithFactory() {
         Map<Integer, Number> map = getLazyMap(new HashMap<Integer,Number>(), oneFactory);
@@ -70,13 +70,13 @@ public class TestLazyMap extends AbstractTestMap {
         assertEquals(1, i2);
         assertEquals(1, map.size());
         assertSame(i1, i2);
-        
+
         map = getLazyMap(new HashMap<Integer,Number>(), FactoryUtils.<Long>nullFactory());
         Object o = map.get("Five");
         assertEquals(null,o);
         assertEquals(1, map.size());
     }
-    
+
     @Test
     public void mapGetWithTransformer() {
     	Transformer<Number, Integer> intConverter = new Transformer<Number, Integer>(){
@@ -90,8 +90,8 @@ public class TestLazyMap extends AbstractTestMap {
     	assertEquals(123, i1);
     	assertEquals(1, map.size());
     }
-    
-    
+
+
     @Override
 	public String getCompatibilityVersion() {
         return "3.1";

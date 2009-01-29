@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -46,12 +46,12 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  * @author Tom Dunham
  */
-public class SetUniqueList extends AbstractSerializableListDecorator {
+public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 7196982186153478694L;
@@ -59,30 +59,29 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
     /**
      * Internal Set to maintain uniqueness.
      */
-    protected final Set set;
+    protected final Set<E> set;
 
     /**
      * Factory method to create a SetList using the supplied list to retain order.
      * <p>
      * If the list contains duplicates, these are removed (first indexed one kept).
      * A <code>HashSet</code> is used for the set behaviour.
-     * 
+     *
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static SetUniqueList decorate(List list) {
+    public static <E> SetUniqueList<E> decorate(List<E> list) {
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
         if (list.isEmpty()) {
-            return new SetUniqueList(list, new HashSet());
-        } else {
-            List temp = new ArrayList(list);
-            list.clear();
-            SetUniqueList sl = new SetUniqueList(list, new HashSet());
-            sl.addAll(temp);
-            return sl;
+            return new SetUniqueList<E>(list, new HashSet<E>());
         }
+        List<E> temp = new ArrayList<E>(list);
+        list.clear();
+        SetUniqueList<E> sl = new SetUniqueList<E>(list, new HashSet<E>());
+        sl.addAll(temp);
+        return sl;
     }
 
     //-----------------------------------------------------------------------
@@ -90,12 +89,12 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
      * Constructor that wraps (not copies) the List and specifies the set to use.
      * <p>
      * The set and list must both be correctly initialised to the same elements.
-     * 
+     *
      * @param set  the set to decorate, must not be null
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if set or list is null
      */
-    protected SetUniqueList(List list, Set set) {
+    protected SetUniqueList(List<E> list, Set<E> set) {
         super(list);
         if (set == null) {
             throw new IllegalArgumentException("Set must not be null");
@@ -106,10 +105,10 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
     //-----------------------------------------------------------------------
     /**
      * Gets an unmodifiable view as a Set.
-     * 
+     *
      * @return an unmodifiable set view
      */
-    public Set asSet() {
+    public Set<E> asSet() {
         return UnmodifiableSet.decorate(set);
     }
 
@@ -121,11 +120,11 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
      * The <code>List</code> interface requires that this method returns
      * <code>true</code> always. However this class may return <code>false</code>
      * because of the <code>Set</code> behaviour.
-     * 
+     *
      * @param object the object to add
      * @return true if object was added
      */
-    public boolean add(Object object) {
+    public boolean add(E object) {
         // gets initial size
         final int sizeBefore = size();
 
@@ -142,11 +141,11 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
      * <i>(Violation)</i>
      * The <code>List</code> interface makes the assumption that the element is
      * always inserted. This may not happen with this implementation.
-     * 
+     *
      * @param index  the index to insert at
      * @param object  the object to add
      */
-    public void add(int index, Object object) {
+    public void add(int index, E object) {
         // adds element if it is not contained already
         if (set.contains(object) == false) {
             super.add(index, object);
@@ -160,10 +159,10 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
      * <i>(Violation)</i>
      * The <code>List</code> interface makes the assumption that the element is
      * always inserted. This may not happen with this implementation.
-     * 
+     *
      * @param coll  the collection to add
      */
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         return addAll(size(), coll);
     }
 
@@ -176,22 +175,24 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
      * <i>(Violation)</i>
      * The <code>List</code> interface makes the assumption that the elements
      * are always inserted. This may not happen with this implementation.
-     * 
+     *
      * @param index  the index to insert at
      * @param coll  the collection to add in iterator order
      * @return true if this collection changed
      */
-    public boolean addAll(int index, Collection coll) {
-        // gets initial size
-        final int sizeBefore = size();
-
-        // adds all elements
-        for (final Iterator it = coll.iterator(); it.hasNext();) {
-            add(it.next());
+    public boolean addAll(int index, Collection<? extends E> coll) {
+        HashSet<E> temp = new HashSet<E>(coll);
+        temp.removeAll(set);
+        if (temp.isEmpty()) {
+            return false;
         }
-
-        // compares sizes to detect if collection changed
-        return sizeBefore != size();
+        for (E e : coll) {
+            if (temp.contains(e)) {
+                add(index, e);
+                index++;
+            }
+        }
+        return true;
     }
 
     //-----------------------------------------------------------------------
@@ -202,18 +203,18 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
      * Afterwards, any previous duplicate is removed
      * If the object is not already in the list then a normal set occurs.
      * If it is present, then the old version is removed.
-     * 
+     *
      * @param index  the index to insert at
      * @param object  the object to set
      * @return the previous object
      */
-    public Object set(int index, Object object) {
+    public E set(int index, E object) {
         int pos = indexOf(object);
-        Object removed = super.set(index, object);
+        E removed = super.set(index, object);
         if (pos == -1 || pos == index) {
             return removed;
         }
-        
+
         // the object is already in the uniq list
         // (and it hasn't been swapped with itself)
         super.remove(pos);  // remove the duplicate by index
@@ -227,19 +228,19 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
         return result;
     }
 
-    public Object remove(int index) {
-        Object result = super.remove(index);
+    public E remove(int index) {
+        E result = super.remove(index);
         set.remove(result);
         return result;
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         boolean result = super.removeAll(coll);
         set.removeAll(coll);
         return result;
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         boolean result = super.retainAll(coll);
         set.retainAll(coll);
         return result;
@@ -254,41 +255,61 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
         return set.contains(object);
     }
 
-    public boolean containsAll(Collection coll) {
+    public boolean containsAll(Collection<?> coll) {
         return set.containsAll(coll);
     }
 
-    public Iterator iterator() {
-        return new SetListIterator(super.iterator(), set);
+    public Iterator<E> iterator() {
+        return new SetListIterator<E>(super.iterator(), set);
     }
 
-    public ListIterator listIterator() {
-        return new SetListListIterator(super.listIterator(), set);
+    public ListIterator<E> listIterator() {
+        return new SetListListIterator<E>(super.listIterator(), set);
     }
 
-    public ListIterator listIterator(int index) {
-        return new SetListListIterator(super.listIterator(index), set);
+    public ListIterator<E> listIterator(int index) {
+        return new SetListListIterator<E>(super.listIterator(index), set);
     }
 
-    public List subList(int fromIndex, int toIndex) {
-        return new SetUniqueList(super.subList(fromIndex, toIndex), set);
+    public List<E> subList(int fromIndex, int toIndex) {
+        List<E> superSubList = super.subList(fromIndex, toIndex);
+        Set<E> subSet = createSetBasedOnList(set, superSubList);
+        return new SetUniqueList<E>(superSubList, subSet);
+    }
+
+    @SuppressWarnings("unchecked")
+    protected Set<E> createSetBasedOnList(Set<E> set, List<E> list) {
+        Set<E> subSet = null;
+        if (set.getClass().equals(HashSet.class)) {
+            subSet = new HashSet<E>();
+        } else {
+            try {
+                subSet = (Set<E>) set.getClass().newInstance();
+            } catch (InstantiationException ie) {
+                subSet = new HashSet<E>();
+            } catch (IllegalAccessException iae) {
+                subSet = new HashSet<E>();
+            }
+        }
+        subSet.addAll(list);
+        return subSet;
     }
 
     //-----------------------------------------------------------------------
     /**
      * Inner class iterator.
      */
-    static class SetListIterator extends AbstractIteratorDecorator {
-        
-        protected final Set set;
-        protected Object last = null;
-        
-        protected SetListIterator(Iterator it, Set set) {
+    static class SetListIterator<E> extends AbstractIteratorDecorator<E> {
+
+        protected final Set<E> set;
+        protected E last = null;
+
+        protected SetListIterator(Iterator<E> it, Set<E> set) {
             super(it);
             this.set = set;
         }
-        
-        public Object next() {
+
+        public E next() {
             last = super.next();
             return last;
         }
@@ -299,26 +320,26 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
             last = null;
         }
     }
-    
+
     /**
      * Inner class iterator.
      */
-    static class SetListListIterator extends AbstractListIteratorDecorator {
-        
-        protected final Set set;
-        protected Object last = null;
-        
-        protected SetListListIterator(ListIterator it, Set set) {
+    static class SetListListIterator<E> extends AbstractListIteratorDecorator<E> {
+
+        protected final Set<E> set;
+        protected E last = null;
+
+        protected SetListListIterator(ListIterator<E> it, Set<E> set) {
             super(it);
             this.set = set;
         }
-        
-        public Object next() {
+
+        public E next() {
             last = super.next();
             return last;
         }
 
-        public Object previous() {
+        public E previous() {
             last = super.previous();
             return last;
         }
@@ -329,16 +350,16 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
             last = null;
         }
 
-        public void add(Object object) {
+        public void add(E object) {
             if (set.contains(object) == false) {
                 super.add(object);
                 set.add(object);
             }
         }
-        
-        public void set(Object object) {
+
+        public void set(E object) {
             throw new UnsupportedOperationException("ListIterator does not support set");
         }
     }
-    
+
 }

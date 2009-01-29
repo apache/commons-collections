@@ -57,7 +57,7 @@ import java.util.Map;
  *
  * @author Commons-Collections team
  */
-public class CaseInsensitiveMap extends AbstractHashedMap implements Serializable, Cloneable {
+public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements Serializable, Cloneable {
 
     /** Serialisation version */
     private static final long serialVersionUID = -7074655917369299456L;
@@ -102,7 +102,7 @@ public class CaseInsensitiveMap extends AbstractHashedMap implements Serializabl
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public CaseInsensitiveMap(Map map) {
+    public CaseInsensitiveMap(Map<K, V> map) {
         super(map);
     }
 
@@ -119,9 +119,8 @@ public class CaseInsensitiveMap extends AbstractHashedMap implements Serializabl
     protected Object convertKey(Object key) {
         if (key != null) {
             return key.toString().toLowerCase();
-        } else {
-            return AbstractHashedMap.NULL;
         }
+        return AbstractHashedMap.NULL;
     }   
 
     //-----------------------------------------------------------------------
@@ -130,8 +129,8 @@ public class CaseInsensitiveMap extends AbstractHashedMap implements Serializabl
      *
      * @return a shallow clone
      */
-    public Object clone() {
-        return super.clone();
+    public CaseInsensitiveMap<K, V> clone() {
+        return (CaseInsensitiveMap<K, V>) super.clone();
     }
 
     /**

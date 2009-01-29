@@ -54,11 +54,11 @@ public final class UnmodifiableSortedBag<E>
      * @return an unmodifiable SortedBag
      * @throws IllegalArgumentException if bag is null
      */
-    public static <T> SortedBag<T> decorate(SortedBag<T> bag) {
+    public static <E> SortedBag<E> decorate(SortedBag<E> bag) {
         if (bag instanceof Unmodifiable) {
             return bag;
         }
-        return new UnmodifiableSortedBag<T>(bag);
+        return new UnmodifiableSortedBag<E>(bag);
     }
 
     //-----------------------------------------------------------------------
@@ -91,13 +91,14 @@ public final class UnmodifiableSortedBag<E>
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection<E>) in.readObject();
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return UnmodifiableIterator.decorate(decorated().iterator());
     }
 

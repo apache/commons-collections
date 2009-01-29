@@ -63,15 +63,13 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  * @author Rafael U.C. Afonso
  * @see LazyMap
  */
-public class DefaultedMap
-        extends AbstractMapDecorator
-        implements Map, Serializable {
+public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 19698628745827L;
 
     /** The transformer to use if the map does not contain a key */
-    protected final Object value;
+    private final Transformer<? super K, ? extends V> value;
 
     //-----------------------------------------------------------------------
     /**
@@ -83,11 +81,8 @@ public class DefaultedMap
      * @param defaultValue  the default value to return when the key is not found
      * @throws IllegalArgumentException if map is null
      */
-    public static Map decorate(Map map, Object defaultValue) {
-        if (defaultValue instanceof Transformer) {
-            defaultValue = ConstantTransformer.getInstance(defaultValue);
-        }
-        return new DefaultedMap(map, defaultValue);
+    public static <K, V> Map<K, V> decorate(Map<K, V> map, V defaultValue) {
+        return new DefaultedMap<K, V>(map, ConstantTransformer.getInstance(defaultValue));
     }
 
     /**
@@ -100,11 +95,11 @@ public class DefaultedMap
      * @param factory  the factory to use to create entries, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static Map decorate(Map map, Factory factory) {
+    public static <K, V> Map<K, V> decorate(Map<K, V> map, Factory<? extends V> factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }
-        return new DefaultedMap(map, FactoryTransformer.getInstance(factory));
+        return new DefaultedMap<K, V>(map, FactoryTransformer.getInstance(factory));
     }
 
     /**
@@ -118,11 +113,11 @@ public class DefaultedMap
      * @param transformer  the transformer to use as a factory to create entries, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static Map decorate(Map map, Transformer transformer) {
+    public static <K, V> Map<K, V> decorate(Map<K, V> map, Transformer<? super K, ? extends V> transformer) {
         if (transformer == null) {
            throw new IllegalArgumentException("Transformer must not be null");
        }
-       return new DefaultedMap(map, transformer);
+       return new DefaultedMap<K, V>(map, transformer);
     }
 
     //-----------------------------------------------------------------------
@@ -135,12 +130,18 @@ public class DefaultedMap
      * 
      * @param defaultValue  the default value to return when the key is not found
      */
-    public DefaultedMap(Object defaultValue) {
-        super(new HashMap());
-        if (defaultValue instanceof Transformer) {
-            defaultValue = ConstantTransformer.getInstance(defaultValue);
-        }
-        this.value = defaultValue;
+    public DefaultedMap(V defaultValue) {
+        this(ConstantTransformer.getInstance(defaultValue));
+    }
+
+    /**
+     * Constructs a new empty <code>DefaultedMap</code> that decorates
+     * a <code>HashMap</code>.
+     * <p>
+     * @param defaultValueTransformer transformer to use to generate missing values.
+     */
+    public DefaultedMap(Transformer<? super K, ? extends V> defaultValueTransformer) {
+        this(new HashMap<K, V>(), defaultValueTransformer);
     }
 
     /**
@@ -150,9 +151,9 @@ public class DefaultedMap
      * @param value  the value to use
      * @throws IllegalArgumentException if map or transformer is null
      */
-    protected DefaultedMap(Map map, Object value) {
+    protected DefaultedMap(Map<K, V> map, Transformer<? super K, ? extends V> defaultValueTransformer) {
         super(map);
-        this.value = value;
+        this.value = defaultValueTransformer;
     }
 
     //-----------------------------------------------------------------------
@@ -174,19 +175,18 @@ public class DefaultedMap
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
-    public Object get(Object key) {
+    @SuppressWarnings("unchecked")
+    public V get(Object key) {
         // create value for key if key is not currently in the map
         if (map.containsKey(key) == false) {
-            if (value instanceof Transformer) {
-                return ((Transformer) value).transform(key);
-            }
-            return value;
+            return value.transform((K) key);
         }
         return map.get(key);
     }

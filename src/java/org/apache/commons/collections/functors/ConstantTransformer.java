@@ -32,16 +32,27 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class ConstantTransformer implements Transformer, Serializable {
+public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 6374440726369055124L;
     
     /** Returns null each time */
-    public static final Transformer NULL_INSTANCE = new ConstantTransformer(null);
+    public static final Transformer<Object, Object> NULL_INSTANCE = new ConstantTransformer<Object, Object>(null);
 
     /** The closures to call in turn */
-    private final Object iConstant;
+    private final O iConstant;
+
+    /**
+     * Get a typed null instance.
+     * @param <I>
+     * @param <O>
+     * @return Transformer<I, O> that always returns null.
+     */
+    @SuppressWarnings("unchecked")
+    public static <I, O> Transformer<I, O> getNullInstance() {
+        return (Transformer<I, O>) NULL_INSTANCE;
+    }
 
     /**
      * Transformer method that performs validation.
@@ -49,11 +60,11 @@ public class ConstantTransformer implements Transformer, Serializable {
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
-    public static Transformer getInstance(Object constantToReturn) {
+    public static <I, O> Transformer<I, O> getInstance(O constantToReturn) {
         if (constantToReturn == null) {
-            return NULL_INSTANCE;
+            return getNullInstance();
         }
-        return new ConstantTransformer(constantToReturn);
+        return new ConstantTransformer<I, O>(constantToReturn);
     }
     
     /**
@@ -62,7 +73,7 @@ public class ConstantTransformer implements Transformer, Serializable {
      * 
      * @param constantToReturn  the constant to return each time
      */
-    public ConstantTransformer(Object constantToReturn) {
+    public ConstantTransformer(O constantToReturn) {
         super();
         iConstant = constantToReturn;
     }
@@ -73,7 +84,7 @@ public class ConstantTransformer implements Transformer, Serializable {
      * @param input  the input object which is ignored
      * @return the stored constant
      */
-    public Object transform(Object input) {
+    public O transform(I input) {
         return iConstant;
     }
 
@@ -83,8 +94,34 @@ public class ConstantTransformer implements Transformer, Serializable {
      * @return the constant
      * @since Commons Collections 3.1
      */
-    public Object getConstant() {
+    public O getConstant() {
         return iConstant;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj instanceof ConstantTransformer == false) {
+            return false;
+        }
+        Object otherConstant = ((ConstantTransformer<?, ?>) obj).getConstant();
+        return otherConstant == getConstant() || otherConstant != null && otherConstant.equals(getConstant());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        int result = "ConstantTransformer".hashCode() << 2;
+        if (getConstant() != null) {
+            result |= getConstant().hashCode();
+        }
+        return result;
+    }
 }

@@ -40,8 +40,8 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * 
  * @author Stephen Colebourne
  */
-public final class UnmodifiableSortedMap
-        extends AbstractSortedMapDecorator
+public final class UnmodifiableSortedMap<K, V>
+        extends AbstractSortedMapDecorator<K, V>
         implements Unmodifiable, Serializable {
 
     /** Serialization version */
@@ -53,11 +53,11 @@ public final class UnmodifiableSortedMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static SortedMap decorate(SortedMap map) {
+    public static <K, V> SortedMap<K, V> decorate(SortedMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
-        return new UnmodifiableSortedMap(map);
+        return new UnmodifiableSortedMap<K, V>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -67,10 +67,10 @@ public final class UnmodifiableSortedMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableSortedMap(SortedMap map) {
+    private UnmodifiableSortedMap(SortedMap<K, V> map) {
         super(map);
     }
-
+    
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
@@ -92,9 +92,10 @@ public final class UnmodifiableSortedMap
      * @throws ClassNotFoundException
      * @since Commons Collections 3.1
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        map = (Map) in.readObject();
+        map = (Map<K, V>) in.readObject();
     }
 
     //-----------------------------------------------------------------------
@@ -102,59 +103,53 @@ public final class UnmodifiableSortedMap
         throw new UnsupportedOperationException();
     }
 
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
-    public void putAll(Map mapToCopy) {
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
-    public Object remove(Object key) {
+    public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
-    public Set entrySet() {
-        Set set = super.entrySet();
-        return UnmodifiableEntrySet.decorate(set);
+    public Set<Map.Entry<K, V>> entrySet() {
+        return UnmodifiableEntrySet.decorate(super.entrySet());
     }
 
-    public Set keySet() {
-        Set set = super.keySet();
-        return UnmodifiableSet.decorate(set);
+    public Set<K> keySet() {
+        return UnmodifiableSet.decorate(super.keySet());
     }
 
-    public Collection values() {
-        Collection coll = super.values();
-        return UnmodifiableCollection.decorate(coll);
+    public Collection<V> values() {
+        return UnmodifiableCollection.decorate(super.values());
     }
 
     //-----------------------------------------------------------------------
-    public Object firstKey() {
+    public K firstKey() {
         return decorated().firstKey();
     }
 
-    public Object lastKey() {
+    public K lastKey() {
         return decorated().lastKey();
     }
 
-    public Comparator comparator() {
+    public Comparator<? super K> comparator() {
         return decorated().comparator();
     }
 
-    public SortedMap subMap(Object fromKey, Object toKey) {
-        SortedMap map = decorated().subMap(fromKey, toKey);
-        return new UnmodifiableSortedMap(map);
+    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+        return new UnmodifiableSortedMap<K, V>(decorated().subMap(fromKey, toKey));
     }
 
-    public SortedMap headMap(Object toKey) {
-        SortedMap map = decorated().headMap(toKey);
-        return new UnmodifiableSortedMap(map);
+    public SortedMap<K, V> headMap(K toKey) {
+        return new UnmodifiableSortedMap<K, V>(decorated().headMap(toKey));
     }
 
-    public SortedMap tailMap(Object fromKey) {
-        SortedMap map = decorated().tailMap(fromKey);
-        return new UnmodifiableSortedMap(map);
+    public SortedMap<K, V> tailMap(K fromKey) {
+        return new UnmodifiableSortedMap<K, V>(decorated().tailMap(fromKey));
     }
 
 }

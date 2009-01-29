@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,66 +22,67 @@ import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Unmodifiable;
 
 /**
- * Extension of {@link AbstractTestMap} for exercising the 
+ * Extension of {@link AbstractTestMap} for exercising the
  * {@link UnmodifiableMap} implementation.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
-public class TestUnmodifiableMap extends AbstractTestIterableMap{
-    
+public class TestUnmodifiableMap<K, V> extends AbstractTestIterableMap<K, V> {
+
     public TestUnmodifiableMap(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestUnmodifiableMap.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestUnmodifiableMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
+
     //-------------------------------------------------------------------
-    
-    public Map makeEmptyMap() {
-        return UnmodifiableMap.decorate(new HashMap());
+
+    public IterableMap<K, V> makeObject() {
+        return (IterableMap<K, V>) UnmodifiableMap.decorate(new HashMap<K, V>());
     }
-    
+
     public boolean isPutChangeSupported() {
         return false;
     }
-    
+
     public boolean isPutAddSupported() {
         return false;
     }
-    
+
     public boolean isRemoveSupported() {
         return false;
     }
-    
-    public Map makeFullMap() {
-        Map m = new HashMap();
+
+    public IterableMap<K, V> makeFullMap() {
+        Map<K, V> m = new HashMap<K, V>();
         addSampleMappings(m);
-        return UnmodifiableMap.decorate(m);
+        return (IterableMap<K, V>) UnmodifiableMap.decorate(m);
     }
-    
+
     //-----------------------------------------------------------------------
     public void testUnmodifiable() {
-        assertTrue(makeEmptyMap() instanceof Unmodifiable);
+        assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
-    
+
     public void testDecorateFactory() {
-        Map map = makeFullMap();
+        Map<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableMap.decorate(map));
-        
+
         try {
             UnmodifiableMap.decorate(null);
             fail();

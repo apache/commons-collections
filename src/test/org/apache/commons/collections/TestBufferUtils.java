@@ -42,16 +42,16 @@ public class TestBufferUtils extends BulkTest {
     }
 
     public void testpredicatedBuffer() {
-        Predicate predicate = new Predicate() {
+        Predicate<Object> predicate = new Predicate<Object>() {
             public boolean evaluate(Object o) {
                 return o instanceof String;
             }
         };
-        Buffer buffer = BufferUtils.predicatedBuffer(new ArrayStack(), predicate);
+        Buffer<Object> buffer = BufferUtils.predicatedBuffer(new ArrayStack<Object>(), predicate);
         assertTrue("returned object should be a PredicatedBuffer",
             buffer instanceof PredicatedBuffer);
         try {
-            buffer = BufferUtils.predicatedBuffer(new ArrayStack(), null);
+            buffer = BufferUtils.predicatedBuffer(new ArrayStack<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
         } catch (IllegalArgumentException ex) {
             // expected

@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,17 +24,16 @@ import junit.framework.TestSuite;
 
 /**
  * Test the TiedMapEntry class.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestTiedMapEntry extends AbstractTestMapEntry {
+public class TestTiedMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
 
     public TestTiedMapEntry(String testName) {
         super(testName);
-
     }
 
     public static void main(String[] args) {
@@ -49,10 +48,10 @@ public class TestTiedMapEntry extends AbstractTestMapEntry {
     /**
      * Gets the instance to test
      */
-    public Map.Entry makeMapEntry(Object key, Object value) {
-        Map map = new HashMap();
+    public Map.Entry<K, V> makeMapEntry(K key, V value) {
+        Map<K, V> map = new HashMap<K, V>();
         map.put(key, value);
-        return new TiedMapEntry(map, key);
+        return new TiedMapEntry<K, V>(map, key);
     }
 
     //-----------------------------------------------------------------------
@@ -66,29 +65,30 @@ public class TestTiedMapEntry extends AbstractTestMapEntry {
     /**
      * Tests the constructors.
      */
+    @SuppressWarnings("unchecked")
     public void testSetValue() {
-        Map map = new HashMap();
-        map.put("A", "a");
-        map.put("B", "b");
-        map.put("C", "c");
-        Map.Entry entry = new TiedMapEntry(map, "A");
+        Map<K, V> map = new HashMap<K, V>();
+        map.put((K) "A", (V) "a");
+        map.put((K) "B", (V) "b");
+        map.put((K) "C", (V) "c");
+        Map.Entry<K, V> entry = new TiedMapEntry<K, V>(map, (K) "A");
         assertSame("A", entry.getKey());
         assertSame("a", entry.getValue());
-        assertSame("a", entry.setValue("x"));
+        assertSame("a", entry.setValue((V) "x"));
         assertSame("A", entry.getKey());
         assertSame("x", entry.getValue());
-        
-        entry = new TiedMapEntry(map, "B");
+
+        entry = new TiedMapEntry<K, V>(map, (K) "B");
         assertSame("B", entry.getKey());
         assertSame("b", entry.getValue());
-        assertSame("b", entry.setValue("y"));
+        assertSame("b", entry.setValue((V) "y"));
         assertSame("B", entry.getKey());
         assertSame("y", entry.getValue());
-        
-        entry = new TiedMapEntry(map, "C");
+
+        entry = new TiedMapEntry<K, V>(map, (K) "C");
         assertSame("C", entry.getKey());
         assertSame("c", entry.getValue());
-        assertSame("c", entry.setValue("z"));
+        assertSame("c", entry.setValue((V) "z"));
         assertSame("C", entry.getKey());
         assertSame("z", entry.getValue());
     }

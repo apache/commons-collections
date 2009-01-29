@@ -16,8 +16,10 @@
  */
 package org.apache.commons.collections;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.apache.commons.collections.iterators.EnumerationIterator;
 
@@ -47,8 +49,21 @@ public class EnumerationUtils {
      * @param enumeration  the enumeration to traverse, which should not be <code>null</code>.
      * @throws NullPointerException if the enumeration parameter is <code>null</code>.
      */
-    public static List toList(Enumeration enumeration) {
-        return IteratorUtils.toList(new EnumerationIterator(enumeration));
+    public static <E> List<E> toList(Enumeration<E> enumeration) {
+        return IteratorUtils.toList(new EnumerationIterator<E>(enumeration));
     }
 
+    /**
+     * Override toList(Enumeration) for StringTokenizer as it implements Enumeration<String>
+     * for the sake of backward compatibility.
+     * @param stringTokenizer
+     * @return List<String>
+     */
+    public static List<String> toList(StringTokenizer stringTokenizer) {
+        List<String> result = new ArrayList<String>(stringTokenizer.countTokens());
+        while (stringTokenizer.hasMoreTokens()) {
+            result.add(stringTokenizer.nextToken());
+        }
+        return result;
+    }
 }

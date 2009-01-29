@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,13 +17,13 @@
 package org.apache.commons.collections.set;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
@@ -32,11 +32,11 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestTransformedSet extends AbstractTestSet {
-    
+public class TestTransformedSet<E> extends AbstractTestSet<E> {
+
     public TestTransformedSet(String testName) {
         super(testName);
     }
@@ -50,40 +50,46 @@ public class TestTransformedSet extends AbstractTestSet {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Collection makeConfirmedCollection() {
-        return new HashSet();
+    public Set<E> makeConfirmedCollection() {
+        return new HashSet<E>();
     }
 
-    public Collection makeConfirmedFullCollection() {
-        Set set = new HashSet();
+    public Set<E> makeConfirmedFullCollection() {
+        Set<E> set = new HashSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
     }
-    
-    public Set makeEmptySet() {
-        return TransformedSet.decorate(new HashSet(), TestTransformedCollection.NOOP_TRANSFORMER);
+
+    @SuppressWarnings("unchecked")
+    public Set<E> makeObject() {
+        return TransformedSet.decorate(new HashSet<E>(),
+                (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
-    public Set makeFullSet() {
-        Set list = new HashSet();
+    @SuppressWarnings("unchecked")
+    public Set<E> makeFullCollection() {
+        Set<E> list = new HashSet<E>();
         list.addAll(Arrays.asList(getFullElements()));
-        return TransformedSet.decorate(list, TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSet.decorate(list,
+                (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        Set set = TransformedSet.decorate(new HashSet(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Set<E> set = TransformedSet.decorate(new HashSet<E>(),
+                (Transformer<E, E>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
             set.add(els[i]);
             assertEquals(i + 1, set.size());
             assertEquals(true, set.contains(new Integer((String) els[i])));
             assertEquals(false, set.contains(els[i]));
         }
-        
+
         assertEquals(false, set.remove(els[0]));
         assertEquals(true, set.remove(new Integer((String) els[0])));
-        
+
     }
 
     public String getCompatibilityVersion() {

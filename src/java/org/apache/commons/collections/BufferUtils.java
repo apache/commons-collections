@@ -37,7 +37,7 @@ public class BufferUtils {
     /**
      * An empty unmodifiable buffer.
      */
-    public static final Buffer EMPTY_BUFFER = UnmodifiableBuffer.decorate(new ArrayStack(1));
+    public static final Buffer<Object> EMPTY_BUFFER = UnmodifiableBuffer.decorate(new ArrayStack<Object>(1));
 
     /**
      * <code>BufferUtils</code> should not normally be instantiated.
@@ -66,7 +66,7 @@ public class BufferUtils {
      * @return a synchronized buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static Buffer synchronizedBuffer(Buffer buffer) {
+    public static <E> Buffer<E> synchronizedBuffer(Buffer<E> buffer) {
         return SynchronizedBuffer.decorate(buffer);
     }
 
@@ -82,7 +82,7 @@ public class BufferUtils {
      * @return a blocking buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static Buffer blockingBuffer(Buffer buffer) {
+    public static <E> Buffer<E> blockingBuffer(Buffer<E> buffer) {
         return BlockingBuffer.decorate(buffer);
     }
 
@@ -100,7 +100,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer is null
      * @since Commons Collections 3.2
      */
-    public static Buffer blockingBuffer(Buffer buffer, long timeoutMillis) {
+    public static <E> Buffer<E> blockingBuffer(Buffer<E> buffer, long timeoutMillis) {
         return BlockingBuffer.decorate(buffer, timeoutMillis);
     }
 
@@ -117,7 +117,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException if the given buffer is null
      * @since Commons Collections 3.2
      */
-    public static Buffer boundedBuffer(Buffer buffer, int maximumSize) {
+    public static <E> Buffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize) {
         return BoundedBuffer.decorate(buffer, maximumSize);
     }
 
@@ -135,7 +135,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException if the given buffer is null
      * @since Commons Collections 3.2
      */
-    public static Buffer boundedBuffer(Buffer buffer, int maximumSize, long timeoutMillis) {
+    public static <E> Buffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize, long timeoutMillis) {
         return BoundedBuffer.decorate(buffer, maximumSize, timeoutMillis);
     }
 
@@ -146,7 +146,7 @@ public class BufferUtils {
      * @return an unmodifiable buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static Buffer unmodifiableBuffer(Buffer buffer) {
+    public static <E> Buffer<E> unmodifiableBuffer(Buffer<E> buffer) {
         return UnmodifiableBuffer.decorate(buffer);
     }
 
@@ -163,7 +163,7 @@ public class BufferUtils {
      * @return a predicated buffer
      * @throws IllegalArgumentException  if the Buffer or Predicate is null
      */
-    public static Buffer predicatedBuffer(Buffer buffer, Predicate predicate) {
+    public static <E> Buffer<E> predicatedBuffer(Buffer<E> buffer, Predicate<? super E> predicate) {
         return PredicatedBuffer.decorate(buffer, predicate);
     }
 
@@ -179,8 +179,17 @@ public class BufferUtils {
      * @return a transformed buffer backed by the given buffer
      * @throws IllegalArgumentException  if the Buffer or Transformer is null
      */
-    public static Buffer transformedBuffer(Buffer buffer, Transformer transformer) {
+    public static <E> Buffer<E> transformedBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
         return TransformedBuffer.decorate(buffer, transformer);
     }
 
+    /**
+     * Get an empty <code>Buffer</code>.
+     * @param <E>
+     * @return Buffer<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> Buffer<E> emptyBuffer() {
+        return (Buffer<E>) EMPTY_BUFFER;
+    }
 }

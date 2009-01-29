@@ -37,7 +37,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
      * 
      * @return a map iterator
      */
-    OrderedMapIterator<K, V> orderedMapIterator();
+    OrderedMapIterator<K, V> mapIterator();
 
     /**
      * Gets the first key currently in this map.

@@ -17,11 +17,11 @@
 package org.apache.commons.collections;
 
 import java.util.Collection;
-import java.util.Collections;
+//import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
+//import java.util.TreeMap;
 
 import org.apache.commons.collections.map.Flat3Map;
 
@@ -43,17 +43,17 @@ public class MapPerformance {
     }
     
     private static void testAll() {
-        Map dummyMap = new DummyMap();
-        Map hashMap = new HashMap();
+        Map<String, String> dummyMap = new DummyMap<String, String>();
+        Map<String, String> hashMap = new HashMap<String, String>();
 //        hashMap.put("Alpha", "A");
 //        hashMap.put("Beta", "B");
 //        hashMap.put("Gamma", "C");
 //        hashMap.put("Delta", "D");
-        Map flatMap = new Flat3Map(hashMap);
+        Map<String, String> flatMap = new Flat3Map<String, String>(hashMap);
         System.out.println(flatMap);
-        Map unmodHashMap = Collections.unmodifiableMap(new HashMap(hashMap));
+//        Map<String, String> unmodHashMap = Collections.unmodifiableMap(new HashMap<String, String>(hashMap));
 //        Map fastHashMap = new FastHashMap(hashMap);
-        Map treeMap = new TreeMap(hashMap);
+//        Map<String, String> treeMap = new TreeMap<String, String>(hashMap);
 //        Map linkedMap = new LinkedHashMap(hashMap);
 //        Map syncMap = Collections.unmodifiableMap(new HashMap(hashMap));
 //        Map bucketMap = new StaticBucketMap();
@@ -109,9 +109,9 @@ public class MapPerformance {
 //        test(doubleMap,     "     DoubleMap ");
     }
 
-    private static void test(Map map, String name) {
+    private static void test(Map<String, String> map, String name) {
         long start = 0, end = 0;
-        int total = 0;
+//        int total = 0;
         start = System.currentTimeMillis();
         for (int i = RUNS; i > 0; i--) {
 //            if (map.get("Alpha") != null) total++;
@@ -133,7 +133,7 @@ public class MapPerformance {
 
     // ----------------------------------------------------------------------
 
-    private static class DummyMap implements Map {
+    private static class DummyMap<K, V> implements Map<K, V> {
         public void clear() {
         }
         public boolean containsKey(Object key) {
@@ -142,30 +142,30 @@ public class MapPerformance {
         public boolean containsValue(Object value) {
             return false;
         }
-        public Set entrySet() {
+        public Set<Map.Entry<K, V>> entrySet() {
             return null;
         }
-        public Object get(Object key) {
+        public V get(Object key) {
             return null;
         }
         public boolean isEmpty() {
             return false;
         }
-        public Set keySet() {
+        public Set<K> keySet() {
             return null;
         }
-        public Object put(Object key, Object value) {
+        public V put(K key, V value) {
             return null;
         }
-        public void putAll(Map t) {
+        public void putAll(Map<? extends K, ? extends V> t) {
         }
-        public Object remove(Object key) {
+        public V remove(Object key) {
             return null;
         }
         public int size() {
             return 0;
         }
-        public Collection values() {
+        public Collection<V> values() {
             return null;
         }
     }

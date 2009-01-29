@@ -31,19 +31,19 @@ import org.apache.commons.collections.ResettableListIterator;
  * @author Stephen Colebourne
  * @author Rodney Waldhoff
  */
-public class SingletonListIterator implements ListIterator, ResettableListIterator {
+public class SingletonListIterator<E> implements ListIterator<E>, ResettableListIterator<E> {
 
     private boolean beforeFirst = true;
     private boolean nextCalled = false;
     private boolean removed = false;
-    private Object object;
+    private E object;
 
     /**
      * Constructs a new <code>SingletonListIterator</code>.
      *
      * @param object  the single object to return from the iterator
      */
-    public SingletonListIterator(Object object) {
+    public SingletonListIterator(E object) {
         super();
         this.object = object;
     }
@@ -100,7 +100,7 @@ public class SingletonListIterator implements ListIterator, ResettableListIterat
      * @throws NoSuchElementException if the single object has already 
      *    been returned
      */
-    public Object next() {
+    public E next() {
         if (!beforeFirst || removed) {
             throw new NoSuchElementException();
         }
@@ -118,7 +118,7 @@ public class SingletonListIterator implements ListIterator, ResettableListIterat
      * @throws NoSuchElementException if the single object has not already 
      *    been returned
      */
-    public Object previous() {
+    public E previous() {
         if (beforeFirst || removed) {
             throw new NoSuchElementException();
         }
@@ -147,7 +147,7 @@ public class SingletonListIterator implements ListIterator, ResettableListIterat
      *
      * @throws UnsupportedOperationException always
      */
-    public void add(Object obj) {
+    public void add(E obj) {
         throw new UnsupportedOperationException("add() is not supported by this iterator");
     }
     
@@ -158,7 +158,7 @@ public class SingletonListIterator implements ListIterator, ResettableListIterat
      * @throws IllegalStateException if <tt>next</tt> has not been called 
      *          or the object has been removed
      */
-    public void set(Object obj) {
+    public void set(E obj) {
         if (!nextCalled || removed) {
             throw new IllegalStateException();
         }

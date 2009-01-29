@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -27,57 +27,54 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Extension of {@link TestPredicatedMap} for exercising the 
+ * Extension of {@link TestPredicatedMap} for exercising the
  * {@link PredicatedSortedMap} implementation.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
-public class TestPredicatedSortedMap extends AbstractTestSortedMap{
-    
-    protected static final Predicate truePredicate = PredicateUtils.truePredicate();
-    protected static final Predicate testPredicate = new Predicate() {
+public class TestPredicatedSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
+
+    protected static final Predicate<Object> truePredicate = TruePredicate.truePredicate();
+
+    protected static final Predicate<Object> testPredicate = new Predicate<Object>() {
         public boolean evaluate(Object o) {
             return (o instanceof String);
         }
     };
-    
+
     public TestPredicatedSortedMap(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestPredicatedSortedMap.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestPredicatedSortedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------
-    protected SortedMap decorateMap(SortedMap map, Predicate keyPredicate, 
-        Predicate valuePredicate) {
+    protected SortedMap<K, V> decorateMap(SortedMap<K, V> map, Predicate<? super K> keyPredicate,
+        Predicate<? super V> valuePredicate) {
         return PredicatedSortedMap.decorate(map, keyPredicate, valuePredicate);
     }
-    
-    public Map makeEmptyMap() {
-        return decorateMap(new TreeMap(), truePredicate, truePredicate);
+
+    public SortedMap<K, V> makeObject() {
+        return decorateMap(new TreeMap<K, V>(), truePredicate, truePredicate);
     }
-   
-    public Map makeTestMap() {
-        return decorateMap(new TreeMap(), testPredicate, testPredicate);
-    } 
-    
-    public SortedMap makeTestSortedMap() {
-        return decorateMap(new TreeMap(), testPredicate, testPredicate);
+
+    public SortedMap<K, V> makeTestMap() {
+        return decorateMap(new TreeMap<K, V>(), testPredicate, testPredicate);
     }
-    
+
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;
@@ -89,28 +86,30 @@ public class TestPredicatedSortedMap extends AbstractTestSortedMap{
 
     // from TestPredicatedMap
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testEntrySet() {
-        SortedMap map = makeTestSortedMap();
+        SortedMap<K, V> map = makeTestMap();
         assertTrue("returned entryset should not be null",
             map.entrySet() != null);
-        map = decorateMap(new TreeMap(), null, null);
-        map.put("oneKey", "oneValue");
+        map = decorateMap(new TreeMap<K, V>(), null, null);
+        map.put((K) "oneKey", (V) "oneValue");
         assertTrue("returned entryset should contain one entry",
-            map.entrySet().size() == 1); 
+            map.entrySet().size() == 1);
         map = decorateMap(map, null, null);
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testPut() {
-        Map map = makeTestMap();
+        Map<K, V> map = makeTestMap();
         try {
-            map.put("Hi", new Integer(3));
+            map.put((K) "Hi", (V) new Integer(3));
             fail("Illegal value should raise IllegalArgument");
         } catch (IllegalArgumentException e) {
             // expected
         }
 
         try {
-            map.put(new Integer(3), "Hi");
+            map.put((K) new Integer(3), (V) "Hi");
             fail("Illegal key should raise IllegalArgument");
         } catch (IllegalArgumentException e) {
             // expected
@@ -119,11 +118,11 @@ public class TestPredicatedSortedMap extends AbstractTestSortedMap{
         assertTrue(!map.containsKey(new Integer(3)));
         assertTrue(!map.containsValue(new Integer(3)));
 
-        Map map2 = new HashMap();
-        map2.put("A", "a");
-        map2.put("B", "b");
-        map2.put("C", "c");
-        map2.put("c", new Integer(3));
+        Map<K, V> map2 = new HashMap<K, V>();
+        map2.put((K) "A", (V) "a");
+        map2.put((K) "B", (V) "b");
+        map2.put((K) "C", (V) "c");
+        map2.put((K) "c", (V) new Integer(3));
 
         try {
             map.putAll(map2);
@@ -132,52 +131,53 @@ public class TestPredicatedSortedMap extends AbstractTestSortedMap{
             // expected
         }
 
-        map.put("E", "e");
-        Iterator iterator = map.entrySet().iterator();
+        map.put((K) "E", (V) "e");
+        Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
         try {
-            Map.Entry entry = (Map.Entry)iterator.next();
-            entry.setValue(new Integer(3));
+            Map.Entry<K, V> entry = iterator.next();
+            entry.setValue((V) new Integer(3));
             fail("Illegal value should raise IllegalArgument");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        
-        map.put("F", "f");
+
+        map.put((K) "F", (V) "f");
         iterator = map.entrySet().iterator();
-        Map.Entry entry = (Map.Entry)iterator.next();
-        entry.setValue("x");
-        
+        Map.Entry<K, V> entry = iterator.next();
+        entry.setValue((V) "x");
+
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testSortOrder() {
-        SortedMap map = makeTestSortedMap();
-        map.put("A",  "a");
-        map.put("B", "b");
+        SortedMap<K, V> map = makeTestMap();
+        map.put((K) "A",  (V) "a");
+        map.put((K) "B", (V) "b");
         try {
-            map.put(null, "c");
+            map.put(null, (V) "c");
             fail("Null key should raise IllegalArgument");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        map.put("C", "c");
+        map.put((K) "C", (V) "c");
         try {
-            map.put("D", null);
+            map.put((K) "D", null);
             fail("Null value should raise IllegalArgument");
         } catch (IllegalArgumentException e) {
             // expected
         }
         assertEquals("First key should be A", map.firstKey(), "A");
         assertEquals("Last key should be C", map.lastKey(), "C");
-        assertEquals("First key in tail map should be B", 
-            map.tailMap("B").firstKey(), "B");
-        assertEquals("Last key in head map should be B", 
-            map.headMap("C").lastKey(), "B");
+        assertEquals("First key in tail map should be B",
+            map.tailMap((K) "B").firstKey(), "B");
+        assertEquals("Last key in head map should be B",
+            map.headMap((K) "C").lastKey(), "B");
         assertEquals("Last key in submap should be B",
-           map.subMap("A","C").lastKey(), "B");
-        
-        Comparator c = map.comparator();
-        assertTrue("natural order, so comparator should be null", 
+           map.subMap((K) "A",(K) "C").lastKey(), "B");
+
+        Comparator<? super K> c = map.comparator();
+        assertTrue("natural order, so comparator should be null",
             c == null);
     }
 

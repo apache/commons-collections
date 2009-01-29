@@ -63,9 +63,9 @@ public class CollectionUtils {
     private static class CardinalityHelper<O> {
         final Map<O, Integer> cardinalityA, cardinalityB;
         
-        public <I1 extends O, I2 extends O> CardinalityHelper(Iterable<I1> a, Iterable<I2> b) {
-            cardinalityA = CollectionUtils.<O, I1>getCardinalityMap(a);
-            cardinalityB = CollectionUtils.<O, I2>getCardinalityMap(b);
+        public CardinalityHelper(Iterable<? extends O> a, Iterable<? extends O> b) {
+            cardinalityA = CollectionUtils.<O>getCardinalityMap(a);
+            cardinalityB = CollectionUtils.<O>getCardinalityMap(b);
         }
         
         public final int max(Object obj) {
@@ -118,7 +118,6 @@ public class CollectionUtils {
         public Collection<O> list() {
             return newList;
         }
-
 
     }
 
@@ -292,9 +291,9 @@ public class CollectionUtils {
      *            super type of <I>.
      * @return the populated cardinality map
      */
-    public static <O, I extends O> Map<O, Integer> getCardinalityMap(final Iterable<I> coll) {
+    public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
         Map<O, Integer> count = new HashMap<O, Integer>();
-        for (I obj : coll) {
+        for (O obj : coll) {
             Integer c = count.get(obj);
             if (c == null) {
                 count.put(obj, 1);
@@ -490,7 +489,8 @@ public class CollectionUtils {
      * @param transformer
      *            the transformer to perform, may be null
      */
-    public static <C> void transform(Collection<C> collection, Transformer<? super C, ? extends C> transformer) {
+    public static <C> void transform(Collection<C> collection,
+            Transformer<? super C, ? extends C> transformer) {
         if (collection != null && transformer != null) {
             if (collection instanceof List) {
                 List<C> list = (List<C>) collection;
@@ -567,7 +567,8 @@ public class CollectionUtils {
      * @throws NullPointerException
      *             if the input collection is null
      */
-    public static <O, I extends O> Collection<O> select(Collection<I> inputCollection, Predicate<? super I> predicate) {
+    public static <O> Collection<O> select(Collection<? extends O> inputCollection,
+            Predicate<? super O> predicate) {
         return select(inputCollection, predicate, new ArrayList<O>(inputCollection.size()));
     }
 
@@ -586,9 +587,10 @@ public class CollectionUtils {
      *            the collection to output into, may not be null
      * @return outputCollection
      */
-    public static <O, I extends O, R extends Collection<O>> R select(Collection<I> inputCollection, Predicate<? super I> predicate, R outputCollection) {
+    public static <O, R extends Collection<? super O>> R select(Collection<? extends O> inputCollection,
+            Predicate<? super O> predicate, R outputCollection) {
         if (inputCollection != null && predicate != null) {
-            for (I item : inputCollection) {
+            for (O item : inputCollection) {
                 if (predicate.evaluate(item)) {
                     outputCollection.add(item);
                 }
@@ -612,7 +614,8 @@ public class CollectionUtils {
      * @throws NullPointerException
      *             if the input collection is null
      */
-    public static <O, I extends O> Collection<O> selectRejected(Collection<I> inputCollection, Predicate<? super I> predicate) {
+    public static <O> Collection<O> selectRejected(Collection<? extends O> inputCollection,
+            Predicate<? super O> predicate) {
         return selectRejected(inputCollection, predicate, new ArrayList<O>(inputCollection.size()));
     }
 
@@ -631,9 +634,10 @@ public class CollectionUtils {
      *            the collection to output into, may not be null
      * @return outputCollection
      */
-    public static <O, I extends O, R extends Collection<O>> R selectRejected(Collection<I> inputCollection, Predicate<? super I> predicate, R outputCollection) {
+    public static <O, R extends Collection<? super O>> R selectRejected(
+            Collection<? extends O> inputCollection, Predicate<? super O> predicate, R outputCollection) {
         if (inputCollection != null && predicate != null) {
-            for (I item : inputCollection) {
+            for (O item : inputCollection) {
                 if (!predicate.evaluate(item)) {
                     outputCollection.add(item);
                 }
@@ -658,7 +662,8 @@ public class CollectionUtils {
      * @throws NullPointerException
      *             if the input collection is null
      */
-    public static <I,O> Collection<O> collect(Iterable<I> inputCollection, Transformer<? super I, ? extends O> transformer) {
+    public static <I, O> Collection<O> collect(Iterable<I> inputCollection,
+            Transformer<? super I, ? extends O> transformer) {
         ArrayList<O> answer = new ArrayList<O>();
         collect(inputCollection, transformer, answer);
         return answer;
@@ -679,7 +684,8 @@ public class CollectionUtils {
      * @param <O> the type of object in the output collection
      * @return the transformed result (new list)
      */
-    public static <I,O> Collection<O> collect(Iterator<I> inputIterator, Transformer<? super I, ? extends O> transformer) {
+    public static <I, O> Collection<O> collect(Iterator<I> inputIterator,
+            Transformer<? super I, ? extends O> transformer) {
         ArrayList<O> answer = new ArrayList<O>();
         collect(inputIterator, transformer, answer);
         return answer;
@@ -701,7 +707,8 @@ public class CollectionUtils {
      * @return the outputCollection with the transformed input added
      * @throws NullPointerException if the output collection is null
      */
-    public static <I,O,T extends O, R extends Collection<O>> R collect(Iterable<I> inputCollection, final Transformer<? super I,T> transformer, final R outputCollection) {
+    public static <I, O, R extends Collection<? super O>> R collect(Iterable<? extends I> inputCollection,
+            final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
         if (inputCollection != null) {
             return collect(inputCollection.iterator(), transformer, outputCollection);
         }
@@ -725,11 +732,12 @@ public class CollectionUtils {
      * @throws NullPointerException if the output collection is null
      */
     //TODO - deprecate and replace with IteratorIterable
-    public static <I,O,T extends O, R extends Collection<O>> R collect(Iterator<I> inputIterator, final Transformer<? super I,T> transformer, final R outputCollection) {
+    public static <I, O, R extends Collection<? super O>> R collect(Iterator<? extends I> inputIterator,
+            final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
         if (inputIterator != null && transformer != null) {
             while (inputIterator.hasNext()) {
                 I item = inputIterator.next();
-                T value = transformer.transform(item);
+                O value = transformer.transform(item);
                 outputCollection.add(value);
             }
         }
@@ -813,7 +821,7 @@ public class CollectionUtils {
      * @throws NullPointerException
      *             if the collection or array is null
      */
-    public static <C, T extends C> void addAll(Collection<C> collection, T[] elements) {
+    public static <C> void addAll(Collection<C> collection, C[] elements) {
         for (int i = 0, size = elements.length; i < size; i++) {
             collection.add(elements[i]);
         }
@@ -913,13 +921,13 @@ public class CollectionUtils {
             throw new IndexOutOfBoundsException("Index cannot be negative: " + i);
         }
         if (object instanceof Map) {
-            Map map = (Map) object;
-            Iterator iterator = map.entrySet().iterator();
+            Map<?, ?> map = (Map<?, ?>) object;
+            Iterator<?> iterator = map.entrySet().iterator();
             return get(iterator, i);
         } else if (object instanceof Object[]) {
             return ((Object[]) object)[i];
         } else if (object instanceof Iterator) {
-            Iterator it = (Iterator) object;
+            Iterator<?> it = (Iterator<?>) object;
             while (it.hasNext()) {
                 i--;
                 if (i == -1) {
@@ -929,10 +937,10 @@ public class CollectionUtils {
             }
             throw new IndexOutOfBoundsException("Entry does not exist: " + i);
         } else if (object instanceof Collection) {
-            Iterator iterator = ((Collection) object).iterator();
+            Iterator<?> iterator = ((Collection<?>) object).iterator();
             return get(iterator, i);
         } else if (object instanceof Enumeration) {
-            Enumeration it = (Enumeration) object;
+            Enumeration<?> it = (Enumeration<?>) object;
             while (it.hasMoreElements()) {
                 i--;
                 if (i == -1) {
@@ -987,19 +995,19 @@ public class CollectionUtils {
     public static int size(Object object) {
         int total = 0;
         if (object instanceof Map) {
-            total = ((Map) object).size();
+            total = ((Map<?, ?>) object).size();
         } else if (object instanceof Collection) {
-            total = ((Collection) object).size();
+            total = ((Collection<?>) object).size();
         } else if (object instanceof Object[]) {
             total = ((Object[]) object).length;
         } else if (object instanceof Iterator) {
-            Iterator it = (Iterator) object;
+            Iterator<?> it = (Iterator<?>) object;
             while (it.hasNext()) {
                 total++;
                 it.next();
             }
         } else if (object instanceof Enumeration) {
-            Enumeration it = (Enumeration) object;
+            Enumeration<?> it = (Enumeration<?>) object;
             while (it.hasMoreElements()) {
                 total++;
                 it.nextElement();
@@ -1038,15 +1046,15 @@ public class CollectionUtils {
      */
     public static boolean sizeIsEmpty(Object object) {
         if (object instanceof Collection) {
-            return ((Collection) object).isEmpty();
+            return ((Collection<?>) object).isEmpty();
         } else if (object instanceof Map) {
-            return ((Map) object).isEmpty();
+            return ((Map<?, ?>) object).isEmpty();
         } else if (object instanceof Object[]) {
             return ((Object[]) object).length == 0;
         } else if (object instanceof Iterator) {
-            return ((Iterator) object).hasNext() == false;
+            return ((Iterator<?>) object).hasNext() == false;
         } else if (object instanceof Enumeration) {
-            return ((Enumeration) object).hasMoreElements() == false;
+            return ((Enumeration<?>) object).hasMoreElements() == false;
         } else if (object == null) {
             throw new IllegalArgumentException("Unsupported object type: null");
         } else {
@@ -1068,7 +1076,7 @@ public class CollectionUtils {
      * @return true if empty or null
      * @since Commons Collections 3.2
      */
-    public static boolean isEmpty(Collection coll) {
+    public static boolean isEmpty(Collection<?> coll) {
         return (coll == null || coll.isEmpty());
     }
 
@@ -1081,7 +1089,7 @@ public class CollectionUtils {
      * @return true if non-null and non-empty
      * @since Commons Collections 3.2
      */
-    public static boolean isNotEmpty(Collection coll) {
+    public static boolean isNotEmpty(Collection<?> coll) {
         return !isEmpty(coll);
     }
 
@@ -1120,17 +1128,17 @@ public class CollectionUtils {
      * @return true if the BoundedCollection is full
      * @throws NullPointerException if the collection is null
      */
-    public static boolean isFull(Collection coll) {
+    @SuppressWarnings("unchecked")
+    public static boolean isFull(Collection<?> coll) {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }
         if (coll instanceof BoundedCollection) {
-            return ((BoundedCollection) coll).isFull();
+            return ((BoundedCollection<?>) coll).isFull();
         }
         try {
-            BoundedCollection bcoll = UnmodifiableBoundedCollection.decorateUsing(coll);
+            BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.decorateUsing((Collection<Object>) coll);
             return bcoll.isFull();
-
         } catch (IllegalArgumentException ex) {
             return false;
         }
@@ -1151,17 +1159,17 @@ public class CollectionUtils {
      * @return the maximum size of the BoundedCollection, -1 if no maximum size
      * @throws NullPointerException if the collection is null
      */
-    public static int maxSize(Collection coll) {
+    @SuppressWarnings("unchecked")
+    public static int maxSize(Collection<?> coll) {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }
         if (coll instanceof BoundedCollection) {
-            return ((BoundedCollection) coll).maxSize();
+            return ((BoundedCollection<?>) coll).maxSize();
         }
         try {
-            BoundedCollection bcoll = UnmodifiableBoundedCollection.decorateUsing(coll);
+            BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.decorateUsing((Collection<Object>) coll);
             return bcoll.maxSize();
-
         } catch (IllegalArgumentException ex) {
             return -1;
         }
@@ -1203,7 +1211,7 @@ public class CollectionUtils {
      * @throws NullPointerException if either parameter is null
      * @since Commons Collections 3.3 (method existed in 3.2 but was completely broken)
      */
-    public static Collection removeAll(Collection collection, Collection remove) {
+    public static <E> Collection<E> removeAll(Collection<E> collection, Collection<?> remove) {
         return ListUtils.removeAll(collection, remove);
     }
 
@@ -1277,7 +1285,7 @@ public class CollectionUtils {
      * @return a transformed collection backed by the given collection
      * @throws IllegalArgumentException  if the Collection or Transformer is null
      */
-    public static Collection transformedCollection(Collection collection, Transformer transformer) {
+    public static <E> Collection<E> transformedCollection(Collection<E> collection, Transformer<? super E, ? extends E> transformer) {
         return TransformedCollection.decorate(collection, transformer);
     }
 

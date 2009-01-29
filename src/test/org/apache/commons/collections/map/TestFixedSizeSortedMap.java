@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections.map;
 
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -30,10 +29,10 @@ import org.apache.commons.collections.BulkTest;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
+public class TestFixedSizeSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
 
     public TestFixedSizeSortedMap(String testName) {
         super(testName);
@@ -49,16 +48,16 @@ public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
     }
 
     //-----------------------------------------------------------------------
-    public Map makeEmptyMap() {
-        return FixedSizeSortedMap.decorate(new TreeMap());
+    public SortedMap<K, V> makeObject() {
+        return FixedSizeSortedMap.decorate(new TreeMap<K, V>());
     }
 
-    public Map makeFullMap() {
-        SortedMap map = new TreeMap();
+    public SortedMap<K, V> makeFullMap() {
+        SortedMap<K, V> map = new TreeMap<K, V>();
         addSampleMappings(map);
         return FixedSizeSortedMap.decorate(map);
     }
-    
+
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;
@@ -76,7 +75,7 @@ public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
     public String getCompatibilityVersion() {
         return "3.1";
     }
-    
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(

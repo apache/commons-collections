@@ -28,10 +28,10 @@ import org.apache.commons.collections.MapIterator;
  * 
  * @author Stephen Colebourne
  */
-public class AbstractMapIteratorDecorator implements MapIterator {
+public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
 
     /** The iterator being decorated */
-    protected final MapIterator iterator;
+    protected final MapIterator<K, V> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -40,7 +40,7 @@ public class AbstractMapIteratorDecorator implements MapIterator {
      * @param iterator  the iterator to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractMapIteratorDecorator(MapIterator iterator) {
+    public AbstractMapIteratorDecorator(MapIterator<K, V> iterator) {
         super();
         if (iterator == null) {
             throw new IllegalArgumentException("MapIterator must not be null");
@@ -53,7 +53,7 @@ public class AbstractMapIteratorDecorator implements MapIterator {
      * 
      * @return the decorated iterator
      */
-    protected MapIterator getMapIterator() {
+    protected MapIterator<K, V> getMapIterator() {
         return iterator;
     }
 
@@ -62,7 +62,7 @@ public class AbstractMapIteratorDecorator implements MapIterator {
         return iterator.hasNext();
     }
 
-    public Object next() {
+    public K next() {
         return iterator.next();
     }
 
@@ -70,15 +70,15 @@ public class AbstractMapIteratorDecorator implements MapIterator {
         iterator.remove();
     }
     
-    public Object getKey() {
+    public K getKey() {
         return iterator.getKey();
     }
 
-    public Object getValue() {
+    public V getValue() {
         return iterator.getValue();
     }
 
-    public Object setValue(Object obj) {
+    public V setValue(V obj) {
         return iterator.setValue(obj);
     }
 

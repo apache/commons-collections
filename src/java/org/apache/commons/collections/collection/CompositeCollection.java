@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -31,7 +31,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Decorates a collection of other collections to provide a single unified view.
  * <p>
  * Changes made to this collection will actually be made on the decorated collection.
- * Add and remove operations require the use of a pluggable strategy. If no 
+ * Add and remove operations require the use of a pluggable strategy. If no
  * strategy is provided then add and remove are unsupported.
  *
  * @param <E> the type of the elements in the collection
@@ -46,6 +46,7 @@ public class CompositeCollection<E> implements Collection<E> {
 
     /** CollectionMutator to handle changes to the collection */
     protected CollectionMutator<E> mutator;
+
     /** Collections in the composite */
     protected List<Collection<E>> all = new ArrayList<Collection<E>>();
 
@@ -79,7 +80,7 @@ public class CompositeCollection<E> implements Collection<E> {
 
     /**
      * Create a Composite Collection with an array of collections.
-     * 
+     *
      * @param compositeCollections  the collections to composite
      */
     public CompositeCollection(Collection<E>[] compositeCollections) {
@@ -89,7 +90,7 @@ public class CompositeCollection<E> implements Collection<E> {
 
 //    /**
 //     * Create a Composite Collection extracting the collections from an iterable.
-//     * 
+//     *
 //     * @param compositeCollections  the collections to composite
 //     */
 //    public CompositeCollection(Iterable<Collection<E>> compositeCollections) {
@@ -121,7 +122,7 @@ public class CompositeCollection<E> implements Collection<E> {
      * @return true if all of the contained collections are empty
      */
     public boolean isEmpty() {
-        for (Collection<E> item : all) {
+        for (Collection<? extends E> item : all) {
             if (item.isEmpty() == false) {
                 return false;
             }
@@ -138,7 +139,7 @@ public class CompositeCollection<E> implements Collection<E> {
      * @return true if obj is contained in any of the contained collections
      */
     public boolean contains(Object obj) {
-        for (Collection<E> item : all) {
+        for (Collection<? extends E> item : all) {
             if (item.contains(obj)) {
                 return true;
             }
@@ -158,10 +159,10 @@ public class CompositeCollection<E> implements Collection<E> {
      */
     public Iterator<E> iterator() {
         if (all.isEmpty()) {
-            return EmptyIterator.INSTANCE;
+            return EmptyIterator.<E>getInstance();
         }
-        IteratorChain chain = new IteratorChain();
-        for (Collection<E> item : all) {
+        IteratorChain<E> chain = new IteratorChain<E>();
+        for (Collection<? extends E> item : all) {
             chain.addIterator(item.iterator());
         }
         return chain;
@@ -197,11 +198,11 @@ public class CompositeCollection<E> implements Collection<E> {
         } else {
             result = (Object[]) Array.newInstance(array.getClass().getComponentType(), size);
         }
-        
+
         int offset = 0;
-        for (Collection<E> item : all) {
-            for (Iterator<E> it = item.iterator(); it.hasNext();) {
-                result[offset++] = it.next();
+        for (Collection<? extends E> item : all) {
+            for (E e : item) {
+                result[offset++] = e;
             }
         }
         if (result.length > size) {
@@ -301,7 +302,7 @@ public class CompositeCollection<E> implements Collection<E> {
             return false;
         }
         boolean changed = false;
-        for (Collection<E> item : all) {
+        for (Collection<? extends E> item : all) {
             changed |= item.removeAll(coll);
         }
         return changed;
@@ -319,7 +320,7 @@ public class CompositeCollection<E> implements Collection<E> {
      */
     public boolean retainAll(final Collection<?> coll) {
         boolean changed = false;
-        for (Collection<E> item : all) {
+        for (Collection<? extends E> item : all) {
             changed |= item.retainAll(coll);
         }
         return changed;
@@ -333,7 +334,7 @@ public class CompositeCollection<E> implements Collection<E> {
      * @throws UnsupportedOperationException if clear is unsupported
      */
     public void clear() {
-        for (Collection<E> coll : all) {
+        for (Collection<? extends E> coll : all) {
             coll.clear();
         }
     }
@@ -413,18 +414,26 @@ public class CompositeCollection<E> implements Collection<E> {
      *
      * @return Unmodifiable list of all collections in this composite.
      */
-    public List<Collection<E>> getCollections() {
+    public List<? extends Collection<E>> getCollections() {
         return UnmodifiableList.decorate(all);
+    }
+
+    /**
+     * Get the collection mutator to be used for this CompositeCollection.
+     * @return CollectionMutator<E>
+     */
+    protected CollectionMutator<E> getMutator() {
+        return mutator;
     }
 
     //-----------------------------------------------------------------------
     /**
      * Pluggable strategy to handle changes to the composite.
-     * 
+     *
      * @param <E> the element being held in the collection
      */
     public interface CollectionMutator<E> {
-        
+
         /**
          * Called when an object is to be added to the composite.
          *
@@ -438,7 +447,7 @@ public class CompositeCollection<E> implements Collection<E> {
          * @throws IllegalArgumentException if the object cannot be added
          */
         public boolean add(CompositeCollection<E> composite, List<Collection<E>> collections, E obj);
-        
+
         /**
          * Called when a collection is to be added to the composite.
          *
@@ -452,7 +461,7 @@ public class CompositeCollection<E> implements Collection<E> {
          * @throws IllegalArgumentException if the object cannot be added
          */
         public boolean addAll(CompositeCollection<E> composite, List<Collection<E>> collections, Collection<? extends E> coll);
-        
+
         /**
          * Called when an object is to be removed to the composite.
          *
@@ -466,7 +475,7 @@ public class CompositeCollection<E> implements Collection<E> {
          * @throws IllegalArgumentException if the object cannot be removed
          */
         public boolean remove(CompositeCollection<E> composite, List<Collection<E>> collections, Object obj);
-        
+
     }
 
 }

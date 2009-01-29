@@ -73,7 +73,7 @@ import java.io.Serializable;
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public class ReferenceMap extends AbstractReferenceMap implements Serializable {
+public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 1555089888138299607L;
@@ -83,7 +83,8 @@ public class ReferenceMap extends AbstractReferenceMap implements Serializable {
      * use hard references to keys and soft references to values.
      */
     public ReferenceMap() {
-        super(HARD, SOFT, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, false);
+        super(ReferenceStrength.HARD, ReferenceStrength.SOFT, DEFAULT_CAPACITY,
+                DEFAULT_LOAD_FACTOR, false);
     }
 
     /**
@@ -95,7 +96,7 @@ public class ReferenceMap extends AbstractReferenceMap implements Serializable {
      * @param valueType  the type of reference to use for values;
      *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
      */
-    public ReferenceMap(int keyType, int valueType) {
+    public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, false);
     }
 
@@ -110,7 +111,7 @@ public class ReferenceMap extends AbstractReferenceMap implements Serializable {
      * @param purgeValues should the value be automatically purged when the 
      *   key is garbage collected 
      */
-    public ReferenceMap(int keyType, int valueType, boolean purgeValues) {
+    public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType, boolean purgeValues) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, purgeValues);
     }
 
@@ -126,7 +127,8 @@ public class ReferenceMap extends AbstractReferenceMap implements Serializable {
      * @param capacity  the initial capacity for the map
      * @param loadFactor  the load factor for the map
      */
-    public ReferenceMap(int keyType, int valueType, int capacity, float loadFactor) {
+    public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType, int capacity,
+            float loadFactor) {
         super(keyType, valueType, capacity, loadFactor, false);
     }
 
@@ -144,8 +146,8 @@ public class ReferenceMap extends AbstractReferenceMap implements Serializable {
      * @param purgeValues  should the value be automatically purged when the 
      *   key is garbage collected 
      */
-    public ReferenceMap(int keyType, int valueType, int capacity,
-                        float loadFactor, boolean purgeValues) {
+    public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType, int capacity,
+            float loadFactor, boolean purgeValues) {
         super(keyType, valueType, capacity, loadFactor, purgeValues);
     }
 

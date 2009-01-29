@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,12 +25,12 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for {@link BooleanComparator}.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  */
-public class TestBooleanComparator extends AbstractTestComparator {
+public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
 
     // conventional
     // ------------------------------------------------------------------------
@@ -46,21 +46,21 @@ public class TestBooleanComparator extends AbstractTestComparator {
     // collections testing framework
     // ------------------------------------------------------------------------
 
-    public Comparator makeComparator() {
+    public Comparator<Boolean> makeObject() {
         return new BooleanComparator();
     }
 
-    public List getComparableObjectsOrdered() {
-        List list = new ArrayList();
+    public List<Boolean> getComparableObjectsOrdered() {
+        List<Boolean> list = new ArrayList<Boolean>();
         list.add(new Boolean(false));
         list.add(Boolean.FALSE);
         list.add(new Boolean(false));
         list.add(Boolean.TRUE);
         list.add(new Boolean(true));
-        list.add(Boolean.TRUE);
+        list.add(true);
         return list;
     }
-    
+
     public String getCompatibilityVersion() {
         return "3";
     }
@@ -71,16 +71,16 @@ public class TestBooleanComparator extends AbstractTestComparator {
     public void testConstructors() {
         allTests(false,new BooleanComparator());
         allTests(false,new BooleanComparator(false));
-        allTests(true,new BooleanComparator(true));        
+        allTests(true,new BooleanComparator(true));
     }
-    
+
     public void testStaticFactoryMethods() {
         allTests(false,BooleanComparator.getFalseFirstComparator());
         allTests(false,BooleanComparator.getBooleanComparator(false));
         allTests(true,BooleanComparator.getTrueFirstComparator());
         allTests(true,BooleanComparator.getBooleanComparator(true));
     }
-    
+
     public void testEqualsCompatibleInstance() {
         assertEquals(new BooleanComparator(),new BooleanComparator(false));
         assertEquals(new BooleanComparator(false),new BooleanComparator(false));
@@ -94,7 +94,7 @@ public class TestBooleanComparator extends AbstractTestComparator {
         assertTrue(!(new BooleanComparator().equals(new BooleanComparator(true))));
         assertTrue(!(new BooleanComparator(true).equals(new BooleanComparator(false))));
     }
-    
+
     // utilities
     // ------------------------------------------------------------------------
 
@@ -109,36 +109,24 @@ public class TestBooleanComparator extends AbstractTestComparator {
 
     protected void trueFirstTests(BooleanComparator comp) {
         assertNotNull(comp);
-        assertEquals(0,comp.compare(Boolean.TRUE,Boolean.TRUE));
-        assertEquals(0,comp.compare(Boolean.FALSE,Boolean.FALSE));
-        assertTrue(comp.compare(Boolean.FALSE,Boolean.TRUE) > 0);
-        assertTrue(comp.compare(Boolean.TRUE,Boolean.FALSE) < 0);
-
-        assertEquals(0,comp.compare((Object)(Boolean.TRUE),(Object)(Boolean.TRUE)));
-        assertEquals(0,comp.compare((Object)(Boolean.FALSE),(Object)(Boolean.FALSE)));
-        assertTrue(comp.compare((Object)(Boolean.FALSE),(Object)(Boolean.TRUE)) > 0);
-        assertTrue(comp.compare((Object)(Boolean.TRUE),(Object)(Boolean.FALSE)) < 0);
+        assertEquals(0,comp.compare(true, true));
+        assertEquals(0,comp.compare(false, false));
+        assertTrue(comp.compare(false, true) > 0);
+        assertTrue(comp.compare(true, false) < 0);
     }
 
     protected void falseFirstTests(BooleanComparator comp) {
         assertNotNull(comp);
-        assertEquals(0,comp.compare(Boolean.TRUE,Boolean.TRUE));
-        assertEquals(0,comp.compare(Boolean.FALSE,Boolean.FALSE));
-        assertTrue(comp.compare(Boolean.FALSE,Boolean.TRUE) < 0);
-        assertTrue(comp.compare(Boolean.TRUE,Boolean.FALSE) > 0);
-
-        assertEquals(0,comp.compare((Object)(Boolean.TRUE),(Object)(Boolean.TRUE)));
-        assertEquals(0,comp.compare((Object)(Boolean.FALSE),(Object)(Boolean.FALSE)));
-        assertTrue(comp.compare((Object)(Boolean.FALSE),(Object)(Boolean.TRUE)) < 0);
-        assertTrue(comp.compare((Object)(Boolean.TRUE),(Object)(Boolean.FALSE)) > 0);
+        assertEquals(0,comp.compare(true, true));
+        assertEquals(0,comp.compare(false, false));
+        assertTrue(comp.compare(false, true) < 0);
+        assertTrue(comp.compare(true, false) > 0);
     }
 
     protected void orderIndependentTests(BooleanComparator comp) {
         nullArgumentTests(comp);
-        nonBooleanArgumentTests(comp);
-        nullAndNonBooleanArgumentsTests(comp);
     }
-    
+
     protected void nullArgumentTests(BooleanComparator comp) {
         assertNotNull(comp);
         try {
@@ -168,60 +156,6 @@ public class TestBooleanComparator extends AbstractTestComparator {
         try {
             comp.compare(null,Boolean.FALSE);
             fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
-    }
-    
-    protected void nonBooleanArgumentTests(BooleanComparator comp) {
-        assertNotNull(comp);
-        try {
-            comp.compare("string","string");
-            fail("Expected ClassCastException");
-        } catch(ClassCastException e) {
-            // expected
-        }
-        try {
-            comp.compare(Boolean.TRUE,"string");
-            fail("Expected ClassCastException");
-        } catch(ClassCastException e) {
-            // expected
-        }
-        try {
-            comp.compare("string",Boolean.TRUE);
-            fail("Expected ClassCastException");
-        } catch(ClassCastException e) {
-            // expected
-        }
-        try {
-            comp.compare("string",new Integer(3));
-            fail("Expected ClassCastException");
-        } catch(ClassCastException e) {
-            // expected
-        }
-        try {
-            comp.compare(new Integer(3),"string");
-            fail("Expected ClassCastException");
-        } catch(ClassCastException e) {
-            // expected
-        }
-    }
-    
-    protected void nullAndNonBooleanArgumentsTests(BooleanComparator comp) {
-        assertNotNull(comp);
-        try {
-            comp.compare(null,"string");
-            fail("Expected ClassCast or NullPointer Exception");
-        } catch(ClassCastException e) {
-            // expected
-        } catch(NullPointerException e) {
-            // expected
-        }
-        try {
-            comp.compare("string",null);
-            fail("Expected ClassCast or NullPointer Exception");
-        } catch(ClassCastException e) {
-            // expected
         } catch(NullPointerException e) {
             // expected
         }

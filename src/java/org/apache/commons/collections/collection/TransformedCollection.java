@@ -44,7 +44,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
     private static final long serialVersionUID = 8692300188161871514L;
 
     /** The transformer to use */
-    protected final Transformer<E, E> transformer;
+    protected final Transformer<? super E, ? extends E> transformer;
 
     /**
      * Factory method to create a transforming collection.
@@ -57,8 +57,8 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @return a new transformed collection
      * @throws IllegalArgumentException if collection or transformer is null
      */
-    public static Collection decorate(Collection coll, Transformer transformer) {
-        return new TransformedCollection(coll, transformer);
+    public static <E> Collection<E> decorate(Collection<E> coll, Transformer<? super E, ? extends E> transformer) {
+        return new TransformedCollection<E>(coll, transformer);
     }
 
     //-----------------------------------------------------------------------
@@ -72,7 +72,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if collection or transformer is null
      */
-    protected TransformedCollection(Collection coll, Transformer transformer) {
+    protected TransformedCollection(Collection<E> coll, Transformer<? super E, ? extends E> transformer) {
         super(coll);
         if (transformer == null) {
             throw new IllegalArgumentException("Transformer must not be null");
@@ -88,8 +88,8 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param object  the object to transform
      * @return a transformed object
      */
-    protected E transform(Object object) {
-        return transformer.transform((E) object);
+    protected E transform(E object) {
+        return transformer.transform(object);
     }
 
     /**
@@ -100,20 +100,20 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param coll  the collection to transform
      * @return a transformed object
      */
-    protected Collection transform(Collection coll) {
-        List list = new ArrayList(coll.size());
-        for (Object item : coll) {
+    protected Collection<E> transform(Collection<? extends E> coll) {
+        List<E> list = new ArrayList<E>(coll.size());
+        for (E item : coll) {
             list.add(transform(item));
         }
         return list;
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object object) {
+    public boolean add(E object) {
         return decorated().add(transform(object));
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         return decorated().addAll(transform(coll));
     }
 

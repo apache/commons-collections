@@ -19,7 +19,6 @@ package org.apache.commons.collections.bidimap;
 import junit.framework.Test;
 import junit.textui.TestRunner;
 
-import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 
 /**
@@ -30,7 +29,7 @@ import org.apache.commons.collections.BulkTest;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class TestDualHashBidiMap extends AbstractTestBidiMap {
+public class TestDualHashBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
 
     public static void main(String[] args) {
         TestRunner.run(suite());
@@ -44,15 +43,19 @@ public class TestDualHashBidiMap extends AbstractTestBidiMap {
         super(testName);
     }
 
-    public BidiMap makeEmptyBidiMap() {
-        return new DualHashBidiMap();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DualHashBidiMap<K, V> makeObject() {
+        return new DualHashBidiMap<K, V>();
     }
 
     /**
      * Override to prevent infinite recursion of tests.
      */
     public String[] ignoredTests() {
-        return new String[] {"TestDualHashBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
+        return new String[] { "TestDualHashBidiMap.bulkTestInverseMap.bulkTestInverseMap" };
     }
     
 //    public void testCreate() throws Exception {

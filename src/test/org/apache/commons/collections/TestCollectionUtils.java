@@ -31,7 +31,6 @@ import org.apache.commons.collections.collection.PredicatedCollection;
 import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.collection.TransformedCollection;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
-import org.apache.commons.collections.functors.EqualPredicate;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -139,7 +138,7 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void getCardinalityMap() {
-        Map<Number, Integer> freqA = CollectionUtils.<Number, Integer>getCardinalityMap(iterableA);
+        Map<Number, Integer> freqA = CollectionUtils.<Number>getCardinalityMap(iterableA);
         assertEquals(1, (int) freqA.get(1));
         assertEquals(2, (int) freqA.get(2));
         assertEquals(3, (int) freqA.get(3));
@@ -185,7 +184,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertEquals(0, CollectionUtils.cardinality("D", set));
         assertEquals(1, CollectionUtils.cardinality("E", set));
 
-        Bag<String> bag = new HashBag();
+        Bag<String> bag = new HashBag<String>();
         bag.add("A", 3);
         bag.add("C");
         bag.add("E");
@@ -202,43 +201,43 @@ public class TestCollectionUtils extends MockTestCase {
         List<String> list = new ArrayList<String>();
         assertEquals(0, CollectionUtils.cardinality(null, list));
         {
-            Map freq = CollectionUtils.getCardinalityMap(list);
+            Map<String, Integer> freq = CollectionUtils.getCardinalityMap(list);
             assertNull(freq.get(null));
         }
         list.add("A");
         assertEquals(0, CollectionUtils.cardinality(null, list));
         {
-            Map freq = CollectionUtils.getCardinalityMap(list);
+            Map<String, Integer> freq = CollectionUtils.getCardinalityMap(list);
             assertNull(freq.get(null));
         }
         list.add(null);
         assertEquals(1, CollectionUtils.cardinality(null, list));
         {
-            Map freq = CollectionUtils.getCardinalityMap(list);
+            Map<String, Integer> freq = CollectionUtils.getCardinalityMap(list);
             assertEquals(1, freq.get(null));
         }
         list.add("B");
         assertEquals(1, CollectionUtils.cardinality(null, list));
         {
-            Map freq = CollectionUtils.getCardinalityMap(list);
+            Map<String, Integer> freq = CollectionUtils.getCardinalityMap(list);
             assertEquals(1, freq.get(null));
         }
         list.add(null);
         assertEquals(2, CollectionUtils.cardinality(null, list));
         {
-            Map freq = CollectionUtils.getCardinalityMap(list);
+            Map<String, Integer> freq = CollectionUtils.getCardinalityMap(list);
             assertEquals(2, freq.get(null));
         }
         list.add("B");
         assertEquals(2, CollectionUtils.cardinality(null, list));
         {
-            Map freq = CollectionUtils.getCardinalityMap(list);
+            Map<String, Integer> freq = CollectionUtils.getCardinalityMap(list);
             assertEquals(2, freq.get(null));
         }
         list.add(null);
         assertEquals(3, CollectionUtils.cardinality(null, list));
         {
-            Map freq = CollectionUtils.getCardinalityMap(list);
+            Map<String, Integer> freq = CollectionUtils.getCardinalityMap(list);
             assertEquals(3, freq.get(null));
         }
     }
@@ -275,7 +274,7 @@ public class TestCollectionUtils extends MockTestCase {
     @Test
     public void union() {
         Collection<Integer> col = CollectionUtils.union(iterableA, iterableC);
-        Map freq = CollectionUtils.getCardinalityMap(col);
+        Map<Integer, Integer> freq = CollectionUtils.getCardinalityMap(col);
         assertEquals(1, freq.get(1));
         assertEquals(4, freq.get(2));
         assertEquals(3, freq.get(3));
@@ -283,7 +282,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertEquals(1, freq.get(5));
 
         Collection<Number> col2 = CollectionUtils.union(collectionC2, iterableA);
-        Map freq2 = CollectionUtils.getCardinalityMap(col2);
+        Map<Number, Integer> freq2 = CollectionUtils.getCardinalityMap(col2);
         assertEquals(1, freq2.get(1));
         assertEquals(4, freq2.get(2));
         assertEquals(3, freq2.get(3));
@@ -294,7 +293,7 @@ public class TestCollectionUtils extends MockTestCase {
     @Test
     public void intersection() {
         Collection<Integer> col = CollectionUtils.intersection(iterableA, iterableC);
-        Map freq = CollectionUtils.getCardinalityMap(col);
+        Map<Integer, Integer> freq = CollectionUtils.getCardinalityMap(col);
         assertNull(freq.get(1));
         assertEquals(2, freq.get(2));
         assertEquals(3, freq.get(3));
@@ -302,7 +301,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertNull(freq.get(5));
 
         Collection<Number> col2 = CollectionUtils.intersection(collectionC2, collectionA);
-        Map freq2 = CollectionUtils.getCardinalityMap(col2);
+        Map<Number, Integer> freq2 = CollectionUtils.getCardinalityMap(col2);
         assertNull(freq2.get(1));
         assertEquals(2, freq2.get(2));
         assertEquals(3, freq2.get(3));
@@ -313,7 +312,7 @@ public class TestCollectionUtils extends MockTestCase {
     @Test
     public void disjunction() {
         Collection<Integer> col = CollectionUtils.disjunction(iterableA, iterableC);
-        Map freq = CollectionUtils.getCardinalityMap(col);
+        Map<Integer, Integer> freq = CollectionUtils.getCardinalityMap(col);
         assertEquals(1, freq.get(1));
         assertEquals(2, freq.get(2));
         assertNull(freq.get(3));
@@ -321,7 +320,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertEquals(1, freq.get(5));
 
         Collection<Number> col2 = CollectionUtils.disjunction(collectionC2, collectionA);
-        Map freq2 = CollectionUtils.getCardinalityMap(col2);
+        Map<Number, Integer> freq2 = CollectionUtils.getCardinalityMap(col2);
         assertEquals(1, freq2.get(1));
         assertEquals(2, freq2.get(2));
         assertNull(freq2.get(3));
@@ -348,7 +347,7 @@ public class TestCollectionUtils extends MockTestCase {
     @Test
     public void testSubtract() {
         Collection<Integer> col = CollectionUtils.subtract(iterableA, iterableC);
-        Map freq = CollectionUtils.getCardinalityMap(col);
+        Map<Integer, Integer> freq = CollectionUtils.getCardinalityMap(col);
         assertEquals(1, freq.get(1));
         assertNull(freq.get(2));
         assertNull(freq.get(3));
@@ -356,7 +355,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertNull(freq.get(5));
 
         Collection<Number> col2 = CollectionUtils.subtract(collectionC2, collectionA);
-        Map freq2 = CollectionUtils.getCardinalityMap(col2);
+        Map<Number, Integer> freq2 = CollectionUtils.getCardinalityMap(col2);
         assertEquals(1, freq2.get(5));
         assertNull(freq2.get(4));
         assertNull(freq2.get(3));
@@ -500,8 +499,8 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void forAllDo() {
-        Closure<Collection> testClosure = ClosureUtils.invokerClosure("clear");
-        Collection<List> col = new ArrayList<List>();
+        Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
+        Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
         col.add(collectionA);
         col.add(collectionB);
         CollectionUtils.forAllDo(col, testClosure);
@@ -601,10 +600,10 @@ public class TestCollectionUtils extends MockTestCase {
     @Test
     public void getFromEnumeration() throws Exception {
         // Enumeration, entry exists
-        Vector vector = new Vector();
+        Vector<String> vector = new Vector<String>();
         vector.addElement("zero");
         vector.addElement("one");
-        Enumeration en = vector.elements();
+        Enumeration<String> en = vector.elements();
         assertEquals("zero", CollectionUtils.get(en, 0));
         en = vector.elements();
         assertEquals("one", CollectionUtils.get(en, 1));
@@ -622,7 +621,7 @@ public class TestCollectionUtils extends MockTestCase {
     @Test(expected = IndexOutOfBoundsException.class)
     public void getFromIterable() throws Exception {
         // Collection, entry exists
-        Bag bag = new HashBag();
+        Bag<String> bag = new HashBag<String>();
         bag.add("element", 1);
         assertEquals("element", CollectionUtils.get(bag, 0));
 
@@ -714,7 +713,7 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void testSize_Enumeration() {
-        Vector list = new Vector();
+        Vector<String> list = new Vector<String>();
         assertEquals(0, CollectionUtils.size(list.elements()));
         list.add("a");
         assertEquals(1, CollectionUtils.size(list.elements()));
@@ -724,7 +723,7 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void testSize_Iterator() {
-        List list = new ArrayList();
+        List<String> list = new ArrayList<String>();
         assertEquals(0, CollectionUtils.size(list.iterator()));
         list.add("a");
         assertEquals(1, CollectionUtils.size(list.iterator()));
@@ -795,7 +794,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertEquals(true, CollectionUtils.sizeIsEmpty(list.elements()));
         list.add("a");
         assertEquals(false, CollectionUtils.sizeIsEmpty(list.elements()));
-        Enumeration en = list.elements();
+        Enumeration<String> en = list.elements();
         en.nextElement();
         assertEquals(true, CollectionUtils.sizeIsEmpty(en));
     }
@@ -806,7 +805,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertEquals(true, CollectionUtils.sizeIsEmpty(list.iterator()));
         list.add("a");
         assertEquals(false, CollectionUtils.sizeIsEmpty(list.iterator()));
-        Iterator it = list.iterator();
+        Iterator<String> it = list.iterator();
         it.next();
         assertEquals(true, CollectionUtils.sizeIsEmpty(it));
     }
@@ -828,7 +827,7 @@ public class TestCollectionUtils extends MockTestCase {
     // -----------------------------------------------------------------------
     @Test
     public void testIsEmptyWithEmptyCollection() {
-        Collection coll = new ArrayList();
+        Collection<Object> coll = new ArrayList<Object>();
         assertEquals(true, CollectionUtils.isEmpty(coll));
     }
 
@@ -841,13 +840,13 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void testIsEmptyWithNull() {
-        Collection coll = null;
+        Collection<?> coll = null;
         assertEquals(true, CollectionUtils.isEmpty(coll));
     }
 
     @Test
     public void testIsNotEmptyWithEmptyCollection() {
-        Collection coll = new ArrayList();
+        Collection<Object> coll = new ArrayList<Object>();
         assertEquals(false, CollectionUtils.isNotEmpty(coll));
     }
 
@@ -860,7 +859,7 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void testIsNotEmptyWithNull() {
-        Collection coll = null;
+        Collection<?> coll = null;
         assertEquals(false, CollectionUtils.isNotEmpty(coll));
     }
 
@@ -930,7 +929,7 @@ public class TestCollectionUtils extends MockTestCase {
         list.add(4);
         // Ensure that the collection is the input type or a super type
         Collection<Integer> output1 = CollectionUtils.select(list, EQUALS_TWO);
-        Collection<Number> output2 = CollectionUtils.<Number, Integer>select(list, EQUALS_TWO);
+        Collection<Number> output2 = CollectionUtils.<Number>select(list, EQUALS_TWO);
         HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
         assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         assertEquals(4, list.size());
@@ -946,7 +945,7 @@ public class TestCollectionUtils extends MockTestCase {
         list.add(3L);
         list.add(4L);
         Collection<Long> output1 = CollectionUtils.selectRejected(list, EQUALS_TWO);
-        Collection<Number> output2 = CollectionUtils.<Number, Long>selectRejected(list, EQUALS_TWO);
+        Collection<? extends Number> output2 = CollectionUtils.selectRejected(list, EQUALS_TWO);
         HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
         assertTrue(CollectionUtils.isEqualCollection(output1, output2));
         assertTrue(CollectionUtils.isEqualCollection(output1, output3));
@@ -1091,7 +1090,7 @@ public class TestCollectionUtils extends MockTestCase {
         }
         assertFalse(CollectionUtils.isFull(set));
 
-        BoundedFifoBuffer buf = new BoundedFifoBuffer(set);
+        BoundedFifoBuffer<String> buf = new BoundedFifoBuffer<String>(set);
         assertEquals(true, CollectionUtils.isFull(buf));
         buf.remove("2");
         assertFalse(CollectionUtils.isFull(buf));
@@ -1125,7 +1124,7 @@ public class TestCollectionUtils extends MockTestCase {
         }
         assertEquals(-1, CollectionUtils.maxSize(set));
 
-        Buffer<String> buf = new BoundedFifoBuffer(set);
+        Buffer<String> buf = new BoundedFifoBuffer<String>(set);
         assertEquals(3, CollectionUtils.maxSize(buf));
         buf.remove("2");
         assertEquals(3, CollectionUtils.maxSize(buf));
@@ -1217,16 +1216,16 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void testRemoveAll() {
-        List base = new ArrayList();
+        List<String> base = new ArrayList<String>();
         base.add("A");
         base.add("B");
         base.add("C");
-        List sub = new ArrayList();
+        List<String> sub = new ArrayList<String>();
         sub.add("A");
         sub.add("C");
         sub.add("X");
 
-        Collection result = CollectionUtils.removeAll(base, sub);
+        Collection<String> result = CollectionUtils.removeAll(base, sub);
         assertEquals(1, result.size());
         assertFalse(result.contains("A"));
         assertEquals(true, result.contains("B"));
@@ -1250,11 +1249,11 @@ public class TestCollectionUtils extends MockTestCase {
     // -----------------------------------------------------------------------
     @Test
     public void testTransformedCollection() {
-        Transformer transformer = TransformerUtils.nopTransformer();
-        Collection collection = CollectionUtils.transformedCollection(new ArrayList(), transformer);
+        Transformer<Object, Object> transformer = TransformerUtils.nopTransformer();
+        Collection<Object> collection = CollectionUtils.transformedCollection(new ArrayList<Object>(), transformer);
         assertTrue("returned object should be a TransformedCollection", collection instanceof TransformedCollection);
         try {
-            collection = CollectionUtils.transformedCollection(new ArrayList(), null);
+            collection = CollectionUtils.transformedCollection(new ArrayList<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (IllegalArgumentException ex) {
             // expected
@@ -1269,11 +1268,11 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void testTransformedCollection_2() {
-        List list = new ArrayList();
+        List<Object> list = new ArrayList<Object>();
         list.add("1");
         list.add("2");
         list.add("3");
-        Collection result = CollectionUtils.transformedCollection(list, TRANSFORM_TO_INTEGER);
+        Collection<Object> result = CollectionUtils.transformedCollection(list, TRANSFORM_TO_INTEGER);
         assertEquals(true, result.contains("1")); // untransformed
         assertEquals(true, result.contains("2")); // untransformed
         assertEquals(true, result.contains("3")); // untransformed
@@ -1281,7 +1280,7 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void testSynchronizedCollection() {
-        Collection col = CollectionUtils.synchronizedCollection(new ArrayList());
+        Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<Object>());
         assertTrue("Returned object should be a SynchronizedCollection.", col instanceof SynchronizedCollection);
         try {
             col = CollectionUtils.synchronizedCollection(null);
@@ -1293,7 +1292,7 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void testUnmodifiableCollection() {
-        Collection col = CollectionUtils.unmodifiableCollection(new ArrayList());
+        Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<Object>());
         assertTrue("Returned object should be a UnmodifiableCollection.", col instanceof UnmodifiableCollection);
         try {
             col = CollectionUtils.unmodifiableCollection(null);
@@ -1353,7 +1352,7 @@ public class TestCollectionUtils extends MockTestCase {
 
     @Test
     public void addAllForEnumeration() {
-        Hashtable<Integer, Integer> h = new Hashtable();
+        Hashtable<Integer, Integer> h = new Hashtable<Integer, Integer>();
         h.put(5, 5);
         Enumeration<? extends Integer> enumeration = h.keys();
         CollectionUtils.addAll(collectionA, enumeration);

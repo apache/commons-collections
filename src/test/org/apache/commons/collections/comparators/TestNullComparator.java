@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,12 +25,12 @@ import junit.framework.TestSuite;
 
 /**
  * Test the NullComparator.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Michael A. Smith
  */
-public abstract class TestNullComparator extends AbstractTestComparator {
+public abstract class TestNullComparator extends AbstractTestComparator<Integer> {
 
     public TestNullComparator(String testName) {
         super(testName);
@@ -48,45 +48,45 @@ public abstract class TestNullComparator extends AbstractTestComparator {
      **/
     public static class TestNullComparator1 extends TestNullComparator {
 
-	public TestNullComparator1(String testName) {
-	    super(testName);
-	}
+    	public TestNullComparator1(String testName) {
+    	    super(testName);
+    	}
 
-    public Comparator makeComparator() {
-	    return new NullComparator();
-	}
-	
-    public List getComparableObjectsOrdered() {
-        List list = new LinkedList();
-	    list.add(new Integer(1));
-	    list.add(new Integer(2));
-	    list.add(new Integer(3));
-	    list.add(new Integer(4));
-	    list.add(new Integer(5));
-	    list.add(null);
-	    return list;
-	}
+        public Comparator<Integer> makeObject() {
+    	    return new NullComparator<Integer>();
+    	}
 
-	public String getCanonicalComparatorName(Object object) {
-	    return super.getCanonicalComparatorName(object) + "1";
-	}
+        public List<Integer> getComparableObjectsOrdered() {
+            List<Integer> list = new LinkedList<Integer>();
+    	    list.add(new Integer(1));
+    	    list.add(new Integer(2));
+    	    list.add(new Integer(3));
+    	    list.add(new Integer(4));
+    	    list.add(new Integer(5));
+    	    list.add(null);
+    	    return list;
+    	}
+
+    	public String getCanonicalComparatorName(Object object) {
+    	    return super.getCanonicalComparatorName(object) + "1";
+    	}
     }
 
     /**
      *  Test the NullComparator with nulls low using the comparable comparator
      **/
     public static class TestNullComparator2 extends TestNullComparator {
-        
+
         public TestNullComparator2(String testName) {
             super(testName);
         }
-        
-        public Comparator makeComparator() {
-            return new NullComparator(false);
+
+        public Comparator<Integer> makeObject() {
+            return new NullComparator<Integer>(false);
         }
-        
-        public List getComparableObjectsOrdered() {
-            List list = new LinkedList();
+
+        public List<Integer> getComparableObjectsOrdered() {
+            List<Integer> list = new LinkedList<Integer>();
             list.add(null);
             list.add(new Integer(1));
             list.add(new Integer(2));
@@ -95,7 +95,7 @@ public abstract class TestNullComparator extends AbstractTestComparator {
             list.add(new Integer(5));
             return list;
         }
-        
+
         public String getCanonicalComparatorName(Object object) {
             return super.getCanonicalComparatorName(object) + "2";
         }

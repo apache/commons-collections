@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,7 +17,7 @@
 package org.apache.commons.collections.set;
 
 import java.util.Collection;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -35,29 +35,30 @@ import org.apache.commons.collections.collection.CompositeCollection;
  *
  * @author Brian McCallister
  */
-public class CompositeSet extends CompositeCollection implements Set {
+public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
+
     /**
      * Create an empty CompositeSet
      */
     public CompositeSet() {
         super();
     }
-    
+
     /**
      * Create a CompositeSet with just <code>set</code> composited
      * @param set The initial set in the composite
      */
-    public CompositeSet(Set set) {
+    public CompositeSet(Set<E> set) {
         super(set);
     }
-    
+
     /**
      * Create a composite set with sets as the initial set of composited Sets
      */
-    public CompositeSet(Set[] sets) {
+    public CompositeSet(Set<E>[] sets) {
         super(sets);
     }
-    
+
     /**
      * Add a Set to this composite
      *
@@ -69,14 +70,13 @@ public class CompositeSet extends CompositeCollection implements Set {
      * @see org.apache.commons.collections.collection.CompositeCollection.CollectionMutator
      * @see SetMutator
      */
-    public synchronized void addComposited(Collection c) {
+    public synchronized void addComposited(Collection<E> c) {
         if (!(c instanceof Set)) {
             throw new IllegalArgumentException("Collections added must implement java.util.Set");
         }
-        
-        for (Iterator i = this.getCollections().iterator(); i.hasNext();) {
-            Set set = (Set) i.next();
-            Collection intersects = CollectionUtils.intersection(set, c);
+
+        for (Set<E> set : getCollections()) {
+            Collection<E> intersects = CollectionUtils.intersection(set, c);
             if (intersects.size() > 0) {
                 if (this.mutator == null) {
                     throw new UnsupportedOperationException(
@@ -86,38 +86,48 @@ public class CompositeSet extends CompositeCollection implements Set {
                     throw new UnsupportedOperationException(
                         "Collision adding composited collection to a CompositeSet with a CollectionMutator instead of a SetMutator");
                 }
-                ((SetMutator) this.mutator).resolveCollision(this, set, (Set) c, intersects);
+                getMutator().resolveCollision(this, set, (Set<E>) c, intersects);
                 if (CollectionUtils.intersection(set, c).size() > 0) {
                     throw new IllegalArgumentException(
                         "Attempt to add illegal entry unresolved by SetMutator.resolveCollision()");
                 }
             }
         }
-        super.addComposited(new Collection[]{c});
+        super.addComposited(c);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<? extends Set<E>> getCollections() {
+        return (List<Set<E>>) super.getCollections();
+    }
+
     /**
      * Add two sets to this composite
      *
      * @throws IllegalArgumentException if c or d does not implement java.util.Set
      */
-    public synchronized void addComposited(Collection c, Collection d) {
+    @SuppressWarnings("unchecked")
+    public synchronized void addComposited(Collection<E> c, Collection<E> d) {
         if (!(c instanceof Set)) throw new IllegalArgumentException("Argument must implement java.util.Set");
         if (!(d instanceof Set)) throw new IllegalArgumentException("Argument must implement java.util.Set");
-        this.addComposited(new Set[]{(Set) c, (Set) d});
+        this.addComposited(new Set[] { (Set<? extends E>) c, (Set<? extends E>) d });
     }
-    
+
     /**
      * Add an array of sets to this composite
      * @param comps
      * @throws IllegalArgumentException if any of the collections in comps do not implement Set
      */
-    public synchronized void addComposited(Collection[] comps) {
+    public synchronized void addComposited(Collection<E>[] comps) {
         for (int i = comps.length - 1; i >= 0; --i) {
             this.addComposited(comps[i]);
         }
     }
-    
+
     /**
      * This can receive either a <code>CompositeCollection.CollectionMutator</code>
      * or a <code>CompositeSet.SetMutator</code>. If a
@@ -125,12 +135,12 @@ public class CompositeSet extends CompositeCollection implements Set {
      * composited sets will throw IllegalArgumentException
      * <p>
      */
-    public void setMutator(CollectionMutator mutator) {
+    public void setMutator(CollectionMutator<E> mutator) {
         super.setMutator(mutator);
     }
-    
+
     /* Set operations */
-    
+
     /**
      * If a <code>CollectionMutator</code> is defined for this CompositeSet then this
      * method will be called anyway.
@@ -139,46 +149,51 @@ public class CompositeSet extends CompositeCollection implements Set {
      * @return true if the object is removed, false otherwise
      */
     public boolean remove(Object obj) {
-        for (Iterator i = this.getCollections().iterator(); i.hasNext();) {
-            Set set = (Set) i.next();
+        for (Set<? extends E> set : getCollections()) {
             if (set.contains(obj)) return set.remove(obj);
         }
         return false;
     }
-    
-    
+
     /**
      * @see Set#equals
      */
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj instanceof Set) {
             Set set = (Set) obj;
-            if (set.containsAll(this) && set.size() == this.size()) {
-                return true;
-            }
+            return set.containsAll(this) && set.size() == this.size();
         }
         return false;
     }
-    
+
     /**
      * @see Set#hashCode
      */
     public int hashCode() {
         int code = 0;
-        for (Iterator i = this.iterator(); i.hasNext();) {
-            Object next = i.next();
-            code += (next != null ? next.hashCode() : 0);
+        for (E e : this) {
+            code += (e == null ? 0 : e.hashCode());
         }
         return code;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected SetMutator<E> getMutator() {
+        return (SetMutator<E>) super.getMutator();
+    }
+
     /**
      * Define callbacks for mutation operations.
      * <p>
      * Defining remove() on implementations of SetMutator is pointless
      * as they are never called by CompositeSet.
      */
-    public static interface SetMutator extends CompositeCollection.CollectionMutator {
+    public static interface SetMutator<E> extends CompositeCollection.CollectionMutator<E> {
+
         /**
          * <p>
          * Called when a Set is added to the CompositeSet and there is a
@@ -193,6 +208,6 @@ public class CompositeSet extends CompositeCollection implements Set {
          * @param added the Set being added to the composite
          * @param intersects the intersection of th existing and added sets
          */
-        public void resolveCollision(CompositeSet comp, Set existing, Set added, Collection intersects);
+        public void resolveCollision(CompositeSet<E> comp, Set<E> existing, Set<E> added, Collection<E> intersects);
     }
 }

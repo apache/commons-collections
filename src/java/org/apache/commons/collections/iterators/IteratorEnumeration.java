@@ -19,36 +19,36 @@ package org.apache.commons.collections.iterators;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-/** 
- * Adapter to make an {@link Iterator Iterator} instance appear to be
- * an {@link Enumeration Enumeration} instance.
- *
+/**
+ * Adapter to make an {@link Iterator Iterator} instance appear to be an
+ * {@link Enumeration Enumeration} instance.
+ * 
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$ $Date: 2006-10-27 19:52:37 -0500 (Fri, 27 Oct
+ * 2006) $
  * 
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */
-public class IteratorEnumeration implements Enumeration {
-    
+public class IteratorEnumeration<E> implements Enumeration<E> {
+
     /** The iterator being decorated. */
-    private Iterator iterator;
-    
+    private Iterator<? extends E> iterator;
+
     /**
-     * Constructs a new <code>IteratorEnumeration</code> that will not 
-     * function until {@link #setIterator(Iterator) setIterator} is  
-     * invoked.
+     * Constructs a new <code>IteratorEnumeration</code> that will not function
+     * until {@link #setIterator(Iterator) setIterator} is invoked.
      */
     public IteratorEnumeration() {
         super();
     }
 
     /**
-     * Constructs a new <code>IteratorEnumeration</code> that will use
-     * the given iterator. 
+     * Constructs a new <code>IteratorEnumeration</code> that will use the given
+     * iterator.
      * 
-     * @param iterator  the iterator to use
+     * @param iterator the iterator to use
      */
-    public IteratorEnumeration( Iterator iterator ) {
+    public IteratorEnumeration(Iterator<? extends E> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -57,22 +57,22 @@ public class IteratorEnumeration implements Enumeration {
     //-------------------------------------------------------------------------
 
     /**
-     *  Returns true if the underlying iterator has more elements.
-     *
-     *  @return true if the underlying iterator has more elements
+     * Returns true if the underlying iterator has more elements.
+     * 
+     * @return true if the underlying iterator has more elements
      */
     public boolean hasMoreElements() {
         return iterator.hasNext();
     }
 
     /**
-     *  Returns the next element from the underlying iterator.
-     *
-     *  @return the next element from the underlying iterator.
-     *  @throws java.util.NoSuchElementException  if the underlying iterator has no
-     *    more elements
+     * Returns the next element from the underlying iterator.
+     * 
+     * @return the next element from the underlying iterator.
+     * @throws java.util.NoSuchElementException if the underlying iterator has
+     * no more elements
      */
-    public Object nextElement() {
+    public E nextElement() {
         return iterator.next();
     }
 
@@ -80,21 +80,21 @@ public class IteratorEnumeration implements Enumeration {
     //-------------------------------------------------------------------------
 
     /**
-     *  Returns the underlying iterator.
+     * Returns the underlying iterator.
      * 
-     *  @return the underlying iterator
+     * @return the underlying iterator
      */
-    public Iterator getIterator() {
+    public Iterator<? extends E> getIterator() {
         return iterator;
     }
 
     /**
-     *  Sets the underlying iterator.
-     *
-     *  @param iterator  the new underlying iterator
+     * Sets the underlying iterator.
+     * 
+     * @param iterator the new underlying iterator
      */
-    public void setIterator( Iterator iterator ) {
+    public void setIterator(Iterator<? extends E> iterator) {
         this.iterator = iterator;
     }
-    
+
 }

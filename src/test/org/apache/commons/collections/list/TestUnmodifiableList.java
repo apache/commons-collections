@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,80 +25,82 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Extension of {@link AbstractTestList} for exercising the 
+ * Extension of {@link AbstractTestList} for exercising the
  * {@link UnmodifiableList} implementation.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
-public class TestUnmodifiableList extends AbstractTestList {
-    
+public class TestUnmodifiableList<E> extends AbstractTestList<E> {
+
     public TestUnmodifiableList(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestUnmodifiableList.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestUnmodifiableList.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    //-----------------------------------------------------------------------    
-    public List makeEmptyList() {
-        return UnmodifiableList.decorate(new ArrayList());
+    //-----------------------------------------------------------------------
+    public UnmodifiableList<E> makeObject() {
+        return new UnmodifiableList<E>(new ArrayList<E>());
     }
-    
-    public List makeFullList() {
-        ArrayList list = new ArrayList();
+
+    public UnmodifiableList<E> makeFullCollection() {
+        ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
-        return UnmodifiableList.decorate(list);
+        return new UnmodifiableList<E>(list);
     }
-    
+
     public boolean isSetSupported() {
         return false;
     }
-    
+
     public boolean isAddSupported() {
         return false;
     }
-    
+
     public boolean isRemoveSupported() {
         return false;
     }
-    
-    //-----------------------------------------------------------------------    
-    protected UnmodifiableList list = null;
-    protected ArrayList array = null;
-    
+
+    //-----------------------------------------------------------------------
+    protected UnmodifiableList<E> list;
+    protected ArrayList<E> array;
+
+    @SuppressWarnings("unchecked")
     protected void setupList() {
-        list = (UnmodifiableList) makeFullList();
-        array = new ArrayList();
-        array.add(new Integer(1));
+        list = makeFullCollection();
+        array = new ArrayList<E>();
+        array.add((E) new Integer(1));
     }
-    
-    /** 
+
+    /**
      * Verify that base list and sublists are not modifiable
      */
     public void testUnmodifiable() {
         setupList();
-        verifyUnmodifiable(list); 
+        verifyUnmodifiable(list);
         verifyUnmodifiable(list.subList(0, 2));
-    } 
-        
-    protected void verifyUnmodifiable(List list) {
+    }
+
+    @SuppressWarnings("unchecked")
+    protected void verifyUnmodifiable(List<E> list) {
         try {
-            list.add(0, new Integer(0));
+            list.add(0, (E) new Integer(0));
             fail("Expecting UnsupportedOperationException.");
         } catch (UnsupportedOperationException e) {
             // expected
-        } 
+        }
         try {
-            list.add(new Integer(0));
+            list.add((E) new Integer(0));
              fail("Expecting UnsupportedOperationException.");
         } catch (UnsupportedOperationException e) {
             // expected
@@ -146,21 +148,21 @@ public class TestUnmodifiableList extends AbstractTestList {
             // expected
         }
         try {
-            list.set(0, new Integer(0));
+            list.set(0, (E) new Integer(0));
              fail("Expecting UnsupportedOperationException.");
         } catch (UnsupportedOperationException e) {
             // expected
         }
     }
-    
+
     /**
      * Verify that iterator is not modifiable
      */
     public void testUnmodifiableIterator() {
         setupList();
-        Iterator iterator = list.iterator();
+        Iterator<E> iterator = list.iterator();
         try {
-            Object obj = iterator.next();
+            iterator.next();
             iterator.remove();
             fail("Expecting UnsupportedOperationException.");
         } catch (UnsupportedOperationException e) {

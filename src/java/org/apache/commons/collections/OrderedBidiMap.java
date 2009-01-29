@@ -47,20 +47,6 @@ public interface OrderedBidiMap<K, V> extends BidiMap<K, V>, OrderedMap<K, V> {
      *
      * @return an inverted bidirectional map
      */
-    public BidiMap<V, K> inverseBidiMap();
-
-    /**
-     * Gets a view of this map where the keys and values are reversed.
-     * <p>
-     * Changes to one map will be visible in the other and vice versa.
-     * This enables both directions of the map to be accessed equally.
-     * <p>
-     * Implementations should seek to avoid creating a new object every time this
-     * method is called. See <code>AbstractMap.values()</code> etc. Calling this
-     * method on the inverse map should return the original.
-     *
-     * @return an inverted bidirectional map
-     */
-    public OrderedBidiMap<V, K> inverseOrderedBidiMap();
+    public OrderedBidiMap<V, K> inverseBidiMap();
 
 }

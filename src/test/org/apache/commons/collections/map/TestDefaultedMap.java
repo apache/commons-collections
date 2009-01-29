@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,17 +28,17 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ConstantFactory;
 
 /**
- * Extension of {@link TestMap} for exercising the 
+ * Extension of {@link TestMap} for exercising the
  * {@link DefaultedMap} implementation.
  *
  * @since Commons Collections 3.2
  * @version $Revision: 155406 $ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public class TestDefaultedMap extends AbstractTestMap {
+public class TestDefaultedMap<K, V> extends AbstractTestMap<K, V> {
 
-    protected static final Factory nullFactory = FactoryUtils.nullFactory();
+    protected final Factory<V> nullFactory = FactoryUtils.<V>nullFactory();
 
     public TestDefaultedMap(String testName) {
         super(testName);
@@ -53,20 +53,21 @@ public class TestDefaultedMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    //-----------------------------------------------------------------------    
-    public Map makeEmptyMap() {
-        return DefaultedMap.decorate(new HashMap(), nullFactory);
+    //-----------------------------------------------------------------------
+    public Map<K, V> makeObject() {
+        return DefaultedMap.decorate(new HashMap<K, V>(), nullFactory);
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testMapGet() {
-        Map map = new DefaultedMap("NULL");
-        
+        Map<K, V> map = new DefaultedMap<K, V>((V) "NULL");
+
         assertEquals(0, map.size());
         assertEquals(false, map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
-        
-        map.put("Key", "Value");
+
+        map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(true, map.containsKey("Key"));
         assertEquals("Value", map.get("Key"));
@@ -74,16 +75,17 @@ public class TestDefaultedMap extends AbstractTestMap {
         assertEquals("NULL", map.get("NotInMap"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testMapGet2() {
-        HashMap base = new HashMap();
-        Map map = DefaultedMap.decorate(base, "NULL");
-        
+        HashMap<K, V> base = new HashMap<K, V>();
+        Map<K, V> map = DefaultedMap.decorate(base, (V) "NULL");
+
         assertEquals(0, map.size());
         assertEquals(0, base.size());
         assertEquals(false, map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
-        
-        map.put("Key", "Value");
+
+        map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
         assertEquals(true, map.containsKey("Key"));
@@ -92,16 +94,17 @@ public class TestDefaultedMap extends AbstractTestMap {
         assertEquals("NULL", map.get("NotInMap"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testMapGet3() {
-        HashMap base = new HashMap();
-        Map map = DefaultedMap.decorate(base, ConstantFactory.getInstance("NULL"));
-        
+        HashMap<K, V> base = new HashMap<K, V>();
+        Map<K, V> map = DefaultedMap.decorate(base, ConstantFactory.getInstance((V) "NULL"));
+
         assertEquals(0, map.size());
         assertEquals(0, base.size());
         assertEquals(false, map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
-        
-        map.put("Key", "Value");
+
+        map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
         assertEquals(true, map.containsKey("Key"));
@@ -110,24 +113,25 @@ public class TestDefaultedMap extends AbstractTestMap {
         assertEquals("NULL", map.get("NotInMap"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testMapGet4() {
-        HashMap base = new HashMap();
-        Map map = DefaultedMap.decorate(base, new Transformer() {
-            public Object transform(Object input) {
+        HashMap<K, V> base = new HashMap<K, V>();
+        Map<K, V> map = DefaultedMap.decorate(base, new Transformer<K, V>() {
+            public V transform(K input) {
                 if (input instanceof String) {
-                    return "NULL";
+                    return (V) "NULL";
                 }
-                return "NULL_OBJECT";
+                return (V) "NULL_OBJECT";
             }
         });
-        
+
         assertEquals(0, map.size());
         assertEquals(0, base.size());
         assertEquals(false, map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
         assertEquals("NULL_OBJECT", map.get(new Integer(0)));
-        
-        map.put("Key", "Value");
+
+        map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
         assertEquals(1, base.size());
         assertEquals(true, map.containsKey("Key"));

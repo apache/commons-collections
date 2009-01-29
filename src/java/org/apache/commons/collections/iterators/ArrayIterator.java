@@ -41,7 +41,7 @@ import org.apache.commons.collections.ResettableIterator;
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public class ArrayIterator implements ResettableIterator {
+public class ArrayIterator<E> implements ResettableIterator<E> {
 
     /** The array to iterate over */    
     protected Object array;
@@ -159,11 +159,12 @@ public class ArrayIterator implements ResettableIterator {
      * @throws NoSuchElementException if all the elements in the array
      *  have already been returned
      */
-    public Object next() {
+    @SuppressWarnings("unchecked")
+    public E next() {
         if (hasNext() == false) {
             throw new NoSuchElementException();
         }
-        return Array.get(array, index++);
+        return (E) Array.get(array, index++);
     }
 
     /**

@@ -30,7 +30,7 @@ import java.util.Map;
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public abstract class AbstractMapEntry extends AbstractKeyValue implements Map.Entry {
+public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> implements Map.Entry<K, V> {
 
     /**
      * Constructs a new entry with the given key and given value.
@@ -38,7 +38,7 @@ public abstract class AbstractMapEntry extends AbstractKeyValue implements Map.E
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    protected AbstractMapEntry(Object key, Object value) {
+    protected AbstractMapEntry(K key, V value) {
         super(key, value);
     }
 
@@ -53,8 +53,8 @@ public abstract class AbstractMapEntry extends AbstractKeyValue implements Map.E
      * @param value  the new value
      * @return the previous value
      */
-    public Object setValue(Object value) {
-        Object answer = this.value;
+    public V setValue(V value) {
+        V answer = this.value;
         this.value = value;
         return answer;
     }
@@ -67,6 +67,7 @@ public abstract class AbstractMapEntry extends AbstractKeyValue implements Map.E
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

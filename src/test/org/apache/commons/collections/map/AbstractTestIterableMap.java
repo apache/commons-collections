@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,102 +29,116 @@ import org.apache.commons.collections.iterators.AbstractTestMapIterator;
  * Abstract test class for {@link IterableMap} methods and contracts.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestIterableMap extends AbstractTestMap {
+public abstract class AbstractTestIterableMap<K, V> extends AbstractTestMap<K, V> {
 
     /**
      * JUnit constructor.
-     * 
+     *
      * @param testName  the test name
      */
     public AbstractTestIterableMap(String testName) {
         super(testName);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract IterableMap<K, V> makeObject();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IterableMap<K, V> makeFullMap() {
+        return (IterableMap<K, V>) super.makeFullMap();
+    }
+
     //-----------------------------------------------------------------------
     public void testFailFastEntrySet() {
         if (isRemoveSupported() == false) return;
         resetFull();
-        Iterator it = map.entrySet().iterator();
-        Map.Entry val = (Map.Entry) it.next();
-        map.remove(val.getKey());
+        Iterator<Map.Entry<K, V>> it = getMap().entrySet().iterator();
+        Map.Entry<K, V> val = it.next();
+        getMap().remove(val.getKey());
         try {
             it.next();
             fail();
         } catch (ConcurrentModificationException ex) {}
-        
+
         resetFull();
-        it = map.entrySet().iterator();
+        it = getMap().entrySet().iterator();
         it.next();
-        map.clear();
+        getMap().clear();
         try {
             it.next();
             fail();
         } catch (ConcurrentModificationException ex) {}
     }
-    
+
     public void testFailFastKeySet() {
         if (isRemoveSupported() == false) return;
         resetFull();
-        Iterator it = map.keySet().iterator();
-        Object val = it.next();
-        map.remove(val);
+        Iterator<K> it = getMap().keySet().iterator();
+        K val = it.next();
+        getMap().remove(val);
         try {
             it.next();
             fail();
         } catch (ConcurrentModificationException ex) {}
-        
+
         resetFull();
-        it = map.keySet().iterator();
+        it = getMap().keySet().iterator();
         it.next();
-        map.clear();
+        getMap().clear();
         try {
             it.next();
             fail();
         } catch (ConcurrentModificationException ex) {}
     }
-    
+
     public void testFailFastValues() {
         if (isRemoveSupported() == false) return;
         resetFull();
-        Iterator it = map.values().iterator();
+        Iterator<V> it = getMap().values().iterator();
         it.next();
-        map.remove(map.keySet().iterator().next());
+        getMap().remove(getMap().keySet().iterator().next());
         try {
             it.next();
             fail();
         } catch (ConcurrentModificationException ex) {}
-        
+
         resetFull();
-        it = map.values().iterator();
+        it = getMap().values().iterator();
         it.next();
-        map.clear();
+        getMap().clear();
         try {
             it.next();
             fail();
         } catch (ConcurrentModificationException ex) {}
     }
-    
+
     //-----------------------------------------------------------------------
     public BulkTest bulkTestMapIterator() {
         return new InnerTestMapIterator();
     }
-    
-    public class InnerTestMapIterator extends AbstractTestMapIterator {
+
+    public class InnerTestMapIterator extends AbstractTestMapIterator<K, V> {
         public InnerTestMapIterator() {
             super("InnerTestMapIterator");
         }
-        
-        public Object[] addSetValues() {
+
+        public V[] addSetValues() {
             return AbstractTestIterableMap.this.getNewSampleValues();
         }
-        
+
         public boolean supportsRemove() {
             return AbstractTestIterableMap.this.isRemoveSupported();
         }
-        
+
         public boolean isGetStructuralModify() {
             return AbstractTestIterableMap.this.isGetStructuralModify();
         }
@@ -133,36 +147,44 @@ public abstract class AbstractTestIterableMap extends AbstractTestMap {
             return AbstractTestIterableMap.this.isSetValueSupported();
         }
 
-        public MapIterator makeEmptyMapIterator() {
+        public MapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
-            return ((IterableMap) AbstractTestIterableMap.this.map).mapIterator();
+            return AbstractTestIterableMap.this.getMap().mapIterator();
         }
 
-        public MapIterator makeFullMapIterator() {
+        public MapIterator<K, V> makeObject() {
             resetFull();
-            return ((IterableMap) AbstractTestIterableMap.this.map).mapIterator();
+            return AbstractTestIterableMap.this.getMap().mapIterator();
         }
-        
-        public Map getMap() {
+
+        public Map<K, V> getMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractTestIterableMap.this.map;
+            return AbstractTestIterableMap.this.getMap();
         }
-        
-        public Map getConfirmedMap() {
+
+        public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractTestIterableMap.this.confirmed;
+            return AbstractTestIterableMap.this.getConfirmed();
         }
-        
+
         public void verify() {
             super.verify();
             AbstractTestIterableMap.this.verify();
         }
     }
-    
+
 //  public void testCreate() throws Exception {
 //      resetEmpty();
 //      writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/HashedMap.emptyCollection.version3.obj");
 //      resetFull();
 //      writeExternalFormToDisk((Serializable) map, "D:/dev/collections/data/test/HashedMap.fullCollection.version3.obj");
 //  }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public IterableMap<K, V> getMap() {
+        return (IterableMap<K, V>) super.getMap();
+    }
 }
