@@ -113,6 +113,7 @@ limitations under the License.
   <!-- JUnit -->
   <property name="test.failonerror"        value="true"/>
   <property name="test.fork"               value="true"/>
+  <property name="test.haltonfailure"      value="true"/>
 
   <!-- Maven -->
   <property name="maven.repo"  value="${user.home}/.maven/repository" />
@@ -327,7 +328,7 @@ limitations under the License.
   <target name="-test-all" depends="instrument" unless="testcase">
 	<mkdir dir="${build.reports.test}" />
 
-    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+    <junit printsummary="yes" haltonfailure="${test.haltonfailure}" showoutput="yes">
       <classpath>
         <pathelement location="${build.instrumented}"/>
         <pathelement location="${build.classes}"/>
@@ -366,7 +367,7 @@ limitations under the License.
 
   <!-- Runs a single test -->
   <target name="-test-single" depends="compile.tests" if="testcase">
-    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+    <junit printsummary="yes" haltonfailure="${test.haltonfailure}" showoutput="yes">
       <formatter type="brief" />
       <classpath>
         <pathelement location="${build.classes}"/>
@@ -398,7 +399,7 @@ limitations under the License.
   <target name="testjar"  depends="compile.tests,jar"
           description="Run all unit test cases">
     <echo message="Running collections tests against built jar ..."/>
-    <junit printsummary="yes" haltonfailure="yes" dir="${basedir}">
+    <junit printsummary="yes" haltonfailure="${test.haltonfailure}" dir="${basedir}">
       <classpath>
         <pathelement location="${build.jar.name}"/>
         <pathelement location="${build.tests}"/>
