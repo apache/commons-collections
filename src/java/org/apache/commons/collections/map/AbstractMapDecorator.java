@@ -20,8 +20,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.MapIterator;
-
 /**
  * Provides a base decorator that enables additional functionality to be added
  * to a Map via decoration.
@@ -142,10 +140,4 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
         return decorated().toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public MapIterator<K, V> mapIterator() {
-        return new EntrySetToMapIteratorAdapter<K, V>(entrySet());
-    }
 }
