@@ -28,7 +28,6 @@ import java.util.Map.Entry;
 
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.collection.AbstractTestCollection;
 import org.apache.commons.collections.set.AbstractTestSet;
 
@@ -1712,14 +1711,6 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
             assertTrue("Map's values should still equal HashMap's", removed);
         }
         assertTrue("Map's values should still equal HashMap's", test.isEmpty());
-    }
-
-    /**
-     * All [collections] Map implementations should implement IterableMap.
-     */
-    public void testSubsetInterfaces() {
-        resetEmpty();
-        assertTrue(getMap() instanceof IterableMap);
     }
 
     /**
