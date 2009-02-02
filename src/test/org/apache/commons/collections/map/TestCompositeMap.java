@@ -33,7 +33,7 @@ import java.util.Collection;
  *
  * @author Brian McCallister
  */
-public class TestCompositeMap<K, V> extends AbstractTestMap<K, V> {
+public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
     /** used as a flag in MapMutator tests */
     private boolean pass = false;
     

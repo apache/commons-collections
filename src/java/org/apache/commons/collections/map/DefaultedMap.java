@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections.Factory;
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.functors.FactoryTransformer;
@@ -95,7 +96,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param factory  the factory to use to create entries, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> Map<K, V> decorate(Map<K, V> map, Factory<? extends V> factory) {
+    public static <K, V> IterableMap<K, V> decorate(Map<K, V> map, Factory<? extends V> factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }

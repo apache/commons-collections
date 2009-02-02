@@ -35,7 +35,7 @@ import org.junit.Test;
  *
  * @author Phil Steitz
  */
-public class TestLazyMap<K, V> extends AbstractTestMap<K, V> {
+public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
 
 	private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
 

@@ -24,6 +24,7 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.functors.ConstantFactory;
 
@@ -36,7 +37,7 @@ import org.apache.commons.collections.functors.ConstantFactory;
  *
  * @author Stephen Colebourne
  */
-public class TestDefaultedMap<K, V> extends AbstractTestMap<K, V> {
+public class TestDefaultedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     protected final Factory<V> nullFactory = FactoryUtils.<V>nullFactory();
 
@@ -54,7 +55,7 @@ public class TestDefaultedMap<K, V> extends AbstractTestMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
-    public Map<K, V> makeObject() {
+    public IterableMap<K, V> makeObject() {
         return DefaultedMap.decorate(new HashMap<K, V>(), nullFactory);
     }
 

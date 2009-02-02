@@ -1270,7 +1270,7 @@ public class MapUtils {
      * @return a predicated map backed by the given map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static <K, V> Map<K, V> predicatedMap(Map<K, V> map, Predicate<? super K> keyPred, Predicate<? super V> valuePred) {
+    public static <K, V> IterableMap<K, V> predicatedMap(Map<K, V> map, Predicate<? super K> keyPred, Predicate<? super V> valuePred) {
         return PredicatedMap.decorate(map, keyPred, valuePred);
     }
 
@@ -1295,7 +1295,7 @@ public class MapUtils {
      * @return a transformed map backed by the given map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static <K, V> Map<K, V> transformedMap(Map<K, V> map,
+    public static <K, V> IterableMap<K, V> transformedMap(Map<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
         return TransformedMap.decorate(map, keyTransformer, valueTransformer);
@@ -1311,7 +1311,7 @@ public class MapUtils {
      * @return a fixed-size map backed by that map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static <K, V> Map<K, V> fixedSizeMap(Map<K, V> map) {
+    public static <K, V> IterableMap<K, V> fixedSizeMap(Map<K, V> map) {
         return FixedSizeMap.decorate(map);
     }
 
@@ -1343,7 +1343,7 @@ public class MapUtils {
      * @return a lazy map backed by the given map
      * @throws IllegalArgumentException  if the Map or Factory is null
      */
-    public static <K, V> Map<K, V> lazyMap(Map<K, V> map, Factory<? extends V> factory) {
+    public static <K, V> IterableMap<K, V> lazyMap(Map<K, V> map, Factory<? extends V> factory) {
         return LazyMap.getLazyMap(map, factory);
     }
 
@@ -1382,7 +1382,7 @@ public class MapUtils {
      * @return a lazy map backed by the given map
      * @throws IllegalArgumentException  if the Map or Transformer is null
      */
-    public static <K, V> Map<K, V> lazyMap(Map<K, V> map, Transformer<? super K, ? extends V> transformerFactory) {
+    public static <K, V> IterableMap<K, V> lazyMap(Map<K, V> map, Transformer<? super K, ? extends V> transformerFactory) {
         return LazyMap.getLazyMap(map, transformerFactory);
     }
 
@@ -1397,7 +1397,7 @@ public class MapUtils {
      * @return an ordered map backed by the given map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static <K, V> Map<K, V> orderedMap(Map<K, V> map) {
+    public static <K, V> IterableMap<K, V> orderedMap(Map<K, V> map) {
         return ListOrderedMap.decorate(map);
     }
 

@@ -17,7 +17,6 @@
 package org.apache.commons.collections;
 
 import java.util.Collection;
-import java.util.Map;
 
 /** 
  * Defines a map that holds a collection of values against each key.
@@ -47,7 +46,7 @@ import java.util.Map;
  * @author James Strachan
  * @author Stephen Colebourne
  */
-public interface MultiMap<K, V> extends Map<K, Object> {
+public interface MultiMap<K, V> extends IterableMap<K, Object> {
 
     /**
      * Removes a specific value from map.

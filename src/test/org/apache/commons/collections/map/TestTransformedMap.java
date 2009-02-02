@@ -23,6 +23,7 @@ import java.util.Set;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
 import org.apache.commons.collections.collection.TestTransformedCollection;
@@ -36,7 +37,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  *
  * @author Stephen Colebourne
  */
-public class TestTransformedMap<K, V> extends AbstractTestMap<K, V> {
+public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestTransformedMap(String testName) {
         super(testName);
@@ -52,7 +53,7 @@ public class TestTransformedMap<K, V> extends AbstractTestMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
-    public Map<K, V> makeObject() {
+    public IterableMap<K, V> makeObject() {
         return TransformedMap.decorate(new HashMap<K, V>(), TransformerUtils.<K> nopTransformer(),
                 TransformerUtils.<V> nopTransformer());
     }

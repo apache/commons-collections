@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.BoundedMap;
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
@@ -68,7 +69,7 @@ public class FixedSizeMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> Map<K, V> decorate(Map<K, V> map) {
+    public static <K, V> IterableMap<K, V> decorate(Map<K, V> map) {
         return new FixedSizeMap<K, V>(map);
     }
 

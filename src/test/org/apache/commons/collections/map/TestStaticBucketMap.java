@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  *
  * @author Michael A. Smith
  */
-public class TestStaticBucketMap<K, V> extends AbstractTestMap<K, V> {
+public class TestStaticBucketMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestStaticBucketMap(String name) {
         super(name);
@@ -45,6 +45,14 @@ public class TestStaticBucketMap<K, V> extends AbstractTestMap<K, V> {
 
     public StaticBucketMap<K, V> makeObject() {
         return new StaticBucketMap<K, V>(30);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFailFastExpected() {
+        return false;
     }
 
     public String[] ignoredTests() {

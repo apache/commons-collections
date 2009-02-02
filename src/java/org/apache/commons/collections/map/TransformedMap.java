@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Transformer;
 
 /**
@@ -69,7 +70,7 @@ public class TransformedMap<K, V>
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> Map<K, V> decorate(Map<K, V> map,
+    public static <K, V> IterableMap<K, V> decorate(Map<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
         return new TransformedMap<K, V>(map, keyTransformer, valueTransformer);

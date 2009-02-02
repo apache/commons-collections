@@ -26,7 +26,7 @@ import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.iterators.AbstractTestMapIterator;
-import org.apache.commons.collections.map.AbstractTestMap;
+import org.apache.commons.collections.map.AbstractTestIterableMap;
 
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
@@ -36,7 +36,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestBidiMap<K, V> extends AbstractTestMap<K, V> {
+public abstract class AbstractTestBidiMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public AbstractTestBidiMap(String testName) {
         super(testName);

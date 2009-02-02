@@ -101,7 +101,7 @@ import org.apache.commons.collections.KeyValue;
  * @author Janek Bogucki
  * @author Kazuya Ujihara
  */
-public final class StaticBucketMap<K, V> implements Map<K, V> {
+public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     /** The default number of buckets to use */
     private static final int DEFAULT_BUCKETS = 255;

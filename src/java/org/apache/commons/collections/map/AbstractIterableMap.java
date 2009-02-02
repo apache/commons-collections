@@ -14,34 +14,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.map;
+
+import org.apache.commons.collections.IterableMap;
+import org.apache.commons.collections.MapIterator;
 
 /**
- * Defines a map that is bounded in size.
- * <p>
- * The size of the map can vary, but it can never exceed a preset 
- * maximum number of elements. This interface allows the querying of details
- * associated with the maximum number of elements.
- *
- * @since Commons Collections 3.0
+ * Provide a basic {@link IterableMap} implementation.
+ * @since Commons Collections 5
+ * @TODO fix version
  * @version $Revision$ $Date$
  * 
- * @author Stephen Colebourne
+ * @author Matt Benson
  */
-public interface BoundedMap<K, V> extends IterableMap<K, V> {
+public abstract class AbstractIterableMap<K, V> implements IterableMap<K, V> {
 
     /**
-     * Returns true if this map is full and no new elements can be added.
-     *
-     * @return <code>true</code> if the map is full
+     * {@inheritDoc}
      */
-    boolean isFull();
-
-    /**
-     * Gets the maximum size of the map (the bound).
-     *
-     * @return the maximum number of elements the map can hold
-     */
-    int maxSize();
-
+    public MapIterator<K, V> mapIterator() {
+        return new EntrySetToMapIteratorAdapter<K, V>(entrySet());
+    }
 }

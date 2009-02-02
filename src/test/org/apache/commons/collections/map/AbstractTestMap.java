@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.collection.AbstractTestCollection;
 import org.apache.commons.collections.set.AbstractTestSet;
 
@@ -271,6 +272,18 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
      * Override if your collection class does not support duplicate values.
      */
     public boolean isAllowDuplicateValues() {
+        return true;
+    }
+
+    /**
+     * Returns true if the maps produced by
+     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * provide fail-fast behavior on their various iterators.
+     * <p>
+     * Default implementation returns true.
+     * Override if your collection class does not support fast failure.
+     */
+    public boolean isFailFastExpected() {
         return true;
     }
 
@@ -1701,6 +1714,13 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         assertTrue("Map's values should still equal HashMap's", test.isEmpty());
     }
 
+    /**
+     * All [collections] Map implementations should implement IterableMap.
+     */
+    public void testSubsetInterfaces() {
+        resetEmpty();
+        assertTrue(getMap() instanceof IterableMap);
+    }
 
     /**
      * Erases any leftover instance variables by setting them to null.

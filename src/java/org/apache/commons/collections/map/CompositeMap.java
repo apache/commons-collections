@@ -42,7 +42,7 @@ import org.apache.commons.collections.set.CompositeSet;
  *
  * @author Brian McCallister
  */
-public class CompositeMap<K, V> implements Map<K, V> {
+public class CompositeMap<K, V> extends AbstractIterableMap<K, V> {
 
     /** Array of all maps in the composite */
     private Map<K, V>[] composite;

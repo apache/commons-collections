@@ -23,6 +23,7 @@ import java.util.Map;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
@@ -35,7 +36,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedMap<K, V> extends AbstractTestMap<K, V> {
+public class TestPredicatedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     protected static final Predicate<Object> truePredicate = TruePredicate.<Object>truePredicate();
 
@@ -59,16 +60,16 @@ public class TestPredicatedMap<K, V> extends AbstractTestMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
-    protected Map<K, V> decorateMap(Map<K, V> map, Predicate<? super K> keyPredicate,
+    protected IterableMap<K, V> decorateMap(Map<K, V> map, Predicate<? super K> keyPredicate,
         Predicate<? super V> valuePredicate) {
         return PredicatedMap.decorate(map, keyPredicate, valuePredicate);
     }
 
-    public Map<K, V> makeObject() {
+    public IterableMap<K, V> makeObject() {
         return decorateMap(new HashMap<K, V>(), truePredicate, truePredicate);
     }
 
-    public Map<K, V> makeTestMap() {
+    public IterableMap<K, V> makeTestMap() {
         return decorateMap(new HashMap<K, V>(), testPredicate, testPredicate);
     }
 
