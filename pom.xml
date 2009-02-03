@@ -111,6 +111,10 @@
       <name>Robert Burrell Donkin</name>
       <id>rdonkin</id>
     </developer>
+    <developer>
+      <name>Matt Benson</name>
+      <id>mbenson</id>
+    </developer>
   </developers>
   
   <contributors>
@@ -131,9 +135,6 @@
     </contributor>
     <contributor>
       <name>Sebastian Bazley</name>
-    </contributor>
-    <contributor>
-      <name>Matt Benson</name>
     </contributor>
     <contributor>
       <name>Ola Berg</name>
