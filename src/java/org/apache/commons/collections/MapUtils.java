@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -43,7 +43,7 @@ import org.apache.commons.collections.map.TransformedSortedMap;
 import org.apache.commons.collections.map.UnmodifiableMap;
 import org.apache.commons.collections.map.UnmodifiableSortedMap;
 
-/** 
+/**
  * Provides utility methods and decorators for
  * {@link Map} and {@link SortedMap} instances.
  * <p>
@@ -72,7 +72,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
  * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>
@@ -87,7 +87,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  * @author Neil O'Toole
  */
 public class MapUtils {
-    
+
     /**
      * An empty unmodifiable map.
      * This was not provided in JDK1.2.
@@ -109,7 +109,7 @@ public class MapUtils {
      * <code>MapUtils</code> should not normally be instantiated.
      */
     public MapUtils() {
-    }    
+    }
 
     // Type safe getters
     //-------------------------------------------------------------------------
@@ -382,7 +382,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a string, or defaultValue if the 
+     *  @return  the value in the map as a string, or defaultValue if the
      *    original value is null, the map is null or the string conversion
      *    fails
      */
@@ -402,7 +402,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a boolean, or defaultValue if the 
+     *  @return  the value in the map as a boolean, or defaultValue if the
      *    original value is null, the map is null or the boolean conversion
      *    fails
      */
@@ -422,7 +422,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a number, or defaultValue if the 
+     *  @return  the value in the map as a number, or defaultValue if the
      *    original value is null, the map is null or the number conversion
      *    fails
      */
@@ -442,7 +442,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a number, or defaultValue if the 
+     *  @return  the value in the map as a number, or defaultValue if the
      *    original value is null, the map is null or the number conversion
      *    fails
      */
@@ -462,7 +462,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a number, or defaultValue if the 
+     *  @return  the value in the map as a number, or defaultValue if the
      *    original value is null, the map is null or the number conversion
      *    fails
      */
@@ -482,7 +482,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a number, or defaultValue if the 
+     *  @return  the value in the map as a number, or defaultValue if the
      *    original value is null, the map is null or the number conversion
      *    fails
      */
@@ -502,7 +502,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a number, or defaultValue if the 
+     *  @return  the value in the map as a number, or defaultValue if the
      *    original value is null, the map is null or the number conversion
      *    fails
      */
@@ -522,7 +522,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a number, or defaultValue if the 
+     *  @return  the value in the map as a number, or defaultValue if the
      *    original value is null, the map is null or the number conversion
      *    fails
      */
@@ -542,7 +542,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a number, or defaultValue if the 
+     *  @return  the value in the map as a number, or defaultValue if the
      *    original value is null, the map is null or the number conversion
      *    fails
      */
@@ -562,7 +562,7 @@ public class MapUtils {
      *  @param key  the key of the value to look up in that map
      *  @param defaultValue  what to return if the value is null or if the
      *     conversion fails
-     *  @return  the value in the map as a number, or defaultValue if the 
+     *  @return  the value in the map as a number, or defaultValue if the
      *    original value is null, the map is null or the map conversion
      *    fails
      */
@@ -725,7 +725,7 @@ public class MapUtils {
 
     /**
      * Gets a byte from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.     
+     * using the default value if the the conversion fails.
      * <p>
      * The byte is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -745,7 +745,7 @@ public class MapUtils {
 
     /**
      * Gets a short from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.     
+     * using the default value if the the conversion fails.
      * <p>
      * The short is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -765,7 +765,7 @@ public class MapUtils {
 
     /**
      * Gets an int from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.     
+     * using the default value if the the conversion fails.
      * <p>
      * The int is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -785,7 +785,7 @@ public class MapUtils {
 
     /**
      * Gets a long from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.     
+     * using the default value if the the conversion fails.
      * <p>
      * The long is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -805,7 +805,7 @@ public class MapUtils {
 
     /**
      * Gets a float from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.     
+     * using the default value if the the conversion fails.
      * <p>
      * The float is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -825,7 +825,7 @@ public class MapUtils {
 
     /**
      * Gets a double from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.     
+     * using the default value if the the conversion fails.
      * <p>
      * The double is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -848,7 +848,7 @@ public class MapUtils {
     /**
      * Gets a new Properties object initialised with the values from a Map.
      * A null input will return an empty properties object.
-     * 
+     *
      * @param map  the map to convert to a Properties object, may not be null
      * @return the properties object
      */
@@ -867,7 +867,7 @@ public class MapUtils {
 
     /**
      * Creates a new HashMap using data copied from a ResourceBundle.
-     * 
+     *
      * @param resourceBundle  the resource bundle to convert, may not be null
      * @return the hashmap containing the data
      * @throws NullPointerException if the bundle is null
@@ -884,7 +884,7 @@ public class MapUtils {
 
         return map;
     }
- 
+
     // Printing methods
     //-------------------------------------------------------------------------
     /**
@@ -953,15 +953,15 @@ public class MapUtils {
     }
 
     /**
-     * Implementation providing functionality for {@link #debugPrint} and for 
+     * Implementation providing functionality for {@link #debugPrint} and for
      * {@link #verbosePrint}.  This prints the given map with nice line breaks.
-     * If the debug flag is true, it additionally prints the type of the object 
-     * value.  If the contents of a map include the map itself, then the text 
-     * <em>(this Map)</em> is printed out.  If the contents include a 
-     * parent container of the map, the the text <em>(ancestor[i] Map)</em> is 
-     * printed, where i actually indicates the number of levels which must be 
-     * traversed in the sequential list of ancestors (e.g. father, grandfather, 
-     * great-grandfather, etc).  
+     * If the debug flag is true, it additionally prints the type of the object
+     * value.  If the contents of a map include the map itself, then the text
+     * <em>(this Map)</em> is printed out.  If the contents include a
+     * parent container of the map, the the text <em>(ancestor[i] Map)</em> is
+     * printed, where i actually indicates the number of levels which must be
+     * traversed in the sequential list of ancestors (e.g. father, grandfather,
+     * great-grandfather, etc).
      *
      * @param out  the stream to print to
      * @param label  the label to be used, may be <code>null</code>.
@@ -969,7 +969,7 @@ public class MapUtils {
      *  It typically represents the name of the property in a bean or similar.
      * @param map  the map to print, may be <code>null</code>.
      *  If <code>null</code>, the text 'null' is output
-     * @param lineage  a stack consisting of any maps in which the previous 
+     * @param lineage  a stack consisting of any maps in which the previous
      *  argument is contained. This is checked to avoid infinite recursion when
      *  printing the output
      * @param debug  flag indicating whether type names should be output.
@@ -981,7 +981,7 @@ public class MapUtils {
         final Map<?, ?> map,
         final ArrayStack<Map<?, ?>> lineage,
         final boolean debug) {
-        
+
         printIndent(out, lineage.size());
 
         if (map == null) {
@@ -1016,12 +1016,12 @@ public class MapUtils {
                 printIndent(out, lineage.size());
                 out.print(childKey);
                 out.print(" = ");
-                
+
                 final int lineageIndex = lineage.indexOf(childValue);
                 if (lineageIndex == -1) {
                     out.print(childValue);
                 } else if (lineage.size() - 1 == lineageIndex) {
-                    out.print("(this Map)");    
+                    out.print("(this Map)");
                 } else {
                     out.print(
                         "(ancestor["
@@ -1063,7 +1063,7 @@ public class MapUtils {
      * <p>
      * This operation assumes that the inverse mapping is well defined.
      * If the input map had multiple entries with the same value mapped to
-     * different keys, the returned map will map one of those keys to the 
+     * different keys, the returned map will map one of those keys to the
      * value, but the exact key which will be mapped is undefined.
      *
      * @param map  the map to invert, may not be null
@@ -1093,7 +1093,7 @@ public class MapUtils {
      * Keys are not validated.
      * Note that this method can be used to circumvent the map's
      * value type at runtime.
-     * 
+     *
      * @param map  the map to add to, may not be null
      * @param key  the key
      * @param value  the value, null converted to ""
@@ -1189,7 +1189,7 @@ public class MapUtils {
      * Null-safe check if the specified map is empty.
      * <p>
      * Null returns true.
-     * 
+     *
      * @param map  the map to check, may be null
      * @return true if empty or null
      * @since Commons Collections 3.2
@@ -1203,7 +1203,7 @@ public class MapUtils {
      * Null-safe check if the specified map is not empty.
      * <p>
      * Null returns false.
-     * 
+     *
      * @param map  the map to check, may be null
      * @return true if non-null and non-empty
      * @since Commons Collections 3.2
@@ -1218,9 +1218,9 @@ public class MapUtils {
     /**
      * Returns a synchronized map backed by the given map.
      * <p>
-     * You must manually synchronize on the returned buffer's iterator to 
+     * You must manually synchronize on the returned buffer's iterator to
      * avoid non-deterministic behavior:
-     *  
+     *
      * <pre>
      * Map m = MapUtils.synchronizedMap(myMap);
      * Set s = m.keySet();  // outside synchronized block
@@ -1231,9 +1231,9 @@ public class MapUtils {
      *     }
      * }
      * </pre>
-     * 
+     *
      * This method uses the implementation in {@link java.util.Collections Collections}.
-     * 
+     *
      * @param map  the map to synchronize, must not be null
      * @return a synchronized map backed by the given map
      * @throws IllegalArgumentException  if the map is null
@@ -1283,7 +1283,7 @@ public class MapUtils {
      * If you want that behaviour, see {@link TransformedMap#decorateTransform}.
      * <p>
      * Each object is passed through the transformers as it is added to the
-     * Map. It is important not to use the original map after invoking this 
+     * Map. It is important not to use the original map after invoking this
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * If there are any elements already in the map being decorated, they
@@ -1300,11 +1300,11 @@ public class MapUtils {
             Transformer<? super V, ? extends V> valueTransformer) {
         return TransformedMap.decorate(map, keyTransformer, valueTransformer);
     }
-    
+
     /**
      * Returns a fixed-sized map backed by the given map.
-     * Elements may not be added or removed from the returned map, but 
-     * existing elements can be changed (for instance, via the 
+     * Elements may not be added or removed from the returned map, but
+     * existing elements can be changed (for instance, via the
      * {@link Map#put(Object,Object)} method).
      *
      * @param map  the map whose size to fix, must not be null
@@ -1449,9 +1449,9 @@ public class MapUtils {
     /**
      * Returns a synchronized sorted map backed by the given sorted map.
      * <p>
-     * You must manually synchronize on the returned buffer's iterator to 
+     * You must manually synchronize on the returned buffer's iterator to
      * avoid non-deterministic behavior:
-     *  
+     *
      * <pre>
      * Map m = MapUtils.synchronizedSortedMap(myMap);
      * Set s = m.keySet();  // outside synchronized block
@@ -1462,9 +1462,9 @@ public class MapUtils {
      *     }
      * }
      * </pre>
-     * 
+     *
      * This method uses the implementation in {@link java.util.Collections Collections}.
-     * 
+     *
      * @param map  the map to synchronize, must not be null
      * @return a synchronized map backed by the given map
      * @throws IllegalArgumentException  if the map is null
@@ -1515,7 +1515,7 @@ public class MapUtils {
      * If you want that behaviour, see {@link TransformedSortedMap#decorateTransform}.
      * <p>
      * Each object is passed through the transformers as it is added to the
-     * Map. It is important not to use the original map after invoking this 
+     * Map. It is important not to use the original map after invoking this
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * If there are any elements already in the map being decorated, they
@@ -1532,11 +1532,11 @@ public class MapUtils {
             Transformer<? super V, ? extends V> valueTransformer) {
         return TransformedSortedMap.decorate(map, keyTransformer, valueTransformer);
     }
-    
+
     /**
      * Returns a fixed-sized sorted map backed by the given sorted map.
-     * Elements may not be added or removed from the returned map, but 
-     * existing elements can be changed (for instance, via the 
+     * Elements may not be added or removed from the returned map, but
+     * existing elements can be changed (for instance, via the
      * {@link Map#put(Object,Object)} method).
      *
      * @param map  the map whose size to fix, must not be null
@@ -1580,7 +1580,7 @@ public class MapUtils {
             Factory<? extends V> factory) {
         return LazySortedMap.getLazySortedMap(map, factory);
     }
-    
+
     /**
      * Returns a "lazy" sorted map whose values will be created on demand.
      * <p>
