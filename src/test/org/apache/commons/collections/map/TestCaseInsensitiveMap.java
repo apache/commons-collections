@@ -123,7 +123,7 @@ public class TestCaseInsensitiveMap extends AbstractTestIterableMap {
     public void testLocaleIndependence() {
         Locale orig = Locale.getDefault();
 
-        Locale[] locales = { Locale.ENGLISH, new Locale("tr"), Locale.getDefault() };
+        Locale[] locales = { Locale.ENGLISH, new Locale("tr", "", ""), Locale.getDefault() };
 
         String[][] data = { 
             { "i", "I" },
