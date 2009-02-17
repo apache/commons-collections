@@ -27,7 +27,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
 
 /**
- * Extension of {@link TestMap} for exercising the 
+ * Extension of {@link AbstractTestMap} for exercising the 
  * {@link PredicatedMap} implementation.
  *
  * @since Commons Collections 3.0
