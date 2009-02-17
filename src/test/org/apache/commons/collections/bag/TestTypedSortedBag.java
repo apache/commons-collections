@@ -25,7 +25,7 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.SortedBag;
 
 /**
- * Extension of {@link TestBag} for exercising the {@link TypedSortedBag}
+ * Extension of {@link AbstractTestSortedBag} for exercising the {@link TypedSortedBag}
  * implementation.
  *
  * @since Commons Collections 3.0

@@ -27,7 +27,7 @@ import org.apache.commons.collections.PredicateUtils;
 import org.apache.commons.collections.SortedBag;
 
 /**
- * Extension of {@link TestBag} for exercising the {@link PredicatedSortedBag}
+ * Extension of {@link AbstractTestSortedBag} for exercising the {@link PredicatedSortedBag}
  * implementation.
  *
  * @since Commons Collections 3.0

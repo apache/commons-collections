@@ -23,7 +23,7 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
- * Extension of {@link TestBag} for exercising the {@link TransformedBag}
+ * Extension of {@link AbstractTestBag} for exercising the {@link TransformedBag}
  * implementation.
  *
  * @since Commons Collections 3.0

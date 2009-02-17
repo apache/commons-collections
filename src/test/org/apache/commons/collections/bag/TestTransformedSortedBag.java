@@ -23,7 +23,7 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
- * Extension of {@link TestSortedBag} for exercising the {@link TransformedSortedBag}
+ * Extension of {@link AbstractTestSortedBag} for exercising the {@link TransformedSortedBag}
  * implementation.
  *
  * @since Commons Collections 3.0

@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.Bag;
 
 /**
- * Extension of {@link TestBag} for exercising the {@link HashBag}
+ * Extension of {@link AbstractTestBag} for exercising the {@link HashBag}
  * implementation.
  * 
  * @version $Revision$ $Date$

@@ -26,7 +26,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
 
 /**
- * Extension of {@link TestBag} for exercising the {@link PredicatedBag}
+ * Extension of {@link AbstractTestBag} for exercising the {@link PredicatedBag}
  * implementation.
  *
  * @since Commons Collections 3.0

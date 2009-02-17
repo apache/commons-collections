@@ -22,7 +22,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.bag.AbstractTestBag;
 
 /**
- * Extension of {@link TestBag} for exercising the {@link TreeBag}
+ * Extension of {@link AbstractTestBag} for exercising the {@link TreeBag}
  * implementation.
  * 
  * @version $Revision$ $Date$
