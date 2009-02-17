@@ -27,7 +27,7 @@ import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.list.AbstractTestList;
 
 /**
- * Extension of {@link TestMap} for exercising the {@link ListOrderedMap}
+ * Extension of {@link AbstractTestOrderedMap} for exercising the {@link ListOrderedMap}
  * implementation.
  *
  * @since Commons Collections 3.1

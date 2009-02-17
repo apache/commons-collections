@@ -25,7 +25,7 @@ import junit.framework.Test;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * Extension of {@link TestSortedMap} for exercising the {@link FixedSizeSortedMap}
+ * Extension of {@link AbstractTestSortedMap} for exercising the {@link FixedSizeSortedMap}
  * implementation.
  *
  * @since Commons Collections 3.0

@@ -26,7 +26,7 @@ import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.FactoryUtils;
 
 /**
- * Extension of {@link TestMap} for exercising the 
+ * Extension of {@link AbstractTestMap} for exercising the 
  * {@link LazyMap} implementation.
  *
  * @since Commons Collections 3.0
