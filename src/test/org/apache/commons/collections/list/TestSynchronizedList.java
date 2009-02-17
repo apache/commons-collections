@@ -24,7 +24,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Extension of {@link TestList} for exercising the {@link SynchronizedList}
+ * Extension of {@link AbstractTestList} for exercising the {@link SynchronizedList}
  * implementation.
  *
  * @since Commons Collections 3.1

@@ -85,7 +85,7 @@ public class TestFilterIterator extends AbstractTestIterator {
      * Returns an array with elements wrapped in a pass-through
      * FilterIterator
      * 
-     * @return 
+     * @return a filtered iterator
      */
     public Iterator makeFullIterator() {
         array = new String[] { "a", "b", "c" };

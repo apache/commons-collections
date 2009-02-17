@@ -25,7 +25,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Extension of {@link TestList} for exercising the {@link GrowthList}.
+ * Extension of {@link AbstractTestList} for exercising the {@link GrowthList}.
  *
  * @since Commons Collections 3.2
  * @version $Revision: 155406 $ $Date$

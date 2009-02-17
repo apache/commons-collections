@@ -28,7 +28,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
- * Extension of {@link TestList} for exercising the {@link TransformedList}
+ * Extension of {@link AbstractTestList} for exercising the {@link TransformedList}
  * implementation.
  *
  * @since Commons Collections 3.0
