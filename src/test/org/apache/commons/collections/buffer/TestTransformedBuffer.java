@@ -25,7 +25,7 @@ import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
- * Extension of {@link TestBuffer} for exercising the {@link TransformedBuffer}
+ * Extension of {@link TestCase} for exercising the {@link TransformedBuffer}
  * implementation.
  *
  * @since Commons Collections 3.0

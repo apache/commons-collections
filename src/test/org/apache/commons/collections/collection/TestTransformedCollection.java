@@ -28,7 +28,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
 
 /**
- * Extension of {@link TestCollection} for exercising the {@link TransformedCollection}
+ * Extension of {@link AbstractTestCollection} for exercising the {@link TransformedCollection}
  * implementation.
  *
  * @since Commons Collections 3.0

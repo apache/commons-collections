@@ -28,7 +28,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
 
 /**
- * Extension of {@link TestCollection} for exercising the 
+ * Extension of {@link AbstractTestCollection} for exercising the 
  * {@link PredicatedCollection} implementation.
  *
  * @since Commons Collections 3.0
