@@ -60,7 +60,7 @@ public abstract class TestArrayList extends AbstractTestList {
             list.get(1);
             fail("get(int i) should have thrown IndexOutOfBoundsException");
         } catch (IndexOutOfBoundsException e) {
-            ; // Expected result
+            // Expected result
         }
     }
 

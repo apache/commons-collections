@@ -64,14 +64,14 @@ public class TestArrayStack extends TestArrayList {
             stack.peek();
             fail("peek() should have thrown EmptyStackException");
         } catch (EmptyStackException e) {
-            ; // Expected result
+            // Expected result
         }
 
         try {
             stack.pop();
             fail("pop() should have thrown EmptyStackException");
         } catch (EmptyStackException e) {
-            ; // Expected result
+            // Expected result
         }
 
     }
