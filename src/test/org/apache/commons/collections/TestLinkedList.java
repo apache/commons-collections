@@ -28,7 +28,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  * Tests base {@link java.util.LinkedList} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
- * the {@link #makeLinkedList} method.
+ * the {@link #makeEmptyLinkedList()} method.
  * <p>
  * If your {@link LinkedList} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
@@ -126,7 +126,7 @@ public abstract class TestLinkedList extends AbstractTestList {
     }
 
     /**
-     *  Tests {@link LinkedList#getFirst(Object)}.
+     *  Tests {@link LinkedList#getFirst()}.
      */
     public void testLinkedListGetFirst() {
         resetEmpty();
@@ -148,7 +148,7 @@ public abstract class TestLinkedList extends AbstractTestList {
     }
 
     /**
-     *  Tests {@link LinkedList#getLast(Object)}.
+     *  Tests {@link LinkedList#getLast()}.
      */
     public void testLinkedListGetLast() {
         resetEmpty();
@@ -170,7 +170,7 @@ public abstract class TestLinkedList extends AbstractTestList {
     }
 
     /**
-     *  Tests {@link LinkedList#removeFirst(Object)}.
+     *  Tests {@link LinkedList#removeFirst()}.
      */
     public void testLinkedListRemoveFirst() {
         if (!isRemoveSupported()) return;
@@ -194,7 +194,7 @@ public abstract class TestLinkedList extends AbstractTestList {
     }
 
     /**
-     *  Tests {@link LinkedList#removeLast(Object)}.
+     *  Tests {@link LinkedList#removeLast()}.
      */
     public void testLinkedListRemoveLast() {
         if (!isRemoveSupported()) return;
@@ -218,14 +218,14 @@ public abstract class TestLinkedList extends AbstractTestList {
     }
 
     /**
-     *  Returns an empty {@link ArrayList}.
+     *  Returns an empty {@link LinkedList}.
      */
     public Collection makeConfirmedCollection() {
         return new LinkedList();
     }
 
     /**
-     *  Returns a full {@link ArrayList}.
+     *  Returns a full {@link LinkedList}.
      */
     public Collection makeConfirmedFullCollection() {
         List list = new LinkedList();
