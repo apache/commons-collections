@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
- * Extension of {@link TestSet} for exercising the {@link TransformedSet}
+ * Extension of {@link AbstractTestSet} for exercising the {@link TransformedSet}
  * implementation.
  *
  * @since Commons Collections 3.0

@@ -27,7 +27,7 @@ import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
- * Extension of {@link TestSortedSet} for exercising the {@link TransformedSortedSet}
+ * Extension of {@link AbstractTestSortedSet} for exercising the {@link TransformedSortedSet}
  * implementation.
  *
  * @since Commons Collections 3.0

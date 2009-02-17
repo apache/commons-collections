@@ -25,7 +25,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Extension of {@link TestSet} for exercising the {@link ListOrderedSet}
+ * Extension of {@link AbstractTestSet} for exercising the {@link ListOrderedSet}
  * implementation.
  *
  * @since Commons Collections 3.1

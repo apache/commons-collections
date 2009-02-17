@@ -27,7 +27,7 @@ import org.apache.commons.collections.TransformerUtils;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
- * Extension of {@link TestMap} for exercising the {@link TransformedMap}
+ * Extension of {@link AbstractTestMap} for exercising the {@link TransformedMap}
  * implementation.
  *
  * @since Commons Collections 3.0
