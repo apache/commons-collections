@@ -29,6 +29,6 @@ import java.util.ListIterator;
  * 
  * @author Stephen Colebourne
  */
-public interface ResettableListIterator<E> extends ListIterator<E>, ResettableIterator<E> {
+public interface ResettableListIterator<E> extends ListIterator<E>, ResettableIterator<E>, OrderedIterator<E> {
 
 }
