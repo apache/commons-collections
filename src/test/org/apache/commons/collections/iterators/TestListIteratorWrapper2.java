@@ -26,14 +26,13 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.ResettableListIterator;
 
 /**
- * Tests the ListIteratorWrapper to insure that it simulates
- * a ListIterator correctly.
+ * Tests the ListIteratorWrapper to insure that it behaves as expected when wrapping a ListIterator.
  *
  * @version $Revision$ $Date$
  *
  * @author Morgan Delagrange
  */
-public class TestListIteratorWrapper<E> extends AbstractTestIterator<E> {
+public class TestListIteratorWrapper2<E> extends AbstractTestIterator<E> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
@@ -42,10 +41,10 @@ public class TestListIteratorWrapper<E> extends AbstractTestIterator<E> {
     protected List<E> list1 = null;
 
     public static Test suite() {
-        return new TestSuite(TestListIteratorWrapper.class);
+        return new TestSuite(TestListIteratorWrapper2.class);
     }
 
-    public TestListIteratorWrapper(String testName) {
+    public TestListIteratorWrapper2(String testName) {
         super(testName);
     }
 
@@ -62,11 +61,11 @@ public class TestListIteratorWrapper<E> extends AbstractTestIterator<E> {
 
     public ResettableListIterator<E> makeEmptyIterator() {
         ArrayList<E> list = new ArrayList<E>();
-        return new ListIteratorWrapper<E>(list.iterator());
+        return new ListIteratorWrapper<E>(list.listIterator());
     }
 
     public ResettableListIterator<E> makeObject() {
-        return new ListIteratorWrapper<E>(list1.iterator());
+        return new ListIteratorWrapper<E>(list1.listIterator());
     }
 
     public void testIterator() {
@@ -174,40 +173,18 @@ public class TestListIteratorWrapper<E> extends AbstractTestIterator<E> {
         assertEquals(0, iter.previousIndex());
         assertEquals(1, iter.nextIndex());
 
-        //dig into cache
+        //this would dig into cache on a plain Iterator, but forwards directly to wrapped ListIterator:
         assertEquals(list1.get(0), iter.previous());
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        try {
-            iter.remove();
-            fail("ListIteratorWrapper does not support the remove() method while dug into the cache via previous()");
-        } catch (IllegalStateException e) {
-        }
-
-        //no change from invalid op:
+        //here's the proof; remove() still works:
+        iter.remove();
+        assertEquals(--sz, list1.size());
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
 
-        //dig out of cache, first next() maintains current position:
-        assertEquals(list1.get(0), iter.next());
-        assertEquals(0, iter.previousIndex());
-        assertEquals(1, iter.nextIndex());
-        //continue traversing underlying iterator with this next() call, and we're out of the hole, so to speak:
-        assertEquals(list1.get(1), iter.next());
-        assertEquals(1, iter.previousIndex());
-        assertEquals(2, iter.nextIndex());
-
-        //verify remove() works again:
-        iter.remove();
-        assertEquals(--sz, list1.size());
-        assertEquals(0, iter.previousIndex());
-        assertEquals(1, iter.nextIndex());
-
-        assertEquals(list1.get(1), iter.next());
-        assertEquals(1, iter.previousIndex());
-        assertEquals(2, iter.nextIndex());
-
+        //further testing would be fairly meaningless:
     }
 
     public void testReset() {
