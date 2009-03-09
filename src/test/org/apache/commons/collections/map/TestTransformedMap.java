@@ -94,9 +94,9 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
         assertEquals(new Integer((String) els[0]), map.remove(els[0]));
 
-        Set entrySet = map.entrySet();
-        Map.Entry[] array = (Map.Entry[]) entrySet.toArray(new Map.Entry[0]);
-        array[0].setValue("66");
+        Set<Map.Entry<K, V>> entrySet = map.entrySet();
+        Map.Entry<K, V>[] array = entrySet.toArray(new Map.Entry[0]);
+        array[0].setValue((V) "66");
         assertEquals(new Integer(66), array[0].getValue());
         assertEquals(new Integer(66), map.get(array[0].getKey()));
 
