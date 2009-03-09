@@ -30,6 +30,8 @@ import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.collections.map.AbstractMapDecorator;
+import org.apache.commons.collections.map.AbstractSortedMapDecorator;
 import org.apache.commons.collections.map.FixedSizeMap;
 import org.apache.commons.collections.map.FixedSizeSortedMap;
 import org.apache.commons.collections.map.LazyMap;
@@ -1397,7 +1399,7 @@ public class MapUtils {
      * @return an ordered map backed by the given map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static <K, V> IterableMap<K, V> orderedMap(Map<K, V> map) {
+    public static <K, V> OrderedMap<K, V> orderedMap(Map<K, V> map) {
         return ListOrderedMap.decorate(map);
     }
 
@@ -1619,6 +1621,42 @@ public class MapUtils {
     public static <K, V> SortedMap<K, V> lazySortedMap(SortedMap<K, V> map,
             Transformer<? super K, ? extends V> transformerFactory) {
         return LazySortedMap.getLazySortedMap(map, transformerFactory);
+    }
+
+    /**
+     * Get the specified {@link Map} as an {@link IterableMap}.
+     * @param <K>
+     * @param <V>
+     * @param map to wrap if necessary.
+     * @return IterableMap<K, V>
+     * @since Commons Collections 5
+     * @TODO fix version
+     */
+    public static <K, V> IterableMap<K, V> iterableMap(Map<K, V> map) {
+        if (map == null) {
+            throw new IllegalArgumentException("Map must not be null");
+        }
+        return map instanceof IterableMap ? (IterableMap<K, V>) map
+                : new AbstractMapDecorator<K, V>(map) {
+                };
+    }
+
+    /**
+     * Get the specified {@link SortedMap} as an {@link IterableSortedMap}.
+     * @param <K>
+     * @param <V>
+     * @param sortedMap to wrap if necessary
+     * @return {@link IterableSortedMap}<K, V>
+     * @since Commons Collections 5
+     * @TODO fix version
+     */
+    public static <K, V> IterableSortedMap<K, V> iterableSortedMap(SortedMap<K, V> sortedMap) {
+        if (sortedMap == null) {
+            throw new IllegalArgumentException("Map must not be null");
+        }
+        return sortedMap instanceof IterableSortedMap ? (IterableSortedMap<K, V>) sortedMap
+                : new AbstractSortedMapDecorator<K, V>(sortedMap) {
+                };
     }
 
 }

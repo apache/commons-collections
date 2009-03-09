@@ -31,6 +31,7 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.keyvalue.DefaultKeyValue;
 import org.apache.commons.collections.keyvalue.DefaultMapEntry;
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.collections.map.PredicatedMap;
 
@@ -735,6 +736,39 @@ public class TestMapUtils extends BulkTest {
     public void testIsNotEmptyWithNull() {
         Map<Object, Object> map = null;
         assertEquals(false, MapUtils.isNotEmpty(map));
+    }
+
+    public void testIterableMap() {
+        try {
+            MapUtils.iterableMap(null);
+            fail("Should throw IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+        }
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("foo", "foov");
+        map.put("bar", "barv");
+        map.put("baz", "bazv");
+        IterableMap<String, String> iMap = MapUtils.iterableMap(map);
+        assertEquals(map, iMap);
+        assertNotSame(map, iMap);
+        HashedMap<String, String> hMap = new HashedMap<String, String>(map);
+        assertSame(hMap, MapUtils.iterableMap(hMap));
+    }
+
+    public void testIterableSortedMap() {
+        try {
+            MapUtils.iterableSortedMap(null);
+            fail("Should throw IllegalArgumentException");
+        } catch (IllegalArgumentException e) {
+        }
+        TreeMap<String, String> map = new TreeMap<String, String>();
+        map.put("foo", "foov");
+        map.put("bar", "barv");
+        map.put("baz", "bazv");
+        IterableSortedMap<String, String> iMap = MapUtils.iterableSortedMap(map);
+        assertEquals(map, iMap);
+        assertNotSame(map, iMap);
+        assertSame(iMap, MapUtils.iterableMap(iMap));
     }
 
 }
