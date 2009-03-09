@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
+import org.apache.commons.collections.Get;
 import org.apache.commons.collections.Put;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.map.LinkedMap;
@@ -40,11 +41,22 @@ import org.apache.commons.collections.map.LinkedMap;
  * is to wrap this map using {@link java.util.Collections#synchronizedMap(Map)}.
  * This class may throw exceptions when accessed by concurrent threads without
  * synchronization.
- * 
+ * <p>
+ * The "put" and "get" type constraints of this class are mutually independent;
+ * contrast with {@link org.apache.commons.collections.map.TransformedMap} which,
+ * by virtue of its implementing {@link Map}&lt;K, V&gt;, must be constructed in such
+ * a way that its read and write parameters are generalized to a common (super-)type.
+ * In practice this would often mean <code>&gt;Object, Object&gt;</code>, defeating
+ * much of the usefulness of having parameterized types.
+ * <p>
+ * On the downside, this class is not a drop-in replacement for {@link java.util.Map}
+ * but is intended to be worked with either directly or by {@link Put} and {@link Get}
+ * generalizations.
+ *
  * @since Commons Collections 5
  * @TODO fix version
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Matt Benson
  */
@@ -66,7 +78,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * <p>
      * If there are any elements already in the map being decorated, they are
      * NOT transformed.
-     * 
+     *
      * @param map the map to decorate, must not be null
      * @param keyTransformer the transformer to use for key conversion, null
      * means no transformation
@@ -86,7 +98,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param map the map to decorate, must not be null
      * @param keyTransformer the transformer to use for key conversion, null
      * means no conversion
@@ -110,7 +122,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out the output stream
      * @throws IOException
      */
@@ -121,7 +133,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in the input stream
      * @throws IOException
      * @throws ClassNotFoundException
@@ -138,7 +150,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * Transforms a key.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param object the object to transform
      * @throws the transformed object
      */
@@ -150,7 +162,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * Transforms a value.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param object the object to transform
      * @throws the transformed object
      */
@@ -162,7 +174,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * Transforms a map.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param map the map to transform
      * @throws the transformed object
      */
@@ -181,7 +193,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
 
     /**
      * Override to transform the value when using <code>setValue</code>.
-     * 
+     *
      * @param value the value to transform
      * @return the transformed value
      */
@@ -204,5 +216,5 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
         decorated().putAll(transformMap(mapToCopy));
     }
 
-    
+
 }
