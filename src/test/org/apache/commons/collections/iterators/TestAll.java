@@ -47,6 +47,7 @@ public class TestAll extends TestCase {
         suite.addTest(TestFilterListIterator.suite());
         suite.addTest(TestIteratorChain.suite());
         suite.addTest(TestListIteratorWrapper.suite());
+        suite.addTest(TestListIteratorWrapper2.suite());
         suite.addTest(TestLoopingIterator.suite());
         suite.addTest(TestLoopingListIterator.suite());
         suite.addTest(TestReverseListIterator.suite());
