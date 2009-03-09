@@ -19,26 +19,31 @@ package org.apache.commons.collections;
 import java.util.Map;
 
 /**
- * Defines a map that can be iterated directly without needing to create an entry set.
- * <p>
- * A map iterator is an efficient way of iterating over maps.
- * There is no need to access the entry set or use Map Entry objects.
- * <pre>
- * IterableMap<String,Integer> map = new HashedMap<String,Integer>();
- * MapIterator<String,Integer> it = map.mapIterator();
- * while (it.hasNext()) {
- *   String key = it.next();
- *   Integer value = it.getValue();
- *   it.setValue(value + 1);
- * }
- * </pre>
- * 
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
- * @since Commons Collections 3.0
+ * The "read" subset of the {@link Map} interface.
+ * @since Commons Collections 5
+ * @TODO fix version
  * @version $Revision$ $Date$
- *
- * @author Stephen Colebourne
+ * @see Put
+ * @author Matt Benson
  */
-public interface IterableMap<K, V> extends Map<K, V>, Put<K, V>, IterableGet<K, V> {
+public interface IterableGet<K, V> extends Get<K, V> {
+    /**
+     * Obtains a <code>MapIterator</code> over the map.
+     * <p>
+     * A map iterator is an efficient way of iterating over maps.
+     * There is no need to access the entry set or use Map Entry objects.
+     * <pre>
+     * IterableMap<String,Integer> map = new HashedMap<String,Integer>();
+     * MapIterator<String,Integer> it = map.mapIterator();
+     * while (it.hasNext()) {
+     *   String key = it.next();
+     *   Integer value = it.getValue();
+     *   it.setValue(value + 1);
+     * }
+     * </pre>
+     * 
+     * @return a map iterator
+     */
+    MapIterator<K, V> mapIterator();
+
 }
