@@ -17,7 +17,15 @@
 package org.apache.commons.collections.map;
 
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
 import java.util.SortedMap;
+
+import org.apache.commons.collections.IterableSortedMap;
+import org.apache.commons.collections.OrderedMapIterator;
+import org.apache.commons.collections.iterators.ListIteratorWrapper;
 
 /** 
  * Provides a base decorator that enables additional functionality to be added
@@ -39,7 +47,7 @@ import java.util.SortedMap;
  * @author Stephen Colebourne
  */
 public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecorator<K, V> implements
-        SortedMap<K, V> {
+        IterableSortedMap<K, V> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -93,4 +101,63 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
         return decorated().tailMap(fromKey);
     }
 
+    public K previousKey(K key) {
+        SortedMap<K, V> headMap = headMap(key);
+        return headMap.isEmpty() ? null : headMap.lastKey();
+    };
+
+    public K nextKey(K key) {
+        Iterator<K> it = tailMap(key).keySet().iterator();
+        it.next();
+        return it.hasNext() ? it.next() : null;
+    };
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrderedMapIterator<K, V> mapIterator() {
+        return new SortedMapIterator<K, V>(entrySet());
+    }
+
+    /**
+     * OrderedMapIterator implementation.
+     *
+     * @param <K>
+     * @param <V>
+     */
+    protected static class SortedMapIterator<K, V> extends EntrySetToMapIteratorAdapter<K, V>
+            implements OrderedMapIterator<K, V> {
+
+        /**
+         * Create a new AbstractSortedMapDecorator.SortedMapIterator.
+         */
+        protected SortedMapIterator(Set<Map.Entry<K, V>> entrySet) {
+            super(entrySet);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public synchronized void reset() {
+            super.reset();
+            iterator = new ListIteratorWrapper<Map.Entry<K, V>>(iterator);
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public boolean hasPrevious() {
+            return ((ListIterator<Map.Entry<K, V>>) iterator).hasPrevious();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public K previous() {
+            entry = ((ListIterator<Map.Entry<K, V>>) iterator).previous();
+            return getKey();
+        }
+    }
 }

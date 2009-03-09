@@ -269,6 +269,14 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
         protected DualTreeBidiMap<K, V> decorated() {
             return (DualTreeBidiMap<K, V>) super.decorated();
         }
+
+        public K previousKey(K key) {
+            return decorated().previousKey(key);
+        };
+
+        public K nextKey(K key) {
+            return decorated().nextKey(key);
+        };
     }
 
     //-----------------------------------------------------------------------
