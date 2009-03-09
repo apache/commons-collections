@@ -63,7 +63,7 @@ public class TransformedMap<K, V>
      * <p>
      * If there are any elements already in the map being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #decorateTransform}.
      * 
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
@@ -82,7 +82,7 @@ public class TransformedMap<K, V>
      * <p>
      * If there are any elements already in the map being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
+     * Contrast this with {@link #decorate}.
      * 
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
