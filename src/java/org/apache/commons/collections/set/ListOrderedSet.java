@@ -21,8 +21,10 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
+import org.apache.commons.collections.OrderedIterator;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections.list.UnmodifiableList;
 
@@ -171,8 +173,8 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
         setOrder.clear();
     }
 
-    public Iterator<E> iterator() {
-        return new OrderedSetIterator<E>(setOrder.iterator(), collection);
+    public OrderedIterator<E> iterator() {
+        return new OrderedSetIterator<E>(setOrder.listIterator(), collection);
     }
 
     public boolean add(E object) {
@@ -279,14 +281,15 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
     /**
      * Internal iterator handle remove.
      */
-    static class OrderedSetIterator<E> extends AbstractIteratorDecorator<E> {
+    static class OrderedSetIterator<E> extends AbstractIteratorDecorator<E> implements OrderedIterator<E> {
 
         /** Object we iterate on */
         protected final Collection<E> set;
+
         /** Last object retrieved */
         protected E last;
 
-        private OrderedSetIterator(Iterator<E> iterator, Collection<E> set) {
+        private OrderedSetIterator(ListIterator<E> iterator, Collection<E> set) {
             super(iterator);
             this.set = set;
         }
@@ -300,6 +303,15 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
             set.remove(last);
             iterator.remove();
             last = null;
+        }
+
+        public boolean hasPrevious() {
+            return ((ListIterator<E>) iterator).hasPrevious();
+        }
+
+        public E previous() {
+            last = ((ListIterator<E>) iterator).previous();
+            return last;
         }
     }
 
