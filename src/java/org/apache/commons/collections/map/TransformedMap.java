@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,14 +36,16 @@ import org.apache.commons.collections.Transformer;
  * <strong>Note that TransformedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * <p>
+ * @see org.apache.commons.collections.splitmap.TransformedMap
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TransformedMap<K, V>
@@ -64,7 +66,7 @@ public class TransformedMap<K, V>
      * If there are any elements already in the map being decorated, they
      * are NOT transformed.
      * Contrast this with {@link #decorateTransform}.
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
@@ -83,7 +85,7 @@ public class TransformedMap<K, V>
      * If there are any elements already in the map being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #decorate}.
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
@@ -108,7 +110,7 @@ public class TransformedMap<K, V>
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
@@ -124,7 +126,7 @@ public class TransformedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      * @since Commons Collections 3.1
@@ -136,7 +138,7 @@ public class TransformedMap<K, V>
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
@@ -153,7 +155,7 @@ public class TransformedMap<K, V>
      * Transforms a key.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param object  the object to transform
      * @throws the transformed object
      */
@@ -168,7 +170,7 @@ public class TransformedMap<K, V>
      * Transforms a value.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param object  the object to transform
      * @throws the transformed object
      */
@@ -183,7 +185,7 @@ public class TransformedMap<K, V>
      * Transforms a map.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param map  the map to transform
      * @throws the transformed object
      */
@@ -202,7 +204,7 @@ public class TransformedMap<K, V>
 
     /**
      * Override to transform the value when using <code>setValue</code>.
-     * 
+     *
      * @param value  the value to transform
      * @return the transformed value
      * @since Commons Collections 3.1
@@ -213,7 +215,7 @@ public class TransformedMap<K, V>
 
     /**
      * Override to only return true when there is a value transformer.
-     * 
+     *
      * @return true if a value transformer is in use
      * @since Commons Collections 3.1
      */
