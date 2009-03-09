@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -55,7 +55,7 @@ import org.apache.commons.collections.iterators.UnmodifiableListIterator;
 import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
 
 /**
- * Provides static utility methods and decorators for {@link Iterator} 
+ * Provides static utility methods and decorators for {@link Iterator}
  * instances. The implementations are provided in the iterators subpackage.
  * <p>
  * WARNING: Due to human error certain binary incompatabilities were introduced
@@ -67,7 +67,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Phil Steitz
  */
@@ -93,17 +93,17 @@ public class IteratorUtils {
 
     /**
      * An ordered iterator over no elements.
-     */    
+     */
     public static final OrderedIterator<Object> EMPTY_ORDERED_ITERATOR = EmptyOrderedIterator.INSTANCE;
 
     /**
      * A map iterator over no elements.
-     */    
+     */
     public static final MapIterator<Object, Object> EMPTY_MAP_ITERATOR = EmptyMapIterator.INSTANCE;
 
     /**
      * An ordered map iterator over no elements.
-     */    
+     */
     public static final OrderedMapIterator<Object, Object> EMPTY_ORDERED_MAP_ITERATOR = EmptyOrderedMapIterator.INSTANCE;
 
     /**
@@ -132,7 +132,7 @@ public class IteratorUtils {
     /**
      * Gets an empty list iterator.
      * <p>
-     * This iterator is a valid list iterator object that will iterate 
+     * This iterator is a valid list iterator object that will iterate
      * over nothing.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1 and 2.1.1.
@@ -147,7 +147,7 @@ public class IteratorUtils {
     /**
      * Gets an empty ordered iterator.
      * <p>
-     * This iterator is a valid iterator object that will iterate 
+     * This iterator is a valid iterator object that will iterate
      * over nothing.
      *
      * @return  an ordered iterator over nothing
@@ -159,7 +159,7 @@ public class IteratorUtils {
     /**
      * Gets an empty map iterator.
      * <p>
-     * This iterator is a valid map iterator object that will iterate 
+     * This iterator is a valid map iterator object that will iterate
      * over nothing.
      *
      * @return  a map iterator over nothing
@@ -171,7 +171,7 @@ public class IteratorUtils {
     /**
      * Gets an empty ordered map iterator.
      * <p>
-     * This iterator is a valid map iterator object that will iterate 
+     * This iterator is a valid map iterator object that will iterate
      * over nothing.
      *
      * @return  a map iterator over nothing
@@ -385,7 +385,7 @@ public class IteratorUtils {
     public static <E> ResettableListIterator<E> arrayListIterator(E[] array, int start, int end) {
         return new ObjectArrayListIterator<E>(array, start, end);
     }
-    
+
     /**
      * Gets a list iterator over part of an object or primitive array.
      * <p>
@@ -404,7 +404,7 @@ public class IteratorUtils {
     public static <E> ResettableListIterator<E> arrayListIterator(Object array, int start, int end) {
         return new ArrayListIterator<E>(array, start, end);
     }
-    
+
     // Unmodifiable
     //-----------------------------------------------------------------------
     /**
@@ -418,7 +418,7 @@ public class IteratorUtils {
     public static <E> Iterator<E> unmodifiableIterator(Iterator<E> iterator) {
         return UnmodifiableIterator.decorate(iterator);
     }
-    
+
     /**
      * Gets an immutable version of a {@link ListIterator}. The returned object
      * will always throw an {@link UnsupportedOperationException} for
@@ -447,7 +447,7 @@ public class IteratorUtils {
     // Chained
     //-----------------------------------------------------------------------
     /**
-     * Gets an iterator that iterates through two {@link Iterator}s 
+     * Gets an iterator that iterates through two {@link Iterator}s
      * one after another.
      *
      * @param iterator1  the first iterators to use, not null
@@ -460,7 +460,7 @@ public class IteratorUtils {
     }
 
     /**
-     * Gets an iterator that iterates through an array of {@link Iterator}s 
+     * Gets an iterator that iterates through an array of {@link Iterator}s
      * one after another.
      *
      * @param iterators  the iterators to use, not null or empty or contain nulls
@@ -472,7 +472,7 @@ public class IteratorUtils {
     }
 
     /**
-     * Gets an iterator that iterates through a collections of {@link Iterator}s 
+     * Gets an iterator that iterates through a collections of {@link Iterator}s
      * one after another.
      *
      * @param iterators  the iterators to use, not null or empty or contain nulls
@@ -491,7 +491,7 @@ public class IteratorUtils {
      * contained in a collection of ordered {@link Iterator}s.
      * <p>
      * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
-     * the {@link Iterator#next()} method will return the lesser of 
+     * the {@link Iterator#next()} method will return the lesser of
      * <code>A.next()</code> and <code>B.next()</code>.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.
@@ -511,7 +511,7 @@ public class IteratorUtils {
      * contained in an array of {@link Iterator}s.
      * <p>
      * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
-     * the {@link Iterator#next()} method will return the lesser of 
+     * the {@link Iterator#next()} method will return the lesser of
      * <code>A.next()</code> and <code>B.next()</code> and so on.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.
@@ -530,7 +530,7 @@ public class IteratorUtils {
      * contained in a collection of {@link Iterator}s.
      * <p>
      * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
-     * the {@link Iterator#next()} method will return the lesser of 
+     * the {@link Iterator#next()} method will return the lesser of
      * <code>A.next()</code> and <code>B.next()</code> and so on.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.
@@ -545,7 +545,7 @@ public class IteratorUtils {
             Collection<Iterator<? extends E>> iterators) {
         return new CollatingIterator<E>(comparator, iterators);
     }
-    
+
     // Object Graph
     //-----------------------------------------------------------------------
     /**
@@ -595,7 +595,7 @@ public class IteratorUtils {
      * <p>
      * Under many circumstances, linking Iterators together in this manner is
      * more efficient (and convenient) than using nested for loops to extract a list.
-     * 
+     *
      * @param root  the root object to start iterating from, null results in an empty iterator
      * @param transformer  the transformer to use, see above, null uses no effect transformer
      * @return a new object graph iterator
@@ -604,7 +604,7 @@ public class IteratorUtils {
     public static <E> Iterator<E> objectGraphIterator(E root, Transformer<? super E, ? extends E> transformer) {
         return new ObjectGraphIterator<E>(root, transformer);
     }
-    
+
     // Transformed
     //-----------------------------------------------------------------------
     /**
@@ -627,7 +627,7 @@ public class IteratorUtils {
         }
         return new TransformIterator<I, O>(iterator, transform);
     }
-    
+
     // Filtered
     //-----------------------------------------------------------------------
     /**
@@ -650,7 +650,7 @@ public class IteratorUtils {
         }
         return new FilterIterator<E>(iterator, predicate);
     }
-    
+
     /**
      * Gets a list iterator that filters another list iterator.
      * <p>
@@ -671,7 +671,7 @@ public class IteratorUtils {
         }
         return new FilterListIterator<E>(listIterator, predicate);
     }
-    
+
     // Looping
     //-----------------------------------------------------------------------
     /**
@@ -691,7 +691,7 @@ public class IteratorUtils {
         }
         return new LoopingIterator<E>(coll);
     }
-    
+
     /**
      * Gets an iterator that loops continuously over the supplied list.
      * <p>
@@ -726,7 +726,7 @@ public class IteratorUtils {
     }
 
     /**
-     * Gets an iterator that provides an iterator view of the given enumeration 
+     * Gets an iterator that provides an iterator view of the given enumeration
      * that will remove elements from the specified collection.
      *
      * @param enumeration  the enumeration to use
@@ -742,7 +742,7 @@ public class IteratorUtils {
         }
         return new EnumerationIterator<E>(enumeration, removeCollection);
     }
-    
+
     /**
      * Gets an enumeration that wraps an iterator.
      *
@@ -756,7 +756,7 @@ public class IteratorUtils {
         }
         return new IteratorEnumeration<E>(iterator);
     }
-    
+
     /**
      * Gets a list iterator based on a simple iterator.
      * <p>
@@ -773,7 +773,7 @@ public class IteratorUtils {
         }
         return new ListIteratorWrapper<E>(iterator);
     }
-    
+
     /**
      * Gets an array based on an iterator.
      * <p>
@@ -816,7 +816,7 @@ public class IteratorUtils {
         List<E> list = toList(iterator, 100);
         return list.toArray((E[]) Array.newInstance(arrayClass, list.size()));
     }
-    
+
     /**
      * Gets a list based on an iterator.
      * <p>
@@ -856,8 +856,8 @@ public class IteratorUtils {
         }
         return list;
     }
-    
-    /** 
+
+    /**
      * Gets a suitable Iterator for the given object.
      * <p>
      * This method can handle objects as follows
@@ -872,7 +872,7 @@ public class IteratorUtils {
      * <li>object with iterator() public method accessed by reflection
      * <li>object - singleton iterator
      * </ul>
-     * 
+     *
      * @param obj  the object to convert to an iterator
      * @return a suitable iterator, never null
      */
@@ -916,4 +916,20 @@ public class IteratorUtils {
         return singletonIterator(obj);
     }
 
+    /**
+     * Return an {@link Iterable} so that any {@link Iterator} can be used
+     * with the "foreach" statement.
+     * @param <T> element type
+     * @param iterator to wrap
+     * @return Iterable<T>
+     * @since Commons Collections 5
+     * @TODO fix version
+     */
+    public static <T> Iterable<T> iterable(final Iterator<T> iterator) {
+        return new Iterable<T>() {
+            public Iterator<T> iterator() {
+                return iterator;
+            }
+        };
+    }
 }
