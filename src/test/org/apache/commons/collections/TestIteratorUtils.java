@@ -725,17 +725,4 @@ public class TestIteratorUtils extends BulkTest {
         }
     }
 
-    public void testIterable() throws Exception {
-        Integer[] array = new Integer[10];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = i;
-        }
-        Iterator<Integer> it = Arrays.asList(array).iterator();
-        int i = 0;
-        for (Integer o : IteratorUtils.iterable(it)) {
-            assertEquals(i, o.intValue());
-            i++;
-        }
-        assertEquals(i, array.length);
-    }
 }

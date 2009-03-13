@@ -916,20 +916,4 @@ public class IteratorUtils {
         return singletonIterator(obj);
     }
 
-    /**
-     * Return an {@link Iterable} so that any {@link Iterator} can be used
-     * with the "foreach" statement.
-     * @param <T> element type
-     * @param iterator to wrap
-     * @return Iterable<T>
-     * @since Commons Collections 5
-     * @TODO fix version
-     */
-    public static <T> Iterable<T> iterable(final Iterator<T> iterator) {
-        return new Iterable<T>() {
-            public Iterator<T> iterator() {
-                return iterator;
-            }
-        };
-    }
 }
