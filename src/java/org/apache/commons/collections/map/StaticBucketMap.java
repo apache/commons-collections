@@ -382,11 +382,11 @@ public final class StaticBucketMap implements Map {
      * @param map  the map of entries to add
      */
     public void putAll(Map map) {
-        Iterator i = map.keySet().iterator();
+        Iterator i = map.entrySet().iterator();
 
         while (i.hasNext()) {
-            Object key = i.next();
-            put(key, map.get(key));
+            Map.Entry entry = (Entry) i.next();
+            put(entry.getKey(), entry.getValue());
         }
     }
 
