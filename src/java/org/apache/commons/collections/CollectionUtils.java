@@ -914,8 +914,6 @@ public class CollectionUtils {
                 total++;
                 it.nextElement();
             }
-        } else if (object == null) {
-            throw new IllegalArgumentException("Unsupported object type: null");
         } else {
             try {
                 total = Array.getLength(object);
