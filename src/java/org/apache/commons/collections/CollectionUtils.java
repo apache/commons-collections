@@ -58,7 +58,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
 public class CollectionUtils {
 
     /** Constant to avoid repeated object creation */
-    private static Integer INTEGER_ONE = new Integer(1);
+    private static final Integer INTEGER_ONE = new Integer(1);
 
     /**
      * An empty unmodifiable collection.
