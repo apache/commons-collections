@@ -202,16 +202,16 @@ public abstract class AbstractTestComparator extends AbstractTestObject {
             // test to make sure the canonical form has been preserved
             try {
                 comparator = (Comparator) readExternalFormFromDisk(getCanonicalComparatorName(makeComparator()));
-        	} catch (FileNotFoundException exception) {
+            } catch (FileNotFoundException exception) {
     
                 boolean autoCreateSerialized = false;
     
-        	    if(autoCreateSerialized) {
-    	          	comparator = makeComparator();
-            		String fileName = getCanonicalComparatorName(comparator);
-            		writeExternalFormToDisk((Serializable) comparator, fileName);
-            		fail("Serialized form could not be found.  A serialized version " +
-            		     "has now been written (and should be added to SVN): " + fileName);
+                if(autoCreateSerialized) {
+                    comparator = makeComparator();
+                    String fileName = getCanonicalComparatorName(comparator);
+                    writeExternalFormToDisk((Serializable) comparator, fileName);
+                    fail("Serialized form could not be found.  A serialized version " +
+                         "has now been written (and should be added to SVN): " + fileName);
                 } else {
                     fail("The Serialized form could be located to test serialization " +
                         "compatibility: " + exception.getMessage());

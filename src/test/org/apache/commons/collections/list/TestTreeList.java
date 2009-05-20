@@ -33,9 +33,9 @@ import org.apache.commons.collections.BulkTest;
  */
 public class TestTreeList extends AbstractTestList {
     
-	public TestTreeList(String name) {
-		super(name);
-	}
+    public TestTreeList(String name) {
+        super(name);
+    }
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(suite());
@@ -105,72 +105,72 @@ public class TestTreeList extends AbstractTestList {
     }
 
     //-----------------------------------------------------------------------
-	public List makeEmptyList() {
-		return new TreeList();
-	}
+    public List makeEmptyList() {
+        return new TreeList();
+    }
 
     //-----------------------------------------------------------------------
-	public void testAddMultiple() {
-		List l = makeEmptyList();
-		l.add("hugo");
-		l.add("erna");
-		l.add("daniel");
-		l.add("andres");
-		l.add("harald");
-		l.add(0, null);
-		assertEquals(null, l.get(0));
-		assertEquals("hugo", l.get(1));
-		assertEquals("erna", l.get(2));
-		assertEquals("daniel", l.get(3));
-		assertEquals("andres", l.get(4));
-		assertEquals("harald", l.get(5));
-	}
+    public void testAddMultiple() {
+        List l = makeEmptyList();
+        l.add("hugo");
+        l.add("erna");
+        l.add("daniel");
+        l.add("andres");
+        l.add("harald");
+        l.add(0, null);
+        assertEquals(null, l.get(0));
+        assertEquals("hugo", l.get(1));
+        assertEquals("erna", l.get(2));
+        assertEquals("daniel", l.get(3));
+        assertEquals("andres", l.get(4));
+        assertEquals("harald", l.get(5));
+    }
 
-	public void testRemove() {
-		List l = makeEmptyList();
-		l.add("hugo");
-		l.add("erna");
-		l.add("daniel");
-		l.add("andres");
-		l.add("harald");
-		l.add(0, null);
-		int i = 0;
-		assertEquals(null, l.get(i++));
-		assertEquals("hugo", l.get(i++));
-		assertEquals("erna", l.get(i++));
-		assertEquals("daniel", l.get(i++));
-		assertEquals("andres", l.get(i++));
-		assertEquals("harald", l.get(i++));
+    public void testRemove() {
+        List l = makeEmptyList();
+        l.add("hugo");
+        l.add("erna");
+        l.add("daniel");
+        l.add("andres");
+        l.add("harald");
+        l.add(0, null);
+        int i = 0;
+        assertEquals(null, l.get(i++));
+        assertEquals("hugo", l.get(i++));
+        assertEquals("erna", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
 
-		l.remove(0);
-		i = 0;
-		assertEquals("hugo", l.get(i++));
-		assertEquals("erna", l.get(i++));
-		assertEquals("daniel", l.get(i++));
-		assertEquals("andres", l.get(i++));
-		assertEquals("harald", l.get(i++));
+        l.remove(0);
+        i = 0;
+        assertEquals("hugo", l.get(i++));
+        assertEquals("erna", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
 
-		i = 0;
-		l.remove(1);
-		assertEquals("hugo", l.get(i++));
-		assertEquals("daniel", l.get(i++));
-		assertEquals("andres", l.get(i++));
-		assertEquals("harald", l.get(i++));
+        i = 0;
+        l.remove(1);
+        assertEquals("hugo", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
 
-		i = 0;
-		l.remove(2);
-		assertEquals("hugo", l.get(i++));
-		assertEquals("daniel", l.get(i++));
-		assertEquals("harald", l.get(i++));
-	}
+        i = 0;
+        l.remove(2);
+        assertEquals("hugo", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("harald", l.get(i++));
+    }
 
-	public void testInsertBefore() {
-		List l = makeEmptyList();
-		l.add("erna");
-		l.add(0, "hugo");
-		assertEquals("hugo", l.get(0));
-		assertEquals("erna", l.get(1));
-	}
+    public void testInsertBefore() {
+        List l = makeEmptyList();
+        l.add("erna");
+        l.add(0, "hugo");
+        assertEquals("hugo", l.get(0));
+        assertEquals("erna", l.get(1));
+    }
 
     public void testIndexOf() {
         List l = makeEmptyList();

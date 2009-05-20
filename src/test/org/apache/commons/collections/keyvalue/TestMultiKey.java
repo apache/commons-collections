@@ -215,37 +215,37 @@ public class TestMultiKey extends TestCase {
     }
     
     static class SystemHashCodeSimulatingKey implements Serializable {
-    	
-		private static final long serialVersionUID = 1L;
-		private final String name;
-    	private int hashCode = 1;
 
-		public SystemHashCodeSimulatingKey(String name)
-		{
-			this.name = name;
-		}
+        private static final long serialVersionUID = 1L;
+        private final String name;
+        private int hashCode = 1;
 
-		public boolean equals(Object obj)
-		{
-			return obj instanceof SystemHashCodeSimulatingKey 
-				&& name.equals(((SystemHashCodeSimulatingKey)obj).name);
-		}
+        public SystemHashCodeSimulatingKey(String name)
+        {
+            this.name = name;
+        }
 
-		public int hashCode()
-		{
-			return hashCode;
-		}
+        public boolean equals(Object obj)
+        {
+            return obj instanceof SystemHashCodeSimulatingKey 
+                && name.equals(((SystemHashCodeSimulatingKey)obj).name);
+        }
 
-		private Object readResolve() {
-			hashCode=2; // simulate different hashCode after deserialization in another process
-			return this;
-		}
+        public int hashCode()
+        {
+            return hashCode;
+        }
+
+        private Object readResolve() {
+            hashCode=2; // simulate different hashCode after deserialization in another process
+            return this;
+        }
     }
     
     public void testEqualsAfterSerialization() throws IOException, ClassNotFoundException
-	{
+    {
         SystemHashCodeSimulatingKey sysKey = new SystemHashCodeSimulatingKey("test");
-		MultiKey mk = new MultiKey(ONE, sysKey);
+        MultiKey mk = new MultiKey(ONE, sysKey);
         Map map = new HashMap();
         map.put(mk, TWO);
 
@@ -266,6 +266,6 @@ public class TestMultiKey extends TestCase {
         assertEquals(2, sysKey.hashCode()); // different hashCode now
 
         MultiKey mk2 = new MultiKey(ONE, sysKey);
-        assertEquals(TWO, map2.get(mk2));		
-	}
+        assertEquals(TWO, map2.get(mk2));        
+    }
 }

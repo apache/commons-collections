@@ -102,12 +102,12 @@ public class TestSingletonListIterator extends AbstractTestListIterator {
         assertEquals( "Iteration next index", 1, iter.nextIndex() );
         assertEquals( "Iteration previous index", 0, iter.previousIndex() );
 
-    	try {
-    	    iter.next();
-    	} catch (Exception e) {
-    	  assertTrue("NoSuchElementException must be thrown", 
-    		 e.getClass().equals((new NoSuchElementException()).getClass()));
-    	}
+        try {
+            iter.next();
+        } catch (Exception e) {
+          assertTrue("NoSuchElementException must be thrown", 
+             e.getClass().equals((new NoSuchElementException()).getClass()));
+        }
         iter.previous();
         try {
             iter.previous();

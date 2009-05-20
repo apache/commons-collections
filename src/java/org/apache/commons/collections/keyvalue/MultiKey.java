@@ -249,29 +249,29 @@ public class MultiKey implements Serializable {
         return "MultiKey" + Arrays.asList(keys).toString();
     }
 
-	/**
-	 * Calculate the hash code of the instance using the provided keys.
-	 * @param keys
-	 */
-	private void calculateHashCode(Object[] keys)
-	{
-		int total = 0;
+    /**
+     * Calculate the hash code of the instance using the provided keys.
+     * @param keys
+     */
+    private void calculateHashCode(Object[] keys)
+    {
+        int total = 0;
         for (int i = 0; i < keys.length; i++) {
             if (keys[i] != null) {
                 total ^= keys[i].hashCode();
             }
         }
         hashCode = total;
-	}
-	
-	/**
-	 * Recalculate the hash code after deserialization. The hash code of some
-	 * keys might have change (hash codes based on the system hash code are
-	 * only stable for the same process). 
-	 * @return the instance with recalculated hash code
-	 */
-	private Object readResolve() {
-		calculateHashCode(keys);
-		return this;
-	}
+    }
+    
+    /**
+     * Recalculate the hash code after deserialization. The hash code of some
+     * keys might have change (hash codes based on the system hash code are
+     * only stable for the same process). 
+     * @return the instance with recalculated hash code
+     */
+    private Object readResolve() {
+        calculateHashCode(keys);
+        return this;
+    }
 }
