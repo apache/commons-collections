@@ -161,7 +161,7 @@ public class AbstractHashedMap extends AbstractMap implements IterableMap {
      */
     protected AbstractHashedMap(Map map) {
         this(Math.max(2 * map.size(), DEFAULT_CAPACITY), DEFAULT_LOAD_FACTOR);
-        putAll(map);
+        _putAll(map);
     }
 
     /**
@@ -295,6 +295,22 @@ public class AbstractHashedMap extends AbstractMap implements IterableMap {
      * @throws NullPointerException if the map is null
      */
     public void putAll(Map map) {
+        _putAll(map);
+    }
+
+    /**
+     * Puts all the values from the specified map into this map.
+     * <p>
+     * This implementation iterates around the specified map and
+     * uses {@link #put(Object, Object)}.
+     * <p>
+     * It is private to allow the constructor to still call it 
+     * even when putAll is overriden. 
+     * 
+     * @param map  the map to add
+     * @throws NullPointerException if the map is null
+     */
+    private void _putAll(Map map) {
         int mapSize = map.size();
         if (mapSize == 0) {
             return;
