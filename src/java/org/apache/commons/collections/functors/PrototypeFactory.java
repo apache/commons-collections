@@ -196,9 +196,7 @@ public class PrototypeFactory {
                     // ignore
                 }
                 try {
-                    if (baos != null) {
-                        baos.close();
-                    }
+                    baos.close();
                 } catch (IOException ex) {
                     // ignore
                 }
