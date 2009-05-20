@@ -379,6 +379,8 @@
   </dependencies>
 
   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <commons.componentid>collections</commons.componentid>
     <commons.release.version>3.2.1</commons.release.version>
     <commons.jira.id>COLLECTIONS</commons.jira.id>
