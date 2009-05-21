@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <version>3.4-SNAPSHOT</version>
+  <version>3.3-SNAPSHOT</version>
   <name>Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
