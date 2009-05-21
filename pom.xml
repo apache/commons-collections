@@ -21,9 +21,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/collections/tags/COLLECTIONS_3_3</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/collections/tags/COLLECTIONS_3_3</developerConnection>
-    <url>http://svn.apache.org/viewvc/commons/proper/collections/tags/COLLECTIONS_3_3</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/collections/tags/COLLECTIONS_3_3_RC1</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/collections/tags/COLLECTIONS_3_3_RC1</developerConnection>
+    <url>http://svn.apache.org/viewvc/commons/proper/collections/tags/COLLECTIONS_3_3_RC1</url>
   </scm>
 
   <developers>
@@ -459,5 +459,19 @@
       -->
     </plugins>
   </reporting>
+
+  <profiles>
+    <profile>
+      <id>rc</id>
+      <distributionManagement>
+        <!-- Cannot define in parent ATM, see COMMONSSITE-26 -->
+        <site>
+          <id>apache.website</id>
+          <name>Apache Commons Release Candidate Staging Site</name>
+          <url>${commons.deployment.protocol}://people.apache.org/www/people.apache.org/builds/commons/${commons.componentid}/${commons.release.version}/${commons.rc.version}/site</url>
+        </site>
+      </distributionManagement>
+    </profile>
+  </profiles>
 
 </project>
