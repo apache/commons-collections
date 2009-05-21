@@ -7,7 +7,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <version>3.3</version>
+  <version>3.4-SNAPSHOT</version>
   <name>Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
@@ -21,9 +21,9 @@
   </issueManagement>
 
   <scm>
-    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/collections/tags/COLLECTIONS_3_3</connection>
-    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/collections/tags/COLLECTIONS_3_3</developerConnection>
-    <url>http://svn.apache.org/viewvc/commons/proper/collections/tags/COLLECTIONS_3_3</url>
+    <connection>scm:svn:http://svn.apache.org/repos/asf/commons/proper/collections/trunk</connection>
+    <developerConnection>scm:svn:https://svn.apache.org/repos/asf/commons/proper/collections/trunk</developerConnection>
+    <url>http://svn.apache.org/viewvc/commons/proper/collections/trunk</url>
   </scm>
 
   <developers>
