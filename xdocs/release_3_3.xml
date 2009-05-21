@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Release notes for v3.3</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+
+<section name="Release notes for v3.3">
+<p>
+Commons collections is a project to develop and maintain collection classes
+based on and inspired by the JDK collection framework.
+This project is JDK1.2 compatible, and does not use JDK1.5 generics.
+</p>
+<p>
+This release adds various new classes and fixes a number of bugs.
+All feedback should be directed to commons-user at jakarta.apache.org.
+</p>
+<hr />
+
+<center><h3>COMPATIBILITY</h3></center>
+<p>
+This release is fully source and binary compatible with v3.2.
+(Checks performed using JDiff and Clirr, thanks).
+Please check the bug fixes to ensure you weren't relying on the behaviour of a bug.
+</p>
+<p>
+One bug was that the ExtendedProperties was hiding properties with empty 
+property values. It is possible you could have been depending on that feature. 
+See [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-238">COLLECTIONS-238</a>].
+</p>
+<p>
+There are is one new <i>deprecation</i>:<br />
+<ul>
+<li>ExtendedProperties.include is deprecated in favour of a getInclude()/setInclude(String) pairing</li>
+</ul>
+If this causes major headaches to anyone please contact dev at commons.apache.org.
+</p>
+
+<center><h3>NEW CLASSES</h3></center>
+<ul>
+<li>None</li>
+</ul>
+
+<center><h3>ENHANCEMENTS</h3></center>
+<ul>
+<li>CollatingIterator - getIteratorIndex() method added [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-289">COLLECTIONS-289</a>]</li>
+<li>CollectionUtils - size(null) now returns 0 [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-230">COLLECTIONS-230</a>]</li>
+<li>CollectionUtils - sizeIsEmpty(null) return trues [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-298">COLLECTIONS-298</a>]</li>
+<li>ExtendedProperties - load() now allows empty property values [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-238">COLLECTIONS-238</a>]</li>
+<li>ListOrderedMap - putAll method added [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-226">COLLECTIONS-226</a>]</li>
+<li>ListUtils - indexOf(List,Predicate) method added [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-235">COLLECTIONS-235</a>]</li>
+<li>MapUtils - populateMap methods added [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-194">COLLECTIONS-194</a>]</li>
+<li>PredicatedCollection - validate IllegalArgumentException text includes failing Predicate [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-280">COLLECTIONS-280</a>]</li>
+<li>TreeBidiMap - Implements Serializable [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-285">COLLECTIONS-285</a>]</li>
+<li>TreeBidiMap - TreeView now cached [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-255">COLLECTIONS-255</a>]</li>
+</ul>
+
+<center><h3>BUG FIXES</h3></center>
+<ul>
+<li>Flat3Map - Fix setValue in MapIterator and EntrySetIterator to work correctly [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-217">COLLECTIONS-217</a>]</li>
+<li>ExtendedProperties - Include property name had confused static/instance semantics [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-214">COLLECTIONS-214</a>]</li>
+<li>CollectionUtils - Fix removeAll() method which was completely broken [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-219">COLLECTIONS-219</a>]</li>
+<li>MultiValueMap - Fix put() and putAll() to return correct results [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-228">COLLECTIONS-228</a>]</li>
+<li>SetUniqueList - addAll(int, Collection) fixed to properly insert at the specified index [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-249">COLLECTIONS-249</a>]</li>
+<li>UnboundedFifoBuffer - Serialization/Deserialization no longer creates an unmodifiable object [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-220">COLLECTIONS-220</a>]</li>
+<li>Composite classes - Now implement Serializable [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-221">COLLECTIONS-221</a>]</li>
+<li>MultiValueMap - Now implements Serializable [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-240">COLLECTIONS-240</a>]</li>
+<li>Transformed classes - now all have decorateTransform methods  [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-256">COLLECTIONS-256</a>]</li>
+<li>Flat3Map - remove() now returns the correct value when size &lt;= 3 [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-261">COLLECTIONS-261</a>]</li>
+<li>FastTreeMap - no longer loses the comparator [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-264">COLLECTIONS-264</a>]</li>
+<li>TreeBag - no longer accepts non-Comparable classes when naturally ordered [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-265">COLLECTIONS-265</a>]</li>
+<li>MultiKey - hashCode made transient to deal with RMI issues [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-266">COLLECTIONS-266</a>]</li>
+<li>ExtendedProperties - combine now imports properly [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-271">COLLECTIONS-271</a>]</li>
+<li>ExtendedProeprties - put() and putAll() now update the getKeys() map [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-278">COLLECTIONS-278</a>]</li>
+<li>CaseInsensitiveMap - Case insensitivity approach made locale independent [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-294">COLLECTIONS-294</a>]</li>
+<li>ExtendedProperties - convertProperties now filters out non-String values [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-299">COLLECTIONS-299</a>]</li>
+<li>SetUniqueList - set method no longer allows duplicates [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-304">COLLECTIONS-304</a>]</li>
+<li>SetUniqueList - subList().contains() now checks against its own values and not its parents [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-307">COLLECTIONS-307</a>]</li>
+<li>AbstractHashedMap - Map constructor now calls a private putAll rather than a potential method in a subclass [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-317">COLLECTIONS-317</a>]</li>
+<li>StaticBucketMap - putAll() uses more efficient entrySet() iterator [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-320">COLLECTIONS-320</a>]</li>
+</ul>
+
+<center><h3>JAVADOC</h3></center>
+<ul>
+<li>IteratorChain - Clarify constructor behaviour</li>
+<li>Unmodiable collections - Improved documentation to indicate what happens when a modification attempt is made [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-303">COLLECTIONS-303</a>]</li>
+<li>MuliKey - Spelling [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-216">COLLECTIONS-216</a>]</li>
+<li>DefaultedMap - Clarify transformer behaviour [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-215">COLLECTIONS-215</a>]</li>
+<li>AbstractLinkMap - firstKey() and lastKey() documentation swapped [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-262">COLLECTIONS-262</a>]</li>
+<li>ListUtils - transformedList behaviour correctly explained [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-288">COLLECTIONS-288</a>]</li>
+<li>LRUMap - constructor javadoc no longer implies -1 maxSize means unlimited [<a href="https://issues.apache.org/jira/browse/COLLECTIONS-316">COLLECTIONS-316</a>]</li>
+</ul>
+</section>
+
+</body>
+</document>
