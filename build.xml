@@ -36,7 +36,7 @@
   <property name="component.title.full"    value="Apache Commons Collections"/>
 
   <!-- The current version number of this component -->
-  <property name="component.version"       value="3.3-SNAPSHOT"/>
+  <property name="component.version"       value="3.3"/>
 
   <!-- The base directory for component configuration files -->
   <property name="source.conf"               value="src/conf"/>
