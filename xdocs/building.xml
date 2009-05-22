@@ -29,7 +29,7 @@ limitations under the License.
   build is also available.
 </p>
 <p>
-  You may also be interested in the <a href="release_3_2_1.html">v3.2.1 release notes</a>.
+  You may also be interested in the <a href="release_3_3.html">v3.3 release notes</a>.
 </p>
 </section>
 <!-- ================================================== -->
@@ -44,19 +44,6 @@ limitations under the License.
     <li><code>mvn package</code> - build the jar</li>
     <li><code>mvn install</code> - build the jar and install in local maven repository</li>
     <li><code>mvn site assembly:assembly</code> - Create the source and binary distributions</li>
-  </ul>
-</section>
-<!-- ================================================== -->
-<section name="Maven 1 Goals">
-  <p>
-    The following <strong><i>Maven 1</i></strong> commands can be used to build collections:
-  </p>
-  <ul>
-    <li><code>maven clean</code> - clean up</li>
-    <li><code>maven test</code> - compile and run the unit tests</li>
-    <li><code>maven site</code> - create io documentation</li>
-    <li><code>maven jar</code> - build the jar</li>
-    <li><code>maven dist</code> - Create the source and binary distributions</li>
   </ul>
 </section>
 <!-- ================================================== -->
