@@ -53,7 +53,7 @@ There are many features, including:
 <!-- ================================================== -->
 <section name="Documentation">
 <p>
-A getting started<span> </span><a href="userguide.html">User's Guide</a> is available
+A getting started <a href="userguide.html">User's Guide</a> is available
 as are various <a href="project-reports.html">project reports</a>.
 </p>
 <p>
@@ -74,7 +74,7 @@ The <a href="cvs-usage.html">subversion repository</a> can be
 <p>
 The latest version is v3.3 - 
 <a href="http://commons.apache.org/downloads/download_collections.cgi">Download now!</a><br />
-The <a href="release_3_3.html">release notes</a> are also available.
+It is built for Java 1.3+ and the <a href="release_3_3.html">release notes</a> are also available.
 </p>
 <p>
 For previous releases, see the <a href="http://archive.apache.org/dist/commons/collections/">Apache Archive</a>
