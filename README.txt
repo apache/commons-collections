@@ -9,10 +9,26 @@ The first, commons-collections.jar is the main jar used by applications.
 The second, commons-collections-testframework.jar is an extension to junit
 for testing new collection implementations and is not normally used by applications.
 
-
 Building from source
---------------------
-This component requires the excellent Ant utility.
+=-=-=-=-=-=-=-=-=-=-
+
+Maven2
+------
+Collections is usually built using Maven2.
+It can be found here :
+
+  http://maven.apache.org/
+
+Once installed, the major goals are:
+
+mvn package           - build jars
+mvn install           - place jars in local maven repository
+mvn assembly:assembly - build tar.gz/zips
+
+Ant
+---
+
+It may also be built using Ant.
 It can be found here :
 
   http://ant.apache.org/
@@ -40,13 +56,4 @@ ant dist         - create folders as per a distribution
 ant tf.jar       - create the testframework jar file
 ant tf.javadoc   - build the testframework javadoc
 
-
-Maven
------
-The component can also be built using Maven. (Ant is the primary build tool.)
-It can be found here :
-
-  http://maven.apache.org/
-
-Once installed, the jars may be built with 'maven jar'.
 
