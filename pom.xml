@@ -355,7 +355,7 @@
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
     <!-- The RC version used in the staging repository URL. -->
-    <commons.rc.version>RC1</commons.rc.version>
+    <commons.rc.version>RC2</commons.rc.version>
   </properties> 
 
 
