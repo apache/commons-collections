@@ -37,17 +37,17 @@
       <Version>
         <name>commons-collections</name>
         <created>2006-05-14</created>
-        <revision>3.2</version>
+        <revision>3.2</revision>
       </Version>
       <Version>
         <name>commons-collections</name>
         <created>2004-06-23</created>
-        <revision>3.1</version>
+        <revision>3.1</revision>
       </Version>
       <Version>
         <name>commons-collections</name>
         <created>2004-06-23</created>
-        <revision>2.1.1</version>
+        <revision>2.1.1</revision>
       </Version>
     </release>
     <mailing-list rdf:resource="http://commons.apache.org/mail-lists.html"/>
