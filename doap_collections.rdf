@@ -34,21 +34,21 @@
       </SVNRepository>
     </repository>
     <release>
-      <revision>
+      <Version>
         <name>commons-collections</name>
         <created>2006-05-14</created>
-        <version>3.2</version>
-      </revision>
-      <revision>
+        <revision>3.2</version>
+      </Version>
+      <Version>
         <name>commons-collections</name>
         <created>2004-06-23</created>
-        <version>3.1</version>
-      </revision>
-      <revision>
+        <revision>3.1</version>
+      </Version>
+      <Version>
         <name>commons-collections</name>
         <created>2004-06-23</created>
-        <version>2.1.1</version>
-      </revision>
+        <revision>2.1.1</version>
+      </Version>
     </release>
     <mailing-list rdf:resource="http://commons.apache.org/mail-lists.html"/>
   </Project>
