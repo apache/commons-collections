@@ -150,7 +150,7 @@ public class LinkedMap
      * Gets the value at the specified index.
      * 
      * @param index  the index to retrieve
-     * @return the key at the specified index
+     * @return the value at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public Object getValue(int index) {
