@@ -40,7 +40,7 @@ public class TestFixedOrderComparator extends TestCase {
     /**
      * Top cities of the world, by population including metro areas.
      */
-    public static final String topCities[] = new String[] {
+    private static final String topCities[] = new String[] {
         "Tokyo",
         "Mexico City",
         "Mumbai",
