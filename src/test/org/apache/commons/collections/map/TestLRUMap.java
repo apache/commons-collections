@@ -490,7 +490,8 @@ public class TestLRUMap extends AbstractTestOrderedMap {
                         }
                         synchronized (map) {
                             for (MapIterator iter = map.mapIterator(); iter.hasNext();) {
-                                if (map.get(iter.getValue()) == this) {
+                                String name = (String)iter.next();
+                                if (map.get(name) == this) {
                                     iter.remove();
                                 }
                             }
