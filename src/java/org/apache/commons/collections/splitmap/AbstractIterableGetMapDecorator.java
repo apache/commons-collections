@@ -56,10 +56,6 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
         return map;
     }
 
-    public void clear() {
-        decorated().clear();
-    }
-
     /**
      * {@inheritDoc}
      */
