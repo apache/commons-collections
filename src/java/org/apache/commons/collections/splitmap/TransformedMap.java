@@ -66,8 +66,6 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
     /** Serialization version */
     private static final long serialVersionUID = 5966875321133456994L;
 
-    /** The decorated map */
-    private Map<K, V> decorated;
     /** The transformer to use for the key */
     private final Transformer<? super J, ? extends K> keyTransformer;
     /** The transformer to use for the value */
@@ -128,7 +126,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
-        out.writeObject(decorated);
+        out.writeObject(decorated());
     }
 
     /**
@@ -142,7 +140,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
     @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        decorated = (Map) in.readObject();
+        map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
@@ -216,5 +214,10 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
         decorated().putAll(transformMap(mapToCopy));
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
+    public void clear() {
+        decorated().clear();
+    }
 }
