@@ -1291,4 +1291,17 @@ public class CollectionUtils {
         return TransformedCollection.decorate(collection, transformer);
     }
 
+    /**
+     * Extract the lone element of the specified Collection.
+     * @param <E> collection type
+     * @param collection to read
+     * @return sole member of collection
+     * @throws IllegalArgumentException if collection is null/empty or contains more than one element
+     */
+    public static <E> E extractSingleton(Collection<E> collection) {
+        if (collection == null || collection.size() != 1) {
+            throw new IllegalArgumentException("Can extract singleton only when collection size == 1");
+        }
+        return collection.iterator().next();
+    }
 }

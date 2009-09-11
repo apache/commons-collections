@@ -1414,6 +1414,29 @@ public class TestCollectionUtils extends MockTestCase {
         assertEquals(collectionA, Arrays.asList(a));
     }
 
+    @Test
+    public void extractSingleton() {
+        ArrayList<String> coll = null;
+        try {
+            CollectionUtils.extractSingleton(coll);
+            fail("expected IllegalArgumentException from extractSingleton(null)");
+        } catch (IllegalArgumentException e) {
+        }
+        coll = new ArrayList<String>();
+        try {
+            CollectionUtils.extractSingleton(coll);
+            fail("expected IllegalArgumentException from extractSingleton(empty)");
+        } catch (IllegalArgumentException e) {
+        }
+        coll.add("foo");
+        assertEquals("foo", CollectionUtils.extractSingleton(coll));
+        coll.add("bar");
+        try {
+            CollectionUtils.extractSingleton(coll);
+            fail("expected IllegalArgumentException from extractSingleton(size == 2)");
+        } catch (IllegalArgumentException e) {
+        }
+    }
 
     /**
      * Records the next object returned for a mock iterator
