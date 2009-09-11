@@ -106,9 +106,9 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
     /** The default number of buckets to use */
     private static final int DEFAULT_BUCKETS = 255;
     /** The array of buckets, where the actual data is held */
-    private Node<K, V>[] buckets;
+    private final Node<K, V>[] buckets;
     /** The matching array of locks */
-    private Lock[] locks;
+    private final Lock[] locks;
 
     /**
      * Initializes the map with the default number of buckets (255).
@@ -410,11 +410,12 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * @param obj  the object to compare to
      * @return true if equal
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
-        if (obj instanceof Map == false) {
+        if (obj instanceof Map<?, ?> == false) {
             return false;
         }
         Map<?, ?> other = (Map<?, ?>) obj;
@@ -426,6 +427,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * 
      * @return the hash code
      */
+    @Override
     public int hashCode() {
         int hashCode = 0;
 
@@ -459,16 +461,18 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             return value;
         }
 
+        @Override
         public int hashCode() {
             return ((key == null ? 0 : key.hashCode()) ^
                     (value == null ? 0 : value.hashCode()));
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
             }
-            if (obj instanceof Map.Entry == false) {
+            if (obj instanceof Map.Entry<?, ?> == false) {
                 return false;
             }
 
@@ -553,18 +557,22 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     private class EntrySet extends AbstractSet<Map.Entry<K, V>> {
 
+        @Override
         public int size() {
             return StaticBucketMap.this.size();
         }
 
+        @Override
         public void clear() {
             StaticBucketMap.this.clear();
         }
 
+        @Override
         public Iterator<Map.Entry<K, V>> iterator() {
             return new EntryIterator();
         }
 
+        @Override
         public boolean contains(Object obj) {
             Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             int hash = getHash(entry.getKey());
@@ -576,8 +584,9 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             return false;
         }
 
+        @Override
         public boolean remove(Object obj) {
-            if (obj instanceof Map.Entry == false) {
+            if (obj instanceof Map.Entry<?, ?> == false) {
                 return false;
             }
             Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
@@ -597,22 +606,27 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     private class KeySet extends AbstractSet<K> {
 
+        @Override
         public int size() {
             return StaticBucketMap.this.size();
         }
 
+        @Override
         public void clear() {
             StaticBucketMap.this.clear();
         }
 
+        @Override
         public Iterator<K> iterator() {
             return new KeyIterator();
         }
 
+        @Override
         public boolean contains(Object obj) {
             return StaticBucketMap.this.containsKey(obj);
         }
 
+        @Override
         public boolean remove(Object obj) {
             int hash = getHash(obj);
             synchronized (locks[hash]) {
@@ -632,14 +646,17 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     private class Values extends AbstractCollection<V> {
 
+        @Override
         public int size() {
             return StaticBucketMap.this.size();
         }
 
+        @Override
         public void clear() {
             StaticBucketMap.this.clear();
         }
 
+        @Override
         public Iterator<V> iterator() {
             return new ValueIterator();
         }
