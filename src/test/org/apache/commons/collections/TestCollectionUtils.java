@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,6 +21,7 @@ import static org.apache.commons.collections.functors.EqualPredicate.equalPredic
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 import java.util.*;
@@ -36,7 +37,7 @@ import org.junit.Test;
 
 /**
  * Tests for CollectionUtils.
- * 
+ *
  * @author Rodney Waldhoff
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -503,11 +504,13 @@ public class TestCollectionUtils extends MockTestCase {
         Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
         col.add(collectionA);
         col.add(collectionB);
-        CollectionUtils.forAllDo(col, testClosure);
+        Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col, testClosure);
+        assertSame(testClosure, resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        CollectionUtils.forAllDo(col, null);
+        resultClosure = CollectionUtils.forAllDo(col, null);
+        assertNull(resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        CollectionUtils.forAllDo(null, testClosure);
+        resultClosure = CollectionUtils.forAllDo(null, testClosure);
         col.add(null);
         // null should be OK
         CollectionUtils.forAllDo(col, testClosure);
@@ -642,7 +645,7 @@ public class TestCollectionUtils extends MockTestCase {
         // ArrayIndexOutOfBoundsException
         CollectionUtils.get(objArray, 2);
     }
-    
+
     @Test(expected = IndexOutOfBoundsException.class)
     public void getFromPrimativeArray() throws Exception {
         // Primitive array, entry exists
@@ -884,7 +887,7 @@ public class TestCollectionUtils extends MockTestCase {
         assertEquals(1, (int) ints.size());
         assertEquals(2, (int) ints.get(0));
     }
-    
+
     @Test
     public void filterNullParameters() throws Exception {
         List<Long> longs = Collections.nCopies(4, 10L);
@@ -962,7 +965,7 @@ public class TestCollectionUtils extends MockTestCase {
         Collection<Number> collection = CollectionUtils.<Integer, Number>collect(iterableA, transformer);
         assertTrue(collection.size() == collectionA.size());
         assertCollectResult(collection);
-        
+
         ArrayList<Number> list;
         list = CollectionUtils.collect(collectionA, transformer, new ArrayList<Number>());
         assertTrue(list.size() == collectionA.size());
@@ -1144,7 +1147,7 @@ public class TestCollectionUtils extends MockTestCase {
         // Let elta and eltb be objects...
         Integer elta = new Integer(17);
         Integer eltb = new Integer(17);
-        
+
         // ...which are equal...
         assertEquals(elta, eltb);
         assertEquals(eltb, elta);
