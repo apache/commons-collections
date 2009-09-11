@@ -16,7 +16,7 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * If modification to the decorated {@link Collection} is unavoidable, then a
  * call to {@link #reindex()} will update the index to the current contents of
  * the {@link Collection}.
- * 
+ *
  * @param K the type of object in the index.
  * @param C the type of object in the collection.
  * @author Stephen Kestle
@@ -31,7 +31,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 
     /**
      * Create an {@link IndexedCollection} for a unique index.
-     * 
+     *
      * @param <K> the index object type.
      * @param <C> the collection type.
      * @param coll the decorated {@link Collection}.
@@ -54,7 +54,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 
     /**
      * Create a {@link IndexedCollection} for a unique index.
-     * 
+     *
      * @param coll the decorated {@link Collection}.
      * @param keyTransformer the {@link Transformer} for generating index keys.
      * @return the created {@link IndexedCollection}.
@@ -100,7 +100,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 
     /**
      * Provides checking for adding the index.
-     * 
+     *
      * @param object the object to index.
      */
     private void addIndex(C object) {
@@ -110,6 +110,11 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
         }
     }
 
+    /**
+     * Get the element associated with the given key.
+     * @param key to look up
+     * @return element found
+     */
     public C get(K key) {
         return index.get(key);
     }
