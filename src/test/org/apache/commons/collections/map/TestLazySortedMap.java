@@ -40,7 +40,7 @@ import org.junit.Test;
  */
 public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     
-	private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
+    private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
    
     public TestLazySortedMap(String testName) {
         super(testName);
@@ -52,18 +52,18 @@ public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     }
 
     @Override
-	public SortedMap<K,V> makeObject() {
+    public SortedMap<K,V> makeObject() {
         return getLazySortedMap(new TreeMap<K,V>(), FactoryUtils.<V>nullFactory());
     }
     
     @Override
-	public boolean isSubMapViewsSerializable() {
+    public boolean isSubMapViewsSerializable() {
         // TODO TreeMap sub map views have a bug in deserialization.
         return false;
     }
 
     @Override
-	public boolean isAllowNullKey() {
+    public boolean isAllowNullKey() {
         return false;
     }
 
@@ -71,7 +71,7 @@ public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     //-----------------------------------------------------------------------
     @Override
     public void testMapGet() {
-    	//TODO eliminate need for this via superclass - see svn history.
+        //TODO eliminate need for this via superclass - see svn history.
     }
     
     @Test
@@ -128,7 +128,7 @@ public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     }
     
     @Override
-	public String getCompatibilityVersion() {
+    public String getCompatibilityVersion() {
         return "3.1";
     }
 

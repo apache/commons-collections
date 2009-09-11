@@ -36,7 +36,7 @@ import org.junit.runners.Suite.SuiteClasses;
 @RunWith(Suite.class)
 @SuiteClasses({
     TestSplitMapUtils.class,
-	TestTransformedMap.class
+    TestTransformedMap.class
 })
 public class TestAll extends TestCase {
 }

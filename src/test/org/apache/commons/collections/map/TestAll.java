@@ -33,7 +33,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	TestCaseInsensitiveMap.class,
+    TestCaseInsensitiveMap.class,
     TestCompositeMap.class,
     TestDefaultedMap.class,
     TestFlat3Map.class,

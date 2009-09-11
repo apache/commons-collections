@@ -538,7 +538,7 @@ public class PredicateUtils {
      * @param predicate  the predicate to call with the result of the transform
      * @return the predicate
      * @throws IllegalArgumentException if the transformer or the predicate is null
-	 * @since Commons Collections 3.1
+     * @since Commons Collections 3.1
      */
     public static <T> Predicate<T> transformedPredicate(
             Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {

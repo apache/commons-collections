@@ -48,28 +48,28 @@ public abstract class TestNullComparator extends AbstractTestComparator<Integer>
      **/
     public static class TestNullComparator1 extends TestNullComparator {
 
-    	public TestNullComparator1(String testName) {
-    	    super(testName);
-    	}
+        public TestNullComparator1(String testName) {
+            super(testName);
+        }
 
         public Comparator<Integer> makeObject() {
-    	    return new NullComparator<Integer>();
-    	}
+            return new NullComparator<Integer>();
+        }
 
         public List<Integer> getComparableObjectsOrdered() {
             List<Integer> list = new LinkedList<Integer>();
-    	    list.add(new Integer(1));
-    	    list.add(new Integer(2));
-    	    list.add(new Integer(3));
-    	    list.add(new Integer(4));
-    	    list.add(new Integer(5));
-    	    list.add(null);
-    	    return list;
-    	}
+            list.add(new Integer(1));
+            list.add(new Integer(2));
+            list.add(new Integer(3));
+            list.add(new Integer(4));
+            list.add(new Integer(5));
+            list.add(null);
+            return list;
+        }
 
-    	public String getCanonicalComparatorName(Object object) {
-    	    return super.getCanonicalComparatorName(object) + "1";
-    	}
+        public String getCanonicalComparatorName(Object object) {
+            return super.getCanonicalComparatorName(object) + "1";
+        }
     }
 
     /**

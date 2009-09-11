@@ -30,7 +30,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({
-	org.apache.commons.collections.TestAll.class,
+    org.apache.commons.collections.TestAll.class,
     org.apache.commons.collections.bag.TestAll.class,
     org.apache.commons.collections.bidimap.TestAll.class,
     org.apache.commons.collections.buffer.TestAll.class,

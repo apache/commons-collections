@@ -37,7 +37,7 @@ import org.junit.Test;
  */
 public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
 
-	private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
+    private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
 
     public TestLazyMap(String testName) {
         super(testName);
@@ -49,14 +49,14 @@ public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
     }
 
     @Override
-	public LazyMap<K,V> makeObject() {
+    public LazyMap<K,V> makeObject() {
         return getLazyMap(new HashMap<K,V>(), FactoryUtils.<V>nullFactory());
     }
 
     //-----------------------------------------------------------------------
     @Override
     public void testMapGet() {
-    	//TODO eliminate need for this via superclass - see svn history.
+        //TODO eliminate need for this via superclass - see svn history.
     }
 
     @Test
@@ -79,21 +79,21 @@ public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     @Test
     public void mapGetWithTransformer() {
-    	Transformer<Number, Integer> intConverter = new Transformer<Number, Integer>(){
-			public Integer transform(Number input) {
-				return input.intValue();
-			}
-    	};
-		Map<Long, Number> map = getLazyMap(new HashMap<Long,Number>(), intConverter );
-    	assertEquals(0, map.size());
-    	Number i1 = map.get(123L);
-    	assertEquals(123, i1);
-    	assertEquals(1, map.size());
+        Transformer<Number, Integer> intConverter = new Transformer<Number, Integer>(){
+            public Integer transform(Number input) {
+                return input.intValue();
+            }
+        };
+        Map<Long, Number> map = getLazyMap(new HashMap<Long,Number>(), intConverter );
+        assertEquals(0, map.size());
+        Number i1 = map.get(123L);
+        assertEquals(123, i1);
+        assertEquals(1, map.size());
     }
 
 
     @Override
-	public String getCompatibilityVersion() {
+    public String getCompatibilityVersion() {
         return "3.1";
     }
 

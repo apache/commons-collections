@@ -128,7 +128,7 @@ public class CollectionUtils {
      * undesirable. This implementation only implements Collection.
      */
     @SuppressWarnings("unchecked")
-	public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.decorate(new ArrayList<Object>());
+    public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.decorate(new ArrayList<Object>());
 
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.
@@ -845,7 +845,7 @@ public class CollectionUtils {
      */
     public static <T> T get(Iterator<T> iterator, int index) {
         int i = index;
-		checkIndexBounds(i);
+        checkIndexBounds(i);
             while (iterator.hasNext()) {
                 i--;
                 if (i == -1) {
@@ -919,7 +919,7 @@ public class CollectionUtils {
      */
     public static Object get(Object object, int index) {
         int i = index;
-		if (i < 0) {
+        if (i < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative: " + i);
         }
         if (object instanceof Map) {
@@ -935,7 +935,7 @@ public class CollectionUtils {
                 if (i == -1) {
                     return it.next();
                 }
-				it.next();
+                it.next();
             }
             throw new IndexOutOfBoundsException("Entry does not exist: " + i);
         } else if (object instanceof Collection) {

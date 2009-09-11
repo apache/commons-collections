@@ -875,7 +875,7 @@ public class TestCollectionUtils extends MockTestCase {
 
 //Up to here
     @SuppressWarnings("cast")
-	@Test
+    @Test
     public void filter() {
         List<Integer> ints = new ArrayList<Integer>();
         ints.add(1);
@@ -1396,10 +1396,10 @@ public class TestCollectionUtils extends MockTestCase {
     }
 
     /**
-	 * TODO: Should {@link CollectionUtils} be able to be extended? If it is extended, subclasses must 'override' the static methods with
-	 * call-throughs anyhow, otherwise java compiler warnings will result
-	 */
-	@Test
+     * TODO: Should {@link CollectionUtils} be able to be extended? If it is extended, subclasses must 'override' the static methods with
+     * call-throughs anyhow, otherwise java compiler warnings will result
+     */
+    @Test
     public void ensureCollectionUtilsCanBeExtended() {
         new CollectionUtils() {};
     }

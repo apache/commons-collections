@@ -566,9 +566,9 @@ public class TestIteratorUtils extends BulkTest {
     }
 
     //-----------------------------------------------------------------------
-	/**
-	 * Test next() and hasNext() for an immutable Iterator.
-	 */
+    /**
+     * Test next() and hasNext() for an immutable Iterator.
+     */
     public void testUnmodifiableIteratorIteration() {
         Iterator<String> iterator = getImmutableIterator();
 
@@ -672,7 +672,7 @@ public class TestIteratorUtils extends BulkTest {
      * Test remove() for an immutable ListIterator.
      */
     public void testUnmodifiableListIteratorImmutability() {
-    	ListIterator<String> listIterator = getImmutableListIterator();
+        ListIterator<String> listIterator = getImmutableListIterator();
 
         try {
             listIterator.remove();

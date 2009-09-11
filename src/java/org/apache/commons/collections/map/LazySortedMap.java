@@ -85,19 +85,19 @@ public class LazySortedMap<K,V>
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-	public static <K, V> SortedMap<K, V> getLazySortedMap(SortedMap<K, V> map, Factory<? extends V> factory) {
-		return new LazySortedMap<K,V>(map, factory);
-	}
+    public static <K, V> SortedMap<K, V> getLazySortedMap(SortedMap<K, V> map, Factory<? extends V> factory) {
+        return new LazySortedMap<K,V>(map, factory);
+    }
 
-	/**
-	 * Factory method to create a lazily instantiated sorted map.
-	 * 
-	 * @param map  the map to decorate, must not be null
-	 * @param factory  the factory to use, must not be null
-	 * @throws IllegalArgumentException if map or factory is null
-	 * @deprecated
-	 */
-	@Deprecated
+    /**
+     * Factory method to create a lazily instantiated sorted map.
+     * 
+     * @param map  the map to decorate, must not be null
+     * @param factory  the factory to use, must not be null
+     * @throws IllegalArgumentException if map or factory is null
+     * @deprecated
+     */
+    @Deprecated
     public static <K,V> SortedMap<K,V> decorate(SortedMap<K,V> map, Transformer<? super K, ? extends V> factory) {
         return getLazySortedMap(map, factory);
     }
@@ -109,9 +109,9 @@ public class LazySortedMap<K,V>
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-	public static <K, V> SortedMap<K, V> getLazySortedMap(SortedMap<K, V> map, Transformer<? super K, ? extends V> factory) {
-		return new LazySortedMap<K,V>(map, factory);
-	}
+    public static <K, V> SortedMap<K, V> getLazySortedMap(SortedMap<K, V> map, Transformer<? super K, ? extends V> factory) {
+        return new LazySortedMap<K,V>(map, factory);
+    }
 
     //-----------------------------------------------------------------------
     /**

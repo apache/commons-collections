@@ -31,37 +31,37 @@ import org.easymock.IExpectationSetters;
  * @author Stephen Kestle
  */
 public abstract class MockTestCase {
-	private List<Object> mockObjects = new ArrayList<Object>();
+    private List<Object> mockObjects = new ArrayList<Object>();
 
-	@SuppressWarnings("unchecked")
-	protected <T> T createMock(Class name) {
-		T mock = (T) EasyMock.createMock(name);
-		return registerMock(mock);
-	}
+    @SuppressWarnings("unchecked")
+    protected <T> T createMock(Class name) {
+        T mock = (T) EasyMock.createMock(name);
+        return registerMock(mock);
+    }
 
-	private <T> T registerMock(T mock) {
-		mockObjects.add(mock);
-		return mock;
-	}
+    private <T> T registerMock(T mock) {
+        mockObjects.add(mock);
+        return mock;
+    }
 
-	protected <T> IExpectationSetters<T> expect(T t) {
-		return EasyMock.expect(t);
-	}
+    protected <T> IExpectationSetters<T> expect(T t) {
+        return EasyMock.expect(t);
+    }
 
-	protected final void replay() {
-		for (Object o : mockObjects) {
-			EasyMock.replay(o);
-		}
-	}
+    protected final void replay() {
+        for (Object o : mockObjects) {
+            EasyMock.replay(o);
+        }
+    }
 
-	protected final void verify() {
-		for (ListIterator<Object> i = mockObjects.listIterator(); i.hasNext();) {
-			try {
-				EasyMock.verify(i.next());
-			} catch (AssertionError e) {
-				throw new AssertionError((i.previousIndex() + 1) + ""
-						+ e.getMessage());
-			}
-		}
-	}
+    protected final void verify() {
+        for (ListIterator<Object> i = mockObjects.listIterator(); i.hasNext();) {
+            try {
+                EasyMock.verify(i.next());
+            } catch (AssertionError e) {
+                throw new AssertionError((i.previousIndex() + 1) + ""
+                        + e.getMessage());
+            }
+        }
+    }
 }

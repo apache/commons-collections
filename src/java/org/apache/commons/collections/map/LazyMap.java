@@ -91,8 +91,8 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @throws IllegalArgumentException if map or factory is null
      */
     public static <K, V> LazyMap<K, V> getLazyMap(Map<K, V> map, Factory< ? extends V> factory) {
-		return new LazyMap<K,V>(map, factory);
-	}
+        return new LazyMap<K,V>(map, factory);
+    }
 
     /**
      * Factory method to create a lazily instantiated map.
@@ -102,21 +102,21 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @throws IllegalArgumentException if map or factory is null
      * @deprecated use {@link #getLazyMap(Map, Transformer)} instead.
      */
-	@Deprecated
+    @Deprecated
     public static <K,V> Map<K,V> decorate(Map<K,V> map, Transformer<? super K, ? extends V> factory) {
         return getLazyMap(map, factory);
     }
 
-	/**
+    /**
      * Factory method to create a lazily instantiated map.
      * 
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-	public static <V, K> LazyMap<K, V> getLazyMap(Map<K, V> map, Transformer<? super K, ? extends V> factory) {
-		return new LazyMap<K,V>(map, factory);
-	}
+    public static <V, K> LazyMap<K, V> getLazyMap(Map<K, V> map, Transformer<? super K, ? extends V> factory) {
+        return new LazyMap<K,V>(map, factory);
+    }
 
     //-----------------------------------------------------------------------
     /**
@@ -171,17 +171,17 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
     @Override
-	public V get(Object key) {
+    public V get(Object key) {
         // create value for key if key is not currently in the map
         if (map.containsKey(key) == false) {
-        	K castKey = cast(key);
+            K castKey = cast(key);
             V value = factory.transform(castKey);
             map.put(castKey, value);
             return value;
@@ -195,10 +195,10 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @param key .
      * @return the cast key.
      */
-	@SuppressWarnings("unchecked")
-	private K cast(Object key) {
-		return (K) key;
-	}
+    @SuppressWarnings("unchecked")
+    private K cast(Object key) {
+        return (K) key;
+    }
 
     // no need to wrap keySet, entrySet or values as they are views of
     // existing map entries - you can't do a map-style get on them.

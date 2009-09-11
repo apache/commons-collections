@@ -79,7 +79,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /** The stack of iterators */
     protected final ArrayStack<Iterator<? extends E>> stack = new ArrayStack<Iterator<? extends E>>(8);
-	/** The root object in the tree */
+    /** The root object in the tree */
     protected E root;
     /** The transformer to use */
     protected Transformer<? super E, ? extends E> transformer;
@@ -198,7 +198,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             // all iterators exhausted
         } else {
             // current iterator exhausted, go up a level
-            currentIterator = (Iterator<? extends E>) stack.pop();
+            currentIterator = stack.pop();
             findNextByIterator(currentIterator);
         }
     }

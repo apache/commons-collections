@@ -33,9 +33,9 @@ import org.apache.commons.collections.BulkTest;
  */
 public class TestTreeList<E> extends AbstractTestList<E> {
 
-	public TestTreeList(String name) {
-		super(name);
-	}
+    public TestTreeList(String name) {
+        super(name);
+    }
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(suite());
@@ -105,29 +105,29 @@ public class TestTreeList<E> extends AbstractTestList<E> {
     }
 
     //-----------------------------------------------------------------------
-	public TreeList<E> makeObject() {
-		return new TreeList<E>();
-	}
+    public TreeList<E> makeObject() {
+        return new TreeList<E>();
+    }
 
     //-----------------------------------------------------------------------
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public void testAddMultiple() {
-		List<E> l = makeObject();
-		l.add((E) "hugo");
-		l.add((E) "erna");
-		l.add((E) "daniel");
-		l.add((E) "andres");
-		l.add((E) "harald");
-		l.add(0, null);
-		assertEquals(null, l.get(0));
-		assertEquals("hugo", l.get(1));
-		assertEquals("erna", l.get(2));
-		assertEquals("daniel", l.get(3));
-		assertEquals("andres", l.get(4));
-		assertEquals("harald", l.get(5));
-	}
+        List<E> l = makeObject();
+        l.add((E) "hugo");
+        l.add((E) "erna");
+        l.add((E) "daniel");
+        l.add((E) "andres");
+        l.add((E) "harald");
+        l.add(0, null);
+        assertEquals(null, l.get(0));
+        assertEquals("hugo", l.get(1));
+        assertEquals("erna", l.get(2));
+        assertEquals("daniel", l.get(3));
+        assertEquals("andres", l.get(4));
+        assertEquals("harald", l.get(5));
+    }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public void testRemove() {
         List<E> l = makeObject();
         l.add((E) "hugo");
@@ -136,44 +136,44 @@ public class TestTreeList<E> extends AbstractTestList<E> {
         l.add((E) "andres");
         l.add((E) "harald");
         l.add(0, null);
-		int i = 0;
-		assertEquals(null, l.get(i++));
-		assertEquals("hugo", l.get(i++));
-		assertEquals("erna", l.get(i++));
-		assertEquals("daniel", l.get(i++));
-		assertEquals("andres", l.get(i++));
-		assertEquals("harald", l.get(i++));
+        int i = 0;
+        assertEquals(null, l.get(i++));
+        assertEquals("hugo", l.get(i++));
+        assertEquals("erna", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
 
-		l.remove(0);
-		i = 0;
-		assertEquals("hugo", l.get(i++));
-		assertEquals("erna", l.get(i++));
-		assertEquals("daniel", l.get(i++));
-		assertEquals("andres", l.get(i++));
-		assertEquals("harald", l.get(i++));
+        l.remove(0);
+        i = 0;
+        assertEquals("hugo", l.get(i++));
+        assertEquals("erna", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
 
-		i = 0;
-		l.remove(1);
-		assertEquals("hugo", l.get(i++));
-		assertEquals("daniel", l.get(i++));
-		assertEquals("andres", l.get(i++));
-		assertEquals("harald", l.get(i++));
+        i = 0;
+        l.remove(1);
+        assertEquals("hugo", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("andres", l.get(i++));
+        assertEquals("harald", l.get(i++));
 
-		i = 0;
-		l.remove(2);
-		assertEquals("hugo", l.get(i++));
-		assertEquals("daniel", l.get(i++));
-		assertEquals("harald", l.get(i++));
-	}
+        i = 0;
+        l.remove(2);
+        assertEquals("hugo", l.get(i++));
+        assertEquals("daniel", l.get(i++));
+        assertEquals("harald", l.get(i++));
+    }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public void testInsertBefore() {
         List<E> l = makeObject();
         l.add((E) "erna");
         l.add(0, (E) "hugo");
-		assertEquals("hugo", l.get(0));
-		assertEquals("erna", l.get(1));
-	}
+        assertEquals("hugo", l.get(0));
+        assertEquals("erna", l.get(1));
+    }
 
     @SuppressWarnings("unchecked")
     public void testIndexOf() {
