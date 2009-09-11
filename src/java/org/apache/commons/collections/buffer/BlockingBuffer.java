@@ -59,7 +59,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
     /**
      * Factory method to create a blocking buffer.
      *
-     * @param <t> the type of the elements in the buffer
+     * @param <T> the type of the elements in the buffer
      * @param buffer the buffer to decorate, must not be null
      * @return a new blocking Buffer
      * @throws IllegalArgumentException if buffer is null

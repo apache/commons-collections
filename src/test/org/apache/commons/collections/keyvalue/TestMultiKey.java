@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Unit tests for {@link org.apache.commons.collections.MultiKey}.
+ * Unit tests for {@link org.apache.commons.collections.keyvalue.MultiKey}.
  *
  * @version $Revision$ $Date$
  *

@@ -284,8 +284,6 @@ public class CollectionUtils {
      * @param coll
      *            the collection to get the cardinality map for, must not be
      *            null
-     * @param <I>
-     *            the type of object in the input {@link Collection}
      * @param <O>
      *            the type of object in the returned {@link Map}. This is a
      *            super type of <I>.

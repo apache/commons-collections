@@ -280,7 +280,7 @@ public class PredicateUtils {
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
-     * @deprecated use {@link AllPredicate#allPredicate(Predicate...)))} instead.
+     * @deprecated use {@link AllPredicate#allPredicate(Predicate...)} instead.
      */
     @Deprecated
     public static <T> Predicate<T> allPredicate(Predicate<? super T>[] predicates) {

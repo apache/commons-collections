@@ -17,8 +17,8 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * call to {@link #reindex()} will update the index to the current contents of
  * the {@link Collection}.
  *
- * @param K the type of object in the index.
- * @param C the type of object in the collection.
+ * @param <K> the type of object in the index.
+ * @param <C> the type of object in the collection.
  * @author Stephen Kestle
  */
 // TODO support MultiMap/non-unique index behavior
@@ -57,7 +57,6 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      *
      * @param coll the decorated {@link Collection}.
      * @param keyTransformer the {@link Transformer} for generating index keys.
-     * @return the created {@link IndexedCollection}.
      */
     public IndexedCollection(Collection<C> coll, Transformer<C, K> keyTransformer, HashMap<K, C> map) {
         super(coll);
