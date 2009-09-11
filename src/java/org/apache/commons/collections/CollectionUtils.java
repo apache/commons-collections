@@ -386,10 +386,10 @@ public class CollectionUtils {
      * @return the the number of occurrences of obj in coll
      */
     public static <O> int cardinality(O obj, final Iterable<? super O> coll) {
-        if (coll instanceof Set) {
+        if (coll instanceof Set<?>) {
             return (((Set<? super O>) coll).contains(obj) ? 1 : 0);
         }
-        if (coll instanceof Bag) {
+        if (coll instanceof Bag<?>) {
             return ((Bag<? super O>) coll).getCount(obj);
         }
         int count = 0;
@@ -492,7 +492,7 @@ public class CollectionUtils {
     public static <C> void transform(Collection<C> collection,
             Transformer<? super C, ? extends C> transformer) {
         if (collection != null && transformer != null) {
-            if (collection instanceof List) {
+            if (collection instanceof List<?>) {
                 List<C> list = (List<C>) collection;
                 for (ListIterator<C> it = list.listIterator(); it.hasNext();) {
                     it.set(transformer.transform(it.next()));
@@ -703,7 +703,7 @@ public class CollectionUtils {
      * @param outputCollection  the collection to output into, may not be null
      * @param <I> the type of object in the input collection
      * @param <O> the type of object in the output collection
-     * @param <T> the output type of the transformer - this extends O.
+     * @param <R> the output type of the transformer - this extends O.
      * @return the outputCollection with the transformed input added
      * @throws NullPointerException if the output collection is null
      */
@@ -727,7 +727,7 @@ public class CollectionUtils {
      * @param outputCollection  the collection to output into, may not be null
      * @param <I> the type of object in the input collection
      * @param <O> the type of object in the output collection
-     * @param <T> the output type of the transformer - this extends O.
+     * @param <R> the output type of the transformer - this extends O.
      * @return the outputCollection with the transformed input added
      * @throws NullPointerException if the output collection is null
      */
@@ -772,7 +772,7 @@ public class CollectionUtils {
      *             if the collection or iterator is null
      */
     public static <C> boolean addAll(Collection<C> collection, Iterable<? extends C> iterable) {
-        if (iterable instanceof Collection) {
+        if (iterable instanceof Collection<?>) {
             return collection.addAll((Collection<? extends C>) iterable);
         }
         return addAll(collection, iterable.iterator());
@@ -879,7 +879,7 @@ public class CollectionUtils {
      */
     public static <T> T get(Iterable<T> iterable, int index) {
         checkIndexBounds(index);
-        if (iterable instanceof List) {
+        if (iterable instanceof List<?>) {
             return ((List<T>) iterable).get(index);
         }
         return get(iterable.iterator(), index);
@@ -920,13 +920,13 @@ public class CollectionUtils {
         if (i < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative: " + i);
         }
-        if (object instanceof Map) {
+        if (object instanceof Map<?,?>) {
             Map<?, ?> map = (Map<?, ?>) object;
             Iterator<?> iterator = map.entrySet().iterator();
             return get(iterator, i);
         } else if (object instanceof Object[]) {
             return ((Object[]) object)[i];
-        } else if (object instanceof Iterator) {
+        } else if (object instanceof Iterator<?>) {
             Iterator<?> it = (Iterator<?>) object;
             while (it.hasNext()) {
                 i--;
@@ -936,10 +936,10 @@ public class CollectionUtils {
                 it.next();
             }
             throw new IndexOutOfBoundsException("Entry does not exist: " + i);
-        } else if (object instanceof Collection) {
+        } else if (object instanceof Collection<?>) {
             Iterator<?> iterator = ((Collection<?>) object).iterator();
             return get(iterator, i);
-        } else if (object instanceof Enumeration) {
+        } else if (object instanceof Enumeration<?>) {
             Enumeration<?> it = (Enumeration<?>) object;
             while (it.hasMoreElements()) {
                 i--;
@@ -994,19 +994,19 @@ public class CollectionUtils {
      */
     public static int size(Object object) {
         int total = 0;
-        if (object instanceof Map) {
+        if (object instanceof Map<?,?>) {
             total = ((Map<?, ?>) object).size();
-        } else if (object instanceof Collection) {
+        } else if (object instanceof Collection<?>) {
             total = ((Collection<?>) object).size();
         } else if (object instanceof Object[]) {
             total = ((Object[]) object).length;
-        } else if (object instanceof Iterator) {
+        } else if (object instanceof Iterator<?>) {
             Iterator<?> it = (Iterator<?>) object;
             while (it.hasNext()) {
                 total++;
                 it.next();
             }
-        } else if (object instanceof Enumeration) {
+        } else if (object instanceof Enumeration<?>) {
             Enumeration<?> it = (Enumeration<?>) object;
             while (it.hasMoreElements()) {
                 total++;
@@ -1045,15 +1045,15 @@ public class CollectionUtils {
      * @since Commons Collections 3.2
      */
     public static boolean sizeIsEmpty(Object object) {
-        if (object instanceof Collection) {
+        if (object instanceof Collection<?>) {
             return ((Collection<?>) object).isEmpty();
-        } else if (object instanceof Map) {
+        } else if (object instanceof Map<?, ?>) {
             return ((Map<?, ?>) object).isEmpty();
         } else if (object instanceof Object[]) {
             return ((Object[]) object).length == 0;
-        } else if (object instanceof Iterator) {
+        } else if (object instanceof Iterator<?>) {
             return ((Iterator<?>) object).hasNext() == false;
-        } else if (object instanceof Enumeration) {
+        } else if (object instanceof Enumeration<?>) {
             return ((Enumeration<?>) object).hasMoreElements() == false;
         } else if (object == null) {
             throw new IllegalArgumentException("Unsupported object type: null");
