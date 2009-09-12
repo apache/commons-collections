@@ -32,9 +32,9 @@ import org.apache.commons.collections.ResettableIterator;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestLRUMap extends AbstractTestOrderedMap {

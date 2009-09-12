@@ -26,7 +26,7 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class AbstractBufferDecorator extends AbstractCollectionDecorator implements Buffer {

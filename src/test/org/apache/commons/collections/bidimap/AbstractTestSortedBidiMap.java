@@ -34,9 +34,9 @@ import org.apache.commons.collections.map.AbstractTestSortedMap;
 
 /**
  * Abstract test class for {@link SortedBidiMap} methods and contracts.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */

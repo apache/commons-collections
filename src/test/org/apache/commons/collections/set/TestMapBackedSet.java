@@ -28,7 +28,7 @@ import org.apache.commons.collections.map.HashedMap;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestMapBackedSet extends AbstractTestSet {

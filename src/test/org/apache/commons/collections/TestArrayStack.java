@@ -23,9 +23,9 @@ import junit.framework.Test;
 
 /**
  * Tests ArrayStack.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Craig McClanahan
  */
 public class TestArrayStack extends TestArrayList {

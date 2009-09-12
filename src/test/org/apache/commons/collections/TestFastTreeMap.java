@@ -23,9 +23,9 @@ import junit.framework.Test;
 
 /**
  * Tests FastTreeMap.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Jason van Zyl
  */
 public class TestFastTreeMap extends TestTreeMap {

@@ -36,7 +36,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
  */

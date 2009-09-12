@@ -30,10 +30,10 @@ import org.apache.commons.collections.Transformer;
  * use the Integer form to remove objects.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TransformedSortedSet extends TransformedSet implements SortedSet {

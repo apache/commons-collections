@@ -36,7 +36,7 @@ import java.util.Iterator;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class SynchronizedCollection implements Collection, Serializable {

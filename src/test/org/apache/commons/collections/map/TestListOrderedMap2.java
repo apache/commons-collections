@@ -32,7 +32,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestListOrderedMap2 extends AbstractTestOrderedMap {

@@ -25,7 +25,7 @@ package org.apache.commons.collections;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public interface KeyValue {

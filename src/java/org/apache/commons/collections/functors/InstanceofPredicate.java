@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Predicate implementation that returns true if the input is an instanceof
  * the type stored in this predicate.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

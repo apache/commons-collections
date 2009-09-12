@@ -26,7 +26,7 @@ import org.apache.commons.collections.Factory;
  * No check is made that the object is immutable. In general, only immutable
  * objects should use the constant factory. Mutable objects should
  * use the prototype factory.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

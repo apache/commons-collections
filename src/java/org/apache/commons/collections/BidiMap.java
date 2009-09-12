@@ -32,7 +32,7 @@ package org.apache.commons.collections;
  * keys and values, meaning that multiple keys cannot map to the same value. 
  * This is required so that "inverting" the map results in a map without 
  * duplicate keys. See the {@link #put} method description for more information.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

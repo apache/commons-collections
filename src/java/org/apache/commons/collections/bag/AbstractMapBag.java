@@ -39,7 +39,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
  * @version $Revision$ $Date$
- * 
+ *
  * @author Chuck Burdick
  * @author Michael A. Smith
  * @author Stephen Colebourne

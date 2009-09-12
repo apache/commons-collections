@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * Predicate implementation that transforms the given object before invoking
  * another <code>Predicate</code>.
- * 
+ *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
  * @author Alban Peignier

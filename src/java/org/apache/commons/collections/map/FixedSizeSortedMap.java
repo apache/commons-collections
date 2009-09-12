@@ -53,7 +53,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Paul Jack
  */

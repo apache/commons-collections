@@ -30,7 +30,7 @@ import org.apache.commons.collections.FunctorException;
 
 /**
  * Factory implementation that creates a new instance each time based on a prototype.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

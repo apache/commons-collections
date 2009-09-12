@@ -26,9 +26,9 @@ import junit.framework.Test;
 
 /**
  * Tests LRUMap.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Morgan Delagrange
  * @author Stephen Colebourne

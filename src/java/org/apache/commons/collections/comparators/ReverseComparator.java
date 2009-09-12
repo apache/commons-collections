@@ -22,12 +22,12 @@ import java.util.Comparator;
 /**
  * Reverses the order of another comparator by reversing the arguments
  * to its {@link #compare(Object, Object) compare} method.
- * 
+ *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
  *
  * @author Michael A. Smith
- * 
+ *
  * @see java.util.Collections#reverseOrder()
  */
 public class ReverseComparator implements Comparator, Serializable {

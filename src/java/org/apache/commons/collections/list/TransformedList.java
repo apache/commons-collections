@@ -36,7 +36,7 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TransformedList extends TransformedCollection implements List {

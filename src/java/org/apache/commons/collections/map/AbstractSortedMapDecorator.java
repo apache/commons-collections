@@ -33,7 +33,7 @@ import java.util.SortedMap;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class AbstractSortedMapDecorator

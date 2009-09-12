@@ -22,9 +22,9 @@ import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * Tests TreeMap.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Jason van Zyl
  */
 public abstract class TestTreeMap extends AbstractTestMap {

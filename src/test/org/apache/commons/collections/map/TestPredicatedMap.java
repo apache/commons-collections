@@ -32,7 +32,7 @@ import org.apache.commons.collections.PredicateUtils;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
 public class TestPredicatedMap extends AbstractTestMap{

@@ -35,10 +35,10 @@ import java.util.Collection;
  * using this class.
  * <p>
  * <b>Note that this implementation is not synchronized.</b>
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Jeff Varszegi
  * @author Rich Dougherty
  * @author Phil Steitz

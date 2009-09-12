@@ -22,10 +22,10 @@ import junit.framework.TestSuite;
 
 /**
  * Entry point for key-value test cases.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */

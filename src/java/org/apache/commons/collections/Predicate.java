@@ -27,10 +27,10 @@ package org.apache.commons.collections;
  * Standard implementations of common predicates are provided by
  * {@link PredicateUtils}. These include true, false, instanceof, equals, and,
  * or, not, method invokation and null testing.
- * 
+ *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Stephen Colebourne
  */

@@ -74,7 +74,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
  * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>

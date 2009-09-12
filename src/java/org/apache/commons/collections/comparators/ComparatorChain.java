@@ -34,22 +34,22 @@ import java.util.List;
  * to multi-column sorting in SQL, and this class
  * allows Java classes to emulate that kind of behaviour
  * when sorting a List.</p>
- * 
+ *
  * <p>To further facilitate SQL-like sorting, the order of
  * any single Comparator in the list can be reversed.</p>
- * 
+ *
  * <p>Calling a method that adds new Comparators or
  * changes the ascend/descend sort <i>after compare(Object,
  * Object) has been called</i> will result in an
  * UnsupportedOperationException.  However, <i>take care</i>
  * to not alter the underlying List of Comparators
  * or the BitSet that defines the sort order.</p>
- * 
+ *
  * <p>Instances of ComparatorChain are not synchronized.
  * The class is not thread-safe at construction time, but
  * it <i>is</i> thread-safe to perform multiple comparisons
  * after all the setup operations are complete.</p>
- * 
+ *
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
  * @version $Revision$ $Date$

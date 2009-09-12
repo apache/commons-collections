@@ -28,9 +28,9 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 
 /**
  * Test cases for BoundedFifoBuffer.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Paul Jack
  */
 public class TestBoundedFifoBuffer extends AbstractTestCollection {

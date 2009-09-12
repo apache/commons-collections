@@ -29,9 +29,9 @@ import org.apache.commons.collections.Predicate;
 
 /**
  * Tests the FilterListIterator class.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  */
 public class TestFilterListIterator extends TestCase {

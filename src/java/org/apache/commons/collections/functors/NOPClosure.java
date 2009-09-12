@@ -22,7 +22,7 @@ import org.apache.commons.collections.Closure;
 
 /**
  * Closure implementation that does nothing.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

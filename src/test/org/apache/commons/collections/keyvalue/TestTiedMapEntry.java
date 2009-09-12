@@ -24,10 +24,10 @@ import junit.framework.TestSuite;
 
 /**
  * Test the TiedMapEntry class.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestTiedMapEntry extends AbstractTestMapEntry {

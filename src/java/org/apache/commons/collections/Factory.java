@@ -25,7 +25,7 @@ package org.apache.commons.collections;
  * Standard implementations of common factories are provided by
  * {@link FactoryUtils}. These include factories that return a constant,
  * a copy of a prototype or a new instance.
- * 
+ *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
  *

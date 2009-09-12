@@ -26,7 +26,7 @@ import org.apache.commons.collections.KeyValue;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Michael A. Smith
  * @author Neil O'Toole

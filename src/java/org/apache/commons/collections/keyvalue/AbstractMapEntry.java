@@ -24,7 +24,7 @@ import java.util.Map;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Michael A. Smith
  * @author Neil O'Toole

@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
 
 /**
  * Test the ArrayListIterator class with primitives.
- * 
+ *
  * @version $Revision$ $Date$
  * @author Neil O'Toole
  */

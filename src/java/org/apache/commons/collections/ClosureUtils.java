@@ -47,7 +47,7 @@ import org.apache.commons.collections.functors.WhileClosure;
  * <li>Exception - always throws an exception
  * </ul>
  * All the supplied closures are Serializable.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

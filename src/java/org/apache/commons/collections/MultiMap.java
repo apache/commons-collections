@@ -42,7 +42,7 @@ import java.util.Map;
  *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Christopher Berry
  * @author James Strachan
  * @author Stephen Colebourne

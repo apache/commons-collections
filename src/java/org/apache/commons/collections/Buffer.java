@@ -37,7 +37,7 @@ import java.util.Collection;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Avalon
  * @author Berin Loritsch
  * @author Paul Jack

@@ -25,7 +25,7 @@ import java.util.ListIterator;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
  */

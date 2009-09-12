@@ -33,9 +33,9 @@ import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 
 /**
  * Tests for IteratorUtils.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Unknown
  */
 public class TestIteratorUtils extends BulkTest {

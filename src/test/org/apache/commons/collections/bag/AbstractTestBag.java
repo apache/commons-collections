@@ -38,7 +38,7 @@ import org.apache.commons.collections.Bag;
  * test case (method) your bag fails.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */

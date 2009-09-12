@@ -41,7 +41,7 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Neil O'Toole

@@ -33,7 +33,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class AbstractOrderedBidiMapDecorator

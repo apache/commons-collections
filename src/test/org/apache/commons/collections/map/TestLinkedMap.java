@@ -32,9 +32,9 @@ import org.apache.commons.collections.list.AbstractTestList;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestLinkedMap extends AbstractTestOrderedMap {

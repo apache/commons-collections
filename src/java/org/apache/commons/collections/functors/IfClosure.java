@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Closure implementation acts as an if statement calling one or other closure
  * based on a predicate.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

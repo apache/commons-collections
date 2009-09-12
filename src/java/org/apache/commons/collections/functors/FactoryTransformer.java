@@ -23,7 +23,7 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * Transformer implementation that calls a Factory and returns the result.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

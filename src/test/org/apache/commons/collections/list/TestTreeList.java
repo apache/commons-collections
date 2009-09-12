@@ -25,7 +25,7 @@ import org.apache.commons.collections.BulkTest;
 
 /**
  * JUnit tests
- * 
+ *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
  *

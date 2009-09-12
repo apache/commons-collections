@@ -24,7 +24,7 @@ import java.util.Map;
  * @deprecated Use the version in the keyvalue subpackage. Will be removed in v4.0
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Michael A. Smith
  * @author Neil O'Toole

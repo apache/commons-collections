@@ -27,9 +27,9 @@ import org.apache.commons.collections.list.PredicatedList;
 
 /**
  * Tests for ListUtils.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Neil O'Toole
  * @author Matthew Hawthorne

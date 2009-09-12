@@ -26,9 +26,9 @@ import junit.framework.TestSuite;
  * Tests the ArrayIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  * The code of this test was supplied by Mauricio S. Moura.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange

@@ -57,7 +57,7 @@ import org.apache.commons.collections.iterators.EmptyIterator;
  *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Christopher Berry
  * @author James Strachan
  * @author Steve Downey

@@ -23,7 +23,7 @@ package org.apache.commons.collections.bag;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class AbstractTestSortedBag extends AbstractTestBag {

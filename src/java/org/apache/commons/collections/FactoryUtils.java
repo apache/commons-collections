@@ -32,7 +32,7 @@ import org.apache.commons.collections.functors.PrototypeFactory;
  * <li>Exception - always throws an exception
  * </ul>
  * All the supplied factories are Serializable.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

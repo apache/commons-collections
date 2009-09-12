@@ -29,7 +29,7 @@ import org.apache.commons.collections.Bag;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
 public class TestTypedBag extends AbstractTestBag {

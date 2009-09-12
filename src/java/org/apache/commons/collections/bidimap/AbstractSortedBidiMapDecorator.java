@@ -35,7 +35,7 @@ import org.apache.commons.collections.SortedBidiMap;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class AbstractSortedBidiMapDecorator

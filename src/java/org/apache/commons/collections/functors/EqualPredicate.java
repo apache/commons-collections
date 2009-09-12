@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Predicate implementation that returns true if the input is the same object
  * as the one stored in this predicate by equals.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

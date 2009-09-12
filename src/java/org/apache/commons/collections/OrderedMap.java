@@ -19,7 +19,7 @@ package org.apache.commons.collections;
 /**
  * Defines a map that maintains order and allows both forward and backward
  * iteration through that order.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

@@ -34,7 +34,7 @@ import org.apache.commons.collections.BulkTest;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Dieter Wimberger
  */

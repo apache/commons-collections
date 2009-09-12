@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Closure implementation that executes a closure repeatedly until a condition is met,
  * like a do-while or while loop.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

@@ -34,7 +34,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  * Test the filter iterator.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Jan Sorensen
  * @author Ralph Wagner
  * @author Huw Roberts

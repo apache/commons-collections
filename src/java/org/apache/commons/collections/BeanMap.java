@@ -44,11 +44,11 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Stephen Colebourne
  * @author Dimiter Dimitrov
- * 
+ *
  * @deprecated Identical class now available in commons-beanutils (full jar version).
  * This version is due to be removed in collections v4.0.
  */

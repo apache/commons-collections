@@ -28,9 +28,9 @@ import org.apache.commons.collections.KeyValue;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestSingletonMap extends AbstractTestOrderedMap {

@@ -27,9 +27,9 @@ import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * Test cases for BeanMap
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */

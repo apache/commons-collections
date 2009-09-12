@@ -36,7 +36,7 @@ import org.apache.commons.collections.ResettableListIterator;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Neil O'Toole
  * @author Stephen Colebourne
  * @author Phil Steitz

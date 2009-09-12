@@ -31,9 +31,9 @@ import org.apache.commons.collections.map.AbstractTestMap;
  * {@link org.apache.commons.collections.SequencedHashMap}.
  * Be sure to use the "labRat" instance whenever possible,
  * so that subclasses will be tested correctly.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Morgan Delagrange
  * @author Daniel Rall
  * @author Henning P. Schmiedehausen

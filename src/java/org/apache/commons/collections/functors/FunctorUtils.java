@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * Internal utilities for functors.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

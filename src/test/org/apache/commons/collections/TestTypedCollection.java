@@ -22,9 +22,9 @@ import java.util.List;
 
 /**
  * Tests TypedCollection.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class TestTypedCollection extends BulkTest {

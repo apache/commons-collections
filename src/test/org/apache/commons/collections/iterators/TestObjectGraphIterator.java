@@ -30,9 +30,9 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * Testcase.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestObjectGraphIterator extends AbstractTestIterator {

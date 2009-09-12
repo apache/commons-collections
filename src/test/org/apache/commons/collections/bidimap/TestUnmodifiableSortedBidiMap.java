@@ -28,9 +28,9 @@ import org.apache.commons.collections.SortedBidiMap;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestUnmodifiableSortedBidiMap extends AbstractTestSortedBidiMap {

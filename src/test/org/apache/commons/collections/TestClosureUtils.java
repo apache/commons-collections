@@ -30,7 +30,7 @@ import org.apache.commons.collections.functors.NOPClosure;
 
 /**
  * Tests the org.apache.commons.collections.ClosureUtils class.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

@@ -22,7 +22,7 @@ import org.apache.commons.collections.Predicate;
 
 /**
  * Predicate implementation that returns true if the input is not null.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

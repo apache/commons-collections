@@ -36,7 +36,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public final class UnmodifiableBuffer

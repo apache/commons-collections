@@ -37,7 +37,7 @@ import org.apache.commons.collections.comparators.TransformingComparator;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Paul Jack
  * @author Stephen Colebourne
  */

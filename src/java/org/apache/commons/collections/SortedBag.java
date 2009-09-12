@@ -24,7 +24,7 @@ import java.util.Comparator;
  *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Chuck Burdick
  */
 public interface SortedBag extends Bag {

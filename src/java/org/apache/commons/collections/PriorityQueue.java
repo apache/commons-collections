@@ -25,7 +25,7 @@ package org.apache.commons.collections;
  *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Peter Donald
  */
 public interface PriorityQueue {

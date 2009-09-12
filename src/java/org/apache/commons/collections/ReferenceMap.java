@@ -75,11 +75,11 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  *  provide synchronized access to a <code>ReferenceMap</code>.
  *
  * @see java.lang.ref.Reference
- * 
+ *
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Paul Jack
  */
 public class ReferenceMap extends AbstractMap {

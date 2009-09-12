@@ -39,7 +39,7 @@ import java.io.Serializable;
  * test case (method) your {@link Object} fails.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
  * @author Anonymous

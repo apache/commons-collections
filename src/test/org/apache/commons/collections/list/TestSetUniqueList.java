@@ -33,7 +33,7 @@ import junit.textui.TestRunner;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Matthew Hawthorne
  * @author Tom Dunham
  */

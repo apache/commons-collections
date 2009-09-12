@@ -37,9 +37,9 @@ import org.apache.commons.collections.map.AbstractTestMap;
  * implement TestMap.SupportsPut, because it is a special
  * Map that does not support duplicate keys, duplicate 
  * values, or null values.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Marc Johnson
  * @author Stephen Colebourne
  */

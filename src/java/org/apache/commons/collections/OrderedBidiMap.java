@@ -22,7 +22,7 @@ package org.apache.commons.collections;
  * <p>
  * Implementations should allow a value to be looked up from a key and
  * a key to be looked up from a value with equal performance.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

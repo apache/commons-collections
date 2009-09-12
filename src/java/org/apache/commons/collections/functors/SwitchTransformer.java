@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * Transformer implementation calls the transformer whose predicate returns true,
  * like a switch statement.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

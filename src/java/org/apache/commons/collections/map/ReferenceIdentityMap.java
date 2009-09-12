@@ -64,10 +64,10 @@ import java.lang.ref.Reference;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @see java.lang.ref.Reference
- * 
+ *
  * @since Commons Collections 3.0 (previously in main package v2.1)
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class ReferenceIdentityMap extends AbstractReferenceMap implements Serializable {

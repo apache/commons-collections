@@ -40,7 +40,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne

@@ -28,7 +28,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * Tests the SingletonListIterator.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestSingletonListIterator extends AbstractTestListIterator {

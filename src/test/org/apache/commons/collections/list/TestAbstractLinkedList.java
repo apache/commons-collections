@@ -20,9 +20,9 @@ import java.util.Arrays;
 
 /**
  * Test case for {@link AbstractLinkedList}.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rich Dougherty
  * @author David Hay
  * @author Phil Steitz

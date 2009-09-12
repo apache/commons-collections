@@ -31,7 +31,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * <p>
  * Concrete subclasses declare the comparator to be tested.
  * They also declare certain aspects of the tests.
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class AbstractTestComparator extends AbstractTestObject {

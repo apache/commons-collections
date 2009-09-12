@@ -29,9 +29,9 @@ import org.apache.commons.collections.Unmodifiable;
 
 /**
  * Tests the UnmodifiableListIterator.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestUnmodifiableListIterator extends AbstractTestListIterator {

@@ -25,7 +25,7 @@ import org.apache.commons.collections.BulkTest;
 
 /**
  * Tests for ReferenceMap. 
- * 
+ *
  * @version $Revision$ $Date$
  *
  * @author Paul Jack

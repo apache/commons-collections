@@ -26,7 +26,7 @@ import junit.framework.Test;
 
 /**
  * Test FastArrayList implementation in <strong>fast</strong> mode.
- * 
+ *
  * @version $Revision$ $Date$
  *
  * @author Jason van Zyl

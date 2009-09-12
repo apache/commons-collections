@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * Transformer implementation that returns the value held in a specified map
  * using the input parameter as a key.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

@@ -25,7 +25,7 @@ import org.apache.commons.collections.FunctorException;
 
 /**
  * Factory implementation that creates a new object instance by reflection.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

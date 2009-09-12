@@ -47,7 +47,7 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * protected methods from AbstractTestCollection.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne

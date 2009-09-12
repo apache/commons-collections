@@ -32,7 +32,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  * @author Stephen Colebourne
  */

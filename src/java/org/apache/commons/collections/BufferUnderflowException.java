@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
  * The BufferUnderflowException is used when the buffer is already empty.
  * <p>
  * NOTE: From version 3.0, this exception extends NoSuchElementException.
- * 
+ *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
  *

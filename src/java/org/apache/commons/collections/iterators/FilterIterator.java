@@ -29,7 +29,7 @@ import org.apache.commons.collections.Predicate;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Jan Sorensen
  * @author Ralph Wagner

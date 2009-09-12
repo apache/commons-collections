@@ -32,9 +32,9 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 /**
  * Tests the BinaryHeap.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Michael A. Smith
  */
 public class TestBinaryHeap extends AbstractTestCollection {

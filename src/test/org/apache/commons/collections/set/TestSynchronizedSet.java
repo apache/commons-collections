@@ -29,7 +29,7 @@ import org.apache.commons.collections.BulkTest;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestSynchronizedSet extends AbstractTestSet{

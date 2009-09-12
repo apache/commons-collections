@@ -33,12 +33,12 @@ import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
  * <p>
  * An implementation can be written simply by implementing the
  * <code>createMap</code> method.
- * 
+ *
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since Commons Collections 3.0
  * @version $Id$
- * 
+ *
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */

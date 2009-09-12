@@ -29,7 +29,7 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @since Commons Collections 2.1.1 and 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class EmptyIterator extends AbstractEmptyIterator implements ResettableIterator {

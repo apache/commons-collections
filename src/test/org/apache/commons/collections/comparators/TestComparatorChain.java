@@ -26,9 +26,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for ComparatorChain.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Unknown
  */
 public class TestComparatorChain extends AbstractTestComparator {

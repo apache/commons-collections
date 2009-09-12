@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  * @author Stephen Colebourne
  */

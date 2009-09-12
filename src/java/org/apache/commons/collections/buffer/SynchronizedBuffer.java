@@ -29,7 +29,7 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class SynchronizedBuffer extends SynchronizedCollection implements Buffer {

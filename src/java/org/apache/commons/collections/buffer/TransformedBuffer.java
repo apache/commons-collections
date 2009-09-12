@@ -32,7 +32,7 @@ import org.apache.commons.collections.collection.TransformedCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TransformedBuffer extends TransformedCollection implements Buffer {

@@ -29,7 +29,7 @@ import org.apache.commons.collections.Predicate;
  *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  */
 public class FilterListIterator implements ListIterator {

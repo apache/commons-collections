@@ -33,10 +33,10 @@ import org.apache.commons.collections.OrderedMapIterator;
  * Concrete subclasses must provide the list iterator to be tested.
  * They must also specify certain details of how the list iterator operates by
  * overriding the supportsXxx() methods if necessary.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class AbstractTestOrderedMapIterator extends AbstractTestMapIterator {

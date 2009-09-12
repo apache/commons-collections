@@ -26,7 +26,7 @@ import java.util.Iterator;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
  */

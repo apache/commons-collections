@@ -24,9 +24,9 @@ import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
  * Tests FastHashMap.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Jason van Zyl
  */
 public class TestFastHashMap extends AbstractTestMap {

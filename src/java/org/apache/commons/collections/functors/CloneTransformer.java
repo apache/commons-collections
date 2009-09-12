@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that returns a clone of the input object.
  * <p>
  * Clone is performed using <code>PrototypeFactory.getInstance(input).create()</code>.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

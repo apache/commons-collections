@@ -25,7 +25,7 @@ import java.util.Iterator;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public interface ResettableIterator extends Iterator {

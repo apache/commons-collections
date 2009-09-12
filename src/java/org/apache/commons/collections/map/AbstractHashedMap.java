@@ -51,7 +51,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * NOTE: From Commons Collections 3.1 this class extends AbstractMap.
  * This is to provide backwards compatibility for ReferenceMap between v3.0 and v3.1.
  * This extends clause will be removed in v4.0.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

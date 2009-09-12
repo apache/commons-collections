@@ -30,7 +30,7 @@ import org.apache.commons.collections.Unmodifiable;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
 public class TestUnmodifiableMap extends AbstractTestIterableMap{

@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
  *  Due to be removed in v4.0.
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Ram Chidambaram
  */
 public final class SynchronizedPriorityQueue implements PriorityQueue {

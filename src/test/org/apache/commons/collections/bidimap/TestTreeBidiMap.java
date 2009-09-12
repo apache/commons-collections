@@ -27,9 +27,9 @@ import org.apache.commons.collections.BulkTest;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestTreeBidiMap extends AbstractTestOrderedBidiMap {

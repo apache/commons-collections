@@ -61,7 +61,7 @@ import java.util.TreeMap;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Craig R. McClanahan
  * @author Stephen Colebourne
  */

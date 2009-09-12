@@ -24,9 +24,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the ObjectArrayIterator.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Mauricio S. Moura
  * @author Morgan Delagrange

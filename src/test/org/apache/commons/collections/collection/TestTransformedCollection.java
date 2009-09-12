@@ -33,7 +33,7 @@ import org.apache.commons.collections.TransformerUtils;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestTransformedCollection extends AbstractTestCollection {

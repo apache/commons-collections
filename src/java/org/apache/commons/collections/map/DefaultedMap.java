@@ -58,7 +58,7 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  *
  * @since Commons Collections 3.2
  * @version $Revision: 1.7 $ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Rafael U.C. Afonso
  * @see LazyMap

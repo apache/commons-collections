@@ -24,10 +24,10 @@ import org.apache.commons.collections.Transformer;
  * Decorates another Comparator with transformation behavior. That is, the
  * return value from the transform operation will be passed to the decorated
  * {@link Comparator#compare(Object,Object) compare} method.
- * 
+ *
  * @since Commons Collections 2.0 (?)
  * @version $Revision$ $Date$
- * 
+ *
  * @see org.apache.commons.collections.Transformer
  * @see org.apache.commons.collections.comparators.ComparableComparator
  */

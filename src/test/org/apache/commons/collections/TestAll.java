@@ -22,9 +22,9 @@ import junit.framework.TestSuite;
 
 /**
  * Entry point for all Collections package tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
  */

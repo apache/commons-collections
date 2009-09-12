@@ -23,9 +23,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the ObjectArrayListIterator class.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestObjectArrayListIterator2 extends AbstractTestListIterator {

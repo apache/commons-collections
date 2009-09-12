@@ -27,7 +27,7 @@ import java.util.Iterator;
  * An implementation of a Map which has a maximum size and uses a Least Recently Used
  * algorithm to remove items from the Map when the maximum size is reached and new items are added.
  * </p>
- * 
+ *
  * <p>
  * A synchronized version can be obtained with:
  * <code>Collections.synchronizedMap( theMapToSynchronize )</code>
@@ -35,18 +35,18 @@ import java.util.Iterator;
  * to this Map.  Even concurrent get(Object) operations produce indeterminate
  * behaviour.
  * </p>
- * 
+ *
  * <p>
  * Unlike the Collections 1.0 version, this version of LRUMap does use a true
  * LRU algorithm.  The keys for all gets and puts are moved to the front of
  * the list.  LRUMap is now a subclass of SequencedHashMap, and the "LRU"
  * key is now equivalent to LRUMap.getFirst().
  * </p>
- * 
+ *
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  * @author <a href="mailto:morgand@apache.org">Morgan Delagrange</a>
  */

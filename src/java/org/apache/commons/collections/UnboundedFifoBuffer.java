@@ -40,7 +40,7 @@ import java.util.NoSuchElementException;
  * </pre>
  * <p>
  * This buffer prevents null objects from being added.
- * 
+ *
  * @deprecated Moved to buffer subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$

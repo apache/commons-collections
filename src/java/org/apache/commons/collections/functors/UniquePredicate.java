@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Predicate implementation that returns true the first time an object is
  * passed into the predicate.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

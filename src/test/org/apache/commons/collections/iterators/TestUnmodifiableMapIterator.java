@@ -29,9 +29,9 @@ import org.apache.commons.collections.bidimap.DualHashBidiMap;
 
 /**
  * Tests the UnmodifiableMapIterator.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestUnmodifiableMapIterator extends AbstractTestMapIterator {

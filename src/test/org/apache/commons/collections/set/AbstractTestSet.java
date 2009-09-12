@@ -40,7 +40,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Paul Jack
  */
 public abstract class AbstractTestSet extends AbstractTestCollection {

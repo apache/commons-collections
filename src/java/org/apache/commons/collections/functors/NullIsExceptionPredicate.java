@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 
 /**
  * Predicate implementation that throws an exception if the input is null.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

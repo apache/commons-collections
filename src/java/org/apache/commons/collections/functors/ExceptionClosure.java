@@ -23,7 +23,7 @@ import org.apache.commons.collections.FunctorException;
 
 /**
  * Closure implementation that always throws an exception.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

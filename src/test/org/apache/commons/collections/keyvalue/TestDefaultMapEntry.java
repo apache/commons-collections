@@ -25,10 +25,10 @@ import org.apache.commons.collections.KeyValue;
 
 /**
  * Test the DefaultMapEntry class.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Neil O'Toole
  */
 public class TestDefaultMapEntry extends AbstractTestMapEntry {

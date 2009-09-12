@@ -27,7 +27,7 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Stephen Colebourne
  * @author Rodney Waldhoff

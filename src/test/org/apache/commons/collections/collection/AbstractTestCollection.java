@@ -114,7 +114,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * test case (method) your {@link Collection} fails.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Michael A. Smith

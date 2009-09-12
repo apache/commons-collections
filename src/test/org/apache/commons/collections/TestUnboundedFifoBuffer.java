@@ -26,9 +26,9 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 
 /**
  * Test cases for UnboundedFifoBuffer.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Unknown
  */
 public class TestUnboundedFifoBuffer extends AbstractTestCollection {

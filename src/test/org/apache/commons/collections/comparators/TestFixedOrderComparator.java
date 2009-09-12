@@ -28,9 +28,9 @@ import junit.framework.TestSuite;
 
 /**
  * Test class for FixedOrderComparator.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author David Leppik 
  * @author Stephen Colebourne
  */

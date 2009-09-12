@@ -34,7 +34,7 @@ import org.apache.commons.collections.functors.ConstantFactory;
 
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

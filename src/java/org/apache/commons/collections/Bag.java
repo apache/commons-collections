@@ -40,7 +40,7 @@ import java.util.Set;
  *
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */

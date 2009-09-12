@@ -27,10 +27,10 @@ import junit.framework.TestCase;
  * a new Map.Entry of the type being tested. Subclasses must also implement
  * {@link #testConstructors()} to test the constructors of the Map.Entry
  * type being tested.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Neil O'Toole
  */
 public abstract class AbstractTestMapEntry extends TestCase {

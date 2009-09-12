@@ -28,10 +28,10 @@ import org.apache.commons.collections.AbstractTestObject;
  * Concrete subclasses must provide the iterator to be tested.
  * They must also specify certain details of how the iterator operates by
  * overriding the supportsXxx() methods if necessary.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */

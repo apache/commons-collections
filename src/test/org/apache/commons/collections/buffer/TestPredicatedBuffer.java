@@ -33,7 +33,7 @@ import org.apache.commons.collections.collection.TestPredicatedCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
 public class TestPredicatedBuffer extends TestPredicatedCollection {

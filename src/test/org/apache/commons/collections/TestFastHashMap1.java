@@ -23,7 +23,7 @@ import junit.framework.Test;
 
 /**
  * Test FastHashMap in <strong>fast</strong> mode.
- * 
+ *
  * @version $Revision$ $Date$
  *
  * @author Jason van Zyl

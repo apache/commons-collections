@@ -56,7 +56,7 @@ import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
  * <p>
  * The implementation is also designed to be subclassed, with lots of useful
  * methods exposed.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

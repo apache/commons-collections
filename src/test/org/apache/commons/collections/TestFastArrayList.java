@@ -25,9 +25,9 @@ import junit.framework.Test;
 
 /**
  * Test FastArrayList.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Jason van Zyl
  */
 public class TestFastArrayList extends TestArrayList {

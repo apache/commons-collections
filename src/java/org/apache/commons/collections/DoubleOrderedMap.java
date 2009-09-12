@@ -101,7 +101,7 @@ import java.util.Set;
  * @see org.apache.commons.collections.bidimap.DualHashBidiMap
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Marc Johnson
  */
 public final class DoubleOrderedMap extends AbstractMap {

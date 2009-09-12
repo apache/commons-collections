@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 
 /**
  * Test the ArrayListIterator class.
- * 
+ *
  * @version $Revision$ $Date$
  * @author Neil O'Toole
  */

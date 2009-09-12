@@ -35,9 +35,9 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 
 /**
  * Test cases for CircularFifoBuffer.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestCircularFifoBuffer extends AbstractTestCollection {

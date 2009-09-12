@@ -28,7 +28,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * The array can be either an array of object or of primitives. If you know 
  * that you have an object array, the {@link ObjectArrayListIterator}
  * class is a better choice, as it will perform better.
- * 
+ *
  * <p>
  * This iterator does not support {@link #add(Object)} or {@link #remove()}, as the array 
  * cannot be changed in size. The {@link #set(Object)} method is supported however.

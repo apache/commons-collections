@@ -44,7 +44,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
 
 /**
  * Tests for CollectionUtils.
- * 
+ *
  * @author Rodney Waldhoff
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
@@ -52,7 +52,7 @@ import org.apache.commons.collections.collection.UnmodifiableCollection;
  * @author Steven Melzer
  * @author Neil O'Toole
  * @author Stephen Smith
- * 
+ *
  * @version $Revision$ $Date$
  */
 public class TestCollectionUtils extends TestCase {

@@ -33,9 +33,9 @@ import junit.framework.TestSuite;
 
 /**
  * Unit tests for {@link org.apache.commons.collections.keyvalue.MultiKey}.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestMultiKey extends TestCase {

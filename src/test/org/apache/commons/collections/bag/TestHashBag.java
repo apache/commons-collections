@@ -24,7 +24,7 @@ import org.apache.commons.collections.Bag;
 /**
  * Extension of {@link AbstractTestBag} for exercising the {@link HashBag}
  * implementation.
- * 
+ *
  * @version $Revision$ $Date$
  *
  * @author Chuck Burdick

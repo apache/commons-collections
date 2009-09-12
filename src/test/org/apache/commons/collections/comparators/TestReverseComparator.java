@@ -30,9 +30,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for ReverseComparator.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Unknown
  */
 public class TestReverseComparator extends AbstractTestComparator {

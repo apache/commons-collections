@@ -28,9 +28,9 @@ import org.apache.commons.collections.list.AbstractTestList;
 
 /**
  * Test class.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Simon Kitching
  */

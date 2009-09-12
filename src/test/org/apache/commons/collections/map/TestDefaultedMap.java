@@ -33,7 +33,7 @@ import org.apache.commons.collections.functors.ConstantFactory;
  *
  * @since Commons Collections 3.2
  * @version $Revision: 155406 $ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestDefaultedMap extends AbstractTestMap {

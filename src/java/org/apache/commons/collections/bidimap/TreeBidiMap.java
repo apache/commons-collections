@@ -71,7 +71,7 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
  * @version $Revision$ $Date$
- * 
+ *
  * @author Marc Johnson
  * @author Stephen Colebourne
  */

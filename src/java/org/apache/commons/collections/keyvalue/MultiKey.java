@@ -38,10 +38,10 @@ import java.util.Arrays;
  * MultiKey multiKey = new MultiKey(key, locale);
  * String localizedText = (String) map.get(multiKey);
  * </pre>
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Howard Lewis Ship
  * @author Stephen Colebourne
  */

@@ -35,7 +35,7 @@ import org.apache.commons.collections.map.TestPredicatedSortedMap;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
 public class TestPredicatedSortedSet extends AbstractTestSortedSet{

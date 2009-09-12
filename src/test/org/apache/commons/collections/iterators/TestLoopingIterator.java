@@ -27,9 +27,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the LoopingIterator class.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Jonathan Carlson
  * @author Stephen Colebourne
  */

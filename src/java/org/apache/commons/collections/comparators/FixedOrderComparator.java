@@ -40,7 +40,7 @@ import java.util.Map;
  * Instances of FixedOrderComparator are not synchronized.  The class is not
  * thread-safe at construction time, but it is thread-safe to perform
  * multiple comparisons  after all the setup operations are complete.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

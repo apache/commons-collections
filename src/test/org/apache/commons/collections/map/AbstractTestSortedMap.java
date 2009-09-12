@@ -30,7 +30,7 @@ import org.apache.commons.collections.BulkTest;
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public abstract class AbstractTestSortedMap extends AbstractTestMap {

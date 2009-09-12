@@ -53,7 +53,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * @see org.apache.commons.collections.map.ListOrderedMap
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Michael A. Smith
  * @author Daniel Rall
  * @author Henning P. Schmiedehausen

@@ -45,7 +45,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * <b>Entry Population Methods</b>
  * <p>
  * Override these methods if your map requires special entries:
- * 
+ *
  * <ul>
  * <li>{@link #getSampleKeys()}
  * <li>{@link #getSampleValues()}

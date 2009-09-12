@@ -24,7 +24,7 @@ import java.util.Collection;
 
 /**
  * Serializable subclass of AbstractCollectionDecorator.
- * 
+ *
  * @author Stephen Colebourne
  * @since Commons Collections 3.1
  */

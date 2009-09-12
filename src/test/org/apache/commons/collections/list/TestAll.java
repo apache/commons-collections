@@ -22,10 +22,10 @@ import junit.framework.TestSuite;
 
 /**
  * Entry point for tests.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestAll extends TestCase {

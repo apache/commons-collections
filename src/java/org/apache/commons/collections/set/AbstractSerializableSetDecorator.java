@@ -25,7 +25,7 @@ import java.util.Set;
 
 /**
  * Serializable subclass of AbstractSetDecorator.
- * 
+ *
  * @author Stephen Colebourne
  * @since Commons Collections 3.1
  */

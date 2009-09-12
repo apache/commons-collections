@@ -31,7 +31,7 @@ import org.apache.commons.collections.bag.UnmodifiableSortedBag;
 
 /**
  * Tests for BagUtils factory methods.
- * 
+ *
  * @version $Revision$ $Date$
  *
  * @author Phil Steitz

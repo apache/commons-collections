@@ -22,7 +22,7 @@ package org.apache.commons.collections;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Avalon
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>

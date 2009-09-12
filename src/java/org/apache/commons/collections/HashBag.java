@@ -25,7 +25,7 @@ import java.util.HashMap;
  * @deprecated Moved to bag subpackage and rewritten internally. Due to be removed in v4.0.
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Chuck Burdick
  */
 public class HashBag extends DefaultMapBag implements Bag {

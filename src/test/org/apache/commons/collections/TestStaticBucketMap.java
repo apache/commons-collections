@@ -25,9 +25,9 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Unit tests.
  * {@link org.apache.commons.collections.StaticBucketMap}.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Michael A. Smith
  */
 public class TestStaticBucketMap extends AbstractTestMap {

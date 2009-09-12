@@ -29,7 +29,7 @@ import org.apache.commons.collections.ResettableIterator;
  * perform the iteration rather than the hasNext() method.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  */
 public class TestSingletonIterator2 extends AbstractTestIterator {

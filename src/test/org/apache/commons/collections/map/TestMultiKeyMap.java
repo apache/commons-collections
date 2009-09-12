@@ -27,9 +27,9 @@ import org.apache.commons.collections.keyvalue.MultiKey;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestMultiKeyMap extends AbstractTestIterableMap {

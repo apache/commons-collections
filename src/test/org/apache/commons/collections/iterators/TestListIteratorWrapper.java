@@ -31,7 +31,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * a ListIterator correctly.
  *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Morgan Delagrange
  */
 public class TestListIteratorWrapper extends AbstractTestIterator {

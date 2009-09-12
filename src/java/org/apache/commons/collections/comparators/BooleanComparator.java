@@ -26,10 +26,10 @@ import java.util.Comparator;
  * @see #getTrueFirstComparator()
  * @see #getFalseFirstComparator()
  * @see #getBooleanComparator(boolean)
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  */
 public final class BooleanComparator implements Comparator, Serializable {

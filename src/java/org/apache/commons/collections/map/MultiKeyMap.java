@@ -56,7 +56,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * and a Locale to lookup the airline's name:
  * <pre>
  * private MultiKeyMap cache = MultiKeyMap.decorate(new LRUMap(50));
- * 
+ *
  * public String getAirlineName(String code, String locale) {
  *   String name = (String) cache.get(code, locale);
  *   if (name == null) {

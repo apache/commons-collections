@@ -46,7 +46,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Henning P. Schmiedehausen
  */

@@ -55,7 +55,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
  * @version $Revision$ $Date$
- * 
+ *
  * @author Avalon
  * @author Berin Loritsch
  * @author Paul Jack

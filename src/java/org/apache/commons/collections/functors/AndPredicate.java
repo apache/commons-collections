@@ -22,7 +22,7 @@ import org.apache.commons.collections.Predicate;
 
 /**
  * Predicate implementation that returns true if both the predicates return true.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

@@ -34,7 +34,7 @@ import java.util.Set;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public final class MapBackedSet implements Set, Serializable {

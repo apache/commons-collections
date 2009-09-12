@@ -54,7 +54,7 @@ import java.util.ListIterator;
  * @see java.util.LinkedList
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  * @author Janek Bogucki
  * @author Simon Kitching

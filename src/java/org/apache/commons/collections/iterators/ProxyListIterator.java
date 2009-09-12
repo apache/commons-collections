@@ -25,7 +25,7 @@ import java.util.ListIterator;
  * @deprecated Use AbstractListIteratorDecorator. Will be removed in v4.0
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  */
 public class ProxyListIterator implements ListIterator {

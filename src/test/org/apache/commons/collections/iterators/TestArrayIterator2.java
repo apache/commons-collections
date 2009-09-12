@@ -24,9 +24,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the ArrayIterator with primitive type arrays.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Morgan Delagrange
  * @author James Strachan
  */

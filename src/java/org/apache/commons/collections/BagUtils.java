@@ -35,7 +35,7 @@ import org.apache.commons.collections.bag.UnmodifiableSortedBag;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Andrew Freeman

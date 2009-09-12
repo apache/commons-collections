@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
  * <p>
  * The input object is passed to the first transformer. The transformed result
  * is passed to the second transformer and so on.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

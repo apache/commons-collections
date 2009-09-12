@@ -39,7 +39,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * @deprecated Moved to bag subpackage as AbstractMapBag. Due to be removed in v4.0.
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Chuck Burdick
  * @author Michael A. Smith
  * @author Stephen Colebourne

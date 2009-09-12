@@ -25,10 +25,10 @@ import junit.framework.TestSuite;
 
 /**
  * Test the DefaultKeyValue class.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Neil O'Toole
  */
 public class TestDefaultKeyValue extends TestCase {

@@ -31,7 +31,7 @@ import org.apache.commons.collections.FactoryUtils;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Phil Steitz
  */
 public class TestLazyMap extends AbstractTestMap {

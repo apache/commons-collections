@@ -39,9 +39,9 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  * @author Jonas Van Poucke

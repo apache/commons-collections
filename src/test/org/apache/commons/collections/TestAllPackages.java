@@ -22,9 +22,9 @@ import junit.framework.TestSuite;
 
 /**
  * Entry point for all Collections project tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestAllPackages extends TestCase {

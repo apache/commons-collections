@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Serializable subclass of AbstractListDecorator.
- * 
+ *
  * @author Stephen Colebourne
  * @since Commons Collections 3.1
  */

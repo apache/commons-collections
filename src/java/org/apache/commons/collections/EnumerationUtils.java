@@ -23,10 +23,10 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
 
 /**
  * Provides utility methods for {@link Enumeration} instances.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Id$
- * 
+ *
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  */
 public class EnumerationUtils {

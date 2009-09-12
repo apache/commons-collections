@@ -30,7 +30,7 @@ import java.util.Collection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Herve Quiroz
  * @author Stephen Colebourne
  */

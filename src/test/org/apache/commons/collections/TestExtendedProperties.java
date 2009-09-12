@@ -28,9 +28,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests some basic functions of the ExtendedProperties class.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Geir Magnusson Jr.
  * @author Mohan Kishore
  * @author Stephen Colebourne

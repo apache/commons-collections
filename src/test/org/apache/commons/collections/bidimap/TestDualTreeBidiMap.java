@@ -24,9 +24,9 @@ import org.apache.commons.collections.BulkTest;
 
 /**
  * JUnit tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */

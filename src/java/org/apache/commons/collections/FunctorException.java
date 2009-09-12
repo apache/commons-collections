@@ -22,7 +22,7 @@ import java.io.PrintWriter;
 /**
  * Runtime exception thrown from functors.
  * If required, a root cause error can be wrapped within this one.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

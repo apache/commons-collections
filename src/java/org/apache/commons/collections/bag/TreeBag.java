@@ -42,7 +42,7 @@ import org.apache.commons.collections.SortedBag;
  *
  * @since Commons Collections 3.0 (previously in main package v2.0)
  * @version $Revision$ $Date$
- * 
+ *
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */

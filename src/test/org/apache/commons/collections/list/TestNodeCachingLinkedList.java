@@ -26,9 +26,9 @@ import org.apache.commons.collections.BulkTest;
 
 /**
  * Test class for NodeCachingLinkedList, a performance optimised LinkedList.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Jeff Varszegi
  * @author Phil Steitz
  */

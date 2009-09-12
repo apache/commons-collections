@@ -48,10 +48,10 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * <p>
  * NOTE: From Commons Collections 3.1, all subclasses will use <code>TreeMap</code>
  * and the flawed <code>createMap</code> method is ignored.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Id$
- * 
+ *
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */

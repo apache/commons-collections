@@ -36,7 +36,7 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Paul Jack
  */

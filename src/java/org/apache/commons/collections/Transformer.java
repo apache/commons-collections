@@ -28,10 +28,10 @@ package org.apache.commons.collections;
  * Standard implementations of common transformers are provided by
  * {@link TransformerUtils}. These include method invokation, returning a constant,
  * cloning and returning the string value.
- * 
+ *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Stephen Colebourne
  */

@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 abstract class AbstractEmptyIterator {

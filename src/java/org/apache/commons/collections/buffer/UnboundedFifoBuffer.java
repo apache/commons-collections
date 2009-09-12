@@ -50,7 +50,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This buffer prevents null objects from being added.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
- * 
+ *
  * @since Commons Collections 3.0 (previously in main package v2.1)
  * @version $Revision$ $Date$
  *

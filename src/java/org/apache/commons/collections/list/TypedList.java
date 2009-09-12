@@ -30,7 +30,7 @@ import org.apache.commons.collections.functors.InstanceofPredicate;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Matthew Hawthorne
  */

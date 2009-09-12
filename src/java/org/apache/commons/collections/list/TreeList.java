@@ -49,7 +49,7 @@ import org.apache.commons.collections.OrderedIterator;
  * <code>LinkedList</code> is rarely a good choice of implementation.
  * <code>TreeList</code> is almost always a good replacement for it, although it
  * does use sligtly more memory.
- * 
+ *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
  *

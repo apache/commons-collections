@@ -22,9 +22,9 @@ import junit.framework.TestSuite;
 
 /**
  * Entry point for all Comparator Collections tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestAll extends TestCase {

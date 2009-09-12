@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * Transformer implementation that calls a Closure using the input object
  * and then returns the input.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

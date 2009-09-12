@@ -22,9 +22,9 @@ import junit.framework.TestSuite;
 
 /**
  * Entry point for all iterator tests.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  */
 public class TestAll extends TestCase {

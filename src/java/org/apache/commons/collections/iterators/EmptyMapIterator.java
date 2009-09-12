@@ -24,7 +24,7 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class EmptyMapIterator extends AbstractEmptyIterator implements MapIterator, ResettableIterator {

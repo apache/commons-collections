@@ -35,7 +35,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Federico Barbieri
  * @author Peter Donald
  * @author Paul Jack

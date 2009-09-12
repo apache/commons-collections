@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Stephen Colebourne
  */

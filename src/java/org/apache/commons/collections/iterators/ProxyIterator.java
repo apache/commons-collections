@@ -24,7 +24,7 @@ import java.util.Iterator;
  * @deprecated Use AbstractIteratorDecorator. Will be removed in v4.0
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  */
 public class ProxyIterator implements Iterator {

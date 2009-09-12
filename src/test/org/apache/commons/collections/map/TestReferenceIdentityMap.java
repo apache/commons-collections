@@ -27,7 +27,7 @@ import org.apache.commons.collections.IterableMap;
 
 /**
  * Tests for ReferenceIdentityMap. 
- * 
+ *
  * @version $Revision$
  *
  * @author Paul Jack

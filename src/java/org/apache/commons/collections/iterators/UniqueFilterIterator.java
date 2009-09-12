@@ -27,7 +27,7 @@ import org.apache.commons.collections.functors.UniquePredicate;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Morgan Delagrange
  */
 public class UniqueFilterIterator extends FilterIterator {

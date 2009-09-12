@@ -91,7 +91,7 @@ import java.util.Set;
  * @deprecated Moved to map subpackage. Due to be removed in v4.0.
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
  * @author <a href="mailto:g-froehlich@gmx.de">Gerhard Froehlich</a>
  * @author <a href="mailto:mas@apache.org">Michael A. Smith</a>

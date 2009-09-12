@@ -26,10 +26,10 @@ import org.apache.commons.collections.Unmodifiable;
 
 /**
  * Test the UnmodifiableMapEntry class.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Neil O'Toole
  */
 public class TestUnmodifiableMapEntry extends AbstractTestMapEntry {

@@ -30,7 +30,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestTransformedBuffer extends TestCase {

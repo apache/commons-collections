@@ -67,7 +67,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  * @author Phil Steitz
  */

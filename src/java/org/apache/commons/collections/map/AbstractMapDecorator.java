@@ -35,7 +35,7 @@ import java.util.Set;
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Daniel Rall
  * @author Stephen Colebourne
  */

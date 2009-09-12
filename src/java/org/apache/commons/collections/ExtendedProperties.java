@@ -93,7 +93,7 @@ import java.util.Vector;
  *
  *   Then "additional.properties" is expected to be in the same
  *   directory as the parent configuration file.
- * 
+ *
  *   Duplicate name values will be replaced, so be careful.
  *
  *  </li>
@@ -131,7 +131,7 @@ import java.util.Vector;
  *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
  * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
  * @author <a href="mailto:daveb@miceda-data">Dave Bryson</a>

@@ -29,7 +29,7 @@ import junit.framework.TestSuite;
  *
  * @since Commons Collections 3.2
  * @version $Revision: 155406 $ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 public class TestGrowthList extends AbstractTestList {

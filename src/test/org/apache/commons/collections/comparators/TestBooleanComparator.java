@@ -25,9 +25,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for {@link BooleanComparator}.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Rodney Waldhoff
  */
 public class TestBooleanComparator extends AbstractTestComparator {

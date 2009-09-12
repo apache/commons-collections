@@ -41,7 +41,7 @@ import org.apache.commons.collections.set.AbstractSetDecorator;
  *
  * @since Commons Collections 3.1
  * @version $Revision$ $Date$
- * 
+ *
  * @author Stephen Colebourne
  */
 abstract class AbstractInputCheckedMapDecorator

@@ -92,7 +92,7 @@ import org.apache.commons.collections.KeyValue;
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
  * @version $Revision$ $Date$
- * 
+ *
  * @author Berin Loritsch
  * @author Gerhard Froehlich
  * @author Michael A. Smith

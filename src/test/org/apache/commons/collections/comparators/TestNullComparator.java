@@ -25,9 +25,9 @@ import junit.framework.TestSuite;
 
 /**
  * Test the NullComparator.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Michael A. Smith
  */
 public abstract class TestNullComparator extends AbstractTestComparator {

@@ -30,7 +30,7 @@ import junit.textui.TestRunner;
 
 /**
  * Tests the org.apache.commons.collections.PredicateUtils class.
- * 
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *

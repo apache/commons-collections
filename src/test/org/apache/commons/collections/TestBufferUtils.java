@@ -22,9 +22,9 @@ import org.apache.commons.collections.buffer.PredicatedBuffer;
 
 /**
  * Tests for BufferUtils.
- * 
+ *
  * @version $Revision$ $Date$
- * 
+ *
  * @author Unknown
  */
 public class TestBufferUtils extends BulkTest {

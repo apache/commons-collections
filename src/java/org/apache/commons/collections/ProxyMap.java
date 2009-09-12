@@ -27,7 +27,7 @@ import java.util.Set;
  * build to extensions for its wrapped <code>Map</code> object which
  * would be unavailable or inconvenient via sub-classing (but usable
  * via composition).</p>
- * 
+ *
  * <p>This implementation does not perform any special processing with
  * {@link #entrySet()}, {@link #keySet()} or {@link #values()}. Instead
  * it simply returns the set/collection from the wrapped map. This may be
@@ -38,7 +38,7 @@ import java.util.Set;
  * @deprecated Moved to map subpackage as AbstractMapDecorator. It will be removed in v4.0.
  * @since Commons Collections 2.0
  * @version $Revision$ $Date$
- * 
+ *
  * @author Daniel Rall
  * @author Stephen Colebourne
  */
