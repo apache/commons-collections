@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,11 +30,11 @@ import org.apache.commons.collections.bag.UnmodifiableSortedBag;
 /**
  * Provides utility methods and decorators for {@link Bag} and {@link SortedBag}
  * instances.
- * 
+ *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date: 2007-07-13 05:39:24 -0500 (Fri, 13 Jul
  * 2007) $
- * 
+ *
  * @author Paul Jack
  * @author Stephen Colebourne
  * @author Andrew Freeman

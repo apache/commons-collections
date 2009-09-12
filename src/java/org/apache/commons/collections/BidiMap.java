@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,7 +32,7 @@ package org.apache.commons.collections;
  * keys and values, meaning that multiple keys cannot map to the same value. 
  * This is required so that "inverting" the map results in a map without 
  * duplicate keys. See the {@link #put} method description for more information.
- * 
+ *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
  * @since Commons Collections 3.0

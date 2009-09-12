@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,11 +33,11 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Given two ordered {@link Iterator} instances <code>A</code> and
  * <code>B</code>, the {@link #next} method on this iterator will return the
  * lesser of <code>A.next()</code> and <code>B.next()</code>.
- * 
+ *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date: 2006-10-27 19:52:37 -0500 (Fri, 27 Oct
  * 2006) $
- * 
+ *
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
  */

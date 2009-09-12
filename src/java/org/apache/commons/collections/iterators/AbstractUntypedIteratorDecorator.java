@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.apache.commons.collections.iterators;
 
@@ -10,10 +10,10 @@ import java.util.Iterator;
  * without committing the generic type of the Iterator implementation.
  * <p>
  * All methods are forwarded to the decorated iterator.
- * 
+ *
  * @since Commons Collections 5
  * @version $Revision$ $Date$
- * 
+ *
  * @author James Strachan
  * @author Stephen Colebourne
  * @author Matt Benson

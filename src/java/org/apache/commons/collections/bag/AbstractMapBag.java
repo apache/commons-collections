@@ -5,9 +5,9 @@
  * The ASF licenses this file to You under the Apache License, Version 2.0
  * (the "License"); you may not use this file except in compliance with
  * the License.  You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,11 +36,11 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Subclasses specify a Map implementation to use as the internal storage. The
  * map will be used to map bag elements to a number; the number represents the
  * number of occurrences of that element in the bag.
- * 
+ *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
  * @version $Revision$ $Date: 2006-10-27 19:52:37 -0500 (Fri, 27 Oct
  * 2006) $
- * 
+ *
  * @author Chuck Burdick
  * @author Michael A. Smith
  * @author Stephen Colebourne

@@ -25,10 +25,10 @@ import org.apache.commons.collections.SortedBag;
 /**
  * Extension of {@link TestBag} for exercising the {@link TreeBag}
  * implementation.
- * 
+ *
  * @version $Revision$ $Date: 2006-10-27 19:52:37 -0500 (Fri, 27 Oct
  * 2006) $
- * 
+ *
  * @author Chuck Burdick
  */
 public class TestTreeBag<T> extends AbstractTestSortedBag<T> {
