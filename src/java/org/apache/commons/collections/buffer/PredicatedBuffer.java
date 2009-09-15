@@ -39,7 +39,7 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedBuffer extends PredicatedCollection implements Buffer {
+public class PredicatedBuffer<E> extends PredicatedCollection<E> implements Buffer<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 2307609000539943581L;
@@ -56,8 +56,8 @@ public class PredicatedBuffer extends PredicatedCollection implements Buffer {
      * @throws IllegalArgumentException if buffer or predicate is null
      * @throws IllegalArgumentException if the buffer contains invalid elements
      */
-    public static Buffer decorate(Buffer buffer, Predicate predicate) {
-        return new PredicatedBuffer(buffer, predicate);
+    public static <T> Buffer<T> decorate(Buffer<T> buffer, Predicate<? super T> predicate) {
+        return new PredicatedBuffer<T>(buffer, predicate);
     }
     
     //-----------------------------------------------------------------------
@@ -72,7 +72,7 @@ public class PredicatedBuffer extends PredicatedCollection implements Buffer {
      * @throws IllegalArgumentException if buffer or predicate is null
      * @throws IllegalArgumentException if the buffer contains invalid elements
      */
-    protected PredicatedBuffer(Buffer buffer, Predicate predicate) {
+    protected PredicatedBuffer(Buffer<E> buffer, Predicate<? super E> predicate) {
         super(buffer, predicate);
     }
 
@@ -81,17 +81,17 @@ public class PredicatedBuffer extends PredicatedCollection implements Buffer {
      * 
      * @return the decorated buffer
      */
-    protected Buffer getBuffer() {
-        return (Buffer) getCollection();
+    protected Buffer<E> decorated() {
+        return (Buffer<E>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public Object get() {
-        return getBuffer().get();
+    public E get() {
+        return decorated().get();
     }
 
-    public Object remove() {
-        return getBuffer().remove();
+    public E remove() {
+        return decorated().remove();
     }
 
 }
