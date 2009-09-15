@@ -34,32 +34,34 @@ import java.util.Iterator;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public class SynchronizedCollection implements Collection, Serializable {
+public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 2412805092710877986L;
 
     /** The collection to decorate */
-    protected final Collection collection;
+    protected final Collection<E> collection;
     /** The object to lock on, needed for List/SortedSet views */
     protected final Object lock;
 
     /**
      * Factory method to create a synchronized collection.
      * 
+     * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @return a new synchronized collection
      * @throws IllegalArgumentException if collection is null
      */
-    public static Collection decorate(Collection coll) {
-        return new SynchronizedCollection(coll);
+    public static <T> Collection<T> decorate(Collection<T> coll) {
+        return new SynchronizedCollection<T>(coll);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
@@ -67,7 +69,7 @@ public class SynchronizedCollection implements Collection, Serializable {
      * @param collection  the collection to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected SynchronizedCollection(Collection collection) {
+    protected SynchronizedCollection(Collection<E> collection) {
         if (collection == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
@@ -82,7 +84,7 @@ public class SynchronizedCollection implements Collection, Serializable {
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected SynchronizedCollection(Collection collection, Object lock) {
+    protected SynchronizedCollection(Collection<E> collection, Object lock) {
         if (collection == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
@@ -90,40 +92,49 @@ public class SynchronizedCollection implements Collection, Serializable {
         this.lock = lock;
     }
 
+    /**
+     * Gets the collection being decorated.
+     * 
+     * @return the decorated collection
+     */
+    protected Collection<E> decorated() {
+        return collection;
+    }
+
     //-----------------------------------------------------------------------
-    public boolean add(Object object) {
+    public boolean add(E object) {
         synchronized (lock) {
-            return collection.add(object);
+            return decorated().add(object);
         }
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         synchronized (lock) {
-            return collection.addAll(coll);
+            return decorated().addAll(coll);
         }
     }
 
     public void clear() {
         synchronized (lock) {
-            collection.clear();
+            decorated().clear();
         }
     }
 
     public boolean contains(Object object) {
         synchronized (lock) {
-            return collection.contains(object);
+            return decorated().contains(object);
         }
     }
 
-    public boolean containsAll(Collection coll) {
+    public boolean containsAll(Collection<?> coll) {
         synchronized (lock) {
-            return collection.containsAll(coll);
+            return decorated().containsAll(coll);
         }
     }
 
     public boolean isEmpty() {
         synchronized (lock) {
-            return collection.isEmpty();
+            return decorated().isEmpty();
         }
     }
 
@@ -137,43 +148,43 @@ public class SynchronizedCollection implements Collection, Serializable {
      * 
      * @return an iterator that must be manually synchronized on the collection
      */
-    public Iterator iterator() {
-        return collection.iterator();
+    public Iterator<E> iterator() {
+        return decorated().iterator();
     }
 
     public Object[] toArray() {
         synchronized (lock) {
-            return collection.toArray();
+            return decorated().toArray();
         }
     }
 
-    public Object[] toArray(Object[] object) {
+    public <T> T[] toArray(T[] object) {
         synchronized (lock) {
-            return collection.toArray(object);
+            return decorated().toArray(object);
         }
     }
 
     public boolean remove(Object object) {
         synchronized (lock) {
-            return collection.remove(object);
+            return decorated().remove(object);
         }
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         synchronized (lock) {
-            return collection.removeAll(coll);
+            return decorated().removeAll(coll);
         }
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         synchronized (lock) {
-            return collection.retainAll(coll);
+            return decorated().retainAll(coll);
         }
     }
 
     public int size() {
         synchronized (lock) {
-            return collection.size();
+            return decorated().size();
         }
     }
 
@@ -182,19 +193,19 @@ public class SynchronizedCollection implements Collection, Serializable {
             if (object == this) {
                 return true;
             }
-            return collection.equals(object);
+            return decorated().equals(object);
         }
     }
 
     public int hashCode() {
         synchronized (lock) {
-            return collection.hashCode();
+            return decorated().hashCode();
         }
     }
 
     public String toString() {
         synchronized (lock) {
-            return collection.toString();
+            return decorated().toString();
         }
     }
 
