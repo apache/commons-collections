@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Predicate;
 
 /**
@@ -50,17 +51,18 @@ import org.apache.commons.collections.Predicate;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedMap
-        extends AbstractInputCheckedMapDecorator
+public class PredicatedMap<K, V>
+        extends AbstractInputCheckedMapDecorator<K, V>
         implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 7412622456128415156L;
 
     /** The key predicate to use */
-    protected final Predicate keyPredicate;
+    protected final Predicate<? super K> keyPredicate;
+
     /** The value predicate to use */
-    protected final Predicate valuePredicate;
+    protected final Predicate<? super V> valuePredicate;
 
     /**
      * Factory method to create a predicated (validating) map.
@@ -73,8 +75,8 @@ public class PredicatedMap
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
-    public static Map decorate(Map map, Predicate keyPredicate, Predicate valuePredicate) {
-        return new PredicatedMap(map, keyPredicate, valuePredicate);
+    public static <K, V> IterableMap<K, V> decorate(Map<K, V> map, Predicate<? super K> keyPredicate, Predicate<? super V> valuePredicate) {
+        return new PredicatedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
     //-----------------------------------------------------------------------
@@ -86,17 +88,15 @@ public class PredicatedMap
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
-    protected PredicatedMap(Map map, Predicate keyPredicate, Predicate valuePredicate) {
+    protected PredicatedMap(Map<K, V> map, Predicate<? super K> keyPredicate, Predicate<? super V> valuePredicate) {
         super(map);
         this.keyPredicate = keyPredicate;
         this.valuePredicate = valuePredicate;
         
-        Iterator it = map.entrySet().iterator();
+        Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            Object key = entry.getKey();
-            Object value = entry.getValue();
-            validate(key, value);
+            Map.Entry<K, V> entry = it.next();
+            validate(entry.getKey(), entry.getValue());
         }
     }
 
@@ -121,6 +121,7 @@ public class PredicatedMap
      * @throws ClassNotFoundException
      * @since Commons Collections 3.1
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map) in.readObject();
@@ -134,7 +135,7 @@ public class PredicatedMap
      * @param value  the value to validate
      * @throws IllegalArgumentException if invalid
      */
-    protected void validate(Object key, Object value) {
+    protected void validate(K key, V value) {
         if (keyPredicate != null && keyPredicate.evaluate(key) == false) {
             throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
         }
@@ -150,7 +151,7 @@ public class PredicatedMap
      * @throws IllegalArgumentException if invalid
      * @since Commons Collections 3.1
      */
-    protected Object checkSetValue(Object value) {
+    protected V checkSetValue(V value) {
         if (valuePredicate.evaluate(value) == false) {
             throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
         }
@@ -168,20 +169,16 @@ public class PredicatedMap
     }
 
     //-----------------------------------------------------------------------
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         validate(key, value);
         return map.put(key, value);
     }
 
-    public void putAll(Map mapToCopy) {
-        Iterator it = mapToCopy.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            Object key = entry.getKey();
-            Object value = entry.getValue();
-            validate(key, value);
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
+        for (Map.Entry<? extends K, ? extends V> entry : mapToCopy.entrySet()) {
+            validate(entry.getKey(), entry.getValue());
         }
-        map.putAll(mapToCopy);
+        super.putAll(mapToCopy);
     }
 
 }
